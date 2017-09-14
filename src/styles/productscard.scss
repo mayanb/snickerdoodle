@@ -1,0 +1,71 @@
+.products-card {
+	color: rgb(79,79,79);
+	font-size: 12px;
+	line-height: 16px;
+
+	.products-card-section {
+		margin-bottom: 16px;
+		//background-color: rgba(255,0,0,0.5);
+	}
+
+	.products-card-header {
+		display: flex;
+		flex-direction: row;
+
+		h1 {
+				display: inline-block;
+		}
+	}
+
+	.products-card-icon {
+		margin-top: 4px;
+		display: inline-block;
+		margin-right: 20px;
+		vertical-align: middle;
+
+	}
+
+	.products-card-code, .products-card-name {
+		margin-right: 20px;
+	}
+
+	.products-card-name {
+		flex: 1;
+		flex-grow: 1;
+	}
+
+	.products-card-description-empty {
+		color: rgba(0,0,0,0.3);
+		font-style: italic; 
+	}
+
+	.products-card-created-by {
+		color: rgba(0,0,0,0.3);
+	}
+
+	.products-card-rule {
+		height: 1px;
+		background-color: $light-gray;
+		margin: 24px;
+		margin-bottom: 23px;
+	}
+
+	.products-card-actions {
+		text-align: right;
+		color: $theme-color;
+
+		span {
+			margin-left: 24px;
+			cursor: pointer;
+			line-height: 24px;
+			vertical-align: bottom;
+			display: inline;
+		}
+
+		i{
+			font-size: 18px;
+			line-height: 24px;
+			margin-right: 4px;
+		}
+	}
+}

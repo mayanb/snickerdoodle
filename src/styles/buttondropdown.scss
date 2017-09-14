@@ -1,0 +1,44 @@
+div.button-dropdown {
+	position: relative;
+
+	.button-dropdown-shim {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vh;
+		height: 100vw;
+		background-color: rgba(0,0,0,0);
+		z-index: 1;
+		display: none;
+	}
+
+	.button-dropdown-content {
+		position: absolute;
+		top: 28px;
+		right: 0px;
+		z-index: 2;
+		//display: none;
+		transform: scale(0, 0);
+		transform-origin: right top;
+		transition: 0.2s;
+
+		&>div {
+			border-radius: 8px 0px 8px 8px;
+		}
+	}
+
+	&.expanded {
+		&>button {
+			background-color: $dark-theme-color;
+		}
+
+		.button-dropdown-shim {
+			display: block;
+		}
+
+		.button-dropdown-content{
+			display:block;
+			transform: scale(1, 1);
+		}
+	}
+}

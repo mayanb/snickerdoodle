@@ -1,0 +1,24 @@
+.navbar {
+	background-color: $theme-color;
+	min-width: 64px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+
+
+	// text
+	color: white;
+
+	ul {
+		list-style-type: none;
+		padding: 0px;
+
+	}
+}
+
+.logo {
+	min-height: 64px;
+	min-width: 64px;
+	background-color: #42AFFF;
+}

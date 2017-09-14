@@ -1,0 +1,27 @@
+.create-process-input {
+	display:flex;
+	flex-direction: row;
+	margin-bottom: 16px;
+
+	input {
+		display: inline;
+
+		&:last-child {
+			flex-grow: 1;
+		}
+	}
+
+	.number {
+		border-radius: 4px 0 0 4px;
+		border-right-color: rgba(0,0,0,0);
+		width: 50px;
+		z-index: 10;
+		text-align: center;
+	}
+
+	.unit {
+		//margin-left: -1px;
+		border-radius: 0 4px 4px 0;
+		z-index: 11;
+	}
+}

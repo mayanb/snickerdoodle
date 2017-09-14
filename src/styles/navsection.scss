@@ -1,0 +1,28 @@
+.nav-section {
+	display: flex;
+	flex-direction:row;
+	flex-grow: 100;
+
+	&>div {
+	margin: 100px 80px 0px 64px;
+	flex: 7;
+
+		&>.card {
+			height: 100%;
+		}
+	}
+
+	.nav-section-header {
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 32px;
+
+		h1 {
+			flex-grow: 1;
+		}
+	}
+
+	.nav-section-list {
+		margin-top: 132px;
+	}
+}

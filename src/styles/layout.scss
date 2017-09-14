@@ -1,0 +1,45 @@
+$sans-stack: 'Interface', 'Helvetica';
+$light-gray: rgba(0,0,0,0.1);
+$theme-color: #2198EE; //42AFFF;
+$dark-theme-color: #0068B4;
+$baseline: 8px;
+
+.layout {
+	display:flex;
+	flex-direction: row;
+}
+
+.baseline-grid {
+	background-image: url('baselinegrid.png');
+	background-size: 16px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	opacity: 0.5;
+	z-index: 1;
+}
+
+.application-content {
+	padding-left: 64px;
+	flex-grow: 1;
+}
+
+body {
+	font-family: $sans-stack;
+	font-size: 0.75em;
+	line-height: 0.9em;
+	color: rgba(79,79,79,1);
+	padding: 0;
+	margin: 0;
+}
+
+div, input, * {
+	box-sizing: border-box !important;
+}
+
+span {
+	line-height: 16px;
+}
+

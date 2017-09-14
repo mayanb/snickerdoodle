@@ -1,0 +1,83 @@
+.card {
+	border-radius: 8px;
+	box-shadow: 0 0 13px 0 rgba(161,161,161,0.33);
+	max-height: 70vh;
+	padding: 16px;
+	overflow-x: hidden;
+	background-color:white;
+
+	.rule {
+		background-color: $light-gray;
+		height: 1px;
+		margin: 16px;
+		margin-bottom: 15px;
+	}
+
+	&.big {
+		padding: 32px;
+		border-radius: 18px;
+
+		.rule {
+			margin: 32px;
+			margin-bottom: 31px;
+		}
+	}
+}
+
+.icon {
+	display: inline-block;
+	background-color: $light-gray;
+}
+
+.select-circle {
+	width: 16px;
+	padding-bottom: 16px;
+	border: 1px solid $light-gray;
+	border-radius: 16px;
+
+	&.selected {
+		border-color: $theme-color;
+		background-color: $theme-color;
+	}
+}
+
+body div.dialog-shim {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0,0,0,0.7);
+	margin: 0 !important;
+	padding: 0 !important;
+	z-index: 2;
+
+	.dialog-box {
+		max-width: 400px;
+		width: 400px;
+		position: fixed;
+		top: 30%;
+		left: 50%;
+		transform: translateX(-50%) ;
+		z-index: 1;
+	}
+}
+
+button {
+	padding: 8px 12px 8px 12px;
+	font-size: 12px;
+	line-height: 16px;
+	background-color: $theme-color;
+	color: white;
+	border-radius: 6px;
+	border: 0;
+	outline: none;
+	display:block;
+	cursor: pointer;
+
+	&.secondary {
+		background-color: white;
+		color: $theme-color;
+	}
+
+}
