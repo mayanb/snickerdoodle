@@ -8,23 +8,35 @@ export default class CreateProductDropdown extends React.Component {
 		super(props)
 
 		this.state = {
+			expanded: false,
 			name: "",
 			abbreviation: "",
 			description: "", 
 			error: false
 		}
+
+		this.handleDropdownToggle = this.handleDropdownToggle.bind(this)
 	}
 	render() {
 		return (
-			<ButtonDropdown button="Create Product">
+			<ButtonDropdown button="Create Product" expanded={this.state.expanded} onToggle={this.handleDropdownToggle}>
 				<div className="create-product-dialog">
 					{ this.renderInput("name", "Name", "eg. Maya Mountain 2016") }
 					{ this.renderInput("abbreviation", "Abbreviation", "eg. MM16") }
 					{ this.renderDescription() }
 					{ this.renderError() }
-					<Button onClick={this.handleCreateProduct.bind(this)}>Create Product</Button>
+					{ this.renderCreateButton() }
 				</div>
 			</ButtonDropdown>
+		)
+	}
+
+	renderCreateButton() {
+		if (this.props.ui.isCreatingItem)
+			return <Button disabled>Creating...</Button>
+
+		return (
+			<Button onClick={this.handleCreateProduct.bind(this)}>Create product</Button>
 		)
 	}
 
@@ -60,22 +72,29 @@ export default class CreateProductDropdown extends React.Component {
 		)
 	}
 
+	handleDropdownToggle() {
+		this.setState({expanded: !this.state.expanded})
+	}
+
 	handleCreateProduct() {
-		this.handleInputValidation()
+		if (!this.handleInputValidation())
+			return 
+
+		this.props.onSubmit({code: this.state.abbreviation, name: this.state.name})
 	}
 
 	handleInputValidation() {
 		let {name, abbreviation} = this.state
 		if(!name || name.length == 0 || !abbreviation || abbreviation.length == 0) {
 			this.setState({error: true})
-			return
+			return false
 		}
 		if (name.length > 20 || abbreviation.length > 10) {
 			this.setState({error: true})
-			return 
+			return false
 		}
 		this.setState({error: false})
-
+		return true
 	}
 
 

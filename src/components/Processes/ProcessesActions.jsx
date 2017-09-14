@@ -20,10 +20,8 @@ export function fetchProcesses() {
     dispatch(requestProcesses())
 
     // actually fetch 
-    return api.mockget('/ics/processes/')
-      .then( function (err, res) {
-        res = err
-        err = null
+    return api.get('/ics/processes/')
+      .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestProcessesFailure(err))
         } else {
@@ -59,9 +57,9 @@ export function fetchProcessInventory(process) {
     // dispatch an action that we are requesting inventory
     dispatch(requestProcessInventory())
 
-    return api.mockget('/ics/inventory')
+    return api.get('/ics/inventory')
       //.query({processes: process.code})
-      .then(function (err, res) {
+      .end(function (err, res) {
         if (err || !res.ok) {
           dispatch(requestProcessInventoryFailure(err))
         } else {

@@ -14,21 +14,29 @@ export const REQUEST_PRODUCT_INVENTORY_FAILURE = 'REQUEST_PRODUCT_INVENTORY_FAIL
 
 export const PAGE_PRODUCTS = 'PAGE_PRODUCTS' 
 
+export const POST_CREATE_PRODUCT = 'POST_CREATE_PRODUCT'
+export const REQUEST_CREATE_PRODUCT = 'REQUEST_CREATE_PRODUCT'
+export const REQUEST_CREATE_PRODUCT_FAILURE = 'REQUEST_CREATE_PRODUCT_FAILURE'
+export const REQUEST_CREATE_PRODUCT_SUCCESS = 'REQUEST_CREATE_PRODUCT_SUCCESS'
+
+export const POST_DELETE_PRODUCT = 'POST_DELETE_PRODUCT'
+export const REQUEST_DELETE_PRODUCT = 'REQUEST_DELETE_PRODUCT'
+export const REQUEST_DELETE_PRODUCT_FAILURE = 'REQUEST_DELETE_PRODUCT_FAILURE'
+export const REQUEST_DELETE_PRODUCT_SUCCESS = 'REQUEST_DELETE_PRODUCT_SUCCESS'
+
 export function fetchProducts() {
   return function (dispatch) {
     // dispatch an action that we are requesting a product
     dispatch(requestProducts())
 
     // actually fetch 
-    return api.mockget('/ics/products/')
-      .then( function (err, res) {
-        res = err
-        err = null
+    return api.get('/ics/products/')
+      .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestProductsFailure(err))
         } else {
-          let products = formatProductResponse(res.body)
-          dispatch(requestProductsSuccess(products))
+          //let products = formatProductResponse(res.body)
+          dispatch(requestProductsSuccess(res.body))
         }
       })
   }
@@ -42,6 +50,7 @@ function requestProducts() {
 
 function requestProductsFailure(err) {
   alert('Oh no! Something went wrong\n' + err)
+  console.log(err)
   return {
     type: REQUEST_PRODUCTS_FAILURE
   }
@@ -59,9 +68,9 @@ export function fetchProductInventory(product) {
     // dispatch an action that we are requesting inventory
     dispatch(requestProductInventory())
 
-    return api.mockget('/ics/inventory')
-      //.query({products: product.code})
-      .then(function (err, res) {
+    return api.get('/ics/inventory')
+      .query({products: product.code})
+      .end(function (err, res) {
         if (err || !res.ok) {
           dispatch(requestProductInventoryFailure(err))
         } else {
@@ -79,6 +88,7 @@ function requestProductInventory() {
 
 function requestProductInventoryFailure(err) {
   alert('Oh no! Something went wrong\n' + err)
+  console.log(err)
   return {
     type: REQUEST_PRODUCT_INVENTORY_FAILURE
   }
@@ -101,6 +111,49 @@ export function selectProduct(id) {
 }
 
 
+export function pageProducts(direction) {
+  return {
+    type: PAGE_PRODUCTS,
+    direction: direction
+  }
+}
+
+export function postCreateProduct(json) {
+  return function (dispatch) {
+    dispatch(requestCreateProduct())
+
+    return api.post('/ics/products/')
+      .send(json)
+      .end(function (err, res) {
+        if (err || !res.ok)
+          dispatch(requestCreateProductFailure(err))
+        else
+          dispatch(requestCreateProductSuccess(res.body))
+          dispatch(selectProduct(res.body.id))
+      })
+  }
+}
+
+function requestCreateProduct() {
+  return {
+    type: REQUEST_CREATE_PRODUCT
+  }
+}
+
+function requestCreateProductFailure(err) {
+  alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
+  return {
+    type: REQUEST_CREATE_PRODUCT_FAILURE
+  }
+}
+
+function requestCreateProductSuccess(json) {
+  return {
+    type: REQUEST_CREATE_PRODUCT_SUCCESS,
+    item: json
+  }
+}
+
 function formatProductResponse(json) {
   let products = {}
   
@@ -113,10 +166,40 @@ function formatProductResponse(json) {
   return products
 }
 
-export function pageProducts(direction) {
+export function postDeleteProduct(id, callback) {
+  return function (dispatch) {
+    dispatch(requestDeleteProduct(id))
+
+    return api.del('/ics/products/', id)
+      .end(function (err, res) {
+        if (err || !res.ok)
+          dispatch(requestDeleteProductFailure(id))
+        else {
+          dispatch(requestDeleteProductSuccess(id))
+          callback()
+        }
+      })
+  }
+}
+
+function requestDeleteProduct(id) {
   return {
-    type: PAGE_PRODUCTS,
-    direction: direction
+    type: REQUEST_DELETE_PRODUCT,
+    id: id
+  }
+}
+
+function requestDeleteProductFailure(id) {
+  return {
+    type: REQUEST_DELETE_PRODUCT_FAILURE,
+    id: id
+  }
+}
+
+function requestDeleteProductSuccess(id) {
+  return {
+    type: REQUEST_DELETE_PRODUCT_SUCCESS,
+    id: id
   }
 }
 

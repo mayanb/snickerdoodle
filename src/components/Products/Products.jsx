@@ -6,6 +6,7 @@ import ProductsCard from './ProductsCard.jsx'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDropdown from './CreateProductDropdown'
+import {findPosition, alphabetize} from './arrayutils.jsx'
 
 function titleRow() {
   return <ProductsListItem header item={{code: "ID", name: "Name"}} />
@@ -17,6 +18,8 @@ class Products extends React.Component {
 
     this.handleSelectProduct = this.handleSelectProduct.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
+    this.handleCreateProduct = this.handleCreateProduct.bind(this)
+    this.handleArchiveProduct = this.handleArchiveProduct.bind(this)
   }
 
   // fetch products on load
@@ -58,7 +61,10 @@ class Products extends React.Component {
     return (
       <div className="products-list-actions">
         <div className="products-create-product">
-          <CreateProductDropdown>Create product</CreateProductDropdown>
+          <CreateProductDropdown 
+            onSubmit={this.handleCreateProduct}
+            ui={this.props.ui}
+          />
         </div>
       </div>
     )
@@ -84,6 +90,21 @@ class Products extends React.Component {
       return
 
     //this.props.dispatch(actions.editProduct(id, params))
+  }
+
+  handleCreateProduct(json) {
+    this.props.dispatch(actions.postCreateProduct(json))
+  }
+
+  handleArchiveProduct(id) {
+    let pos = findPosition(this.props.ui.sortedArray, this.props.items[id], alphabetize)
+    let i = pos + 1
+    if (i == this.props.ui.sortedArray.length)
+      i = pos
+
+    this.props.dispatch(actions.postDeleteProduct(id, function () {
+      this.props.dispatch(actions.selectProduct(this.props.ui.sortedArray[i]))
+    }))
   }
 
 

@@ -1,4 +1,5 @@
 import update from 'immutability-helper'
+import {findPosition, alphabetize} from './arrayutils'
 
 import {
   REQUEST_PRODUCTS, 
@@ -6,6 +7,9 @@ import {
   SELECT_PRODUCT,
   REQUEST_PRODUCT_INVENTORY,
   REQUEST_PRODUCT_INVENTORY_SUCCESS,
+  REQUEST_CREATE_PRODUCT,
+  REQUEST_CREATE_PRODUCT_SUCCESS,
+  REQUEST_DELETE_PRODUCT_SUCCESS,
   PAGE_PRODUCTS
 } from './ProductsActions.jsx'
 
@@ -13,10 +17,13 @@ var initialProductState = {
   items: {},
   inventories: {},
   ui: {
-    isFetchingList: false,
+    page_size: 15,
     selectedItem: 4,
+    currentPage: 0,
+    isFetchingList: false,
     isFetchingInventory: false,
-    currentPage: 0
+    isCreatingItem: false,
+    sortedArray: []
   }
 }
 
@@ -35,6 +42,12 @@ export default function _products(state = initialProductState, action) {
       return requestProductInventorySuccess(state, action)
     case PAGE_PRODUCTS:
       return page(state, action)
+    case REQUEST_CREATE_PRODUCT:
+      return requestCreateProduct(state, action)
+    case REQUEST_CREATE_PRODUCT_SUCCESS:
+      return requestCreateProductSuccess(state, action)
+    case REQUEST_DELETE_PRODUCT_SUCCESS:
+      return requestDeleteProductSuccess(state, action)
     default:
       return state
   }
@@ -55,23 +68,32 @@ function requestProductsSuccess(state, action) {
     ui: {
       $merge: {
         isFetchingList: false,
-        page: 0
+        page: 0,
+        sortedArray: action.data.sort(alphabetize)
       }
     },
     items: {
-      $set: action.data
+      $set: formatProductResponse(action.data)
     }
   })
 }
 
 function selectProduct(state, action) {
+
+  // get the page number:
+  let index = state.ui.sortedArray.findIndex((e, i, a) => e.id == action.id)
+  let pageNumber = Math.trunc(index / state.ui.page_size)
+
   return update(state, {
     ui: {
-      selectedItem: {
-        $set: action.id
+      $merge: {
+        selectedItem: action.id,
+        currentPage: pageNumber
       }
     }
   })
+
+
 }
 
 function requestProductInventory(state, action) {
@@ -109,22 +131,64 @@ function page(state, action) {
   })
 }
 
+function requestCreateProduct(state, action) {
+  return update(state, {
+    ui: {
+      isCreatingItem: {
+        $set: true
+      }
+    }
+  })
+}
+
+function requestCreateProductSuccess(state, action) {
+  let pos = findPosition(state.ui.sortedArray, action.item, alphabetize)
+  return update(state, {
+    ui: {
+      isCreatingItem: {
+        $set: false
+      },
+      sortedArray: {
+        $splice: [[pos, 0, action.item]]
+      }
+    },
+    items: {
+      $merge: {
+        [action.item.id]: action.item
+      }
+    },
+  })
+}
+
+function requestDeleteProduct(state, action) {
+  return state
+}
+
+function requestDeleteProductSuccess(state, action) {
+  let pos = findPosition(state.ui.sortedArray, action.item, alphabetize)
+  return update(state, {
+    items: {
+      $unset: [action.id]
+    }, 
+    ui: {
+      sortedArray: {
+        $splice: [[pos, 1]]
+      }
+    }
+  })
+}
 
 
+function formatProductResponse(json) {
+  let products = {}
+  
+  if (!json)
+    return {}
 
-
-
-// shape of product state:
-// state = {
-//   items: {
-//     [id1] : { ...productJSON },
-//     [id2] : { ...productJSON },
-//     ...
-//   },
-//   ui: {
-//     selected: [id],
-//     isFetching: [BOOL],
-//   }
-// }
+  for (var p of json) {
+    products[p.id] = p
+  }
+  return products
+}
 
 
