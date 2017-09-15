@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import Products from '../Products/Products'
 import Processes from '../Processes/Processes'
 import Navbar from '../Navbar/Navbar'
+import GoogleConnect from '../GoogleConnect/GoogleConnect'
 
 export default function ApplicationLayout(props) {
 	return (
@@ -12,6 +13,7 @@ export default function ApplicationLayout(props) {
 				<div className="application-content">
 					<Route path='/products' component={Products} />
 					<Route path='/processes' component={Processes} />
+					<Route path='/googleconnect/:ext?' component={GoogleConnect} />
 				</div>
 			</div>
 		</Router>
