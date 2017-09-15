@@ -1,7 +1,7 @@
 import request from 'superagent'
 
-//let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging/ics/users/'
-let host = 'http://127.0.0.1:8000'
+let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
+//let host = 'http://127.0.0.1:8000'
 
 function get(path) {
 	let url = host + path
@@ -18,6 +18,7 @@ function post(path) {
 
 	return request
 	.post(url)
+	.set('Content-Type', 'application/json')
 	.send({team: team, created_by: team})
 
 }
