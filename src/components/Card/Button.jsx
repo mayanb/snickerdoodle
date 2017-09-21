@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function Button(props) {
-	let className=props.secondary?"secondary":""
+export default function Button({secondary, ...rest}) {
+	let className=secondary?"secondary":""
 	return (
-		<button {...props} className={className}>{props.children}</button>
+		<button {...rest} className={className}>{rest.children}</button>
 	)
 }

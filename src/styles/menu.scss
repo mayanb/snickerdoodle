@@ -1,0 +1,39 @@
+.menu .button-dropdown-content .card {
+	padding: 0px;
+}
+
+.menu-section {
+	border-bottom: 1px solid $light-gray;
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.account-menu {
+	min-width: 180px;
+
+	.menu-section > span {
+		padding-left: 12px;
+		padding-top: 12px;
+		margin: 0;
+		line-height: 16px;
+		display: block;
+		font-size: 11px;
+	}
+
+	.menu-section span {
+		line-height: 16px;
+		display: inline-block;
+		vertical-align: middle;
+		text-align: left;
+	}
+
+	.icon {
+		vertical-align: middle;
+		margin-right: 8px;
+	}
+
+} 
+
+

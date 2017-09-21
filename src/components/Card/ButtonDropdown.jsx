@@ -5,18 +5,16 @@ import Button from './Button.jsx'
 export default class ButtonDropdown extends React.Component {
 	constructor(props) {
 		super(props) 
-		this.state = { expanded: false }
 	}
 
 	render() {
-		let {expanded} = this.state
-		let className = "button-dropdown" + (expanded?" expanded":"")
-		let toggleExpand = () => this.setState({expanded: !expanded})
+		let {expanded, onToggleDropdown, secondary, menu} = this.props
+		let className = "button-dropdown" + (expanded?" expanded":"") + (menu?" menu":"")
 
 		return (
 			<div className={className}>
-				<Button onClick={toggleExpand}>{this.props.button}</Button>
-				<div className="button-dropdown-shim" onClick={toggleExpand}></div>
+				<Button secondary={secondary} onClick={onToggleDropdown}>{this.props.button}</Button>
+				<div className="button-dropdown-shim" onClick={onToggleDropdown}></div>
 				{this.renderContent()}
 			</div>
 		)

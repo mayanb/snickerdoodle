@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from '../Card/Card.jsx'
 import Dialog from '../Card/Dialog.jsx'
+import Icon from '../Card/Icon.jsx'
 import { connect } from 'react-redux'
 import * as actions from './ProductsActions.jsx'
 import ProductsCardInventory from './ProductsCardInventory.jsx'
@@ -110,15 +111,4 @@ export default class ProductsCard extends React.Component {
 		this.setState({archive: !this.state.archive})
 	}
 
-}
-
-
-
-
-function Icon(props) {
-	let size = props.size || "30px"
-	return (
-		<div className="icon" style={{height: size, width:size, borderRadius: size}}>
-		</div>
-	)
 }

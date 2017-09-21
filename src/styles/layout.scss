@@ -4,9 +4,16 @@ $theme-color: #2198EE; //42AFFF;
 $dark-theme-color: #0068B4;
 $baseline: 8px;
 
+html, body {
+	width: 100%;
+	height: 100%;
+
+}
+
 .layout {
 	display:flex;
 	flex-direction: row;
+	margin-top: 54px;
 }
 
 .baseline-grid {

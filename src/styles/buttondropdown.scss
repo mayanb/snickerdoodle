@@ -1,12 +1,13 @@
 div.button-dropdown {
 	position: relative;
+	z-index: 1;
 
 	.button-dropdown-shim {
 		position: fixed;
 		top: 0;
 		left: 0;
-		width: 100vh;
-		height: 100vw;
+		width: 100vw;
+		height: 100vh;
 		background-color: rgba(0,0,0,0);
 		z-index: 1;
 		display: none;
@@ -28,8 +29,14 @@ div.button-dropdown {
 	}
 
 	&.expanded {
+
+		z-index: 999;
 		&>button {
 			background-color: $dark-theme-color;
+
+			&.secondary {
+				background-color: white;
+			}
 		}
 
 		.button-dropdown-shim {

@@ -1,0 +1,43 @@
+.account-menu {
+	min-width: 180px;
+	line-height: 16px;
+	z-index: 1;
+
+	.account-menu-section-title {
+		color: rgba(0,0,0,0.3);
+		font-size: 11px;
+	}
+} 
+
+.account {
+	display: flex;
+	margin: 12px;
+	cursor: pointer;
+
+	.name {
+		font-weight: 500;
+	}
+
+	.username {
+		color: $theme-color;
+	}
+}
+
+.current-account {
+	div, span, i {
+		vertical-align: middle;
+	}
+
+	.icon {
+		margin-right: 8px;
+	}
+}
+
+.nav-team {
+	padding-top: 7px;
+	vertical-align: middle;
+
+	div.button-dropdown-content {
+		top: 39px;
+	}
+}
