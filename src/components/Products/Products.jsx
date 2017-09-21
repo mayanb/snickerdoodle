@@ -6,7 +6,9 @@ import ProductsCard from './ProductsCard.jsx'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDropdown from './CreateProductDropdown'
-import {findPosition, alphabetize} from './arrayutils.jsx'
+//import {findPosition, alphabetize} from './arrayutils.jsx'
+
+import Card from '../Card/Card.jsx'
 
 function titleRow() {
   return <ProductsListItem header item={{code: "ID", name: "Name"}} />
@@ -28,7 +30,7 @@ class Products extends React.Component {
   }
 
   render() {
-    var { items, ui } = this.props
+    var { data, ui } = this.props
     return (
       <div className="nav-section products">
         <div className="nav-section-list">
@@ -42,11 +44,12 @@ class Products extends React.Component {
           />
         </div>
         <div>
-          <ProductsCard {...this.props} />
+            <ProductsCard {...this.props} />
         </div>
       </div>
     )
   }
+
 
   renderTitle() {
     return (
@@ -71,13 +74,12 @@ class Products extends React.Component {
   }
 
   /* EVENT HANDLERS */
-  handleSelectProduct(id) {
-    let product = this.props.items[id]
-
+  handleSelectProduct(index) {
+    let product = this.props.data[index]
     if (!product) 
       return 
 
-    this.props.dispatch(actions.selectProduct(id))
+    this.props.dispatch(actions.selectProduct(index))
     this.props.dispatch(actions.fetchProductInventory(product))
   }
 
@@ -85,25 +87,26 @@ class Products extends React.Component {
     this.props.dispatch(actions.pageProducts(direction))
   }
 
-  handleEditProduct(id, params) {
-    if (!this.props.items[id])
+  handleEditProduct(index, params) {
+    if (!this.props.data[index])
       return
 
     //this.props.dispatch(actions.editProduct(id, params))
   }
 
   handleCreateProduct(json) {
-    this.props.dispatch(actions.postCreateProduct(json))
+    this.props.dispatch(actions.postCreateProduct(json, (id) => {
+      let index = this.props.data.findIndex((e, i, a) => e.id === id)
+      this.props.dispatch(actions.selectProduct(index))
+      }))
   }
 
-  handleArchiveProduct(id) {
-    let pos = findPosition(this.props.ui.sortedArray, this.props.items[id], alphabetize)
-    let i = pos + 1
-    if (i == this.props.ui.sortedArray.length)
-      i = pos
-
-    this.props.dispatch(actions.postDeleteProduct(id, function () {
-      this.props.dispatch(actions.selectProduct(this.props.ui.sortedArray[i]))
+  handleArchiveProduct(index) {
+    let newIndex = index + 1
+    if ( newIndex== this.props.data.length)
+      newIndex = index
+    this.props.dispatch(actions.postDeleteProduct(index, function () {
+      this.props.dispatch(actions.selectProduct(newIndex))
     }))
   }
 
@@ -114,9 +117,10 @@ class Products extends React.Component {
 // through props to our component.
 const mapStateToProps = (state/*, props*/) => {
   return {
-    items: state.products.items,
+    data: state.products.data,
     ui: state.products.ui,
-    inventories: state.products.inventories
+    inventoryData: state.inventories.data
+    // inventories: state.products.inventories
   }
 }
 

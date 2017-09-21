@@ -1,28 +1,47 @@
 import api from '../WaffleconeAPI/api.jsx'
+import {
+  REQUEST, 
+  REQUEST_SUCCESS, 
+  REQUEST_FAILURE,
+  REQUEST_CREATE,
+  REQUEST_CREATE_SUCCESS,
+  REQUEST_CREATE_FAILURE,
+  REQUEST_DELETE,
+  REQUEST_DELETE_SUCCESS,
+  REQUEST_DELETE_FAILURE,
+  REQUEST_EDIT,
+  REQUEST_EDIT_SUCCESS,
+  SELECT,
+  PAGE,
+  PRODUCTS,
+  INVENTORIES
+} from '../../create-store.jsx'
+import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
-export const FETCH_PRODUCTS = 'FETCH_PRODUCTS'
-export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS'
-export const REQUEST_PRODUCTS_SUCCESS = 'REQUEST_PRODUCTS_SUCCESS'
-export const REQUEST_PRODUCTS_FAILURE = 'REQUEST_PRODUCTS_FAILURE'
 
-export const SELECT_PRODUCT = 'SELECT_PRODUCT'
+// export const FETCH_PRODUCTS = 'FETCH_PRODUCTS'
+// export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS'
+// export const REQUEST_PRODUCTS_SUCCESS = 'REQUEST_PRODUCTS_SUCCESS'
+// export const REQUEST_PRODUCTS_FAILURE = 'REQUEST_PRODUCTS_FAILURE'
 
-export const FETCH_PRODUCT_INVENTORY = 'FETCH_PRODUCT_INVENTORY'
-export const REQUEST_PRODUCT_INVENTORY = 'REQUEST_PRODUCT_INVENTORY'
-export const REQUEST_PRODUCT_INVENTORY_SUCCESS = 'REQUEST_PRODUCT_INVENTORY_SUCCESS'
-export const REQUEST_PRODUCT_INVENTORY_FAILURE = 'REQUEST_PRODUCT_INVENTORY_FAILURE'
+// export const SELECT_PRODUCT = 'SELECT_PRODUCT'
 
-export const PAGE_PRODUCTS = 'PAGE_PRODUCTS' 
+// export const FETCH_PRODUCT_INVENTORY = 'FETCH_PRODUCT_INVENTORY'
+// export const REQUEST_PRODUCT_INVENTORY = 'REQUEST_PRODUCT_INVENTORY'
+// export const REQUEST_PRODUCT_INVENTORY_SUCCESS = 'REQUEST_PRODUCT_INVENTORY_SUCCESS'
+// export const REQUEST_PRODUCT_INVENTORY_FAILURE = 'REQUEST_PRODUCT_INVENTORY_FAILURE'
 
-export const POST_CREATE_PRODUCT = 'POST_CREATE_PRODUCT'
-export const REQUEST_CREATE_PRODUCT = 'REQUEST_CREATE_PRODUCT'
-export const REQUEST_CREATE_PRODUCT_FAILURE = 'REQUEST_CREATE_PRODUCT_FAILURE'
-export const REQUEST_CREATE_PRODUCT_SUCCESS = 'REQUEST_CREATE_PRODUCT_SUCCESS'
+// export const PAGE_PRODUCTS = 'PAGE_PRODUCTS' 
 
-export const POST_DELETE_PRODUCT = 'POST_DELETE_PRODUCT'
-export const REQUEST_DELETE_PRODUCT = 'REQUEST_DELETE_PRODUCT'
-export const REQUEST_DELETE_PRODUCT_FAILURE = 'REQUEST_DELETE_PRODUCT_FAILURE'
-export const REQUEST_DELETE_PRODUCT_SUCCESS = 'REQUEST_DELETE_PRODUCT_SUCCESS'
+// export const POST_CREATE_PRODUCT = 'POST_CREATE_PRODUCT'
+// export const REQUEST_CREATE_PRODUCT = 'REQUEST_CREATE_PRODUCT'
+// export const REQUEST_CREATE_PRODUCT_FAILURE = 'REQUEST_CREATE_PRODUCT_FAILURE'
+// export const REQUEST_CREATE_PRODUCT_SUCCESS = 'REQUEST_CREATE_PRODUCT_SUCCESS'
+
+// export const POST_DELETE_PRODUCT = 'POST_DELETE_PRODUCT'
+// export const REQUEST_DELETE_PRODUCT = 'REQUEST_DELETE_PRODUCT'
+// export const REQUEST_DELETE_PRODUCT_FAILURE = 'REQUEST_DELETE_PRODUCT_FAILURE'
+// export const REQUEST_DELETE_PRODUCT_SUCCESS = 'REQUEST_DELETE_PRODUCT_SUCCESS'
 
 export function fetchProducts() {
   return function (dispatch) {
@@ -36,7 +55,9 @@ export function fetchProducts() {
           dispatch(requestProductsFailure(err))
         } else {
           //let products = formatProductResponse(res.body)
-          dispatch(requestProductsSuccess(res.body))
+          dispatch(requestProductsSuccess(res.body.sort(alphabetize)))
+          dispatch(selectProduct(0))
+
         }
       })
   }
@@ -44,22 +65,25 @@ export function fetchProducts() {
 
 function requestProducts() {
   return {
-    type: REQUEST_PRODUCTS,
+    name: PRODUCTS,
+    type: REQUEST
   }
 }
 
 function requestProductsFailure(err) {
   alert('Oh no! Something went wrong\n' + err)
-  console.log(err)
   return {
-    type: REQUEST_PRODUCTS_FAILURE
+    name: PRODUCTS,
+    type: REQUEST_FAILURE, 
+    error: err
   }
 }
 
 function requestProductsSuccess(json) {
   return {
-    type: REQUEST_PRODUCTS_SUCCESS,
-    data: json, 
+    name: PRODUCTS,
+    type: REQUEST_SUCCESS, 
+    data: json
   }
 }
 
@@ -74,7 +98,7 @@ export function fetchProductInventory(product) {
         if (err || !res.ok) {
           dispatch(requestProductInventoryFailure(err))
         } else {
-          dispatch(requestProductInventorySuccess(res.body, product.id))
+          dispatch(requestProductInventorySuccess(res.body))
         }
       })
   }
@@ -82,7 +106,8 @@ export function fetchProductInventory(product) {
 
 function requestProductInventory() {
   return {
-    type: REQUEST_PRODUCT_INVENTORY
+    name: INVENTORIES,
+    type: REQUEST
   }
 }
 
@@ -90,35 +115,40 @@ function requestProductInventoryFailure(err) {
   alert('Oh no! Something went wrong\n' + err)
   console.log(err)
   return {
-    type: REQUEST_PRODUCT_INVENTORY_FAILURE
+    type: REQUEST_FAILURE,
+    name: INVENTORIES,
   }
 }
 
-function requestProductInventorySuccess(json, id) {
+function requestProductInventorySuccess(json) {
   return {
-    type: REQUEST_PRODUCT_INVENTORY_SUCCESS,
+    type: REQUEST_SUCCESS,
     data: json,
-    id: id
+    name: INVENTORIES,
   }
 }
 
 
-export function selectProduct(id) {
+export function selectProduct(index) {
   return {
-    type: SELECT_PRODUCT,
-    id: id
+    type: SELECT,
+    index: index,
+    name: PRODUCTS,
+
   }
 }
 
 
 export function pageProducts(direction) {
   return {
-    type: PAGE_PRODUCTS,
-    direction: direction
+    type: PAGE,
+    direction: direction,
+    name: PRODUCTS,
+
   }
 }
 
-export function postCreateProduct(json) {
+export function postCreateProduct(json, success) {
   return function (dispatch) {
     dispatch(requestCreateProduct())
 
@@ -129,28 +159,33 @@ export function postCreateProduct(json) {
           dispatch(requestCreateProductFailure(err))
         else
           dispatch(requestCreateProductSuccess(res.body))
-          dispatch(selectProduct(res.body.id))
+          success(res.body.id)
       })
   }
 }
 
+
 function requestCreateProduct() {
   return {
-    type: REQUEST_CREATE_PRODUCT
+    type: REQUEST_CREATE, 
+    name: PRODUCTS
   }
 }
 
 function requestCreateProductFailure(err) {
   alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
   return {
-    type: REQUEST_CREATE_PRODUCT_FAILURE
+    type: REQUEST_CREATE_FAILURE,
+    name: PRODUCTS,
+    error: err,
   }
 }
 
 function requestCreateProductSuccess(json) {
   return {
-    type: REQUEST_CREATE_PRODUCT_SUCCESS,
-    item: json
+    type: REQUEST_CREATE_SUCCESS,
+    item: json,
+    name: PRODUCTS,
   }
 }
 
@@ -166,40 +201,43 @@ function formatProductResponse(json) {
   return products
 }
 
-export function postDeleteProduct(id, callback) {
+export function postDeleteProduct(index, callback) {
   return function (dispatch) {
-    dispatch(requestDeleteProduct(id))
+    dispatch(requestDeleteProduct(index))
 
-    return api.del('/ics/products/', id)
+    return api.del('/ics/products/', index)
       .end(function (err, res) {
         if (err || !res.ok)
-          dispatch(requestDeleteProductFailure(id))
+          dispatch(requestDeleteProductFailure(index, err))
         else {
-          dispatch(requestDeleteProductSuccess(id))
+          dispatch(requestDeleteProductSuccess(index))
           callback()
         }
       })
   }
 }
 
-function requestDeleteProduct(id) {
+function requestDeleteProduct(index) {
   return {
-    type: REQUEST_DELETE_PRODUCT,
-    id: id
+    type: REQUEST_DELETE,
+    index: index,
+    name: PRODUCTS
   }
 }
 
-function requestDeleteProductFailure(id) {
+function requestDeleteProductFailure(index, err) {
   return {
-    type: REQUEST_DELETE_PRODUCT_FAILURE,
-    id: id
+    type: REQUEST_DELETE_FAILURE,
+    index: index,
+    name: PRODUCTS,
+    error: err
   }
 }
 
-function requestDeleteProductSuccess(id) {
+function requestDeleteProductSuccess(index) {
   return {
-    type: REQUEST_DELETE_PRODUCT_SUCCESS,
-    id: id
+    type: REQUEST_DELETE_SUCCESS,
+    index: index
   }
 }
 

@@ -13,7 +13,7 @@ export default class CreateProcessDropdown extends React.Component {
 			abbreviation: "",
 			description: "", 
 			error: false,
-			dialog: true
+			dialog: false
 		}
 	}
 	render() {

@@ -3,13 +3,13 @@ import React from 'react'
 const INVENTORY_PAGE_SIZE = 5
 
 export default function ProductsCardInventory(props) {
-	let {items, ui, inventories} = props
+	let {inventoryData, ui} = props
 
-	if (ui.isFetchingInventory) {
+	if (ui.isFetchingData) {
 		return <span>Loading...</span>
 	}
 
-	let inventory = inventories[ui.selectedItem]
+	let inventory = inventoryData
 
 	return (
 		<div>

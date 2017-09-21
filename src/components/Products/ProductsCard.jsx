@@ -19,8 +19,8 @@ export default class ProductsCard extends React.Component {
 	}
 
 	render() {
-		let { items, ui } = this.props
-		let product = items[ui.selectedItem]
+		let { data, ui } = this.props
+		let product = data[ui.selectedItem]
 
 		if (!product)
 			return false;

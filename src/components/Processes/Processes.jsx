@@ -14,6 +14,10 @@ function titleRow() {
 class Processes extends React.Component {
   constructor(props) {
     super(props)
+
+    this.handleSelectProcess = this.handleSelectProcess.bind(this)
+    this.handlePagination = this.handlePagination.bind(this)
+
   }
 
   // fetch products on load
@@ -22,15 +26,15 @@ class Processes extends React.Component {
   }
 
   render() {
-    var { items, ui } = this.props
-
+    var { data, ui } = this.props
+    console.log(data)
     return (
       <div className="nav-section processes">
         <div className="nav-section-list">
           { this.renderTitle() }
           <PaginatedTable 
             {...this.props}
-            onClick={this.handleSelectProduct} 
+            onClick={this.handleSelectProcess} 
             onPagination={this.handlePagination} 
             Row={ProcessListItem}
             TitleRow={titleRow}
@@ -65,6 +69,15 @@ class Processes extends React.Component {
     this.props.dispatch(actions.pageProcesses(direction))
   }
 
+  handleSelectProcess(index) {
+    let process = this.props.data[index]
+    if (!process) 
+      return 
+
+    this.props.dispatch(actions.selectProcess(index))
+    this.props.dispatch(actions.fetchProcessInventory(process))
+  }
+
 }
 
 // This is our select function that will extract from the state the data slice we want to expose
@@ -72,8 +85,9 @@ class Processes extends React.Component {
 const mapStateToProps = (state/*, props*/) => {
   console.log(state)
   return {
-    items: state.processes.items,
+    data: state.processes.data,
     ui: state.processes.ui,
+    processInventoryData: state.processInventories.data
   }
 }
 
