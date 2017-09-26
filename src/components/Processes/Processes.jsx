@@ -142,7 +142,6 @@ class Processes extends React.Component {
 // This is our select function that will extract from the state the data slice we want to expose
 // through props to our component.
 const mapStateToProps = (state/*, props*/) => {
-  console.log(state)
   return {
     data: state.processes.data,
     ui: state.processes.ui,

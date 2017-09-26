@@ -29,6 +29,7 @@ export function fetchProcesses() {
         if (err || !res.ok) {
           dispatch(requestProcessesFailure(err))
         } else {
+          console.log(res.body)
           // let processes = formatProcessResponse(res.body)
           // let processesArray = Object.values(processes).sort(alphabetize);
           dispatch(requestProcessesSuccess(res.body.sort(alphabetize)))
