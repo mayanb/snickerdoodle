@@ -26,6 +26,7 @@ var processInventoriesDefault = stateDefault
 var taskDefault = stateDefault
 var taskAncestorsDefault = stateDefault
 var taskDescendentsDefault = stateDefault
+var taskAttributeDefault = stateDefault
 
 
 export const REQUEST = 'REQUEST'
@@ -41,6 +42,9 @@ export const REQUEST_EDIT = 'REQUEST_EDIT'
 export const REQUEST_EDIT_SUCCESS = 'REQUEST_EDIT_SUCCESS'
 export const SELECT = 'SELECT'
 export const PAGE = 'PAGE'
+export const MARK_OUTPUT_USED = 'MARK_OUTPUT_USED'
+export const REQUEST_EDIT_SUCCESS_EXTENSION = 'REQUEST_EDIT_SUCCESS_EXTENSION'
+
 
 export const MOVEMENTS = 'MOVEMENTS'
 export const PRODUCTS = 'PRODUCTS'
@@ -50,6 +54,7 @@ export const PROCESS_INVENTORY = 'PROCESS_INVENTORY'
 export const TASK = 'TASK'
 export const TASK_ANCESTORS = 'TASK_ANCESTORS'
 export const TASK_DESCENDENTS = 'TASK_DESCENDENTS'
+export const TASK_ATTRIBUTE = 'TASK_ATTRIBUTE'
 
 
 function apiDataReducer(state, action) {
@@ -73,13 +78,17 @@ function apiDataReducer(state, action) {
 		case REQUEST_DELETE_FAILURE:
 			return requestDeleteFailure(state, action)
 		case REQUEST_EDIT:
-			return requestDelete(state, action)
+			return requestEdit(state, action)
 	    case REQUEST_EDIT_SUCCESS:
-			return requestDeleteSuccess(state, action)
+			return requestEditSuccess(state, action)
 		case SELECT:
       		return select(state, action)
       	case PAGE:
       		return page(state, action)
+      	case MARK_OUTPUT_USED:
+      		return markOutputUsed(state, action)
+      	case REQUEST_EDIT_SUCCESS_EXTENSION:
+      		return requestEditSuccessExtension(state, action)
 	    default:
 	      return state
   	}
@@ -121,6 +130,7 @@ function requestFailure(state, action) {
 
 
 function requestCreate(state, action) {
+	console.log("creating?")
   return update(state, {
     ui: {
       isCreatingItem: {
@@ -132,8 +142,6 @@ function requestCreate(state, action) {
 
 function requestCreateSuccess(state, action) {
 	console.log(state)
-	console.log(action)
-
   let position = findPosition(state.data, action.item, alphabetize)
   return update(state, {
     ui: {
@@ -211,9 +219,24 @@ function requestEditSuccess(state, action) {
         $set: false
       },
     },
-    items: {
+    data: {
       $merge: {
         [action.item.id]: action.item
+      }
+    },
+  })
+}
+
+function requestEditSuccessExtension(state, action) {
+  return update(state, {
+    ui: {
+      isEditingItem: {
+        $set: false
+      },
+    },
+    data: {
+      $merge: {
+        [action.field]: action.value
       }
     },
   })
@@ -243,6 +266,65 @@ function page(state, action) {
   })
 }
 
+function markOutputUsed(state, action) {
+	console.log(state)
+	console.log(action.index)
+  // get the page number:
+  let index = action.index
+  return update(state, {
+    data: {
+    	items: {
+    		[action.index]: {
+    			$merge: {is_used: true}
+    		}
+    	}
+    }
+  })
+}
+
+
+// function taskExtensionReducer(state, action) {
+//     switch (action.type) {
+//     	case REQUEST:
+//       		return request(state, action)
+// 	    case REQUEST_SUCCESS:
+// 	      	return requestSuccess(state, action)
+// 	    case REQUEST_FAILURE:
+// 	      	return requestFailure(state, action)
+// 	    case REQUEST_CREATE:
+// 			return requestCreate(state, action)
+// 	    case REQUEST_CREATE_SUCCESS:
+// 			return requestCreateSuccess(state, action)
+// 		case REQUEST_CREATE_FAILURE:
+// 			return requestCreateFailure(state, action)
+// 		case REQUEST_DELETE:
+// 			return requestDelete(state, action)
+// 	    case REQUEST_DELETE_SUCCESS:
+// 			return requestDeleteSuccess(state, action)
+// 		case REQUEST_DELETE_FAILURE:
+// 			return requestDeleteFailure(state, action)
+// 		case REQUEST_EDIT:
+// 			return requestEdit(state, action)
+// 	    case REQUEST_EDIT_SUCCESS:
+// 			return requestEditSuccess(state, action)
+// 		case SELECT:
+//       		return select(state, action)
+//       	case PAGE:
+//       		return page(state, action)
+//       	case MARK_OUTPUT_USED:
+//       		return markOutputUsed(state, action)
+// 	    default:
+// 	      return state
+//   	}
+// }
+
+// function taskReducer(state, action) {
+// 	let ns = taskExtensionReducer(state, action)
+// 	ns = apiDataReducer(ns, action)
+// 	return ns
+// }
+
+
 
 function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) {
     return (state, action) => {
@@ -267,6 +349,7 @@ export default function(data) {
   	task: createFilteredReducer(apiDataReducer, action => action.name === 'TASK', taskDefault), 
   	taskDescendents: createFilteredReducer(apiDataReducer, action => action.name === 'TASK_DESCENDENTS', taskDescendentsDefault), 
   	taskAncestors: createFilteredReducer(apiDataReducer, action => action.name === 'TASK_ANCESTORS', taskAncestorsDefault), 
+  	taskAttribute: createFilteredReducer(apiDataReducer, action => action.name === 'TASK_ATTRIBUTE', taskAttributeDefault), 
   	processInventories: createFilteredReducer(apiDataReducer, action => action.name === 'PROCESS_INVENTORY', processInventoriesDefault),  })
 
   const store = createStore(reducer, applyMiddleware(thunkMiddleware))
