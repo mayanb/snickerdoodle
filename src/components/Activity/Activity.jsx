@@ -104,6 +104,7 @@ export default class Activity extends React.Component {
     api.get(url)
       .query(`start=${params.start}&end=${params.end}&process_type=${processID}&product_type=${productID}`)
       .end(function (err, res) {
+        console.log(res)
         if (err || !res.ok) {
           console.log(err)
           component.setState({taskLoading: false})

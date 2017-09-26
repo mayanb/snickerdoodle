@@ -1,5 +1,6 @@
 import React from 'react'
-import Dialog from '../Card/Dialog.jsx'
+import Dialog from '../Card/Dialog'
+import Button from '../Card/Button'
 
 export default class CreateProcessDialog extends React.Component {
 	constructor(props) {
@@ -8,21 +9,37 @@ export default class CreateProcessDialog extends React.Component {
 		this.state = {
 			number: "",
 			unit: "", 
-			outputDescription: ""
+			outputDescription: "", 
+			error: false, 
 		}
+
+		this.handleCreate = this.handleCreate.bind(this)
 	}
 
 	render() {
+		if (!this.props.isOpen) {
+			return null
+		}
+
 		return (
-			<Dialog>
+			<Dialog onToggle={this.props.onToggle}>
 				<h1>Your process is almost ready...</h1>
 				<span>Fill out the following details to help your team understand this new process.</span>
 				{ this.renderRule() }
 				{ this.renderQuantityInput() }
 				{ this.renderOutputDescription() }
 				{ this.renderDescription() }
+				{ this.renderError() }
+				{ this.renderButtons() }
 			</Dialog>
 		)
+	}
+
+	renderError() {
+		if (this.state.error) {
+			return <span className="create-product-error">Please make sure you've filled out a name and abbreviation.</span>
+		}
+		return null;
 	}
 
 	renderRule() {
@@ -45,7 +62,8 @@ export default class CreateProcessDialog extends React.Component {
 					className="unit"
 					placeholder="kilograms"  
 					value={this.state.unit} 
-					onChange={(e)=> this.handleInputChange(e, "unit")}/>
+					onChange={(e)=> this.handleInputChange(e, "unit")}
+				/>
 			</div>
 		)
 	}
@@ -65,15 +83,69 @@ export default class CreateProcessDialog extends React.Component {
 
 	renderDescription() {
 		return (
-			<div className="create-product-description">
+			<div className="create-process-description">
 				<label>Process description</label>
-				<textarea placeholder="hello"/>
+				<textarea placeholder="Optional"/>
 			</div>
 		)
 	}
 
+	renderButtons() {
+		return (
+			<div className="create-process-buttons">
+				<Button secondary onClick={this.props.onToggle}>Cancel</Button>
+				<Button onClick={this.handleCreate}>Create process</Button>
+			</div>
+		)
+	}
+
+	handleCreate() {
+		if (!this.handleInputValidation()) {
+			return 
+		}
+
+		let newProcess = {
+			name: this.props.name,
+			code: this.props.code,
+			default_amount: this.state.number,
+			unit: this.state.unit,
+			output_desc: this.state.outputDescription,
+			description: this.state.description
+		}
+
+		this.props.onCreate(newProcess)
+		this.props.onToggle()
+
+	}
+
 	handleInputChange(e, key) {
 		this.setState({[key]: e.target.value})
+		if (this.state.error) {
+			this.handleInputValidation()
+		}
+	}
+
+	handleInputValidation() {
+		let {number, unit, abbreviation} = this.state
+		let {name, code} = this.props
+
+		if(!number || number.length == 0 || Number.isNaN(number)) {
+			this.setState({error: true})
+			return false
+		}
+
+		if (!code || code.length == 0 || code.length > 10) {
+			this.setState({error: true})
+			return false
+		}
+
+		if(!name || name.length > 20) {
+			this.setState({error: true})
+			return false
+		}
+
+		this.setState({error: true})
+		return true
 	}
 
 

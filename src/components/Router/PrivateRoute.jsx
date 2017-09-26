@@ -1,58 +1,66 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import {BrowserRouter as Router, Route, Redirect, withRouter} from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import Teams from '../Teams/Teams'
+import shouldLogin from '../AccountMenu/authentication'
 
-
-export default function PrivateRoute({component: Component, ...rest}) {
+function PrivateRoute({component: Component, ...rest}) {
 
   Component = withRouter(Component)
+  let unix = Math.round(+new Date()/1000);
 
-  let authorizedAccount = findAuthorizedAccount()
-  if (authorizedAccount != null) {
-    Teams.setActive(authorizedAccount)
+  if (shouldLogin(rest.users)) {
     return (
-      <Route {...rest} render={props => <Component {...rest}/> } />
-    )
-  }
-
-
-  return (
-    <Route {...rest} render={props => (
+      <Route {...rest} render={props => (
         <Redirect to={{
           pathname: '/login',
           state: { from: props.location }
-        }}/>
-      )
-    }/>
-  )
-}
-
-function findAuthorizedAccount() {
-  let teams = Teams.all()
-  if (!teams)
-    return null 
-
-  if (teams.auth_active) {
-    let default_team = teams[teams.auth_active]
-
-    if(default_team && hasValidToken(default_team))
-      return default_team.user.pk
+          }}/>
+        )
+      }/>
+    )
+  } else {
+    return <Route {...rest} render={props => ( <Component {...rest}/> )} />
   }
 
-  for (var team of teams) {
-    if(hasValidToken(team))
-      return team.user.pk
-  }
+  // let authorizedAccount = rest.users.ui.activeUser
+  // let isAddingAccount = rest.users.ui.isAddingAccount
+  // try {
+  //   let jwt = rest.users.data[authorizedAccount].token
+  //   let unexpired = jwt && (jwt_decode(jwt).exp > unix)
 
-  return null
+  //   return (
+  //     <Route {...rest} render={props => (
+  //       (unexpired && !isAddingAccount) ? (
+  //         <Component {...rest}/>
+  //       ) : (
+  //         <Redirect to={{
+  //         pathname: '/login',
+  //         state: { from: props.location }
+  //         }}/>
+  //       )
+  //     )}/>
+  //   )
+  // } catch (e) {
+  //   return ( 
+  //     <Route {...rest} render={props => (
+  //         <Redirect to={{
+  //           pathname: '/login',
+  //           state: { from: props.location }
+  //           }}/>
+  //       )
+  //     }/>
+  //   )
+  // }
 }
 
-function hasValidToken(team) {
-  let unix = Math.round(+new Date()/1000);
-  if (team && team.token) {
-    let exp = jwt_decode(team.token).exp
-    return exp && exp > unix
+
+
+const mapStateToProps = (state/*, props*/) => {
+  return {
+    users: state.users
   }
-  return false
 }
+
+export default connect(mapStateToProps)(PrivateRoute)

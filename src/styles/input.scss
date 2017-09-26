@@ -22,3 +22,10 @@ label {
 	line-height: 16px;
 	padding: 8px 8px 8px 0;
 }
+
+textarea {
+	border: 1px solid $light-gray;
+	border-radius: 4px;
+	padding: 8px;
+	resize: none;
+}

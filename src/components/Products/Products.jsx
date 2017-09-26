@@ -98,16 +98,19 @@ class Products extends React.Component {
     this.props.dispatch(actions.postCreateProduct(json, (id) => {
       let index = this.props.data.findIndex((e, i, a) => e.id === id)
       this.props.dispatch(actions.selectProduct(index))
-      }))
+    }))
   }
 
   handleArchiveProduct(index) {
-    let newIndex = index + 1
-    if ( newIndex== this.props.data.length)
-      newIndex = index
-    this.props.dispatch(actions.postDeleteProduct(index, function () {
-      this.props.dispatch(actions.selectProduct(newIndex))
-    }))
+    let newIndex = index
+    if ( newIndex == this.props.data.length - 1)
+      newIndex = index - 1
+
+    let product = this.props.data[index]
+    this.props.dispatch(actions.postDeleteProduct(process, index, () => {
+        this.props.dispatch(actions.selectProduct(newIndex))
+      })
+    )
   }
 
 

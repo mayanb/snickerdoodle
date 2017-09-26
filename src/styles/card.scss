@@ -41,25 +41,32 @@
 	}
 }
 
-body div.dialog-shim {
+body div.dialog-container {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100vw;
 	height: 100vh;
-	background-color: rgba(0,0,0,0.7);
 	margin: 0 !important;
 	padding: 0 !important;
-	z-index: 2;
+	z-index: 999;
 
-	.dialog-box {
+	.dialog-shim {
+		position: fixed;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0,0,0,0.7);
+		z-index: 997;
+	}
+
+	.dialog-card {
 		max-width: 400px;
 		width: 400px;
 		position: fixed;
 		top: 30%;
 		left: 50%;
 		transform: translateX(-50%) ;
-		z-index: 1;
+		z-index: 999;
 	}
 }
 

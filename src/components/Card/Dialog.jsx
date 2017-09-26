@@ -3,12 +3,13 @@ import Card from './Card.jsx'
 
 export default function Dialog(props) {
 	return (
-		<div className="dialog-shim">
-			<div className="dialog-box">
-				<Card>
-					{props.children}
-				</Card>
-			</div>
+		<div className="dialog-container">
+			<div className="dialog-shim" onClick={props.onToggle}/>
+			<div className="dialog-card">
+					<Card>
+						{props.children}
+					</Card>
+				</div>
 		</div>
 	)
 }
