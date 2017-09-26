@@ -44,6 +44,26 @@ function post(path) {
 
 }
 
+function put(path) {
+	let url = host + path
+
+	let team = -1
+	let token = ""
+	try {
+		team = JSON.parse(window.localStorage.getItem('users')).ui.activeUser
+		token = JSON.parse(window.localStorage.getItem('users')).data[team].token
+	} catch(e) {
+		
+	}
+
+	return request('PUT', url)
+	.set('Content-Type', 'application/json')
+	//.set('X-CSRFToken', getCookie('csrftoken'))
+	//.withCredentials()
+	//.send({team: team, created_by: team})
+
+}
+
 function del(path, id) {
 	let url = host + path + id
 
@@ -52,5 +72,5 @@ function del(path, id) {
 
 }
 
-export default {get, post, del, host}
+export default {get, post, del, host, put}
 
