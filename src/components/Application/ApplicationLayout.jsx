@@ -22,21 +22,7 @@ import PrivateRoute from '../Router/PrivateRoute'
 import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
 
-function ApplicationLayoutDev(props) {
-	return (
-		<Router>
-			<div className="layout">
-				<Navbar />
-				<div className="application-content">
-					<Route path='/products' component={ZebraPrinter} />
-					<Route path='/processes' component={Processes} />
-					<Route path='/movements' component={Movements} />
-					<Route path='/googleconnect/:ext?' component={GoogleConnect} />
-				</div>
-			</div>
-		</Router>
-	)
-}
+import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 
 export default class ApplicationLayoutStable extends React.Component {
 
@@ -57,20 +43,21 @@ export default class ApplicationLayoutStable extends React.Component {
 function App(props) {
 	return (
 		<div className="layout">
-    	<Route path="/:section?/:id?" component={Navbar} />
 
- 		 <div className="application-content">
-	    <Route exact path={"/"} component={Activity} />
-	    <Route exact path={"/inventory/:id?"} component={Inventory} />
-	    <Route exact path={"/labels/"} component={ZebraPrinter} />
-	    <Route path={"/zebra/"} component={ZebraPrinter} />
-	    <Route path={"/dymo/"} component={LabelPrinter} />
-	    <Route path={"/task/:id?"} component={Task} />
-	    <Route path={"/processes/:id?"} component={Processes} />
-	    <Route path={"/products/:id?"} component={Products} />
-	  </div>
+			<Route path="/:section?/:id?" component={Navbar} />
 
-	  <Route path="/:section?/:id?" component={Topbar} />
+ 		 	<div className="application-content">
+ 		 		<Route path="/:section?/:id?" component={Topbar} />
+		    <Route exact path={"/"} component={Activity} />
+		    <Route exact path={"/inventory/:id?"} component={Inventory} />
+		    <Route exact path={"/labels/"} component={ZebraPrinter} />
+		    <Route path={"/zebra/"} component={ZebraPrinter} />
+		    <Route path={"/dymo/"} component={LabelPrinter} />
+		    <Route path={"/task/:id?"} component={Task} />
+		    <Route path={"/processes/:id?"} component={Processes} />
+		    <Route path={"/products/:id?"} component={Products} />
+		    <Route path={"/attributetest"} component={TaskAttributeTest} />
+	  	</div>
 		</div>
 	)
 }
