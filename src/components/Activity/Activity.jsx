@@ -102,7 +102,7 @@ export default class Activity extends React.Component {
     this.lastTaskRequestID = rID
 
     api.get(url)
-      .query(`start=${params.start}&end=${params.end}&process_type=${processID}&product_type=${productID}&team=5`)
+      .query(`start=${params.start}&end=${params.end}&process_type=${processID}&product_type=${productID}`)
       .end(function (err, res) {
         if (err || !res.ok) {
           console.log(err)

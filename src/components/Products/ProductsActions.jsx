@@ -237,6 +237,7 @@ function requestDeleteProductFailure(index, err) {
 function requestDeleteProductSuccess(index) {
   return {
     type: REQUEST_DELETE_SUCCESS,
+    name: PRODUCTS,
     index: index
   }
 }

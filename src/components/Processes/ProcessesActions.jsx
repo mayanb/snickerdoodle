@@ -18,20 +18,6 @@ import {
 } from '../../create-store.jsx'
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
-// export const FETCH_PROCESSES = 'FETCH_PROCESSES'
-// export const REQUEST_PROCESSES = 'REQUEST_PROCESSES'
-// export const REQUEST_PROCESSES_SUCCESS = 'REQUEST_PROCESSES_SUCCESS'
-// export const REQUEST_PROCESSES_FAILURE = 'REQUEST_PROCESSES_FAILURE'
-
-// export const SELECT_PROCESS = 'SELECT_PROCESS'
-
-// export const FETCH_PROCESS_INVENTORY = 'FETCH_PROCESS_INVENTORY'
-// export const REQUEST_PROCESS_INVENTORY = 'REQUEST_PROCESS_INVENTORY'
-// export const REQUEST_PROCESS_INVENTORY_SUCCESS = 'REQUEST_PROCESS_INVENTORY_SUCCESS'
-// export const REQUEST_PROCESS_INVENTORY_FAILURE = 'REQUEST_PROCESS_INVENTORY_FAILURE'
-
-// export const PAGE_PROCESSES = 'PAGE_PROCESSES' 
-
 export function fetchProcesses() {
   return function (dispatch) {
     // dispatch an action that we are requesting a process
