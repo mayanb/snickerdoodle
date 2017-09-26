@@ -5,7 +5,8 @@ import Icon from '../Card/Icon.jsx'
 import { connect } from 'react-redux'
 import * as actions from './ProductsActions.jsx'
 import ProductsCardInventory from './ProductsCardInventory.jsx'
-import ProductsArchiveDialog from './ProductsArchiveDialog.jsx'
+import {ElementHeader} from '../Element/Element'
+import ElementMenu from '../Element/ElementMenu'
 
 export default class ProductsCard extends React.Component {
 	constructor(props) {
@@ -29,22 +30,22 @@ export default class ProductsCard extends React.Component {
 		return (
 			<Card big={true}>
 				<div className="products-card">
-					{this.renderHeader(product)}
+					<ElementHeader {...product} actions={this.renderMenu()}/>
 					{this.renderDescription(product)}
 					{this.renderCreatedBy(product)}
 					{this.renderRule()}
 					<ProductsCardInventory {...this.props } />
-					{this.renderArchiveDialog(product)}
 				</div>
 				
 			</Card>
 		)
 	}
 
-	renderArchiveDialog(product) {
-		if(this.state.archive)
-			return <ProductsArchiveDialog {...product} onCancel={this.handleToggleArchive}/>
-		else return null
+	renderMenu() {
+		return <ElementMenu
+			onArchive={this.props.onArchive} 
+			onEdit={() => null}
+		/>
 	}
 
 	renderRule() {

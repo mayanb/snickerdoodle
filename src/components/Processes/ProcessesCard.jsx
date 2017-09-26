@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import Button from '../Card/Button'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import {ElementHeader} from '../Element/Element'
-import ProcessesCardMenu from './ProcessesCardMenu'
+import ElementMenu from '../Element/ElementMenu'
 import ProcessesCardInventory from './ProcessesCardInventory'
 
 export default class ProcessCard extends React.Component {
@@ -43,7 +43,7 @@ export default class ProcessCard extends React.Component {
 	}
 
 	renderMenu() {
-		return <ProcessesCardMenu
+		return <ElementMenu
 			onArchive={this.props.onArchive} 
 			onEdit={() => null}
 		/>
