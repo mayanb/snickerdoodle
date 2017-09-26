@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './ProcessesActions.jsx'
-
+import * as inventoryActions from '../Inventory/InventoryActions'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessListItem from './ProcessListItem'
 import ProcessesCard from './ProcessesCard'
@@ -33,6 +33,7 @@ class Processes extends React.Component {
   // fetch products on load
   componentDidMount() {
     this.props.dispatch(actions.fetchProcesses())
+    //this.handleSelectProcess(index)
   }
 
   render() {
@@ -110,12 +111,12 @@ class Processes extends React.Component {
   }
 
   handleSelectProcess(index) {
-    let process = this.props.data[index]
-    if (!process) 
+    let p = this.props.data[index]
+    if (!p) 
       return 
 
     this.props.dispatch(actions.selectProcess(index))
-    this.props.dispatch(actions.fetchProcessInventory(process))
+    this.props.dispatch(inventoryActions.fetchInventory({processes: p.id}))
   }
 
   handleArchiveProcess(index) {
@@ -127,14 +128,10 @@ class Processes extends React.Component {
     let c = this
 
     this.props.dispatch(actions.postDeleteProcess(p, index, function () {
-        c.props.dispatch(actions.selectProcess(index))
+        c.handleSelectProcess(index)
         c.toggleArchive()
       })
     )
-  }
-
-  handleEditProduct(index) {
-    
   }
 
 }
@@ -145,7 +142,7 @@ const mapStateToProps = (state/*, props*/) => {
   return {
     data: state.processes.data,
     ui: state.processes.ui,
-    processInventoryData: state.processInventories.data
+    inventoryData: state.inventories.data,
   }
 }
 

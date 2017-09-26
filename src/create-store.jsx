@@ -214,7 +214,7 @@ function requestDelete(state, action) {
 function requestDeleteSuccess(state, action) {
   return update(state, {
 	data: {
-      $splice: [[state.index, 1, ]]
+      $splice: [[action.index, 1, ]]
     },
     ui: {
       isDeletingItem: {

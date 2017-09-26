@@ -63,47 +63,6 @@ function requestProductsSuccess(json) {
   }
 }
 
-export function fetchProductInventory(product) {
-  return function (dispatch) {
-    // dispatch an action that we are requesting inventory
-    dispatch(requestProductInventory())
-
-    return api.get('/ics/inventory')
-      .query({products: product.code})
-      .end(function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestProductInventoryFailure(err))
-        } else {
-          dispatch(requestProductInventorySuccess(res.body))
-        }
-      })
-  }
-}
-
-function requestProductInventory() {
-  return {
-    name: INVENTORIES,
-    type: REQUEST
-  }
-}
-
-function requestProductInventoryFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
-  console.log(err)
-  return {
-    type: REQUEST_FAILURE,
-    name: INVENTORIES,
-  }
-}
-
-function requestProductInventorySuccess(json) {
-  return {
-    type: REQUEST_SUCCESS,
-    data: json,
-    name: INVENTORIES,
-  }
-}
-
 
 export function selectProduct(index) {
   return {

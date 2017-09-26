@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './ProductsActions.jsx'
+import * as inventoryActions from '../Inventory/InventoryActions'
 
 import ProductsCard from './ProductsCard.jsx'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
@@ -80,7 +81,7 @@ class Products extends React.Component {
       return 
 
     this.props.dispatch(actions.selectProduct(index))
-    this.props.dispatch(actions.fetchProductInventory(product))
+    this.props.dispatch(inventoryActions.fetchInventory({products: product.code}))
   }
 
   handlePagination(direction) {
