@@ -24,6 +24,8 @@ export default class Navbar extends React.Component {
       navbarSizeClass = "littleNav"
     }
 
+
+
     return (
       <div className={"d-nav " + navbarSizeClass}>
         <Link to={(this.props.match.params.section||"") + "/"} style={{"display":(navbarSizeClass=="littleNav")?"":"none"}}>
@@ -31,17 +33,19 @@ export default class Navbar extends React.Component {
           </div>
         </Link>
         <div className="bar">
+          <div className="logo">
+          </div>
           <div>
-          <ul>
-            { 
-              options.map(function (x, i) {
-                return (
-                <li key={i}> 
-                  <NavLink exact to={"/" + links[i]} activeClassName={"active"}>{x}</NavLink>
-                </li>
-                )
-            }, this )}
-          </ul>
+            <ul>
+              { 
+                options.map(function (x, i) {
+                  return (
+                  <li key={i}> 
+                    <NavLink exact to={"/" + links[i]} activeClassName={"active"}>{x}</NavLink>
+                  </li>
+                  )
+              }, this )}
+            </ul>
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ export default class Topbar extends React.Component {
   render () {
     return (
       <div className="d-top">
-        <div className="nav-brand">POLYMER</div>
+        <div className="nav-brand"></div>
           <div className="nav-team">
           <AccountMenu />
           </div>

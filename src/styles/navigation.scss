@@ -1,0 +1,34 @@
+$nav-width: 150px;
+
+.d-nav {
+	background-color: #333C44;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: $nav-width;
+
+	color: rgba(255,255,255, 0.4);
+	font-size: 14px;
+	line-height: 40px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	ul {
+		padding-left: 16px;
+	}
+
+	.logo {
+		background-color: #42515F;
+		height: 130px;
+		margin-bottom: 32px;
+	}
+}
+
+.d-top {
+	display: flex;
+	min-height: 120px;
+	align-items: center;
+	justify-content: flex-end;
+}
+
