@@ -16,21 +16,7 @@ import {
   PROCESSES,
   PROCESS_INVENTORY
 } from '../../create-store.jsx'
-import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
-
-// export const FETCH_PROCESSES = 'FETCH_PROCESSES'
-// export const REQUEST_PROCESSES = 'REQUEST_PROCESSES'
-// export const REQUEST_PROCESSES_SUCCESS = 'REQUEST_PROCESSES_SUCCESS'
-// export const REQUEST_PROCESSES_FAILURE = 'REQUEST_PROCESSES_FAILURE'
-
-// export const SELECT_PROCESS = 'SELECT_PROCESS'
-
-// export const FETCH_PROCESS_INVENTORY = 'FETCH_PROCESS_INVENTORY'
-// export const REQUEST_PROCESS_INVENTORY = 'REQUEST_PROCESS_INVENTORY'
-// export const REQUEST_PROCESS_INVENTORY_SUCCESS = 'REQUEST_PROCESS_INVENTORY_SUCCESS'
-// export const REQUEST_PROCESS_INVENTORY_FAILURE = 'REQUEST_PROCESS_INVENTORY_FAILURE'
-
-// export const PAGE_PROCESSES = 'PAGE_PROCESSES' 
+import {findPosition, alphabetize} from '../Logic/arrayutils.jsx' 
 
 export function fetchProcesses() {
   return function (dispatch) {
@@ -125,6 +111,89 @@ export function selectProcess(id) {
     name: PROCESSES
   }
 }
+
+export function postCreateProcess(json, success) {
+  return function (dispatch) {
+    dispatch(requestCreateProcess())
+
+    return api.post('/ics/processes/')
+      .send(json)
+      .end(function (err, res) {
+        if (err || !res.ok)
+          dispatch(requestCreateProcessFailure(err))
+        else
+          dispatch(requestCreateProcessSuccess(res.body))
+          success(res.body.id)
+      })
+  }
+}
+
+
+function requestCreateProcess() {
+  return {
+    type: REQUEST_CREATE, 
+    name: PROCESSES
+  }
+}
+
+function requestCreateProcessFailure(err) {
+  alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
+  return {
+    type: REQUEST_CREATE_FAILURE,
+    name: PROCESSES,
+    error: err,
+  }
+}
+
+function requestCreateProcessSuccess(json) {
+  return {
+    type: REQUEST_CREATE_SUCCESS,
+    item: json,
+    name: PROCESSES,
+  }
+}
+
+export function postDeleteProcess(p, index, callback) {
+  return function (dispatch) {
+    dispatch(requestDeleteProcess(index))
+
+    return api.del('/ics/processes/', p.id)
+      .end(function (err, res) {
+        if (err || !res.ok)
+          dispatch(requestDeleteProcessFailure(index, err))
+        else {
+          dispatch(requestDeleteProcessSuccess(index))
+          callback()
+        }
+      })
+  }
+}
+
+function requestDeleteProcess(index) {
+  return {
+    type: REQUEST_DELETE,
+    index: index,
+    name: PROCESSES
+  }
+}
+
+function requestDeleteProcessFailure(index, err) {
+  return {
+    type: REQUEST_DELETE_FAILURE,
+    index: index,
+    name: PROCESSES,
+    error: err
+  }
+}
+
+function requestDeleteProcessSuccess(index) {
+  return {
+    type: REQUEST_DELETE_SUCCESS,
+    index: index,
+    name: PROCESSES
+  }
+}
+
 
 
 function formatProcessResponse(json) {

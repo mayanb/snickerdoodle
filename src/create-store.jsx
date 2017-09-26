@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import update from 'immutability-helper'
 import {findPosition, alphabetize} from './components/Logic/arrayutils.jsx'
-
+import _users from './components/AccountMenu/UserReducer'
 
 var movementsDefault = {
   data: [],
@@ -302,6 +302,7 @@ export default function(data) {
   //var reducer = combineReducers({products: productReducer, processes: processReducer, movements: movementsReducer})
 
   var reducer = combineReducers({
+    users: _users,
   	products:  createFilteredReducer(apiDataReducer, action => action.name === 'PRODUCTS', productsDefault), 
   	processes: createFilteredReducer(apiDataReducer, action => action.name === 'PROCESSES', processesDefault), 
   	movements: createFilteredReducer(apiDataReducer, action => action.name === 'MOVEMENTS', movementsDefault), 

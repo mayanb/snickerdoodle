@@ -34,16 +34,16 @@ export default class ProductsCard extends React.Component {
 					{this.renderCreatedBy(product)}
 					{this.renderRule()}
 					<ProductsCardInventory {...this.props } />
-					{this.renderArchiveDialog()}
+					{this.renderArchiveDialog(product)}
 				</div>
 				
 			</Card>
 		)
 	}
 
-	renderArchiveDialog() {
+	renderArchiveDialog(product) {
 		if(this.state.archive)
-			return <ProductsArchiveDialog onCancel={this.handleToggleArchive}/>
+			return <ProductsArchiveDialog {...product} onCancel={this.handleToggleArchive}/>
 		else return null
 	}
 

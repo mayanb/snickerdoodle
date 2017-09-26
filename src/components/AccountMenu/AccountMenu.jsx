@@ -4,22 +4,21 @@ import Button from '../Card/Button'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import Icon from '../Card/Icon'
 import Account from './Account'
+import api from '../WaffleconeAPI/api'
+import * as actions from './UserActions'
+import { connect } from 'react-redux'
 
-export default class AccountMenu extends React.Component {
+class AccountMenu extends React.Component {
 
 	 constructor(props) {
     super(props)
 
-    let teams = Teams.all() || []
-
-    this.state = { 
-      teams: teams,
-      activeTeam: teams.auth_active,
-      expanded: false,
-    }
+    this.state = {expanded: false}
 
     this.handleDropdownToggle = this.handleDropdownToggle.bind(this)
     this.handleTeamChange = this.handleTeamChange.bind(this)
+    this.handleAddAccount = this.handleAddAccount.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
 
@@ -31,20 +30,16 @@ export default class AccountMenu extends React.Component {
   }
 
   handleTeamChange(id) {
-    this.setState({activeTeam : id})
-    Teams.setActive(id)
-    window.location.reload()
+    this.props.dispatch(actions.switchActiveUser(id))
   }
-
-
-
 
   /* RENDERERS */
 
   render() {
-  	let {teams, expanded, activeTeam} = this.state
+  	let {data, ui} = this.props.users
+  	let {expanded} = this.state
 
-    if (!teams || !activeTeam || !teams[activeTeam] || !teams[activeTeam].user)
+    if (!data || !ui.activeUser || !data[ui.activeUser] || !data[ui.activeUser].user)
       return null
 
 		return (
@@ -65,30 +60,31 @@ export default class AccountMenu extends React.Component {
 	}
 
 	renderCurrentAccount() {
-		let {teams, expanded, activeTeam} = this.state
+		let {data, ui} = this.props.users
+
 		return (
 			<div className="current-account">
 				<Icon size="18px" />
-				<span>{`${teams[activeTeam].user.first_name} ${teams[activeTeam].user.last_name}`}</span>
+				<span>{`${data[ui.activeUser].user.first_name} ${data[ui.activeUser].user.last_name}`}</span>
 				<i className="material-icons">arrow_drop_down</i>
 			</div>
 		)
 	}
 
 	renderSwitchAccounts() {
-	  let {teams, activeTeam} = this.state
+	  let {data, ui} = this.props.users
 
-	  if (Object.keys(teams).length <= 2)
+	  if (Object.keys(data).length <= 1)
 	    return null
 
 	  return (
 	    <div className="menu-section">
 	    <span className="account-menu-section-title">Switch Accounts</span>
 	    {
-	      Object.keys(teams).map(function (tid, i) {
-	        if (tid == activeTeam || !teams[tid].user || !teams[tid].user.username)
+	      Object.keys(data).map(function (tid, i) {
+	        if (tid == ui.activeUser || !data[tid].user || !data[tid].user.username)
 	          return null
-	        return <Account key={tid} onClick={(e) => this.handleTeamChange(tid)} team={teams[tid].user} />
+	        return <Account key={tid} onClick={(e) => this.handleTeamChange(tid)} team={data[tid].user} />
 	      }, this)
 	    }
 	    </div>
@@ -98,7 +94,7 @@ export default class AccountMenu extends React.Component {
 	renderAddAccount() {
 	  return (
 	    <div className="menu-section">
-	      <Button secondary onClick={() => window.location.href = window.location.origin + "/login"}>Add an account</Button>
+	      <Button secondary onClick={this.handleAddAccount}>Add an account</Button>
 	    </div>
 	  )
 	}
@@ -106,9 +102,29 @@ export default class AccountMenu extends React.Component {
 	renderLogout() {
 	  return (
 	    <div className="menu-section">
-	      <Button secondary>Logout</Button>
+	      <Button secondary onClick={this.handleLogout}>Logout</Button>
 	    </div>
 	  )
 	}
 
+	handleAddAccount(id) {
+		this.props.dispatch(actions.addUserAccount())
+	}
+
+	handleLogout() {
+		let {data, ui} = this.props.users
+		let user = data[ui.activeUser]
+		this.props.dispatch(actions.postRequestLogout(user, ()=>null, ()=>null))
+	}
+
 }
+
+const mapStateToProps = (state/*, props*/) => {
+  return {
+    users: state.users
+  }
+}
+
+const connectedAccountMenu = connect(mapStateToProps)(AccountMenu)
+
+export default connectedAccountMenu

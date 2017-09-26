@@ -4,6 +4,8 @@ import * as actions from './ProcessesActions.jsx'
 
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessListItem from './ProcessListItem'
+import ProcessesCard from './ProcessesCard'
+import ProductsArchiveDialog from '../Products/ProductsArchiveDialog'
 
 import CreateProcessDropdown from './CreateProcessDropdown'
 
@@ -15,8 +17,16 @@ class Processes extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      isArchiveOpen: false, 
+      archivingObjectIndex: -1, 
+    }
+
     this.handleSelectProcess = this.handleSelectProcess.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
+    this.handleCreateProcess = this.handleCreateProcess.bind(this)
+    this.handleArchiveProcess = this.handleArchiveProcess.bind(this)
+    this.toggleArchive = this.toggleArchive.bind(this)
 
   }
 
@@ -27,7 +37,6 @@ class Processes extends React.Component {
 
   render() {
     var { data, ui } = this.props
-    console.log(data)
     return (
       <div className="nav-section processes">
         <div className="nav-section-list">
@@ -40,8 +49,27 @@ class Processes extends React.Component {
             TitleRow={titleRow}
           />
         </div>
-        <div />
+
+        <div>
+          <ProcessesCard 
+            {...this.props} 
+            onArchive={() => this.setState({isArchiveOpen: true, archivingObjectIndex: ui.selectedItem})}/>
+        </div>
+        {this.renderArchiveDialog(data, ui)}
       </div>
+    )
+  }
+
+  renderArchiveDialog(data, ui) {
+    if (!this.state.isArchiveOpen)
+      return null
+
+    return (
+      <ProductsArchiveDialog 
+        {...data[this.state.archivingObjectIndex]} 
+        onCancel={this.toggleArchive}
+        onSubmit={() => this.handleArchiveProcess(this.state.archivingObjectIndex)}
+      />
     )
   }
 
@@ -58,13 +86,25 @@ class Processes extends React.Component {
     return (
       <div>
         <div className="products-create-product">
-          <CreateProcessDropdown />
+          <CreateProcessDropdown onSubmit={this.handleCreateProcess}/>
         </div>
       </div>
     )
   }
 
   /* EVENT HANDLERS */
+
+  toggleArchive() {
+    this.setState({isArchiveOpen: !this.state.isArchiveOpen})
+  }
+
+  handleCreateProcess(newProcess) {
+    this.props.dispatch(actions.postCreateProcess(newProcess, (id) => {
+      let index = this.props.data.findIndex((e, i, a) => e.id === id)
+      this.props.dispatch(actions.selectProcess(index))
+    }))
+  }
+
   handlePagination(direction) {
     this.props.dispatch(actions.pageProcesses(direction))
   }
@@ -76,6 +116,25 @@ class Processes extends React.Component {
 
     this.props.dispatch(actions.selectProcess(index))
     this.props.dispatch(actions.fetchProcessInventory(process))
+  }
+
+  handleArchiveProcess(index) {
+    let newIndex = index
+    if ( newIndex == this.props.data.length - 1)
+      newIndex = index - 1
+
+    let p = this.props.data[index]
+    let c = this
+
+    this.props.dispatch(actions.postDeleteProcess(p, index, function () {
+        c.props.dispatch(actions.selectProcess(index))
+        c.toggleArchive()
+      })
+    )
+  }
+
+  handleEditProduct(index) {
+    
   }
 
 }

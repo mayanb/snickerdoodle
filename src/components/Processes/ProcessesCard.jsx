@@ -1,0 +1,94 @@
+import React from 'react'
+import Card from '../Card/Card.jsx'
+import Dialog from '../Card/Dialog.jsx'
+import Icon from '../Card/Icon.jsx'
+import { connect } from 'react-redux'
+import Button from '../Card/Button'
+import ButtonDropdown from '../Card/ButtonDropdown'
+import {ElementHeader} from '../Element/Element'
+import ProcessesCardMenu from './ProcessesCardMenu'
+
+export default class ProcessCard extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			isArchiveOpen: false,
+			isEditOpen: false, 
+		}
+
+
+	}
+
+	render() {
+		let { data, ui } = this.props
+		let product = data[ui.selectedItem]
+
+		if (!product)
+			return false;
+
+		return (
+			<Card big={true}>
+				<div className="products-card">
+					<ElementHeader {...product} actions={this.renderMenu()}/>
+					{this.renderDescription(product)}
+					{this.renderCreatedBy(product)}
+					{this.renderRule()}
+					{this.renderEditDialog()}
+				</div>
+			</Card>
+		)
+	}
+
+	renderMenu() {
+		return <ProcessesCardMenu
+			onArchive={this.props.onArchive} 
+			onEdit={() => null}
+		/>
+	}
+
+	renderRule() {
+		return (
+			<div className="products-card-rule" style={{marginLeft: "-32px", marginRight: "-20px", width: "120%"}} />
+		)
+	}
+
+	renderEditDialog() {
+		if (!this.state.isEditOpen)
+			return null
+
+		return (
+			<Dialog>
+			</Dialog>
+		)
+	}
+
+	renderDescription(product) {
+		let className = ""
+		let description = product.description
+		if (!description || description.length == 0) {
+			description = "No description"
+			className = "products-card-description-empty"
+		}
+
+		return (
+			<div className={"products-card-section products-card-description " + className}>
+				<span>
+					{description}
+				</span>
+			</div>
+		)
+	}
+
+	renderCreatedBy(product) {
+		return (
+			<div className="products-card-section products-card-created-by">
+				<span>
+					Created on October 12, 2016
+				</span>
+			</div>
+		)
+	}
+
+
+}

@@ -2,6 +2,7 @@ import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Activity from '../Activity/Activity'
 import Processes from '../Processes/Processes'
+import Products from '../Products/Products'
 //import Navbar from '../Navbar/Navbar'
 import GoogleConnect from '../GoogleConnect/GoogleConnect'
 import Movements from '../Movements/Movements'
@@ -42,7 +43,7 @@ export default class ApplicationLayoutStable extends React.Component {
 
           <Switch>
           	<Route path="/login" component={Login} />
-          	<Route component={App}/>
+          	<PrivateRoute component={App}/>
           </Switch>
       </Router>
     )
@@ -56,12 +57,14 @@ function App(props) {
     	<Route path="/:section?/:id?" component={Navbar} />
 
  		 <div className="application-content">
-	    <PrivateRoute exact path={"/"} component={Activity} />
-	    <PrivateRoute path={"/inventory/:id?"} component={Inventory} />
-	    <PrivateRoute path={"/labels/"} component={ZebraPrinter} />
-	    <PrivateRoute path={"/zebra/"} component={ZebraPrinter} />
-	    <PrivateRoute path={"/dymo/"} component={LabelPrinter} />
-	    <PrivateRoute path={"/task/:id?"} component={Task} />
+	    <Route exact path={"/"} component={Activity} />
+	    <Route exact path={"/inventory/:id?"} component={Inventory} />
+	    <Route exact path={"/labels/"} component={ZebraPrinter} />
+	    <Route path={"/zebra/"} component={ZebraPrinter} />
+	    <Route path={"/dymo/"} component={LabelPrinter} />
+	    <Route path={"/task/:id?"} component={Task} />
+	    <Route path={"/processes/:id?"} component={Processes} />
+	    <Route path={"/products/:id?"} component={Products} />
 	  </div>
 
 	  <Route path="/:section?/:id?" component={Topbar} />

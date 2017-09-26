@@ -19,30 +19,6 @@ import {
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
 
-// export const FETCH_PRODUCTS = 'FETCH_PRODUCTS'
-// export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS'
-// export const REQUEST_PRODUCTS_SUCCESS = 'REQUEST_PRODUCTS_SUCCESS'
-// export const REQUEST_PRODUCTS_FAILURE = 'REQUEST_PRODUCTS_FAILURE'
-
-// export const SELECT_PRODUCT = 'SELECT_PRODUCT'
-
-// export const FETCH_PRODUCT_INVENTORY = 'FETCH_PRODUCT_INVENTORY'
-// export const REQUEST_PRODUCT_INVENTORY = 'REQUEST_PRODUCT_INVENTORY'
-// export const REQUEST_PRODUCT_INVENTORY_SUCCESS = 'REQUEST_PRODUCT_INVENTORY_SUCCESS'
-// export const REQUEST_PRODUCT_INVENTORY_FAILURE = 'REQUEST_PRODUCT_INVENTORY_FAILURE'
-
-// export const PAGE_PRODUCTS = 'PAGE_PRODUCTS' 
-
-// export const POST_CREATE_PRODUCT = 'POST_CREATE_PRODUCT'
-// export const REQUEST_CREATE_PRODUCT = 'REQUEST_CREATE_PRODUCT'
-// export const REQUEST_CREATE_PRODUCT_FAILURE = 'REQUEST_CREATE_PRODUCT_FAILURE'
-// export const REQUEST_CREATE_PRODUCT_SUCCESS = 'REQUEST_CREATE_PRODUCT_SUCCESS'
-
-// export const POST_DELETE_PRODUCT = 'POST_DELETE_PRODUCT'
-// export const REQUEST_DELETE_PRODUCT = 'REQUEST_DELETE_PRODUCT'
-// export const REQUEST_DELETE_PRODUCT_FAILURE = 'REQUEST_DELETE_PRODUCT_FAILURE'
-// export const REQUEST_DELETE_PRODUCT_SUCCESS = 'REQUEST_DELETE_PRODUCT_SUCCESS'
-
 export function fetchProducts() {
   return function (dispatch) {
     // dispatch an action that we are requesting a product
@@ -201,11 +177,11 @@ function formatProductResponse(json) {
   return products
 }
 
-export function postDeleteProduct(index, callback) {
+export function postDeleteProduct(p, index, callback) {
   return function (dispatch) {
     dispatch(requestDeleteProduct(index))
 
-    return api.del('/ics/products/', index)
+    return api.del('/ics/products/', p.id)
       .end(function (err, res) {
         if (err || !res.ok)
           dispatch(requestDeleteProductFailure(index, err))

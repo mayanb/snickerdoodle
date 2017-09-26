@@ -20,8 +20,23 @@
 	}
 
 	.unit {
-		//margin-left: -1px;
 		border-radius: 0 4px 4px 0;
 		z-index: 11;
 	}
+}
+
+.create-process-description {
+	display:flex;
+	flex-direction: column;
+	margin-bottom: 16px;
+}
+
+.create-process-buttons {
+	display:flex;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+.create-process-error {
+	margin-bottom: 16px;
 }
