@@ -1,5 +1,5 @@
 function all() {
-	return JSON.parse(window.localStorage.getItem("auth"))
+	return JSON.parse(window.localStorage.getItem("auth")) || {}
 }
 
 function save(auth_response) {

@@ -16,7 +16,8 @@ import {
   PROCESSES,
   PROCESS_INVENTORY
 } from '../../create-store.jsx'
-import {findPosition, alphabetize} from '../Logic/arrayutils.jsx' 
+import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
+
 
 export function fetchProcesses() {
   return function (dispatch) {

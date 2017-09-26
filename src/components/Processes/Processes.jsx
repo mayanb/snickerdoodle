@@ -110,7 +110,7 @@ class Processes extends React.Component {
   }
 
   handleSelectProcess(index) {
-    let process = this.props.data[index]
+    var process = this.props.data[index]
     if (!process) 
       return 
 
