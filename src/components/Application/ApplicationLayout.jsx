@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Activity from '../Activity/Activity'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
+
 //import Navbar from '../Navbar/Navbar'
 import GoogleConnect from '../GoogleConnect/GoogleConnect'
 import Movements from '../Movements/Movements'
@@ -12,7 +13,9 @@ import Navbar from '../OldComponents/Layout.jsx'
 import FactoryMap from '../OldComponents/FactoryMap.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../OldComponents/Inventory2.jsx'
-import Task from '../OldComponents/Task-2.jsx'
+import Task from '../Task/Task.jsx'
+
+// import Task from '../OldComponents/Task-2.jsx'
 import Dash from '../OldComponents/Dash.jsx'
 
 import PrivateRoute from '../Router/PrivateRoute'

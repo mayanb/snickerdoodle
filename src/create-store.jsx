@@ -4,7 +4,7 @@ import update from 'immutability-helper'
 import {findPosition, alphabetize} from './components/Logic/arrayutils.jsx'
 import _users from './components/AccountMenu/UserReducer'
 
-var movementsDefault = {
+var stateDefault = {
   data: [],
   ui: {
     isFetchingData: false,
@@ -18,61 +18,15 @@ var movementsDefault = {
   }
 }
 
-var productsDefault = {
-  data: [],
-  ui: {
-    page_size: 15,
-    selectedItem: 4,
-    currentPage: 0,
-    isFetchingData: false,
-    isCreatingItem: false,
-    isDeletingItem: false,
-    isEditingItem: false,
-    error: null
-  }
-}
+var movementsDefault = stateDefault
+var productsDefault = stateDefault
+var processesDefault = stateDefault
+var inventoriesDefault = stateDefault
+var processInventoriesDefault = stateDefault
+var taskDefault = stateDefault
+var taskAncestorsDefault = stateDefault
+var taskDescendentsDefault = stateDefault
 
-var processesDefault = {
-  data: [],
-  ui: {
-    isFetchingData: false,
-    isCreatingItem: false,
-    isDeletingItem: false,
-    isEditingItem: false,
-    selectedItem: 4,
-    currentPage: 0,
-    page_size: 15,
-    error: null
-  }
-}
-
-var inventoriesDefault = {
-  data: [],
-  ui: {
-    isFetchingData: false,
-    isCreatingItem: false,
-    isDeletingItem: false,
-    isEditingItem: false,
-    selectedItem: 4,
-    currentPage: 0,
-    page_size: 15,
-    error: null
-  }
-}
-
-var processInventoriesDefault = {
-  data: [],
-  ui: {
-    isFetchingData: false,
-    isCreatingItem: false,
-    isDeletingItem: false,
-    isEditingItem: false,
-    selectedItem: 4,
-    currentPage: 0,
-    page_size: 15,
-    error: null
-  }
-}
 
 export const REQUEST = 'REQUEST'
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS'
@@ -88,13 +42,14 @@ export const REQUEST_EDIT_SUCCESS = 'REQUEST_EDIT_SUCCESS'
 export const SELECT = 'SELECT'
 export const PAGE = 'PAGE'
 
-
 export const MOVEMENTS = 'MOVEMENTS'
 export const PRODUCTS = 'PRODUCTS'
 export const PROCESSES = 'PROCESSES'
 export const INVENTORIES = 'INVENTORIES'
 export const PROCESS_INVENTORY = 'PROCESS_INVENTORY'
-
+export const TASK = 'TASK'
+export const TASK_ANCESTORS = 'TASK_ANCESTORS'
+export const TASK_DESCENDENTS = 'TASK_DESCENDENTS'
 
 
 function apiDataReducer(state, action) {
@@ -176,6 +131,9 @@ function requestCreate(state, action) {
 }
 
 function requestCreateSuccess(state, action) {
+	console.log(state)
+	console.log(action)
+
   let position = findPosition(state.data, action.item, alphabetize)
   return update(state, {
     ui: {
@@ -276,7 +234,6 @@ function select(state, action) {
 }
 
 function page(state, action) {
-	console.log("asdfadsf")
   return update(state, {
     ui: {
       currentPage: {
@@ -307,6 +264,9 @@ export default function(data) {
   	processes: createFilteredReducer(apiDataReducer, action => action.name === 'PROCESSES', processesDefault), 
   	movements: createFilteredReducer(apiDataReducer, action => action.name === 'MOVEMENTS', movementsDefault), 
   	inventories: createFilteredReducer(apiDataReducer, action => action.name === 'INVENTORIES', inventoriesDefault), 
+  	task: createFilteredReducer(apiDataReducer, action => action.name === 'TASK', taskDefault), 
+  	taskDescendents: createFilteredReducer(apiDataReducer, action => action.name === 'TASK_DESCENDENTS', taskDescendentsDefault), 
+  	taskAncestors: createFilteredReducer(apiDataReducer, action => action.name === 'TASK_ANCESTORS', taskAncestorsDefault), 
   	processInventories: createFilteredReducer(apiDataReducer, action => action.name === 'PROCESS_INVENTORY', processInventoriesDefault),  })
 
   const store = createStore(reducer, applyMiddleware(thunkMiddleware))
