@@ -80,6 +80,7 @@ export default class CreateProductDropdown extends React.Component {
 		if (!this.handleInputValidation())
 			return 
 
+		this.handleDropdownToggle()
 		this.props.onSubmit({code: this.state.abbreviation, name: this.state.name})
 	}
 
