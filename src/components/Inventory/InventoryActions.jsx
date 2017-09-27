@@ -3,8 +3,8 @@ import {
   REQUEST, 
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
-  INVENTORIES
-} from '../../create-store.jsx'
+} from '../../APIDataReducer'
+import { INVENTORIES } from '../../ReducerTypes'
 
 
 export function fetchInventory(filter) {

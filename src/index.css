@@ -53,107 +53,6 @@ table {
 img:before {
   background-image: url(/dashboard/static/dashboard/img/default@3x.png); }
 
-.d-nav {
-  flex: 0 0 13em;
-  transition: flex 0.3s;
-  border-right: 1px solid #EAEAEA; }
-
-.pushout {
-  width: 32px;
-  height: 32px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.12);
-  border-radius: 100%;
-  position: fixed;
-  background-color: white;
-  top: 5px;
-  left: 8px; }
-
-.d-nav.littleNav {
-  flex: 0 0 16px; }
-  .d-nav.littleNav > div.bar {
-    display: none; }
-
-.d-nav {
-  /* put the nav on the left */
-  order: -1;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  color: rgba(98, 98, 98, 0.56); }
-  .d-nav .bar {
-    position: relative;
-    top: 0; }
-  .d-nav ul {
-    margin: 0 auto; }
-  .d-nav li {
-    list-style-type: none; }
-    .d-nav li a, .d-nav li a:hover, .d-nav li a:visited {
-      display: block;
-      line-height: 50px;
-      text-decoration: none;
-      color: rgba(98, 98, 98, 0.56);
-      margin-left: 16px; }
-      .d-nav li a.active, .d-nav li a:hover.active, .d-nav li a:visited.active {
-        background-color: #49A8F3;
-        color: white;
-        width: 100%;
-        padding-left: 16px;
-        margin-left: 0px; }
-        .d-nav li a.active, .d-nav li a.active:hover, .d-nav li a.active:visited, .d-nav li a:hover.active, .d-nav li a:hover.active:hover, .d-nav li a:hover.active:visited, .d-nav li a:visited.active, .d-nav li a:visited.active:hover, .d-nav li a:visited.active:visited {
-          color: white; }
-
-i.material-icons {
-  color: rgba(0, 0, 0, 0.5); }
-  i.material-icons:hover {
-    color: blue; }
-
-.loading {
-  display: none; }
-
-.noresults {
-  margin-top: 32px;
-  text-align: center; }
-  .noresults span {
-    font-size: 18px;
-    color: rgba(0, 0, 0, 0.3);
-    text-align: middle; }
-
-div[data-react-toolbox="dropdown"] > div {
-  padding: 0; }
-div[data-react-toolbox="dropdown"] input {
-  font-size: 14px; }
-
-.d-nav div[data-react-toolbox="dropdown"] > div {
-  padding: 0px;
-  margin: 0px; }
-.d-nav div[data-react-toolbox="dropdown"] ul {
-  color: rgba(0, 0, 0, 0.6); }
-.d-nav div[data-react-toolbox="dropdown"] input {
-  margin: 0px;
-  padding: 0px;
-  padding-top: 4px;
-  outline: none;
-  border: none; }
-
-.d-nav div[data-react-toolbox="dropdown"] input {
-  color: rgba(255, 255, 255, 0.56); }
-
-.d-top {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 54px;
-  min-height: 54px;
-  background-color: white;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.06);
-  line-height: 54px;
-  display: flex;
-  flex-direction: row;
-  padding: 0px 16px; }
-  .d-top .nav-brand {
-    flex: 1; }
-
 .filters {
   background-color: white;
   border-radius: 4px;
@@ -801,8 +700,7 @@ html, body {
 
 .layout {
   display: flex;
-  flex-direction: row;
-  margin-top: 54px; }
+  flex-direction: row; }
 
 .baseline-grid {
   background-image: url("baselinegrid.png");
@@ -817,6 +715,7 @@ html, body {
 
 .application-content {
   padding-left: 64px;
+  margin-right: 64px;
   flex-grow: 1; }
 
 body {
@@ -832,6 +731,31 @@ div, input, * {
 
 span {
   line-height: 16px; }
+
+.d-nav {
+  background-color: #333C44;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 150px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+  line-height: 40px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+  .d-nav ul {
+    padding-left: 16px; }
+  .d-nav .logo {
+    background-color: #42515F;
+    height: 130px;
+    margin-bottom: 32px; }
+
+.d-top {
+  display: flex;
+  min-height: 120px;
+  align-items: center;
+  justify-content: flex-end; }
 
 h1 {
   font-size: 20px;
@@ -947,12 +871,15 @@ button {
 .nav-section {
   display: flex;
   flex-direction: row;
-  flex-grow: 100; }
+  flex-grow: 100;
+  margin-bottom: 150px; }
   .nav-section > div {
-    margin: 100px 80px 0px 64px;
+    margin: 0px 80px 0px 64px;
     flex: 7; }
     .nav-section > div > .card {
       height: 100%; }
+    .nav-section > div:last-child {
+      margin-right: 0px; }
   .nav-section .nav-section-header {
     display: flex;
     flex-direction: row;
@@ -960,7 +887,7 @@ button {
     .nav-section .nav-section-header h1 {
       flex-grow: 1; }
   .nav-section .nav-section-list {
-    margin-top: 132px; }
+    margin-top: 32px; }
 
 .paginated-table ul {
   list-style-type: none;
@@ -1244,10 +1171,61 @@ div.create-product-dialog .create-product-description {
 .current-account .icon {
   margin-right: 8px; }
 
-.nav-team {
-  padding-top: 7px;
-  vertical-align: middle; }
-  .nav-team div.button-dropdown-content {
-    top: 39px; }
+.nav-team div.button-dropdown-content {
+  top: 39px; }
+
+.task-attribute {
+  font-size: 12px;
+  font-family: "Apercu Mono";
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  .task-attribute.editor {
+    display: flex;
+    flex-direction: column; }
+    .task-attribute.editor .attribute-content {
+      height: 48px; }
+    .task-attribute.editor .task-attribute-edit-button {
+      color: #2198EE;
+      cursor: normal; }
+
+.attribute-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px; }
+  .attribute-content i {
+    font-size: 16px;
+    line-height: 40px;
+    margin: 8px;
+    cursor: pointer; }
+  .attribute-content > .task-attribute-name {
+    flex: 1; }
+  .attribute-content > .task-attribute-value {
+    flex: 1;
+    text-align: right;
+    justify-content: right;
+    margin-right: 8px; }
+    .attribute-content > .task-attribute-value.empty {
+      color: rgba(0, 0, 0, 0.2); }
+  .attribute-content input {
+    text-align: right; }
+
+.attribute-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: top;
+  margin-right: 40px;
+  height: 32px; }
+  .attribute-buttons button {
+    text-transform: uppercase;
+    font-size: 10px;
+    padding: 8px;
+    line-height: 10px;
+    border-radius: 4px;
+    height: 26px; }
+
+.task-attribute-test {
+  margin-left: 150px;
+  max-width: 500px; }
 
 /*# sourceMappingURL=index.css.map */

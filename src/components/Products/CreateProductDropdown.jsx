@@ -19,7 +19,7 @@ export default class CreateProductDropdown extends React.Component {
 	}
 	render() {
 		return (
-			<ButtonDropdown button="Create Product" expanded={this.state.expanded} onToggle={this.handleDropdownToggle}>
+			<ButtonDropdown button="Create Product" expanded={this.state.expanded} onToggleDropdown={this.handleDropdownToggle}>
 				<div className="create-product-dialog">
 					{ this.renderInput("name", "Name", "eg. Maya Mountain 2016") }
 					{ this.renderInput("abbreviation", "Abbreviation", "eg. MM16") }
@@ -80,6 +80,7 @@ export default class CreateProductDropdown extends React.Component {
 		if (!this.handleInputValidation())
 			return 
 
+		this.handleDropdownToggle()
 		this.props.onSubmit({code: this.state.abbreviation, name: this.state.name})
 	}
 

@@ -3,8 +3,8 @@ import {
   REQUEST, 
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
-  MOVEMENTS,
-} from '../../create-store.jsx'
+} from '../../APIDataReducer'
+import {  MOVEMENTS } from '../../ReducerTypes'
 
 
 export function fetchMovements() {

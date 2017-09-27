@@ -7,6 +7,7 @@ import ProductsCard from './ProductsCard.jsx'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDropdown from './CreateProductDropdown'
+import ProductsArchiveDialog from './ProductsArchiveDialog'
 //import {findPosition, alphabetize} from './arrayutils.jsx'
 
 import Card from '../Card/Card.jsx'
@@ -19,10 +20,16 @@ class Products extends React.Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      isArchiveOpen: false, 
+      archivingObjectIndex: -1, 
+    }
+
     this.handleSelectProduct = this.handleSelectProduct.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
     this.handleCreateProduct = this.handleCreateProduct.bind(this)
     this.handleArchiveProduct = this.handleArchiveProduct.bind(this)
+    this.toggleArchive = this.toggleArchive.bind(this)
   }
 
   // fetch products on load
@@ -45,9 +52,25 @@ class Products extends React.Component {
           />
         </div>
         <div>
-            <ProductsCard {...this.props} />
+          <ProductsCard {...this.props} 
+            onArchive={() => this.setState({isArchiveOpen: true, archivingObjectIndex: ui.selectedItem})}
+          />
         </div>
+        {this.renderArchiveDialog(data, ui)}
       </div>
+    )
+  }
+
+  renderArchiveDialog(data, ui) {
+    if (!this.state.isArchiveOpen)
+      return null
+
+    return (
+      <ProductsArchiveDialog 
+        {...data[this.state.archivingObjectIndex]} 
+        onCancel={this.toggleArchive}
+        onSubmit={() => this.handleArchiveProduct(this.state.archivingObjectIndex)}
+      />
     )
   }
 
@@ -102,14 +125,21 @@ class Products extends React.Component {
     }))
   }
 
+  toggleArchive() {
+    this.setState({isArchiveOpen: !this.state.isArchiveOpen})
+  }
+
   handleArchiveProduct(index) {
     let newIndex = index
     if ( newIndex == this.props.data.length - 1)
       newIndex = index - 1
 
-    let product = this.props.data[index]
-    this.props.dispatch(actions.postDeleteProduct(process, index, () => {
-        this.props.dispatch(actions.selectProduct(newIndex))
+    let p = this.props.data[index]
+    let c = this
+
+    this.props.dispatch(actions.postDeleteProduct(p, index, function () {
+        c.handleSelectProduct(index)
+        c.toggleArchive()
       })
     )
   }

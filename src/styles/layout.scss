@@ -13,7 +13,6 @@ html, body {
 .layout {
 	display:flex;
 	flex-direction: row;
-	margin-top: 54px;
 }
 
 .baseline-grid {
@@ -30,6 +29,7 @@ html, body {
 
 .application-content {
 	padding-left: 64px;
+	margin-right: 64px;
 	flex-grow: 1;
 }
 

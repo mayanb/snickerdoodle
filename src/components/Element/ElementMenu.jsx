@@ -3,7 +3,7 @@ import ButtonDropdown from '../Card/ButtonDropdown'
 import Button from '../Card/Button'
 
 
-export default class ProcessesCardMenu extends React.Component {
+export default class ElementMenu extends React.Component {
 	constructor(props) {
 		super(props)
 

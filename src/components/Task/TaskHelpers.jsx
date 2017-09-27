@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment'
 import React from 'react'
 
 
@@ -131,24 +131,6 @@ export function TaskTable(props) {
             </span>
             <span className=""></span>
           </a>
-        )
-      })
-    }
-    </Table>
-  )
-}
-
-export function InformationTable(props) {
-  return (
-    <Table>
-    {
-      props.attributes.map(function(attr, i) {
-        let isEmpty = (attr.value == "")
-        return (
-          <div key={i} className="task-attribute-table-row">
-            <span className="information-table-title">{attr.name}</span>
-            <span className={"information-table-answer " + (isEmpty?"empty-answer":"")}>{isEmpty?"n/a":attr.value}</span>
-          </div>
         )
       })
     }
