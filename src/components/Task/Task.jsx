@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import * as actions from './TaskActions'
 import * as attributeActions from './TaskAttributeActions'
 import TaskInformationTable from './TaskInformationTable'
+import TaskFlag from './TaskFlag'
 
 
 
@@ -84,6 +85,7 @@ class Task extends React.Component {
         </div>
         <div className="task-content">
           <div>
+            <TaskFlag flagged={data.is_flagged} onUnflag={this.toggleTask} />
             <TaskInformationTable 
               attributes={data.organized_attrs}
               editingAttribute={ui.editingAttribute} 
@@ -91,8 +93,10 @@ class Task extends React.Component {
               saveEditing={this.saveEditing}
             />
 
-            <button className="task_button" onClick={this.closeTask}>Close Task</button>
-            <button className="task_button" onClick={this.toggleTask}>Toggle flag</button>
+            {
+              data.is_flagged?null:
+                (<button className="task_button" onClick={this.toggleTask}>Flag this item</button>)
+            }
             <button className="task_button" onClick={this.deleteTask}>Delete Task</button>
           </div>
           <div>
@@ -159,3 +163,9 @@ const mapStateToProps = (state/*, props*/) => {
 }
 const connectedTask = connect(mapStateToProps)(Task)
 export default connectedTask
+
+/*
+
+<button className="task_button" onClick={this.closeTask}>Close Task</button>
+            
+*/

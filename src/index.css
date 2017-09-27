@@ -1233,4 +1233,22 @@ div.create-product-dialog .create-product-description {
   margin-left: 150px;
   max-width: 300px; }
 
+.task-flag {
+  background-color: #F06F6F;
+  color: white;
+  border-radius: 4px;
+  line-height: 16px;
+  font-size: 12px;
+  padding: 8px 12px 8px 12px;
+  display: flex;
+  flex-direction: row; }
+  .task-flag > div {
+    flex: 0; }
+  .task-flag > div:first-child {
+    flex: 1;
+    flex-grow: 1; }
+  .task-flag .task-flag-unflag {
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer; }
+
 /*# sourceMappingURL=index.css.map */
