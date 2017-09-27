@@ -21,8 +21,6 @@ var stateDefault = {
   }
 }
 
-
-
 function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) {
     return (state, action) => {
         const isInitializationCall = state === undefined;

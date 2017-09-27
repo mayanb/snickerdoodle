@@ -11,33 +11,15 @@ export default class TaskInformationTable extends React.Component {
           return <TaskAttribute 
             key={i} 
             {...attr} 
-            cancelEditing={() => this.props.cancelEditing(attr, i)}
-            startEditing={() => this.props.startEditing(attr, i)}
-            saveEditing={(val) => this.props.saveEditing(attr, i, val)}
+            isEditing={this.props.editingAttribute===i}
+            finishEditing={() => this.props.finishEditing(i)}
+            startEditing={() => this.props.startEditing(i)}
+            saveEditing={(val) => this.props.saveEditing(i, val)}
           />
-        })
+        }, this)
       }
       </div>
     )
   }
 }
 
-
-
-// export default function TaskInformationTable(props) {
-//   return (
-//     <div>
-//     {
-//       props.attributes.map(function(attr, i) {
-//         let isEmpty = (attr.value == "")
-//         return (
-//           <div key={i} className="task-attribute-table-row">
-//             <span className="information-table-title">{attr.name}</span>
-//             <span className={"information-table-answer " + (isEmpty?"empty-answer":"")}>{isEmpty?"n/a":attr.value}</span>
-//           </div>
-//         )
-//       })
-//     }
-//     </div>
-//   )
-// }

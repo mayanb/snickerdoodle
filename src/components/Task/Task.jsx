@@ -4,7 +4,8 @@ import {display, icon, TaskTable, OutputTable, InputTable, subs, Table, pl} from
 import moment from 'moment'
 import {Dialog} from '../OldComponents/Dialog.jsx'
 import { connect } from 'react-redux'
-import * as actions from './TaskActions.jsx'
+import * as actions from './TaskActions'
+import * as attributeActions from './TaskAttributeActions'
 import TaskInformationTable from './TaskInformationTable'
 
 
@@ -20,11 +21,15 @@ let dialogs = {
 class Task extends React.Component {
   constructor(props) {
     super(props)
+
     this.handleSearch = this.handleSearch.bind(this)
     this.markAsUsed = this.markAsUsed.bind(this)
     this.closeTask = this.closeTask.bind(this)
     this.toggleTask = this.toggleTask.bind(this)
     this.deleteTask = this.deleteTask.bind(this)
+    this.startEditing = this.startEditing.bind(this)
+    this.finishEditing = this.finishEditing.bind(this)
+    this.saveEditing = this.saveEditing.bind(this)
   }
 
   componentWillMount() {
@@ -41,7 +46,6 @@ class Task extends React.Component {
     //   correctLevel : QRCode.CorrectLevel.Q
     // })
     // this.setState({qrcode: q})
-    console.log(this.props.match.params.id)
     let id = this.props.match.params.id
     this.props.dispatch(actions.getTask(id))
     this.props.dispatch(actions.getTaskAncestors(id))
@@ -54,7 +58,7 @@ class Task extends React.Component {
   }
 
   render() {
-    var { data, ui, ancestorsData, ancestorsUI, descendentsData, descendentsUI, movementsData, movementsUI } = this.props
+    let { data, ui, ancestorsData, ancestorsUI, descendentsData, descendentsUI, movementsData, movementsUI } = this.props
     if (!data || (data.length===0)) {
       return (
         <div className="task-detail">
@@ -63,7 +67,7 @@ class Task extends React.Component {
       )
     }
 
-    var dialog = false;
+    let dialog = false;
     // if(this.state.showDialog) {
     //   dialog = <Dialog {...this.state.activeDialog} />
     // }
@@ -80,7 +84,12 @@ class Task extends React.Component {
         </div>
         <div className="task-content">
           <div>
-            <TaskInformationTable attributes={this.organizeAttributes(data)} />
+            <TaskInformationTable 
+              attributes={data.organized_attrs}
+              editingAttribute={ui.editingAttribute} 
+              startEditing={this.startEditing} 
+              saveEditing={this.saveEditing}
+            />
 
             <button className="task_button" onClick={this.closeTask}>Close Task</button>
             <button className="task_button" onClick={this.toggleTask}>Toggle flag</button>
@@ -97,62 +106,38 @@ class Task extends React.Component {
     )
   }
 
-            // <button className="task_button" onClick={() => this.showDialog(dialogs.deleteTask, this.closeTask)}>Close Task</button>
+  startEditing(index) {
+    this.props.dispatch(attributeActions.startEditingAttribute(index))
+  }
 
-  startEditing(attribute, index) {
+  finishEditing(index) {
+    this.props.dispatch(attributeActions.finishEditingAttribute(index))
+  }
 
+  saveEditing(index, value) {
+    let attr = this.props.data.organized_attrs[index]
+    let task = this.props.data.id
+    let params = { attribute: attr.attribute, task: task, value: value }
+    this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
+    this.props.dispatch(attributeActions.finishEditingAttribute(index, params))
   }
 
   closeTask() {
     this.props.dispatch(actions.closeTask(this.props.data))
-
-    //change is_open
   }
 
   toggleTask() {
     this.props.dispatch(actions.toggleTask(this.props.data))
-
-    //change is_flagged
-
   }
 
   deleteTask() {
-    console.log("delete")
-    console.log(this.props.data)
     this.props.dispatch(actions.deleteTask(this.props.data))
-
   }
 
   handleSearch(val) {
-    console.log(val)
     if (val.value && val.value != parseInt(this.props.match.params.id)) {
-      console.log("yay")
       window.location.href = window.location.origin + "/task/" + val.value
     }
-  }
-
-  organizeAttributes(taskData) {
-    let attributes = taskData.process_type.attributes
-    let values = taskData.attribute_values
-    let organized = [
-      {attribute: -1, value: taskData.process_type.name, name: "Process", isEditable: false},
-      {attribute: -1, value: taskData.product_type.name, name: "Product", isEitable: false},
-      {attribute: -1, value: taskData.process_type.created_by_name, name: "Production Team", isEditable: false},
-      {attribute: -1, value: moment(taskData.created_at).format('MM/DD/YY h:mm a'), name: "Created at", isEditable: false},
-      {attribute: -1, value: moment(taskData.updated_at).format('MM/DD/YY h:mm a'), name: "Updated at", isEditable: false},
-    ]
-
-    attributes.map(function (attr, i) {
-      let val = values.find(function (e) {
-        return (e.attribute == attr.id)
-      })
-      organized.push({attribute: attr.id, value: val?val.value:"", name: attr.name, editable: true})
-    })
-
-    organized.push({attribute: -1, value: pl(taskData.inputs.length, taskData.inputUnit), name: "# INPUTS", editable: false})
-    organized.push({attribute: -1, value: pl(taskData.items.length, taskData.process_type.unit), name: "# OUTPUTS", editable: false})
-
-    return organized
   }
 
   markAsUsed(index, id) {
@@ -161,7 +146,6 @@ class Task extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
-  console.log(state)
   return {
     data: state.task.data,
     ui: state.task.ui,

@@ -11,6 +11,7 @@ import Button from '../Card/Button'
  *    cancelEditing={CANCEL_EDITING_FUNC}  // params: n/a
  *    saveEditing={SAVE_EDIT_FUNC}         // params: newValue, success, failure
  *    startEditing={START_EDITING_FUNC}    // params: n/a
+ * />
  */
 
 export default function TaskAttribute(props) {
@@ -25,10 +26,16 @@ class TaskAttributeEditor extends React.Component {
 		super(props)
 
 		this.state = {
-			value: props.value
+			value: ""
 		}
 
 		this.handleEdit = this.handleEdit.bind(this)
+	}
+
+	componentDidMount() {
+		this.input.focus()
+		let e = {target: {value: this.props.value}}
+		this.handleEdit(e)
 	}
 
 	handleEdit(e) {
@@ -44,7 +51,11 @@ class TaskAttributeEditor extends React.Component {
 						<span>{this.props.name}</span>
 					</div>
 					<div className="task-attribute-value">
-						<input value={this.state.value} onChange={this.handleEdit}/>
+						<input 
+							value={this.state.value} 
+							onChange={this.handleEdit}
+							ref={(input) => {this.input = input}}
+						/>
 					</div>
 					{editButton(this.props)}
 				</div>
@@ -76,7 +87,7 @@ function BasicTaskAttribute(props) {
 
 function editButton(props) {
 	if (!props.isEditable) 
-		return null
+		return <div className="task-attribute-edit-button" />
 
 	return (
 		<div className="task-attribute-edit-button" onClick={props.startEditing}>

@@ -1,4 +1,5 @@
 import api from '../WaffleconeAPI/api.jsx'
+import moment from 'moment'
 import {
   REQUEST, 
   REQUEST_SUCCESS, 
@@ -12,7 +13,6 @@ import {
   SELECT,
   PAGE,
 } from '../../APIDataReducer'
-
 import {
     REQUEST_EDIT_TASK,
     REQUEST_EDIT_TASK_SUCCESS,
@@ -22,7 +22,7 @@ import {  TASK, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../Reduce
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
 export function getTask(task) {
-  console.log(task)
+
   return function (dispatch) {
     // dispatch an action that we are requesting a process
     dispatch(requestTask())
@@ -31,19 +31,35 @@ export function getTask(task) {
       // .query({id: task})
       .end( function (err, res) {
         if (err || !res.ok) {
-          console.log("failure")
           dispatch(requestTaskFailure(err))
         } else {
-          // let attrs = component.organizeAttributes(data)
-          // component.setState({task: data, attributes: attrs})
-          console.log("success")
-
-          dispatch(requestTaskSuccess(res.body))
-
-
+          let organized = organizeAttributes(res.body)
+          dispatch(requestTaskSuccess(organized))
         }
       })
   }
+}
+
+function organizeAttributes(task) {
+  let attributes = task.process_type.attributes
+  let values = task.attribute_values
+
+  let organized_attrs = [
+    {attribute: -1, value: task.process_type.name, name: "Process", isEditable: false},
+    {attribute: -1, value: task.product_type.name, name: "Product", isEitable: false},
+    {attribute: -1, value: task.process_type.created_by_name, name: "Production Team", isEditable: false},
+    {attribute: -1, value: moment(task.created_at).format('MM/DD/YY h:mm a'), name: "Created at", isEditable: false},
+    {attribute: -1, value: moment(task.updated_at).format('MM/DD/YY h:mm a'), name: "Updated at", isEditable: false},
+  ]
+
+  attributes.map(function (attr, i) {
+    let val = values.find(function (e) {
+      return (e.attribute == attr.id)
+    })
+    organized_attrs.push({attribute: attr.id, value: val?val.value:"", name: attr.name, isEditable: true, isEditing: false})
+  })
+  task.organized_attrs = organized_attrs
+  return task
 }
 
 function requestTask() {
@@ -316,13 +332,3 @@ function requestEditTaskSuccess(field, value) {
     value: value
   }
 }
-
-
-
-// ["is_open" : "False",
-//                           "label" : self.label,
-//                           "label_index" : String(labelIndex),
-//                           "custom_display" : customDisplay ,
-//                           "is_trashed" : "False" ,
-//                           "is_flagged" : String(self.flagged).capitalized,
-//                           "experiment" : self.experiment ]
