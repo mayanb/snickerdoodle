@@ -9,17 +9,16 @@ import {
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
-  REQUEST_EDIT,
-  REQUEST_EDIT_SUCCESS,
-  REQUEST_EDIT_SUCCESS_EXTENSION,
   SELECT,
   PAGE,
-  TASK,
-  TASK_ANCESTORS,
-  TASK_DESCENDENTS,
-  MOVEMENTS,
-  MARK_OUTPUT_USED
-} from '../../create-store.jsx'
+} from '../../APIDataReducer'
+
+import {
+    REQUEST_EDIT_TASK,
+    REQUEST_EDIT_TASK_SUCCESS,
+    MARK_OUTPUT_USED,
+} from '../../TaskReducerExtension'
+import {  TASK, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../ReducerTypes'
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
 export function getTask(task) {
@@ -223,10 +222,10 @@ function requestMarkOutputAsUsed(id) {
 
 
 export function closeTask(task) {
-  console.log("close")
-  console.log(task)
   return function (dispatch) {
+
     dispatch((requestEditTask()))
+
     return api.put(`/ics/tasks/edit/${task.id}/`)
       .send({ 
         is_open: false,
@@ -242,7 +241,6 @@ export function closeTask(task) {
           //dispatch(requestEditTaskFailure(err))
         } else {
           dispatch(requestEditTaskSuccess("is_open", false))
-          //dispatch(requestEditTaskSuccessExtension(index))
         }
       })
   }
@@ -304,7 +302,7 @@ export function deleteTask(task) {
 
 function requestEditTask() {
   return {
-    type: REQUEST_EDIT,
+    type: REQUEST_EDIT_TASK,
     name: TASK
 
   }
@@ -312,7 +310,7 @@ function requestEditTask() {
 
 function requestEditTaskSuccess(field, value) {
   return {
-    type: REQUEST_EDIT_SUCCESS_EXTENSION,
+    type: REQUEST_EDIT_TASK_SUCCESS,
     name: TASK,
     field: field,
     value: value

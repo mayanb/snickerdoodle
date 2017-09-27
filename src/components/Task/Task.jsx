@@ -1,11 +1,11 @@
 import React from 'react'
 import { TaskSelect } from '../OldComponents/Inputs.jsx'
-import {display, icon, TaskTable, InformationTable, OutputTable, InputTable, subs, Table, pl} from './TaskHelpers.jsx'
+import {display, icon, TaskTable, OutputTable, InputTable, subs, Table, pl} from './TaskHelpers.jsx'
 import moment from 'moment'
-//import {mountQR, printQRs} from './qr.jsx'
 import {Dialog} from '../OldComponents/Dialog.jsx'
 import { connect } from 'react-redux'
 import * as actions from './TaskActions.jsx'
+import TaskInformationTable from './TaskInformationTable'
 
 
 
@@ -80,7 +80,7 @@ class Task extends React.Component {
         </div>
         <div className="task-content">
           <div>
-            <InformationTable attributes={this.organizeAttributes(data)} />
+            <TaskInformationTable attributes={this.organizeAttributes(data)} />
 
             <button className="task_button" onClick={this.closeTask}>Close Task</button>
             <button className="task_button" onClick={this.toggleTask}>Toggle flag</button>
@@ -99,18 +99,17 @@ class Task extends React.Component {
 
             // <button className="task_button" onClick={() => this.showDialog(dialogs.deleteTask, this.closeTask)}>Close Task</button>
 
+  startEditing(attribute, index) {
+
+  }
 
   closeTask() {
-    console.log("close")
-    console.log(this.props.data)
     this.props.dispatch(actions.closeTask(this.props.data))
 
     //change is_open
   }
 
   toggleTask() {
-    console.log("toggle")
-    console.log(this.props.data)
     this.props.dispatch(actions.toggleTask(this.props.data))
 
     //change is_flagged
@@ -136,11 +135,11 @@ class Task extends React.Component {
     let attributes = taskData.process_type.attributes
     let values = taskData.attribute_values
     let organized = [
-      {attribute: -1, value: taskData.process_type.name, name: "Process", editable: false},
-      {attribute: -1, value: taskData.product_type.name, name: "Product", editable: false},
-      {attribute: -1, value: taskData.process_type.created_by_name, name: "Production Team", editable: false},
-      {attribute: -1, value: moment(taskData.created_at).format('MM/DD/YY h:mm a'), name: "Created at", editable: false},
-      {attribute: -1, value: moment(taskData.updated_at).format('MM/DD/YY h:mm a'), name: "Updated at", editable: false},
+      {attribute: -1, value: taskData.process_type.name, name: "Process", isEditable: false},
+      {attribute: -1, value: taskData.product_type.name, name: "Product", isEitable: false},
+      {attribute: -1, value: taskData.process_type.created_by_name, name: "Production Team", isEditable: false},
+      {attribute: -1, value: moment(taskData.created_at).format('MM/DD/YY h:mm a'), name: "Created at", isEditable: false},
+      {attribute: -1, value: moment(taskData.updated_at).format('MM/DD/YY h:mm a'), name: "Updated at", isEditable: false},
     ]
 
     attributes.map(function (attr, i) {

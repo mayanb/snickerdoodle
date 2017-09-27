@@ -13,9 +13,7 @@ import Navbar from '../OldComponents/Layout.jsx'
 import FactoryMap from '../OldComponents/FactoryMap.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../OldComponents/Inventory2.jsx'
-import Task from '../OldComponents/Task-2.jsx'
-
-// import Task from '../OldComponents/Task-2.jsx'
+import Task from '../Task/Task.jsx'
 import Dash from '../OldComponents/Dash.jsx'
 
 import PrivateRoute from '../Router/PrivateRoute'

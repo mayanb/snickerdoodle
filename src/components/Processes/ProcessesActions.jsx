@@ -13,9 +13,8 @@ import {
   REQUEST_EDIT_SUCCESS,
   SELECT,
   PAGE,
-  PROCESSES,
-  PROCESS_INVENTORY
-} from '../../create-store.jsx'
+} from '../../APIDataReducer'
+import {  PROCESSES, PROCESS_INVENTORY } from '../../ReducerTypes'
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
 
