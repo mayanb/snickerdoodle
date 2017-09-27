@@ -17,13 +17,22 @@ var getOptions = function(input, callback) {
       label: input,
       team: window.localStorage.getItem("team") || "1"
     }
-    $.get(api.host + "/ics/tasks/search/", params).done(function (data) {
-      var options = data.body.results.map(function (x) {
-        return { value: x.id, label: x.display}
-      })
-      callback(null, {options : options, complete: false})
+      console.log(input)
+
+    api.get('/ics/tasks/search/')
+      .query(params)
+      .end(function (err, res) {
+      if (err || !res.ok) {
+        console.log("bad")
+      } else {
+        let options = res.body.results.map(function (x) {
+          return { value: x.id, label: x.display}
+        })
+        callback(null, {options : options, complete: false})
+      }   
     })
-  }
+
+  }    
 }
 
 class TaskSelect extends React.Component {

@@ -422,7 +422,7 @@ div.zero-state {
     flex-basis: 300px; }
 
 .task-detail {
-  padding: 56px;
+  margin-left: 150px;
   max-width: 900px; }
   .task-detail .task-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -1192,13 +1192,18 @@ div.create-product-dialog .create-product-description {
   flex-direction: row;
   align-items: center;
   height: 40px; }
+  .attribute-content .task-attribute-edit-button {
+    min-width: 32px; }
   .attribute-content i {
     font-size: 16px;
     line-height: 40px;
     margin: 8px;
     cursor: pointer; }
   .attribute-content > .task-attribute-name {
-    flex: 1; }
+    flex: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; }
   .attribute-content > .task-attribute-value {
     flex: 1;
     text-align: right;
@@ -1226,6 +1231,6 @@ div.create-product-dialog .create-product-description {
 
 .task-attribute-test {
   margin-left: 150px;
-  max-width: 500px; }
+  max-width: 300px; }
 
 /*# sourceMappingURL=index.css.map */

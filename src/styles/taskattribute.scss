@@ -25,6 +25,10 @@
 	align-items: center;
 	height: 40px;
 
+	.task-attribute-edit-button {
+		min-width: 32px;
+	}
+
 	i {
 		font-size: 16px;
 		line-height: 40px;

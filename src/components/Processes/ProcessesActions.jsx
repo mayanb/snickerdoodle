@@ -13,9 +13,8 @@ import {
   REQUEST_EDIT_SUCCESS,
   SELECT,
   PAGE,
-  PROCESSES,
-  PROCESS_INVENTORY
-} from '../../create-store.jsx'
+} from '../../APIDataReducer'
+import {  PROCESSES, PROCESS_INVENTORY } from '../../ReducerTypes'
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
 
@@ -68,7 +67,7 @@ export function fetchProcessInventory(process) {
     // dispatch an action that we are requesting inventory
     dispatch(requestProcessInventory())
 
-    return api.get('/ics/processesinventory')
+    return api.get('/ics/processesinventory/')
       .query({processes: process.code})
       .end(function (err, res) {
         if (err || !res.ok) {
