@@ -33,8 +33,6 @@ function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) 
 }
 
 export default function(data) {
-  //var reducer = combineReducers({products: productReducer, processes: processReducer, movements: movementsReducer})
-
   var reducer = combineReducers({
     users: _users,
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault), 
