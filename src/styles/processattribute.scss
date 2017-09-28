@@ -1,0 +1,87 @@
+.products-card-attributes {
+
+	h2 {
+		line-height: 42px;
+	}
+
+	li {
+		border-top: 1px solid $light-gray;
+		line-height: 39px;
+	}
+}
+
+.process-attribute {
+	display: flex;
+	cursor: default;
+
+	i {
+		font-size: 12px;
+		line-height: 39px;
+		vertical-align: middle;
+		color: rgba(0,0,0,0.3);
+	}
+
+	&>div {
+		margin-left: 8px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+
+	.process-attribute-move {
+		flex: 0;
+		min-width: 16px;
+		text-align: center;
+	}
+
+	.process-attribute-name {
+	 	flex: 1;
+	}
+
+	.process-attribute-type {
+		flex: 0;
+		text-align: right;
+	}
+
+	.process-attribute-more {
+		flex: 0;
+		min-width: 16px;
+		text-align:center;
+		i {
+			display: none;
+		}
+	}
+}
+
+.process-attribute:hover {
+	.process-attribute-more i {
+		display: block;
+		cursor: pointer;
+	}
+
+	&.new-attribute {
+		.process-attribute-more i {
+			display: none;
+		}
+	}
+}
+
+// handle new attribute stuff {
+.process-attribute.new-attribute {
+	color: $theme-color;
+
+	i {
+		color: $theme-color;
+		margin-right: 4px;
+	}
+
+	.process-attribute-move i, .proess-attribute-more i {
+		display: none;
+	}
+}
+
+.process-attribute-creator {
+	display: flex;
+	flex-direction: column;
+}

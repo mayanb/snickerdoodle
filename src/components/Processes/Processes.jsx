@@ -6,7 +6,6 @@ import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessListItem from './ProcessListItem'
 import ProcessesCard from './ProcessesCard'
 import ProductsArchiveDialog from '../Products/ProductsArchiveDialog'
-
 import CreateProcessDropdown from './CreateProcessDropdown'
 
 function titleRow() {
@@ -33,7 +32,6 @@ class Processes extends React.Component {
   // fetch products on load
   componentDidMount() {
     this.props.dispatch(actions.fetchProcesses())
-    //this.handleSelectProcess(index)
   }
 
   render() {

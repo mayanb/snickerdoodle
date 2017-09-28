@@ -1,8 +1,9 @@
-$sans-stack: 'Interface', 'Helvetica';
+$sans-stack: 'Camphor', 'Interface', 'Helvetica';
 $light-gray: rgba(0,0,0,0.1);
 $theme-color: #2198EE; //42AFFF;
 $dark-theme-color: #0068B4;
 $baseline: 8px;
+$nav-width: 150px;
 
 html, body {
 	width: 100%;
@@ -28,7 +29,7 @@ html, body {
 }
 
 .application-content {
-	padding-left: 64px;
+	padding-left: $nav-width;
 	margin-right: 64px;
 	flex-grow: 1;
 }

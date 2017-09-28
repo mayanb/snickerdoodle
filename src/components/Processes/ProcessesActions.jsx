@@ -13,8 +13,8 @@ import {
   REQUEST_EDIT_SUCCESS,
   SELECT,
   PAGE,
-} from '../../APIDataReducer'
-import {  PROCESSES, PROCESS_INVENTORY } from '../../ReducerTypes'
+} from '../../Reducers/APIDataReducer'
+import {  PROCESSES, PROCESS_INVENTORY } from '../../Reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
 
@@ -119,6 +119,7 @@ export function postCreateProcess(json, success) {
 
     return api.post('/ics/processes/')
       .send(json)
+      .send({icon: "default.png"})
       .end(function (err, res) {
         if (err || !res.ok)
           dispatch(requestCreateProcessFailure(err))

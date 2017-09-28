@@ -8,6 +8,7 @@ import ButtonDropdown from '../Card/ButtonDropdown'
 import {ElementHeader} from '../Element/Element'
 import ElementMenu from '../Element/ElementMenu'
 import ProcessesCardInventory from './ProcessesCardInventory'
+import ProcessAttributeList from '../ProcessAttribute/ProcessAttributeList'
 
 export default class ProcessCard extends React.Component {
 	constructor(props) {
@@ -35,7 +36,7 @@ export default class ProcessCard extends React.Component {
 					{this.renderDescription(product)}
 					{this.renderCreatedBy(product)}
 					{this.renderRule()}
-					<ProcessesCardInventory {...this.props } />
+					<ProcessAttributeList />
 					{this.renderEditDialog()}
 				</div>
 			</Card>
@@ -92,5 +93,6 @@ export default class ProcessCard extends React.Component {
 		)
 	}
 
+/* 					<ProcessesCardInventory {...this.props } /> */
 
 }

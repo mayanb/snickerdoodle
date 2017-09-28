@@ -13,8 +13,8 @@ import {
   REQUEST_EDIT_SUCCESS,
   SELECT,
   PAGE,
-} from '../../APIDataReducer'
-import { PRODUCTS, INVENTORIES } from '../../ReducerTypes'
+} from '../../Reducers/APIDataReducer'
+import { PRODUCTS, INVENTORIES } from '../../Reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
 

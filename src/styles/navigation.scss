@@ -1,5 +1,3 @@
-$nav-width: 150px;
-
 .d-nav {
 	background-color: #333C44;
 	position: fixed;
@@ -29,6 +27,15 @@ $nav-width: 150px;
 	display: flex;
 	min-height: 120px;
 	align-items: center;
-	justify-content: flex-end;
+	
+	.nav-left {
+		flex: 1;
+		flex-grow: 1;
+		margin: 0px 36px;
+
+		.filters {
+			max-width: 900px;
+		}
+	}
 }
 

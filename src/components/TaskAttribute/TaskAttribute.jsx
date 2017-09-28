@@ -61,7 +61,7 @@ class TaskAttributeEditor extends React.Component {
 				</div>
 
 				<div className="attribute-buttons">
-					<Button secondary onClick={this.props.cancelEditing}>Cancel</Button>
+					<Button secondary onClick={this.props.finishEditing}>Cancel</Button>
 					<Button onClick={() => this.props.saveEditing(this.state.value)}>Save</Button>
 				</div>
 

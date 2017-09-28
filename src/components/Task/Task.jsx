@@ -22,8 +22,7 @@ let dialogs = {
 class Task extends React.Component {
   constructor(props) {
     super(props)
-
-    this.handleSearch = this.handleSearch.bind(this)
+    
     this.markAsUsed = this.markAsUsed.bind(this)
     this.closeTask = this.closeTask.bind(this)
     this.toggleTask = this.toggleTask.bind(this)
@@ -60,10 +59,10 @@ class Task extends React.Component {
 
   render() {
     let { data, ui, ancestorsData, ancestorsUI, descendentsData, descendentsUI, movementsData, movementsUI } = this.props
+    
     if (!data || (data.length===0)) {
       return (
         <div className="task-detail">
-          <TaskSelect placeholder="Search for a task" onChange={this.handleSearch} />
         </div>
       )
     }
@@ -75,7 +74,6 @@ class Task extends React.Component {
     return (
       <div className="task-detail">
         {dialog}
-        <TaskSelect placeholder="Search for a task" onChange={this.handleSearch} />
         <div className="task-header">
           <div className="header-left">
             <img src={icon(data.process_type.icon)} />
@@ -90,6 +88,7 @@ class Task extends React.Component {
               attributes={data.organized_attrs}
               editingAttribute={ui.editingAttribute} 
               startEditing={this.startEditing} 
+              finishEditing = {this.finishEditing}
               saveEditing={this.saveEditing}
             />
 
@@ -136,12 +135,6 @@ class Task extends React.Component {
 
   deleteTask() {
     this.props.dispatch(actions.deleteTask(this.props.data))
-  }
-
-  handleSearch(val) {
-    if (val.value && val.value != parseInt(this.props.match.params.id)) {
-      window.location.href = window.location.origin + "/task/" + val.value
-    }
   }
 
   markAsUsed(index, id) {

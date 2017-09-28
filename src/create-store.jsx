@@ -2,10 +2,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import update from 'immutability-helper'
 import {findPosition, alphabetize} from './components/Logic/arrayutils.jsx'
-import {apiDataReducer} from './APIDataReducer'
-import {_task} from './TaskReducerExtension'
+import {apiDataReducer} from './Reducers/APIDataReducer'
+import {_task} from './Reducers/TaskReducerExtension'
+import {_process} from './Reducers/ProcessReducerExtension'
 import _users from './components/AccountMenu/UserReducer'
-import * as types from './ReducerTypes'
+import * as types from './Reducers/ReducerTypes'
 
 var stateDefault = {
   data: [],
@@ -15,7 +16,7 @@ var stateDefault = {
     isDeletingItem: false,
     isEditingItem: false,
     currentPage: 0,
-    page_size: 15,
+    page_size: 10,
     selectedItem: 4,
     error: null
   }
@@ -36,7 +37,7 @@ export default function(data) {
   var reducer = combineReducers({
     users: _users,
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault), 
-  	processes: createFilteredReducer(apiDataReducer, action => action.name === types.PROCESSES, stateDefault), 
+  	processes: createFilteredReducer(_process, action => action.name === types.PROCESSES, stateDefault), 
   	movements: createFilteredReducer(apiDataReducer, action => action.name === types.MOVEMENTS, stateDefault), 
   	inventories: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORIES, stateDefault), 
   	task: createFilteredReducer(_task, action => action.name === types.TASK, stateDefault), 

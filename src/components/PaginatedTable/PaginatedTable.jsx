@@ -24,7 +24,6 @@ export default class PaginatedTable extends React.Component {
 
     return (
       <div className="paginated-table">
-        { this.renderPagination(firstIndex, lastIndex, totalLen, this.handlePagination.bind(this)) }
         <ul>
           <li className="header">
             <TitleRow />
@@ -33,6 +32,7 @@ export default class PaginatedTable extends React.Component {
             this.renderRows(firstIndex, lastIndex, keys)
           }
         </ul>
+        { this.renderPagination(firstIndex, lastIndex, totalLen, this.handlePagination.bind(this)) }
       </div>
     )
 	}

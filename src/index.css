@@ -67,15 +67,13 @@ img:before {
     flex: 3;
     border: none; }
 
-.multiselect {
-  margin-bottom: 20px; }
-  .multiselect i {
-    font-size: 14px;
-    line-height: 36px;
-    vertical-align: middle;
-    margin-left: 8px; }
-  .multiselect > div {
-    border-left: none; }
+.multiselect i {
+  font-size: 14px;
+  line-height: 36px;
+  vertical-align: middle;
+  margin-left: 8px; }
+.multiselect > div {
+  border-left: none; }
 
 .task-select {
   width: 100%;
@@ -422,7 +420,7 @@ div.zero-state {
     flex-basis: 300px; }
 
 .task-detail {
-  margin-left: 150px;
+  margin-left: 36px;
   max-width: 900px; }
   .task-detail .task-header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -714,12 +712,12 @@ html, body {
   z-index: 1; }
 
 .application-content {
-  padding-left: 64px;
+  padding-left: 150px;
   margin-right: 64px;
   flex-grow: 1; }
 
 body {
-  font-family: "Interface", "Helvetica";
+  font-family: "Camphor", "Interface", "Helvetica";
   font-size: 0.75em;
   line-height: 0.9em;
   color: #4f4f4f;
@@ -754,8 +752,13 @@ span {
 .d-top {
   display: flex;
   min-height: 120px;
-  align-items: center;
-  justify-content: flex-end; }
+  align-items: center; }
+  .d-top .nav-left {
+    flex: 1;
+    flex-grow: 1;
+    margin: 0px 36px; }
+    .d-top .nav-left .filters {
+      max-width: 900px; }
 
 h1 {
   font-size: 20px;
@@ -773,7 +776,7 @@ h2 {
   color: rgba(0, 0, 0, 0.89); }
 
 input {
-  font-family: "Interface", "Helvetica";
+  font-family: "Camphor", "Interface", "Helvetica";
   font-size: 12px;
   line-height: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -800,7 +803,6 @@ textarea {
 .card {
   border-radius: 8px;
   box-shadow: 0 0 13px 0 rgba(161, 161, 161, 0.33);
-  max-height: 70vh;
   padding: 16px;
   overflow-x: hidden;
   background-color: white; }
@@ -879,7 +881,7 @@ button {
     .nav-section > div > .card {
       height: 100%; }
     .nav-section > div:last-child {
-      margin-right: 0px; }
+      margin: 0px; }
   .nav-section .nav-section-header {
     display: flex;
     flex-direction: row;
@@ -898,7 +900,7 @@ button {
   text-align: right;
   font-size: 11px;
   line-height: 12px;
-  margin-bottom: 4px;
+  margin-top: 8px;
   color: rgba(0, 0, 0, 0.3); }
   .paginated-table .pagination > div, .paginated-table .pagination > i {
     margin: 0 0 0 8px; }
@@ -985,7 +987,9 @@ div.button-dropdown {
     flex: 3;
     text-overflow: ellipsis; }
   .products-list-item .products-list-name {
-    flex: 9; }
+    flex: 8; }
+  .products-list-item .products-list-unit {
+    flex: 3; }
 
 .products-card-inventory .products-card-inventory-item {
   display: flex;
@@ -1088,6 +1092,58 @@ div.create-product-dialog .create-product-description {
   justify-content: flex-end; }
   .products-archive-actions button {
     margin-left: 16px; }
+
+.products-card-attributes h2 {
+  line-height: 42px; }
+.products-card-attributes li {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  line-height: 39px; }
+
+.process-attribute {
+  display: flex;
+  cursor: default; }
+  .process-attribute i {
+    font-size: 12px;
+    line-height: 39px;
+    vertical-align: middle;
+    color: rgba(0, 0, 0, 0.3); }
+  .process-attribute > div {
+    margin-left: 8px; }
+    .process-attribute > div:first-child {
+      margin-left: 0; }
+  .process-attribute .process-attribute-move {
+    flex: 0;
+    min-width: 16px;
+    text-align: center; }
+  .process-attribute .process-attribute-name {
+    flex: 1; }
+  .process-attribute .process-attribute-type {
+    flex: 0;
+    text-align: right; }
+  .process-attribute .process-attribute-more {
+    flex: 0;
+    min-width: 16px;
+    text-align: center; }
+    .process-attribute .process-attribute-more i {
+      display: none; }
+
+.process-attribute:hover .process-attribute-more i {
+  display: block;
+  cursor: pointer; }
+.process-attribute:hover.new-attribute .process-attribute-more i {
+  display: none; }
+
+.process-attribute.new-attribute {
+  color: #2198EE; }
+  .process-attribute.new-attribute i {
+    color: #2198EE;
+    margin-right: 4px; }
+  .process-attribute.new-attribute .process-attribute-move i, .process-attribute.new-attribute .proess-attribute-more i {
+    display: none; }
+
+.process-attribute-creator {
+  display: flex;
+  flex-direction: column; }
 
 .create-process-input {
   display: flex;

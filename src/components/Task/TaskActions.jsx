@@ -12,13 +12,13 @@ import {
   REQUEST_DELETE_FAILURE,
   SELECT,
   PAGE,
-} from '../../APIDataReducer'
+} from '../../Reducers/APIDataReducer'
 import {
     REQUEST_EDIT_TASK,
     REQUEST_EDIT_TASK_SUCCESS,
     MARK_OUTPUT_USED,
-} from '../../TaskReducerExtension'
-import {  TASK, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../ReducerTypes'
+} from '../../Reducers/TaskReducerExtension'
+import {  TASK, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../Reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
 
 export function getTask(task) {

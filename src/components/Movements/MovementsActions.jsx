@@ -3,8 +3,8 @@ import {
   REQUEST, 
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
-} from '../../APIDataReducer'
-import {  MOVEMENTS } from '../../ReducerTypes'
+} from '../../Reducers/APIDataReducer'
+import {  MOVEMENTS } from '../../Reducers/ReducerTypes'
 
 
 export function fetchMovements() {
