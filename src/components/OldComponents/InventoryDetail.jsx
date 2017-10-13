@@ -106,7 +106,7 @@ class InventoryDetail extends React.Component {
 
     this.setState(newState)
 
-    let url = u || api.host + "/ics/inventory/detail-test/"// + props.match.params.id
+    let url = "/ics/inventory/detail-test/"// + props.match.params.id
     let g = {process: props.match.params.id}
     if(this.props.filter) {
       g.products = this.props.filter
@@ -120,20 +120,24 @@ class InventoryDetail extends React.Component {
     this.latestRequestID = random
 
     let component = this
-    fetch(url, g)
-      .done(function (data, d, jqxhr) {
-        if (component.latestRequestID == random) {
-          var tasks = data.results
-          console.log(tasks)
+    api.get(url)
+      .query(g)
+      .end(function (err, res) {
+        if (err || !res.ok) {
+          alert("error!")
+          console.log(err)
+          component.setState({loading: false})
+        }
+
+        else if (component.latestRequestID == random) {
+          let data = res.body
+          let tasks = data.results
           if(u) {
             tasks = update(component.state.tasks, {$push: tasks})
           }
           component.setState({tasks: tasks, next: data.next, loading: false})
 
         }
-      }).fail(function () {
-        alert("error!")
-        component.setState({loading: false})
       })
   }
 

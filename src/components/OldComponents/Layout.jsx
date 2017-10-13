@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Link, NavLink} from 'react-router-dom'
+import Img from '../Img/Img'
 
 var teams = {"1": "Bama", "5": "Valencia"};
 
@@ -16,8 +17,14 @@ export default class Navbar extends React.Component {
   }
 
   render () {
-    let options = ["Activity Log", "Inventory", "Zebra labels", "Dymo labels", "Settings", "Task View"]
-    let links = ["", "inventory", "labels", "dymo", "settings", "task"]
+    let o1 = ["Activity Log", "Inventory"]
+    let l1 = ["", "inventory"]
+
+    let o2= [ "Zebra labels", "Dymo labels"]
+    let l2 = ["labels", "dymo"]
+
+    let o3 = ["Processes", "Products",]
+    let l3 = ["processes", "products",]
 
     var navbarSizeClass = "bigNav"
     if (this.props.match.params.id && this.props.match.params.section == "inventory") {
@@ -36,18 +43,33 @@ export default class Navbar extends React.Component {
           <div className="logo">
           </div>
           <div>
-            <ul>
-              { 
-                options.map(function (x, i) {
-                  return (
-                  <li key={i}> 
-                    <NavLink exact to={"/" + links[i]} activeClassName={"active"}>{x}</NavLink>
-                  </li>
-                  )
-              }, this )}
-            </ul>
+            {this.renderNavigationGroup(o1, l1, null)}
+            {this.renderNavigationGroup(o2, l2, "Printing")}
+            {this.renderNavigationGroup(o3, l3, "My factory")}
           </div>
         </div>
+      </div>
+    )
+  }
+
+  renderNavigationGroup(options, links, title) {
+    return (
+      <div className="nav-group">
+        {title?<span>{title}</span>:null}
+        <ul>
+        {
+          options.map(function (x, i) {
+            return (
+            <li key={i}>
+              <NavLink exact to={"/" + links[i]} activeClassName={"active"}>
+              <Img src={links[i]||"activity"} className="nav-icon" />
+              {x}
+              </NavLink>
+            </li>
+            )
+          }, this )
+        }
+        </ul>
       </div>
     )
   }

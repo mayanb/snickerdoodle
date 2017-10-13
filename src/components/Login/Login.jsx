@@ -50,33 +50,35 @@ class Login extends React.Component {
 
   renderLogin() {
     return (
-      <div className="login-box">
-        <h1>Log in</h1>
-        {this.state.failedAuthentication ? <span>Incorrect username or password.</span> : false }
-        <form>
-          <input 
-            type="text" 
-            value={this.state.username} 
-            onChange={(e) => this.handleChange('username', e.target.value)}
-            className="login-username"
-            name="username" 
-            placeholder="username" 
-          />
-          <input 
-            type="password" 
-            value={this.state.password} 
-            onChange={(e) => this.handleChange('password', e.target.value)}
-            className="login-password"
-            name="password" 
-            placeholder="password" 
-          />
-          <button 
-            type="submit" 
-            disabled={!this.state.username.length || !this.state.password.length} 
-            className="login-submit" 
-            onClick={this.handleSubmit.bind(this)}
-          >Log in</button>
-        </form>
+      <div className="login">
+        <div className="login-box">
+          {this.state.failedAuthentication ? <span>Incorrect username or password.</span> : false }
+          <form>
+            <span>Welcome to Polymer.</span>
+            <input 
+              type="text" 
+              value={this.state.username} 
+              onChange={(e) => this.handleChange('username', e.target.value)}
+              className="login-username"
+              name="username" 
+              placeholder="username" 
+            />
+            <input 
+              type="password" 
+              value={this.state.password} 
+              onChange={(e) => this.handleChange('password', e.target.value)}
+              className="login-password"
+              name="password" 
+              placeholder="password" 
+            />
+            <button 
+              type="submit" 
+              disabled={!this.state.username.length || !this.state.password.length} 
+              className="login-submit" 
+              onClick={this.handleSubmit.bind(this)}
+            >Log in</button>
+          </form>
+        </div>
       </div>
     )
   }
