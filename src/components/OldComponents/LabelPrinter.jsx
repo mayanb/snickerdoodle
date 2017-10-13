@@ -21,11 +21,11 @@ var getOptions = function(input, callback) {
       limit: true,
       ordering: '-created_at',
       label: input,
-      team: window.localStorage.getItem("team") || "1"
     }
-      $.get(api.host + "/ics/tasks/search/", params).done(function (data) {
-        console.log(data)
-        var options = data.results.map(function (x) {
+      api.get("/ics/tasks/search/")
+        .query(params)
+        .end(function (err,data) {
+        var options = data.body.results.map(function (x) {
           return { value: x.id, label: x.display, data: x}
         })
         callback(null, {options : options, complete: false})

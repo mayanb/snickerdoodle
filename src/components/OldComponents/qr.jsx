@@ -8,10 +8,10 @@ let BrowserPrint = window.BrowserPrint
 let dymo = window.dymo
 
 function mountQR() {
-  // if(dymo.label.framework.init)
-  //   dymo.label.framework.init(init)
-  // else
-  // init()
+  if(dymo.label.framework.init)
+    dymo.label.framework.init(init)
+  else
+   init()
 }
 
 /* function : init
@@ -20,6 +20,12 @@ function mountQR() {
  */
 
 function init() {
+  let check = dymo.label.framework.checkEnvironment()
+  if (check.errorDetails.length > 0) {
+    alert(
+      `The dymo label software refused to connect. Please make sure the dymo app in your toolbar is running and refresh the page.` 
+    )
+  }
 }
 
 function print(numLabels, text, success, always) {
@@ -89,59 +95,59 @@ function printQRs_zebra(uuids, task, notes) {
         ^XZ`
     })
 
-    // BrowserPrint.getDefaultDevice("printer", function(device) {
-    //   device.send(zpl, undefined, errorCallback);
-    // })
+    BrowserPrint.getDefaultDevice("printer", function(device) {
+      device.send(zpl, undefined, errorCallback);
+    })
   } catch (e) {
     alert(e.message || e)
   }
 }
 
 function printQRs_dymo(uuids, qrcode) {
-  // try {
+  try {
 
-  //   // get a printer 
-  //   let printer = getPrinter()
+    // get a printer 
+    let printer = getPrinter()
 
-  //   // clear the current qr code
-  //   qrcode.clear()
+    // clear the current qr code
+    qrcode.clear()
 
-  //   // get the label printing xml
-  //   var label = dymo.label.framework.openLabelXml(getXML())
-  //   var labelSetBuilder = new dymo.label.framework.LabelSetBuilder()
+    // get the label printing xml
+    var label = dymo.label.framework.openLabelXml(getXML())
+    var labelSetBuilder = new dymo.label.framework.LabelSetBuilder()
 
-  //   // convert the svg to an image url
-  //   var DOMURL = this.URL || this.webkitURL || this;
-  //   var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
-  //   var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
-  //   var url = DOMURL.createObjectURL(svg);
+    // convert the svg to an image url
+    var DOMURL = window.URL || window.webkitURL || window;
+    var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
+    var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+    var url = DOMURL.createObjectURL(svg);
 
-  //   // create an image and set the URL to the svg image. Then when it's loaded,
-  //   // convert the svg to canvas, and then attach it to the label record
-  //   // And then attach the qr code.
-  //   var img = new Image();
-  //   img.onload = function() {
-  //     var canvas = document.getElementById('canvastest').querySelector('canvas')
-  //     var ctx = canvas.getContext('2d');
+    // create an image and set the URL to the svg image. Then when it's loaded,
+    // convert the svg to canvas, and then attach it to the label record
+    // And then attach the qr code.
+    var img = new Image();
+    img.onload = function() {
+      var canvas = document.getElementById('canvastest').querySelector('canvas')
+      var ctx = canvas.getContext('2d');
 
-  //     uuids.map(function (uuid) {
-  //       createBackingImage(ctx, img, uuid)
-  //       let backingImage = canvas.toDataURL().substr('data:image/png;base64,'.length)
-  //       let qrImage = getQRimage(qrcode, uuid)
-  //       let record = labelSetBuilder.addRecord()
-  //       record.setText('qrImage', qrImage)
-  //       record.setText('backingImage', backingImage)
-  //     })
+      uuids.map(function (uuid) {
+        createBackingImage(ctx, img, uuid)
+        let backingImage = canvas.toDataURL().substr('data:image/png;base64,'.length)
+        let qrImage = getQRimage(qrcode, uuid)
+        let record = labelSetBuilder.addRecord()
+        record.setText('qrImage', qrImage)
+        record.setText('backingImage', backingImage)
+      })
 
-  //     // print the qr code
-  //     label.print(printer, "", labelSetBuilder)
-  //     qrcode.clear()
-  //   }
+      // print the qr code
+      label.print(printer, "", labelSetBuilder)
+      qrcode.clear()
+    }
 
-  //   img.src = url;
-  // }  catch(e) {
-  //   alert(e.message || e)
-  // }
+    img.src = url;
+  }  catch(e) {
+    alert(e.message || e)
+  }
 }
 
 // the backing image is all the text
@@ -171,26 +177,26 @@ function getQRimage(qrcode, uuid) {
  * Gets a DYMO printer. TODO: Maybe update this to use CUPS API?
  */
 function getPrinter() {
-  // // select printer to print on
-  // // for simplicity sake just use the first LabelWriter printer
-  // var printers = dymo.label.framework.getPrinters();
-  // console.log(printers)
-  // if (!printers || printers.length == 0)
-  //   throw "No DYMO printers are installed. Install DYMO printers."
+  // select printer to print on
+  // for simplicity sake just use the first LabelWriter printer
+  var printers = dymo.label.framework.getPrinters();
+  console.log(printers)
+  if (!printers || printers.length == 0)
+    throw "No DYMO printers are installed. Install DYMO printers."
 
-  // var i = -1;
-  // for (var j = 0; j < printers.length; ++j) {
-  //   var printer = printers[j];
-  //   if (printer.printerType == "LabelWriterPrinter" && printer.isConnected) {
-  //     i = j
-  //     break;
-  //   }
-  // }
+  var i = -1;
+  for (var j = 0; j < printers.length; ++j) {
+    var printer = printers[j];
+    if (printer.printerType == "LabelWriterPrinter" && printer.isConnected) {
+      i = j
+      break;
+    }
+  }
 
-  // if (i == -1) 
-  //   throw "No DYMO printers are connected."
+  if (i == -1) 
+    throw "No DYMO printers are connected."
 
-  // return printers[i].name
+  return printers[i].name
 
 }
 

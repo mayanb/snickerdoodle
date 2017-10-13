@@ -712,7 +712,11 @@ html, body {
   z-index: 1; }
 
 .application-content {
+<<<<<<< HEAD
   padding-left: 150px;
+=======
+  padding-left: 200px;
+>>>>>>> 730313a49999b9ff977525cb05536a7fe587594b
   margin-right: 64px;
   flex-grow: 1; }
 
