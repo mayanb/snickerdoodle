@@ -714,7 +714,7 @@ html, body {
   z-index: 1; }
 
 .application-content {
-  padding-left: 64px;
+  padding-left: 200px;
   margin-right: 64px;
   flex-grow: 1; }
 
