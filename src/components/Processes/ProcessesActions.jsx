@@ -151,6 +151,7 @@ function requestCreateProcessSuccess(json) {
   return {
     type: REQUEST_CREATE_SUCCESS,
     item: json,
+    sort: alphabetize,
     name: PROCESSES,
   }
 }

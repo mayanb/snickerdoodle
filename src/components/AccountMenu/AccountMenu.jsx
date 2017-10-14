@@ -52,6 +52,7 @@ class AccountMenu extends React.Component {
 	          >
 	            <div className="account-menu">
 	              { this.renderSwitchAccounts() }
+	              { this.renderTeamSettings() }
 	              { this.renderAddAccount() }
 	              { this.renderLogout() }
 	            </div>
@@ -65,7 +66,7 @@ class AccountMenu extends React.Component {
 		return (
 			<div className="current-account">
 				<Icon size="18px" />
-				<span>{`${data[ui.activeUser].user.first_name} ${data[ui.activeUser].user.last_name}`}</span>
+				<span>{`${data[ui.activeUser].user.team_name} |  @${data[ui.activeUser].user.username}`}</span>
 				<i className="material-icons">arrow_drop_down</i>
 			</div>
 		)
@@ -87,6 +88,14 @@ class AccountMenu extends React.Component {
 	        return <Account key={tid} onClick={(e) => this.handleTeamChange(tid)} team={data[tid].user} />
 	      }, this)
 	    }
+	    </div>
+	  )
+	}
+
+	renderTeamSettings() {
+	  return (
+	    <div className="menu-section">
+	      <Button secondary onClick={() => window.location.href= 'team'}>Team settings</Button>
 	    </div>
 	  )
 	}

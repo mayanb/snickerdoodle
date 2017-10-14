@@ -12,7 +12,8 @@ function get(path) {
 
 	let team = 1
 	try {
-		team = JSON.parse(window.localStorage.getItem('users')).ui.activeUser
+		let users = JSON.parse(window.localStorage.getItem('users'))
+		team = users.data[users.ui.activeUser].user.team
 	} catch(e) {
 
 	}
@@ -29,7 +30,8 @@ function post(path) {
 	let team = -1
 	let token = ""
 	try {
-		team = JSON.parse(window.localStorage.getItem('users')).ui.activeUser
+		let users = JSON.parse(window.localStorage.getItem('users'))
+		team = users.data[users.ui.activeUser].user.team
 		token = JSON.parse(window.localStorage.getItem('users')).data[team].token
 	} catch(e) {
 		
@@ -50,7 +52,8 @@ function put(path) {
 	let team = -1
 	let token = ""
 	try {
-		team = JSON.parse(window.localStorage.getItem('users')).ui.activeUser
+		let users = JSON.parse(window.localStorage.getItem('users'))
+		team = users.data[users.ui.activeUser].user.team
 		token = JSON.parse(window.localStorage.getItem('users')).data[team].token
 	} catch(e) {
 		

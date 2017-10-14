@@ -19,6 +19,7 @@ import Dash from '../OldComponents/Dash.jsx'
 import PrivateRoute from '../Router/PrivateRoute'
 import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
+import TeamSettings from '../TeamSettings/TeamSettings'
 
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 
@@ -55,6 +56,7 @@ function App(props) {
 		    <Route path={"/processes/:id?"} component={Processes} />
 		    <Route path={"/products/:id?"} component={Products} />
 		    <Route path={"/attributetest"} component={TaskAttributeTest} />
+		    <Route path={"/team"} component={TeamSettings} />
 	  	</div>
 		</div>
 	)
