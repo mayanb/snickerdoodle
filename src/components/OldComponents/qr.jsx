@@ -1,5 +1,6 @@
 //import dymo from 'dymo'
 import $ from 'jquery'
+import api from '../WaffleconeAPI/api'
 //import QRCode from 'qrcodejs'
 //import BrowserPrint from 'browserprint'
 
@@ -30,7 +31,7 @@ function init() {
 
 function print(numLabels, text, success, always) {
   $.ajax({
-      url: "codes/",
+      url: api.host + "/codes/",
       data: {count : numLabels},
     })
   .done(function (data) {
@@ -69,6 +70,7 @@ function calibrate() {
 }
 
 function printQRs_zebra(uuids, task, notes) {
+  console.log("printing")
   try {
     var zpl = ""
     uuids.map(function (uuid) {
