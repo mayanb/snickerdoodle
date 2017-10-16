@@ -52,7 +52,6 @@ class AccountMenu extends React.Component {
 	          >
 	            <div className="account-menu">
 	              { this.renderSwitchAccounts() }
-	              { this.renderTeamSettings() }
 	              { this.renderAddAccount() }
 	              { this.renderLogout() }
 	            </div>
@@ -85,7 +84,7 @@ class AccountMenu extends React.Component {
 	      Object.keys(data).map(function (tid, i) {
 	        if (tid == ui.activeUser || !data[tid].user || !data[tid].user.username)
 	          return null
-	        return <Account key={tid} onClick={(e) => this.handleTeamChange(tid)} team={data[tid].user} />
+	        return <Account key={tid} onClick={(e) => this.handleTeamChange(tid)} user={data[tid].user} />
 	      }, this)
 	    }
 	    </div>
@@ -95,7 +94,7 @@ class AccountMenu extends React.Component {
 	renderTeamSettings() {
 	  return (
 	    <div className="menu-section">
-	      <Button secondary onClick={() => window.location.href= 'team'}>Team settings</Button>
+	      <Button secondary onClick={() => window.location.href= '/team'}>Team settings</Button>
 	    </div>
 	  )
 	}

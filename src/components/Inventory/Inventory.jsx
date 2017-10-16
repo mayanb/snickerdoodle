@@ -126,36 +126,10 @@ export default class Inventory extends React.Component {
 }
 
 class Content extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      fixed: false,
-    }
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll.bind(this))
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-  }
-
-  handleScroll(e) {
-    if (this && this.state) {
-      if (e.srcElement.scrollingElement.scrollTop > 176) {
-        this.setState({fixed: true})
-      } else {
-        this.setState({fixed: false})
-      }
-    }
-  }
-
 
   render() {
     let props = this.props
-    var contentArea = <InventoryList fixed={this.state.fixed} processes={props.processes} selected={props.match.params.id} />
+    var contentArea = <InventoryList  processes={props.processes} selected={props.match.params.id} />
     if (props.loading) {
       contentArea = <Loading />
     } else if (!props.processes || props.processes.length == 0) {
@@ -192,12 +166,47 @@ function Rule(props) {
   )
 }
 
+class IH extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      fixed: false,
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll.bind(this))
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
+  }
+
+  handleScroll(e) { 
+    if (this && this.state) {
+      if (e.srcElement.scrollingElement.scrollTop > 176) {
+        this.setState({fixed: true})
+      } else {
+        this.setState({fixed: false})
+      }
+    }
+  }
+
+
+  render() {
+    return (
+      <div className={this.state.fixed?"fixed":""}>
+        <InventoryItem i={"no"} header={true} output_desc={"PRODUCT TYPE"} count={"COUNT"} unit={"UNIT"} />
+      </div>
+    )
+  }
+}
+
 function InventoryList(props) {
   return (
     <div className={"inventory-list " + (props.fixed?"list-padded":"")}>
-      <div className={props.fixed?"fixed":""}>
-        <InventoryItem i={"no"} header={true} output_desc={"PRODUCT TYPE"} count={"COUNT"} unit={"UNIT"} />
-      </div>
+      <IH />
       {
         props.processes.map(function (process, i) {
           return  (
@@ -226,7 +235,7 @@ function InventoryItem(props) {
         <Img className="inventory-icon" src={icon.substring(0, icon.length - 4) + "@3x"} />
       </div>
       <div className="i-code">
-        <span>{props.process_code?`${props.process_code}-${props.product_code}`:"CODE"}</span>
+        <span>{props.process_code || "CODE"}</span>
       </div>
       <div className="i-outputdesc">
         <span>{props.output_desc.sentenceCase()}</span>

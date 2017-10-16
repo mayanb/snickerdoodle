@@ -625,6 +625,8 @@ span {
     margin: 0px 36px; }
     .d-top .nav-left .filters {
       max-width: 900px; }
+  .d-top .nav-team {
+    margin: 0 36px; }
 
 h1 {
   font-size: 20px;
@@ -1083,9 +1085,12 @@ div.create-product-dialog .create-product-description {
   display: flex;
   margin: 12px;
   cursor: pointer; }
-  .account .name {
-    font-weight: 500; }
-  .account .username {
+  .account span.name {
+    display: block;
+    font-weight: 500;
+    font-size: 14px; }
+  .account span.username {
+    display: block;
     color: #2198EE; }
 
 .current-account div, .current-account span, .current-account i {
