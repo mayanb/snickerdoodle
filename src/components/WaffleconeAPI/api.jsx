@@ -25,7 +25,7 @@ function get(path) {
 	return request
 		.get(url)
 		//.withCredentials()
-		.query({created_by: team, team: team})
+		.query({team_created_by: team, team: team})
 }
 
 function post(path) {
@@ -46,7 +46,7 @@ function post(path) {
 	.set('Content-Type', 'application/json')
 	//.set('X-CSRFToken', getCookie('csrftoken'))
 	//.withCredentials()
-	.send({team: team, created_by: team})
+	.send({team: team, team_created_by: team})
 
 }
 
