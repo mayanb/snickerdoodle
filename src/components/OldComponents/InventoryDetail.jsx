@@ -219,24 +219,30 @@ class InventoryDetail extends React.Component {
 
     console.log(itemsToDeliver)
 
-    let team = Teams.all().auth_active
+    let users = JSON.parse(window.localStorage.getItem('users-v2'))
+    let user = users.data[users.ui.activeUser].user
+    let team = user.team
     let component = this
     let url = '/ics/movements/create/'
 
     let params = {
       status: "RC", 
-      origin: team, 
-      destination: destination,  
+      origin: user.profile_id,
+      destination: null,
+      team_origin: user.team, 
+      team_destination: destination,  
       notes: "DELIVERED VIA WEB",
       items: itemsToDeliver
     }
+
+    console.log(JSON.stringify(params))
 
     let headers = {
       contentType: 'application/json',
       processData: false,
     }
 
-    post(url, JSON.stringify(params), headers)
+    post(api.host + url, JSON.stringify(params), headers)
       .done(function (data) {
         if (callback) 
           callback()
@@ -326,7 +332,7 @@ class DeliveryDialog extends React.Component {
   }
 
   render() {
-    let teams = [{value: 1, label: "Bama Pirates"}, {value: 5, label: "Valencia Wizards"}, {value: 3, label: "Fulfillment"}, {value: null, label: "Other"}]
+    let teams = [{value: 1, label: "Bama Pirates"}, {value: 2, label: "Valencia Wizards"}, {value: 5, label: "Fulfillment"}, {value: null, label: "Other"}]
 
     if (this.state.done) {
       return (

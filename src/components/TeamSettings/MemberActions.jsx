@@ -23,7 +23,7 @@ export function fetchTeamMembers() {
     dispatch(requestMembers())
 
     // actually fetch 
-    return api.get('/ics/v2/members/')
+    return api.get('/ics/members/')
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestMembersFailure(err))
@@ -83,7 +83,7 @@ export function postCreateMember(json, success) {
   return function (dispatch) {
     dispatch(requestCreateMember())
 
-    return api.post('/ics/v2/members/')
+    return api.post('/ics/members/')
       .send(json)
       .end(function (err, res) {
         if (err || !res.ok)
