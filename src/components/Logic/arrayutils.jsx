@@ -1,5 +1,7 @@
 
 export function findPosition(array, item, comparator) {
+	if (!comparator)
+		return array.length
 	return positionHelper(array, item, comparator, 0, array.length - 1)
 }
 

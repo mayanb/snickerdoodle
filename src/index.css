@@ -264,161 +264,6 @@ div#blocker, #canvastest {
     -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 0; } }
-.inventory {
-  display: flex; }
-  .inventory .inventory-list {
-    flex: 1;
-    max-width: 900px;
-    margin: 0 auto;
-    padding-top: 40px; }
-    .inventory .inventory-list h2 {
-      font-size: 20px; }
-    .inventory .inventory-list.smallDetail {
-      max-height: 100vh;
-      overflow: scroll; }
-  .inventory .inventory-detail {
-    flex: 0 0 20em;
-    display: flex;
-    flex-direction: column;
-    background-color: #fafafa;
-    min-height: 100vh;
-    max-height: 100vh;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.12);
-    transition: flex 0.3s; }
-    .inventory .inventory-detail.smallDetail {
-      flex: 0 0 0.001px; }
-      .inventory .inventory-detail.smallDetail div {
-        display: none; }
-    .inventory .inventory-detail .i-detail-header {
-      background-color: white;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-      padding: 16px;
-      border-left: 4px solid #43A6F6;
-      flex: 0; }
-      .inventory .inventory-detail .i-detail-header .i-detail-outputdesc {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 12px;
-        text-transform: capitalize; }
-      .inventory .inventory-detail .i-detail-header .i-detail-count {
-        color: rgba(0, 0, 0, 0.4); }
-    .inventory .inventory-detail .i-detail-content {
-      flex: 1;
-      padding: 0 16px;
-      margin: 8px 0px;
-      overflow: scroll; }
-      .inventory .inventory-detail .i-detail-content .task-title {
-        font-weight: bold;
-        padding-bottom: 4px;
-        display: flex;
-        flex-direction: row; }
-        .inventory .inventory-detail .i-detail-content .task-title a {
-          flex: 1; }
-        .inventory .inventory-detail .i-detail-content .task-title button {
-          border: 0;
-          background-color: rgba(0, 0, 0, 0);
-          color: #49A8F3; }
-      .inventory .inventory-detail .i-detail-content .inventory-task {
-        margin: 0px -16px;
-        padding: 16px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
-      .inventory .inventory-detail .i-detail-content .item {
-        display: flex;
-        flex-direction: row;
-        padding: 2px 8px; }
-        .inventory .inventory-detail .i-detail-content .item .item-img {
-          height: 12px;
-          width: 12px;
-          display: inline-block; }
-          .inventory .inventory-detail .i-detail-content .item .item-img img {
-            height: 12px; }
-        .inventory .inventory-detail .i-detail-content .item > div > div {
-          vertical-align: middle;
-          display: inline-block;
-          margin-right: 8px; }
-          .inventory .inventory-detail .i-detail-content .item > div > div span {
-            padding-right: 8px; }
-          .inventory .inventory-detail .i-detail-content .item > div > div .item-qr {
-            text-transform: uppercase;
-            font-size: 12px;
-            color: rgba(0, 0, 0, 0.4); }
-    .inventory .inventory-detail .i-detail-footer {
-      flex: 0;
-      height: 48px; }
-      .inventory .inventory-detail .i-detail-footer button {
-        height: 100%;
-        width: 100%;
-        font-size: 16px;
-        font-family: "Camphor Pro", Nunito, Overpass, Proxima Nova, sans-serif;
-        background-color: #43A6F6;
-        color: white;
-        border: none; }
-  .inventory a, .inventory a:hover, .inventory a:visited, .inventory a:-webkit-any-link {
-    text-decoration: none;
-    color: rgba(0, 0, 0, 0.64); }
-  .inventory .inventoryClass {
-    display: flex;
-    line-height: 20px;
-    padding: 8px 0px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    cursor: pointer; }
-    .inventory .inventoryClass.inventoryClass-header {
-      font-weight: bold;
-      font-size: 12px;
-      text-transform: uppercase;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.3); }
-    .inventory .inventoryClass > div {
-      padding-right: 16px; }
-      .inventory .inventoryClass > div:last-child {
-        padding-right: 0px; }
-    .inventory .inventoryClass .i-outputdesc {
-      flex: 4; }
-    .inventory .inventoryClass .i-count {
-      flex: 1; }
-    .inventory .inventoryClass .i-unit {
-      flex: 4; }
-    .inventory .inventoryClass .i-date {
-      flex: 2; }
-  .inventory .inventoryClass:hover {
-    background-color: rgba(5, 5, 10, 0.02); }
-  .inventory .inventoryClass.selected {
-    color: #43A6F6;
-    font-weight: bold; }
-
-.unflex {
-  flex: 0; }
-
-.flex {
-  flex: 1; }
-
-div.zero-state {
-  background-color: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
-  padding: 16px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.3); }
-  div.zero-state.zero-state-clean {
-    background-color: white; }
-
-.page.mini {
-  background-color: white;
-  padding: 20px 16px;
-  border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.06);
-  margin: 50px auto; }
-
-.page .page-header {
-  display: flex;
-  flex-direction: row;
-  vertical-align: middle;
-  margin-bottom: 20px; }
-  .page .page-header h2 {
-    flex: 1;
-    font-size: 16px; }
-  .page .page-header .filters {
-    flex: 0;
-    flex-basis: 300px; }
-
 .task-detail {
   margin-left: 36px;
   max-width: 900px; }
@@ -712,16 +557,11 @@ html, body {
   z-index: 1; }
 
 .application-content {
-<<<<<<< HEAD
-  padding-left: 150px;
-=======
-  padding-left: 200px;
->>>>>>> 730313a49999b9ff977525cb05536a7fe587594b
-  margin-right: 64px;
+  padding-left: 144px;
   flex-grow: 1; }
 
 body {
-  font-family: "Camphor", "Interface", "Helvetica";
+  font-family: "Interface", "Helvetica";
   font-size: 0.75em;
   line-height: 0.9em;
   color: #4f4f4f;
@@ -735,27 +575,49 @@ span {
   line-height: 16px; }
 
 .d-nav {
-  background-color: #333C44;
+  z-index: 1;
+  background-color: #373A3D;
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
-  width: 150px;
+  width: 144px;
   color: rgba(255, 255, 255, 0.4);
-  font-size: 14px;
-  line-height: 40px;
+  font-size: 13px;
+  line-height: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
-  .d-nav ul {
+  .d-nav .nav-group {
+    border-bottom: 1px solid rgba(39, 43, 46, 0.5);
     padding-left: 16px; }
+    .d-nav .nav-group span {
+      text-transform: uppercase;
+      font-family: "Apercu Mono";
+      font-size: 10px;
+      display: block;
+      padding: 16px 0;
+      color: rgba(255, 255, 255, 0.2); }
+    .d-nav .nav-group li {
+      margin-bottom: 16px; }
+      .d-nav .nav-group li .nav-icon {
+        height: 16px;
+        vertical-align: top;
+        opacity: 0.4;
+        margin-right: 8px; }
+      .d-nav .nav-group li:last-child {
+        margin-bottom: 15px; }
+      .d-nav .nav-group li a.active {
+        color: rgba(255, 255, 255, 0.9); }
+        .d-nav .nav-group li a.active img {
+          opacity: 1; }
   .d-nav .logo {
-    background-color: #42515F;
-    height: 130px;
-    margin-bottom: 32px; }
+    background-color: #272B2E;
+    margin-bottom: 16px;
+    height: 128px; }
 
 .d-top {
   display: flex;
-  min-height: 120px;
+  min-height: 128px;
   align-items: center; }
   .d-top .nav-left {
     flex: 1;
@@ -763,6 +625,8 @@ span {
     margin: 0px 36px; }
     .d-top .nav-left .filters {
       max-width: 900px; }
+  .d-top .nav-team {
+    margin: 0 36px; }
 
 h1 {
   font-size: 20px;
@@ -780,7 +644,7 @@ h2 {
   color: rgba(0, 0, 0, 0.89); }
 
 input {
-  font-family: "Camphor", "Interface", "Helvetica";
+  font-family: "Interface", "Helvetica";
   font-size: 12px;
   line-height: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -1221,9 +1085,12 @@ div.create-product-dialog .create-product-description {
   display: flex;
   margin: 12px;
   cursor: pointer; }
-  .account .name {
-    font-weight: 500; }
-  .account .username {
+  .account span.name {
+    display: block;
+    font-weight: 500;
+    font-size: 14px; }
+  .account span.username {
+    display: block;
     color: #2198EE; }
 
 .current-account div, .current-account span, .current-account i {
@@ -1310,5 +1177,227 @@ div.create-product-dialog .create-product-description {
   .task-flag .task-flag-unflag {
     color: rgba(255, 255, 255, 0.7);
     cursor: pointer; }
+
+.login {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #2198EE;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+  .login .login-box form {
+    display: flex;
+    flex-direction: column;
+    color: white; }
+    .login .login-box form > input, .login .login-box form > button, .login .login-box form > span {
+      color: white;
+      margin: 10px; }
+    .login .login-box form input {
+      background-color: #0068B4;
+      border: 0px;
+      width: 200px;
+      color: white; }
+      .login .login-box form input::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale; }
+      .login .login-box form input::-webkit-input-placeholder, .login .login-box form input::-moz-placeholder, .login .login-box form input:-ms-input-placeholder, .login .login-box form input:-moz-placeholder {
+        color: rgba(255, 255, 255, 0.3); }
+    .login .login-box form button {
+      background-color: rgba(255, 255, 255, 0.2); }
+
+.inventory .inventory-header {
+  display: flex;
+  padding-left: 36px; }
+  .inventory .inventory-header h2, .inventory .inventory-header div {
+    flex: 1; }
+  .inventory .inventory-header h2 {
+    font-size: 20px;
+    line-height: 32px;
+    padding: 6px 0 9px 0; }
+.inventory .rule {
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1); }
+.inventory .halves {
+  display: flex;
+  background-color: white; }
+.inventory .fixed {
+  position: fixed;
+  flex: 1;
+  padding-right: 30em;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding-left: 144px; }
+.inventory .inventory-list {
+  flex: 1; }
+  .inventory .inventory-list.list-padded {
+    padding-top: 32px; }
+  .inventory .inventory-list h2 {
+    font-size: 20px; }
+  .inventory .inventory-list.smallDetail {
+    max-height: 100vh;
+    overflow: scroll; }
+.inventory .inventory-detail {
+  flex: 0 0 30em;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafafa;
+  min-height: 100vh;
+  max-height: 100vh;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  transition: flex 0.3s; }
+  .inventory .inventory-detail.smallDetail {
+    flex: 0 0 0.001px; }
+    .inventory .inventory-detail.smallDetail div {
+      display: none; }
+  .inventory .inventory-detail .i-detail-header {
+    background-color: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    border-left: 4px solid #43A6F6;
+    flex: 0; }
+    .inventory .inventory-detail .i-detail-header .i-detail-outputdesc {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+      text-transform: capitalize; }
+    .inventory .inventory-detail .i-detail-header .i-detail-count {
+      color: rgba(0, 0, 0, 0.4); }
+  .inventory .inventory-detail .i-detail-content {
+    flex: 1;
+    padding: 0 16px;
+    margin: 8px 0px;
+    overflow: scroll; }
+    .inventory .inventory-detail .i-detail-content .task-title {
+      font-weight: bold;
+      padding-bottom: 4px;
+      display: flex;
+      flex-direction: row; }
+      .inventory .inventory-detail .i-detail-content .task-title a {
+        flex: 1; }
+      .inventory .inventory-detail .i-detail-content .task-title button {
+        border: 0;
+        background-color: rgba(0, 0, 0, 0);
+        color: #49A8F3; }
+    .inventory .inventory-detail .i-detail-content .inventory-task {
+      margin: 0px -16px;
+      padding: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+    .inventory .inventory-detail .i-detail-content .item {
+      display: flex;
+      flex-direction: row; }
+      .inventory .inventory-detail .i-detail-content .item .item-img {
+        height: 12px;
+        width: 12px;
+        display: inline-block; }
+        .inventory .inventory-detail .i-detail-content .item .item-img img {
+          height: 12px; }
+      .inventory .inventory-detail .i-detail-content .item > div > div {
+        vertical-align: middle;
+        display: inline-block;
+        margin-right: 8px; }
+        .inventory .inventory-detail .i-detail-content .item > div > div span {
+          padding-right: 8px; }
+        .inventory .inventory-detail .i-detail-content .item > div > div .item-qr {
+          text-transform: uppercase;
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.4); }
+  .inventory .inventory-detail .i-detail-footer {
+    flex: 0;
+    height: 48px; }
+    .inventory .inventory-detail .i-detail-footer button {
+      height: 100%;
+      width: 100%;
+      font-size: 16px;
+      font-family: "Camphor Pro", Nunito, Overpass, Proxima Nova, sans-serif;
+      background-color: #43A6F6;
+      color: white;
+      border: none; }
+.inventory a, .inventory a:hover, .inventory a:visited, .inventory a:-webkit-any-link {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.64); }
+.inventory .inventoryClass {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 16px 0 15px 16px;
+  margin-left: 20px;
+  cursor: pointer;
+  background-color: white; }
+  .inventory .inventoryClass.inventoryClass-header {
+    font-family: 'Apercu Mono';
+    padding: 8px 0 7px 16px;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 10px;
+    line-height: 16px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
+  .inventory .inventoryClass > div {
+    padding-right: 48px;
+    white-space: nowrap;
+    overflow: ellipsis; }
+  .inventory .inventoryClass .i-icon {
+    flex: 0 0 16px; }
+    .inventory .inventoryClass .i-icon img {
+      height: 16px;
+      vertical-align: middle; }
+  .inventory .inventoryClass .i-code {
+    font-family: 'Apercu Mono';
+    flex: 2; }
+  .inventory .inventoryClass .i-outputdesc {
+    flex: 4; }
+  .inventory .inventoryClass .i-count {
+    font-family: 'Apercu Mono';
+    flex: 1;
+    text-align: right; }
+  .inventory .inventoryClass .i-unit {
+    flex: 2; }
+  .inventory .inventoryClass .i-date {
+    flex: 1;
+    text-align: right; }
+.inventory .inventoryClass:hover {
+  background-color: rgba(5, 5, 10, 0.02); }
+.inventory .inventoryClass.selected {
+  color: #43A6F6;
+  font-weight: bold; }
+
+.unflex {
+  flex: 0; }
+
+.flex {
+  flex: 1; }
+
+div.zero-state {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  padding: 16px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.3); }
+  div.zero-state.zero-state-clean {
+    background-color: white; }
+
+.page.mini {
+  background-color: white;
+  padding: 20px 16px;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.06);
+  margin: 50px auto; }
+
+.page .page-header {
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  margin-bottom: 20px; }
+  .page .page-header h2 {
+    flex: 1;
+    font-size: 16px; }
+  .page .page-header .filters {
+    flex: 0;
+    flex-basis: 300px; }
 
 /*# sourceMappingURL=index.css.map */

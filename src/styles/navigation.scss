@@ -1,5 +1,6 @@
 .d-nav {
-	background-color: #333C44;
+	z-index: 1;
+	background-color: #373A3D;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -7,25 +8,59 @@
 	width: $nav-width;
 
 	color: rgba(255,255,255, 0.4);
-	font-size: 14px;
-	line-height: 40px;
+	font-size: 13px;
+	line-height: 16px;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-	ul {
+	.nav-group {
+		border-bottom: 1px solid rgba(39,43,46,0.5);
 		padding-left: 16px;
+
+		span {
+			text-transform: uppercase;
+			font-family: "Apercu Mono";
+			font-size: 10px;
+			display: block;
+			padding: 16px 0;
+			color: rgba(255,255,255,0.2);
+		}
+
+		li {
+			margin-bottom: 16px;
+
+			.nav-icon {
+				height: 16px;
+				vertical-align: top;
+				opacity: 0.4;
+				margin-right: 8px;
+			}
+
+			// make room for that border
+			&:last-child {
+				margin-bottom: 15px;
+			}
+
+			a.active {
+				color: rgba(255,255,255,0.9);
+				img {
+					opacity: 1;
+				}
+			}
+		}
+
 	}
 
 	.logo {
-		background-color: #42515F;
-		height: 130px;
-		margin-bottom: 32px;
+		background-color: #272B2E;
+		margin-bottom: 16px;
+		height: 128px;
 	}
 }
 
 .d-top {
 	display: flex;
-	min-height: 120px;
+	min-height: 128px;
 	align-items: center;
 	
 	.nav-left {
@@ -36,6 +71,10 @@
 		.filters {
 			max-width: 900px;
 		}
+	}
+
+	.nav-team {
+		margin: 0 36px;
 	}
 }
 

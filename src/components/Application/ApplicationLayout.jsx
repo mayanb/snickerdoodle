@@ -12,13 +12,14 @@ import ZebraPrinter from '../OldComponents/ZebraPrinter.jsx'
 import Navbar from '../OldComponents/Layout.jsx'
 import FactoryMap from '../OldComponents/FactoryMap.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
-import Inventory from '../OldComponents/Inventory2.jsx'
+import Inventory from '../Inventory/Inventory.jsx'
 import Task from '../Task/Task.jsx'
 import Dash from '../OldComponents/Dash.jsx'
 
 import PrivateRoute from '../Router/PrivateRoute'
 import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
+import TeamSettings from '../TeamSettings/TeamSettings'
 
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 
@@ -55,6 +56,7 @@ function App(props) {
 		    <Route path={"/processes/:id?"} component={Processes} />
 		    <Route path={"/products/:id?"} component={Products} />
 		    <Route path={"/attributetest"} component={TaskAttributeTest} />
+		    <Route path={"/team"} component={TeamSettings} />
 	  	</div>
 		</div>
 	)

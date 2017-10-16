@@ -106,7 +106,7 @@ class InventoryDetail extends React.Component {
 
     this.setState(newState)
 
-    let url = u || api.host + "/ics/inventory/detail-test/"// + props.match.params.id
+    let url = "/ics/inventory/detail-test/"// + props.match.params.id
     let g = {process: props.match.params.id}
     if(this.props.filter) {
       g.products = this.props.filter
@@ -120,20 +120,24 @@ class InventoryDetail extends React.Component {
     this.latestRequestID = random
 
     let component = this
-    fetch(url, g)
-      .done(function (data, d, jqxhr) {
-        if (component.latestRequestID == random) {
-          var tasks = data.results
-          console.log(tasks)
+    api.get(url)
+      .query(g)
+      .end(function (err, res) {
+        if (err || !res.ok) {
+          alert("error!")
+          console.log(err)
+          component.setState({loading: false})
+        }
+
+        else if (component.latestRequestID == random) {
+          let data = res.body
+          let tasks = data.results
           if(u) {
             tasks = update(component.state.tasks, {$push: tasks})
           }
           component.setState({tasks: tasks, next: data.next, loading: false})
 
         }
-      }).fail(function () {
-        alert("error!")
-        component.setState({loading: false})
       })
   }
 
@@ -215,24 +219,30 @@ class InventoryDetail extends React.Component {
 
     console.log(itemsToDeliver)
 
-    let team = Teams.all().auth_active
+    let users = JSON.parse(window.localStorage.getItem('users-v2'))
+    let user = users.data[users.ui.activeUser].user
+    let team = user.team
     let component = this
-    let url = '/ics/movements/create/'
+    let url = '/ics/v2/movements/create/'
 
     let params = {
       status: "RC", 
-      origin: team, 
-      destination: destination,  
+      origin: user.profile_id,
+      destination: null,
+      team_origin: user.team, 
+      team_destination: destination,  
       notes: "DELIVERED VIA WEB",
       items: itemsToDeliver
     }
+
+    console.log(JSON.stringify(params))
 
     let headers = {
       contentType: 'application/json',
       processData: false,
     }
 
-    post(url, JSON.stringify(params), headers)
+    post(api.host + url, JSON.stringify(params), headers)
       .done(function (data) {
         if (callback) 
           callback()
@@ -322,7 +332,7 @@ class DeliveryDialog extends React.Component {
   }
 
   render() {
-    let teams = [{value: 1, label: "Bama Pirates"}, {value: 5, label: "Valencia Wizards"}, {value: 3, label: "Fulfillment"}, {value: null, label: "Other"}]
+    let teams = [{value: 1, label: "Bama Pirates"}, {value: 2, label: "Valencia Wizards"}, {value: 5, label: "Fulfillment"}, {value: null, label: "Other"}]
 
     if (this.state.done) {
       return (
