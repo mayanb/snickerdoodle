@@ -15,9 +15,7 @@ var getOptions = function(input, callback) {
       limit: true,
       ordering: '-created_at',
       label: input,
-      team: window.localStorage.getItem("team") || "1"
     }
-      console.log(input)
 
     api.get('/ics/tasks/search/')
       .query(params)

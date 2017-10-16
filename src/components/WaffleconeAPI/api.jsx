@@ -7,6 +7,7 @@ import Teams from '../Teams/Teams'
 //let host = 'http://127.0.0.1:8000'
 let host = 'http://localhost:8000'
 
+
 function get(path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
