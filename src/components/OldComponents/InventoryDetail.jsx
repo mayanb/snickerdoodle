@@ -223,7 +223,7 @@ class InventoryDetail extends React.Component {
     let user = users.data[users.ui.activeUser].user
     let team = user.team
     let component = this
-    let url = '/ics/movements/create/'
+    let url = '/ics/v2/movements/create/'
 
     let params = {
       status: "RC", 
