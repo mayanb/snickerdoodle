@@ -11,8 +11,9 @@ import Select from 'react-select';
 class AddGoalDialog extends React.Component {
 	constructor(props) {
 		super(props)
-		this.handleAddGoal = this.handleAddGoal.bind(this)
 		this.state = {process_type: null, product_type: null, goal: ""}
+		this.handleAddGoal = this.handleAddGoal.bind(this)
+
 	}
 
 	componentDidMount() {

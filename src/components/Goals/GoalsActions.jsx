@@ -109,17 +109,17 @@ function requestCreateGoalSuccess(json) {
   }
 }
 
-export function postDeleteGoal(p, index, callback) {
+export function postDeleteGoal(p, index) {
   return function (dispatch) {
     dispatch(requestDeleteGoal(index))
 
-    return api.del('/ics/goals/', p.id)
+    return api.del('/ics/goals/edit/', p.id)
       .end(function (err, res) {
         if (err || !res.ok)
           dispatch(requestDeleteGoalFailure(index, err))
         else {
           dispatch(requestDeleteGoalSuccess(index))
-          callback()
+          // callback()
         }
       })
   }
