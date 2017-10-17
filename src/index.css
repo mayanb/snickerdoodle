@@ -1400,4 +1400,38 @@ div.zero-state {
     flex: 0;
     flex-basis: 300px; }
 
+.goals {
+  width: 70%;
+  padding: 36px; }
+  .goals .goal {
+    padding: 20px 0; }
+    .goals .goal .goal-details {
+      display: flex; }
+      .goals .goal .goal-details .goal-details-left {
+        display: flex;
+        align-items: center;
+        flex: 1; }
+        .goals .goal .goal-details .goal-details-left .product {
+          font-weight: 700;
+          margin-right: 8px; }
+      .goals .goal .goal-details .goal-details-right {
+        visibility: hidden; }
+    .goals .goal .goal-whole-bar {
+      display: flex;
+      height: 20px;
+      background-color: rgba(0, 0, 0, 0.1);
+      line-height: 20px;
+      border-radius: 4px;
+      text-align: right; }
+      .goals .goal .goal-whole-bar span {
+        padding-right: 8px; }
+    .goals .goal .goal-filled-bar {
+      background-color: #2198EE;
+      color: rgba(255, 255, 255, 0.5);
+      border-radius: 4px 0 0 4px; }
+    .goals .goal:hover .goal-details-right {
+      visibility: visible; }
+    .goals .goal:hover .goal-filled-bar {
+      background-color: #0068B4; }
+
 /*# sourceMappingURL=index.css.map */

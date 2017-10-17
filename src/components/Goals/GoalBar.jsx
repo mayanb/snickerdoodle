@@ -6,10 +6,10 @@ export default function GoalBar(props) {
 	return (
 		<div className={"goal-whole-bar " + (achieved?"goal-achieved":"")}>
       <div className="goal-filled-bar" style={{flex: (proportion + '%')}}>
-        {parseInt(achieved?props.goal.goal:props.goal.actual) || 0}
+        <span>{parseInt(achieved?props.goal.goal:props.goal.actual) || 0}</span>
       </div>
       <div style={{flex: ((100 - proportion) + '%')}}> 
-        {parseInt(achieved?props.goal.actual:props.goal.goal) || 0}
+        <span>{parseInt(achieved?props.goal.actual:props.goal.goal) || 0}</span>
       </div>
     </div>
 	)
