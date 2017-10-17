@@ -70,7 +70,6 @@ export function selectGoal(id) {
 export function postCreateGoal(json, success) {
   return function (dispatch) {
     dispatch(requestCreateGoal())
-
     return api.post('/ics/goals/create/')
       .send(json)
       .send({icon: "default.png"})
@@ -79,7 +78,7 @@ export function postCreateGoal(json, success) {
           dispatch(requestCreateGoalFailure(err))
         else
           dispatch(requestCreateGoalSuccess(res.body))
-          success(res.body.id)
+          //success(res.body.id)
       })
   }
 }

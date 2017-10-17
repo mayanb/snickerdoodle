@@ -30,6 +30,9 @@ function get(path) {
 
 function post(path) {
 	let url = host + path
+	if (path.startsWith('/ics')) {
+		url = host + '/ics/v3' + path.substring(4) 
+	}
 
 	let team = -1
 	let token = ""

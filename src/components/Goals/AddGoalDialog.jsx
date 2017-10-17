@@ -11,6 +11,7 @@ import Select from 'react-select';
 class AddGoalDialog extends React.Component {
 	constructor(props) {
 		super(props)
+		this.handleAddGoal = this.handleAddGoal.bind(this)
 		this.state = {process_type: null, product_type: null, goal: ""}
 	}
 
@@ -75,11 +76,28 @@ class AddGoalDialog extends React.Component {
 	}
 
 	handleAddGoal() {
-		let {users} = this.props 
-		let userprofile = users.data[users.ui.activeUser].user.profile_id
-		let data = update(this.state, {$merge: {userprofile: userprofile}})
-		this.props.dispatch(actions.postCreateGoal(data))
-		this.props.onToggle()
+		console.log(this.state)
+		console.log(this.state.goal)
+		if(!this.state.goal || this.state.goal.trim() === '' || isNaN(Number(this.state.goal)) ) {
+			this.state.goal = undefined
+			alert('Goal must be a valid number')
+		}
+		else if(!this.state.process_type) {
+			this.state.process_type = undefined
+			alert('Process Type must be selected')
+		}
+		else if(!this.state.product_type) {
+			this.state.product_type = undefined
+			alert('Product Type must be selected')
+		}
+		else {
+			let {users} = this.props 
+			let userprofile = users.data[users.ui.activeUser].user.profile_id
+			let data = {userprofile: userprofile, process_type: this.state.process_type.id, product_type: this.state.product_type.id, goal: this.state.goal }
+			this.props.dispatch(actions.postCreateGoal(data))
+			this.props.onToggle()
+		}
+		
 	}
 }
 
