@@ -30,8 +30,11 @@ export default class ApplicationLayoutStable extends React.Component {
       <Router>
 
           <Switch>
+          	<Route path="/" component={TeamSelector} />
           	<Route path="/login" component={Login} />
-          	<PrivateRoute component={App}/>
+          	<Route path='/:team/'>
+		          <PrivateRoute component={App}/>
+		        </Route>
           </Switch>
       </Router>
     )
@@ -43,20 +46,20 @@ function App(props) {
 	return (
 		<div className="layout">
 
-			<Route path="/:section?/:id?" component={Navbar} />
+			<Route path="/:team/:section?/:id?" component={Navbar} />
 
  		 	<div className="application-content">
- 		 		<Route path="/:section?/:id?" component={Topbar} />
-		    <Route exact path={"/"} component={Activity} />
-		    <Route exact path={"/inventory/:id?"} component={Inventory} />
-		    <Route exact path={"/labels/"} component={ZebraPrinter} />
-		    <Route path={"/zebra/"} component={ZebraPrinter} />
-		    <Route path={"/dymo/"} component={LabelPrinter} />
-		    <Route path={"/task/:id?"} component={Task} />
-		    <Route path={"/processes/:id?"} component={Processes} />
-		    <Route path={"/products/:id?"} component={Products} />
-		    <Route path={"/attributetest"} component={TaskAttributeTest} />
-		    <Route path={"/team"} component={TeamSettings} />
+ 		 		<Route path="/:team/:section?/:id?" component={Topbar} />
+		    <Route exact path={"/:team/"} component={Activity} />
+		    <Route exact path={"/:team/inventory/:id?"} component={Inventory} />
+		    <Route exact path={"/:team/labels/"} component={ZebraPrinter} />
+		    <Route path={"/:team/zebra/"} component={ZebraPrinter} />
+		    <Route path={"/:team/dymo/"} component={LabelPrinter} />
+		    <Route path={"/:team/task/:id?"} component={Task} />
+		    <Route path={"/:team/processes/:id?"} component={Processes} />
+		    <Route path={"/:team/products/:id?"} component={Products} />
+		    <Route path={"/:team/attributetest"} component={TaskAttributeTest} />
+		    <Route path={"/:team/team"} component={TeamSettings} />
 	  	</div>
 		</div>
 	)
