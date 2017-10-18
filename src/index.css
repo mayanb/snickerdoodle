@@ -904,6 +904,9 @@ div.create-product-dialog .create-product-description {
   line-height: 16px; }
   .products-card .products-card-section {
     margin-bottom: 16px; }
+  .products-card a.inventorylink {
+    color: #2198EE;
+    cursor: pointer; }
   .products-card .products-card-header {
     display: flex;
     flex-direction: row; }

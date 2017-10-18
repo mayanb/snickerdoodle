@@ -8,6 +8,11 @@
 		//background-color: rgba(255,0,0,0.5);
 	}
 
+	a.inventorylink {
+		color: $theme-color;
+		cursor: pointer;
+	}
+
 	.products-card-header {
 		display: flex;
 		flex-direction: row;
