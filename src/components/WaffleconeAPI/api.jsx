@@ -2,10 +2,10 @@ import request from 'superagent'
 import { getCookie } from '../../csrf.jsx'
 import Teams from '../Teams/Teams'
 
-let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
+// let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
 //let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
 //let host = 'http://127.0.0.1:8000'
-//let host = 'http://localhost:8000'
+let host = 'http://localhost:8000'
 
 
 function get(path) {
@@ -55,6 +55,9 @@ function post(path) {
 
 function put(path) {
 	let url = host + path
+	if (path.startsWith('/ics')) {
+		url = host + '/ics/v3' + path.substring(4) 
+	}
 
 	let team = -1
 	let token = ""
