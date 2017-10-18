@@ -8,10 +8,11 @@ import { INVENTORIES } from '../../Reducers/ReducerTypes'
 
 
 export function fetchInventory(filter) {
+  console.log(filter)
+
   return function (dispatch) {
     // dispatch an action that we are requesting inventory
     dispatch(requestProductInventory())
-
     return api.get('/ics/inventory')
       .query(filter)
       .end(function (err, res) {
