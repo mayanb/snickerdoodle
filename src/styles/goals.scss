@@ -1,0 +1,58 @@
+.goals {
+	width: 70%;
+	padding: 36px;
+
+	.goal {
+		padding: 20px 0;
+
+		.goal-details {
+			display: flex;
+
+			.goal-details-left {
+				display: flex;
+				align-items: center;
+				flex: 1;
+
+				.product {
+					font-weight: 700;
+					margin-right: 8px;
+				}
+			}
+
+
+			.goal-details-right {
+				visibility: hidden;
+			}
+
+		}
+
+		.goal-whole-bar {
+			display: flex;
+			height: 20px;
+			background-color: rgba(0,0,0,0.1);
+			line-height: 20px;
+			border-radius: 4px;
+			text-align: right;
+
+			span {
+				padding-right: 8px;
+			}
+		}
+
+		.goal-filled-bar {
+			background-color: $theme-color;
+			color: rgba(255,255,255,0.5);
+			border-radius: 4px 0 0 4px;
+		}
+
+		&:hover {
+			.goal-details-right {
+				visibility: visible;
+			}
+
+			.goal-filled-bar {
+				background-color: $dark-theme-color;
+			}
+		}
+	}
+}

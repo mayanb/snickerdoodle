@@ -114,7 +114,7 @@ export default class ZebraPrinter extends React.Component {
 
     let thisObj = this
     $.ajax({
-      url: "../../../qr/codes/",
+      url: api.host + "/qr/codes/",
       data: {count : numLabels},
     })
     .done(function (data) {
