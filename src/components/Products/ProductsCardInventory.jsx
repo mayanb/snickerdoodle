@@ -55,7 +55,9 @@ function renderListItem(item, i) {
 function renderRemainderLink(inventory) {
 	if (inventory.length <= INVENTORY_PAGE_SIZE)
 		return null
+	console.log(inventory)
+	// return <span>{`${inventory.length - INVENTORY_PAGE_SIZE} more items >`}</span>
+	return <a className="inventorylink" href="/inventory">view full inventory</a>
 
-	return <span>{`${inventory.length - INVENTORY_PAGE_SIZE} more items >`}</span>
 
 }

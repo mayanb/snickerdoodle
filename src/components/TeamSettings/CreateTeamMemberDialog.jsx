@@ -58,7 +58,7 @@ export default class CreateTeamMemberDialog extends React.Component {
 						<input 
 							type="password"
 							placeholder="***"  
-							value={this.state.password} 
+							value={this.state.account_type} 
 							onChange={(e)=> this.handleInputChange(e, "password")}
 						/>
 					</div>
