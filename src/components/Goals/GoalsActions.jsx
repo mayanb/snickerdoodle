@@ -70,7 +70,6 @@ export function selectGoal(id) {
 export function postCreateGoal(json, success) {
   return function (dispatch) {
     dispatch(requestCreateGoal())
-
     return api.post('/ics/goals/create/')
       .send(json)
       .send({icon: "default.png"})
@@ -79,7 +78,7 @@ export function postCreateGoal(json, success) {
           dispatch(requestCreateGoalFailure(err))
         else
           dispatch(requestCreateGoalSuccess(res.body))
-          success(res.body.id)
+          //success(res.body.id)
       })
   }
 }
@@ -110,17 +109,17 @@ function requestCreateGoalSuccess(json) {
   }
 }
 
-export function postDeleteGoal(p, index, callback) {
+export function postDeleteGoal(p, index) {
   return function (dispatch) {
     dispatch(requestDeleteGoal(index))
 
-    return api.del('/ics/goals/', p.id)
+    return api.del('/ics/goals/edit/', p.id)
       .end(function (err, res) {
         if (err || !res.ok)
           dispatch(requestDeleteGoalFailure(index, err))
         else {
           dispatch(requestDeleteGoalSuccess(index))
-          callback()
+          // callback()
         }
       })
   }

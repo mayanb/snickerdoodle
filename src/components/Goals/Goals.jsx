@@ -10,6 +10,7 @@ class Goals extends React.Component {
 
 	constructor(props) {
 		super(props)
+		this.handleDelete = this.handleDelete.bind(this)
 
 		this.state = {
 			isAddingGoal: false,
@@ -34,7 +35,7 @@ class Goals extends React.Component {
 			{
 				goals.data.map(function (goal, i) {
 					return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
-				})
+				}, this)
 			}
 			{this.renderAddGoalDialog()}
 			{this.renderDeleteGoalDialog()}
@@ -44,6 +45,8 @@ class Goals extends React.Component {
 	}
 
 	handleDelete(goal, i) {
+		console.log("in handleDelete")
+		console.log(goal)
 		this.setState({isDeletingGoal: goal, isDeletingGoalIndex: i})
 	}
 
@@ -54,6 +57,8 @@ class Goals extends React.Component {
 	}
 
 	renderDeleteGoalDialog() {
+		console.log("inrenderdeletegoaldialog")
+		console.log(this.state.isDeletingGoal)
 		if (this.state.isDeletingGoal)
 			return <DeleteGoalDialog goal={this.state.isDeletingGoal} index={this.state.isDeletingGoalIndex} onToggle={() => this.setState({isDeletingGoal: null})} />
 		return null
