@@ -33,7 +33,7 @@ class Goals extends React.Component {
 
 		let completed = 0
 		goals.data.map(function (goal, i) {
-			if (goal.actual >= goal.amount)
+			if (goal.actual >= goal.goal)
 				completed += 1
 		})
 
