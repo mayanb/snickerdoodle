@@ -11,7 +11,7 @@ export default function Goal(props) {
           <button className="secondary" onClick={props.onDelete}><i className="material-icons">delete_forever</i></button>
         </div>
         <div className="goal-details-right goal-buttons">
-          <span className="blue">{isNaN(props.goal.actual)?parseInt(props.goal.actual):"0"}</span><span>{`/${parseInt(props.goal.goal)} ${props.goal.process_unit.toUpperCase()}(S)`}</span>
+          <span className="blue">{(props.goal.actual && !isNaN(props.goal.actual))?parseInt(props.goal.actual):"0"}</span><span>{`/${parseInt(props.goal.goal)} ${props.goal.process_unit.toUpperCase()}(S)`}</span>
         </div>
       </div>
       <GoalBar {...props} />

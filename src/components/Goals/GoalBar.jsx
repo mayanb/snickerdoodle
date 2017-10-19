@@ -5,9 +5,9 @@ export default function GoalBar(props) {
 
 	return (
 		<div className={"goal-whole-bar " + (achieved?"goal-achieved":"")}>
-      <div className="goal-filled-bar" style={{flex: (proportion + '%')}}>
+      <div className="goal-filled-bar" style={{flex: !achieved?(proportion + '%'):"100%",  borderRadius: achieved?"4px":"4px 0 0 4px"}}>
       </div>
-      <div style={{flex: ((100 - proportion) + '%')}}> 
+      <div style={{flex: achieved?"0%":((100 - proportion) + '%')}}> 
       </div>
     </div>
 	)
