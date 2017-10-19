@@ -15,6 +15,7 @@ import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../Inventory/Inventory.jsx'
 import Task from '../Task/Task.jsx'
 import Dash from '../OldComponents/Dash.jsx'
+import Goals from '../Goals/Goals'
 
 import PrivateRoute from '../Router/PrivateRoute'
 import Login from '../Login/Login'
@@ -57,6 +58,7 @@ function App(props) {
 		    <Route path={"/products/:id?"} component={Products} />
 		    <Route path={"/attributetest"} component={TaskAttributeTest} />
 		    <Route path={"/team"} component={TeamSettings} />
+		    <Route path={"/goals"} component={Goals} />
 	  	</div>
 		</div>
 	)

@@ -57,5 +57,6 @@ function renderRemainderLink(inventory) {
 		return null
 
 	return <span>{`${inventory.length - INVENTORY_PAGE_SIZE} more items >`}</span>
+	return <a href="">view full inventory</a>
 
 }

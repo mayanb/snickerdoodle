@@ -36,6 +36,7 @@ function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) 
 export default function(data) {
   var reducer = combineReducers({
     users: _users,
+    goals:  createFilteredReducer(apiDataReducer, action => action.name === types.GOALS, stateDefault),
     members:  createFilteredReducer(apiDataReducer, action => action.name === types.MEMBERS, stateDefault), 
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault), 
   	processes: createFilteredReducer(_process, action => action.name === types.PROCESSES, stateDefault), 

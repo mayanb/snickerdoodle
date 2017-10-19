@@ -11,6 +11,9 @@ import {
   REQUEST_DELETE_FAILURE,
   REQUEST_EDIT,
   REQUEST_EDIT_SUCCESS,
+  REQUEST_EDIT_ITEM,
+  REQUEST_EDIT_ITEM_SUCCESS,
+  REQUEST_EDIT_ITEM_FAILURE,
   SELECT,
   PAGE,
 } from '../../Reducers/APIDataReducer'
@@ -160,12 +163,19 @@ export function postDeleteProcess(p, index, callback) {
   return function (dispatch) {
     dispatch(requestDeleteProcess(index))
 
-    return api.del('/ics/processes/', p.id)
+    return api.put(`/ics/processes/${p.id}/`)
+      .send({ 
+        name: p.name,
+        code: p.code,
+        created_by: p.created_by,
+        team_created_by: p.team_created_by,
+        is_trashed: true,
+        })
       .end(function (err, res) {
         if (err || !res.ok)
           dispatch(requestDeleteProcessFailure(index, err))
         else {
-          dispatch(requestDeleteProcessSuccess(index))
+          dispatch(requestDeleteProcessSuccess("is_trashed", true, index))
           callback()
         }
       })
@@ -174,29 +184,30 @@ export function postDeleteProcess(p, index, callback) {
 
 function requestDeleteProcess(index) {
   return {
-    type: REQUEST_DELETE,
-    index: index,
+    type: REQUEST_EDIT_ITEM,
+    // index: index,
     name: PROCESSES
   }
 }
 
 function requestDeleteProcessFailure(index, err) {
   return {
-    type: REQUEST_DELETE_FAILURE,
+    type: REQUEST_EDIT_ITEM_FAILURE,
     index: index,
     name: PROCESSES,
     error: err
   }
 }
 
-function requestDeleteProcessSuccess(index) {
+function requestDeleteProcessSuccess(field, value, index) {
   return {
-    type: REQUEST_DELETE_SUCCESS,
+    type: REQUEST_EDIT_ITEM_SUCCESS,
+    name: PROCESSES,
     index: index,
-    name: PROCESSES
+    field: field,
+    value: value
   }
 }
-
 
 
 function formatProcessResponse(json) {

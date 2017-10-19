@@ -12,6 +12,9 @@ export const REQUEST_CREATE_FAILURE = 'REQUEST_CREATE_FAILURE'
 export const REQUEST_DELETE = 'REQUEST_DELETE'
 export const REQUEST_DELETE_SUCCESS = 'REQUEST_DELETE_SUCCESS'
 export const REQUEST_DELETE_FAILURE = 'REQUEST_DELETE_FAILURE'
+export const REQUEST_EDIT_ITEM = 'REQUEST_EDIT_ITEM'
+export const REQUEST_EDIT_ITEM_SUCCESS = 'REQUEST_EDIT_ITEM_SUCCESS'
+export const REQUEST_EDIT_ITEM_FAILURE = 'REQUEST_EDIT_ITEM_FAILURE'
 export const SELECT = 'SELECT'
 export const PAGE = 'PAGE'
 
@@ -35,6 +38,12 @@ export function apiDataReducer(state, action) {
 		  return requestDeleteSuccess(state, action)
 		case REQUEST_DELETE_FAILURE:
 			return requestDeleteFailure(state, action)
+    case REQUEST_EDIT_ITEM:
+      return requestEditItem(state, action)
+    case REQUEST_EDIT_ITEM_SUCCESS:
+      return requestEditItemSuccess(state, action)
+    case REQUEST_EDIT_ITEM_FAILURE:
+      return requestEditItemFailure(state, action)
 		case SELECT:
       return select(state, action)
     case PAGE:
@@ -150,6 +159,53 @@ function requestDeleteFailure(state, action) {
     },
   })
 }
+
+
+function requestEditItem(state, action) {
+  return update(state, {
+    ui: {
+      isEditingItem: {
+        $set: true
+      },
+    },
+  })
+}
+
+
+function requestEditItemSuccess(state, action) {
+  console.log(action.index)
+  console.log(action.field)
+  console.log(action.value)
+  return update(state, {
+    ui: {
+      isEditingItem: {
+        $set: false
+      },
+    },
+    data: {
+      $splice: [[action.index, 1, ]]
+      // [action.index]: {
+      //   $merge: {
+      //     [action.field]: action.value
+      //   }
+      // }
+    },
+  })
+}
+
+
+function requestEditItemFailure(state, action) {
+  return update(state, {
+    ui: {
+      $merge: {
+        isEditingItem: false,
+        error: action.error
+      }
+    },
+  })
+}
+
+
 
 function select(state, action) {
   // get the page number:

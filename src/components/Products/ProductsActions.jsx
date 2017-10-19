@@ -11,6 +11,9 @@ import {
   REQUEST_DELETE_FAILURE,
   REQUEST_EDIT,
   REQUEST_EDIT_SUCCESS,
+  REQUEST_EDIT_ITEM,
+  REQUEST_EDIT_ITEM_SUCCESS,
+  REQUEST_EDIT_ITEM_FAILURE,
   SELECT,
   PAGE,
 } from '../../Reducers/APIDataReducer'
@@ -139,42 +142,53 @@ function formatProductResponse(json) {
 export function postDeleteProduct(p, index, callback) {
   return function (dispatch) {
     dispatch(requestDeleteProduct(index))
+    console.log(p.name)
+    console.log(p.created_by)
+    console.log(p.team_created_by)
 
-    return api.del('/ics/products/', p.id)
+    return api.put(`/ics/products/${p.id}/`)
+      .send({ 
+          name: p.name,
+          code: p.code,
+          created_by: p.created_by,
+          team_created_by: p.team_created_by,
+          is_trashed: true,
+        })
       .end(function (err, res) {
         if (err || !res.ok)
           dispatch(requestDeleteProductFailure(index, err))
         else {
-          dispatch(requestDeleteProductSuccess(index))
+          dispatch(requestDeleteProductSuccess("is_trashed", true, index))
           callback()
         }
       })
   }
 }
 
+
 function requestDeleteProduct(index) {
   return {
-    type: REQUEST_DELETE,
-    index: index,
+    type: REQUEST_EDIT_ITEM,
+    // index: index,
     name: PRODUCTS
   }
 }
 
 function requestDeleteProductFailure(index, err) {
   return {
-    type: REQUEST_DELETE_FAILURE,
+    type: REQUEST_EDIT_ITEM_FAILURE,
     index: index,
     name: PRODUCTS,
     error: err
   }
 }
 
-function requestDeleteProductSuccess(index) {
+function requestDeleteProductSuccess(field, value, index) {
   return {
-    type: REQUEST_DELETE_SUCCESS,
+    type: REQUEST_EDIT_ITEM_SUCCESS,
     name: PRODUCTS,
-    index: index
+    index: index,
+    field: field,
+    value: value
   }
 }
-
-

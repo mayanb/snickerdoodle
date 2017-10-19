@@ -11,6 +11,7 @@ import {display} from '../OldComponents/Task.jsx'
 import moment from 'moment'
 import Datepicker from '../Datepicker/Datepicker.jsx'
 import ReactImageFallback from "react-image-fallback";
+import Goals from '../Goals/Goals'
 
 export default class Activity extends React.Component {
   constructor(props) {
@@ -55,12 +56,21 @@ export default class Activity extends React.Component {
     }
 
     return (
-      <div className={`activity page ${this.state.mini?"mini":""}`}>
-        <div className="activity-header page-header">
-          <h2>Activity Log</h2>
-          <div style={{zIndex: 0}}><Datepicker initialDates={this.state.dates} onChange={this.handleDateRangeChange.bind(this)} /></div>
+      <div>
+        <div className={`activity page ${this.state.mini?"mini":""}`}>
+
+          <Goals />
         </div>
-        {contentArea}
+
+        <div className={`activity page ${this.state.mini?"mini":""}`}>
+          <div className="content">
+            <div className="activity-header page-header">
+              <h2 className="card-header">Activity Log</h2>
+              <div style={{zIndex: 0}}><Datepicker initialDates={this.state.dates} onChange={this.handleDateRangeChange.bind(this)} /></div>
+            </div>
+            {contentArea}
+          </div>
+        </div>
       </div>
     )
   }
@@ -205,12 +215,14 @@ function Process(props) {
       <div onClick={() => props.onClick(props.process_id)}>
         <Row className="activity-process-header"
           img={props.process_name.toLowerCase().replace(/\s/g, '')}
-          first={props.process_name}
-          second={pl(props.runs, "run")}
-          third={pl(parseInt(props.outputs), props.process_unit)}
-          fourth={"0 flagged"}
-          fifth={"0 experimental"}
-          sixth={button}
+          first={props.process_code}         
+          second={props.process_name}
+          third={pl(props.runs, "run")}
+          fourth={pl(parseInt(props.outputs), props.process_unit)}
+          fifth={"0 flagged"}
+          sixth={"0 experimental"}
+          seventh={button}
+
         />
       </div>
       {origins}
@@ -259,20 +271,23 @@ function Row(props) {
       <div className="process-name">
         <span>{props.first}</span>
       </div>
-      <div className="process-runs tiny">
+      <div className="process-name">
         <span>{props.second}</span>
       </div>
-      <div className="process-outputs">
+      <div className="process-runs tiny">
         <span>{props.third}</span>
       </div>
-      <div className="process-flagged tiny">
+      <div className="process-outputs">
         <span>{props.fourth}</span>
       </div>
-      <div className="process-experimental tiny">  
+      <div className="process-flagged tiny">
         <span>{props.fifth}</span>
       </div>
-      <div className="process-button no">
+      <div className="process-experimental tiny">  
         <span>{props.sixth}</span>
+      </div>
+      <div className="process-button no">
+        <span>{props.seventh}</span>
       </div>
     </div>
   )

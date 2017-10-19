@@ -9,13 +9,16 @@ import api from '../WaffleconeAPI/api.jsx'
 
 var getOptions = function(input, callback) {
   if (input.length < 2) {
-    callback(null, { optionss: [] })
+    callback(null, { options: [] })
   } else {
     let params = {
       limit: true,
       ordering: '-created_at',
       label: input,
     }
+    // console.log("try")
+    // callback(null, { options: [{value: 1, label: "ishita"}, {value: 2, label: "maya"}] })
+    // return
 
     api.get('/ics/tasks/search/')
       .query(params)
@@ -23,8 +26,13 @@ var getOptions = function(input, callback) {
       if (err || !res.ok) {
         console.log("bad")
       } else {
+        console.log(res.body.results)
         let options = res.body.results.map(function (x) {
-          return { value: x.id, label: x.display}
+          let display_input = x.display
+          if(!x.display.toLowerCase().startsWith(input)){
+            display_input = input + " - " + x.display
+          }
+          return { value: x.id, label: display_input}
         })
         callback(null, {options : options, complete: false})
       }   

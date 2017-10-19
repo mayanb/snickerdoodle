@@ -1,0 +1,132 @@
+.card-header {
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 16px;
+	letter-spacing: 5%;
+	color: #4f4f4f;
+	padding-top: 3px;
+	padding-bottom: 4px;
+	text-transform: uppercase;
+}
+
+.goals {
+	font-size: 14px;
+	line-height: 16px;
+	color: black;
+
+	.goals-bottom-bar {
+		padding-top: 12px;
+		padding-bottom: 8px;
+		display: flex;
+		width: 100%;
+		background-color: #fafafa;
+
+		span {
+			font-size: 14px;
+			line-height: 19px;
+			padding-top: 3px;
+			padding-bottom: 4px;
+		}
+
+		.left {
+			flex: 1;
+		}
+
+		.right {
+			white-space: nowrap;
+			flex: 0;
+
+			button {
+				color: $theme-color;
+				background-color: rgba(255,255,255,0);
+				text-transform:uppercase;
+				font-weight: 600;
+				font-size: 12px;
+				line-height: 14px;
+				letter-spacing: 5%;
+				padding-top: 5px;
+				padding-bottom: 4px;
+				-webkit-font-smoothing: antialiased;
+			}
+		}
+	}
+
+	.goal {
+		padding: 8px 0 8px 0;
+
+		.goal-details {
+			display: flex;
+			button {
+				padding: 0;
+				i {
+					font-size: 16px;
+					line-height: 16px;
+					vertical-align: top;
+					padding-top: 0px;
+					padding-bottom: 4px;
+				}
+				visibility: hidden;
+			}
+
+			.goal-details-left {
+				display: flex;
+				flex: 1;	
+				padding-top: 3px;
+				padding-bottom: 4px;
+				vertical-align: middle;
+			}
+
+
+			.goal-details-right {
+				font-size:12px;
+				line-height: 14px;
+				letter-spacing: 5%;
+				text-transform: uppercase;
+				padding-top: 5px;
+				padding-bottom: 4px;
+				color: #828282;
+
+				.blue {
+					color: $theme-color;
+				}
+			}
+
+		}
+
+		&:hover {
+			button {
+				visibility: visible;
+			}
+		}
+
+		.goal-whole-bar {
+			display: flex;
+			height: 28px;
+			margin-top: 8px;
+			margin-bottom: 4px;
+			background-color: rgba(0,0,0,0.1);
+			border-radius: 4px;
+			text-align: right;
+
+			span {
+				padding-right: 8px;
+			}
+		}
+
+		.goal-filled-bar {
+			background-color: $theme-color;
+			color: rgba(255,255,255,0.5);
+			border-radius: 4px 0 0 4px;
+		}
+
+		&:hover {
+			.goal-details-right {
+				visibility: visible;
+			}
+
+			.goal-filled-bar {
+				background-color: $dark-theme-color;
+			}
+		}
+	}
+}

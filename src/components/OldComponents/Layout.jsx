@@ -45,6 +45,7 @@ export default class Navbar extends React.Component {
           <div>
             {this.renderNavigationGroup(o1, l1, null)}
             {this.renderNavigationGroup(o2, l2, "Printing")}
+            {this.renderNavigationGroup(o3, l3, "My factory")}
           </div>
         </div>
       </div>

@@ -219,15 +219,15 @@ class InventoryDetail extends React.Component {
 
     console.log(itemsToDeliver)
 
-    let users = JSON.parse(window.localStorage.getItem('users-v2'))
+    let users = JSON.parse(window.localStorage.getItem('users-v3'))
     let user = users.data[users.ui.activeUser].user
     let team = user.team
     let component = this
-    let url = '/ics/v2/movements/create/'
+    let url = '/ics/v3/movements/create/'
 
     let params = {
       status: "RC", 
-      origin: user.profile_id,
+      origin: user.user_id,
       destination: null,
       team_origin: user.team, 
       team_destination: destination,  
