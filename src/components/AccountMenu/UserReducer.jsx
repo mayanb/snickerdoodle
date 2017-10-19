@@ -13,7 +13,8 @@ import {
 
 function getDefaultState() {
 	// get the state from local storage 
-	let state = JSON.parse(window.localStorage.getItem('users-v2'))
+	let team = window.location.pathname.split('/')[1]
+	let state = JSON.parse(window.localStorage.getItem(`users-${team}`))
 
 	// if there was nothing in local storage, fill it with default 
 	if (!state) {
@@ -80,7 +81,9 @@ function requestLoginSuccess(state, action) {
 		}
 	})
 
-	window.localStorage.setItem('users-v2', JSON.stringify(newState))
+	let team = window.location.pathname.split('/')[1]
+
+	window.localStorage.setItem(`users-${team}`, JSON.stringify(newState))
 	return newState
 }
 
@@ -116,7 +119,8 @@ function requestLogoutSuccess(state, action) {
 		}
 	})
 
-	window.localStorage.setItem('users-v2', JSON.stringify(newState))
+	let team = window.location.pathname.split('/')[1]
+	window.localStorage.setItem(`users-${team}`, JSON.stringify(newState))
 	return newState
 }
 
@@ -137,7 +141,9 @@ function switchActiveUser(state, action) {
 			$merge: {activeUser: action.id}
 		}
 	})
-	window.localStorage.setItem('users-v2', JSON.stringify(newState))
+	let team = window.location.pathname.split('/')[1]
+	window.localStorage.setItem(`users-${team}`, JSON.stringify(newState))
+	// sietch the url here too
 	return newState
 }
 

@@ -1,30 +1,45 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {Link, Redirect} from 'react-router-dom'
-import * as actions from '../AccountMenu/UserActions'
+import * as actions from './TeamSelectorActions'
 
 class TeamSelector extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      redirectToReferrer: false,
-      username: "",
-      password: "",
-      token: "",
+      team: "", 
       failedAuthentication: false
     }
   }
 
   handleSubmit(e) {
     e.preventDefault()
-    this.handleAuthenticate(this.state.username, this.state.password, this.failedAuth.bind(this))
+    let c = this
+    this.props.dispatch(actions.getTeam(this.state.team, function () {
+      // console.log(team_data["name"])
+      let team_data = c.props.teams.data
+      if( !team_data || team_data.length == 0 ) {
+        c.setState({"failedAuthentication": true, "team": ""})
+      }
+      else {
+        c.setState({"failedAuthentication": false})
+        let redirectURL = `${window.location.origin}/${c.state.team}/`
+        window.location = redirectURL
+      }
+      // this.setState({"failedAuthentication": true})
+    }))
+  }
+
+
+  handleChange(key, val) {
+    this.setState({[key]: val})
   }
 
   render() {
     return (
       <div className="login">
         <div className="login-box">
-          {this.state.failedAuthentication ? <span>Incorrect username or password.</span> : false }
+          {this.state.failedAuthentication ? <span>We couldn't find any teams of that name. Please try again.</span> : false }
           <form>
             <span>Welcome to Polymer. Please type in the name of your team.</span>
             <input 
@@ -50,10 +65,12 @@ class TeamSelector extends React.Component {
 
 const mapStateToProps = (state/*, props*/) => {
   return {
-    users: state.users
+    users: state.users,
+    teams: state.teams,
+    team: state.team
   }
 }
 
-const connectedLogin = connect(mapStateToProps)(Login)
+const connectedTeamSelector = connect(mapStateToProps)(TeamSelector)
 
-export default connectedLogin
+export default connectedTeamSelector

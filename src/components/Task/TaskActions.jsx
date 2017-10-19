@@ -20,6 +20,7 @@ import {
 } from '../../Reducers/TaskReducerExtension'
 import {  TASK, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../Reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
+import get_active_user from '../teams.jsx'
 
 export function getTask(task) {
 
@@ -176,7 +177,7 @@ export function markAsUsed(index, id) {
     // dispatch an action that we are requesting inventory
     let team = 1
     try {
-      team = JSON.parse(window.localStorage.getItem('users')).ui.activeUser
+      team = get_active_user().user.team
     } catch(e) {
 
     }

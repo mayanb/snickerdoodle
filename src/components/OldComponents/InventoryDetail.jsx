@@ -9,6 +9,7 @@ import {Dropdown} from 'react-toolbox/lib/dropdown'
 import {Dialog} from './Dialog.jsx'
 import Teams from '../Teams/Teams'
 import api from '../WaffleconeAPI/api'
+import get_active_user from '../teams.jsx'
 
 class InventoryDetail extends React.Component {
 
@@ -219,15 +220,14 @@ class InventoryDetail extends React.Component {
 
     console.log(itemsToDeliver)
 
-    let users = JSON.parse(window.localStorage.getItem('users-v2'))
-    let user = users.data[users.ui.activeUser].user
-    let team = user.team
+    let user = get_active_user().user
+
     let component = this
-    let url = '/ics/v2/movements/create/'
+    let url = '/ics/v3/movements/create/'
 
     let params = {
       status: "RC", 
-      origin: user.profile_id,
+      origin: user.user_id,
       destination: null,
       team_origin: user.team, 
       team_destination: destination,  

@@ -34,14 +34,25 @@ class AccountMenu extends React.Component {
   }
 
   /* RENDERERS */
-
+			// <ButtonDropdown 
+	  //           secondary
+	  //           menu
+	  //           expanded={expanded} 
+	  //           onToggleDropdown={this.handleDropdownToggle}
+	  //           button={this.renderCurrentAccount()}
+	  //         >
+	  //           <div className="account-menu">
+	  //             { this.renderSwitchAccounts() }
+	  //             { this.renderAddAccount() }
+	  //             { this.renderLogout() }
+	  //           </div>
+	  //         </ButtonDropdown>
   render() {
   	let {data, ui} = this.props.users
   	let {expanded} = this.state
 
     if (!data || !ui.activeUser || !data[ui.activeUser] || !data[ui.activeUser].user)
       return null
-
 		return (
 			<ButtonDropdown 
 	            secondary
@@ -51,8 +62,6 @@ class AccountMenu extends React.Component {
 	            button={this.renderCurrentAccount()}
 	          >
 	            <div className="account-menu">
-	              { this.renderSwitchAccounts() }
-	              { this.renderAddAccount() }
 	              { this.renderLogout() }
 	            </div>
 	          </ButtonDropdown>

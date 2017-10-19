@@ -40,11 +40,11 @@ class Login extends React.Component {
   }
 
   render() {
-    if (shouldLogin(this.props.users)) {
+    if (shouldLogin(this.props.users, this.props.match.params.team)) {
       return this.renderLogin()
     }
 
-    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { from } = this.props.location.state || { from: { pathname: '/' + this.props.match.params.team + '/' } }
     return <Redirect to={from} />
   }
 

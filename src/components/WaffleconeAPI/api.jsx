@@ -1,6 +1,7 @@
 import request from 'superagent'
 import { getCookie } from '../../csrf.jsx'
 import Teams from '../Teams/Teams'
+import get_active_user from '../teams.jsx'
 
 //let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
 //let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
@@ -11,17 +12,16 @@ let host = 'http://localhost:8000'
 function get(path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
-		url = host + '/ics/v2' + path.substring(4) 
+		url = host + '/ics/v3' + path.substring(4) 
 	}
 
 	let team = 1
-	try {
-		let users = JSON.parse(window.localStorage.getItem('users-v2'))
-		team = users.data[users.ui.activeUser].user.team
+	try {	
+		team = get_active_user().user.team
 	} catch(e) {
 
 	}
-	console.log(url)
+
 	return request
 		.get(url)
 		//.withCredentials()
@@ -31,12 +31,13 @@ function get(path) {
 function post(path) {
 	let url = host + path
 
-	let team = -1
+	// let team = -1
 	let token = ""
+	let team = 1
 	try {
-		let users = JSON.parse(window.localStorage.getItem('users-v2'))
-		team = users.data[users.ui.activeUser].user.team
-		token = JSON.parse(window.localStorage.getItem('users-v2')).data[team].token
+		team = get_active_user().user.team
+
+		// token = JSON.parse(window.localStorage.getItem(`users-${team}`)).data[team].token
 	} catch(e) {
 		
 	}
@@ -53,12 +54,12 @@ function post(path) {
 function put(path) {
 	let url = host + path
 
-	let team = -1
+	// let team = -1
+	let team = 1
 	let token = ""
+
 	try {
-		let users = JSON.parse(window.localStorage.getItem('users-v2'))
-		team = users.data[users.ui.activeUser].user.team
-		token = JSON.parse(window.localStorage.getItem('users-v2')).data[team].token
+		team = get_active_user().user.team
 	} catch(e) {
 		
 	}

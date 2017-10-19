@@ -14,12 +14,13 @@ import FactoryMap from '../OldComponents/FactoryMap.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../Inventory/Inventory.jsx'
 import Task from '../Task/Task.jsx'
-import Dash from '../OldComponents/Dash.jsx'
+// import Dash from '../OldComponents/Dash.jsx'
 
 import PrivateRoute from '../Router/PrivateRoute'
 import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
 import TeamSettings from '../TeamSettings/TeamSettings'
+import TeamSelector from '../TeamSelector/TeamSelector'
 
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 
@@ -30,11 +31,9 @@ export default class ApplicationLayoutStable extends React.Component {
       <Router>
 
           <Switch>
-          	<Route path="/" component={TeamSelector} />
-          	<Route path="/login" component={Login} />
-          	<Route path='/:team/'>
-		          <PrivateRoute component={App}/>
-		        </Route>
+          	<Route exact path="/" component={TeamSelector} />
+          	<Route exact path="/:team/login" component={Login} />
+		    <PrivateRoute component={App}/>
           </Switch>
       </Router>
     )

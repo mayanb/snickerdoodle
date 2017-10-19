@@ -1,5 +1,6 @@
 import moment from 'moment'
 import React from 'react'
+import get_active_user from '../teams.jsx'
 
 
 export function display(task) {
@@ -139,7 +140,7 @@ export function TaskTable(props) {
 }
 
 export function OutputTable(props) {
-  let team = window.localStorage.getItem("team") || "1"
+  let team = get_active_user().user.team
   return (
     <Table title={`Outputs (${(props.outputs || []).length})`}>
     {

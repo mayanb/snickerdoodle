@@ -190,10 +190,11 @@ function Process(props) {
     }, this)
   }
 
+  /* TODO */
   let link = window.location.origin + "/ics/potatoes/?"
-  let team = window.localStorage.getItem("team") || "1"
+  let team = window.location.pathname.split('/')[1]
   let downloadURL = 
-    `${window.location.origin}/ics/potatoes/?team=${team}&process=${props.process_id}&start=${toUTCString(props.dates.start)}&end=${toUTCString(props.dates.end, true)}`
+    `${api.host}/ics/potatoes/?team=${team}&process=${props.process_id}&start=${toUTCString(props.dates.start)}&end=${toUTCString(props.dates.end, true)}`
 
   let button = <a 
     href={downloadURL}
@@ -283,7 +284,7 @@ function TaskList(props) {
     <div className="task-list">
     <Row className="process-origin-task"
       first={" "}
-      second={<a href={window.location.origin + "/task/" + props.id} target="_blank">{display(props)}</a>}
+      second={<a href={window.location.origin + "/" + window.location.pathname.split('/')[1] + "/task/" + props.id} target="_blank">{display(props)}</a>}
       third={pl(parseInt(props.outputs), props.process_unit)}
       fourth={"--"}
       fifth={"--"}

@@ -10,6 +10,7 @@ import api from '../WaffleconeAPI/api'
 import Img from '../Img/Img'
 import Checkbox from '../Checkbox/Checkbox'
 import moment from 'moment'
+import get_active_user from '../teams.jsx'
 
 export default class Inventory extends React.Component {
   constructor(props) {
@@ -204,13 +205,14 @@ class IH extends React.Component {
 }
 
 function InventoryList(props) {
+  let team = window.location.pathname.split('/')[1]
   return (
     <div className={"inventory-list " + (props.fixed?"list-padded":"")}>
       <IH />
       {
         props.processes.map(function (process, i) {
           return  (
-            <Link key={i} to={ "/inventory/" + process.process_id}>
+            <Link key={i} to={ "/" + team + "/inventory/" + process.process_id}>
               <InventoryItem i={i} selected={props.selected} {...process}/>
             </Link>
           )
@@ -223,7 +225,9 @@ function InventoryList(props) {
 
 function InventoryItem(props) {
   var teamStyle = {color: "rgba(0,0,0,0.3", paddingLeft: "4px", fontSize: "10px"}
-  let currTeam = window.localStorage.getItem("team") || "1"
+
+  let currTeam = get_active_user().user.team
+
   teamStyle["display"] = currTeam==props.team_id?"none":""
   let icon = props.process_icon || "default.png" 
   return (

@@ -17,14 +17,15 @@ export default class Navbar extends React.Component {
   }
 
   render () {
+    let team = window.location.pathname.split('/')[1]
     let o1 = ["Activity Log", "Inventory"]
-    let l1 = ["", "inventory"]
+    let l1 = [team + "/", team + "/inventory"]
 
     let o2= [ "Zebra labels", "Dymo labels"]
-    let l2 = ["labels", "dymo"]
+    let l2 = [team + "/labels", team + "/dymo"]
 
     let o3 = ["Processes", "Products",]
-    let l3 = ["processes", "products",]
+    let l3 = [team + "/processes", team + "/products",]
 
     var navbarSizeClass = "bigNav"
     if (this.props.match.params.id && this.props.match.params.section == "inventory") {
