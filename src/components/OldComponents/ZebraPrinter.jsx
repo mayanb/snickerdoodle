@@ -156,11 +156,11 @@ export default class ZebraPrinter extends React.Component {
       selectedItem: ""})
 
     if (this.state.expanded) {
-      let url = window.location.origin + "/ics/tasks/" + v.value
+      let url = "/ics/tasks/" + v.value +"/"
       let component = this
-      fetch(url, {})
-        .done(function (data) {
-          component.reloadItems(data)
+      api.get(url)
+        .end(function (err, res) {
+          component.reloadItems(res.body)
         })
       //component.reloadItems(v.data) 
     }

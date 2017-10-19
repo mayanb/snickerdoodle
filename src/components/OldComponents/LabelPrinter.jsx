@@ -202,7 +202,6 @@ export default class LabelPrinter extends React.Component {
 
   }
 
-
   render() {
     return (
       <div className="labelPrinter">
