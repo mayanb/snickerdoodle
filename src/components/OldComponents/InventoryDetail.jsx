@@ -227,7 +227,7 @@ class InventoryDetail extends React.Component {
 
     let params = {
       status: "RC", 
-      origin: user.profile_id,
+      origin: user.user_id,
       destination: null,
       team_origin: user.team, 
       team_destination: destination,  

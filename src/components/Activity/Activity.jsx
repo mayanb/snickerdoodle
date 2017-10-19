@@ -11,6 +11,7 @@ import {display} from '../OldComponents/Task.jsx'
 import moment from 'moment'
 import Datepicker from '../Datepicker/Datepicker.jsx'
 import ReactImageFallback from "react-image-fallback";
+import Goals from '../Goals/Goals'
 
 export default class Activity extends React.Component {
   constructor(props) {
@@ -55,12 +56,21 @@ export default class Activity extends React.Component {
     }
 
     return (
-      <div className={`activity page ${this.state.mini?"mini":""}`}>
-        <div className="activity-header page-header">
-          <h2>Activity Log</h2>
-          <div style={{zIndex: 0}}><Datepicker initialDates={this.state.dates} onChange={this.handleDateRangeChange.bind(this)} /></div>
+      <div>
+        <div className={`activity page ${this.state.mini?"mini":""}`}>
+
+          <Goals />
         </div>
-        {contentArea}
+
+        <div className={`activity page ${this.state.mini?"mini":""}`}>
+          <div className="content">
+            <div className="activity-header page-header">
+              <h2 className="card-header">Activity Log</h2>
+              <div style={{zIndex: 0}}><Datepicker initialDates={this.state.dates} onChange={this.handleDateRangeChange.bind(this)} /></div>
+            </div>
+            {contentArea}
+          </div>
+        </div>
       </div>
     )
   }

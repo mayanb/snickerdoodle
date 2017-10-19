@@ -26,10 +26,6 @@ export default class ElementMenu extends React.Component {
 				button={<i className="material-icons">more_horiz</i>}
 			>
 				<div style={{minWidth: "100px"}}>
-					<Button secondary onClick={this.handleEdit}>
-						<i className="material-icons">edit</i>
-						<span>Edit</span>
-					</Button>
 					<Button secondary onClick={this.handleArchive}>
 						<i className="material-icons">delete_forever</i>
 						<span>Archive</span>

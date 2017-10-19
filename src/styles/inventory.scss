@@ -267,10 +267,13 @@ div.zero-state {
 .page {
     &.mini {
     background-color: white;
-    padding: 20px 16px;
     border-radius: 4px;
     box-shadow: $shadow-0;
     margin: 50px auto;
+
+     div.content {
+      padding: 20px 16px;
+    }
   }
 }
 

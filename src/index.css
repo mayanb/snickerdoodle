@@ -561,7 +561,7 @@ html, body {
   flex-grow: 1; }
 
 body {
-  font-family: "Interface", "Helvetica";
+  font-family: "Camphor Pro", "Interface", "Helvetica";
   font-size: 0.75em;
   line-height: 0.9em;
   color: #4f4f4f;
@@ -644,7 +644,7 @@ h2 {
   color: rgba(0, 0, 0, 0.89); }
 
 input {
-  font-family: "Interface", "Helvetica";
+  font-family: "Camphor Pro", "Interface", "Helvetica";
   font-size: 12px;
   line-height: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -1386,10 +1386,11 @@ div.zero-state {
 
 .page.mini {
   background-color: white;
-  padding: 20px 16px;
   border-radius: 4px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.06);
   margin: 50px auto; }
+  .page.mini div.content {
+    padding: 20px 16px; }
 
 .page .page-header {
   display: flex;
@@ -1403,27 +1404,84 @@ div.zero-state {
     flex: 0;
     flex-basis: 300px; }
 
+.card-header {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 5%;
+  color: #4f4f4f;
+  padding-top: 3px;
+  padding-bottom: 4px;
+  text-transform: uppercase; }
+
 .goals {
-  width: 70%;
-  padding: 36px; }
+  font-size: 14px;
+  line-height: 16px;
+  color: black; }
+  .goals .goals-bottom-bar {
+    padding-top: 12px;
+    padding-bottom: 8px;
+    display: flex;
+    width: 100%;
+    background-color: #fafafa; }
+    .goals .goals-bottom-bar span {
+      font-size: 14px;
+      line-height: 19px;
+      padding-top: 3px;
+      padding-bottom: 4px; }
+    .goals .goals-bottom-bar .left {
+      flex: 1; }
+    .goals .goals-bottom-bar .right {
+      white-space: nowrap;
+      flex: 0; }
+      .goals .goals-bottom-bar .right button {
+        color: #2198EE;
+        background-color: rgba(255, 255, 255, 0);
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 14px;
+        letter-spacing: 5%;
+        padding-top: 5px;
+        padding-bottom: 4px;
+        -webkit-font-smoothing: antialiased; }
   .goals .goal {
-    padding: 20px 0; }
+    padding: 8px 0 8px 0; }
     .goals .goal .goal-details {
       display: flex; }
+      .goals .goal .goal-details button {
+        padding: 0;
+        visibility: hidden; }
+        .goals .goal .goal-details button i {
+          font-size: 16px;
+          line-height: 16px;
+          vertical-align: top;
+          padding-top: 0px;
+          padding-bottom: 4px; }
       .goals .goal .goal-details .goal-details-left {
         display: flex;
-        align-items: center;
-        flex: 1; }
-        .goals .goal .goal-details .goal-details-left .product {
-          font-weight: 700;
-          margin-right: 8px; }
+        flex: 1;
+        padding-top: 3px;
+        padding-bottom: 4px;
+        vertical-align: middle; }
       .goals .goal .goal-details .goal-details-right {
-        visibility: hidden; }
+        font-size: 12px;
+        line-height: 14px;
+        letter-spacing: 5%;
+        text-transform: uppercase;
+        padding-top: 5px;
+        padding-bottom: 4px;
+        color: #828282; }
+        .goals .goal .goal-details .goal-details-right .blue {
+          color: #2198EE; }
+    .goals .goal:hover button {
+      visibility: visible; }
     .goals .goal .goal-whole-bar {
       display: flex;
-      height: 20px;
+      height: 28px;
+      margin-top: 8px;
+      margin-bottom: 4px;
       background-color: rgba(0, 0, 0, 0.1);
-      line-height: 20px;
       border-radius: 4px;
       text-align: right; }
       .goals .goal .goal-whole-bar span {
