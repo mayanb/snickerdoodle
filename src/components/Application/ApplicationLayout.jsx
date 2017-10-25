@@ -4,8 +4,6 @@ import Activity from '../Activity/Activity'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
 
-//import Navbar from '../Navbar/Navbar'
-import GoogleConnect from '../GoogleConnect/GoogleConnect'
 import Movements from '../Movements/Movements'
 
 import ZebraPrinter from '../OldComponents/ZebraPrinter.jsx'
@@ -58,9 +56,10 @@ function App(props) {
 		    <Route path={"/processes/:id?"} component={Processes} />
 		    <Route path={"/products/:id?"} component={Products} />
 		    <Route path={"/attributetest"} component={TaskAttributeTest} />
-		    <Route path={"/team"} component={TeamSettings} />
+		    <Route path={"/team/:ext?"} component={TeamSettings} />
 		    <Route path={"/goals"} component={Goals} />
 		    <Route path={"/account"} component={Account} />
+		    <Route path={"/googleconnect/:ext?"} component={Account} />
 	  	</div>
 		</div>
 	)

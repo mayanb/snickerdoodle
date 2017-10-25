@@ -7,7 +7,7 @@ export default class AccountIntegrations extends React.Component {
 		return (
 			<div className="account-integrations">
 				<AccountSectionHeader title="Integrations" />
-				<AccountIntegration />
+				<AccountIntegration ext={this.props.ext}/>
 			</div>
 		)
 	}

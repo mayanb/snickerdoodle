@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import AccountHeader from './AccountHeader'
 import AccountBasics from './AccountBasics'
 import AccountIntegrations from './AccountIntegrations'
+import AccountTeam from './AccountTeam'
 
 class Account extends React.Component {
 	render() {
@@ -12,7 +13,8 @@ class Account extends React.Component {
 			<div className="my-account">
 				<AccountHeader />
 				<AccountBasics  {...account.user} />
-				<AccountIntegrations />
+				<AccountIntegrations ext={this.props.match.params.ext}/>
+				<AccountTeam />
 			</div>
 		)
 	}

@@ -24,11 +24,11 @@ class AccountIntegration extends React.Component {
 	renderIntegratedAccount() {
 		let {data, ui} = this.props.users
 		let user = data[ui.activeUser]
-		if (user.gauth_email) {
-			return <span>{user.gauth_email}</span>
+		if (user.user.gauth_email) {
+			return <span>{user.user.gauth_email}</span>
 		}
 
-		return <GoogleConnect />
+		return <GoogleConnect ext={this.props.ext}/>
 	}
 }
 
