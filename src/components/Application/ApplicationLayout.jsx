@@ -21,6 +21,7 @@ import PrivateRoute from '../Router/PrivateRoute'
 import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
 import TeamSettings from '../TeamSettings/TeamSettings'
+import Account from '../Account/Account'
 
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 
@@ -59,6 +60,7 @@ function App(props) {
 		    <Route path={"/attributetest"} component={TaskAttributeTest} />
 		    <Route path={"/team"} component={TeamSettings} />
 		    <Route path={"/goals"} component={Goals} />
+		    <Route path={"/account"} component={Account} />
 	  	</div>
 		</div>
 	)

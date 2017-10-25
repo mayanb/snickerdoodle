@@ -643,6 +643,16 @@ h2 {
   font-weight: 100;
   color: rgba(0, 0, 0, 0.89); }
 
+h3 {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.7px;
+  color: #4f4f4f;
+  padding-top: 3px;
+  padding-bottom: 4px;
+  text-transform: uppercase; }
+
 input {
   font-family: "Camphor Pro", "Interface", "Helvetica";
   font-size: 12px;
@@ -735,7 +745,7 @@ button {
   display: block;
   cursor: pointer; }
   button.secondary {
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0);
     color: #2198EE; }
 
 .nav-section {
@@ -1494,5 +1504,40 @@ div.zero-state {
       visibility: visible; }
     .goals .goal:hover .goal-filled-bar {
       background-color: #0068B4; }
+
+.my-account {
+  max-width: 420px;
+  padding-left: 36px; }
+
+.account-basics, .account-integrations, .account-team {
+  padding-top: 10px;
+  padding-bottom: 50px; }
+
+.account-basics-row {
+  display: flex;
+  padding: 4px 0; }
+  .account-basics-row div {
+    flex: 1; }
+
+.account-integration {
+  background-color: rgba(187, 187, 187, 0.09);
+  -webkit-font-smoothing: antialiased;
+  border-radius: 4px;
+  padding: 16px; }
+  .account-integration .integration-info {
+    display: flex;
+    margin-bottom: 6px; }
+    .account-integration .integration-info div {
+      flex: 1; }
+    .account-integration .integration-info div:first-child {
+      font-weight: 700; }
+    .account-integration .integration-info div:last-child {
+      text-align: right; }
+  .account-integration .integration-detail {
+    color: #9A9A9A; }
+
+.google-connect {
+  cursor: pointer;
+  color: #2198EE; }
 
 /*# sourceMappingURL=index.css.map */

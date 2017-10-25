@@ -5,7 +5,7 @@ import api from '../WaffleconeAPI/api.jsx'
 export default class GoogleConnect extends React.Component {
 
 	componentDidMount() {
-		if (this.props.match.params.ext) {
+		if (this.props.ext) {
 			console.log(window.location.href)
 			api.post('/gauth/create-auth-token/')
 				.type('form')
@@ -24,20 +24,14 @@ export default class GoogleConnect extends React.Component {
 	}
 
 	render() {
-		if (!this.props.match.params.ext) {
+		if (!this.props.ext) {
 			return (
-				<div>
-					<span>{JSON.stringify(window.location.href)}</span>
-					<Button onClick={connect}>Connect</Button>
-				</div>
+				<span className="google-connect" onClick={connect}>Connect your Google account</span>
 			)
 		}
 
 		return (
-			<div>
-				<span>{JSON.stringify(window.location.href)}</span>
-				<Button disabled>Connecting...</Button>
-			</div>
+			<span>Connecting...</span>
 		)
 	}
 

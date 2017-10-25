@@ -1,0 +1,52 @@
+.my-account {
+	max-width: 420px;
+	padding-left: 36px;
+
+}
+
+.account-basics, .account-integrations, .account-team {
+	padding-top: 10px;
+	padding-bottom: 50px;
+}
+
+.account-basics-row {
+	display: flex;
+	padding: 4px 0;
+
+	div {
+		flex: 1;
+	}
+}
+
+.account-integration {
+	background-color: rgba(187,187,187,0.09);
+	-webkit-font-smoothing: antialiased;
+	border-radius: 4px;
+	padding: 16px;
+
+	.integration-info {
+		display: flex;
+		margin-bottom: 6px;
+
+		div {
+			flex: 1;
+		}
+
+		div:first-child {
+			font-weight: 700;
+		}
+
+		div:last-child {
+			text-align: right;
+		}
+	}
+
+	.integration-detail {
+		color: #9A9A9A;
+	}
+}
+
+.google-connect {
+	cursor: pointer;
+	color: $theme-color;
+}

@@ -84,8 +84,12 @@ function printQRs_zebra(uuids, task, notes) {
           ^FD${uuid.substring(uuid.length-6)}
         ^FS
         ^FO270,70
-          ^A0,180
+          ^A0,120
           ^FD${getCode(task.data.display)}
+        ^FS
+        ^FO270,200
+          ^A0,40
+          ^FD${notes}
         ^FS
         ^FO30,300
           ^GB${609-72},1,3
