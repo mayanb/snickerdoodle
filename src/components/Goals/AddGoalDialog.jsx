@@ -11,7 +11,7 @@ import Select from 'react-select';
 class AddGoalDialog extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {process_type: null, product_type: null, goal: ""}
+		this.state = {process_type: null, product_type: null, goal: "", timerange: null}
 		this.handleAddGoal = this.handleAddGoal.bind(this)
 
 	}
@@ -41,6 +41,14 @@ class AddGoalDialog extends React.Component {
 						valueKey={'id'}
 						placeholder="Select a product type to track"
 						onChange={(newVal) => this.onInputChange('product_type', newVal)}
+					/>
+					<Select
+						value={this.state.timerange}
+						options={[{"name": "Day", "type": "d"},{"name": "Week", "type": "w"},{"name": "Month", "type": "m"}]}
+						labelKey={'name'}
+						valueKey={'type'}
+						placeholder="Select a time period for this goal"
+						onChange={(newVal) => this.onInputChange('timerange', newVal)}
 					/>
 					<input 
 						type="text" 
@@ -91,10 +99,14 @@ class AddGoalDialog extends React.Component {
 			this.state.product_type = undefined
 			alert('Product Type must be selected')
 		}
+		else if(!this.state.timerange) {
+			this.state.timerange = undefined
+			alert('Time period must be selected')
+		}
 		else {
 			let {users} = this.props 
 			let userprofile = users.data[users.ui.activeUser].user.profile_id
-			let data = {userprofile: userprofile, process_type: this.state.process_type.id, product_type: this.state.product_type.id, goal: this.state.goal }
+			let data = {userprofile: userprofile, process_type: this.state.process_type.id, product_type: this.state.product_type.id, goal: this.state.goal, timerange: this.state.timerange.type }
 			this.props.dispatch(actions.postCreateGoal(data))
 			this.props.onToggle()
 		}

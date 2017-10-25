@@ -57,8 +57,10 @@ function App(props) {
 		    <Route path={"/processes/:id?"} component={Processes} />
 		    <Route path={"/products/:id?"} component={Products} />
 		    <Route path={"/attributetest"} component={TaskAttributeTest} />
-		    <Route path={"/team"} component={TeamSettings} />
+		    <Route path={"/team/:ext?"} component={TeamSettings} />
 		    <Route path={"/goals"} component={Goals} />
+		   	<Route path={"/googleconnect/:ext?"} component={GoogleConnect} />
+
 	  	</div>
 		</div>
 	)

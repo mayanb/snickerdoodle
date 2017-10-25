@@ -8,12 +8,14 @@ import {
 	REQUEST_LOGOUT_SUCCESS,
 	REQUEST_LOGOUT_FAILURE,
 	SWITCH_ACTIVE_USER, 
-	ADD_USER_ACCOUNT
+	ADD_USER_ACCOUNT,
+	SET_GOOGLE_AUTHENTICATION,
+	SET_GOOGLE_EMAIL,
 } from './UserActions'
 
 function getDefaultState() {
 	// get the state from local storage 
-	let state = JSON.parse(window.localStorage.getItem('users-v3'))
+	let state = JSON.parse(window.localStorage.getItem('users-v4'))
 
 	// if there was nothing in local storage, fill it with default 
 	if (!state) {
@@ -49,9 +51,41 @@ export default function _users(state = getDefaultState(), action) {
 	    		return switchActiveUser(state, action)
 	    case ADD_USER_ACCOUNT:
 	    		return addUserAccount(state, action)
+	    case SET_GOOGLE_AUTHENTICATION:
+	    		return setGoogleAuthentication(state, action)
+	    case SET_GOOGLE_EMAIL:
+	    		return setGoogleEmail(state, action)
 	    default:
 	      return state
   	}
+}
+
+function setGoogleAuthentication(state, action) {
+	let ns = update(state, {
+		data: {
+			[state.ui.activeUser]: {
+				user: {	
+					$merge: { has_gauth_token: action.value }
+				}
+			}
+		}
+	})
+	window.localStorage.setItem('users-v4', JSON.stringify(ns))
+	return ns
+}
+
+function setGoogleEmail(state, action) {
+	let ns = update(state, {
+		data: {
+			[state.ui.activeUser]: {
+				user: {	
+					$merge: { gauth_email: action.value }
+				}
+			}
+		}
+	})
+	window.localStorage.setItem('users-v4', JSON.stringify(ns))
+	return ns
 }
 
 function requestLogin(state, action) {
@@ -80,7 +114,7 @@ function requestLoginSuccess(state, action) {
 		}
 	})
 
-	window.localStorage.setItem('users-v3', JSON.stringify(newState))
+	window.localStorage.setItem('users-v4', JSON.stringify(newState))
 	return newState
 }
 
@@ -116,7 +150,7 @@ function requestLogoutSuccess(state, action) {
 		}
 	})
 
-	window.localStorage.setItem('users-v3', JSON.stringify(newState))
+	window.localStorage.setItem('users-v4', JSON.stringify(newState))
 	return newState
 }
 
@@ -137,7 +171,7 @@ function switchActiveUser(state, action) {
 			$merge: {activeUser: action.id}
 		}
 	})
-	window.localStorage.setItem('users-v3', JSON.stringify(newState))
+	window.localStorage.setItem('users-v4', JSON.stringify(newState))
 	return newState
 }
 

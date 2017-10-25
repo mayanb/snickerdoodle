@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from './MemberActions'
 import Button from '../Card/Button'
 import CreateTeamMemberDialog from './CreateTeamMemberDialog'
+import GoogleConnect from '../GoogleConnect/GoogleConnect'
 let s = false
 
 class TeamSettings extends React.Component {
@@ -32,12 +33,14 @@ class TeamSettings extends React.Component {
 		let {ui, data} = this.props.members
 		let users = this.props.users
 		let selectedUser = users.data[users.ui.activeUser].user
+		console.log(data)
 
 		return (
 			<div key={1} >
 				<TeamHeader name={selectedUser.team_name}/>
 				<MemberList members={data} isFetching={ui.isFetchingData}/>
 				<Button onClick={this.handleToggleDialog}>Add a team member</Button>
+				<GoogleConnect match={this.props.match} />
 				<CreateTeamMemberDialog 
 					isOpen={this.state.isCreatingMember} 
 					onSubmit={this.handleCreateMemberSubmit}
@@ -88,6 +91,7 @@ const mapStateToProps = (state/*, props*/) => {
   	members: state.members,
   }
 }
+
 
 const connectedTeamSettings = connect(mapStateToProps)(TeamSettings)
 
