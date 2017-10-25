@@ -41,10 +41,33 @@ class Goals extends React.Component {
 		return (
 			<div className="goals">
 			<div className="content">
+				<span className="card-header">Daily Goals</span>
+				{
+					goals.data.map(function (goal, i) {
+						if(goal.timerange == 'd') {
+							return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
+
+						}
+					}, this)
+				}
+				<div></div>
 				<span className="card-header">Weekly Goals</span>
 				{
 					goals.data.map(function (goal, i) {
-						return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
+						if(goal.timerange == 'w') {
+							return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
+
+						}
+					}, this)
+				}
+				<div></div>
+				<span className="card-header">Monthly Goals</span>
+				{
+					goals.data.map(function (goal, i) {
+						if(goal.timerange == 'm') {
+							return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
+
+						}
 					}, this)
 				}
 				{this.renderAddGoalDialog()}
