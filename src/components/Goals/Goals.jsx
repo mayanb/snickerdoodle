@@ -6,6 +6,7 @@ import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
 import Button from '../Card/Button'
 import Card from '../Card/Card'
+import { pluralize } from '../Logic/stringutils'
 
 class Goals extends React.Component {
 
@@ -37,7 +38,6 @@ class Goals extends React.Component {
 				completed += 1
 		})
 
-
 		return (
 			<div className="goals">
 			<div className="content">
@@ -56,7 +56,7 @@ class Goals extends React.Component {
 	}
 
 	renderBottomBar(completed, total) {
-		let k = <span>You've reached <span>{completed}</span>{` of ${total} goals.`}</span> 
+		let k = <span>You've reached <span>{completed}</span>{` of ${total} ${pluralize(total, 'goal')}.`}</span>
 		if (total == 0) {
 			k = <span>You have 0 goals. Start adding goals now!</span>
 		}
