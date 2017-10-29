@@ -1434,7 +1434,7 @@ div.zero-state {
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
-  letter-spacing: 5%;
+  letter-spacing: 0.7px;
   color: #4f4f4f;
   padding-top: 3px;
   padding-bottom: 4px;
@@ -1456,7 +1456,8 @@ div.zero-state {
       padding-top: 3px;
       padding-bottom: 4px; }
     .goals .goals-bottom-bar .left {
-      flex: 1; }
+      flex: 1;
+      margin-left: 16px; }
     .goals .goals-bottom-bar .right {
       white-space: nowrap;
       flex: 0; }
@@ -1477,27 +1478,31 @@ div.zero-state {
       display: flex; }
       .goals .goal .goal-details button {
         padding: 0;
+        display: inline-block;
         visibility: hidden; }
         .goals .goal .goal-details button i {
-          font-size: 16px;
-          line-height: 16px;
+          font-size: 14px;
+          line-height: 14px;
           vertical-align: top;
-          padding-top: 0px;
-          padding-bottom: 4px; }
+          padding-top: 0px; }
       .goals .goal .goal-details .goal-details-left {
-        display: flex;
         flex: 1;
         padding-top: 3px;
-        padding-bottom: 4px;
-        vertical-align: middle; }
+        padding-bottom: 4px; }
+        .goals .goal .goal-details .goal-details-left span {
+          display: inline-block;
+          font-size: 14px;
+          line-height: 16px;
+          margin-top: 3px; }
       .goals .goal .goal-details .goal-details-right {
         font-size: 12px;
-        line-height: 14px;
+        line-height: 16px;
         letter-spacing: 5%;
         text-transform: uppercase;
         padding-top: 5px;
         padding-bottom: 4px;
-        color: #828282; }
+        color: #828282;
+        vertical-align: middle; }
         .goals .goal .goal-details .goal-details-right .blue {
           color: #2198EE; }
     .goals .goal:hover button {

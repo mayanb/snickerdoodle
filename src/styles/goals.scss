@@ -2,7 +2,7 @@
 	font-weight: 700;
 	font-size: 14px;
 	line-height: 16px;
-	letter-spacing: 5%;
+	letter-spacing: 0.7px;
 	color: #4f4f4f;
 	padding-top: 3px;
 	padding-bottom: 4px;
@@ -30,6 +30,7 @@
 
 		.left {
 			flex: 1;
+			margin-left: 16px;
 		}
 
 		.right {
@@ -56,35 +57,42 @@
 
 		.goal-details {
 			display: flex;
+
 			button {
 				padding: 0;
+				display:inline-block;
 				i {
-					font-size: 16px;
-					line-height: 16px;
+					font-size: 14px;
+					line-height: 14px;
 					vertical-align: top;
 					padding-top: 0px;
-					padding-bottom: 4px;
 				}
 				visibility: hidden;
 			}
 
 			.goal-details-left {
-				display: flex;
 				flex: 1;	
 				padding-top: 3px;
 				padding-bottom: 4px;
-				vertical-align: middle;
+
+				span {
+				display:inline-block;
+				font-size:14px;
+				line-height: 16px;
+				margin-top: 3px;
+				}
 			}
 
 
 			.goal-details-right {
 				font-size:12px;
-				line-height: 14px;
+				line-height: 16px;
 				letter-spacing: 5%;
 				text-transform: uppercase;
 				padding-top: 5px;
 				padding-bottom: 4px;
 				color: #828282;
+				vertical-align: middle;
 
 				.blue {
 					color: $theme-color;
