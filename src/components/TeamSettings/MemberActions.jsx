@@ -23,7 +23,7 @@ export function fetchTeamMembers() {
     dispatch(requestMembers())
 
     // actually fetch 
-    return api.get('/ics/members/')
+    return api.get('/ics/userprofiles/')
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestMembersFailure(err))
@@ -83,7 +83,7 @@ export function postCreateMember(json, success) {
   return function (dispatch) {
     dispatch(requestCreateMember())
 
-    return api.post('/ics/members/')
+    return api.post('/ics/users/create/')
       .send(json)
       .end(function (err, res) {
         if (err || !res.ok)
@@ -119,48 +119,4 @@ function requestCreateMemberSuccess(json) {
     name: MEMBERS,
   }
 }
-
-
-
-export function connectGoogleAccount(json, success) {
-  return function (dispatch) {
-    dispatch(requestCreateMember())
-
-    return api.post('/ics/members/')
-      .send(json)
-      .end(function (err, res) {
-        if (err || !res.ok)
-          dispatch(requestCreateMemberFailure(err))
-        else
-          dispatch(requestCreateMemberSuccess(res.body))
-          success(res.body.id)
-      })
-  }
-}
-
-
-function requestCreateMember() {
-  return {
-    type: REQUEST_CREATE, 
-    name: MEMBERS
-  }
-}
-
-function requestCreateMemberFailure(err) {
-  alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
-  return {
-    type: REQUEST_CREATE_FAILURE,
-    name: MEMBERS,
-    error: err,
-  }
-}
-
-function requestCreateMemberSuccess(json) {
-  return {
-    type: REQUEST_CREATE_SUCCESS,
-    item: json,
-    name: MEMBERS,
-  }
-}
-
 

@@ -12,6 +12,7 @@ class Login extends React.Component {
       username: "",
       password: "",
       token: "",
+      team_name: "",
       failedAuthentication: false
     }
   }
@@ -32,7 +33,7 @@ class Login extends React.Component {
     let fail = this.failedAuth.bind(this)
     this.props.dispatch(
       actions.postRequestLogin(
-        {username: this.state.username, password: this.state.password},
+        {username: this.state.username + '_' + this.state.team_name, password: this.state.password},
         () => null, 
         fail
       )
@@ -55,6 +56,14 @@ class Login extends React.Component {
           {this.state.failedAuthentication ? <span>Incorrect username or password.</span> : false }
           <form>
             <span>Welcome to Polymer.</span>
+            <input 
+              type="text" 
+              value={this.state.team_name} 
+              onChange={(e) => this.handleChange('team_name', e.target.value)}
+              className="login-username"
+              name="team_name" 
+              placeholder="team name" 
+            />
             <input 
               type="text" 
               value={this.state.username} 
@@ -83,64 +92,6 @@ class Login extends React.Component {
     )
   }
 }
-
-//   render() {
-//     const { from } = this.props.location.state || { from: { pathname: '/' } }
-//     const { redirectToReferrer } = this.state
-    
-//     if (redirectToReferrer) {
-//       return (
-//         <Redirect to={from}/>
-//       )
-//     }
-
-//     return (
-//       <div className="login-box">
-//         <h1>Log in</h1>
-//         {this.state.failedAuthentication ? <span>Incorrect username or password.</span> : false }
-//         <form>
-//           <input 
-//             type="text" 
-//             value={this.state.username} 
-//             onChange={(e) => this.handleChange('username', e.target.value)}
-//             className="login-username"
-//             name="username" 
-//             placeholder="username" 
-//           />
-//           <input 
-//             type="password" 
-//             value={this.state.password} 
-//             onChange={(e) => this.handleChange('password', e.target.value)}
-//             className="login-password"
-//             name="password" 
-//             placeholder="password" 
-//           />
-//           <button 
-//             type="submit" 
-//             disabled={!this.state.username.length || !this.state.password.length} 
-//             className="login-submit" 
-//             onClick={this.handleSubmit.bind(this)}
-//           >Log in</button>
-//         </form>
-//       </div>
-//     )
-//   }
-// }
-// function authenticate(username, password, success, fail) {
-//   let params = {username: username, password: password}
-
-//   api.post("/auth/login/")
-//     .send(params)
-//     .end(function (err, res) {
-//       if (err || !res.ok) {
-//         fail()
-//         return
-//       }
-//       Teams.save(res.body)
-//       Teams.setActive(res.body.user.pk)
-//       success()
-//     })
-// }
 
 const mapStateToProps = (state/*, props*/) => {
   return {

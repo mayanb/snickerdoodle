@@ -12,7 +12,7 @@ export default class CreateTeamMemberDialog extends React.Component {
 			first_name: "",
 			username: "",
 			password: "",
-			account_type: "r",
+			account_type: "w",
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this)

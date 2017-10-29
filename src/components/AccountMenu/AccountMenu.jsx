@@ -18,7 +18,6 @@ class AccountMenu extends React.Component {
     this.handleDropdownToggle = this.handleDropdownToggle.bind(this)
     this.handleTeamChange = this.handleTeamChange.bind(this)
     this.handleAddAccount = this.handleAddAccount.bind(this)
-    this.handleLogout = this.handleLogout.bind(this)
   }
 
 
@@ -65,7 +64,7 @@ class AccountMenu extends React.Component {
 		return (
 			<div className="current-account">
 				<Icon size="18px" />
-				<span>{`${data[ui.activeUser].user.team_name} |  @${data[ui.activeUser].user.username}`}</span>
+				<span>{`${data[ui.activeUser].user.team_name} |  @${data[ui.activeUser].user.username_display}`}</span>
 				<i className="material-icons">arrow_drop_down</i>
 			</div>
 		)
@@ -110,7 +109,7 @@ class AccountMenu extends React.Component {
 	renderLogout() {
 	  return (
 	    <div className="menu-section">
-	      <Button secondary onClick={this.handleLogout}>Logout</Button>
+	      <Button secondary onClick={() => window.location.href= '/account'}>Account Settings</Button>
 	    </div>
 	  )
 	}

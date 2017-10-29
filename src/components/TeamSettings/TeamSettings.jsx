@@ -69,10 +69,12 @@ function MemberList(props) {
 }
 
 function Member(props) {
-	return <div className="member">
-		<span>{props.member.username}</span>
-		<span>{props.member.account_type==="a"?"admin":"regular"}</span>
+	return (
+	<div className="member">
+		<span>{props.member.username_display}</span>
+		<span>{props.member.account_type=="a"?"admin":"regular"}</span>
 	</div>
+	)
 }
 
 const mapStateToProps = (state/*, props*/) => {
