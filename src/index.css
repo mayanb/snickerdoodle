@@ -582,6 +582,8 @@ span {
   left: 0;
   height: 100%;
   width: 144px;
+  display: flex;
+  flex-direction: column;
   color: rgba(255, 255, 255, 0.4);
   font-size: 13px;
   line-height: 16px;
@@ -627,6 +629,20 @@ span {
       max-width: 900px; }
   .d-top .nav-team {
     margin: 0 36px; }
+
+div .bar {
+  flex: 1; }
+
+.nav-feedback {
+  flex: 0;
+  align-items: flex-end;
+  margin: 16px;
+  font-size: 12px;
+  line-height: 18px; }
+  .nav-feedback span {
+    display: block; }
+  .nav-feedback a {
+    text-decoration: underline; }
 
 h1 {
   font-size: 20px;
