@@ -9,7 +9,7 @@ import GoogleConnect from '../GoogleConnect/GoogleConnect'
 import Movements from '../Movements/Movements'
 
 import ZebraPrinter from '../OldComponents/ZebraPrinter.jsx'
-import Navbar from '../OldComponents/Layout.jsx'
+import Navbar from '../Navbar/Navbar.jsx'
 import FactoryMap from '../OldComponents/FactoryMap.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../Inventory/Inventory.jsx'
