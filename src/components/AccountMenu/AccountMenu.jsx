@@ -118,12 +118,6 @@ class AccountMenu extends React.Component {
 		this.props.dispatch(actions.addUserAccount())
 	}
 
-	handleLogout() {
-		let {data, ui} = this.props.users
-		let user = data[ui.activeUser]
-		this.props.dispatch(actions.postRequestLogout(user, ()=>null, ()=>null))
-	}
-
 }
 
 const mapStateToProps = (state/*, props*/) => {

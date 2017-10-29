@@ -1,6 +1,7 @@
 import React from 'react'
 import AccountSectionHeader from './AccountSectionHeader'
 import AccountBasicsRow from './AccountBasicsRow'
+import AccountLogout from './AccountLogout'
 
 export default class AccountBasics extends React.Component {
 	render() {
@@ -9,6 +10,7 @@ export default class AccountBasics extends React.Component {
 				<AccountSectionHeader title="Basics" />
 				<AccountBasicsRow title="Username" content={this.props.username}/>
 				<AccountBasicsRow title="Password" content="******"/>
+				<AccountLogout />
 			</div>
 		)
 	}
