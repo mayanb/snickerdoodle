@@ -659,6 +659,16 @@ h2 {
   font-weight: 100;
   color: rgba(0, 0, 0, 0.89); }
 
+h3 {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.7px;
+  color: #4f4f4f;
+  padding-top: 3px;
+  padding-bottom: 4px;
+  text-transform: uppercase; }
+
 input {
   font-family: "Camphor Pro", "Interface", "Helvetica";
   font-size: 12px;
@@ -751,7 +761,7 @@ button {
   display: block;
   cursor: pointer; }
   button.secondary {
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0);
     color: #2198EE; }
 
 .nav-section {
@@ -1510,5 +1520,76 @@ div.zero-state {
       visibility: visible; }
     .goals .goal:hover .goal-filled-bar {
       background-color: #0068B4; }
+
+.my-account {
+  max-width: 420px;
+  padding-left: 36px; }
+
+.account-basics, .account-integrations, .account-team {
+  padding-top: 10px;
+  padding-bottom: 50px; }
+
+.account-basics-row {
+  display: flex;
+  padding: 4px 0; }
+  .account-basics-row div {
+    flex: 1; }
+
+.account-integration {
+  background-color: rgba(187, 187, 187, 0.09);
+  -webkit-font-smoothing: antialiased;
+  border-radius: 4px;
+  padding: 16px; }
+  .account-integration .integration-info {
+    display: flex;
+    margin-bottom: 6px; }
+    .account-integration .integration-info div {
+      flex: 1; }
+    .account-integration .integration-info div:first-child {
+      font-weight: 700; }
+    .account-integration .integration-info div:last-child {
+      text-align: right; }
+  .account-integration .integration-detail {
+    color: #9A9A9A; }
+
+.google-connect, .add-new-member {
+  cursor: pointer;
+  color: #2198EE; }
+
+.team-members {
+  background-color: rgba(187, 187, 187, 0.09);
+  -webkit-font-smoothing: antialiased;
+  border-radius: 4px;
+  padding: 16px;
+  margin-top: 10px; }
+  .team-members .member {
+    margin-bottom: 10px;
+    display: flex; }
+    .team-members .member span {
+      display: block;
+      flex: 1; }
+      .team-members .member span:last-child {
+        flex: 0;
+        font-size: 10px;
+        line-height: 10px;
+        padding: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.2px;
+        border-radius: 2px;
+        color: white;
+        text-align: right;
+        background-color: rgba(0, 0, 0, 0.2); }
+  .team-members .create-member .buttons {
+    display: flex;
+    justify-content: flex-end; }
+  .team-members .create-member h2 {
+    margin-bottom: 16px; }
+  .team-members .create-member > div {
+    display: flex;
+    margin-bottom: 8px; }
+    .team-members .create-member > div label {
+      flex: 1; }
+    .team-members .create-member > div input {
+      flex: 3; }
 
 /*# sourceMappingURL=index.css.map */

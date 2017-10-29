@@ -10,7 +10,7 @@ export default function Account(props) {
 			</div>
 			<div>
 				<span className="name">{user.team_name}</span>
-				<span className="username">{`@${user.username}`}</span>
+				<span className="username">{`@${user.username_display}`}</span>
 			</div>
 		</div>
 	)
