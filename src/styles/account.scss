@@ -61,6 +61,7 @@
 	.member {
 		margin-bottom: 10px;
 		display: flex;
+
 		span {
 			display: block;
 			flex: 1;
@@ -79,6 +80,31 @@
 			}
 
 		}
-
 	}
+
+	.create-member {
+		.buttons {
+			display:flex;
+			justify-content: flex-end;
+		}
+
+		h2 {
+			margin-bottom: 16px;
+		}
+
+		&>div {
+			display: flex;
+			margin-bottom: 8px;
+			label {
+				flex: 1;
+			}
+
+			input {
+				flex: 3;
+			}
+		}
+	}
+
+
+
 }
