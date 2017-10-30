@@ -1,4 +1,4 @@
-export pluralize(number, noun) {
+export function pluralize(number, noun) {
 	if (number != 1) {
 		return noun + 's'
 	} else {
