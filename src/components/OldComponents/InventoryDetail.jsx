@@ -268,6 +268,7 @@ function ItemList(props) {
 }
 
 function Item(props) {
+  let qr = props.item_qr
   let src = window.location.origin + "/public/img/qricon@2x.png"
   return (
     <div className="item" onClick={props.onClick}>
@@ -276,7 +277,7 @@ function Item(props) {
           <img src={src} />
         </div>
         <div>
-          <span className="item-qr">{props.item_qr.substring(43)}</span>
+          <span className="item-qr">{qr.substring(qr.length() - 6)}</span>
         </div>
       </div>
       <div className="unflex">
