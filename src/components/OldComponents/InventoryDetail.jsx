@@ -277,7 +277,7 @@ function Item(props) {
           <img src={src} />
         </div>
         <div>
-          <span className="item-qr">{qr.substring(qr.length() - 6)}</span>
+          <span className="item-qr">{qr.substring(qr.length - 6)}</span>
         </div>
       </div>
       <div className="unflex">
