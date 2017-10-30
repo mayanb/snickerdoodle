@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from './MemberActions'
 import Button from '../Card/Button'
 import CreateTeamMemberDialog from './CreateTeamMemberDialog'
+import GoogleConnect from '../GoogleConnect/GoogleConnect'
 let s = false
 
 class TeamSettings extends React.Component {
@@ -32,12 +33,12 @@ class TeamSettings extends React.Component {
 		let {ui, data} = this.props.members
 		let users = this.props.users
 		let selectedUser = users.data[users.ui.activeUser].user
+		console.log(data)
 
 		return (
-			<div key={1} >
-				<TeamHeader name={selectedUser.team_name}/>
+			<div key={1} className="team-members">
 				<MemberList members={data} isFetching={ui.isFetchingData}/>
-				<Button onClick={this.handleToggleDialog}>Add a team member</Button>
+				<span className="add-new-member" onClick={this.handleToggleDialog}>Add a team member</span>
 				<CreateTeamMemberDialog 
 					isOpen={this.state.isCreatingMember} 
 					onSubmit={this.handleCreateMemberSubmit}
@@ -46,17 +47,6 @@ class TeamSettings extends React.Component {
 			</div>
 		)
 	}
-}
-
-/* API requirements:
- * for a particular team, get all the current users 
- * create a user given a particular team
- */
-
-function TeamHeader(props) {
-	return (
-		<h1>{`My team: ${props.name}`}</h1>
-	)
 }
 
 function MemberList(props) {
@@ -68,18 +58,23 @@ function MemberList(props) {
 		return <div>No members</div>
 
 	return (
-		<ul>
+		<div className="member-list">
 		{
 			props.members.map(function (m, i) {
 				return <Member key={i} member={m} />
 			})
 		}
-		</ul>
+		</div>
 	)
 }
 
 function Member(props) {
-	return <div>{props.member.username}</div>
+	return (
+	<div className="member">
+		<span>{props.member.username_display}</span>
+		<span>{props.member.account_type=="a"?"admin":"regular"}</span>
+	</div>
+	)
 }
 
 const mapStateToProps = (state/*, props*/) => {
@@ -88,6 +83,7 @@ const mapStateToProps = (state/*, props*/) => {
   	members: state.members,
   }
 }
+
 
 const connectedTeamSettings = connect(mapStateToProps)(TeamSettings)
 

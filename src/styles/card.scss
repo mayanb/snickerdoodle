@@ -82,7 +82,7 @@ button {
 	cursor: pointer;
 
 	&.secondary {
-		background-color: white;
+		background-color: rgba(0,0,0,0);
 		color: $theme-color;
 	}
 

@@ -23,7 +23,7 @@ export function fetchTeamMembers() {
     dispatch(requestMembers())
 
     // actually fetch 
-    return api.get('/ics/members/')
+    return api.get('/ics/userprofiles/')
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestMembersFailure(err))
@@ -83,7 +83,7 @@ export function postCreateMember(json, success) {
   return function (dispatch) {
     dispatch(requestCreateMember())
 
-    return api.post('/ics/members/')
+    return api.post('/ics/users/create/')
       .send(json)
       .end(function (err, res) {
         if (err || !res.ok)
@@ -119,6 +119,4 @@ function requestCreateMemberSuccess(json) {
     name: MEMBERS,
   }
 }
-
-
 

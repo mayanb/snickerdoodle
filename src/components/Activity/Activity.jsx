@@ -183,6 +183,19 @@ export default class Activity extends React.Component {
 
 }
 
+
+function createSpreadsheet(params) {
+  console.log("creating spreadsheet")
+  api.post('/gauth/create-spreadsheet/')
+    .type('form')
+    .send(params)
+    .end(function (err, res) {
+      console.log(res)
+      // window.location.href = res.text
+    })
+}
+
+
 function Process(props) {
   let origins = false
 
@@ -200,15 +213,11 @@ function Process(props) {
     }, this)
   }
 
-  let link = window.location.origin + "/ics/potatoes/?"
-  let team = window.localStorage.getItem("team") || "1"
-  let downloadURL = 
-    `${window.location.origin}/ics/potatoes/?team=${team}&process=${props.process_id}&start=${toUTCString(props.dates.start)}&end=${toUTCString(props.dates.end, true)}`
+  let user_id = api.get_active_user().user.user_id
 
-  let button = <a 
-    href={downloadURL}
-    onClick={(e) => e.stopPropagation()}
-  ><i className="material-icons" >file_download</i></a>
+  let button = <button 
+    onClick={(e) => createSpreadsheet({"user_id": user_id, "process": props.process_id, "start": toUTCString(props.dates.start), "end": toUTCString(props.dates.end, true)})}
+  ><i className="material-icons" >file_download</i></button>
 
   return (
     <div className={ "activity-process " + (props.expanded?"expanded":"")}> 

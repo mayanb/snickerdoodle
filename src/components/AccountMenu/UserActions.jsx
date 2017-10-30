@@ -11,6 +11,10 @@ export const REQUEST_LOGOUT_FAILURE = "REQUEST_LOGOUT_FAILURE"
 export const SWITCH_ACTIVE_USER = "SWITCH_ACTIVE_USER"
 export const ADD_USER_ACCOUNT = "ADD_USER_ACCOUNT"
 
+export const SET_GOOGLE_AUTHENTICATION = "SET_GOOGLE_AUTHENTICATION"
+export const SET_GOOGLE_EMAIL = "SET_GOOGLE_EMAIL"
+
+
 export function postRequestLogin(credentials, success, failure) {
 	return function (dispatch) {
 		dispatch(requestLogin())
@@ -97,5 +101,19 @@ export function switchActiveUser(id) {
 export function addUserAccount() {
 	return {
 		type: ADD_USER_ACCOUNT
+	}
+}
+
+export function setGoogleAuthentication(value) {
+	return {
+		type: SET_GOOGLE_AUTHENTICATION,
+		value: value,
+	}
+}
+
+export function setGoogleEmail(value) {
+	return {
+		type: SET_GOOGLE_EMAIL,
+		value: value,
 	}
 }

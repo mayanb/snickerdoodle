@@ -1,0 +1,110 @@
+.my-account {
+	max-width: 420px;
+	padding-left: 36px;
+
+}
+
+.account-basics, .account-integrations, .account-team {
+	padding-top: 10px;
+	padding-bottom: 50px;
+}
+
+.account-basics-row {
+	display: flex;
+	padding: 4px 0;
+
+	div {
+		flex: 1;
+	}
+}
+
+.account-integration {
+	background-color: rgba(187,187,187,0.09);
+	-webkit-font-smoothing: antialiased;
+	border-radius: 4px;
+	padding: 16px;
+
+	.integration-info {
+		display: flex;
+		margin-bottom: 6px;
+
+		div {
+			flex: 1;
+		}
+
+		div:first-child {
+			font-weight: 700;
+		}
+
+		div:last-child {
+			text-align: right;
+		}
+	}
+
+	.integration-detail {
+		color: #9A9A9A;
+	}
+}
+
+.google-connect, .add-new-member {
+	cursor: pointer;
+	color: $theme-color;
+}
+
+.team-members {
+	background-color: rgba(187,187,187,0.09);
+	-webkit-font-smoothing: antialiased;
+	border-radius: 4px;
+	padding: 16px;
+	margin-top: 10px;
+
+	.member {
+		margin-bottom: 10px;
+		display: flex;
+
+		span {
+			display: block;
+			flex: 1;
+
+			&:last-child {
+				flex: 0;
+				font-size: 10px;
+				line-height: 10px;
+				padding: 3px;
+				text-transform: uppercase;
+				letter-spacing: 0.2px;
+				border-radius: 2px;
+				color: white;
+				text-align: right;
+				background-color: rgba(0,0,0,0.2);
+			}
+
+		}
+	}
+
+	.create-member {
+		.buttons {
+			display:flex;
+			justify-content: flex-end;
+		}
+
+		h2 {
+			margin-bottom: 16px;
+		}
+
+		&>div {
+			display: flex;
+			margin-bottom: 8px;
+			label {
+				flex: 1;
+			}
+
+			input {
+				flex: 3;
+			}
+		}
+	}
+
+
+
+}
