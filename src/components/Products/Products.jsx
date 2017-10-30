@@ -38,7 +38,11 @@ class Products extends React.Component {
   }
 
   render() {
-    var { data, ui } = this.props
+    var { data, ui, users } = this.props
+    let account_type = users.data[users.ui.activeUser].user.account_type
+    if (account_type != 'a')
+      return null
+    
     return (
       <div className="nav-section products">
         <div className="nav-section-list">
@@ -153,7 +157,8 @@ const mapStateToProps = (state/*, props*/) => {
   return {
     data: state.products.data,
     ui: state.products.ui,
-    inventoryData: state.inventories.data
+    inventoryData: state.inventories.data,
+    users: state.products.users
     // inventories: state.products.inventories
   }
 }

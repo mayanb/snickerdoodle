@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import NavigationGroup from './NavigationGroup'
 import NavigationFeedback from './NavigationFeedback'
@@ -12,7 +13,7 @@ let l2 = ["labels", "dymo"]
 let o3 = ["Processes", "Products",]
 let l3 = ["processes", "products",]
 
-export default class Navbar extends React.Component {
+class Navbar extends React.Component {
   render () {
     var navbarSizeClass = "bigNav"
     if (this.props.match.params.id && this.props.match.params.section == "inventory") {
@@ -31,11 +32,27 @@ export default class Navbar extends React.Component {
           <div>
             <NavigationGroup options={o1} links={l1} title={null} />
             <NavigationGroup options={o2} links={l2} title={"Printing"} />
-            <NavigationGroup options={o3} links={l3} title={"My factory"} />
+            { this.renderAdminNavigation() }
           </div>
         </div>
         <NavigationFeedback />
       </div>
     )
   }
+
+  renderAdminNavigation() {
+    let {data, ui} = this.props.users
+    let account_type = data[ui.activeUser].user.account_type
+    if (account_type == 'a')
+      return ( <NavigationGroup options={o3} links={l3} title={"My factory"} /> )
+    return null
+  }
 }
+
+const mapStateToProps = (state/*, props*/) => {
+  return {
+    users: state.users
+  }
+}
+
+export default connect(mapStateToProps)(Navbar)
