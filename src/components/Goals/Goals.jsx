@@ -6,6 +6,7 @@ import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
 import Button from '../Card/Button'
 import Card from '../Card/Card'
+import GoalSection from './GoalSection'
 import { pluralize } from '../Logic/stringutils'
 
 class Goals extends React.Component {
@@ -42,39 +43,37 @@ class Goals extends React.Component {
 		return (
 			<div className="goals">
 			<div className="content">
-				<span className="card-header">Daily Goals</span>
-				{
-					goals.data.map(function (goal, i) {
-						if(goal.timerange == 'd') {
-							return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
-
-						}
-					}, this)
-				}
-				<div></div>
-				<span className="card-header">Weekly Goals</span>
-				{
-					goals.data.map(function (goal, i) {
-						if(goal.timerange == 'w') {
-							return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
-
-						}
-					}, this)
-				}
-				<div></div>
-				<span className="card-header">Monthly Goals</span>
-				{
-					goals.data.map(function (goal, i) {
-						if(goal.timerange == 'm') {
-							return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
-
-						}
-					}, this)
-				}
+				<GoalSection heading='Daily Goals' timerange='d' handleDelete={this.handleDelete} />
+				<GoalSection heading='Weekly Goals' timerange='w' handleDelete={this.handleDelete} />
+				<GoalSection heading='Monthly Goals' timerange='m' handleDelete={this.handleDelete} />
 				{this.renderAddGoalDialog()}
 				{this.renderDeleteGoalDialog()}
 			</div>
 			<div>{this.renderBottomBar(completed,goals.data.length)}</div>
+			</div>
+		)
+	}
+
+	renderGoalSection(heading, timerange) {
+		let { goals } = this.props
+		let sectionGoals = []
+		goals.data.map(function (goal, i) {
+			if(goal.timerange == timerange) {
+				let g = <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
+				sectionGoals.push(g)
+			}
+		}, this)
+
+		if (sectionGoals.length == 0) {
+			return null
+		}
+
+		console.log(sectionGoals)
+
+		return (
+			<div>
+				<span className="card-header">{heading}</span>
+				{ sectionGoals }
 			</div>
 		)
 	}
@@ -97,8 +96,6 @@ class Goals extends React.Component {
 	}
 
 	handleDelete(goal, i) {
-		console.log("in handleDelete")
-		console.log(goal)
 		this.setState({isDeletingGoal: goal, isDeletingGoalIndex: i})
 	}
 
