@@ -219,7 +219,7 @@ class InventoryDetail extends React.Component {
 
     console.log(itemsToDeliver)
 
-    let users = JSON.parse(window.localStorage.getItem('users-v4'))
+    let users = JSON.parse(window.localStorage.getItem('users-v4.1'))
     let user = users.data[users.ui.activeUser].user
     let team = user.team
     let component = this

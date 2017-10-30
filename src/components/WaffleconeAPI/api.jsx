@@ -8,7 +8,7 @@ let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
 //let host = 'http://127.0.0.1:8000'
 
 function get_active_user() {
-	let users = JSON.parse(window.localStorage.getItem('users-v4'))
+	let users = JSON.parse(window.localStorage.getItem('users-v4.1'))
 	return users.data[users.ui.activeUser]
 }
 
@@ -48,7 +48,7 @@ function post(path) {
 		team = user.team
 		id = user.user_id
 		profile_id = user.profile_id
-		token = JSON.parse(window.localStorage.getItem('users-v4')).data[team].token
+		token = JSON.parse(window.localStorage.getItem('users-v4.1')).data[team].token
 	} catch(e) {
 		
 	}
@@ -72,7 +72,7 @@ function put(path) {
 	let token = ""
 	try {
 		team = get_active_user().user.team
-		token = JSON.parse(window.localStorage.getItem('users-v4')).data[team].token
+		token = JSON.parse(window.localStorage.getItem('users-v4.1')).data[team].token
 	} catch(e) {
 		
 	}
