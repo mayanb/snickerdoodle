@@ -624,6 +624,8 @@ span {
     flex: 1;
     flex-grow: 1;
     margin: 0px 36px; }
+    .d-top .nav-left .Select-control {
+      border: none; }
     .d-top .nav-left .filters {
       max-width: 900px; }
   .d-top .nav-team {
