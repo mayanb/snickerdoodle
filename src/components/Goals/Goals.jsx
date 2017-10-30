@@ -6,6 +6,7 @@ import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
 import Button from '../Card/Button'
 import Card from '../Card/Card'
+import { pluralize } from '../Logic/stringutils'
 
 class Goals extends React.Component {
 
@@ -41,10 +42,33 @@ class Goals extends React.Component {
 		return (
 			<div className="goals">
 			<div className="content">
+				<span className="card-header">Daily Goals</span>
+				{
+					goals.data.map(function (goal, i) {
+						if(goal.timerange == 'd') {
+							return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
+
+						}
+					}, this)
+				}
+				<div></div>
 				<span className="card-header">Weekly Goals</span>
 				{
 					goals.data.map(function (goal, i) {
-						return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
+						if(goal.timerange == 'w') {
+							return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
+
+						}
+					}, this)
+				}
+				<div></div>
+				<span className="card-header">Monthly Goals</span>
+				{
+					goals.data.map(function (goal, i) {
+						if(goal.timerange == 'm') {
+							return <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
+
+						}
 					}, this)
 				}
 				{this.renderAddGoalDialog()}
@@ -56,7 +80,7 @@ class Goals extends React.Component {
 	}
 
 	renderBottomBar(completed, total) {
-		let k = <span>You've reached <span>{completed}</span>{` of ${total} goals.`}</span> 
+		let k = <span>You've reached <span>{completed}</span>{` of ${total} ${pluralize(total, 'goal')}.`}</span>
 		if (total == 0) {
 			k = <span>You have 0 goals. Start adding goals now!</span>
 		}

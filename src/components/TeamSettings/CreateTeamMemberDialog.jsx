@@ -12,7 +12,7 @@ export default class CreateTeamMemberDialog extends React.Component {
 			first_name: "",
 			username: "",
 			password: "",
-			account_type: "a",
+			account_type: "w",
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -36,6 +36,7 @@ export default class CreateTeamMemberDialog extends React.Component {
 		return (
 			<Dialog onToggle={this.props.onCancel} >
 				<div className="create-member">
+					<h2>Add a team member</h2>
 					<div>
 						<label>Name</label>
 						<input 
@@ -58,11 +59,11 @@ export default class CreateTeamMemberDialog extends React.Component {
 						<input 
 							type="password"
 							placeholder="***"  
-							value={this.state.account_type} 
+							value={this.state.password} 
 							onChange={(e)=> this.handleInputChange(e, "password")}
 						/>
 					</div>
-					<div>
+					<div className="buttons">
 						<Button secondary onClick={this.props.onCancel}>Cancel</Button>
 						<Button onClick={this.handleSubmit}>Add team member</Button>
 					</div>
