@@ -8,7 +8,7 @@ export default class AccountBasics extends React.Component {
 		return (
 			<div className="account-basics">
 				<AccountSectionHeader title="Basics" />
-				<AccountBasicsRow title="Username" content={this.props.username}/>
+				<AccountBasicsRow title="Username" content={this.props.username_display}/>
 				<AccountBasicsRow title="Password" content="******"/>
 				<AccountLogout />
 			</div>

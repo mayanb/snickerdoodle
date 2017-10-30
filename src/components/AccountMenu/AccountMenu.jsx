@@ -101,7 +101,7 @@ class AccountMenu extends React.Component {
 	renderAddAccount() {
 	  return (
 	    <div className="menu-section">
-	      <Button secondary onClick={this.handleAddAccount}>Add an account</Button>
+	      <Button secondary onClick={this.handleAddAccount}>Log into another account</Button>
 	    </div>
 	  )
 	}
