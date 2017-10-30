@@ -91,9 +91,8 @@ img:before {
     flex: 1 auto; }
 
 .Select-control {
-  border: none;
   outline: none;
-  border-radius: 0; }
+  border-radius: 4; }
 
 .Select-placeholder {
   padding: 0; }
@@ -1525,6 +1524,9 @@ div.zero-state {
       visibility: visible; }
     .goals .goal:hover .goal-filled-bar {
       background-color: #0068B4; }
+
+.goal-section:not(:first-child) {
+  margin-top: 40px; }
 
 .my-account {
   max-width: 420px;

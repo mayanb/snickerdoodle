@@ -138,3 +138,9 @@
 		}
 	}
 }
+
+.goal-section {
+	&:not(:first-child) {
+		margin-top: 40px;
+	}
+}

@@ -12,7 +12,7 @@ class GoalSection extends React.Component {
 		}
 
 		return (
-			<div>
+			<div className='goal-section'>
 				<span className="card-header">{heading}</span>
 				{ sectionGoals }
 			</div>

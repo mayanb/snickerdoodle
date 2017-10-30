@@ -25,8 +25,10 @@ class AddGoalDialog extends React.Component {
 		return (
 			<Dialog>
 				<h1>Make a new goal</h1>
-				<div style={{maxWidth: "200px"}} >
+				<div style={{maxWidth: "300px"}} >
+				<div>
 					<Select
+						openOnFocus
 						value={this.state.process_type}
 						options={this.props.processes}
 						labelKey={'name'}
@@ -34,7 +36,10 @@ class AddGoalDialog extends React.Component {
 						placeholder="Select a process type to track"
 						onChange={(newVal) => this.onInputChange('process_type', newVal)}
 					/>
+				</div>
+				<div>
 					<Select
+						openOnFocus
 						value={this.state.product_type}
 						options={this.props.products}
 						labelKey={'name'}
@@ -42,7 +47,10 @@ class AddGoalDialog extends React.Component {
 						placeholder="Select a product type to track"
 						onChange={(newVal) => this.onInputChange('product_type', newVal)}
 					/>
+				</div>
+				<div>
 					<Select
+						openOnFocus	
 						value={this.state.timerange}
 						options={[{"name": "Day", "type": "d"},{"name": "Week", "type": "w"},{"name": "Month", "type": "m"}]}
 						labelKey={'name'}
@@ -50,6 +58,7 @@ class AddGoalDialog extends React.Component {
 						placeholder="Select a time period for this goal"
 						onChange={(newVal) => this.onInputChange('timerange', newVal)}
 					/>
+				</div>
 					<input 
 						type="text" 
 						placeholder="Target amount" 
