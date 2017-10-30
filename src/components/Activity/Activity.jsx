@@ -230,7 +230,7 @@ function Process(props) {
           fourth={pl(parseInt(props.outputs), props.process_unit)}
           fifth={"0 flagged"}
           sixth={"0 experimental"}
-          seventh={button}
+          seventh={<div />}
 
         />
       </div>
