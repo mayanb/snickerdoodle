@@ -5,23 +5,52 @@ import { event } from 'd3-selection'
 import { drag } from 'd3-drag'
 import { select } from 'd3-selection'
 
+// class BCWrapper extends Component {
+//   componentDidMount() {
+//     this.props.dispatch(actions.getProcessCooccurrence())
+//   }
+
+//   render() {
+//     if (this.props.graph.isLoading) {
+//       return <span>Loading...</span>
+//     }
+//     return <BarChart data={this.props.graph.data} size={[500,500]} />
+//   }
+// }
+
 class BarChart extends Component {
    constructor(props){
       super(props)
       this.createBarChart = this.createBarChart.bind(this)
    }
+
    componentDidMount() {
-      this.createBarChart()
+     this.createBarChart()
    }
+
    componentDidUpdate() {
       this.createBarChart()
    }
    createBarChart() {
       const ref = this.node
       const graph = this.props.data
-      const width = 500
+      const width = 800
       const height = 500
       var color = scaleOrdinal(schemeCategory20);
+
+      select(ref).append("svg:defs").selectAll("marker")
+        .data(["end"])      // Different link/path types can be defined here
+        .enter().append("svg:marker")    // This section adds in the arrows
+          .attr("id", String)
+          .attr("viewBox", "0 -5 10 10")
+          .attr("refX", 15)
+          .attr("refY", -1.5)
+          .attr("markerWidth", 6)
+          .attr("markerHeight", 6)
+          .attr("orient", "auto")
+        .append("svg:path")
+          .attr("d", "M0,-5L10,0L0,5");
+
       var simulation = forceSimulation()
          .force("link", forceLink().id(function(d) { return d.id; }))
          .force("charge", forceManyBody())
@@ -32,21 +61,30 @@ class BarChart extends Component {
          .selectAll('line')
          .data(graph.links)
          .enter().append('line')
-         .attr('stroke-width', d => Math.sqrt(d.value))
+          .attr('stroke-width', d => Math.sqrt(d.value))
+          .attr("marker-end", "url(#end)");
 
 
       var node = select(ref).append('g')
          .attr('class', 'nodes')
          .selectAll('circle')
          .data(graph.nodes)
-         .enter().append('circle')
-         .attr('r', 5)
-         .attr('fill', d => color(d.group))
+         .enter().append('g')
+         // .attr('fill', d => color(d.group))
          .call(drag()
             .on('start', dragstarted)
             .on('drag', dragged)
             .on('end', dragended)
          )
+
+      node.append('circle')
+        .attr('r', 5)
+
+      node.append('text')
+        .attr('dx', 12)
+        .attr('dy', '0.35em')
+        .text(d => d.name)
+
 
 
       simulation
@@ -63,9 +101,7 @@ class BarChart extends Component {
             .attr("x2", function(d) { return d.target.x; })
             .attr("y2", function(d) { return d.target.y; });
 
-         node
-            .attr("cx", function(d) { return d.x; })
-            .attr("cy", function(d) { return d.y; });
+         node.attr('transform', d => "translate(" + d.x + "," + d.y + ")");
       }
 
       function dragstarted(d) {
@@ -88,8 +124,14 @@ class BarChart extends Component {
    }
 
    render() {
+
+    // if (this.props.proc.ui.isGettingProcesses) {
+    //   return <span>Loading...</span>
+    // }
+
+
       return <svg ref={node => this.node = node}
-         width={500} height={500} className="lesmis">
+         width={800} height={500} className="lesmis">
       </svg>
    }
 }
