@@ -3,13 +3,12 @@ import {
   REQUEST, 
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
+  SELECT,
 } from '../../Reducers/APIDataReducer'
 import { INVENTORIES } from '../../Reducers/ReducerTypes'
 
 
 export function fetchInventory(filter) {
-  console.log(filter)
-
   return function (dispatch) {
     // dispatch an action that we are requesting inventory
     dispatch(requestProductInventory())
@@ -46,5 +45,14 @@ function requestProductInventorySuccess(json) {
     type: REQUEST_SUCCESS,
     data: json,
     name: INVENTORIES,
+  }
+}
+
+export function selectInventory(index) {
+  return {
+    type: SELECT,
+    index: index,
+    name: INVENTORIES,
+
   }
 }

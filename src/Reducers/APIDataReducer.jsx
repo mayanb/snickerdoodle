@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import update from 'immutability-helper'
 import {findPosition, alphabetize} from '../components/Logic/arrayutils.jsx'
+import * as paginations from './APIDataPaginations'
 
 export const REQUEST = 'REQUEST'
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS'
@@ -64,6 +65,22 @@ function request(state, action) {
 }
 
 function requestSuccess(state, action) {
+  // if its paginaged, then make sure we process the metadata
+  if (paginations.isPaginated(action.data)) {
+    return update(state, {
+      ui: {
+        $merge: {
+          isFetchingData: false,
+          next: paginations.next(action.data)
+        }
+      },
+      data: {
+        $set: paginations.list(action.data)
+      }
+    })
+  }
+
+  // otherwise just keep it simple
   return update(state, {
     ui: {
       $merge: {

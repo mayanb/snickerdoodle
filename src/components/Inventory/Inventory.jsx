@@ -1,17 +1,14 @@
 import React from 'react'
-import $ from 'jquery'
-import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 import {InventoryDetail} from '../OldComponents/InventoryDetail.jsx'
+import InventoryList from './InventoryList'
 import { InventoryFilter, Filters } from '../OldComponents/Inputs.jsx'
 import {fetch, requestID, ZeroState} from '../OldComponents/APIManager.jsx'
 import Loading from '../OldComponents/Loading.jsx'
 import update from 'immutability-helper'
-import api from '../WaffleconeAPI/api'
-import Img from '../Img/Img'
-import Checkbox from '../Checkbox/Checkbox'
-import moment from 'moment'
+import * as actions from './InventoryActions'
 
-export default class Inventory extends React.Component {
+class Inventory extends React.Component {
   constructor(props) {
     super(props)
     this.handleProductFilter = this.handleProductFilter.bind(this)
@@ -26,41 +23,8 @@ export default class Inventory extends React.Component {
     }
   }
 
-  getProcessesForInventory() {
-    this.setState({loading: true})
-
-    var params = {}
-    if (this.state.productFilter.length > 0)
-      params={products:this.state.productFilterStr}
-
-    let component = this
-    let rid = requestID()
-    this.latestRequestID = rid
-
-    api.get("/ics/inventory/")
-      .query(params)
-      .end(function (err, data) {
-        if (component.latestRequestID == rid)
-          component.setState({processes : data.body, loading: false})
-      })
-  }
-
-  getProductsForInventory() {
-    let component = this
-
-    api.get('/ics/products/codes/')
-      .end(function (err, data) {
-        let mappedProducts = data.body.map(function (product, i) {
-          return {value: product.id, label: product.name}
-        })
-        component.setState({products: data.body})
-      })
-  
-  }
-
   componentDidMount() {
-    this.getProcessesForInventory()
-    this.getProductsForInventory()
+    this.props.dispatch(actions.fetchInventory())
   }
 
   handleProductFilter(which, val) {
@@ -71,13 +35,6 @@ export default class Inventory extends React.Component {
     this.setState({[which] : val, productFilterStr : valStr}, function () {
       component.getProcessesForInventory()
     })
-  }
-
-  getSelectedProcess() {
-    let a = this.state.processes.find(function (x) {
-      return (x.process_id == this.props.match.params.id)
-    }, this)
-    return a
   }
 
   handleDelivery(selectedCount) {
@@ -104,8 +61,6 @@ export default class Inventory extends React.Component {
   render() {
     let props = this.props
 
-
-
     return (
       <div className="inventory">
         <div className={"page " + (props.match.params.id?"smallDetail":"")}>
@@ -114,8 +69,7 @@ export default class Inventory extends React.Component {
 
           <Content 
             {...props} 
-            {...this.state} 
-            selectedProcess={this.getSelectedProcess()}
+            productFilter={this.state.productFilter}
             onDelivery={this.handleDelivery.bind(this)} 
           />
           
@@ -129,26 +83,32 @@ class Content extends React.Component {
 
   render() {
     let props = this.props
-    var contentArea = <InventoryList  processes={props.processes} selected={props.match.params.id} />
-    if (props.loading) {
-      contentArea = <Loading />
-    } else if (!props.processes || props.processes.length == 0) {
-      contentArea = <ZeroState filtered={props.productFilter && props.productFilter.length} />
+    let {data, ui} = props.inventory
+    
+    if (ui.isFetchingData) {
+      return <Loading />
+    } else if (!data || data.length == 0) {
+      return <ZeroState filtered={props.productFilter && props.productFilter.length} />
     }
 
-    return (
-      <div className="halves">
-        {contentArea}
+    let detail = (ui.selectedItem != null && data[ui.selectedItem] != null) ? (
         <InventoryDetail 
-          {...props.selectedProcess} 
+          process={data[ui.selectedItem]}
           filter={props.productFilter.length>0?props.productFilterStr:null} 
           match={props.match} 
           showDetail={props.match.params.id}
           onDelivery={props.onDelivery}
         />
+        ) : null
+
+    return (
+      <div className="halves">
+        <InventoryList  inventory={data} />
+        { detail }
       </div>
     )
   }
+
 }
 
 function InventoryHeader(props) {
@@ -166,111 +126,9 @@ function Rule(props) {
   )
 }
 
-class IH extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      fixed: false,
-    }
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll.bind(this))
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
-  }
-
-  handleScroll(e) { 
-    if (this && this.state) {
-      if (e.srcElement.scrollingElement.scrollTop > 176) {
-        this.setState({fixed: true})
-      } else {
-        this.setState({fixed: false})
-      }
-    }
-  }
-
-
-  render() {
-    return (
-      <div className={this.state.fixed?"fixed":""}>
-        <InventoryItem i={"no"} header={true} output_desc={"PRODUCT TYPE"} count={"COUNT"} unit={"UNIT"} />
-      </div>
-    )
+const mapStateToProps = (state/*, props*/) => {
+  return {
+    inventory: state.inventories,
   }
 }
-
-function InventoryList(props) {
-  return (
-    <div className={"inventory-list " + (props.fixed?"list-padded":"")}>
-      <IH />
-      {
-        props.processes.map(function (process, i) {
-          return  (
-            <Link key={i} to={ "/inventory/" + process.process_id}>
-              <InventoryItem i={i} selected={props.selected} {...process}/>
-            </Link>
-          )
-        }, this)
-      }
-    </div>
-  )
-}
-
-
-function InventoryItem(props) {
-  var teamStyle = {color: "rgba(0,0,0,0.3", paddingLeft: "4px", fontSize: "10px"}
-  let currTeam = window.localStorage.getItem("team") || "1"
-  teamStyle["display"] = currTeam==props.team_id?"none":""
-  let icon = props.process_icon || "default.png" 
-  return (
-    <div className={"inventoryClass " + isSelected(props) + " " + isHeader(props)} onClick={props.onClick}>
-      <div className="i-check">
-        <Checkbox size="16px" checked={isSelected(props)} />
-      </div>
-      <div className="i-icon">
-        <Img className="inventory-icon" src={icon.substring(0, icon.length - 4) + "@3x"} />
-      </div>
-      <div className="i-code">
-        <span>{props.process_code || "CODE"}</span>
-      </div>
-      <div className="i-outputdesc">
-        <span>{props.output_desc.sentenceCase()}</span>
-        <span style={teamStyle}>{props.team}</span>
-      </div>
-      <div className="i-count">
-        <span>{count(props.count)}</span>
-      </div>
-      <div className="i-unit">
-        <span>{props.unit.sentenceCase() + "s"}</span>
-      </div>
-      <div className="i-date">
-        <span>{props.oldest?moment(props.oldest).format('MMM YYYY'):"OLDEST"}</span>
-      </div>
-    </div>
-  )
-}
-
-function count(c) {
-  let p = parseInt(c)
-  if (p - c != 0) 
-    return c
-  return p
-}
-
-function isHeader(props) {
-  return (props.header == true) ? "inventoryClass-header" : ""
-}
-
-function isSelected(props) {
-  if (isHeader(props))
-    return false
-  return (props.process_id == props.selected) ? "selected" : ""
-}
-
-String.prototype.sentenceCase = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-}
+export default connect(mapStateToProps)(Inventory)

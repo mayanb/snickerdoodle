@@ -670,7 +670,7 @@ h3 {
   padding-bottom: 4px;
   text-transform: uppercase; }
 
-input {
+input[type='text'] {
   font-family: "Camphor Pro", "Interface", "Helvetica";
   font-size: 12px;
   line-height: 16px;
@@ -679,9 +679,9 @@ input {
   height: 32px;
   padding: 0px 8px;
   outline: none; }
-  input:focus {
+  input[type='text']:focus {
     border-color: #2198EE !important; }
-  input::-webkit-input-placeholder {
+  input[type='text']::-webkit-input-placeholder {
     color: rgba(0, 0, 0, 0.3); }
 
 label {

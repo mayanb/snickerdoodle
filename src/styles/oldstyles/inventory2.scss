@@ -87,6 +87,10 @@
         flex-direction: row;
         padding: 2px 8px;
 
+        input {
+          height: 16px;
+        }
+
         .item-img {
           height: 12px;
           width: 12px;

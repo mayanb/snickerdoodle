@@ -97,7 +97,9 @@ export default class CreateProductDropdown extends React.Component {
 		this.setState({error: false})
 		return true
 	}
-
-
 }
+
+
+
+
 

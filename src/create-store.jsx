@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import update from 'immutability-helper'
-import {findPosition, alphabetize} from './components/Logic/arrayutils.jsx'
 import {apiDataReducer} from './Reducers/APIDataReducer'
 import {_task} from './Reducers/TaskReducerExtension'
 import {_process} from './Reducers/ProcessReducerExtension'
+import {_inventoryDetails} from './components/InventoryDetail/InventoryDetailsReducer'
 import _users from './components/AccountMenu/UserReducer'
 import * as types from './Reducers/ReducerTypes'
+
 
 var stateDefault = {
   data: [],
@@ -42,6 +42,7 @@ export default function(data) {
   	processes: createFilteredReducer(_process, action => action.name === types.PROCESSES, stateDefault), 
   	movements: createFilteredReducer(apiDataReducer, action => action.name === types.MOVEMENTS, stateDefault), 
   	inventories: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORIES, stateDefault), 
+    inventoryDetails: createFilteredReducer(_inventoryDetails, action => action.name === types.INVENTORYDETAILS, stateDefault), 
   	task: createFilteredReducer(_task, action => action.name === types.TASK, stateDefault), 
   	taskDescendents: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_DESCENDENTS, stateDefault), 
   	taskAncestors: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_ANCESTORS, stateDefault), 

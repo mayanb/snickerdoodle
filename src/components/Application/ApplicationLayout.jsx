@@ -4,15 +4,11 @@ import Activity from '../Activity/Activity'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
 
-import Movements from '../Movements/Movements'
-
 import ZebraPrinter from '../OldComponents/ZebraPrinter.jsx'
 import Navbar from '../Navbar/Navbar.jsx'
-import FactoryMap from '../OldComponents/FactoryMap.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../Inventory/Inventory.jsx'
 import Task from '../Task/Task.jsx'
-import Dash from '../OldComponents/Dash.jsx'
 import Goals from '../Goals/Goals'
 
 import PrivateRoute from '../Router/PrivateRoute'
