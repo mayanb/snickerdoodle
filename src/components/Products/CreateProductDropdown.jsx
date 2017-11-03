@@ -12,7 +12,8 @@ export default class CreateProductDropdown extends React.Component {
 			name: "",
 			abbreviation: "",
 			description: "", 
-			error: false
+			error: false,
+			too_long: false,
 		}
 
 		this.handleDropdownToggle = this.handleDropdownToggle.bind(this)
@@ -25,6 +26,7 @@ export default class CreateProductDropdown extends React.Component {
 					{ this.renderInput("abbreviation", "Abbreviation", "eg. MM16") }
 					{ this.renderDescription() }
 					{ this.renderError() }
+					{ this.renderTooLongError() }
 					{ this.renderCreateButton() }
 				</div>
 			</ButtonDropdown>
@@ -47,6 +49,13 @@ export default class CreateProductDropdown extends React.Component {
 		return null;
 	}
 
+	renderTooLongError() {
+		if (this.state.too_long) {
+			return <span className="create-product-error">The product name must be under 30 characters and the abbreviation under 10.</span>
+		}
+		return null;
+	}
+
 	renderInput(key, label, placeholder,) {
 		return (
 			<div className="create-product-input">
@@ -58,7 +67,7 @@ export default class CreateProductDropdown extends React.Component {
 
 	handleInputChange(e, key) {
 		this.setState({[key]: e.target.value})
-		if (this.state.error) {
+		if (this.state.error || this.state.too_long) {
 			this.handleInputValidation()
 		}
 	}
@@ -91,7 +100,8 @@ export default class CreateProductDropdown extends React.Component {
 			return false
 		}
 		if (name.length > 30 || abbreviation.length > 10) {
-			this.setState({error: true})
+			// this.setState({error: true})
+			this.setState({too_long: true})
 			return false
 		}
 		this.setState({error: false})
