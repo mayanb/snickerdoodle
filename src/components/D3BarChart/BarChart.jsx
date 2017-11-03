@@ -4,17 +4,31 @@ import { scaleOrdinal, schemeCategory20 } from 'd3-scale'
 import { event } from 'd3-selection'
 import { drag } from 'd3-drag'
 import { select } from 'd3-selection'
+import * as actions from './BarChartActions'
+import { connect } from 'react-redux'
+
 
 // class BCWrapper extends Component {
+//   constructor(props) {
+//     super(props)
+//     this.state = {
+//       graphs: {},
+//     }
+//   }
+
 //   componentDidMount() {
-//     this.props.dispatch(actions.getProcessCooccurrence())
+//     console.log("hi")
+//     this.props.dispatch(actions.getProcessCooccurrence(1))
 //   }
 
 //   render() {
-//     if (this.props.graph.isLoading) {
+//     let {graphs} = this.props
+//     console.log(graphs)
+
+//     if (this.props.graphs.isFetchingData) {
 //       return <span>Loading...</span>
 //     }
-//     return <BarChart data={this.props.graph.data} size={[500,500]} />
+//     return <BarChart data={this.props.graphs.data} size={[500,500]} />
 //   }
 // }
 
@@ -125,7 +139,7 @@ class BarChart extends Component {
 
    render() {
 
-    // if (this.props.proc.ui.isGettingProcesses) {
+    // if (this.props.graph.ui.isFetchingData) {
     //   return <span>Loading...</span>
     // }
 
@@ -136,3 +150,6 @@ class BarChart extends Component {
    }
 }
 export default BarChart
+
+
+

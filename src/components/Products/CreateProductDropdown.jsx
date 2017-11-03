@@ -90,7 +90,7 @@ export default class CreateProductDropdown extends React.Component {
 			this.setState({error: true})
 			return false
 		}
-		if (name.length > 20 || abbreviation.length > 10) {
+		if (name.length > 30 || abbreviation.length > 10) {
 			this.setState({error: true})
 			return false
 		}
