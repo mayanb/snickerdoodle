@@ -17,7 +17,7 @@ function get_active_user() {
 function get(path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
-		url = host + '/ics/v4' + path.substring(4) 
+		url = host + '/ics/v5' + path.substring(4) 
 	}
 
 	let user = {team: 1, user_id: 1}
@@ -36,7 +36,7 @@ function get(path) {
 function post(path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
-		url = host + '/ics/v4' + path.substring(4) 
+		url = host + '/ics/v5' + path.substring(4) 
 	}
 
 	let team = -1
@@ -65,7 +65,7 @@ function post(path) {
 function put(path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
-		url = host + '/ics/v4' + path.substring(4) 
+		url = host + '/ics/v5' + path.substring(4) 
 	}
 
 	let team = -1
