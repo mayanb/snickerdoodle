@@ -3,8 +3,8 @@ import { getCookie } from '../../csrf.jsx'
 import Teams from '../Teams/Teams'
 
 
-//let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
-let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
+let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
+//let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
 //let host = 'http://127.0.0.1:8000'
 
 function get_active_user() {
