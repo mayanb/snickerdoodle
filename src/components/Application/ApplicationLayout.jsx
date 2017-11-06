@@ -22,6 +22,8 @@ import TeamSettings from '../TeamSettings/TeamSettings'
 import Account from '../Account/Account'
 
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
+import BarChartTest from '../D3BarChart/BarChartTest'
+import BCWrapper from '../D3BarChart/BCWrapper'
 
 export default class ApplicationLayoutStable extends React.Component {
 
@@ -60,6 +62,7 @@ function App(props) {
 		    <Route path={"/goals"} component={Goals} />
 		    <Route path={"/account"} component={Account} />
 		    <Route path={"/googleconnect/:ext?"} component={Account} />
+		    <Route path={"/barcharttest/"} component={BCWrapper} />
 	  	</div>
 		</div>
 	)
