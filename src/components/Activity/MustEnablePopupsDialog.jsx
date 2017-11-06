@@ -5,7 +5,7 @@ import Button from '../Card/Button'
 export default function MustConnectGoogleDialog(props) {
 	return (
 		<Dialog onToggle={props.onToggle}>
-			<h1>Connect your google account</h1>
+			<h1>Please enable popups</h1>
 			<span>We've created your spreadsheet in Google Drive. To have your spreadsheets open in a new tab after creating them, please allow all popups on this page. You can do this in your browser's address bar.</span>
 
 			<div className="create-process-buttons">
