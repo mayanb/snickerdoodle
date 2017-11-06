@@ -1619,4 +1619,11 @@ div.zero-state {
     .team-members .create-member > div input {
       flex: 3; }
 
+.lesmis .links line {
+  stroke: #999;
+  stroke-opacity: 0.6; }
+.lesmis .nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px; }
+
 /*# sourceMappingURL=index.css.map */

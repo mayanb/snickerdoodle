@@ -175,8 +175,12 @@ export function markAsUsed(index, id) {
   return function (dispatch) {
     // dispatch an action that we are requesting inventory
     let team = 1
+    let user_id = 1
     try {
-      team = JSON.parse(window.localStorage.getItem('users')).ui.activeUser
+      let users = JSON.parse(window.localStorage.getItem('users-v4.1'))
+      let user = users.data[users.ui.activeUser].user
+      team = user.team
+      user_id = user.user_id
     } catch(e) {
 
     }
@@ -186,8 +190,10 @@ export function markAsUsed(index, id) {
     return api.post('/ics/movements/create/')
       .send({ 
         status: "RC", 
-        origin: team, 
-        destination: null,  
+        team_origin: team, 
+        team_destination: null,  
+        origin: user_id,
+        destination: null,
         notes: "MARK AS USED",
         items: [ {item: id}] 
       })
