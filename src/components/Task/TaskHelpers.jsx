@@ -139,12 +139,15 @@ export function TaskTable(props) {
 }
 
 export function OutputTable(props) {
-  let team = window.localStorage.getItem("team") || "1"
+  // let team = window.localStorage.getItem("team") || "1"
+  let users = JSON.parse(window.localStorage.getItem('users-v5'))
+  let user = users.data[users.ui.activeUser].user
+  let team = user.team
   return (
     <Table title={`Outputs (${(props.outputs || []).length})`}>
     {
       (props.outputs || []).map(function (item, i) {
-        let isInInventory = (!item.is_used && item.inventory && item.inventory.toString() == team)
+        let isInInventory = (!item.is_used && item.team_inventory && item.team_inventory.toString() == team)
         var inventory = false
         var markAsUsed = false
         if (isInInventory) {

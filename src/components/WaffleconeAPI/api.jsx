@@ -3,12 +3,12 @@ import { getCookie } from '../../csrf.jsx'
 import Teams from '../Teams/Teams'
 
 
-//let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
-let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
-//let host = 'http://127.0.0.1:8000'
+let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
+// let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
+// let host = 'http://127.0.0.1:8000'
 
 function get_active_user() {
-	let users = JSON.parse(window.localStorage.getItem('users-v4.1'))
+	let users = JSON.parse(window.localStorage.getItem('users-v5'))
 	return users.data[users.ui.activeUser]
 }
 
@@ -17,7 +17,7 @@ function get_active_user() {
 function get(path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
-		url = host + '/ics/v4' + path.substring(4) 
+		url = host + '/ics/v5' + path.substring(4) 
 	}
 
 	let user = {team: 1, user_id: 1}
@@ -36,7 +36,7 @@ function get(path) {
 function post(path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
-		url = host + '/ics/v4' + path.substring(4) 
+		url = host + '/ics/v5' + path.substring(4) 
 	}
 
 	let team = -1
@@ -48,7 +48,7 @@ function post(path) {
 		team = user.team
 		id = user.user_id
 		profile_id = user.profile_id
-		token = JSON.parse(window.localStorage.getItem('users-v4.1')).data[team].token
+		token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
 	} catch(e) {
 		
 	}
@@ -65,14 +65,14 @@ function post(path) {
 function put(path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
-		url = host + '/ics/v4' + path.substring(4) 
+		url = host + '/ics/v5' + path.substring(4) 
 	}
 
 	let team = -1
 	let token = ""
 	try {
 		team = get_active_user().user.team
-		token = JSON.parse(window.localStorage.getItem('users-v4.1')).data[team].token
+		token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
 	} catch(e) {
 		
 	}
