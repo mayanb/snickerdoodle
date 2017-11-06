@@ -232,7 +232,7 @@ function InventoryItem(props) {
         <Checkbox size="16px" checked={isSelected(props)} />
       </div>
       <div className="i-icon">
-        <Img className="inventory-icon" src={icon.substring(0, icon.length - 4) + "@3x"} />
+        <Img className="inventory-icon" src={icon.substring(0, icon.length - 4) + "@3x"} onError={addDefaultSrc}/>
       </div>
       <div className="i-code">
         <span>{props.process_code || "CODE"}</span>
@@ -273,4 +273,8 @@ function isSelected(props) {
 
 String.prototype.sentenceCase = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+function addDefaultSrc(ev) {
+  ev.target.src = '/img/default@3x.png'
 }

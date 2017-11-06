@@ -116,6 +116,10 @@ class InventoryDetail extends React.Component {
       g.page_size = 5
     }
 
+    if (u) {
+      g = u.split('?')[1]
+    }
+
     let random = Math.floor(Math.random() * 1000)
     this.latestRequestID = random
 

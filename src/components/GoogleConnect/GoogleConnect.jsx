@@ -11,9 +11,11 @@ class GoogleConnect extends React.Component {
 		this.disconnectGoogleAccount = this.disconnectGoogleAccount.bind(this);
   	}
 
-	componentDidMount() {
-		let c = this
 
+	componentDidMount() {
+
+		// this code is called ONLY IF we are currently in the process of getting a token!!
+		let c = this
 		if (this.props.ext) {
 			api.post('/gauth/create-auth-token/')
 				.type('form')
@@ -36,14 +38,12 @@ class GoogleConnect extends React.Component {
 	render() {
 		if (!this.props.ext) {
 			return (
-				<span className="google-connect" onClick={connectGoogleAccount}>Connect google account</span>
+				<span className="google-connect" onClick={connectGoogleAccount}>Connect account</span>
 			)
 		}
 
 		return <span>Connecting...</span>
 	}
-
-
 
 	disconnectGoogleAccount() {
 		let c = this
@@ -71,7 +71,6 @@ const mapStateToProps = (state/*, props*/) => {
 }
 
 const conncetedGoogleConnect = connect(mapStateToProps)(GoogleConnect)
-
 export default conncetedGoogleConnect
 
 function connectGoogleAccount() {

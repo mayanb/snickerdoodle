@@ -13,6 +13,7 @@ class Account extends React.Component {
 			<div className="my-account">
 				<AccountHeader />
 				<AccountBasics  {...account.user} />
+				<AccountIntegrations ext={this.props.match.params.ext} />
 				<AccountTeam />
 			</div>
 		)
