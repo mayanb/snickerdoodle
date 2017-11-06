@@ -158,7 +158,7 @@ const mapStateToProps = (state/*, props*/) => {
     data: state.products.data,
     ui: state.products.ui,
     inventoryData: state.inventories.data,
-    users: state.products.users
+    users: state.users
     // inventories: state.products.inventories
   }
 }
