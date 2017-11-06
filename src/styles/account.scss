@@ -27,22 +27,42 @@
 	.integration-info {
 		display: flex;
 		margin-bottom: 6px;
-
-		div {
-			flex: 1;
-		}
+		align-items: baseline;
 
 		div:first-child {
+			flex: 1;
+			flex-grow: 1;
 			font-weight: 700;
 		}
 
-		div:last-child {
+		div.integration-account {
+			flex: 0;
+			background-color: $theme-color;
+			display: flex;
+			color: white;
+			border-radius: 12px;
 			text-align: right;
+			white-space: nowrap;
+			align-items: center;
+
+			span {
+				margin: 4px 0px 4px 8px;
+			}
+
+			.material-icons {
+				font-size: 10px;
+				line-height: 10px;
+				padding: 1px;
+				border: 1px solid white;
+				border-radius: 10px;
+				margin: 4px 6px;
+			}
 		}
 	}
 
 	.integration-detail {
 		color: #9A9A9A;
+		line-height: 20px;
 	}
 }
 
