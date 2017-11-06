@@ -12,6 +12,8 @@ import moment from 'moment'
 import Datepicker from '../Datepicker/Datepicker.jsx'
 import ReactImageFallback from "react-image-fallback";
 import Goals from '../Goals/Goals'
+import MustEnablePopupsDialog from './MustEnablePopupsDialog'
+import MustConnectGoogleDialog from './MustConnectGoogleDialog'
 
 export default class Activity extends React.Component {
 	constructor(props) {
@@ -27,8 +29,15 @@ export default class Activity extends React.Component {
 
 			loading: true,
 			taskLoading: false,
-			mini: true
+			mini: true,
+
+			mustConnectGoogleDialog: false,
+			mustEnablePopupsDialog: false,
 		 }
+	}
+
+	toggleDialog(dialog) {
+		this.setState({[dialog]: !this.state[dialog]})
 	}
 
 	componentDidMount() {
@@ -50,13 +59,23 @@ export default class Activity extends React.Component {
 		} else {
 			contentArea = (
 				Object.values(this.state.processes).map(function (process, i) {
-					return <Process key={i} dates={this.state.dates} {...process} expandedTasks={this.state.expandedTasks} onClick={this.handleProcessClick.bind(this)} onOriginClick={this.handleOriginClick.bind(this)} expanded={this.state.expanded.process==process.process_id?this.state.expanded:null}/>
+					return <Process 
+						key={i} 
+						dates={this.state.dates} 
+						{...process} 
+						expandedTasks={this.state.expandedTasks} 
+						spreadsheet={this.attemptSpreadsheet.bind(this)} 
+						onClick={this.handleProcessClick.bind(this)} 
+						onOriginClick={this.handleOriginClick.bind(this)} 
+						expanded={this.state.expanded.process==process.process_id?this.state.expanded:null}
+					/>
 				}, this)
 			)
 		}
 
 		return (
 			<div>
+				{ this.renderDialog() }
 				<div className={`activity page ${this.state.mini?"mini":""}`}>
 
 					<Goals />
@@ -74,6 +93,16 @@ export default class Activity extends React.Component {
 			</div>
 		)
 	}
+
+	renderDialog() {
+		if (this.state.mustEnablePopupsDialog) {
+			return <MustEnablePopupsDialog onToggle={() => this.toggleDialog('mustEnablePopupsDialog')} />
+		} else if (this.state.mustConnectGoogleDialog) {
+			return <MustConnectGoogleDialog onToggle={() => this.toggleDialog('mustConnectGoogleDialog')} />
+		} else return null
+	}
+
+
 
 	handleOriginClick(process, origin) {
 		if (process == this.state.expanded.process && origin == this.state.expanded.origin) {
@@ -181,41 +210,39 @@ export default class Activity extends React.Component {
 		return processes
 	}
 
-}
-
-
-
-function attemptSpreadsheet(params) {
-	let is_connected = api.get_active_user().user.has_gauth_token
-	if (is_connected) {
-		createSpreadsheet(params)
+	attemptSpreadsheet(params) {
+		let is_connected = api.get_active_user().user.has_gauth_token
+		if (is_connected) {
+			this.createSpreadsheet(params)
+		}
+		else {
+			this.toggleDialog('mustConnectGoogleDialog')
+		}
 	}
-	else {
-		alert("You must first connect a Google account in account settings\n")
-	}
-}
 
-function createSpreadsheet(params) {
-	console.log("creating spreadsheet")
-	api.post('/gauth/create-spreadsheet/')
-		.type('form')
-		.send(params)
-		.end(function (err, res) {
-			if (err || !res.ok) {
-				alert("ugh something went wrong\n" + err)				
-			}
-			else {
-				console.log(res.body.spreadsheetId)
-				let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
-				var newWin = window.open(url, '_blank');
-				if(!newWin || newWin.closed || typeof newWin.closed=='undefined') 
-				{
-					//POPUP BLOCKED
-					alert('Your spreadsheet was created in Google Sheets. To view your new sheet in a tab, you must select: always allow pop-ups from this webpage')
+	createSpreadsheet(params) {
+		let c = this
+		api.post('/gauth/create-spreadsheet/')
+			.type('form')
+			.send(params)
+			.end(function (err, res) {
+				if (err || !res.ok) {
+					alert("ugh something went wrong\n" + err)				
 				}
-			}
-			// window.location.href = res.text
-		})
+				else {
+					console.log(res.body.spreadsheetId)
+					let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
+					var newWin = window.open(url, '_blank');
+					if(!newWin || newWin.closed || typeof newWin.closed=='undefined') 
+					{
+						//POPUP BLOCKED
+						c.toggleDialog('mustEnablePopupsDialog')
+					}
+				}
+				// window.location.href = res.text
+			})
+	}
+
 }
 
 
@@ -239,7 +266,7 @@ function Process(props) {
 	let user_id = api.get_active_user().user.user_id
 
 	let button = <button 
-		onClick={(e) => attemptSpreadsheet({"user_id": user_id, "process": props.process_id, "start": toUTCString(props.dates.start), "end": toUTCString(props.dates.end, true)})}
+		onClick={(e) => props.spreadsheet({"user_id": user_id, "process": props.process_id, "start": toUTCString(props.dates.start), "end": toUTCString(props.dates.end, true)})}
 	><i className="material-icons" >file_download</i></button>
 
 	return (
