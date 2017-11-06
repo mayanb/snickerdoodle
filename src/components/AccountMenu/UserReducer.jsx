@@ -15,7 +15,7 @@ import {
 
 function getDefaultState() {
 	// get the state from local storage 
-	let state = JSON.parse(window.localStorage.getItem('users-v4.1'))
+	let state = JSON.parse(window.localStorage.getItem('users-v5'))
 
 	// if there was nothing in local storage, fill it with default 
 	if (!state) {
@@ -70,7 +70,7 @@ function setGoogleAuthentication(state, action) {
 			}
 		}
 	})
-	window.localStorage.setItem('users-v4.1', JSON.stringify(ns))
+	window.localStorage.setItem('users-v5', JSON.stringify(ns))
 	return ns
 }
 
@@ -84,7 +84,7 @@ function setGoogleEmail(state, action) {
 			}
 		}
 	})
-	window.localStorage.setItem('users-v4.1', JSON.stringify(ns))
+	window.localStorage.setItem('users-v5', JSON.stringify(ns))
 	return ns
 }
 
@@ -114,7 +114,7 @@ function requestLoginSuccess(state, action) {
 		}
 	})
 
-	window.localStorage.setItem('users-v4.1', JSON.stringify(newState))
+	window.localStorage.setItem('users-v5', JSON.stringify(newState))
 	return newState
 }
 
@@ -150,7 +150,7 @@ function requestLogoutSuccess(state, action) {
 		}
 	})
 
-	window.localStorage.setItem('users-v4.1', JSON.stringify(newState))
+	window.localStorage.setItem('users-v5', JSON.stringify(newState))
 	return newState
 }
 
@@ -171,7 +171,7 @@ function switchActiveUser(state, action) {
 			$merge: {activeUser: action.id}
 		}
 	})
-	window.localStorage.setItem('users-v4.1', JSON.stringify(newState))
+	window.localStorage.setItem('users-v5', JSON.stringify(newState))
 	return newState
 }
 

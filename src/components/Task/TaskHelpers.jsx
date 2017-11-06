@@ -140,7 +140,7 @@ export function TaskTable(props) {
 
 export function OutputTable(props) {
   // let team = window.localStorage.getItem("team") || "1"
-  let users = JSON.parse(window.localStorage.getItem('users-v4.1'))
+  let users = JSON.parse(window.localStorage.getItem('users-v5'))
   let user = users.data[users.ui.activeUser].user
   let team = user.team
   return (

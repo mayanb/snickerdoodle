@@ -177,7 +177,7 @@ export function markAsUsed(index, id) {
     let team = 1
     let user_id = 1
     try {
-      let users = JSON.parse(window.localStorage.getItem('users-v4.1'))
+      let users = JSON.parse(window.localStorage.getItem('users-v5'))
       let user = users.data[users.ui.activeUser].user
       team = user.team
       user_id = user.user_id
