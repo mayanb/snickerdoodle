@@ -1,43 +1,18 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import GoogleConnect from '../GoogleConnect/GoogleConnect'
+import AccountIntegrationConnect from './AccountIntegrationConnect'
 
-class AccountIntegration extends React.Component {
-	render() {
-		return (
-			<div className="account-integration">
-				<div className="integration-info">
-					<div>
-						<span>Google Spreadsheets</span>
-					</div>
-					<div>
-						{this.renderIntegratedAccount()}
-					</div>
+export default function AccountIntegration(props) {
+	return (
+		<div className="account-integration">
+			<div className="integration-info">
+				<div>
+					<span>Google Spreadsheets</span>
 				</div>
-				<div className="integration-detail">
-					<span>Upload activity information to spreadsheets in your Google Drive.</span>
-				</div>
+				<AccountIntegrationConnect ext={props.ext}/>
 			</div>
-		)
-	}
-
-	renderIntegratedAccount() {
-		let {data, ui} = this.props.users
-		let user = data[ui.activeUser]
-		if (user.user.gauth_email) {
-			return <span>{user.user.gauth_email}</span>
-		}
-
-		return <GoogleConnect ext={this.props.ext}/>
-	}
+			<div className="integration-detail">
+				<span>With the Google Drive integration, you can upload team, task, activity, and inventory information to a spreadsheet in Google Drive.</span>
+			</div>
+		</div>
+	)
 }
-
-const mapStateToProps = (state/*, props*/) => {
-  return {
-    users: state.users
-  }
-}
-
-const connected = connect(mapStateToProps)(AccountIntegration)
-
-export default connected

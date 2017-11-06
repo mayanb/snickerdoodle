@@ -1551,15 +1551,33 @@ div.zero-state {
   padding: 16px; }
   .account-integration .integration-info {
     display: flex;
-    margin-bottom: 6px; }
-    .account-integration .integration-info div {
-      flex: 1; }
+    margin-bottom: 6px;
+    align-items: baseline; }
     .account-integration .integration-info div:first-child {
+      flex: 1;
+      flex-grow: 1;
       font-weight: 700; }
-    .account-integration .integration-info div:last-child {
-      text-align: right; }
+    .account-integration .integration-info div.integration-account {
+      flex: 0;
+      background-color: #2198EE;
+      display: flex;
+      color: white;
+      border-radius: 12px;
+      text-align: right;
+      white-space: nowrap;
+      align-items: center; }
+      .account-integration .integration-info div.integration-account span {
+        margin: 4px 0px 4px 8px; }
+      .account-integration .integration-info div.integration-account .material-icons {
+        font-size: 10px;
+        line-height: 10px;
+        padding: 1px;
+        border: 1px solid white;
+        border-radius: 10px;
+        margin: 4px 6px; }
   .account-integration .integration-detail {
-    color: #9A9A9A; }
+    color: #9A9A9A;
+    line-height: 20px; }
 
 .google-connect, .add-new-member {
   cursor: pointer;
