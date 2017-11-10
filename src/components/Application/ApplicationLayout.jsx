@@ -63,7 +63,7 @@ function App(props) {
 		    <Route path={"/goals"} component={Goals} />
 		    <Route path={"/account"} component={Account} />
 		    <Route path={"/googleconnect/:ext?"} component={Account} />
-		    <Route path={"/barcharttest/"} component={BCWrapper} />
+		    <Route path={"/bc/"} component={BCWrapper} />
 		    <Route path={"/packingorders/"} component={PackingOrders} />
 	  	</div>
 		</div>
