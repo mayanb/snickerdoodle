@@ -7,6 +7,8 @@ import Card from '../Card/Card.jsx'
 class PackingOrders extends React.Component {
   componentDidMount() {
     this.props.dispatch(actions.fetchPackingOrders())
+    this.props.dispatch(actions.fetchContacts())
+
   }
 
 
@@ -29,6 +31,10 @@ class PackingOrders extends React.Component {
     // )
   }
 
+  handleCreatePackingOrder(data) {
+    this.props.dispatch(actions.postCreatePackingOrder(data))    
+  }
+
 }
 
 
@@ -39,6 +45,7 @@ const mapStateToProps = (state/*, props*/) => {
   console.log(state)
   return {
     packingOrders: state.packingOrders,
+    contacts: state.contacts,
   }
 }
 
