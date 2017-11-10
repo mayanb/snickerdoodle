@@ -4,47 +4,47 @@ import {
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
 } from '../../Reducers/APIDataReducer'
-import {  MOVEMENTS } from '../../Reducers/ReducerTypes'
+import {  PACKING_ORDERS } from '../../Reducers/ReducerTypes'
 
 
-export function fetchMovements() {
+export function fetchPackingOrders() {
   return function (dispatch) {
     // dispatch an action that we are requesting a process
-    dispatch(requestMovements())
+    dispatch(requestPackingOrders())
 
     // actually fetch 
-    return api.get('/ics/processes/')
+    return api.get('/ics/orders/')
       .end( function (err, res) {
         if (err || !res.ok) {
-          dispatch(requestMovementsFailure(err))
+          dispatch(requestPackingOrdersFailure(err))
         } else {
-          let movements = res.body
-          dispatch(requestMovementsSuccess(movements))
+          let packingOrders = res.body
+          dispatch(requestPackingOrdersSuccess(packingOrders))
         }
       })
   }
 }
 
-function requestMovements() {
-  console.log("requesting movements")
+function requestPackingOrders() {
+  console.log("requesting packing orders")
   return {
-    name: MOVEMENTS,
+    name: PACKING_ORDERS,
     type: REQUEST
   }
 }
 
-function requestMovementsFailure(err) {
+function requestPackingOrdersFailure(err) {
   alert('Oh no! Something went wrong\n' + err)
   return {
-    name: MOVEMENTS,
+    name: PACKING_ORDERS,
     type: REQUEST_FAILURE, 
     error: err
   }
 }
 
-function requestMovementsSuccess(json) {
+function requestPackingOrdersSuccess(json) {
   return {
-    name: MOVEMENTS,
+    name: PACKING_ORDERS,
     type: REQUEST_SUCCESS, 
     data: json
   }

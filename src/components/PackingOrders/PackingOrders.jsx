@@ -13,30 +13,36 @@ class PackingOrders extends React.Component {
 
   render() {
   	let packingOrders = this.props.packingOrders
-  	if (this.props.isFetching === true) {return(<div>hi</div>)}
+  	if (packingOrders.ui.isFetchingData === true) {return(<div>hi</div>)}
 
-  	return(
-  		<ul>
-  			{packingOrders.map(function(packingOrder, index) {
-  				return(<li>{JSON.stringify(packingOrder)}</li>)
-  			})}
-  		</ul>
-  	)
+  	// return(
+   //    <div>
+   //      <PackingOrdersList packingOrders={packingOrders.data} />
+   //    </div>
+  	// )
+    return(
+      <ul>
+        {packingOrders.data.map(function(po, index) {
+          return(<li>{JSON.stringify(po)}</li>)
+        })}
+      </ul>
+
+    )
   }
 
-
 }
+
+
 
 // This is our select function that will extract from the state the data slice we want to expose
 // through props to our component.
 const mapStateToProps = (state/*, props*/) => {
   console.log(state)
   return {
-    movements: state.movements.data,
-    isFetching: state.movements.ui.isFetchingData
+    packingOrders: state.packingOrders,
   }
 }
 
-const connectedMovements = connect(mapStateToProps)(Movements)
+const connectedPackingOrders = connect(mapStateToProps)(PackingOrders)
 
-export default connectedMovements
+export default connectedPackingOrders

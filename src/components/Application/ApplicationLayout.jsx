@@ -24,6 +24,7 @@ import Account from '../Account/Account'
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 import BarChartTest from '../D3BarChart/BarChartTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
+import PackingOrders from '../PackingOrders/PackingOrders'
 
 export default class ApplicationLayoutStable extends React.Component {
 
@@ -63,6 +64,7 @@ function App(props) {
 		    <Route path={"/account"} component={Account} />
 		    <Route path={"/googleconnect/:ext?"} component={Account} />
 		    <Route path={"/barcharttest/"} component={BCWrapper} />
+		    <Route path={"/packingorders/"} component={PackingOrders} />
 	  	</div>
 		</div>
 	)
