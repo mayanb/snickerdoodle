@@ -57,22 +57,38 @@ function MemberList(props) {
 	if (!props.members)
 		return <div>No members</div>
 
+	let only = onlyOneAdmin(props.members)
+
 	return (
 		<div className="member-list">
 		{
 			props.members.map(function (m, i) {
-				return <Member key={i} member={m} />
+				return <Member key={i} member={m} onlyOneAdmin={only}/>
 			})
 		}
 		</div>
 	)
 }
 
+function onlyOneAdmin(members) {
+	let count = 0
+	members.map(function (m, i) {
+		count += (m.account_type=="a"?1:0)
+	})
+	return count == 1
+}
+
 function Member(props) {
+	let shouldShowMoreButton = <i className="material-icons">more_vert</i>
+	if (props.onlyOneAdmin && props.member.account_type == "a")
+		shouldShowMoreButton = <i className="material-icons" style={{visibility: "hidden"}}>close</i>
+
 	return (
-	<div className="member">
-		<span>{props.member.username_display}</span>
-		<span>{props.member.account_type=="a"?"admin":"regular"}</span>
+	<div className="member-wrapper">
+		<div className="member">
+			<span>{props.member.username_display}</span>
+			<span className={`member-type member-type-${props.member.account_type}`}>{props.member.account_type=="a"?"admin":"regular"}</span>
+		</div>
 	</div>
 	)
 }

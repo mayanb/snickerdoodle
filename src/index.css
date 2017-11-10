@@ -1587,25 +1587,38 @@ div.zero-state {
   background-color: rgba(187, 187, 187, 0.09);
   -webkit-font-smoothing: antialiased;
   border-radius: 4px;
-  padding: 16px;
   margin-top: 10px; }
   .team-members .member {
-    margin-bottom: 10px;
-    display: flex; }
+    padding: 8px 16px;
+    display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    align-items: center; }
+    .team-members .member i {
+      flex: 0;
+      font-size: 16px;
+      line-height: 10px;
+      padding-left: 8px;
+      color: rgba(0, 0, 0, 0.4);
+      cursor: pointer; }
     .team-members .member span {
       display: block;
       flex: 1; }
-      .team-members .member span:last-child {
+      .team-members .member span.member-type {
         flex: 0;
         font-size: 10px;
         line-height: 10px;
         padding: 3px;
         text-transform: uppercase;
-        letter-spacing: 0.2px;
+        letter-spacing: 0.4px;
         border-radius: 2px;
         color: white;
         text-align: right;
         background-color: rgba(0, 0, 0, 0.2); }
+        .team-members .member span.member-type.member-type-a {
+          background-color: rgba(0, 0, 0, 0.4); }
+  .team-members .add-new-member {
+    display: block;
+    padding: 8px 16px; }
   .team-members .create-member .buttons {
     display: flex;
     justify-content: flex-end; }
