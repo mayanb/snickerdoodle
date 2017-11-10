@@ -13,7 +13,7 @@ class PackingOrdersList extends React.Component {
         <div className="nav-section-list">
           <PackingOrdersTitle />
           <PaginatedTable 
-            {...this.props} 
+            {...this.props.packingOrders} 
             onPagination={this.handlePagination} 
             Row={PackingOrdersListRow}
             TitleRow={PackingOrdersListRowHeader}

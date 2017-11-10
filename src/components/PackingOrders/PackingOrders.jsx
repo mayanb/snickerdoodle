@@ -14,19 +14,19 @@ class PackingOrders extends React.Component {
   	let packingOrders = this.props.packingOrders
   	if (packingOrders.ui.isFetchingData === true) {return(<div>hi</div>)}
 
-  	// return(
-   //    <div>
-   //      <PackingOrdersList packingOrders={packingOrders.data} />
-   //    </div>
-  	// )
-    return(
-      <ul>
-        {packingOrders.data.map(function(po, index) {
-          return(<li>{JSON.stringify(po)}</li>)
-        })}
-      </ul>
+  	return(
+      <div>
+        <PackingOrdersList packingOrders={packingOrders} />
+      </div>
+  	)
+    // return(
+    //   <ul>
+    //     {packingOrders.data.map(function(po, index) {
+    //       return(<li>{JSON.stringify(po)}</li>)
+    //     })}
+    //   </ul>
 
-    )
+    // )
   }
 
 }
