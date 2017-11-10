@@ -4,8 +4,6 @@ import * as actions from './PackingOrdersActions.jsx'
 import Card from '../Card/Card.jsx'
 
 class PackingOrders extends React.Component {
-
-   // fetch movements on load
   componentDidMount() {
     this.props.dispatch(actions.fetchPackingOrders())
   }

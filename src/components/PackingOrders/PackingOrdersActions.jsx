@@ -51,3 +51,12 @@ function requestMovementsSuccess(json) {
 }
 
 
+export function pagePackingOrders(direction) {
+  return {
+    type: PAGE,
+    direction: direction,
+    name: PACKINGORDERS
+  }
+}
+
+
