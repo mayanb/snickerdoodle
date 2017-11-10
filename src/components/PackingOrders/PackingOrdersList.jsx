@@ -4,6 +4,7 @@ import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import PackingOrdersTitle from './PackingOrdersTitle'
 import PackingOrdersListRow from './PackingOrdersListRow'
 import PackingOrdersListRowHeader from './PackingOrdersListRowHeader'
+import * as actions from './PackingOrdersActions'
 
 class PackingOrdersList extends React.Component {
   render() {
@@ -27,4 +28,13 @@ class PackingOrdersList extends React.Component {
   }
 }
 
-export default connect(PackingOrdersList)
+// This is our select function that will extract from the state the data slice we want to expose
+// through props to our component.
+const mapStateToProps = (state/*, props*/) => {
+  console.log(state)
+  return {
+    packingOrders: state.packingOrders,
+  }
+}
+
+export default connect(mapStateToProps)(PackingOrdersList)

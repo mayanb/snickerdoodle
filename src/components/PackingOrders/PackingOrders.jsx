@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './PackingOrdersActions.jsx'
+import PackingOrdersList from './PackingOrdersList.jsx'
 import Card from '../Card/Card.jsx'
 
 class PackingOrders extends React.Component {

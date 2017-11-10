@@ -3,6 +3,7 @@ import {
   REQUEST, 
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
+  PAGE,
 } from '../../Reducers/APIDataReducer'
 import {  PACKING_ORDERS } from '../../Reducers/ReducerTypes'
 
@@ -55,7 +56,7 @@ export function pagePackingOrders(direction) {
   return {
     type: PAGE,
     direction: direction,
-    name: PACKINGORDERS
+    name: PACKING_ORDERS
   }
 }
 
