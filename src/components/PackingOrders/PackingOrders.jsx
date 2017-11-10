@@ -2,9 +2,21 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './PackingOrdersActions.jsx'
 import PackingOrdersList from './PackingOrdersList.jsx'
-import Card from '../Card/Card.jsx'
+import PackingOrdersCreateDialog from './PackingOrdersCreateDialog'
+import Button from '../Card/Button.jsx'
 
 class PackingOrders extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      createPackingOrdersDialog: true,
+    }
+  }
+
+  toggleDialog(name) {
+    this.setState({[name]: !this.state[name]})
+  }
+
   componentDidMount() {
     this.props.dispatch(actions.fetchPackingOrders())
     this.props.dispatch(actions.fetchContacts())
@@ -14,29 +26,35 @@ class PackingOrders extends React.Component {
 
   render() {
   	let packingOrders = this.props.packingOrders
-  	if (packingOrders.ui.isFetchingData === true) {return(<div>hi</div>)}
+  	if (packingOrders.ui.isFetchingData) {
+      return <div>hi</div>
+    }
 
   	return(
       <div>
+        <Button onClick={() => this.toggleDialog("createPackingOrdersDialog")}>Create packing order</Button>
         <PackingOrdersList packingOrders={packingOrders} />
+        {this.renderDialogs()}
       </div>
   	)
-    // return(
-    //   <ul>
-    //     {packingOrders.data.map(function(po, index) {
-    //       return(<li>{JSON.stringify(po)}</li>)
-    //     })}
-    //   </ul>
-
-    // )
   }
+
 
   handleCreatePackingOrder(data) {
     this.props.dispatch(actions.postCreatePackingOrder(data))    
   }
 
-}
 
+  renderDialogs() {
+    if(this.state.createPackingOrdersDialog) {
+      return <PackingOrdersCreateDialog 
+        onToggle={() => this.toggleDialog("createPackingOrdersDialog")}
+      />
+    }
+    return null
+  }
+
+}
 
 
 // This is our select function that will extract from the state the data slice we want to expose
