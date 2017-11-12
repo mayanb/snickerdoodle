@@ -1,0 +1,30 @@
+.button-area {
+	display:flex;
+	justify-content: flex-end;
+}
+
+.packingorders-create-inventory-unit {
+	display:flex;
+
+	.inventory-unit-title {
+		font-weight: 700;
+		flex: 2;
+	}
+
+	.inventory-unit-amount {
+		flex: 1;
+	}
+
+	.inventory-unit-title, .inventory-unit-amount {
+		margin-right: 10px;
+	}
+
+	.inventory-unit-remove {
+		flex: 0;
+
+		i {
+			font-size: 12px;
+			line-height: 12px;
+		}
+	}
+}
