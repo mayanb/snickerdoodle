@@ -26,6 +26,7 @@ class PackingOrders extends React.Component {
 
   render() {
   	let packingOrders = this.props.packingOrders
+    let contacts = this.props.contacts
   	if (packingOrders.ui.isFetchingData) {
       return <div>hi</div>
     }
@@ -35,7 +36,13 @@ class PackingOrders extends React.Component {
         <Button onClick={() => this.toggleDialog("createPackingOrdersDialog")}>Create packing order</Button>
         <PackingOrdersList packingOrders={packingOrders} />
         {this.renderDialogs()}
+         <ul>
+          {contacts.data.map(function(contact, index) {
+            return(<li>{JSON.stringify(contact)}</li>)
+          })}
+        </ul>
       </div>
+
   	)
   }
 

@@ -351,18 +351,18 @@ let data = {"nodes": [{"id": 12, "name": "Rotary Conche Pull"}, {"id": 42, "name
 //     })
 // }
 
-class BarChartTest extends React.Component {
-   render() {
-      return (
-         <div className='App'>
-            <div className='App-header'>
-               <h2>d3ia dashboard</h2>
-            </div>
-            <div>
-               <BarChart data={data} size={[500,500]} />
-            </div>
-         </div>
-      )
-   }
-}
-export default BarChartTest
+// class BarChartTest extends React.Component {
+//    render() {
+//       return (
+//          <div className='App'>
+//             <div className='App-header'>
+//                <h2>d3ia dashboard</h2>
+//             </div>
+//             <div>
+//                <BarChart data={data} size={[500,500]} />
+//             </div>
+//          </div>
+//       )
+//    }
+// }
+// export default BarChartTest
