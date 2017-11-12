@@ -4,6 +4,9 @@ import {
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
   PAGE,
+  REQUEST_CREATE, 
+  REQUEST_CREATE_FAILURE,
+  REQUEST_CREATE_SUCCESS
 } from '../../Reducers/APIDataReducer'
 import {  PACKING_ORDERS, CONTACTS } from '../../Reducers/ReducerTypes'
 

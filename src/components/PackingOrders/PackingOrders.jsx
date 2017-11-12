@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './PackingOrdersActions.jsx'
 import PackingOrdersList from './PackingOrdersList.jsx'
-import PackingOrdersCreateDialog from './PackingOrdersCreateDialog'
+import PackingOrdersCreateDialog from '../PackingOrdersCreate/PackingOrdersCreateDialog'
 import Button from '../Card/Button.jsx'
 
 class PackingOrders extends React.Component {

@@ -1619,6 +1619,25 @@ div.zero-state {
     .team-members .create-member > div input {
       flex: 3; }
 
+.button-area {
+  display: flex;
+  justify-content: flex-end; }
+
+.packingorders-create-inventory-unit {
+  display: flex; }
+  .packingorders-create-inventory-unit .inventory-unit-title {
+    font-weight: 700;
+    flex: 2; }
+  .packingorders-create-inventory-unit .inventory-unit-amount {
+    flex: 1; }
+  .packingorders-create-inventory-unit .inventory-unit-title, .packingorders-create-inventory-unit .inventory-unit-amount {
+    margin-right: 10px; }
+  .packingorders-create-inventory-unit .inventory-unit-remove {
+    flex: 0; }
+    .packingorders-create-inventory-unit .inventory-unit-remove i {
+      font-size: 12px;
+      line-height: 12px; }
+
 .lesmis .links line {
   stroke: #999;
   stroke-opacity: 0.6; }
