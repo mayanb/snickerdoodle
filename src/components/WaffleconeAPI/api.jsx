@@ -5,8 +5,8 @@ import Teams from '../Teams/Teams'
 
 //let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
  // let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
-let host = 'http://127.0.0.1:8000'
-// let host = 'http://192.168.0.125:8000'
+//let host = 'http://127.0.0.1:8000'
+let host = 'http://10.0.0.6:8000'
 
 function get_active_user() {
 	let users = JSON.parse(window.localStorage.getItem('users-v5'))
