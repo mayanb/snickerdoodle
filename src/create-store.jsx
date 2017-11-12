@@ -49,6 +49,7 @@ export default function(data) {
   	processInventories: createFilteredReducer(apiDataReducer, action => action.name === types.PROCESS_INVENTORY, stateDefault),
     graphs: createFilteredReducer(apiDataReducer, action => action.name === types.GRAPHS, stateDefault),
     contacts: createFilteredReducer(apiDataReducer, action => action.name === types.CONTACTS, stateDefault),
+    inventoryUnits: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORY_UNITS, stateDefault),
     packingOrders: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDERS, stateDefault),  })
 
   const store = createStore(reducer, applyMiddleware(thunkMiddleware))

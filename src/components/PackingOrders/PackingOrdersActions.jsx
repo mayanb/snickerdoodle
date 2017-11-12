@@ -8,7 +8,7 @@ import {
   REQUEST_CREATE_FAILURE,
   PAGE,
 } from '../../Reducers/APIDataReducer'
-import {  PACKING_ORDERS, CONTACTS } from '../../Reducers/ReducerTypes'
+import {  PACKING_ORDERS, CONTACTS, INVENTORY_UNITS } from '../../Reducers/ReducerTypes'
 
 
 export function fetchPackingOrders() {
@@ -107,6 +107,54 @@ function requestContactsSuccess(json) {
   }
 }
 
+export function fetchInventoryUnits() {
+  return function (dispatch) {
+    // dispatch an action that we are requesting a process
+    dispatch(requestInventoryUnits())
+
+    // actually fetch 
+    return api.get('/ics/inventoryunits/')
+      .end( function (err, res) {
+        if (err || !res.ok) {
+          dispatch(requestInventoryUnitsFailure(err))
+        } else {
+          let inventoryunits = res.body
+          const copy = [];
+          inventoryunits.forEach(function(item){
+            let item_copy = item
+            item_copy['name'] = item['process']['name'] + "_" + item['product']['name']
+            copy.push(item_copy)
+          });
+          dispatch(requestInventoryUnitsSuccess(copy))
+        }
+      })
+  }
+}
+
+function requestInventoryUnits() {
+  console.log("requesting packing orders")
+  return {
+    name: INVENTORY_UNITS,
+    type: REQUEST
+  }
+}
+
+function requestInventoryUnitsFailure(err) {
+  alert('Oh no! Something went wrong\n' + err)
+  return {
+    name: INVENTORY_UNITS,
+    type: REQUEST_FAILURE, 
+    error: err
+  }
+}
+
+function requestInventoryUnitsSuccess(json) {
+  return {
+    name: INVENTORY_UNITS,
+    type: REQUEST_SUCCESS, 
+    data: json
+  }
+}
 
 export function postCreatePackingOrder(json) {
   return function (dispatch) {
