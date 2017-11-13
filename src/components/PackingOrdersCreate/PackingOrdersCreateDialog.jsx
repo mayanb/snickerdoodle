@@ -19,7 +19,7 @@ class PackingOrdersCreateDialog extends React.Component {
 		this.handleChangeContact = this.handleChangeContact.bind(this)
 
 		this.state = {
-			order_inventory_units: [],
+			order_inventory_units: [{inventory_unit: null, amount_description: ""}],
 			selected_contact: null,
 		}
 
@@ -54,8 +54,6 @@ class PackingOrdersCreateDialog extends React.Component {
 		)
 	}
 
-
-
 	handleCreatePackingOrder() {
 		let contact = this.state.selected_contact.id
 		let inventory_unit_data = this.state.order_inventory_units.map(function (unit, i) {
@@ -63,10 +61,7 @@ class PackingOrdersCreateDialog extends React.Component {
 		})
 		console.log(inventory_unit_data)
 		let data = {"ordered_by": contact, "order_inventory_unit_data": inventory_unit_data}
-    	this.props.dispatch(actions.postCreatePackingOrder(data, (id) => {
-      		let index = this.props.packingOrders.data.findIndex((e, i, a) => e.id === id)
-      		this.props.dispatch(actions.selectPackingOrder(index))
-    	}))  
+    	this.props.dispatch(actions.postCreatePackingOrder(data))    
 	}
 
 	handleChangeInventoryUnit(index, keyword, newVal) {

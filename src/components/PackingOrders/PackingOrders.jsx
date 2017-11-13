@@ -53,17 +53,10 @@ class PackingOrders extends React.Component {
             TitleRow={titleRow}
           />
         {this.renderDialogs()}
-         <ul>
-          {contacts.data.map(function(contact, index) {
-            return(<li>{JSON.stringify(contact)}</li>)
-          })}
-        </ul>
       </div>
 
   	)
   }
-        // <PackingOrdersList packingOrders={packingOrders} />
-
 
   handleCreatePackingOrder(data) {
     this.props.dispatch(actions.postCreatePackingOrder(data, (id) => {
