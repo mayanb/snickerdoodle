@@ -20,7 +20,7 @@ export function getPackingOrder(id) {
     dispatch(requestPackingOrders(id))
 
     // actually fetch 
-    return api.get('/ics/orders/' + id + '/')
+    return api.get(`/ics/orders/${id}/`)
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestPackingOrdersFailure(err))

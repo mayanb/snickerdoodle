@@ -33,6 +33,10 @@ class OrderDetail extends React.Component {
   render() {
     let { packingOrder } = this.props
 
+    if (packingOrder.ui.isFetchingData) {
+      return <div>Loading</div>
+    }
+
     return (
       <div className="order-detail">
         <Button link onClick={this.handleBackButton}>Back to all packing orders</Button>
