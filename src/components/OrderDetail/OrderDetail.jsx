@@ -4,7 +4,7 @@ import moment from 'moment'
 import {Dialog} from '../OldComponents/Dialog.jsx'
 import Button from '../Card/Button'
 import * as actions from './OrderDetailActions'
-import OrderDetailHeader'./OrderDetailHeader'
+import OrderDetailHeader from './OrderDetailHeader'
 
 let dialogs = {
   deleteTask: {
@@ -38,7 +38,7 @@ class OrderDetail extends React.Component {
     }
 
     return (
-      <div className="order-detail">
+      <div className="orderdetail">
         <Button link onClick={this.handleBackButton}>Back to all packing orders</Button>
         <OrderDetailHeader />
       </div>
