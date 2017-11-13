@@ -21,6 +21,7 @@ class PackingOrdersCreateDialog extends React.Component {
 		this.state = {
 			order_inventory_units: [{inventory_unit: null, amount_description: ""}],
 			selected_contact: null,
+			is_valid: false
 		}
 
 	}
@@ -29,6 +30,10 @@ class PackingOrdersCreateDialog extends React.Component {
     this.props.dispatch(actions.fetchInventoryUnits())
     this.props.dispatch(actions.fetchContacts())
   }
+
+
+
+  // MARK: RENDERERS
 
 	render() {
 		return (
@@ -48,23 +53,27 @@ class PackingOrdersCreateDialog extends React.Component {
 				/>
 				<div className="button-area">
 					<Button secondary onClick={this.props.onToggle}>Cancel</Button>
-					<Button onClick={(e) => this.handleCreatePackingOrder()}>Create</Button>
+					<Button disabled={!this.state.is_valid} onClick={(e) => this.handleCreatePackingOrder()}>Create</Button>
 				</div>
 			</Dialog>
 		)
 	}
+
+
+
+	// MARK: EVENT HANDLERS
 
 	handleCreatePackingOrder() {
 		let contact = this.state.selected_contact.id
 		let inventory_unit_data = this.state.order_inventory_units.map(function (unit, i) {
 			return {inventory_unit: unit.inventory_unit.id, amount_description: unit.amount_description}
 		})
-		console.log(inventory_unit_data)
 		let data = {"ordered_by": contact, "order_inventory_unit_data": inventory_unit_data}
     	this.props.dispatch(actions.postCreatePackingOrder(data))    
 	}
 
 	handleChangeInventoryUnit(index, keyword, newVal) {
+		let validate = this.handleValidate.bind(this)
 		let ns = update(this.state.order_inventory_units, {
 			[index]: {
 				[keyword]: {
@@ -72,27 +81,49 @@ class PackingOrdersCreateDialog extends React.Component {
 				}
 			}
 		})
-		this.setState({order_inventory_units: ns})
+		this.setState({order_inventory_units: ns}, validate)
 	}
 
 	handleAddNewListItem() {
+		let validate = this.handleValidate.bind(this)
 		let ns = update(this.state.order_inventory_units, {
 			$push: [{inventory_unit: null, amount_description: ""}]
 		})
-		this.setState({order_inventory_units: ns})
+		this.setState({order_inventory_units: ns}, validate)
 	}
 
 	handleRemoveInventoryUnit(index) {
+		let validate = this.handleValidate.bind(this)
 		let ns = update(this.state.order_inventory_units, {
 			$splice: [[index,1,]]
 		})
-		this.setState({order_inventory_units: ns})
+		this.setState({order_inventory_units: ns}, validate)
 	}
 
 	handleChangeContact(newVal) {
-		this.setState({selected_contact: newVal})
+		let validate = this.handleValidate.bind(this)
+		this.setState({selected_contact: newVal}, validate)
 	}
 
+	handleValidate() {
+		this.setState({is_valid: this.hasValidData()})
+	}
+
+
+	// MARK: VALIDATION
+
+	hasValidData() {
+		console.log(this.state.selected_contact)
+		if (!this.state.selected_contact) {
+			return false
+		}
+		for(let unit of this.state.order_inventory_units) {
+			console.log(unit)
+			if (!unit.inventory_unit || !unit.amount_description || unit.amount_description.length == 0)
+				return false
+		}
+		return true
+	}
 
 }
 
@@ -103,7 +134,4 @@ const mapStateToProps = (state/*, props*/) => {
     inventoryUnits: state.inventoryUnits,
   }
 }
-
-const connectedPackingOrdersCreateDialog = connect(mapStateToProps)(PackingOrdersCreateDialog)
-
-export default connectedPackingOrdersCreateDialog
+export default connect(mapStateToProps)(PackingOrdersCreateDialog)

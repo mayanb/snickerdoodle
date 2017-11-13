@@ -68,28 +68,3 @@ body div.dialog-container {
 		z-index: 999;
 	}
 }
-
-button {
-	padding: 8px 12px 8px 12px;
-	font-size: 12px;
-	line-height: 16px;
-	background-color: $theme-color;
-	color: white;
-	border-radius: 6px;
-	border: 0;
-	outline: none;
-	display:block;
-	cursor: pointer;
-
-	&.secondary {
-		background-color: rgba(0,0,0,0);
-		color: $theme-color;
-	}
-
-	&.link {
-		padding: 0;
-		background-color: rgba(0,0,0,0);
-		color: $theme-color;
-	}
-
-}

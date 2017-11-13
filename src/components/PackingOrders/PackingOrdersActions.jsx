@@ -32,7 +32,6 @@ export function fetchPackingOrders() {
 }
 
 function requestPackingOrders() {
-  console.log("requesting packing orders")
   return {
     name: PACKING_ORDERS,
     type: REQUEST
@@ -92,7 +91,6 @@ export function fetchContacts() {
 }
 
 function requestContacts() {
-  console.log("requesting packing orders")
   return {
     name: CONTACTS,
     type: REQUEST
@@ -141,7 +139,6 @@ export function fetchInventoryUnits() {
 }
 
 function requestInventoryUnits() {
-  console.log("requesting packing orders")
   return {
     name: INVENTORY_UNITS,
     type: REQUEST
@@ -212,9 +209,6 @@ export function sort_packingorders(a, b) {
 
   let aTime = a.created_at
   let bTime = b.created_at
-
-  console.log(aTime)
-  console.log(bTime)
 
   if (aTime < bTime) 
     return 1
