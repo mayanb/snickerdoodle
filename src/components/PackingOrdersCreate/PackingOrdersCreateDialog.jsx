@@ -62,7 +62,10 @@ class PackingOrdersCreateDialog extends React.Component {
 		})
 		console.log(inventory_unit_data)
 		let data = {"ordered_by": contact, "order_inventory_unit_data": inventory_unit_data}
-    	this.props.dispatch(actions.postCreatePackingOrder(data))    
+    	this.props.dispatch(actions.postCreatePackingOrder(data, (id) => {
+      		let index = this.props.packingOrders.data.findIndex((e, i, a) => e.id === id)
+      		this.props.dispatch(actions.selectPackingOrder(index))
+    	}))  
 	}
 
 	handleChangeInventoryUnit(index, keyword, newVal) {

@@ -7,6 +7,7 @@ import {
   REQUEST_CREATE_SUCCESS,
   REQUEST_CREATE_FAILURE,
   PAGE,
+  SELECT,
 } from '../../Reducers/APIDataReducer'
 import {  PACKING_ORDERS, CONTACTS, INVENTORY_UNITS } from '../../Reducers/ReducerTypes'
 
@@ -23,6 +24,7 @@ export function fetchPackingOrders() {
           dispatch(requestPackingOrdersFailure(err))
         } else {
           let packingOrders = res.body
+          packingOrders = packingOrders.sort(sort_packingorders)
           dispatch(requestPackingOrdersSuccess(packingOrders))
         }
       })
@@ -63,6 +65,13 @@ export function pagePackingOrders(direction) {
   }
 }
 
+export function selectPackingOrder(id) {
+  return {
+    type: SELECT,
+    index: id,
+    name: PACKING_ORDERS
+  }
+}
 
 export function fetchContacts() {
   return function (dispatch) {
@@ -156,7 +165,7 @@ function requestInventoryUnitsSuccess(json) {
   }
 }
 
-export function postCreatePackingOrder(json) {
+export function postCreatePackingOrder(json, success) {
   return function (dispatch) {
     dispatch(requestCreatePackingOrder())
     return api.post('/ics/packingorder/create/')
@@ -166,7 +175,7 @@ export function postCreatePackingOrder(json) {
           dispatch(requestCreatePackingOrderFailure(err))
         else
           dispatch(requestCreatePackingOrderSuccess(res.body))
-          //success(res.body.id)
+          success(res.body.id)
       })
   }
 }
@@ -192,9 +201,27 @@ function requestCreatePackingOrderSuccess(json) {
   return {
     type: REQUEST_CREATE_SUCCESS,
     item: json,
-    sort: null,
+    sort: sort_packingorders,
     name: PACKING_ORDERS,
   }
+}
+
+export function sort_packingorders(a, b) {
+  if (a == b || a==null || b==null) 
+    return 0
+
+  let aTime = a.created_at
+  let bTime = b.created_at
+
+  console.log(aTime)
+  console.log(bTime)
+
+  if (aTime < bTime) 
+    return 1
+  if (aTime > bTime)
+    return -1
+
+  return 0
 }
 
 

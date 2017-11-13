@@ -4,6 +4,13 @@ import * as actions from './PackingOrdersActions.jsx'
 import PackingOrdersList from './PackingOrdersList.jsx'
 import PackingOrdersCreateDialog from '../PackingOrdersCreate/PackingOrdersCreateDialog'
 import Button from '../Card/Button.jsx'
+import PaginatedTable from '../PaginatedTable/PaginatedTable'
+import PackingOrdersListItem from './PackingOrdersListItem'
+
+
+function titleRow() {
+  return <PackingOrdersListItem header item={{created_at: "Created At", ordered_by_name: "Ordered By", status: "Status"}} />
+}
 
 class PackingOrders extends React.Component {
   constructor(props) {
@@ -11,6 +18,10 @@ class PackingOrders extends React.Component {
     this.state = {
       createPackingOrdersDialog: true,
     }
+
+    this.handleSelectPackingOrder = this.handleSelectPackingOrder.bind(this)
+    this.handlePagination = this.handlePagination.bind(this)
+
   }
 
   toggleDialog(name) {
@@ -34,7 +45,13 @@ class PackingOrders extends React.Component {
   	return(
       <div>
         <Button onClick={() => this.toggleDialog("createPackingOrdersDialog")}>Create packing order</Button>
-        <PackingOrdersList packingOrders={packingOrders} />
+        <PaginatedTable 
+            {...this.props.packingOrders}
+            onClick={this.handleSelectPackingOrder} 
+            onPagination={this.handlePagination} 
+            Row={PackingOrdersListItem}
+            TitleRow={titleRow}
+          />
         {this.renderDialogs()}
          <ul>
           {contacts.data.map(function(contact, index) {
@@ -45,12 +62,30 @@ class PackingOrders extends React.Component {
 
   	)
   }
+        // <PackingOrdersList packingOrders={packingOrders} />
 
 
   handleCreatePackingOrder(data) {
-    this.props.dispatch(actions.postCreatePackingOrder(data))    
+    this.props.dispatch(actions.postCreatePackingOrder(data, (id) => {
+      let index = this.props.packingOrders.data.findIndex((e, i, a) => e.id === id)
+      this.props.dispatch(actions.selectPackingOrder(index))
+    }))
   }
 
+
+  handlePagination(direction) {
+    this.props.dispatch(actions.pagePackingOrders(direction))
+  }
+
+  handleSelectPackingOrder(index) {
+
+    let p = this.props.packingOrders.data[index]
+    if (!p) 
+      return 
+
+    this.props.dispatch(actions.selectPackingOrder(index))
+    // this.props.dispatch(inventoryActions.fetchInventory({processes: p.id}))
+  }
 
   renderDialogs() {
     if(this.state.createPackingOrdersDialog) {
