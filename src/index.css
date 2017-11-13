@@ -772,6 +772,9 @@ button {
     padding: 0;
     background-color: rgba(0, 0, 0, 0);
     color: #2198EE; }
+  button:disabled {
+    background-color: #c3c3c3;
+    color: #838383; }
 
 .dialog-header h2 {
   padding-top: 3px;
@@ -1662,7 +1665,7 @@ div.zero-state {
     padding-bottom: 0; }
 
 .packingorders-create {
-  min-width: 500px; }
+  min-width: 528px; }
   .packingorders-create .dialog-input-label {
     line-height: 16px;
     font-size: 14px;
