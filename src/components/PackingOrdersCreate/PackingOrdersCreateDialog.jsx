@@ -3,13 +3,15 @@ import { connect } from 'react-redux'
 import update from 'immutability-helper'
 import Button from '../Card/Button'
 import Dialog from '../Card/Dialog'
-import * as actions from '../PackingOrders/PackingOrdersActions.jsx'
+import DialogHeader from '../Dialog/DialogHeader'
+import * as actions from '../PackingOrders/PackingOrdersActions'
 import PackingOrdersCreateContact from './PackingOrdersCreateContact'
 import PackingOrdersCreateInventoryUnitList from './PackingOrdersCreateInventoryUnitList'
 
 class PackingOrdersCreateDialog extends React.Component {
 	constructor(props) {
 		super(props)
+
 		this.handleCreatePackingOrder = this.handleCreatePackingOrder.bind(this)
 		this.handleRemoveInventoryUnit = this.handleRemoveInventoryUnit.bind(this)
 		this.handleChangeInventoryUnit = this.handleChangeInventoryUnit.bind(this)
@@ -30,15 +32,13 @@ class PackingOrdersCreateDialog extends React.Component {
 
 	render() {
 		return (
-			<Dialog onToggle={this.props.onToggle}>
-				<h2>Create a new packing order</h2>
-				<div>
-					<PackingOrdersCreateContact 
-						selected_contact={this.state.selected_contact} 
-						contacts={this.props.contacts.data}
-						onChange={this.handleChangeContact}
-					/>
-				</div>
+			<Dialog onToggle={this.props.onToggle} className="packingorders-create">
+				<DialogHeader>Create a packing order</DialogHeader>
+				<PackingOrdersCreateContact 
+					selected_contact={this.state.selected_contact} 
+					contacts={this.props.contacts.data}
+					onChange={this.handleChangeContact}
+				/>
 				<PackingOrdersCreateInventoryUnitList 
 					inventoryUnits = {this.props.inventoryUnits.data}
 					order_inventory_units={this.state.order_inventory_units} 
@@ -46,7 +46,6 @@ class PackingOrdersCreateDialog extends React.Component {
 					onAdd={this.handleAddNewListItem}
 					onChange={this.handleChangeInventoryUnit}
 				/>
-
 				<div className="button-area">
 					<Button secondary onClick={this.props.onToggle}>Cancel</Button>
 					<Button onClick={(e) => this.handleCreatePackingOrder()}>Create</Button>
@@ -54,6 +53,8 @@ class PackingOrdersCreateDialog extends React.Component {
 			</Dialog>
 		)
 	}
+
+
 
 	handleCreatePackingOrder() {
 		let contact = this.state.selected_contact.id
