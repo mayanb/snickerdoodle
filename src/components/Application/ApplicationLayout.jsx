@@ -26,6 +26,9 @@ import BarChartTest from '../D3BarChart/BarChartTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
 import PackingOrders from '../PackingOrders/PackingOrders'
 
+import ViewPackingOrder from '../ViewPackingOrder/ViewPackingOrder'
+
+
 export default class ApplicationLayoutStable extends React.Component {
 
   render () {
@@ -65,6 +68,8 @@ function App(props) {
 		    <Route path={"/googleconnect/:ext?"} component={Account} />
 		    <Route path={"/bc/"} component={BCWrapper} />
 		    <Route path={"/packingorders/"} component={PackingOrders} />
+		    <Route path={"/orders/:id"} component={ViewPackingOrder} />
+
 	  	</div>
 		</div>
 	)
