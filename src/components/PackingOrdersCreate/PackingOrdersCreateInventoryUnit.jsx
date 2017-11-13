@@ -11,14 +11,15 @@ export default function PackingOrdersCreateInventoryUnit(props) {
 					options={props.inventoryUnits}
 					labelKey={'name'}
 					valueKey={'id'}
-					placeholder="Select a inventory unit for this order"
+					placeholder="Select a product"
 					onChange={(newVal) => props.onInputChange('inventory_unit', newVal)}
 				/>
 			</div>
 			<div className="inventory-unit-amount">
 				<input 
 					type="text" 
-					name="amount" 
+					name="amount"
+					placeholder="0" 
 					value={props.order_inventory_unit.amount_description}
 					onChange={(e) => props.onInputChange('amount_description', e.target.value)} 
 				/>

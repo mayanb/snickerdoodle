@@ -5,6 +5,10 @@
 	flex-direction: row;
 	border: 1px solid rgba(0,0,0,0.1);
 
+	.Select-placeholder {
+		padding: 0;
+	}
+
 	&>div {
 		flex: 2;
 		border-left: 1px solid rgba(0,0,0,0.1);
@@ -52,14 +56,6 @@
 	}
 }
 
-.Select-control {
-	outline: none;
-	border-radius: 4;
-}
-
-.Select-placeholder {
-	padding: 0;
-}
 
 .dates {
 	border-radius: 4px;

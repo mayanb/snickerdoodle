@@ -1,13 +1,18 @@
 .button-area {
+	background-color: #fafafa;
+	margin: 0 -16px -16px -16px;
+	padding: 12px 16px;
+
 	display:flex;
 	justify-content: flex-end;
 }
 
+/* FLEX MEASUREMENTS */
 .packingorders-create-inventory-unit {
 	display:flex;
+	padding-bottom: 12px;
 
 	.inventory-unit-title {
-		font-weight: 700;
 		flex: 2;
 	}
 
@@ -17,14 +22,49 @@
 
 	.inventory-unit-title, .inventory-unit-amount {
 		margin-right: 10px;
+		input {
+			width: 100%;
+		}
 	}
 
 	.inventory-unit-remove {
 		flex: 0;
+	}
 
-		i {
-			font-size: 12px;
-			line-height: 12px;
-		}
+	&.header {
+		padding-bottom: 0;
+	}
+}
+
+
+.packingorders-create {
+	min-width: 500px;
+
+	.dialog-input-label {
+		line-height:16px;
+		font-size: 14px;
+		color: #828282;
+		padding-top: 3px;
+		padding-bottom: 8px;
+		display: block;
+	}
+	.contact {
+		padding-bottom: 21px;
+	}
+
+	.inventory-unit-amount input {
+		text-align: right;
+	}
+
+	.inventory-unit-remove i {
+		color: #828282;
+		line-height: 36px;
+		font-size: 16px;
+	}
+
+	.add-line-item {
+		padding-top: 4px;
+		padding-bottom: 16px;
+		
 	}
 }
