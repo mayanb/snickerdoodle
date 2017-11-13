@@ -47,7 +47,7 @@ class PackingOrders extends React.Component {
         <Button onClick={() => this.toggleDialog("createPackingOrdersDialog")}>Create packing order</Button>
         <PaginatedTable 
             {...this.props.packingOrders}
-            onClick={this.handleSelectPackingOrder} 
+            onClick={this.handleViewPackingOrderDetails} 
             onPagination={this.handlePagination} 
             Row={PackingOrdersListItem}
             TitleRow={titleRow}
@@ -56,6 +56,10 @@ class PackingOrders extends React.Component {
       </div>
 
   	)
+  }
+
+  handleViewPackingOrderDetails(index) {
+    window.location = window.location.origin + "/orders/" + index
   }
 
   handleCreatePackingOrder(data) {

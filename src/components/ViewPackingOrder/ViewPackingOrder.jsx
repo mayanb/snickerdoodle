@@ -42,6 +42,9 @@ class ViewPackingOrder extends React.Component {
     // if(this.state.showDialog) {
     //   dialog = <Dialog {...this.state.activeDialog} />
     // }
+    if (packingOrder.ui.isFetchingData) {
+      return <div>Loading</div>
+    }
     return (
       <span>{JSON.stringify(packingOrder.data)}</span>
     )
