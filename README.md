@@ -35,6 +35,7 @@ First, push your work to a new  branch:
 git checkout -b hotfix
 git add -u
 git commit -m 'added a hotfix'
+git pull origin staging
 git push origin hotfix
 ```
 
