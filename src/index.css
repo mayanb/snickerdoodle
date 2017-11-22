@@ -724,7 +724,9 @@ textarea {
     color: white;
     font-size: 16px;
     line-height: 32px;
-    text-align: center; }
+    text-align: center;
+    display: block;
+    min-width: 32px; }
 
 .select-circle {
   width: 16px;
@@ -1096,21 +1098,6 @@ div.create-product-dialog .create-product-description {
 
 .account-menu {
   min-width: 180px; }
-  .account-menu .menu-section > span {
-    padding-left: 12px;
-    padding-top: 12px;
-    margin: 0;
-    line-height: 16px;
-    display: block;
-    font-size: 11px; }
-  .account-menu .menu-section span {
-    line-height: 16px;
-    display: inline-block;
-    vertical-align: middle;
-    text-align: left; }
-  .account-menu .icon {
-    vertical-align: middle;
-    margin-right: 8px; }
 
 .account-menu {
   min-width: 180px;
@@ -1134,8 +1121,6 @@ div.create-product-dialog .create-product-description {
 
 .current-account div, .current-account span, .current-account i {
   vertical-align: middle; }
-.current-account .icon {
-  margin-right: 8px; }
 
 .nav-team div.button-dropdown-content {
   top: 39px; }

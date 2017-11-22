@@ -14,6 +14,10 @@ export const ADD_USER_ACCOUNT = "ADD_USER_ACCOUNT"
 export const SET_GOOGLE_AUTHENTICATION = "SET_GOOGLE_AUTHENTICATION"
 export const SET_GOOGLE_EMAIL = "SET_GOOGLE_EMAIL"
 
+export const REFRESH = "REFRESH"
+export const REFRESH_SUCCESS = "REFRESH_SUCCESS"
+export const REFRESH_FAILURE = "REFRESH_FAILURE"
+
 
 export function postRequestLogin(credentials, success, failure) {
 	return function (dispatch) {
@@ -117,3 +121,39 @@ export function setGoogleEmail(value) {
 		value: value,
 	}
 }
+
+export function requestRefreshUserAccount(id) {
+	return function (dispatch) {
+		dispatch(refreshUserAccount())
+
+		api.get(`/ics/userprofiles/${id}/`)
+			.end(function (err, res) {
+				if (err || !res.ok) {
+					console.log(err)
+					dispatch(refreshUserAccountFailure(err))
+				} else {
+					dispatch(refreshUserAccountSuccess(res.body))
+				}
+			})
+	}
+}
+
+function refreshUserAccount() {
+	return {
+		type: REFRESH,
+	}
+}
+
+function refreshUserAccountSuccess(data) {
+	return {
+		type: REFRESH_SUCCESS,
+		data: data,
+	}
+}
+
+function refreshUserAccountFailure() {
+	return {
+		type: REFRESH_FAILURE,
+	}
+}
+

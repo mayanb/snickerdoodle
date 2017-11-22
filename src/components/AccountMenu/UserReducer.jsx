@@ -11,6 +11,10 @@ import {
 	ADD_USER_ACCOUNT,
 	SET_GOOGLE_AUTHENTICATION,
 	SET_GOOGLE_EMAIL,
+
+	REFRESH,
+	REFRESH_SUCCESS,
+	REFRESH_FAILURE
 } from './UserActions'
 
 function getDefaultState() {
@@ -55,6 +59,12 @@ export default function _users(state = getDefaultState(), action) {
 	    		return setGoogleAuthentication(state, action)
 	    case SET_GOOGLE_EMAIL:
 	    		return setGoogleEmail(state, action)
+	    case REFRESH:
+	    		return refresh(state, action)
+	    case REFRESH_SUCCESS:
+	    		return refreshSuccess(state, action)
+	    case REFRESH_FAILURE:
+	    		return refreshFailure(state, action)
 	    default:
 	      return state
   	}
@@ -183,4 +193,24 @@ function addUserAccount(state, action) {
 	})
 	console.log(ns)
 	return ns
+}
+
+function refresh(state, action) {
+	return state
+}
+
+function refreshSuccess(state, action) {
+	return update(state, {
+		data: {
+			[action.data.profile_id]: {
+				user: {
+					$merge: action.data
+				}
+			}
+		}
+	})
+}
+
+function refreshFailure(state, action) {
+	return state
 }
