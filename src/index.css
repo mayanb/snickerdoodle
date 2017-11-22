@@ -1651,13 +1651,4 @@ div.zero-state {
   stroke: #fff;
   stroke-width: 1.5px; }
 
-@font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: local("Material Icons"), local("MaterialIcons-Regular"); }
-.material-icons {
-  font-family: 'Material Icons';
-  font-style: normal; }
-
 /*# sourceMappingURL=index.css.map */

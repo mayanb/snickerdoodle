@@ -1,5 +1,6 @@
 import React from 'react'
 import Icon from '../Card/Icon'
+import {isAdmin} from '../AccountMenu/authentication'
 import {colorHash} from '../Logic/stringutils'
 import TeamMemberChangeAccountType from './TeamMemberChangeAccountType'
 
@@ -12,7 +13,12 @@ export default function Member(props) {
 			<span>{props.member.username_display.toLowerCase()}</span>
 		</div>
 		<div className="account-types">
-			<TeamMemberChangeAccountType {...props} />
+		{ 
+			props.editable ? <TeamMemberChangeAccountType {...props} /> : 
+				<span style={{marginRight: '8px'}}>
+					{isAdmin(props.member)?"Administrator":"Regular"} 
+				</span>
+		}
 		</div>
 	</div>
 	)

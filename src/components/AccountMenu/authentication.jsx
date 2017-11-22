@@ -1,6 +1,6 @@
 import jwt_decode from 'jwt-decode'
 
-export default function shoudLogin(users) {
+export function shouldLogin(users) {
 	try {
 		let {data, ui} = users
 
@@ -18,4 +18,19 @@ export default function shoudLogin(users) {
 	} catch(e) {
 		return true
 	}
+}
+
+const TIME_TO_REFRESH = 200 // in seconds
+export function shouldRefresh(users) {
+	let {data, ui} = users	
+  let last_fetched = data[ui.activeUser].last_fetched
+  return !last_fetched || ((new Date() - last_fetched) / 1000 > TIME_TO_REFRESH)
+}
+
+export function isAdmin(user) {
+	return user.account_type == 'a'
+}
+
+export function isRegular(user) {
+	return user.account_type == 'w'
 }

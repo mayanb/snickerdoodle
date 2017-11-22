@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {isAdmin} from '../AccountMenu/authentication'
 import * as actions from './MemberActions'
+import * as userActions from '../AccountMenu/UserActions'
 import ButtonDropdown from '../Card/ButtonDropdown'
 
 let admin_desc = "Here is a description of what an admin can and can't do."
@@ -37,7 +39,7 @@ class TeamMemberChangeAccountType extends React.Component {
 	renderButton() {
 		return (
 			<span className="btn">
-				{this.props.member.account_type=="a"?"Administrator":"Regular"} 
+				{isAdmin(this.props.member)?"Administrator":"Regular"} 
 				<i className="material-icons">expand_more</i>
 			</span>
 		)
@@ -61,6 +63,9 @@ class TeamMemberChangeAccountType extends React.Component {
 		let data = {id: this.props.member.id, new_account_type: value}
 		let c = this
 		this.props.dispatch(actions.postRequestEditAccountType(this.props.index, data, () => {
+			if (data.id == this.props.users.ui.activeUser) {
+				this.props.dispatch(userActions.requestRefreshUserAccount(data.id))
+			}
 			c.handleDropdownToggle()
 		}))
 	}
@@ -69,7 +74,6 @@ class TeamMemberChangeAccountType extends React.Component {
 const mapStateToProps = (state/*, props*/) => {
   return {
   	users: state.users,
-  	members: state.members,
   }
 }
 

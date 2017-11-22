@@ -4,10 +4,9 @@ import * as actions from '../AccountMenu/UserActions'
 import {BrowserRouter as Router, Route, Redirect, withRouter} from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import Teams from '../Teams/Teams'
-import shouldLogin from '../AccountMenu/authentication'
+import {shouldLogin, shouldRefresh} from '../AccountMenu/authentication'
 
 function PrivateRoute({component: Component, ...rest}) {
-
   Component = withRouter(Component)
   let unix = Math.round(+new Date()/1000);
 
@@ -22,12 +21,12 @@ function PrivateRoute({component: Component, ...rest}) {
       }/>
     )
   } else {
-    let {users} = rest
-    rest.dispatch(actions.requestRefreshUserAccount(users.ui.activeUser))
+    if (shouldRefresh(rest.users)) {
+      rest.dispatch(actions.requestRefreshUserAccount(rest.users.ui.activeUser))
+    }
     return <Route {...rest} render={props => ( <Component {...rest}/> )} />
   }
 }
-
 
 
 const mapStateToProps = (state/*, props*/) => {

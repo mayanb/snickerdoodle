@@ -5,6 +5,8 @@ import Button from '../Card/Button'
 import CreateTeamMemberDialog from './CreateTeamMemberDialog'
 import TeamMemberList from './TeamMemberList'
 import GoogleConnect from '../GoogleConnect/GoogleConnect'
+import {isAdmin} from '../AccountMenu/authentication'
+
 let s = false
 
 class TeamSettings extends React.Component {
@@ -33,12 +35,10 @@ class TeamSettings extends React.Component {
 	render() {
 		let {ui, data} = this.props.members
 		let users = this.props.users
-		let selectedUser = users.data[users.ui.activeUser].user
-		console.log(data)
 
 		return (
 			<div key={1} className="team-members">
-				<TeamMemberList members={data} isFetching={ui.isFetchingData}/>
+				<TeamMemberList editable={isAdmin(users.data[users.ui.activeUser].user)} members={data} activeUser={ui.activeUser} isFetching={ui.isFetchingData}/>
 				<span className="add-new-member" onClick={this.handleToggleDialog}>Add a team member</span>
 				<CreateTeamMemberDialog 
 					isOpen={this.state.isCreatingMember} 
