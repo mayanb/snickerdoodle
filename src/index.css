@@ -715,7 +715,16 @@ textarea {
 
 .icon {
   display: inline-block;
-  background-color: rgba(0, 0, 0, 0.1); }
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  min-width: 32px;
+  min-height: 32px;
+  margin-right: 8px; }
+  .icon span {
+    color: white;
+    font-size: 16px;
+    line-height: 32px;
+    text-align: center; }
 
 .select-circle {
   width: 16px;
@@ -838,7 +847,7 @@ div.button-dropdown {
     div.button-dropdown.expanded > button {
       background-color: #0068B4; }
       div.button-dropdown.expanded > button.secondary {
-        background-color: white; }
+        background-color: rgba(0, 0, 0, 0); }
     div.button-dropdown.expanded .button-dropdown-shim {
       display: block; }
     div.button-dropdown.expanded .button-dropdown-content {
@@ -1590,22 +1599,27 @@ div.zero-state {
   padding: 16px;
   margin-top: 10px; }
   .team-members .member {
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     display: flex; }
-    .team-members .member span {
-      display: block;
+    .team-members .member .account-circle {
+      flex: 0; }
+    .team-members .member .account-names {
       flex: 1; }
-      .team-members .member span:last-child {
-        flex: 0;
-        font-size: 10px;
-        line-height: 10px;
-        padding: 3px;
-        text-transform: uppercase;
-        letter-spacing: 0.2px;
-        border-radius: 2px;
-        color: white;
-        text-align: right;
-        background-color: rgba(0, 0, 0, 0.2); }
+      .team-members .member .account-names .account-name-real {
+        font-weight: 700; }
+    .team-members .member .account-types span.btn {
+      flex: 0;
+      color: rgba(0, 0, 0, 0.3);
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.3);
+      text-align: right;
+      vertical-align: bottom; }
+      .team-members .member .account-types span.btn i {
+        font-size: 14px;
+        line-height: 16px;
+        vertical-align: bottom;
+        padding-left: 2px; }
+    .team-members .member span {
+      display: block; }
   .team-members .create-member .buttons {
     display: flex;
     justify-content: flex-end; }
@@ -1615,9 +1629,35 @@ div.zero-state {
     display: flex;
     margin-bottom: 8px; }
     .team-members .create-member > div label {
-      flex: 1; }
+      flex: 1;
+      font-weight: 700; }
     .team-members .create-member > div input {
+      margin-left: 8px; }
+    .team-members .create-member > div input, .team-members .create-member > div div.Select {
       flex: 3; }
+      .team-members .create-member > div input div.Select-control .Select-placeholder, .team-members .create-member > div div.Select div.Select-control .Select-placeholder {
+        padding-left: 8px; }
+  .team-members .accounttype-menu {
+    min-width: 240px; }
+    .team-members .accounttype-menu .accounttype-rule {
+      height: 1px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.1); }
+    .team-members .accounttype-menu .accounttype-option {
+      display: flex;
+      padding: 16px;
+      padding-left: 16px;
+      cursor: pointer; }
+      .team-members .accounttype-menu .accounttype-option .check {
+        min-width: 16px;
+        margin-right: 4px; }
+        .team-members .accounttype-menu .accounttype-option .check i {
+          font-size: 16px;
+          line-height: 16px; }
+      .team-members .accounttype-menu .accounttype-option .title {
+        font-weight: 700; }
+      .team-members .accounttype-menu .accounttype-option .desc {
+        color: rgba(0, 0, 0, 0.4); }
 
 .lesmis .links line {
   stroke: #999;
@@ -1625,5 +1665,14 @@ div.zero-state {
 .lesmis .nodes circle {
   stroke: #fff;
   stroke-width: 1.5px; }
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Material Icons"), local("MaterialIcons-Regular"); }
+.material-icons {
+  font-family: 'Material Icons';
+  font-style: normal; }
 
 /*# sourceMappingURL=index.css.map */

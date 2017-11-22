@@ -168,7 +168,7 @@ export function postDeleteProduct(p, index, callback) {
 
 function requestDeleteProduct(index) {
   return {
-    type: REQUEST_EDIT_ITEM,
+    type: REQUEST_DELETE,
     // index: index,
     name: PRODUCTS
   }
@@ -176,7 +176,7 @@ function requestDeleteProduct(index) {
 
 function requestDeleteProductFailure(index, err) {
   return {
-    type: REQUEST_EDIT_ITEM_FAILURE,
+    type: REQUEST_DELETE_FAILURE,
     index: index,
     name: PRODUCTS,
     error: err
@@ -185,10 +185,8 @@ function requestDeleteProductFailure(index, err) {
 
 function requestDeleteProductSuccess(field, value, index) {
   return {
-    type: REQUEST_EDIT_ITEM_SUCCESS,
+    type: REQUEST_DELETE_SUCCESS,
     name: PRODUCTS,
     index: index,
-    field: field,
-    value: value
   }
 }

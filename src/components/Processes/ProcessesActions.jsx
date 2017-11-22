@@ -184,15 +184,15 @@ export function postDeleteProcess(p, index, callback) {
 
 function requestDeleteProcess(index) {
   return {
-    type: REQUEST_EDIT_ITEM,
-    // index: index,
+    type: REQUEST_DELETE,
+    index: index,
     name: PROCESSES
   }
 }
 
 function requestDeleteProcessFailure(index, err) {
   return {
-    type: REQUEST_EDIT_ITEM_FAILURE,
+    type: REQUEST_DELETE_FAILURE,
     index: index,
     name: PROCESSES,
     error: err
@@ -201,11 +201,9 @@ function requestDeleteProcessFailure(index, err) {
 
 function requestDeleteProcessSuccess(field, value, index) {
   return {
-    type: REQUEST_EDIT_ITEM_SUCCESS,
+    type: REQUEST_DELETE_SUCCESS,
     name: PROCESSES,
     index: index,
-    field: field,
-    value: value
   }
 }
 

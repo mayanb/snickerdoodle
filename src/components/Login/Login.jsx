@@ -33,7 +33,7 @@ class Login extends React.Component {
     let fail = this.failedAuth.bind(this)
     this.props.dispatch(
       actions.postRequestLogin(
-        {username: this.state.username + '_' + this.state.team_name, password: this.state.password},
+        {username: this.state.username.toLowerCase() + '_' + this.state.team_name.toLowerCase(), password: this.state.password},
         () => null, 
         fail
       )
