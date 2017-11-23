@@ -36,7 +36,7 @@ function get(path) {
 function post(path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
-		url = host + '/ics/v5' + path.substring(4) 
+		url = host + '/ics/v6' + path.substring(4) 
 	}
 
 	let team = -1

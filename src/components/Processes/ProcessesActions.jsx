@@ -35,10 +35,17 @@ export function fetchProcesses() {
           console.log(res.body)
           // let processes = formatProcessResponse(res.body)
           // let processesArray = Object.values(processes).sort(alphabetize);
-          dispatch(requestProcessesSuccess(res.body.sort(alphabetize)))
+          dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize))))
         }
       })
   }
+}
+
+function organize_attributes(processes) {
+  for (var p of processes) {
+    p.attributes.sort((a, b) => a.rank - b.rank)
+  }
+  return processes
 }
 
 function requestProcesses() {

@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ProcessAttribute, ProcessAttributeCreator } from './ProcessAttribute'
+import ProcessAttribute from './ProcessAttribute'
+import ProcessAttributeCreator from './ProcessAttributeCreator'
 import * as actions from './ProcessAttributeActions'
+import Sortable from '../Sortable/Container'
 
 class ProcessAttributeList extends React.Component {
 	constructor(props) {
@@ -19,24 +21,25 @@ class ProcessAttributeList extends React.Component {
 		return (
 			<div className="products-card-section products-card-attributes">
 				<h2>Attributes</h2>
-				<ul>
-				{
-					(item.attributes || []).map(function (attr, i) {
-						return <li key={i}><ProcessAttribute {...attr} onArchive={() => this.archiveAttribute(i) } /></li>
-					}, this)
-				}	
+				<Sortable 
+					cards={item.attributes} 
+					canEdit={true} 
+					finishMovingCard={this.moveAttribute.bind(this)} 
+					renderer={ProcessAttribute} 
+				/>
 				{ this.renderAddAttributeSection() }
-				</ul>
 			</div>
 		)
 	}
 
 	renderAddAttributeSection() {
 		if (this.props.ui.isAddingAttribute)
-			return (<li><ProcessAttributeCreator onCancel={this.finishAddingAttribute} onSubmit={this.saveAttribute}/></li>)
+			return (<ProcessAttributeCreator onCancel={this.finishAddingAttribute} onSubmit={this.saveAttribute}/>)
 
-		return (<li><AddAttributeButton onClick={this.startAddingAttribute}/></li>)
+		return (<AddAttributeButton onClick={this.startAddingAttribute}/>)
 	}
+
+	// MARK:- ACTIONS 
 
 	archiveAttribute(index) {
 		let {data, ui} = this.props
@@ -57,7 +60,16 @@ class ProcessAttributeList extends React.Component {
   finishAddingAttribute() {
     this.props.dispatch(actions.finishAddingAttribute())
   }
+
+  moveAttribute(id, toIndex) {
+  	let {ui, data} = this.props
+		this.props.dispatch(actions.postRequestMoveAttribute(ui.selectedItem, id, toIndex))  	
+  }
 }
+
+
+
+
 
 function AddAttributeButton(props) {
 	let button = (
@@ -76,8 +88,7 @@ function AddAttributeButton(props) {
 	)
 }
 
-// This is our select function that will extract from the state the data slice we want to expose
-// through props to our component.
+
 const mapStateToProps = (state/*, props*/) => {
 	let {data, ui} = state.processes
   return {

@@ -1004,9 +1004,6 @@ div.create-product-dialog .create-product-description {
 
 .products-card-attributes h2 {
   line-height: 42px; }
-.products-card-attributes li {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  line-height: 39px; }
 
 .process-attribute {
   display: flex;
@@ -1650,5 +1647,14 @@ div.zero-state {
 .lesmis .nodes circle {
   stroke: #fff;
   stroke-width: 1.5px; }
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Material Icons"), local("MaterialIcons-Regular"); }
+.material-icons {
+  font-family: 'Material Icons';
+  font-style: normal; }
 
 /*# sourceMappingURL=index.css.map */

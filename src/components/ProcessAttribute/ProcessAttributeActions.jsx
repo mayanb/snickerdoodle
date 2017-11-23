@@ -8,6 +8,9 @@ import {
   REQUEST_ARCHIVE_ATTRIBUTE,
   REQUEST_ARCHIVE_ATTRIBUTE_SUCCESS,
   REQUEST_ARCHIVE_ATTRIBUTE_FAILURE,
+  REQUEST_MOVE_ATTRIBUTE,
+  REQUEST_MOVE_ATTRIBUTE_SUCCESS,
+  REQUEST_MOVE_ATTRIBUTE_FAILURE,
 } from '../../Reducers/ProcessAttributeReducer'
 import {  PROCESSES, PROCESS_INVENTORY } from '../../Reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
@@ -107,6 +110,48 @@ function requestArchiveAttributeFailure(process_index, attribute_index, old_attr
     process_index: process_index,
     attribute_index: attribute_index,
     old_attribute: old_attribute
+  }
+}
+
+export function postRequestMoveAttribute(process_index, id, new_rank) {
+  return function (dispatch) {
+    //dispatch(requestMoveAttribute())
+
+    return api.put(`/ics/attributes/move/${id}/`)
+      .send({new_rank: new_rank})
+      .end( function (err, res) {
+        if (err || !res.ok) {
+          dispatch(requestMoveAttributeFailure(process_index))
+        } else {
+          dispatch(requestMoveAttributeSuccess(process_index, id, new_rank))
+        }
+      })
+  }
+}
+
+function requestMoveAttribute(process_index) {
+  return {
+    type: REQUEST_MOVE_ATTRIBUTE,
+    name: PROCESSES, 
+    process_index: process_index
+  }
+}
+
+function requestMoveAttributeSuccess(process_index, id, new_rank) {
+  return {
+    type: REQUEST_MOVE_ATTRIBUTE_SUCCESS,
+    name: PROCESSES, 
+    process_index: process_index,
+    id: id,
+    new_rank: new_rank
+  }
+}
+
+function requestMoveAttributeFailure(process_index) {
+  return {
+    type: REQUEST_MOVE_ATTRIBUTE_FAILURE,
+    name: PROCESSES,
+    process_index: process_index,
   }
 }
 

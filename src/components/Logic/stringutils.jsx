@@ -134,8 +134,6 @@ let colors = ["#f8f9fa",
     "#d9480f"]
     
 export function colorHash(str) {
-    console.log(str)
-    console.log(str.hashCode())
     return colors[Math.abs(str.hashCode() % colors.length)]
 }
 
