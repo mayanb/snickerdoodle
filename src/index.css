@@ -708,7 +708,8 @@ textarea {
     margin-bottom: 15px; }
   .card.big {
     padding: 32px;
-    border-radius: 18px; }
+    border-radius: 18px;
+    margin-right: 48px; }
     .card.big .rule {
       margin: 32px;
       margin-bottom: 31px; }
@@ -782,7 +783,7 @@ button {
   flex-grow: 100;
   margin-bottom: 150px; }
   .nav-section > div {
-    margin: 0px 80px 0px 64px;
+    margin: 0px 48px;
     flex: 7; }
     .nav-section > div > .card {
       height: 100%; }
@@ -1007,22 +1008,27 @@ div.create-product-dialog .create-product-description {
 
 .process-attribute {
   display: flex;
-  cursor: default; }
+  cursor: default;
+  border-bottom: 0.5px solid #ddd; }
   .process-attribute i {
-    font-size: 12px;
-    line-height: 39px;
+    font-size: 16px;
+    line-height: 40px;
     vertical-align: middle;
     color: rgba(0, 0, 0, 0.3); }
   .process-attribute > div {
     margin-left: 8px; }
     .process-attribute > div:first-child {
-      margin-left: 0; }
+      margin-left: 8px; }
+    .process-attribute > div:last-child {
+      margin-right: 8px; }
   .process-attribute .process-attribute-move {
     flex: 0;
     min-width: 16px;
     text-align: center; }
   .process-attribute .process-attribute-name {
     flex: 1; }
+    .process-attribute .process-attribute-name span {
+      line-height: 40px; }
   .process-attribute .process-attribute-type {
     flex: 0;
     text-align: right; }
@@ -1040,7 +1046,8 @@ div.create-product-dialog .create-product-description {
   display: none; }
 
 .process-attribute.new-attribute {
-  color: #2198EE; }
+  color: #2198EE;
+  border: none; }
   .process-attribute.new-attribute i {
     color: #2198EE;
     margin-right: 4px; }
