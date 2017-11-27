@@ -64,7 +64,6 @@ class AccountMenu extends React.Component {
 				<div>
 					<Icon size="32px" />
 				</div>
-				{/* <span>{`${data[ui.activeUser].user.team_name} |  @${data[ui.activeUser].user.username_display}`}</span> */}
 				<div>
 					<span className="name">{data[ui.activeUser].user.team_name}</span>
 					<span className="username">{`@${data[ui.activeUser].user.username_display}`}</span>
