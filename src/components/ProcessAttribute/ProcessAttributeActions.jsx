@@ -11,9 +11,9 @@ import {
   REQUEST_MOVE_ATTRIBUTE,
   REQUEST_MOVE_ATTRIBUTE_SUCCESS,
   REQUEST_MOVE_ATTRIBUTE_FAILURE,
-} from '../../Reducers/ProcessAttributeReducer'
-import {  PROCESSES, PROCESS_INVENTORY } from '../../Reducers/ReducerTypes'
-import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
+} from '../../reducers/ProcessAttributeReducer'
+import {  PROCESSES, PROCESS_INVENTORY } from '../../reducers/ReducerTypes'
+import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
 export function startAddingAttribute() {
   return {

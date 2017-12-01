@@ -146,10 +146,8 @@ function requestMoveAttributeSuccess(state, action) {
 	let attrs = state.data[action.process_index].attributes
 	let old_rank = attrs.findIndex((e) => e.id === action.id)
 	let attr = attrs[old_rank]
-
-	console.log(attrs)
-	console.log(old_rank, action.new_rank)
 	
+	// actually reorder the attributes array 
 	let ns =  update(state, {
 		data: {
 			[action.process_index]: {
@@ -163,10 +161,13 @@ function requestMoveAttributeSuccess(state, action) {
 		}
 	})
 
-	;
+	
+	// update all the ranks to match the new order in the array
 	for (var i = 0; i < ns.data[action.process_index].attributes.length; i++) {
 		ns.data[action.process_index].attributes[i].rank = i
 	}
+
+	// return 
 	return ns
 }
 

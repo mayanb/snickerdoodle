@@ -5,7 +5,7 @@ import Button from '../Card/Button'
 import CreateTeamMemberDialog from './CreateTeamMemberDialog'
 import TeamMemberList from './TeamMemberList'
 import GoogleConnect from '../GoogleConnect/GoogleConnect'
-import {isAdmin} from '../AccountMenu/authentication'
+import {isAdmin} from '../../authentication/authentication'
 
 let s = false
 

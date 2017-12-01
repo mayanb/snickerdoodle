@@ -4,7 +4,7 @@ import * as actions from '../AccountMenu/UserActions'
 import {BrowserRouter as Router, Route, Redirect, withRouter} from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import Teams from '../Teams/Teams'
-import {shouldLogin, shouldRefresh} from '../AccountMenu/authentication'
+import {shouldLogin, shouldRefresh} from '../../authentication/authentication'
 
 function PrivateRoute({component: Component, ...rest}) {
   Component = withRouter(Component)

@@ -13,10 +13,10 @@ import {
   REQUEST_EDIT_ITEM_SUCCESS,
   SELECT,
   PAGE,
-} from '../../Reducers/APIDataReducer'
+} from '../../reducers/APIDataReducer'
 import update from 'immutability-helper'
-import { MEMBERS } from '../../Reducers/ReducerTypes'
-import { sortByAccountType } from '../Logic/arrayutils'
+import { MEMBERS } from '../../reducers/ReducerTypes'
+import { sortByAccountType } from '../../utilities/arrayutils'
 
 
 export function fetchTeamMembers() {

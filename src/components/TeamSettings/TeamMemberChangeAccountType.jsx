@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {isAdmin} from '../AccountMenu/authentication'
+import {isAdmin} from '../../authentication/authentication'
 import * as actions from './MemberActions'
 import * as userActions from '../AccountMenu/UserActions'
 import ButtonDropdown from '../Card/ButtonDropdown'

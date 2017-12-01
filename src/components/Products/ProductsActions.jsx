@@ -16,9 +16,9 @@ import {
   REQUEST_EDIT_ITEM_FAILURE,
   SELECT,
   PAGE,
-} from '../../Reducers/APIDataReducer'
-import { PRODUCTS, INVENTORIES } from '../../Reducers/ReducerTypes'
-import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
+} from '../../reducers/APIDataReducer'
+import { PRODUCTS, INVENTORIES } from '../../reducers/ReducerTypes'
+import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
 
 export function fetchProducts() {

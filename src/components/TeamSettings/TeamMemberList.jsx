@@ -1,6 +1,6 @@
 import React from 'react'
 import TeamMemberAccount from './TeamMemberAccount'
-import {isAdmin, isRegular} from '../AccountMenu/authentication'
+import {isAdmin, isRegular} from '../../authentication/authentication'
 
 export default function MemberList(props) {
 	if (props.isFetching) {

@@ -1,13 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import update from 'immutability-helper'
+import * as types from './GoalTypes'
 import * as actions from './GoalsActions'
 import Goal from './Goal'
+import Sortable from '../Sortable/Container'
 import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
 import Button from '../Card/Button'
 import Card from '../Card/Card'
-import GoalSection from './GoalSection'
-import { pluralize } from '../Logic/stringutils'
+import { pluralize } from '../../utilities/stringutils'
 
 class Goals extends React.Component {
 
@@ -29,54 +31,47 @@ class Goals extends React.Component {
 	}
 
 	render() {
-		let {users, goals} = this.props
+		let {users, goals, timerange} = this.props
 		if (!goals) 
 			return false
 
 		let completed = 0
+		let sortableGoals = []
+
 		goals.data.map(function (goal, i) {
 			if (goal.actual >= goal.goal)
 				completed += 1
+			sortableGoals.push(
+				update(
+					goal, 
+					{$merge: {goal: goal, onDelete: () => this.handleDelete(goal, i) }}
+				)
+			)
 		})
 
 
 		return (
 			<div className="goals">
-			<div className="content">
-				<GoalSection heading='Daily Goals' timerange='d' handleDelete={this.handleDelete} />
-				<GoalSection heading='Weekly Goals' timerange='w' handleDelete={this.handleDelete} />
-				<GoalSection heading='Monthly Goals' timerange='m' handleDelete={this.handleDelete} />
-				{this.renderAddGoalDialog()}
-				{this.renderDeleteGoalDialog()}
-			</div>
-			<div>{this.renderBottomBar(completed,goals.data.length)}</div>
-			</div>
-		)
-	}
-
-	renderGoalSection(heading, timerange) {
-		let { goals } = this.props
-		let sectionGoals = []
-		goals.data.map(function (goal, i) {
-			if(goal.timerange == timerange) {
-				let g = <Goal goal={goal} key={i} onDelete={() => this.handleDelete(goal, i)} />
-				sectionGoals.push(g)
-			}
-		}, this)
-
-		if (sectionGoals.length == 0) {
-			return null
-		}
-
-		console.log(sectionGoals)
-
-		return (
-			<div>
-				<span className="card-header">{heading}</span>
-				{ sectionGoals }
+				<div className="content">
+					<span className="card-header">{timerange === types.WEEKLY ? 'Weekly Goals' : 'Monthly Goals'}</span>
+					<Sortable
+						cards={sortableGoals} 
+						canEdit={true} 
+						finishMovingCard={this.moveGoal.bind(this)} 
+						renderer={Goal} 
+					/>
+					{this.renderAddGoalDialog()}
+					{this.renderDeleteGoalDialog()}
+				</div>
+				<div>{this.renderBottomBar(completed,goals.data.length)}</div>
 			</div>
 		)
 	}
+
+	moveGoal(id, toIndex) {
+  	let goal = this.props.goals.data.find(e => e.id === id)
+		this.props.dispatch(actions.postRequestReorder(goal, toIndex))  	
+  }
 
 	renderBottomBar(completed, total) {
 		let k = <span>You've reached <span>{completed}</span>{` of ${total} ${pluralize(total, 'goal')}.`}</span>
@@ -95,10 +90,6 @@ class Goals extends React.Component {
 		)
 	}
 
-	handleDelete(goal, i) {
-		this.setState({isDeletingGoal: goal, isDeletingGoalIndex: i})
-	}
-
 	renderAddGoalDialog() {
 		if (this.state.isAddingGoal)
 			return <AddGoalDialog onToggle={() => this.setState({isAddingGoal: false})} />
@@ -106,18 +97,24 @@ class Goals extends React.Component {
 	}
 
 	renderDeleteGoalDialog() {
-		console.log("inrenderdeletegoaldialog")
-		console.log(this.state.isDeletingGoal)
 		if (this.state.isDeletingGoal)
 			return <DeleteGoalDialog goal={this.state.isDeletingGoal} index={this.state.isDeletingGoalIndex} onToggle={() => this.setState({isDeletingGoal: null})} />
 		return null
 	}
 
+	handleDelete(goal, i) {
+		this.setState({isDeletingGoal: goal, isDeletingGoalIndex: i})
+	}
+
 }
 
-const mapStateToProps = (state/*, props*/) => {
+const mapStateToProps = (state, props) => {
+	let goals = state.weeklyGoals
+	if (props.timerange === types.MONTHLY)
+		goals = state.monthlyGoals
+
   return {
-    goals: state.goals,
+  	goals: goals,
     users: state.users
   }
 }

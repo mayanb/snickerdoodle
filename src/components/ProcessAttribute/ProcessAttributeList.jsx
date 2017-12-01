@@ -5,6 +5,9 @@ import ProcessAttributeCreator from './ProcessAttributeCreator'
 import * as actions from './ProcessAttributeActions'
 import Sortable from '../Sortable/Container'
 
+
+
+
 class ProcessAttributeList extends React.Component {
 	constructor(props) {
 		super(props)

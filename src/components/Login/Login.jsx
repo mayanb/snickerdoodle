@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {Link, Redirect} from 'react-router-dom'
 import * as actions from '../AccountMenu/UserActions'
-import {shouldLogin} from '../AccountMenu/authentication'
+import {shouldLogin} from '../../authentication/authentication'
 
 class Login extends React.Component {
   constructor(props) {

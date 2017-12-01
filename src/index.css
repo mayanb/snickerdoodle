@@ -1109,7 +1109,9 @@ div.create-product-dialog .create-product-description {
   z-index: 1; }
   .account-menu .account-menu-section-title {
     color: rgba(0, 0, 0, 0.3);
-    font-size: 11px; }
+    font-size: 11px;
+    display: block;
+    margin: 16px 16px 0 16px; }
 
 .account {
   display: flex;

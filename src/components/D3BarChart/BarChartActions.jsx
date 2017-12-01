@@ -14,8 +14,8 @@ import {
   REQUEST_EDIT_SUCCESS,
   SELECT,
   PAGE,
-} from '../../Reducers/APIDataReducer'
-import { GRAPHS } from '../../Reducers/ReducerTypes'
+} from '../../reducers/APIDataReducer'
+import { GRAPHS } from '../../reducers/ReducerTypes'
 
 export function getProcessCooccurrence(team_id) {
   return function (dispatch) {

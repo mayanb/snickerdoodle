@@ -55,14 +55,13 @@ class Card extends Component {
 		connectDropTarget: PropTypes.func.isRequired,
 		isDragging: PropTypes.bool.isRequired,
 		id: PropTypes.any.isRequired,
-		text: PropTypes.string.isRequired,
 		moveCard: PropTypes.func.isRequired,
 		findCard: PropTypes.func.isRequired,
 	}
 
 	render() {
 		const {
-			text,
+			renderProps,
 			isDragging,
 			connectDragSource,
 			connectDropTarget,
@@ -70,7 +69,7 @@ class Card extends Component {
 		const opacity = isDragging ? 0 : 1
 
 		return connectDragSource(
-			connectDropTarget(<div><this.props.renderer {...this.props.renderProps} /></div>),
+			connectDropTarget(<div><this.props.renderer {...renderProps} /></div>),
 		)
 	}
 }

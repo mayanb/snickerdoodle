@@ -15,7 +15,7 @@ import {
 	REFRESH,
 	REFRESH_SUCCESS,
 	REFRESH_FAILURE
-} from './UserActions'
+} from '../components/AccountMenu/UserActions'
 
 function getDefaultState() {
 	// get the state from local storage 

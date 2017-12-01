@@ -1,5 +1,5 @@
 import React from 'react'
-import {colorHash} from '../Logic/stringutils'
+import {colorHash} from '../../utilities/stringutils'
 
 export default function Icon(props) {
 	let size = props.size || "32px"

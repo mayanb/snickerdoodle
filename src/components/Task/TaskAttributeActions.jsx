@@ -1,13 +1,13 @@
 import api from '../WaffleconeAPI/api.jsx'
 import moment from 'moment'
-import { TASK } from '../../Reducers/ReducerTypes'
+import { TASK } from '../../reducers/ReducerTypes'
 import {
   START_EDITING_ATTRIBUTE,
   FINISH_EDITING_ATTRIBUTE,
   REQUEST_SAVE_ATTRIBUTE, 
   REQUEST_SAVE_ATTRIBUTE_SUCCESS, 
   REQUEST_SAVE_ATTRIBUTE_FAILURE
-} from '../../Reducers/TaskAttributeReducerExtension'
+} from '../../reducers/TaskAttributeReducerExtension'
 
 export function startEditingAttribute(index) {
   return {

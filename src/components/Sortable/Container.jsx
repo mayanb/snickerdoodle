@@ -8,7 +8,6 @@ import Card from './Card'
 import ItemTypes from './ItemTypes'
 
 const style = {
-	width: 400,
 }
 
 const cardTarget = {
@@ -87,14 +86,3 @@ let m = DropTarget(ItemTypes.CARD, cardTarget, connect => ({
 	connectDropTarget: connect.dropTarget(),
 }))(Container);
 export default DragDropContext(HTML5Backend)(m)
-
-/*
-<ul>
-				{
-					(item.attributes || []).map(function (attr, i) {
-						return <li key={i}><ProcessAttribute {...attr} onArchive={() => this.archiveAttribute(i) } /></li>
-					}, this)
-				}	
-				{ this.renderAddAttributeSection() }
-				</ul>
-				*/
