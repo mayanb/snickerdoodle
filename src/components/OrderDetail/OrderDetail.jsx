@@ -60,7 +60,7 @@ class OrderDetail extends React.Component {
     return (
       <div className="orderdetail">
         <Button link onClick={this.handleBackButton}>Back to all packing orders</Button>
-        <OrderDetailHeader />
+        <OrderDetailHeader order_number={packingOrder.data.id}/>
         <OrderDetailAttribute name="Placed at " value={packingOrder.data.created_at}></OrderDetailAttribute>
         <OrderDetailContact value={packingOrder.data.ordered_by} isFetchingData={packingOrder.ui.isFetchingData}></OrderDetailContact>
         <OrderDetailListHeader heading={"Items Ordered"}></OrderDetailListHeader>

@@ -3,9 +3,9 @@ import { getCookie } from '../../csrf.jsx'
 import Teams from '../Teams/Teams'
 
 
-let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
+// let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
  // let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
-//let host = 'http://127.0.0.1:8000'
+let host = 'http://127.0.0.1:8000'
 // let host = 'http://192.168.0.103:8000'
 //let host = 'http://localhost:8000'
 

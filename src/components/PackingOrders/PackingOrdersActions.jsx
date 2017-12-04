@@ -172,7 +172,7 @@ export function postCreatePackingOrder(json, success) {
           dispatch(requestCreatePackingOrderFailure(err))
         else
           dispatch(requestCreatePackingOrderSuccess(res.body))
-          success(res.body.id)
+          // success(res.body.id)
       })
   }
 }
