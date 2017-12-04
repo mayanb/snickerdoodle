@@ -1688,6 +1688,32 @@ div.zero-state {
     padding-top: 4px;
     padding-bottom: 16px; }
 
+.orderdetail {
+  max-width: 1000px;
+  margin-left: 20px; }
+
+.orderdetail-header {
+  padding-top: 17px;
+  display: flex;
+  flex-direction: row; }
+  .orderdetail-header > div {
+    flex: 1; }
+  .orderdetail-header h1 {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    color: black; }
+  .orderdetail-header h2 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    color: #4f4f4f; }
+  .orderdetail-header .buttons {
+    display: flex;
+    align-items: right; }
+    .orderdetail-header .buttons > button {
+      margin-left: 12px; }
+
 .lesmis .links line {
   stroke: #999;
   stroke-opacity: 0.6; }

@@ -12,6 +12,7 @@ import OrderItemListItem from './OrderItemListItem'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import OrderDetailListHeader from './OrderDetailListHeader'
 
+
 let dialogs = {
   deleteTask: {
     title: "Are you sure you want to delete this task?",
@@ -57,7 +58,7 @@ class OrderDetail extends React.Component {
       return <div>Loading</div>
     }
     return (
-      <div className="order-detail">
+      <div className="orderdetail">
         <Button link onClick={this.handleBackButton}>Back to all packing orders</Button>
         <OrderDetailHeader />
         <OrderDetailAttribute name="Placed at " value={packingOrder.data.created_at}></OrderDetailAttribute>
