@@ -1647,6 +1647,9 @@ div.zero-state {
   display: flex;
   justify-content: flex-end; }
 
+.packing-orders-section {
+  padding: 32px 32px; }
+
 /* FLEX MEASUREMENTS */
 .packingorders-create-inventory-unit {
   display: flex;

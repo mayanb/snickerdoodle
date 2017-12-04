@@ -13,10 +13,6 @@ export default class PackingOrdersListItem extends React.Component {
 		return (
 			<div className={this.getClassNames()} onClick={onClick}>
 
-				<div className={"products-list-select-circle"}>
-					<SelectCircle isSelected={isSelected} />
-				</div>
-
 				<div className={"products-list-code"}>
 					{item.created_at}
 				</div>
