@@ -1474,7 +1474,10 @@ div.zero-state {
         padding-bottom: 4px;
         -webkit-font-smoothing: antialiased; }
   .goals .goal {
-    padding: 8px 0 8px 0; }
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.06);
+    margin-top: 16px; }
     .goals .goal .goal-details {
       display: flex; }
       .goals .goal .goal-details button {

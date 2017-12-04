@@ -49,7 +49,6 @@ class Goals extends React.Component {
 			)
 		})
 
-
 		return (
 			<div className="goals">
 				<div className="content">
@@ -69,9 +68,9 @@ class Goals extends React.Component {
 	}
 
 	moveGoal(id, toIndex) {
-  	let goal = this.props.goals.data.find(e => e.id === id)
-		this.props.dispatch(actions.postRequestReorder(goal, toIndex))  	
-  }
+		let goal = this.props.goals.data.find(e => e.id === id)
+			this.props.dispatch(actions.postRequestReorder(goal, toIndex))
+	}
 
 	renderBottomBar(completed, total) {
 		let k = <span>You've reached <span>{completed}</span>{` of ${total} ${pluralize(total, 'goal')}.`}</span>
