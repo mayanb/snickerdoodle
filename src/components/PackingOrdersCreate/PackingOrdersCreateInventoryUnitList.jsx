@@ -1,6 +1,6 @@
 import React from 'react'
 import update from 'immutability-helper'
-import {pluralize} from '../Logic/stringutils'
+import {pluralize} from '../../utilities/stringutils'
 import PackingOrdersCreateInventoryUnit from './PackingOrdersCreateInventoryUnit'
 import Button from '../Card/Button'
 

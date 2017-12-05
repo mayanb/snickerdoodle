@@ -8,8 +8,8 @@ import {
   REQUEST_CREATE_FAILURE,
   PAGE,
   SELECT,
-} from '../../Reducers/APIDataReducer'
-import {  PACKING_ORDERS, CONTACTS, INVENTORY_UNITS } from '../../Reducers/ReducerTypes'
+} from '../../reducers/APIDataReducer'
+import {  PACKING_ORDERS, CONTACTS, INVENTORY_UNITS } from '../../reducers/ReducerTypes'
 
 
 export function fetchPackingOrders() {

@@ -10,8 +10,8 @@ import {
   SELECT,
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
-} from '../../Reducers/APIDataReducer'
-import {  PACKING_ORDER, ORDER_ITEMS } from '../../Reducers/ReducerTypes'
+} from '../../reducers/APIDataReducer'
+import {  PACKING_ORDER, ORDER_ITEMS } from '../../reducers/ReducerTypes'
 
 
 export function getPackingOrder(id) {

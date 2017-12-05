@@ -6,12 +6,9 @@ import PackingOrdersCreateDialog from '../PackingOrdersCreate/PackingOrdersCreat
 import Button from '../Card/Button.jsx'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import PackingOrdersListItem from './PackingOrdersListItem'
-<<<<<<< HEAD
 import PackingOrdersListRowHeader from './PackingOrdersListRowHeader'
 import PackingOrdersTitle from './PackingOrdersTitle'
-=======
 
->>>>>>> staging
 
 function titleRow() {
   return <PackingOrdersListItem header item={{created_at: "Created At", ordered_by_name: "Ordered By", status: "Status"}} />
@@ -26,10 +23,7 @@ class PackingOrders extends React.Component {
 
     this.handleSelectPackingOrder = this.handleSelectPackingOrder.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
-<<<<<<< HEAD
     this.handleViewPackingOrderDetails = this.handleViewPackingOrderDetails.bind(this)
-=======
->>>>>>> staging
 
   }
 
