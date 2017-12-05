@@ -17,6 +17,7 @@ import {
 } from '../../reducers/APIDataReducer'
 import { GOALS } from '../../reducers/ReducerTypes'
 import {WEEKLY, MONTHLY} from './GoalTypes'
+import { sortByRank } from '../../utilities/arrayutils'
 
 export function fetchGoals(user_id) {
   return function (dispatch) {
@@ -31,10 +32,11 @@ export function fetchGoals(user_id) {
           dispatch(requestGoalsFailure(err))
         }
 
-        let weekly = res.body.filter(e => e.timerange === WEEKLY)
+        let goals = res.body.sort(sortByRank)
+        let weekly = goals.filter(e => e.timerange === WEEKLY)
         dispatch(requestGoalsSuccess(weekly, WEEKLY))
 
-        let monthly = res.body.filter(e => e.timerange === MONTHLY)
+        let monthly = goals.filter(e => e.timerange === MONTHLY)
         dispatch(requestGoalsSuccess(monthly, MONTHLY))
       })
   }
@@ -113,7 +115,7 @@ function requestCreateGoalSuccess(json) {
   return {
     type: REQUEST_CREATE_SUCCESS,
     item: json,
-    sort: null,
+    sort: sortByRank,
     timerange: json.timerange,
     name: GOALS,
   }

@@ -54,3 +54,11 @@ export function sortByAccountType(a, b) {
 	}
 	return 0
 }
+
+export function sortByRank(a, b) {
+	if (a == b || !a || !b) {
+		return 0
+	}
+
+	return parseInt(a.rank) - parseInt(b.rank)
+}
