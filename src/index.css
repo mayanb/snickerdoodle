@@ -1304,8 +1304,6 @@ div.create-product-dialog .create-product-description {
   display: flex;
   flex-direction: column;
   background-color: #fafafa;
-  min-height: 100vh;
-  max-height: 100vh;
   border-left: 1px solid rgba(0, 0, 0, 0.08);
   transition: flex 0.3s; }
   .inventory .inventory-detail.smallDetail {
@@ -1382,7 +1380,6 @@ div.create-product-dialog .create-product-description {
   display: flex;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding: 16px 0 15px 16px;
-  margin-left: 20px;
   cursor: pointer;
   background-color: white; }
   .inventory .inventoryClass.inventoryClass-header {
@@ -1394,7 +1391,7 @@ div.create-product-dialog .create-product-description {
     text-transform: uppercase;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
   .inventory .inventoryClass > div {
-    padding-right: 48px;
+    padding-right: 24px;
     white-space: nowrap;
     overflow: ellipsis; }
   .inventory .inventoryClass .i-icon {
