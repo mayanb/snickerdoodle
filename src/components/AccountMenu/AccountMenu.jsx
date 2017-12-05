@@ -62,7 +62,7 @@ class AccountMenu extends React.Component {
 		return (
 			<div className="current-account account">
 				<div>
-					<Icon size="32px" />
+					<Icon size="32px" content={data[ui.activeUser].user.username_display}/>
 				</div>
 				<div>
 					<span className="name">{data[ui.activeUser].user.team_name}</span>

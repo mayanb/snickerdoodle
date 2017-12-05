@@ -17,13 +17,12 @@
 	cursor: pointer;
 
 	span.name {
-		display:block;
-		font-weight: 500;
+		display: block;
 		font-size: 14px;
 	}
 
 	span.username {
-		display:block;
+		display: block;
 		color: $theme-color;
 	}
 }
@@ -31,7 +30,6 @@
 .current-account {
 	div, span, i {
 		vertical-align: middle;
-		text-align: left;
 	}
 
 	.icon {
@@ -40,6 +38,10 @@
 
 	span.name {
 		color: #4f4f4f;
+	}
+
+	span.username {
+		text-align: left;
 	}
 }
 

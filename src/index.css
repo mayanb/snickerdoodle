@@ -1119,7 +1119,6 @@ div.create-product-dialog .create-product-description {
   cursor: pointer; }
   .account span.name {
     display: block;
-    font-weight: 500;
     font-size: 14px; }
   .account span.username {
     display: block;
@@ -1127,6 +1126,12 @@ div.create-product-dialog .create-product-description {
 
 .current-account div, .current-account span, .current-account i {
   vertical-align: middle; }
+.current-account .icon {
+  margin-right: 8px; }
+.current-account span.name {
+  color: #4f4f4f; }
+.current-account span.username {
+  text-align: left; }
 
 .nav-team div.button-dropdown-content {
   top: 39px; }
