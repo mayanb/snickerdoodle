@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {Link, Redirect} from 'react-router-dom'
 import * as actions from '../AccountMenu/UserActions'
-import shouldLogin from '../AccountMenu/authentication'
+import {shouldLogin} from '../../authentication/authentication'
 
 class Login extends React.Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class Login extends React.Component {
     let fail = this.failedAuth.bind(this)
     this.props.dispatch(
       actions.postRequestLogin(
-        {username: this.state.username + '_' + this.state.team_name, password: this.state.password},
+        {username: this.state.username.toLowerCase() + '_' + this.state.team_name.toLowerCase(), password: this.state.password},
         () => null, 
         fail
       )

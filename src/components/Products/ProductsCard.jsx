@@ -58,7 +58,7 @@ export default class ProductsCard extends React.Component {
 		return (
 			<div className="products-card-section products-card-header">
 				<div className="products-card-icon" style={{height: "24px"}}>
-						<Icon src="" size="24px"/>
+						<Icon src="" size="24px" content={product.name}/>
 					</div>
 					<h1 className="products-card-code">
 						{product.code}

@@ -24,7 +24,7 @@ export default class Topbar extends React.Component {
     return (
       <div className="d-top">
         <div className="nav-left">
-          <TaskSelect placeholder="Search for a task (or a qr code!!!)" onChange={this.handleSearch} />
+          <TaskSelect placeholder="Search for a task or QR code" onChange={this.handleSearch} />
         </div>
           <div className="nav-team">
           <AccountMenu />

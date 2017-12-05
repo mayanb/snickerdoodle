@@ -3,8 +3,8 @@ import {
   REQUEST, 
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
-} from '../../Reducers/APIDataReducer'
-import { INVENTORIES } from '../../Reducers/ReducerTypes'
+} from '../../reducers/APIDataReducer'
+import { INVENTORIES } from '../../reducers/ReducerTypes'
 
 
 export function fetchInventory(filter) {

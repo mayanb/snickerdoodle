@@ -4,7 +4,6 @@ import GoalBar from './GoalBar'
 export default function Goal(props) {
   return (
     <div className="goal">
-
       <div className="goal-details">
         <div className="goal-details-left">
           <span className="product">{props.goal.process_name + " " + props.goal.product_code}</span>
