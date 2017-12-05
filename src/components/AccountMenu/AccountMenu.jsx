@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 
 class AccountMenu extends React.Component {
 
-	 constructor(props) {
+	constructor(props) {
     super(props)
 
     this.state = {expanded: false}
@@ -19,8 +19,6 @@ class AccountMenu extends React.Component {
     this.handleTeamChange = this.handleTeamChange.bind(this)
     this.handleAddAccount = this.handleAddAccount.bind(this)
   }
-
-
 
   /* EVENT HANDLERS */
 
@@ -62,9 +60,14 @@ class AccountMenu extends React.Component {
 		let {data, ui} = this.props.users
 
 		return (
-			<div className="current-account">
-				<Icon size="18px" content={data[ui.activeUser].user.username_display}/>
-				<span>{`${data[ui.activeUser].user.team_name} |  @${data[ui.activeUser].user.username_display}`}</span>
+			<div className="current-account account">
+				<div>
+					<Icon size="32px" />
+				</div>
+				<div>
+					<span className="name">{data[ui.activeUser].user.team_name}</span>
+					<span className="username">{`@${data[ui.activeUser].user.username_display}`}</span>
+				</div>
 				<i className="material-icons">arrow_drop_down</i>
 			</div>
 		)
@@ -78,7 +81,7 @@ class AccountMenu extends React.Component {
 
 	  return (
 	    <div className="menu-section">
-	    <span className="account-menu-section-title">Switch Accounts</span>
+	    <span className="account-menu-section-title">Switch accounts</span>
 	    {
 	      Object.keys(data).map(function (tid, i) {
 	        if (tid == ui.activeUser || !data[tid].user || !data[tid].user.username)
@@ -109,7 +112,7 @@ class AccountMenu extends React.Component {
 	renderLogout() {
 	  return (
 	    <div className="menu-section">
-	      <Button secondary onClick={() => window.location.href= '/account'}>Account Settings</Button>
+	      <Button secondary onClick={() => window.location.href= '/account'}>Account settings</Button>
 	    </div>
 	  )
 	}
