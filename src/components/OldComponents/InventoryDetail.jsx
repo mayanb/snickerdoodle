@@ -273,7 +273,7 @@ function ItemList(props) {
 
 function Item(props) {
   let qr = props.item_qr
-  let src = window.location.origin + "/public/img/qricon@2x.png"
+  let src = "/img/qricon@2x.png"
   return (
     <div className="item" onClick={props.onClick}>
       <div className="flex">
