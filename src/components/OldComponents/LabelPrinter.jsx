@@ -164,7 +164,7 @@ export default class LabelPrinter extends React.Component {
     console.log(v)
 
     if (this.state.expanded) {
-      let url = window.location.origin + "/ics/tasks/" + v.value
+      let url = api.host +  "/ics/tasks/" + v.value
       let component = this
       fetch(url, {})
         .done(function (data) {

@@ -6,6 +6,8 @@
 	.account-menu-section-title {
 		color: rgba(0,0,0,0.3);
 		font-size: 11px;
+		display: block;
+		margin: 16px 16px 0 16px;
 	}
 } 
 
@@ -15,13 +17,12 @@
 	cursor: pointer;
 
 	span.name {
-		display:block;
-		font-weight: 500;
+		display: block;
 		font-size: 14px;
 	}
 
 	span.username {
-		display:block;
+		display: block;
 		color: $theme-color;
 	}
 }
@@ -33,6 +34,14 @@
 
 	.icon {
 		margin-right: 8px;
+	}
+
+	span.name {
+		color: #4f4f4f;
+	}
+
+	span.username {
+		text-align: left;
 	}
 }
 

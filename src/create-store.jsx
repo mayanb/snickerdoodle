@@ -1,26 +1,16 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import update from 'immutability-helper'
-import {findPosition, alphabetize} from './components/Logic/arrayutils.jsx'
-import {apiDataReducer} from './Reducers/APIDataReducer'
-import {_task} from './Reducers/TaskReducerExtension'
-import {_process} from './Reducers/ProcessReducerExtension'
-import _users from './components/AccountMenu/UserReducer'
-import * as types from './Reducers/ReducerTypes'
+import {stateDefault} from './states'
 
-var stateDefault = {
-  data: [],
-  ui: {
-    isFetchingData: false,
-    isCreatingItem: false,
-    isDeletingItem: false,
-    isEditingItem: false,
-    currentPage: 0,
-    page_size: 10,
-    selectedItem: 4,
-    error: null
-  }
-}
+import {findPosition, alphabetize} from './utilities/arrayutils.jsx'
+import {apiDataReducer} from './reducers/APIDataReducer'
+import {_task} from './reducers/TaskReducerExtension'
+import {_process} from './reducers/ProcessReducerExtension'
+import _users from './reducers/UserReducer'
+import * as types from './reducers/ReducerTypes'
+import {weeklyGoalPredicate, monthlyGoalPredicate} from './reducers/GoalsReducer'
+
 
 function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) {
     return (state, action) => {
@@ -36,7 +26,8 @@ function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) 
 export default function(data) {
   var reducer = combineReducers({
     users: _users,
-    goals:  createFilteredReducer(apiDataReducer, action => action.name === types.GOALS, stateDefault),
+    weeklyGoals:  createFilteredReducer(apiDataReducer, weeklyGoalPredicate, stateDefault),
+    monthlyGoals:  createFilteredReducer(apiDataReducer, monthlyGoalPredicate, stateDefault),
     members:  createFilteredReducer(apiDataReducer, action => action.name === types.MEMBERS, stateDefault), 
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault), 
   	processes: createFilteredReducer(_process, action => action.name === types.PROCESSES, stateDefault), 

@@ -8,6 +8,9 @@ export const REQUEST_SAVE_ATTRIBUTE_FAILURE = 'REQUEST_SAVE_ATTRIBUTE_FAILURE'
 export const REQUEST_ARCHIVE_ATTRIBUTE = 'REQUEST_ARCHIVE_ATTRIBUTE'
 export const REQUEST_ARCHIVE_ATTRIBUTE_SUCCESS = 'REQUEST_ARCHIVE_ATTRIBUTE_SUCCESS'
 export const REQUEST_ARCHIVE_ATTRIBUTE_FAILURE = 'REQUEST_ARCHIVE_ATTRIBUTE_FAILURE'
+export const REQUEST_MOVE_ATTRIBUTE = 'REQUEST_MOVE_ATTRIBUTE'
+export const REQUEST_MOVE_ATTRIBUTE_SUCCESS = 'REQUEST_MOVE_ATTRIBUTE_SUCCESS'
+export const REQUEST_MOVE_ATTRIBUTE_FAILURE = 'REQUEST_MOVE_ATTRIBUTE_FAILURE'
 
 
 export function _processAttribute(state, action) {
@@ -28,6 +31,12 @@ export function _processAttribute(state, action) {
 			return requestArchiveAttributeSuccess(state, action)
 		case REQUEST_ARCHIVE_ATTRIBUTE_FAILURE:
 			return requestArchiveAttributeFailure(state, action)
+		case REQUEST_MOVE_ATTRIBUTE:
+			return requestMoveAttribute(state, action)
+		case REQUEST_MOVE_ATTRIBUTE_SUCCESS:
+			return requestMoveAttributeSuccess(state, action)
+		case REQUEST_MOVE_ATTRIBUTE_FAILURE:
+			return requestMoveAttributeFailure(state, action)
 		default:
 			return state
 	}
@@ -125,4 +134,48 @@ function requestArchiveAttributeFailure(state, action) {
 	})
 }
 
+function requestMoveAttribute(state, action) {
+	return update(state, {
+		ui: {
+			isMovingAttribute: {$set: true}
+		}
+	})
+}
+
+function requestMoveAttributeSuccess(state, action) {
+	let attrs = state.data[action.process_index].attributes
+	let old_rank = attrs.findIndex((e) => e.id === action.id)
+	let attr = attrs[old_rank]
+	
+	// actually reorder the attributes array 
+	let ns =  update(state, {
+		data: {
+			[action.process_index]: {
+				attributes: {
+					$splice: [[old_rank, 1], [action.new_rank, 0, attr]]
+				}
+			}
+		},
+		ui: {
+			isMovingAttribute: {$set: false}
+		}
+	})
+
+	
+	// update all the ranks to match the new order in the array
+	for (var i = 0; i < ns.data[action.process_index].attributes.length; i++) {
+		ns.data[action.process_index].attributes[i].rank = i
+	}
+
+	// return 
+	return ns
+}
+
+function requestMoveAttributeFailure(state, action) {
+	return update(state, {
+		ui: {
+			isMovingAttribute: {$set: false}
+		}
+	})
+}
 

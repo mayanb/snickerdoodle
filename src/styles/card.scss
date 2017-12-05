@@ -15,6 +15,7 @@
 	&.big {
 		padding: 32px;
 		border-radius: 18px;
+		margin-right: 48px;
 
 		.rule {
 			margin: 32px;
@@ -26,6 +27,20 @@
 .icon {
 	display: inline-block;
 	background-color: $light-gray;
+
+	border-radius: 16px;
+	min-width: 32px;
+	min-height: 32px;
+	margin-right: 8px;
+
+	span {
+		color: white;
+		font-size: 16px;
+		line-height: 32px;
+		text-align: center;
+		display: block;
+		min-width: 32px;
+	}
 }
 
 .select-circle {

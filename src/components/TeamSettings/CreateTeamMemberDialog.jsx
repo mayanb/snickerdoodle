@@ -1,8 +1,12 @@
 import React from 'react'
 import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
+import Select from 'react-select'
 
-// team, the user 
+let account_types = [
+	{value: 'a', label: 'Administrator'},
+	{value: 'w', label: 'User'}
+]
 
 export default class CreateTeamMemberDialog extends React.Component {
 	constructor(props) {
@@ -12,7 +16,7 @@ export default class CreateTeamMemberDialog extends React.Component {
 			first_name: "",
 			username: "",
 			password: "",
-			account_type: "w",
+			account_type: "",
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -62,6 +66,17 @@ export default class CreateTeamMemberDialog extends React.Component {
 							value={this.state.password} 
 							onChange={(e)=> this.handleInputChange(e, "password")}
 						/>
+					</div>
+					<div>
+						<label>Account type</label>
+						<Select
+		          value={this.state.account_type}
+		          searchable={false}
+		          clearable={false}
+		          options={account_types}
+		          onChange={(e)=> this.handleInputChange({target: {value: e.value}}, "account_type")}
+		          placeholder="Choose an account type"
+		        />
 					</div>
 					<div className="buttons">
 						<Button secondary onClick={this.props.onCancel}>Cancel</Button>

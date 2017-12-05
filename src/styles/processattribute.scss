@@ -1,22 +1,17 @@
 .products-card-attributes {
-
 	h2 {
 		line-height: 42px;
-	}
-
-	li {
-		border-top: 1px solid $light-gray;
-		line-height: 39px;
 	}
 }
 
 .process-attribute {
 	display: flex;
 	cursor: default;
+	border-bottom: 0.5px solid #ddd;
 
 	i {
-		font-size: 12px;
-		line-height: 39px;
+		font-size: 16px;
+		line-height: 40px;
 		vertical-align: middle;
 		color: rgba(0,0,0,0.3);
 	}
@@ -25,7 +20,11 @@
 		margin-left: 8px;
 
 		&:first-child {
-			margin-left: 0;
+			margin-left: 8px;
+		}
+
+		&:last-child {
+			margin-right: 8px;
 		}
 	}
 
@@ -36,7 +35,11 @@
 	}
 
 	.process-attribute-name {
-	 	flex: 1;
+		flex: 1;
+
+		span {
+			line-height: 40px;
+		}
 	}
 
 	.process-attribute-type {
@@ -70,6 +73,7 @@
 // handle new attribute stuff {
 .process-attribute.new-attribute {
 	color: $theme-color;
+	border: none;
 
 	i {
 		color: $theme-color;
