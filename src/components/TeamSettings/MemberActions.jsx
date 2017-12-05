@@ -9,12 +9,14 @@ import {
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
-  REQUEST_EDIT,
-  REQUEST_EDIT_SUCCESS,
+  REQUEST_EDIT_ITEM,
+  REQUEST_EDIT_ITEM_SUCCESS,
   SELECT,
   PAGE,
-} from '../../Reducers/APIDataReducer'
-import { MEMBERS } from '../../Reducers/ReducerTypes'
+} from '../../reducers/APIDataReducer'
+import update from 'immutability-helper'
+import { MEMBERS } from '../../reducers/ReducerTypes'
+import { sortByAccountType } from '../../utilities/arrayutils'
 
 
 export function fetchTeamMembers() {
@@ -29,7 +31,7 @@ export function fetchTeamMembers() {
           dispatch(requestMembersFailure(err))
         } else {
           //let members = formatMemberResponse(res.body)
-          dispatch(requestMembersSuccess(res.body))
+          dispatch(requestMembersSuccess(res.body.sort(sortByAccountType)))
         }
       })
   }
@@ -55,7 +57,7 @@ function requestMembersSuccess(json) {
   return {
     name: MEMBERS,
     type: REQUEST_SUCCESS, 
-    data: json
+    data: json, 
   }
 }
 
@@ -83,14 +85,19 @@ export function postCreateMember(json, success) {
   return function (dispatch) {
     dispatch(requestCreateMember())
 
+    let data = update(json, {
+      $merge: { username: json.username.toLowerCase()}
+    })
+
     return api.post('/ics/users/create/')
       .send(json)
       .end(function (err, res) {
         if (err || !res.ok)
           dispatch(requestCreateMemberFailure(err))
-        else
+        else {
           dispatch(requestCreateMemberSuccess(res.body))
           success(res.body.id)
+        }
       })
   }
 }
@@ -113,6 +120,7 @@ function requestCreateMemberFailure(err) {
 }
 
 function requestCreateMemberSuccess(json) {
+  console.log(json)
   return {
     type: REQUEST_CREATE_SUCCESS,
     item: json,
@@ -120,3 +128,36 @@ function requestCreateMemberSuccess(json) {
   }
 }
 
+export function postRequestEditAccountType(index, data, success) {
+  return function (dispatch) {
+    dispatch(requestEditMember())
+
+    return api.put(`/ics/userprofiles/edit/${data.id}/`)
+      .send({account_type: data.new_account_type})
+      .end(function (err, res) {
+        if (err || !res.ok) 
+          alert('ugh')
+        else {
+          dispatch(requestEditMemberSuccess(index, 'account_type', data.new_account_type))
+          success()
+        }
+      })
+  }
+}
+
+function requestEditMember() {
+  return {
+    type: REQUEST_EDIT_ITEM,
+    name: MEMBERS,
+  }
+}
+
+function requestEditMemberSuccess(index, field, value) {
+  return {
+    type: REQUEST_EDIT_ITEM_SUCCESS,
+    name: MEMBERS,
+    index: index,
+    field: field,
+    value: value
+  }
+}

@@ -63,7 +63,7 @@ class AccountMenu extends React.Component {
 
 		return (
 			<div className="current-account">
-				<Icon size="18px" />
+				<Icon size="18px" content={data[ui.activeUser].user.username_display}/>
 				<span>{`${data[ui.activeUser].user.team_name} |  @${data[ui.activeUser].user.username_display}`}</span>
 				<i className="material-icons">arrow_drop_down</i>
 			</div>

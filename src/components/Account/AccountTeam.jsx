@@ -18,16 +18,7 @@ class AccountTeam extends React.Component {
 	}
 
 	renderTeam() {
-		let {data, ui} = this.props.users
-		let user = data[ui.activeUser].user
-
-		if (user.account_type === "r")
-			return <span>Contact your team administrator if you have any questions.</span>
-
-		else if (user.account_type === "a") {
-			return <TeamSettings />
-		}
-
+		return <TeamSettings />
 	}
 
 }

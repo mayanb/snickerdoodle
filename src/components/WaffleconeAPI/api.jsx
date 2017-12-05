@@ -1,11 +1,10 @@
 import request from 'superagent'
 import { getCookie } from '../../csrf.jsx'
+import * as urls from './urls'
 import Teams from '../Teams/Teams'
 
 
-//let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
- let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
-// let host = 'http://127.0.0.1:8000'
+let host = urls.LOCAL_BACKEND // urls.PRDUCTION_BACKEND, urls.STAGING_BACKEND
 
 function get_active_user() {
 	let users = JSON.parse(window.localStorage.getItem('users-v5'))
@@ -15,11 +14,7 @@ function get_active_user() {
 
 
 function get(path) {
-	let url = host + path
-	if (path.startsWith('/ics')) {
-		url = host + '/ics/v5' + path.substring(4) 
-	}
-
+	let url = urls.latest(host, path)
 	let user = {team: 1, user_id: 1}
 	try {
 		user = get_active_user().user
@@ -34,10 +29,7 @@ function get(path) {
 }
 
 function post(path) {
-	let url = host + path
-	if (path.startsWith('/ics')) {
-		url = host + '/ics/v5' + path.substring(4) 
-	}
+	let url = urls.latest(host, path)
 
 	let team = -1
 	let token = ""
@@ -63,11 +55,7 @@ function post(path) {
 }
 
 function put(path) {
-	let url = host + path
-	if (path.startsWith('/ics')) {
-		url = host + '/ics/v5' + path.substring(4) 
-	}
-
+	let url = urls.latest(host, path)
 	let team = -1
 	let token = ""
 	try {
