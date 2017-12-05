@@ -59,6 +59,8 @@ img:before {
   display: flex;
   flex-direction: row;
   border: 1px solid rgba(0, 0, 0, 0.1); }
+  .filters .Select-placeholder {
+    padding: 0; }
   .filters > div {
     flex: 2;
     border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -89,13 +91,6 @@ img:before {
     font-size: 14px;
     line-height: 34px;
     flex: 1 auto; }
-
-.Select-control {
-  outline: none;
-  border-radius: 4; }
-
-.Select-placeholder {
-  padding: 0; }
 
 .dates {
   border-radius: 4px;
@@ -672,12 +667,12 @@ h3 {
 
 input {
   font-family: "Camphor Pro", "Interface", "Helvetica";
-  font-size: 12px;
+  font-size: 14px;
   line-height: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-  height: 32px;
-  padding: 0px 8px;
+  height: 36px;
+  padding: 9px 8px 10px 8px;
   outline: none; }
   input:focus {
     border-color: #2198EE !important; }
@@ -695,6 +690,15 @@ textarea {
   padding: 8px;
   resize: none; }
 
+.Select-control {
+  outline: none;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1); }
+
+.Select-placeholder {
+  padding-left: 8px;
+  font-size: 14px; }
+
 .card {
   border-radius: 8px;
   box-shadow: 0 0 13px 0 rgba(161, 161, 161, 0.33);
@@ -708,14 +712,26 @@ textarea {
     margin-bottom: 15px; }
   .card.big {
     padding: 32px;
-    border-radius: 18px; }
+    border-radius: 18px;
+    margin-right: 48px; }
     .card.big .rule {
       margin: 32px;
       margin-bottom: 31px; }
 
 .icon {
   display: inline-block;
-  background-color: rgba(0, 0, 0, 0.1); }
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  min-width: 32px;
+  min-height: 32px;
+  margin-right: 8px; }
+  .icon span {
+    color: white;
+    font-size: 16px;
+    line-height: 32px;
+    text-align: center;
+    display: block;
+    min-width: 32px; }
 
 .select-circle {
   width: 16px;
@@ -764,6 +780,23 @@ button {
   button.secondary {
     background-color: rgba(0, 0, 0, 0);
     color: #2198EE; }
+  button.link {
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    color: #2198EE; }
+  button:disabled {
+    background-color: #c3c3c3;
+    color: #838383; }
+
+.dialog-header h2 {
+  padding-top: 3px;
+  padding-bottom: 15px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22px; }
+.dialog-header .rule {
+  margin: 0;
+  margin-bottom: 16.5px; }
 
 .nav-section {
   display: flex;
@@ -771,7 +804,7 @@ button {
   flex-grow: 100;
   margin-bottom: 150px; }
   .nav-section > div {
-    margin: 0px 80px 0px 64px;
+    margin: 0px 48px;
     flex: 7; }
     .nav-section > div > .card {
       height: 100%; }
@@ -838,7 +871,7 @@ div.button-dropdown {
     div.button-dropdown.expanded > button {
       background-color: #0068B4; }
       div.button-dropdown.expanded > button.secondary {
-        background-color: white; }
+        background-color: rgba(0, 0, 0, 0); }
     div.button-dropdown.expanded .button-dropdown-shim {
       display: block; }
     div.button-dropdown.expanded .button-dropdown-content {
@@ -993,28 +1026,30 @@ div.create-product-dialog .create-product-description {
 
 .products-card-attributes h2 {
   line-height: 42px; }
-.products-card-attributes li {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  line-height: 39px; }
 
 .process-attribute {
   display: flex;
-  cursor: default; }
+  cursor: default;
+  border-bottom: 0.5px solid #ddd; }
   .process-attribute i {
-    font-size: 12px;
-    line-height: 39px;
+    font-size: 16px;
+    line-height: 40px;
     vertical-align: middle;
     color: rgba(0, 0, 0, 0.3); }
   .process-attribute > div {
     margin-left: 8px; }
     .process-attribute > div:first-child {
-      margin-left: 0; }
+      margin-left: 8px; }
+    .process-attribute > div:last-child {
+      margin-right: 8px; }
   .process-attribute .process-attribute-move {
     flex: 0;
     min-width: 16px;
     text-align: center; }
   .process-attribute .process-attribute-name {
     flex: 1; }
+    .process-attribute .process-attribute-name span {
+      line-height: 40px; }
   .process-attribute .process-attribute-type {
     flex: 0;
     text-align: right; }
@@ -1032,7 +1067,8 @@ div.create-product-dialog .create-product-description {
   display: none; }
 
 .process-attribute.new-attribute {
-  color: #2198EE; }
+  color: #2198EE;
+  border: none; }
   .process-attribute.new-attribute i {
     color: #2198EE;
     margin-right: 4px; }
@@ -1087,21 +1123,6 @@ div.create-product-dialog .create-product-description {
 
 .account-menu {
   min-width: 180px; }
-  .account-menu .menu-section > span {
-    padding-left: 12px;
-    padding-top: 12px;
-    margin: 0;
-    line-height: 16px;
-    display: block;
-    font-size: 11px; }
-  .account-menu .menu-section span {
-    line-height: 16px;
-    display: inline-block;
-    vertical-align: middle;
-    text-align: left; }
-  .account-menu .icon {
-    vertical-align: middle;
-    margin-right: 8px; }
 
 .account-menu {
   min-width: 180px;
@@ -1109,7 +1130,9 @@ div.create-product-dialog .create-product-description {
   z-index: 1; }
   .account-menu .account-menu-section-title {
     color: rgba(0, 0, 0, 0.3);
-    font-size: 11px; }
+    font-size: 11px;
+    display: block;
+    margin: 16px 16px 0 16px; }
 
 .account {
   display: flex;
@@ -1117,7 +1140,6 @@ div.create-product-dialog .create-product-description {
   cursor: pointer; }
   .account span.name {
     display: block;
-    font-weight: 500;
     font-size: 14px; }
   .account span.username {
     display: block;
@@ -1127,6 +1149,10 @@ div.create-product-dialog .create-product-description {
   vertical-align: middle; }
 .current-account .icon {
   margin-right: 8px; }
+.current-account span.name {
+  color: #4f4f4f; }
+.current-account span.username {
+  text-align: left; }
 
 .nav-team div.button-dropdown-content {
   top: 39px; }
@@ -1474,7 +1500,10 @@ div.zero-state {
         padding-bottom: 4px;
         -webkit-font-smoothing: antialiased; }
   .goals .goal {
-    padding: 8px 0 8px 0; }
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.06);
+    margin-top: 16px; }
     .goals .goal .goal-details {
       display: flex; }
       .goals .goal .goal-details button {
@@ -1590,22 +1619,27 @@ div.zero-state {
   padding: 16px;
   margin-top: 10px; }
   .team-members .member {
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     display: flex; }
-    .team-members .member span {
-      display: block;
+    .team-members .member .account-circle {
+      flex: 0; }
+    .team-members .member .account-names {
       flex: 1; }
-      .team-members .member span:last-child {
-        flex: 0;
-        font-size: 10px;
-        line-height: 10px;
-        padding: 3px;
-        text-transform: uppercase;
-        letter-spacing: 0.2px;
-        border-radius: 2px;
-        color: white;
-        text-align: right;
-        background-color: rgba(0, 0, 0, 0.2); }
+      .team-members .member .account-names .account-name-real {
+        font-weight: 700; }
+    .team-members .member .account-types span.btn {
+      flex: 0;
+      color: rgba(0, 0, 0, 0.3);
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.3);
+      text-align: right;
+      vertical-align: bottom; }
+      .team-members .member .account-types span.btn i {
+        font-size: 14px;
+        line-height: 16px;
+        vertical-align: bottom;
+        padding-left: 2px; }
+    .team-members .member span {
+      display: block; }
   .team-members .create-member .buttons {
     display: flex;
     justify-content: flex-end; }
@@ -1615,9 +1649,109 @@ div.zero-state {
     display: flex;
     margin-bottom: 8px; }
     .team-members .create-member > div label {
-      flex: 1; }
+      flex: 1;
+      font-weight: 700; }
     .team-members .create-member > div input {
+      margin-left: 8px; }
+    .team-members .create-member > div input, .team-members .create-member > div div.Select {
       flex: 3; }
+      .team-members .create-member > div input div.Select-control .Select-placeholder, .team-members .create-member > div div.Select div.Select-control .Select-placeholder {
+        padding-left: 8px; }
+  .team-members .accounttype-menu {
+    min-width: 240px; }
+    .team-members .accounttype-menu .accounttype-rule {
+      height: 1px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.1); }
+    .team-members .accounttype-menu .accounttype-option {
+      display: flex;
+      padding: 16px;
+      padding-left: 16px;
+      cursor: pointer; }
+      .team-members .accounttype-menu .accounttype-option .check {
+        min-width: 16px;
+        margin-right: 4px; }
+        .team-members .accounttype-menu .accounttype-option .check i {
+          font-size: 16px;
+          line-height: 16px; }
+      .team-members .accounttype-menu .accounttype-option .title {
+        font-weight: 700; }
+      .team-members .accounttype-menu .accounttype-option .desc {
+        color: rgba(0, 0, 0, 0.4); }
+
+.button-area {
+  background-color: #fafafa;
+  margin: 0 -16px -16px -16px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: flex-end; }
+
+.packing-orders-section {
+  padding: 32px 32px; }
+
+/* FLEX MEASUREMENTS */
+.packingorders-create-inventory-unit {
+  display: flex;
+  padding-bottom: 12px; }
+  .packingorders-create-inventory-unit .inventory-unit-title {
+    flex: 2; }
+  .packingorders-create-inventory-unit .inventory-unit-amount {
+    flex: 1; }
+  .packingorders-create-inventory-unit .inventory-unit-title, .packingorders-create-inventory-unit .inventory-unit-amount {
+    margin-right: 10px; }
+    .packingorders-create-inventory-unit .inventory-unit-title input, .packingorders-create-inventory-unit .inventory-unit-amount input {
+      width: 100%; }
+  .packingorders-create-inventory-unit .inventory-unit-remove {
+    flex: 0; }
+  .packingorders-create-inventory-unit.header {
+    padding-bottom: 0; }
+
+.packingorders-create {
+  min-width: 528px; }
+  .packingorders-create .dialog-input-label {
+    line-height: 16px;
+    font-size: 14px;
+    color: #828282;
+    padding-top: 3px;
+    padding-bottom: 8px;
+    display: block; }
+  .packingorders-create .contact {
+    padding-bottom: 21px; }
+  .packingorders-create .inventory-unit-amount input {
+    text-align: right; }
+  .packingorders-create .inventory-unit-remove i {
+    color: #828282;
+    line-height: 36px;
+    font-size: 16px; }
+  .packingorders-create .add-line-item {
+    padding-top: 4px;
+    padding-bottom: 16px; }
+
+.orderdetail {
+  max-width: 1000px;
+  margin-left: 20px; }
+
+.orderdetail-header {
+  padding-top: 17px;
+  display: flex;
+  flex-direction: row; }
+  .orderdetail-header > div {
+    flex: 1; }
+  .orderdetail-header h1 {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    color: black; }
+  .orderdetail-header h2 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    color: #4f4f4f; }
+  .orderdetail-header .buttons {
+    display: flex;
+    align-items: right; }
+    .orderdetail-header .buttons > button {
+      margin-left: 12px; }
 
 .lesmis .links line {
   stroke: #999;
@@ -1625,5 +1759,14 @@ div.zero-state {
 .lesmis .nodes circle {
   stroke: #fff;
   stroke-width: 1.5px; }
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Material Icons"), local("MaterialIcons-Regular"); }
+.material-icons {
+  font-family: 'Material Icons';
+  font-style: normal; }
 
 /*# sourceMappingURL=index.css.map */

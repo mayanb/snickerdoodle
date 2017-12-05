@@ -14,8 +14,8 @@ import {
   REQUEST_EDIT_SUCCESS,
   SELECT,
   PAGE,
-} from '../../Reducers/APIDataReducer'
-import { GRAPHS } from '../../Reducers/ReducerTypes'
+} from '../../reducers/APIDataReducer'
+import { GRAPHS } from '../../reducers/ReducerTypes'
 
 export function getProcessCooccurrence(team_id) {
   return function (dispatch) {
@@ -26,12 +26,13 @@ export function getProcessCooccurrence(team_id) {
     // actually fetch 
     return api.get('/graphs/get-process-coocurrence/')
       // .send({user_profile: user_id})
-      .query({team: team_id})
+      // .query({team: team_id})
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestGraphFailure(err))
         } else {
-          dispatch(requestGraphSuccess(res.body))
+          console.log(res)
+          dispatch(requestGraphSuccess(JSON.parse(res.text)))
         }
       })
   }

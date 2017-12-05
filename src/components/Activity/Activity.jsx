@@ -10,7 +10,8 @@ import update from 'immutability-helper'
 import {display} from '../OldComponents/Task.jsx'
 import moment from 'moment'
 import Datepicker from '../Datepicker/Datepicker.jsx'
-import ReactImageFallback from "react-image-fallback";
+import ReactImageFallback from "react-image-fallback"
+import * as goalTypes from '../Goals/GoalTypes'
 import Goals from '../Goals/Goals'
 import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
@@ -76,10 +77,16 @@ export default class Activity extends React.Component {
 		return (
 			<div>
 				{ this.renderDialog() }
-				<div className={`activity page ${this.state.mini?"mini":""}`}>
 
-					<Goals />
+				<div className={`activity page ${this.state.mini?"mini":""}`}>
+					<Goals timerange={goalTypes.WEEKLY} />
 				</div>
+
+				<div className={`activity page ${this.state.mini?"mini":""}`}>
+					<Goals timerange={goalTypes.MONTHLY} />
+				</div>
+
+
 
 				<div className={`activity page ${this.state.mini?"mini":""}`}>
 					<div className="content">
@@ -139,9 +146,6 @@ export default class Activity extends React.Component {
 
 		let rID = requestID()
 		this.lastTaskRequestID = rID
-
-		console.log(params.start)
-		console.log(params.end)
 
 		api.get(url)
 			.query(`start=${params.start}&end=${params.end}&process_type=${processID}&product_type=${productID}`)

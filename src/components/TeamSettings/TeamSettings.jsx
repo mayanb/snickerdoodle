@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import * as actions from './MemberActions'
 import Button from '../Card/Button'
 import CreateTeamMemberDialog from './CreateTeamMemberDialog'
+import TeamMemberList from './TeamMemberList'
 import GoogleConnect from '../GoogleConnect/GoogleConnect'
+import {isAdmin} from '../../authentication/authentication'
+
 let s = false
 
 class TeamSettings extends React.Component {
@@ -32,12 +35,10 @@ class TeamSettings extends React.Component {
 	render() {
 		let {ui, data} = this.props.members
 		let users = this.props.users
-		let selectedUser = users.data[users.ui.activeUser].user
-		console.log(data)
 
 		return (
 			<div key={1} className="team-members">
-				<MemberList members={data} isFetching={ui.isFetchingData}/>
+				<TeamMemberList editable={isAdmin(users.data[users.ui.activeUser].user)} members={data} activeUser={ui.activeUser} isFetching={ui.isFetchingData}/>
 				<span className="add-new-member" onClick={this.handleToggleDialog}>Add a team member</span>
 				<CreateTeamMemberDialog 
 					isOpen={this.state.isCreatingMember} 
@@ -47,34 +48,6 @@ class TeamSettings extends React.Component {
 			</div>
 		)
 	}
-}
-
-function MemberList(props) {
-	if (props.isFetching) {
-		return <div>Loading...</div>
-	}
-
-	if (!props.members)
-		return <div>No members</div>
-
-	return (
-		<div className="member-list">
-		{
-			props.members.map(function (m, i) {
-				return <Member key={i} member={m} />
-			})
-		}
-		</div>
-	)
-}
-
-function Member(props) {
-	return (
-	<div className="member">
-		<span>{props.member.username_display}</span>
-		<span>{props.member.account_type=="a"?"admin":"regular"}</span>
-	</div>
-	)
 }
 
 const mapStateToProps = (state/*, props*/) => {

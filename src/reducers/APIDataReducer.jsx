@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import update from 'immutability-helper'
-import {findPosition, alphabetize} from '../components/Logic/arrayutils.jsx'
+import {findPosition, alphabetize} from '../utilities/arrayutils.jsx'
 
 export const REQUEST = 'REQUEST'
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS'
@@ -15,6 +15,9 @@ export const REQUEST_DELETE_FAILURE = 'REQUEST_DELETE_FAILURE'
 export const REQUEST_EDIT_ITEM = 'REQUEST_EDIT_ITEM'
 export const REQUEST_EDIT_ITEM_SUCCESS = 'REQUEST_EDIT_ITEM_SUCCESS'
 export const REQUEST_EDIT_ITEM_FAILURE = 'REQUEST_EDIT_ITEM_FAILURE'
+export const REQUEST_REORDER = 'REQUEST_REORDER'
+export const REQUEST_REORDER_SUCCESS = 'REQUEST_REORDER_SUCCESS'
+export const REQUEST_REORDER_FAILURE = 'REQUEST_REORDER_FAILURE'
 export const SELECT = 'SELECT'
 export const PAGE = 'PAGE'
 
@@ -26,24 +29,35 @@ export function apiDataReducer(state, action) {
       return requestSuccess(state, action)
     case REQUEST_FAILURE:
       return requestFailure(state, action)
+
     case REQUEST_CREATE:
 		  return requestCreate(state, action)
     case REQUEST_CREATE_SUCCESS:
 		  return requestCreateSuccess(state, action)
 	  case REQUEST_CREATE_FAILURE:
 		  return requestCreateFailure(state, action)
+
 	  case REQUEST_DELETE:
 		  return requestDelete(state, action)
     case REQUEST_DELETE_SUCCESS:
 		  return requestDeleteSuccess(state, action)
 		case REQUEST_DELETE_FAILURE:
 			return requestDeleteFailure(state, action)
+
     case REQUEST_EDIT_ITEM:
       return requestEditItem(state, action)
     case REQUEST_EDIT_ITEM_SUCCESS:
       return requestEditItemSuccess(state, action)
     case REQUEST_EDIT_ITEM_FAILURE:
       return requestEditItemFailure(state, action)
+
+    case REQUEST_REORDER:
+      return requestReorder(state, action)
+    case REQUEST_REORDER_SUCCESS:
+      return requestReorderSuccess(state, action)
+    case REQUEST_REORDER_FAILURE:
+      return requestReorderFailure(state, action)
+
 		case SELECT:
       return select(state, action)
     case PAGE:
@@ -102,6 +116,7 @@ function requestCreate(state, action) {
 function requestCreateSuccess(state, action) {
 	console.log(state)
   let position = findPosition(state.data, action.item, action.sort)
+  console.log(position)
   return update(state, {
     ui: {
       isCreatingItem: {
@@ -173,9 +188,7 @@ function requestEditItem(state, action) {
 
 
 function requestEditItemSuccess(state, action) {
-  console.log(action.index)
-  console.log(action.field)
-  console.log(action.value)
+  let obj = {[action.field]: action.value}
   return update(state, {
     ui: {
       isEditingItem: {
@@ -183,12 +196,9 @@ function requestEditItemSuccess(state, action) {
       },
     },
     data: {
-      $splice: [[action.index, 1, ]]
-      // [action.index]: {
-      //   $merge: {
-      //     [action.field]: action.value
-      //   }
-      // }
+      [action.index]: {
+        $merge: obj
+      }
     },
   })
 }
@@ -202,6 +212,48 @@ function requestEditItemFailure(state, action) {
         error: action.error
       }
     },
+  })
+}
+
+function requestReorder(state, action) {
+  return update(state, {
+    ui: {
+      isReordering: {$set: true}
+    }
+  })
+}
+
+
+function requestReorderSuccess(state, action) {
+  let old_data = state.data
+  let old_rank = old_data.findIndex((e) => e.id === action.id)
+  let item = old_data[old_rank]
+  
+  // actually reorder the  array 
+  let ns =  update(state, {
+    data: {
+      $splice: [[old_rank, 1], [action.new_rank, 0, item]]
+    },
+    ui: {
+      isReordering: {$set: false}
+    }
+  })
+
+  
+  // update all the ranks to match the new order in the array
+  for (var i = 0; i < ns.data.length; i++) {
+    ns.data[i].rank = i
+  }
+
+  // return 
+  return ns
+}
+
+function requestReorderFailure(state, action) {
+  return update(state, {
+    ui: {
+      isReordering: {$set: false}
+    }
   })
 }
 

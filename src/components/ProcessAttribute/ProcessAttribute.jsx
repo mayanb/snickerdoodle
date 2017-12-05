@@ -1,7 +1,9 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import * as actions from './ProcessAttributeActions'
 import Button from '../Card/Button'
 
-export class ProcessAttribute extends React.Component {
+class ProcessAttribute extends React.Component {
 
 	render() {
 		let props = this.props
@@ -17,71 +19,25 @@ export class ProcessAttribute extends React.Component {
 				<div className="process-attribute-type">
 					<span></span>
 				</div>
-				<div className="process-attribute-more" onClick={props.newAttribute?()=>null:props.onArchive} >
+				<div className="process-attribute-more" onClick={props.newAttribute?()=>null:this.handleArchive.bind(this)} >
 					<i className="material-icons">delete</i>
 				</div>
 			</div>
 		)
 	}
-}
 
-export class ProcessAttributeCreator extends React.Component {
-	constructor(props) {
-		super(props)
-
-		this.state = {
-			name: "",
-			type: ""
-		}
-
-		this.handleSubmit = this.handleSubmit.bind(this)
-	}
-
-	handleChange(key, value) {
-		this.setState({[key]: value})
-	}
-
-	handleSubmit() {
-		this.props.onSubmit(this.state.name, this.state.type)
-	}
-
-
-	render() {
-		let props = this.props
-
-		return (
-			<div className="process-attribute-creator">
-				<div className="process-attribute">
-					<div className="process-attribute-move" />
-					<div className="process-attribute-name">
-						<input 
-							type="text" 
-							placeholder="Attribute name" 
-							style={{width: "100%", marginRight: "16px"}} 
-							value={this.state.name} 
-							onChange={(e) => this.handleChange("name", e.target.value)}
-						/>
-					</div>
-					<div className="process-attribute-type">
-						
-					</div>
-					<div className="process-attribute-more" />
-				</div>
-
-				<div className="attribute-buttons">
-					<Button secondary onClick={this.props.onCancel}>Cancel</Button>
-					<Button onClick={this.handleSubmit}>Save</Button>
-				</div>
-			</div>
-		)
+	handleArchive() {
+		let {data, ui, index} = this.props
+		this.props.dispatch(actions.archiveAttribute(ui.selectedItem, index, data[ui.selectedItem].attributes[index]))
 	}
 }
 
-/*
-<input 
-							type="select" 
-							placeholder="Text"
-							value={this.state.type} 
-							onChange={(e) => this.handleChange("type", e.target.value)}
-						/>
-						*/
+const mapStateToProps = (state/*, props*/) => {
+	let {data, ui} = state.processes
+  return {
+    data: state.processes.data,
+    ui: state.processes.ui,
+  }
+}
+
+export default connect(mapStateToProps)(ProcessAttribute)

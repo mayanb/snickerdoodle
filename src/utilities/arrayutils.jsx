@@ -40,3 +40,25 @@ export function alphabetize(a, b) {
 
   return 0
 }
+
+export function sortByAccountType(a, b) {
+	if (a == b || !a || !b) {
+		return 0
+	}
+
+	if (a.account_type < b.account_type) {
+		return -1
+	}
+	if (a.account_type > b.account_type) {
+		return 1
+	}
+	return 0
+}
+
+export function sortByRank(a, b) {
+	if (a == b || !a || !b) {
+		return 0
+	}
+
+	return parseInt(a.rank) - parseInt(b.rank)
+}

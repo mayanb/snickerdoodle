@@ -9,12 +9,15 @@ import {
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
-  REQUEST_EDIT,
-  REQUEST_EDIT_SUCCESS,
+  REQUEST_REORDER,
+  REQUEST_REORDER_SUCCESS,
+  REQUEST_REORDER_FAILURE,
   SELECT,
   PAGE,
-} from '../../Reducers/APIDataReducer'
-import { GOALS } from '../../Reducers/ReducerTypes'
+} from '../../reducers/APIDataReducer'
+import { GOALS } from '../../reducers/ReducerTypes'
+import {WEEKLY, MONTHLY} from './GoalTypes'
+import { sortByRank } from '../../utilities/arrayutils'
 
 export function fetchGoals(user_id) {
   return function (dispatch) {
@@ -23,13 +26,18 @@ export function fetchGoals(user_id) {
 
     // actually fetch 
     return api.get('/ics/goals/')
-      .send({user_profile: user_id})
+      .query({userprofile: user_id})
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestGoalsFailure(err))
-        } else {
-          dispatch(requestGoalsSuccess(res.body))
         }
+
+        let goals = res.body.sort(sortByRank)
+        let weekly = goals.filter(e => e.timerange === WEEKLY)
+        dispatch(requestGoalsSuccess(weekly, WEEKLY))
+
+        let monthly = goals.filter(e => e.timerange === MONTHLY)
+        dispatch(requestGoalsSuccess(monthly, MONTHLY))
       })
   }
 }
@@ -50,11 +58,12 @@ function requestGoalsFailure(err) {
   }
 }
 
-function requestGoalsSuccess(json) {
+function requestGoalsSuccess(json, timerange) {
   return {
     type: REQUEST_SUCCESS,
     name: GOALS,
     data: json, 
+    timerange: timerange
   }
 }
 
@@ -69,13 +78,13 @@ export function selectGoal(id) {
 
 export function postCreateGoal(json, success) {
   return function (dispatch) {
-    dispatch(requestCreateGoal())
+    dispatch(requestCreateGoal(json))
     return api.post('/ics/goals/create/')
       .send(json)
       .send({icon: "default.png"})
       .end(function (err, res) {
         if (err || !res.ok)
-          dispatch(requestCreateGoalFailure(err))
+          dispatch(requestCreateGoalFailure(err, json))
         else
           dispatch(requestCreateGoalSuccess(res.body))
           //success(res.body.id)
@@ -84,19 +93,21 @@ export function postCreateGoal(json, success) {
 }
 
 
-function requestCreateGoal() {
+function requestCreateGoal(json) {
   return {
     type: REQUEST_CREATE, 
-    name: GOALS
+    name: GOALS,
+    timerange: json.timerange
   }
 }
 
-function requestCreateGoalFailure(err) {
+function requestCreateGoalFailure(err, json) {
   alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
   return {
     type: REQUEST_CREATE_FAILURE,
     name: GOALS,
     error: err,
+    timerange: json.timerange
   }
 }
 
@@ -104,49 +115,53 @@ function requestCreateGoalSuccess(json) {
   return {
     type: REQUEST_CREATE_SUCCESS,
     item: json,
-    sort: null,
+    sort: sortByRank,
+    timerange: json.timerange,
     name: GOALS,
   }
 }
 
-export function postDeleteGoal(p, index) {
+export function postDeleteGoal(p, index, timerange) {
   return function (dispatch) {
-    dispatch(requestDeleteGoal(index))
+    dispatch(requestDeleteGoal(index, timerange))
 
     return api.del('/ics/goals/edit/', p.id)
       .end(function (err, res) {
         if (err || !res.ok)
-          dispatch(requestDeleteGoalFailure(index, err))
+          dispatch(requestDeleteGoalFailure(index, err, timerange))
         else {
-          dispatch(requestDeleteGoalSuccess(index))
+          dispatch(requestDeleteGoalSuccess(index, timerange))
           // callback()
         }
       })
   }
 }
 
-function requestDeleteGoal(index) {
+function requestDeleteGoal(index, timerange) {
   return {
     type: REQUEST_DELETE,
     index: index,
-    name: GOALS
+    name: GOALS,
+    timerange: timerange,
   }
 }
 
-function requestDeleteGoalFailure(index, err) {
+function requestDeleteGoalFailure(index, err, timerange) {
   return {
     type: REQUEST_DELETE_FAILURE,
     index: index,
     name: GOALS,
-    error: err
+    error: err,
+    timerange: timerange,
   }
 }
 
-function requestDeleteGoalSuccess(index) {
+function requestDeleteGoalSuccess(index, timerange) {
   return {
     type: REQUEST_DELETE_SUCCESS,
     index: index,
-    name: GOALS
+    name: GOALS,
+    timerange: timerange,
   }
 }
 
@@ -158,6 +173,49 @@ export function pageGoals(direction) {
 
   }
 }
+
+export function postRequestReorder(goal, new_rank) {
+  return function (dispatch) {
+    //dispatch(requestMoveAttribute())
+
+    return api.put(`/ics/goals/move/${goal.id}/`)
+      .send({new_rank: new_rank})
+      .end( function (err, res) {
+        if (err || !res.ok) {
+          dispatch(requestReorderFailure(goal))
+        } else {
+          dispatch(requestReorderSuccess(goal, new_rank))
+        }
+      })
+  }
+}
+
+function requestReorder(goal) {
+  return {
+    type: REQUEST_REORDER,
+    name: GOALS, 
+    timerange: goal.timerange,
+  }
+}
+
+function requestReorderSuccess(goal, new_rank) {
+  return {
+    type: REQUEST_REORDER_SUCCESS,
+    name: GOALS, 
+    timerange: goal.timerange,
+    id: goal.id,
+    new_rank: new_rank
+  }
+}
+
+function requestReorderFailure(goal) {
+  return {
+    type: REQUEST_REORDER_FAILURE,
+    name: GOALS,
+    timerange: goal.timerange
+  }
+}
+
 
 
 

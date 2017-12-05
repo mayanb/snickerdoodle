@@ -16,9 +16,9 @@ import {
   REQUEST_EDIT_ITEM_FAILURE,
   SELECT,
   PAGE,
-} from '../../Reducers/APIDataReducer'
-import {  PROCESSES, PROCESS_INVENTORY } from '../../Reducers/ReducerTypes'
-import {findPosition, alphabetize} from '../Logic/arrayutils.jsx'
+} from '../../reducers/APIDataReducer'
+import {  PROCESSES, PROCESS_INVENTORY } from '../../reducers/ReducerTypes'
+import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
 
 export function fetchProcesses() {
@@ -35,10 +35,17 @@ export function fetchProcesses() {
           console.log(res.body)
           // let processes = formatProcessResponse(res.body)
           // let processesArray = Object.values(processes).sort(alphabetize);
-          dispatch(requestProcessesSuccess(res.body.sort(alphabetize)))
+          dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize))))
         }
       })
   }
+}
+
+function organize_attributes(processes) {
+  for (var p of processes) {
+    p.attributes.sort((a, b) => a.rank - b.rank)
+  }
+  return processes
 }
 
 function requestProcesses() {
@@ -184,15 +191,15 @@ export function postDeleteProcess(p, index, callback) {
 
 function requestDeleteProcess(index) {
   return {
-    type: REQUEST_EDIT_ITEM,
-    // index: index,
+    type: REQUEST_DELETE,
+    index: index,
     name: PROCESSES
   }
 }
 
 function requestDeleteProcessFailure(index, err) {
   return {
-    type: REQUEST_EDIT_ITEM_FAILURE,
+    type: REQUEST_DELETE_FAILURE,
     index: index,
     name: PROCESSES,
     error: err
@@ -201,11 +208,9 @@ function requestDeleteProcessFailure(index, err) {
 
 function requestDeleteProcessSuccess(field, value, index) {
   return {
-    type: REQUEST_EDIT_ITEM_SUCCESS,
+    type: REQUEST_DELETE_SUCCESS,
     name: PROCESSES,
     index: index,
-    field: field,
-    value: value
   }
 }
 
