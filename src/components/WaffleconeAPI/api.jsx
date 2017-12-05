@@ -10,7 +10,7 @@ import Teams from '../Teams/Teams'
 // let host = 'http://127.0.0.1:8000'
 // let host = 'http://192.168.0.103:8000'
 //let host = 'http://localhost:8000'
-let host = urls.PRDUCTION_BACKEND //urls.LOCAL_BACKEND urls.PRDUCTION_BACKEND, urls.STAGING_BACKEND
+let host = urls.PRODUCTION_BACKEND //urls.LOCAL_BACKEND urls.PRDUCTION_BACKEND, urls.STAGING_BACKEND
 
 function get_active_user() {
 	let users = JSON.parse(window.localStorage.getItem('users-v5'))
