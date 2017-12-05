@@ -6,6 +6,8 @@
 @import "headers";
 @import "input";
 @import "card";
+@import "button";
+@import "dialog";
 @import "navsection";
 @import "paginatedtable";
 @import "buttondropdown";
@@ -24,6 +26,8 @@
 @import "inventory";
 @import "goals";
 @import "account";
+@import "packingorders"; 
+@import "orderdetail"; 
 
 .lesmis {
 	.links line {

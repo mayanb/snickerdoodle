@@ -4,6 +4,12 @@ import * as urls from './urls'
 import Teams from '../Teams/Teams'
 
 
+
+// let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
+ // let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
+// let host = 'http://127.0.0.1:8000'
+// let host = 'http://192.168.0.103:8000'
+//let host = 'http://localhost:8000'
 let host = urls.LOCAL_BACKEND // urls.PRDUCTION_BACKEND, urls.STAGING_BACKEND
 
 function get_active_user() {
@@ -14,6 +20,7 @@ function get_active_user() {
 
 
 function get(path) {
+
 	let url = urls.latest(host, path)
 	let user = {team: 1, user_id: 1}
 	try {
@@ -29,8 +36,8 @@ function get(path) {
 }
 
 function post(path) {
-	let url = urls.latest(host, path)
 
+	let url = urls.latest(host, path)
 	let team = -1
 	let token = ""
 	let id = -1
@@ -55,6 +62,7 @@ function post(path) {
 }
 
 function put(path) {
+
 	let url = urls.latest(host, path)
 	let team = -1
 	let token = ""

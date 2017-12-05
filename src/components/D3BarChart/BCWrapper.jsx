@@ -9,12 +9,12 @@ import { connect } from 'react-redux'
 import BarChart from './BarChart'
 
 class BCWrapper extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      graphs: {},
-    }
-  }
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {
+  //     graphs: {},
+  //   }
+  // }
 
   componentDidMount() {
     console.log("hi")
@@ -22,17 +22,31 @@ class BCWrapper extends Component {
   }
 
   render() {
-    let {graphs} = this.props
+    let graphs = this.props.graphs
     console.log(graphs)
 
-    if (this.props.graphs.isFetchingData) {
+    if (graphs.ui.isFetchingData) {
       return <span>Loading...</span>
     }
-    return <BarChart data={this.props.graphs.data} size={[500,500]} />
+    if (!graphs.data || graphs.data.length == 0) {
+      return <span>Nothing to show here</span>
+    }
+
+    return( 
+      <div className='App'>
+        <div className='App-header'>
+          <h2>d3ia dashboard</h2>
+        </div>
+        <div>
+          <BarChart data={graphs.data} size={[500,500]} />
+        </div>
+      </div>
+    )
   }
 }
 
 const mapStateToProps = (state/*, props*/) => {
+  console.log(state)
   return {
     graphs: state.graphs,
   }

@@ -48,6 +48,7 @@ class BarChart extends Component {
    createBarChart() {
       const ref = this.node
       const graph = this.props.data
+      console.log(graph)
       const width = 800
       const height = 500
       var color = scaleOrdinal(schemeCategory20);

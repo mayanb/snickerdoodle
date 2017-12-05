@@ -116,6 +116,7 @@ function requestCreate(state, action) {
 function requestCreateSuccess(state, action) {
 	console.log(state)
   let position = findPosition(state.data, action.item, action.sort)
+  console.log(position)
   return update(state, {
     ui: {
       isCreatingItem: {

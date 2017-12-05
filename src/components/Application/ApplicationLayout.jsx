@@ -24,7 +24,11 @@ import Account from '../Account/Account'
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 import BarChartTest from '../D3BarChart/BarChartTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
+
+import PackingOrders from '../PackingOrders/PackingOrders'
+import OrderDetail from '../OrderDetail/OrderDetail'
 import Sortable from '../Sortable/Index'
+
 
 export default class ApplicationLayoutStable extends React.Component {
 
@@ -63,6 +67,9 @@ function App(props) {
 		    <Route path={"/goals"} component={Goals} />
 		    <Route path={"/account"} component={Account} />
 		    <Route path={"/googleconnect/:ext?"} component={Account} />
+		    <Route path={"/bc/"} component={BCWrapper} />
+		    <Route path={"/packingorders/"} component={PackingOrders} />
+		    <Route path={"/orders/:id"} component={OrderDetail} />
 		    <Route path={"/barcharttest/"} component={Sortable} />
 	  	</div>
 		</div>
