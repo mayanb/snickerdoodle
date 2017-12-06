@@ -11,9 +11,14 @@ html, body {
 
 }
 
+#root {
+	height: 100%;
+}
+
 .layout {
 	display:flex;
 	flex-direction: row;
+	height: 100%
 }
 
 .baseline-grid {
@@ -49,4 +54,3 @@ div, input, * {
 span {
 	line-height: 16px;
 }
-

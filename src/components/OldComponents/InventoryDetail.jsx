@@ -37,7 +37,6 @@ class InventoryDetail extends React.Component {
     this.getInventoryItems(this.props, this.state.next)
   }
 
-
   render() {
     let props = this.props
 
@@ -181,7 +180,6 @@ class InventoryDetail extends React.Component {
   }
 
   handleItemSelect(taskIndex, itemIndex) {
-
     // get the toggled selection value
     let newVal = !(this.state.tasks[taskIndex].items[itemIndex].selected)
 
@@ -297,7 +295,6 @@ function Item(props) {
 }
 
 function TaskDropdown(props) {
-
   return (
     <div className="inventory-task">
       <div className="task-title">

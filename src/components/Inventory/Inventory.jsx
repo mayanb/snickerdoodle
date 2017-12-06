@@ -98,13 +98,10 @@ export default class Inventory extends React.Component {
     })
 
     this.setState({processes: newProcesses})
-
   }
 
   render() {
     let props = this.props
-
-
 
     return (
       <div className="inventory">
@@ -193,7 +190,6 @@ class IH extends React.Component {
     }
   }
 
-
   render() {
     return (
       <div className={this.state.fixed?"fixed":""}>
@@ -272,7 +268,7 @@ function isSelected(props) {
 }
 
 String.prototype.sentenceCase = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+  return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 function addDefaultSrc(ev) {

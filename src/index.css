@@ -535,9 +535,13 @@ html, body {
   width: 100%;
   height: 100%; }
 
+#root {
+  height: 100%; }
+
 .layout {
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  height: 100%; }
 
 .baseline-grid {
   background-image: url("baselinegrid.png");
@@ -613,7 +617,7 @@ span {
 
 .d-top {
   display: flex;
-  min-height: 128px;
+  height: 128px;
   align-items: center; }
   .d-top .nav-left {
     flex: 1;
