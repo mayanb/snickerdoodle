@@ -203,15 +203,17 @@ function InventoryList(props) {
   return (
     <div className={"inventory-list " + (props.fixed?"list-padded":"")}>
       <IH />
-      {
-        props.processes.map(function (process, i) {
-          return  (
-            <Link key={i} to={ "/inventory/" + process.process_id}>
-              <InventoryItem i={i} selected={props.selected} {...process}/>
-            </Link>
-          )
-        }, this)
-      }
+      <div className="inventory-content">
+        {
+          props.processes.map(function (process, i) {
+            return  (
+              <Link key={i} to={ "/inventory/" + process.process_id}>
+                <InventoryItem i={i} selected={props.selected} {...process}/>
+              </Link>
+            )
+          }, this)
+        }
+      </div>
     </div>
   )
 }

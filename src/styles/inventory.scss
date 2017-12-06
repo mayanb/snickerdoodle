@@ -45,7 +45,11 @@
 	.inventory-list {
     flex: 1;
     height: 100%;
-    overflow-y: auto;
+
+    .inventory-content {
+      overflow-y: auto;
+      height: calc(100% - 32px);
+    }
 
     &.list-padded {
     	padding-top: 32px;
@@ -278,7 +282,9 @@ div.zero-state {
 }
 
 .page {
-    &.mini {
+  height: 100%;
+
+  &.mini {
     background-color: white;
     border-radius: 4px;
     box-shadow: $shadow-0;
