@@ -154,23 +154,28 @@
             color: rgba(0,0,0,0.4)
           }
         }
-
       }
-
     }
 
     .i-detail-footer {
       flex: 0;
-      height: 48px;
+      text-align: center;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding: 0 24px;
 
       button {
-        height: 100%;
         width: 100%;
         font-size: 16px;
         font-family: $font-stack;
         background-color: #43A6F6;
         color: white;
         border: none;
+        margin: 16px auto;
+        padding: 16px 0;
+      }
+
+      div.zero-state {
+        margin: 16px auto;
       }
     }
   }
@@ -206,9 +211,7 @@
       padding-right: 24px; //gutter
       white-space: nowrap;
       overflow: ellipsis;
-
     }
-
 
     .i-icon {
     	flex: 0 0 16px;

@@ -82,10 +82,10 @@ class InventoryDetail extends React.Component {
         </div>
         <div className="i-detail-content">
           { contentArea }
-          { loading }
-          { loadMore }
         </div>
         <div className="i-detail-footer">
+          { loading }
+          { loadMore }
           { deliver }
         </div>
       </div>
