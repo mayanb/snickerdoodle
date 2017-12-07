@@ -56,7 +56,7 @@ class Goals extends React.Component {
 		return (
 			<div className="goals">
 				<div className="content">
-					<GoalHeader timerange={timerange} editable={!this.props.goals.ui.isEditing} onClick={this.toggleEditing.bind(this)}/>
+					<GoalHeader edit={goals.data.length > 0} timerange={timerange} editable={!this.props.goals.ui.isEditing} onClick={this.toggleEditing.bind(this)}/>
 					<Sortable
 						cards={sortableGoals} 
 						canEdit={true} 
