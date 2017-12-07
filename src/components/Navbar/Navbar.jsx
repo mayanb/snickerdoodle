@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import NavigationGroup from './NavigationGroup'
 import NavigationFeedback from './NavigationFeedback'
+import Img from '../Img/Img'
 
 let o1 = ["Activity Log", "Inventory"]
 let l1 = ["", "inventory"]
@@ -27,7 +28,8 @@ class Navbar extends React.Component {
           </div>
         </Link>
         <div className="bar">
-          <div className="logo">
+          <div className="logo" style={{display:"flex", justifyContent: "center", "alignItems": "center"}}>
+            <Img src="logo" style={{height: "96px", opacity: "0.3"}}/>
           </div>
           <div>
             <NavigationGroup options={o1} links={l1} title={null} />

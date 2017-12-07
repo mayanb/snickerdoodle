@@ -14,6 +14,10 @@
 	line-height: 16px;
 	color: black;
 
+	.goal-header button {
+		margin: 0;
+		padding: 0;
+	}
 
 	.goals-bottom-bar {
 		padding-top: 12px;
@@ -70,13 +74,16 @@
 			//align-items: center;
 			flex : 0;
 			padding-right: 16px;
+			cursor: pointer;
 			
-			&>i:last-child {
-				color: #e74c3c;
+			&>i:first-child {
+				color: rgba(0,0,0,0.1);
+				margin-bottom: 4px;
 			}
 
 			&>i:last-child {
 				color: #e74c3c;
+				line-height: 28px;
 			}
 		}
 

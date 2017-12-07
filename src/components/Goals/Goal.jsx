@@ -1,19 +1,20 @@
 import React from 'react'
 import GoalBar from './GoalBar'
+import Img from '../Img/Img'
 
 export default function Goal(props) {
   return (
     <div className="goal">
       <div className="remove-goal" style={{display: props.editable?"block":"none"}}>
         <i className="material-icons">reorder</i>
-        <i className="material-icons">remove_circle</i>
+        <i className="material-icons" onClick={props.onDelete}>remove_circle</i>
       </div>
       <div className="goal-main">
         <div className="goal-details">
           <div className="goal-details-left">
+            <Img className="inventory-icon" src="foil@3x" style={{height: "16px", paddingRight: "8px"}}/>
             <span className="product">{props.goal.process_name + " " + get_product_display(props.goal.product_code)}</span>
             <span className="more">{get_more_display(props.goal.product_code)}</span>
-            <button className="secondary" onClick={props.onDelete}><i className="material-icons">delete_forever</i></button>
           </div>
           <div className="goal-details-right goal-buttons">
             <span className="blue">{(props.goal.actual && !isNaN(props.goal.actual))?parseInt(props.goal.actual):"0"}</span><span>{`/${parseInt(props.goal.goal)} ${props.goal.process_unit.toUpperCase()}(S)`}</span>

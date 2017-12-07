@@ -268,7 +268,8 @@ div.zero-state {
     &.mini {
     background-color: white;
     border-radius: 4px;
-    box-shadow: $shadow-0;
+    border: 1px solid rgba(0,0,0,0.05);
+    //box-shadow: $shadow-0;
     margin: 50px 32px;
 
     &:first-child {

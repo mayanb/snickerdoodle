@@ -5,6 +5,7 @@ import * as types from './GoalTypes'
 import * as actions from './GoalsActions'
 import Goal from './Goal'
 import GoalHeader from './GoalHeader'
+import AddNewGoal from './AddNewGoal'
 import Sortable from '../Sortable/Container'
 import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
@@ -62,10 +63,10 @@ class Goals extends React.Component {
 						finishMovingCard={this.moveGoal.bind(this)} 
 						renderer={Goal} 
 					/>
+					<AddNewGoal onClick={() => this.setState({isAddingGoal: true})}/>
 					{this.renderAddGoalDialog()}
 					{this.renderDeleteGoalDialog()}
 				</div>
-				<div>{this.renderBottomBar(completed,goals.data.length)}</div>
 			</div>
 		)
 	}

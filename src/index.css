@@ -1440,7 +1440,7 @@ div.zero-state {
 .page.mini {
   background-color: white;
   border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   margin: 50px 32px; }
   .page.mini:first-child {
     margin-top: 0px; }
@@ -1473,6 +1473,9 @@ div.zero-state {
   font-size: 14px;
   line-height: 16px;
   color: black; }
+  .goals .goal-header button {
+    margin: 0;
+    padding: 0; }
   .goals .goals-bottom-bar {
     padding-top: 12px;
     padding-bottom: 8px;
@@ -1515,11 +1518,14 @@ div.zero-state {
       line-height: 16px;
       padding-top: 3px;
       flex: 0;
-      padding-right: 16px; }
+      padding-right: 16px;
+      cursor: pointer; }
+      .goals .goal .remove-goal > i:first-child {
+        color: rgba(0, 0, 0, 0.1);
+        margin-bottom: 4px; }
       .goals .goal .remove-goal > i:last-child {
-        color: #e74c3c; }
-      .goals .goal .remove-goal > i:last-child {
-        color: #e74c3c; }
+        color: #e74c3c;
+        line-height: 28px; }
     .goals .goal .goal-main {
       flex: 1; }
     .goals .goal span.more {
