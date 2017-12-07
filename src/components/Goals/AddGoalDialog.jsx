@@ -38,7 +38,8 @@ class AddGoalDialog extends React.Component {
 					/>
 				</div>
 				<div>
-					<Select
+					<Select 
+						multi={true}
 						openOnFocus
 						value={this.state.product_type}
 						options={this.props.products}
@@ -115,13 +116,25 @@ class AddGoalDialog extends React.Component {
 		else {
 			let {users} = this.props 
 			let userprofile = users.data[users.ui.activeUser].user.profile_id
-			let data = {userprofile: userprofile, process_type: this.state.process_type.id, product_type: this.state.product_type.id, goal: this.state.goal, timerange: this.state.timerange.type }
+			let data = {
+				userprofile: userprofile, 
+				process_type: this.state.process_type.id, 
+				input_products: parseProductTypes(this.state.product_type),
+				goal: this.state.goal, 
+				timerange: this.state.timerange.type 
+			}
 			this.props.dispatch(actions.postCreateGoal(data))
 			this.props.onToggle()
 		}
 		
 	}
 }
+
+function parseProductTypes(product_types) {
+	return product_types.map(e => e.id).join(",")
+}
+
+
 
 const mapStateToProps = (state/*, props*/) => {
   return {

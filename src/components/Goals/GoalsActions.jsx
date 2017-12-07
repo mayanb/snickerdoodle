@@ -14,6 +14,7 @@ import {
   REQUEST_REORDER_FAILURE,
   SELECT,
   PAGE,
+  TOGGLE_EDITING
 } from '../../reducers/APIDataReducer'
 import { GOALS } from '../../reducers/ReducerTypes'
 import {WEEKLY, MONTHLY} from './GoalTypes'
@@ -31,6 +32,8 @@ export function fetchGoals(user_id) {
         if (err || !res.ok) {
           dispatch(requestGoalsFailure(err))
         }
+
+        console.log(res.body)
 
         let goals = res.body.sort(sortByRank)
         let weekly = goals.filter(e => e.timerange === WEEKLY)
@@ -190,6 +193,7 @@ export function postRequestReorder(goal, new_rank) {
   }
 }
 
+
 function requestReorder(goal) {
   return {
     type: REQUEST_REORDER,
@@ -213,6 +217,14 @@ function requestReorderFailure(goal) {
     type: REQUEST_REORDER_FAILURE,
     name: GOALS,
     timerange: goal.timerange
+  }
+}
+
+export function toggleEditing(timerange) {
+  return {
+    type: TOGGLE_EDITING,
+    name: GOALS, 
+    timerange: timerange
   }
 }
 

@@ -45,7 +45,7 @@ class DeleteGoalDialog extends React.Component {
 
 	handleRemove() {
 		this.props.onToggle()
-		this.props.dispatch(actions.postDeleteGoal(this.props.goal, this.props.index))
+		this.props.dispatch(actions.postDeleteGoal(this.props.goal, this.props.index, this.props.goal.timerange))
 	}
 }
 
