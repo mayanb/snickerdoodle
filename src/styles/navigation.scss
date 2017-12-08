@@ -9,7 +9,7 @@
 	display: flex;
 	flex-direction: column;
 
-	color: rgba(255, 255, 255, 0.6);
+	color: rgba(255, 255, 255, 1);
 	font-size: 13px;
 	line-height: 16px;
 	-webkit-font-smoothing: antialiased;
@@ -34,7 +34,6 @@
 			.nav-icon {
 				height: 16px;
 				vertical-align: top;
-				opacity: 0.6;
 				margin-right: 8px;
 			}
 
@@ -43,8 +42,23 @@
 				margin-bottom: 15px;
 			}
 
-			a.active {
-				color: rgba(255, 255, 255, 1);
+			a {
+				opacity: 0.6;
+
+				-o-transition: .4s;
+				-ms-transition: .4s;
+				-moz-transition: .4s;
+				-webkit-transition: .4s;
+				transition: .4s;
+
+				&:hover {
+					opacity: 1;
+				}
+			}
+
+			a.active, a.active:hover {
+				opacity: 1;
+
 				img {
 					opacity: 1;
 				}

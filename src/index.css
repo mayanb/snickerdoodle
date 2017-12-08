@@ -577,7 +577,7 @@ span {
   width: 144px;
   display: flex;
   flex-direction: column;
-  color: rgba(255, 255, 255, 0.6);
+  color: white;
   font-size: 13px;
   line-height: 16px;
   -webkit-font-smoothing: antialiased;
@@ -597,13 +597,21 @@ span {
       .d-nav .nav-group li .nav-icon {
         height: 16px;
         vertical-align: top;
-        opacity: 0.6;
         margin-right: 8px; }
       .d-nav .nav-group li:last-child {
         margin-bottom: 15px; }
-      .d-nav .nav-group li a.active {
-        color: white; }
-        .d-nav .nav-group li a.active img {
+      .d-nav .nav-group li a {
+        opacity: 0.6;
+        -o-transition: .4s;
+        -ms-transition: .4s;
+        -moz-transition: .4s;
+        -webkit-transition: .4s;
+        transition: .4s; }
+        .d-nav .nav-group li a:hover {
+          opacity: 1; }
+      .d-nav .nav-group li a.active, .d-nav .nav-group li a.active:hover {
+        opacity: 1; }
+        .d-nav .nav-group li a.active img, .d-nav .nav-group li a.active:hover img {
           opacity: 1; }
   .d-nav .logo {
     background-color: #0E4FDF;
@@ -765,7 +773,7 @@ body div.dialog-container {
     z-index: 999; }
 
 button {
-  padding: 8px 12px 8px 12px;
+  padding: 12px 16px;
   font-size: 12px;
   line-height: 16px;
   background-color: #2198EE;
@@ -774,7 +782,8 @@ button {
   border: 0;
   outline: none;
   display: block;
-  cursor: pointer; }
+  cursor: pointer;
+  font-family: "Apercu", "Interface", "Helvetica"; }
   button.secondary {
     background-color: rgba(0, 0, 0, 0);
     color: #2198EE; }
