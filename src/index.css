@@ -164,7 +164,8 @@ div.labelPrinter .marginer h2 {
   text-align: center;
   line-height: 48px;
   font-weight: bold;
-  font-size: 18px; }
+  font-size: 18px;
+  margin-bottom: 16px; }
 div.labelPrinter button {
   padding: 12px 16px;
   color: white;
