@@ -192,7 +192,7 @@ export default class ZebraPrinter extends React.Component {
 
   render() {
     return (
-      <div className="labelPrinter" style={{"minHeight": "100vh"}}>
+      <div className="labelPrinter">
         <div className="marginer">
           <div className="stuff">          
 
