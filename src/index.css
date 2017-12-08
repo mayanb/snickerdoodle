@@ -140,6 +140,8 @@ ul div.menuContentWrapper div.rdr-Days {
     line-height: 16px; }
   .trouble li {
     margin-bottom: 10px; }
+  .trouble a {
+    color: #49A8F3; }
 
 div.labelPrinter .stuff {
   max-width: 300px;
