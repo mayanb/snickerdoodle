@@ -8,8 +8,8 @@ import Img from '../Img/Img'
 let o1 = ["Activity Log", "Inventory"]
 let l1 = ["", "inventory"]
 
-let o2= [ "Zebra labels", "Dymo labels"]
-let l2 = ["labels", "dymo"]
+let o2= ["DYMO Labels", "Zebra Labels"]
+let l2 = ["dymo", "zebra"]
 
 let o3 = ["Processes", "Products",]
 let l3 = ["processes", "products",]
@@ -29,10 +29,10 @@ class Navbar extends React.Component {
         </Link>
         <div className="bar">
           <div className="logo" style={{display:"flex", justifyContent: "center", "alignItems": "center"}}>
-            <Img src="logo" style={{height: "96px", opacity: "0.3"}}/>
+            <Img src="logo" style={{height: "96px"}}/>
           </div>
           <div>
-            <NavigationGroup options={o1} links={l1} title={null} />
+            <NavigationGroup options={o1} links={l1} title={"Production"} />
             <NavigationGroup options={o2} links={l2} title={"Printing"} />
             { this.renderAdminNavigation() }
           </div>
@@ -46,7 +46,7 @@ class Navbar extends React.Component {
     let {data, ui} = this.props.users
     let account_type = data[ui.activeUser].user.account_type
     if (account_type == 'a')
-      return ( <NavigationGroup options={o3} links={l3} title={"My factory"} /> )
+      return ( <NavigationGroup options={o3} links={l3} title={"Factory"} /> )
     return null
   }
 }

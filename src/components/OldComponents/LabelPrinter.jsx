@@ -222,7 +222,7 @@ export default class LabelPrinter extends React.Component {
           <div className="stuff">          
 
             <div className={"regularPrint"} style={{display: (this.state.expanded?"none":"initial")}}>
-              <h2> Print me some labels - Dymo</h2>
+              <h2> Print DYMO Labels</h2>
               <span className="inputLabel">Number of labels</span>
               <input type="text" 
                 placeholder="eg. 20" 
@@ -240,9 +240,9 @@ export default class LabelPrinter extends React.Component {
                 value={this.state.notes}
                 onChange={(e) => this.handleChange("notes", e.target.value.substr(0,20))}
               />
-              <button type="submit" id="printButton" onClick={this.handlePrint}> {this.state.disabled?"Printing...":"Print!"} </button>
+              <button type="submit" id="printButton" onClick={this.handlePrint}> {this.state.disabled?"Printing...":"Print"} </button>
               <button className="expandReprint" onClick={this.handleExpandClick}>
-                <span>I need to reprint a label</span>
+                <span>Reprint a Label</span>
               </button>
               <button className="expandReprint" onClick={this.handleToggleInstructionsDialog.bind(this)}>
                 <span>My printer isn't working</span>
@@ -265,7 +265,7 @@ export default class LabelPrinter extends React.Component {
                 value={this.state.selectedItem}
                 onChange={this.handleItemChange}
               />
-              <button type="submit" id="printButton" onClick={this.handlePrint} > {this.state.disabled?"Printing...":"Print!"}  </button>
+              <button type="submit" id="printButton" onClick={this.handlePrint} > {this.state.disabled?"Printing...":"Print"}  </button>
             </div>
 
           </div>
@@ -282,8 +282,7 @@ export default class LabelPrinter extends React.Component {
             <div id="qrtest"></div>
             <div id="blocker" />
           </div>
-
-          </div>
+        </div>
       </div>
     )
   }

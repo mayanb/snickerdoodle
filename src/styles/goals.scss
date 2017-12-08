@@ -17,6 +17,8 @@
 	.goal-header button {
 		margin: 0;
 		padding: 0;
+		font-family: "Apercu", "Interface", "Helvetica";
+		font-size: 14px;
 	}
 
 	.goals-bottom-bar {
@@ -71,7 +73,6 @@
 			vertical-align: middle;
 			line-height: 16px;
 			padding-top: 3px;
-			//align-items: center;
 			flex : 0;
 			padding-right: 16px;
 			cursor: pointer;
@@ -94,6 +95,7 @@
 		span.more {
 			font-size: 10px;
 			color: $primary;
+			padding-left: 4px;
 		}
 
 		.goal-details {
@@ -118,7 +120,7 @@
 
 				span {
 					display:inline-block;
-					font-size:14px;
+					font-size: 14px;
 					line-height: 16px;
 					margin-top: 3px;
 				}

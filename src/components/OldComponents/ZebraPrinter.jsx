@@ -162,7 +162,6 @@ export default class ZebraPrinter extends React.Component {
         .end(function (err, res) {
           component.reloadItems(res.body)
         })
-      //component.reloadItems(v.data) 
     }
   }
 
@@ -193,14 +192,12 @@ export default class ZebraPrinter extends React.Component {
 
   render() {
     return (
-      <div className="labelPrinter" style={{"minHeight": "100vh"}}>
-
-
+      <div className="labelPrinter">
         <div className="marginer">
           <div className="stuff">          
 
             <div className={"regularPrint"} style={{display: (this.state.expanded?"none":"initial")}}>
-              <h2> Print me some labels - Zebra version</h2>
+              <h2> Print Zebra Labels</h2>
               <span className="inputLabel">Number of labels</span>
               <input type="text" 
                 placeholder="eg. 20" 
@@ -217,13 +214,13 @@ export default class ZebraPrinter extends React.Component {
                 value={this.state.notes}
                 onChange={(e) => this.handleChange("notes", e.target.value.substr(0,20))}
               />
-              <button type="submit" id="printButton" onClick={this.handlePrint}> {this.state.disabled?"Printing...":"Print!"} </button>
+              <button type="submit" id="printButton" onClick={this.handlePrint}> {this.state.disabled?"Printing...":"Print"} </button>
 
               <button className="expandReprint" onClick={this.handleExpandClick}>
-                <span>I need to reprint a label</span>
+                <span>Reprint a Label</span>
               </button>
               <button className="expandReprint" onClick={() => calibrate()}>
-                <span>Calibrate this printer</span>
+                <span>Calibrate Printer</span>
               </button>
             </div>
 
@@ -243,7 +240,7 @@ export default class ZebraPrinter extends React.Component {
                 value={this.state.selectedItem}
                 onChange={this.handleItemChange}
               />
-              <button type="submit" id="printButton" onClick={this.handlePrint} > {this.state.disabled?"Printing...":"Print!"}  </button>
+              <button type="submit" id="printButton" onClick={this.handlePrint} > {this.state.disabled?"Printing...":"Print"}  </button>
             </div>
 
           </div>

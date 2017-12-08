@@ -3,7 +3,7 @@ import React from 'react'
 let dashed_style = {
 	border: "2px dashed rgba(0,0,0,0.1)", 
 	borderRadius: "4px",
-	height: "50px",
+	height: "44px",
 	width: "100%", 
 	cursor: "pointer"
 }
