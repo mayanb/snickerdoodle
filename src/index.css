@@ -141,7 +141,7 @@ ul div.menuContentWrapper div.rdr-Days {
   .trouble li {
     margin-bottom: 10px; }
   .trouble a {
-    color: #49A8F3; }
+    color: #3976FF; }
 
 div.labelPrinter .stuff {
   max-width: 300px;
@@ -572,7 +572,7 @@ span {
 
 .d-nav {
   z-index: 1;
-  background-color: #3976FF;
+  background-color: #373A3D;
   position: fixed;
   top: 0;
   left: 0;
@@ -586,7 +586,7 @@ span {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
   .d-nav .nav-group {
-    border-bottom: 1px solid rgba(17, 79, 223, 0.6);
+    border-bottom: 1px solid rgba(39, 43, 46, 0.6);
     padding-left: 16px; }
     .d-nav .nav-group span {
       text-transform: uppercase;
@@ -617,7 +617,7 @@ span {
         .d-nav .nav-group li a.active img, .d-nav .nav-group li a.active:hover img {
           opacity: 1; }
   .d-nav .logo {
-    background-color: #0E4FDF;
+    background-color: #272B2E;
     height: 128px; }
 
 .d-top {

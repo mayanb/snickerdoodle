@@ -1,6 +1,6 @@
 .d-nav {
 	z-index: 1;
-	background-color: #3976FF;// #373A3D;
+	background-color: #373A3D;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -16,7 +16,7 @@
 	-moz-osx-font-smoothing: grayscale;
 
 	.nav-group {
-		border-bottom: 1px solid rgba(17, 79, 223, 0.6);
+		border-bottom: 1px solid rgba(39, 43, 46, 0.6);
 		padding-left: 16px;
 
 		span {
@@ -68,7 +68,7 @@
 	}
 
 	.logo {
-		background-color: #0E4FDF;
+		background-color: #272B2E;
 		height: 128px;
 	}
 }
