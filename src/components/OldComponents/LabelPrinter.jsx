@@ -211,7 +211,7 @@ export default class LabelPrinter extends React.Component {
           <div className="stuff">          
 
             <div className={"regularPrint"} style={{display: (this.state.expanded?"none":"initial")}}>
-              <h2> Print me some labels - Dymo</h2>
+              <h2> Print DYMO Labels</h2>
               <span className="inputLabel">Number of labels</span>
               <input type="text" 
                 placeholder="eg. 20" 
@@ -229,9 +229,9 @@ export default class LabelPrinter extends React.Component {
                 value={this.state.notes}
                 onChange={(e) => this.handleChange("notes", e.target.value.substr(0,20))}
               />
-              <button type="submit" id="printButton" onClick={this.handlePrint}> {this.state.disabled?"Printing...":"Print!"} </button>
+              <button type="submit" id="printButton" onClick={this.handlePrint}> {this.state.disabled?"Printing...":"Print"} </button>
               <button className="expandReprint" onClick={this.handleExpandClick}>
-                <span>I need to reprint a label</span>
+                <span>Reprint a Label</span>
               </button>
             </div>
 
@@ -251,7 +251,7 @@ export default class LabelPrinter extends React.Component {
                 value={this.state.selectedItem}
                 onChange={this.handleItemChange}
               />
-              <button type="submit" id="printButton" onClick={this.handlePrint} > {this.state.disabled?"Printing...":"Print!"}  </button>
+              <button type="submit" id="printButton" onClick={this.handlePrint} > {this.state.disabled?"Printing...":"Print"}  </button>
             </div>
 
           </div>
@@ -270,7 +270,6 @@ export default class LabelPrinter extends React.Component {
           </div>
 
           <div className="trouble">
-            <hr></hr>
             <h6> Troubleshooting </h6>
             <p> You need to run the Dymo toolbar app to make this work.</p>
             <ul>
@@ -278,8 +277,6 @@ export default class LabelPrinter extends React.Component {
               <li>If you can't find the Dymo Service icon, open <b>/Library/Frameworks/DYMO/SDK/Dymo.DLS.Printing.Host</b> from Finder. That should give you the dymo toolbar app. Make sure it's been "started," too.</li>
               <li>If that folder doesn't exist, make sure you have the latest version of the <a href="">dymo software installed.</a> Once you do, you should have that folder. </li>
               <li>If you're still having problems, tell whoever is running the site!</li>
-              <hr></hr>
-              <li> (If you are the person running the site, check the <a href=""> Dymo developers blog</a> because that's the only place they document...)</li>
             </ul>
           </div>
         </div>
