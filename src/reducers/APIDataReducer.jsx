@@ -20,6 +20,7 @@ export const REQUEST_REORDER_SUCCESS = 'REQUEST_REORDER_SUCCESS'
 export const REQUEST_REORDER_FAILURE = 'REQUEST_REORDER_FAILURE'
 export const SELECT = 'SELECT'
 export const PAGE = 'PAGE'
+export const TOGGLE_EDITING = 'TOGGLE_EDITING'
 
 export function apiDataReducer(state, action) {
   switch (action.type) {
@@ -62,9 +63,22 @@ export function apiDataReducer(state, action) {
       return select(state, action)
     case PAGE:
       return page(state, action)
+    case TOGGLE_EDITING:
+      return toggleEditing(state, action)
     default:
       return state
 	}
+}
+
+function toggleEditing(state, action) {
+  let old_val = state.ui.isEditing
+   return update(state, {
+    ui: {
+      isEditing: {
+        $set: !old_val
+      }
+    }
+  })
 }
 
 function request(state, action) {

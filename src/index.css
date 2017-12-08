@@ -134,9 +134,12 @@ ul div.menuContentWrapper div.rdr-Days {
   .trouble h6 {
     text-align: center; }
   .trouble p, .trouble li {
-    font-size: 11px; }
+    font-size: 12px;
+    line-height: 16px; }
   .trouble li {
     margin-bottom: 10px; }
+  .trouble a {
+    color: #49A8F3; }
 
 div.labelPrinter {
   padding-top: 50px;
@@ -384,7 +387,7 @@ a, a:hover, a:visited span {
 .activity {
   display: flex;
   max-width: 900px;
-  width: 95%;
+  width: 50%;
   flex-direction: column; }
   .activity .activity-process {
     width: 100%;
@@ -559,7 +562,7 @@ html, body {
   flex-grow: 1; }
 
 body {
-  font-family: "Camphor Pro", "Interface", "Helvetica";
+  font-family: "Apercu", "Interface", "Helvetica";
   font-size: 0.75em;
   line-height: 0.9em;
   color: #4f4f4f;
@@ -670,7 +673,7 @@ h3 {
   text-transform: uppercase; }
 
 input {
-  font-family: "Camphor Pro", "Interface", "Helvetica";
+  font-family: "Apercu", "Interface", "Helvetica";
   font-size: 14px;
   line-height: 16px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -1455,6 +1458,7 @@ div.zero-state {
   div.zero-state.zero-state-clean {
     background-color: white; }
 
+<<<<<<< HEAD
 .page {
   height: 100%; }
   .page.mini {
@@ -1464,6 +1468,17 @@ div.zero-state {
     margin: 50px auto; }
     .page.mini div.content {
       padding: 20px 16px; }
+=======
+.page.mini {
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  margin: 50px 32px; }
+  .page.mini:first-child {
+    margin-top: 0px; }
+  .page.mini div.content {
+    padding: 20px 16px; }
+>>>>>>> staging
 
 .page .page-header {
   display: flex;
@@ -1491,6 +1506,9 @@ div.zero-state {
   font-size: 14px;
   line-height: 16px;
   color: black; }
+  .goals .goal-header button {
+    margin: 0;
+    padding: 0; }
   .goals .goals-bottom-bar {
     padding-top: 12px;
     padding-bottom: 8px;
@@ -1521,9 +1539,31 @@ div.zero-state {
         -webkit-font-smoothing: antialiased; }
   .goals .goal {
     padding: 16px;
-    border-radius: 4px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.06);
-    margin-top: 16px; }
+    margin-top: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-left: -16px;
+    margin-right: -16px;
+    display: flex; }
+    .goals .goal .remove-goal {
+      display: flex;
+      flex-direction: column;
+      vertical-align: middle;
+      line-height: 16px;
+      padding-top: 3px;
+      flex: 0;
+      padding-right: 16px;
+      cursor: pointer; }
+      .goals .goal .remove-goal > i:first-child {
+        color: rgba(0, 0, 0, 0.1);
+        margin-bottom: 4px; }
+      .goals .goal .remove-goal > i:last-child {
+        color: #e74c3c;
+        line-height: 28px; }
+    .goals .goal .goal-main {
+      flex: 1; }
+    .goals .goal span.more {
+      font-size: 10px;
+      color: #49A8F3; }
     .goals .goal .goal-details {
       display: flex; }
       .goals .goal .goal-details button {
@@ -1538,19 +1578,19 @@ div.zero-state {
       .goals .goal .goal-details .goal-details-left {
         flex: 1;
         padding-top: 3px;
-        padding-bottom: 4px; }
+        padding-bottom: 2px; }
         .goals .goal .goal-details .goal-details-left span {
           display: inline-block;
           font-size: 14px;
           line-height: 16px;
           margin-top: 3px; }
       .goals .goal .goal-details .goal-details-right {
-        font-size: 12px;
+        font-size: 14px;
         line-height: 16px;
         letter-spacing: 5%;
         text-transform: uppercase;
         padding-top: 5px;
-        padding-bottom: 4px;
+        padding-bottom: 2px;
         color: #828282;
         vertical-align: middle; }
         .goals .goal .goal-details .goal-details-right .blue {
@@ -1569,6 +1609,7 @@ div.zero-state {
         padding-right: 8px; }
     .goals .goal .goal-filled-bar {
       background-color: #2198EE;
+      background: linear-gradient(to left, #2087F1, #0E4FDF);
       color: rgba(255, 255, 255, 0.5);
       border-radius: 4px 0 0 4px; }
     .goals .goal:hover .goal-details-right {

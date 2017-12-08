@@ -8,6 +8,7 @@ import {Label, LabelV2} from './Label.jsx'
 import {fetch} from './APIManager.jsx'
 import api from '../WaffleconeAPI/api'
 import TaskSelector from '../TaskSelector/TaskSelector'
+import DymoPrinterInstructions from '../DymoPrinter/DymoPrinterInstructions'
 
 let QRCode = window.QRCode
 let BrowserPrint = window.BrowserPrint
@@ -70,7 +71,8 @@ export default class LabelPrinter extends React.Component {
       task: "",
       qrValue: "",
       items: [],
-      selectedItem: ""
+      selectedItem: "",
+      instructionsDialog: false,
     }
   }
 
@@ -202,9 +204,18 @@ export default class LabelPrinter extends React.Component {
 
   }
 
+  handleToggleInstructionsDialog() {
+    console.log("hello")
+    this.setState({instructionsDialog: !this.state.instructionsDialog})
+  }
+
   render() {
     return (
       <div className="labelPrinter">
+
+        {this.state.instructionsDialog ?
+        <DymoPrinterInstructions onToggle={this.handleToggleInstructionsDialog.bind(this)} />
+        : false }
 
 
         <div className="marginer">
@@ -232,6 +243,9 @@ export default class LabelPrinter extends React.Component {
               <button type="submit" id="printButton" onClick={this.handlePrint}> {this.state.disabled?"Printing...":"Print!"} </button>
               <button className="expandReprint" onClick={this.handleExpandClick}>
                 <span>I need to reprint a label</span>
+              </button>
+              <button className="expandReprint" onClick={this.handleToggleInstructionsDialog.bind(this)}>
+                <span>My printer isn't working</span>
               </button>
             </div>
 
@@ -269,21 +283,7 @@ export default class LabelPrinter extends React.Component {
             <div id="blocker" />
           </div>
 
-          <div className="trouble">
-            <hr></hr>
-            <h6> Troubleshooting </h6>
-            <p> You need to run the Dymo toolbar app to make this work.</p>
-            <ul>
-              <li>Find the little <b>Dymo icon on the top toolbar</b> of your Mac. Click on it and make sure it's been "Started on port XXX", otherwise start it.</li>
-              <li>If you can't find the Dymo Service icon, open <b>/Library/Frameworks/DYMO/SDK/Dymo.DLS.Printing.Host</b> from Finder. That should give you the dymo toolbar app. Make sure it's been "started," too.</li>
-              <li>If that folder doesn't exist, make sure you have the latest version of the <a href="">dymo software installed.</a> Once you do, you should have that folder. </li>
-              <li>If you're still having problems, tell whoever is running the site!</li>
-              <hr></hr>
-              <li> (If you are the person running the site, check the <a href=""> Dymo developers blog</a> because that's the only place they document...)</li>
-            </ul>
           </div>
-        </div>
-
       </div>
     )
   }

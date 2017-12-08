@@ -38,13 +38,14 @@ class AddGoalDialog extends React.Component {
 					/>
 				</div>
 				<div>
-					<Select
+					<Select 
+						multi={true}
 						openOnFocus
 						value={this.state.product_type}
 						options={this.props.products}
 						labelKey={'name'}
 						valueKey={'id'}
-						placeholder="Select a product type to track"
+						placeholder="Select a product type - default is all"
 						onChange={(newVal) => this.onInputChange('product_type', newVal)}
 					/>
 				</div>
@@ -100,28 +101,48 @@ class AddGoalDialog extends React.Component {
 			this.state.goal = undefined
 			alert('Goal must be a valid number')
 		}
-		else if(!this.state.process_type) {
+		if(!this.state.product_type) {
+			this.state.product_type = null
+			// alert('Product Type must be selected')
+		}
+		if(!this.state.process_type) {
 			this.state.process_type = undefined
 			alert('Process Type must be selected')
 		}
-		else if(!this.state.product_type) {
-			this.state.product_type = undefined
-			alert('Product Type must be selected')
-		}
-		else if(!this.state.timerange) {
+
+		if(!this.state.timerange) {
 			this.state.timerange = undefined
 			alert('Time period must be selected')
 		}
-		else {
+		if(this.state.process_type && this.state.goal && this.state.timerange) {
+			console.log("hi")
 			let {users} = this.props 
 			let userprofile = users.data[users.ui.activeUser].user.profile_id
-			let data = {userprofile: userprofile, process_type: this.state.process_type.id, product_type: this.state.product_type.id, goal: this.state.goal, timerange: this.state.timerange.type }
+			let product_types = "ALL"
+			console.log(this.state.product_type)
+			if (this.state.product_type)
+			{
+				product_types = parseProductTypes(this.state.product_type)
+			}
+			let data = {
+				userprofile: userprofile, 
+				process_type: this.state.process_type.id, 
+				input_products: product_types,
+				goal: this.state.goal, 
+				timerange: this.state.timerange.type 
+			}
 			this.props.dispatch(actions.postCreateGoal(data))
 			this.props.onToggle()
 		}
 		
 	}
 }
+
+function parseProductTypes(product_types) {
+	return product_types.map(e => e.id).join(",")
+}
+
+
 
 const mapStateToProps = (state/*, props*/) => {
   return {

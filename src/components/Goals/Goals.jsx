@@ -4,6 +4,8 @@ import update from 'immutability-helper'
 import * as types from './GoalTypes'
 import * as actions from './GoalsActions'
 import Goal from './Goal'
+import GoalHeader from './GoalHeader'
+import AddNewGoal from './AddNewGoal'
 import Sortable from '../Sortable/Container'
 import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
@@ -38,13 +40,15 @@ class Goals extends React.Component {
 		let completed = 0
 		let sortableGoals = []
 
+		let hd = this.handleDelete
+
 		goals.data.map(function (goal, i) {
 			if (goal.actual >= goal.goal)
 				completed += 1
 			sortableGoals.push(
 				update(
 					goal, 
-					{$merge: {goal: goal, onDelete: () => this.handleDelete(goal, i) }}
+					{$merge: {goal: goal, editable: goals.ui.isEditing, onDelete: () => hd(goal, i) }}
 				)
 			)
 		})
@@ -52,19 +56,23 @@ class Goals extends React.Component {
 		return (
 			<div className="goals">
 				<div className="content">
-					<span className="card-header">{timerange === types.WEEKLY ? 'Weekly Goals' : 'Monthly Goals'}</span>
+					<GoalHeader edit={goals.data.length > 0} timerange={timerange} editable={!this.props.goals.ui.isEditing} onClick={this.toggleEditing.bind(this)}/>
 					<Sortable
 						cards={sortableGoals} 
 						canEdit={true} 
 						finishMovingCard={this.moveGoal.bind(this)} 
 						renderer={Goal} 
 					/>
+					<AddNewGoal onClick={() => this.setState({isAddingGoal: true})}/>
 					{this.renderAddGoalDialog()}
 					{this.renderDeleteGoalDialog()}
 				</div>
-				<div>{this.renderBottomBar(completed,goals.data.length)}</div>
 			</div>
 		)
+	}
+
+	toggleEditing() {
+		this.props.dispatch(actions.toggleEditing(this.props.timerange))
 	}
 
 	moveGoal(id, toIndex) {
