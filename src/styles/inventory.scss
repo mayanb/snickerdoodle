@@ -1,5 +1,11 @@
 .inventory {
 
+  height: calc(100% - 128px);
+
+  .page.smallDetail {
+    height: 100%;
+  }
+
 	.inventory-header {
 		display: flex;
 		padding-left: 36px;
@@ -22,7 +28,8 @@
 
 	.halves {
 		display: flex;
-		background-color:white;
+		background-color: white;
+    height: calc(100% - 48px);
 	}
 
 	.fixed {
@@ -37,6 +44,12 @@
 
 	.inventory-list {
     flex: 1;
+    height: 100%;
+
+    .inventory-content {
+      overflow-y: auto;
+      height: calc(100% - 32px);
+    }
 
     &.list-padded {
     	padding-top: 32px;
@@ -57,8 +70,6 @@
     display: flex;
     flex-direction: column;
     background-color: #fafafa;
-    min-height: 100vh;
-    max-height: 100vh;
     border-left: 1px solid rgba(0,0,0,0.08);
     transition: flex 0.3s;
 
@@ -91,7 +102,6 @@
     .i-detail-content {
       flex: 1;
       padding: 0 16px;
-      margin: 8px 0px;
       overflow: scroll;
 
       .task-title {
@@ -108,6 +118,7 @@
           border: 0;
           background-color: rgba(0,0,0,0);
           color: $primary;
+          padding: 0;
         }
       }
 
@@ -120,6 +131,7 @@
       .item {
         display: flex;
         flex-direction: row;
+        align-items: center;
 
         .item-img {
           height: 12px;
@@ -146,23 +158,28 @@
             color: rgba(0,0,0,0.4)
           }
         }
-
       }
-
     }
 
     .i-detail-footer {
       flex: 0;
-      height: 48px;
+      text-align: center;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding: 0 24px;
 
       button {
-        height: 100%;
         width: 100%;
         font-size: 16px;
         font-family: $font-stack;
         background-color: #43A6F6;
         color: white;
         border: none;
+        margin: 16px auto;
+        padding: 16px 0;
+      }
+
+      div.zero-state {
+        margin: 16px auto;
       }
     }
   }
@@ -176,7 +193,6 @@
     display: flex; 
     border-bottom: 1px solid rgba(0,0,0,0.08);
     padding: 16px 0 15px 16px;
-    margin-left: 20px;
     cursor: pointer;
     background-color: white;
 
@@ -189,15 +205,17 @@
       line-height: 16px;
       text-transform: uppercase;
       border-bottom: 1px solid rgba(0,0,0,0.08);
+
+      .i-check {
+        visibility: hidden;
+      }
     }
 
     &>div {
-      padding-right: 48px; //gutter
+      padding-right: 24px; //gutter
       white-space: nowrap;
       overflow: ellipsis;
-
     }
-
 
     .i-icon {
     	flex: 0 0 16px;
@@ -241,7 +259,6 @@
     color: #43A6F6;
     font-weight: bold;
   }
-
 }
 
 .unflex {
@@ -265,7 +282,9 @@ div.zero-state {
 }
 
 .page {
-    &.mini {
+  height: 100%;
+
+  &.mini {
     background-color: white;
     border-radius: 4px;
     border: 1px solid rgba(0,0,0,0.05);
@@ -283,18 +302,18 @@ div.zero-state {
 }
 
 .page .page-header {
-    display: flex;
-    flex-direction: row;
-    vertical-align: middle;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  margin-bottom: 20px;
 
-    h2 {
-      flex: 1;
-      font-size: 16px;
-    }
-
-    .filters {
-      flex: 0;
-      flex-basis: 300px;
-    }
+  h2 {
+    flex: 1;
+    font-size: 16px;
   }
+
+  .filters {
+    flex: 0;
+    flex-basis: 300px;
+  }
+}

@@ -98,13 +98,10 @@ export default class Inventory extends React.Component {
     })
 
     this.setState({processes: newProcesses})
-
   }
 
   render() {
     let props = this.props
-
-
 
     return (
       <div className="inventory">
@@ -193,7 +190,6 @@ class IH extends React.Component {
     }
   }
 
-
   render() {
     return (
       <div className={this.state.fixed?"fixed":""}>
@@ -207,15 +203,17 @@ function InventoryList(props) {
   return (
     <div className={"inventory-list " + (props.fixed?"list-padded":"")}>
       <IH />
-      {
-        props.processes.map(function (process, i) {
-          return  (
-            <Link key={i} to={ "/inventory/" + process.process_id}>
-              <InventoryItem i={i} selected={props.selected} {...process}/>
-            </Link>
-          )
-        }, this)
-      }
+      <div className="inventory-content">
+        {
+          props.processes.map(function (process, i) {
+            return  (
+              <Link key={i} to={ "/inventory/" + process.process_id}>
+                <InventoryItem i={i} selected={props.selected} {...process}/>
+              </Link>
+            )
+          }, this)
+        }
+      </div>
     </div>
   )
 }
@@ -272,7 +270,7 @@ function isSelected(props) {
 }
 
 String.prototype.sentenceCase = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+  return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
 function addDefaultSrc(ev) {

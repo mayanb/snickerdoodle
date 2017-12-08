@@ -538,9 +538,13 @@ html, body {
   width: 100%;
   height: 100%; }
 
+#root {
+  height: 100%; }
+
 .layout {
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  height: 100%; }
 
 .baseline-grid {
   background-image: url("baselinegrid.png");
@@ -616,7 +620,7 @@ span {
 
 .d-top {
   display: flex;
-  min-height: 128px;
+  height: 128px;
   align-items: center; }
   .d-top .nav-left {
     flex: 1;
@@ -1270,160 +1274,174 @@ div.create-product-dialog .create-product-description {
     .login .login-box form button {
       background-color: rgba(255, 255, 255, 0.2); }
 
-.inventory .inventory-header {
-  display: flex;
-  padding-left: 36px; }
-  .inventory .inventory-header h2, .inventory .inventory-header div {
-    flex: 1; }
-  .inventory .inventory-header h2 {
-    font-size: 20px;
-    line-height: 32px;
-    padding: 6px 0 9px 0; }
-.inventory .rule {
-  height: 1px;
-  background-color: rgba(0, 0, 0, 0.1); }
-.inventory .halves {
-  display: flex;
-  background-color: white; }
-.inventory .fixed {
-  position: fixed;
-  flex: 1;
-  padding-right: 30em;
-  width: 100%;
-  top: 0;
-  left: 0;
-  padding-left: 144px; }
-.inventory .inventory-list {
-  flex: 1; }
-  .inventory .inventory-list.list-padded {
-    padding-top: 32px; }
-  .inventory .inventory-list h2 {
-    font-size: 20px; }
-  .inventory .inventory-list.smallDetail {
-    max-height: 100vh;
-    overflow: scroll; }
-.inventory .inventory-detail {
-  flex: 0 0 30em;
-  display: flex;
-  flex-direction: column;
-  background-color: #fafafa;
-  min-height: 100vh;
-  max-height: 100vh;
-  border-left: 1px solid rgba(0, 0, 0, 0.08);
-  transition: flex 0.3s; }
-  .inventory .inventory-detail.smallDetail {
-    flex: 0 0 0.001px; }
-    .inventory .inventory-detail.smallDetail div {
-      display: none; }
-  .inventory .inventory-detail .i-detail-header {
+.inventory {
+  height: calc(100% - 128px); }
+  .inventory .page.smallDetail {
+    height: 100%; }
+  .inventory .inventory-header {
+    display: flex;
+    padding-left: 36px; }
+    .inventory .inventory-header h2, .inventory .inventory-header div {
+      flex: 1; }
+    .inventory .inventory-header h2 {
+      font-size: 20px;
+      line-height: 32px;
+      padding: 6px 0 9px 0; }
+  .inventory .rule {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1); }
+  .inventory .halves {
+    display: flex;
     background-color: white;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    border-left: 4px solid #43A6F6;
-    flex: 0; }
-    .inventory .inventory-detail .i-detail-header .i-detail-outputdesc {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 12px;
-      text-transform: capitalize; }
-    .inventory .inventory-detail .i-detail-header .i-detail-count {
-      color: rgba(0, 0, 0, 0.4); }
-  .inventory .inventory-detail .i-detail-content {
+    height: calc(100% - 48px); }
+  .inventory .fixed {
+    position: fixed;
     flex: 1;
-    padding: 0 16px;
-    margin: 8px 0px;
-    overflow: scroll; }
-    .inventory .inventory-detail .i-detail-content .task-title {
-      font-weight: bold;
-      padding-bottom: 4px;
-      display: flex;
-      flex-direction: row; }
-      .inventory .inventory-detail .i-detail-content .task-title a {
-        flex: 1; }
-      .inventory .inventory-detail .i-detail-content .task-title button {
-        border: 0;
-        background-color: rgba(0, 0, 0, 0);
-        color: #49A8F3; }
-    .inventory .inventory-detail .i-detail-content .inventory-task {
-      margin: 0px -16px;
+    padding-right: 30em;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-left: 144px; }
+  .inventory .inventory-list {
+    flex: 1;
+    height: 100%; }
+    .inventory .inventory-list .inventory-content {
+      overflow-y: auto;
+      height: calc(100% - 32px); }
+    .inventory .inventory-list.list-padded {
+      padding-top: 32px; }
+    .inventory .inventory-list h2 {
+      font-size: 20px; }
+    .inventory .inventory-list.smallDetail {
+      max-height: 100vh;
+      overflow: scroll; }
+  .inventory .inventory-detail {
+    flex: 0 0 30em;
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa;
+    border-left: 1px solid rgba(0, 0, 0, 0.08);
+    transition: flex 0.3s; }
+    .inventory .inventory-detail.smallDetail {
+      flex: 0 0 0.001px; }
+      .inventory .inventory-detail.smallDetail div {
+        display: none; }
+    .inventory .inventory-detail .i-detail-header {
+      background-color: white;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       padding: 16px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
-    .inventory .inventory-detail .i-detail-content .item {
-      display: flex;
-      flex-direction: row; }
-      .inventory .inventory-detail .i-detail-content .item .item-img {
-        height: 12px;
-        width: 12px;
-        display: inline-block; }
-        .inventory .inventory-detail .i-detail-content .item .item-img img {
-          height: 12px; }
-      .inventory .inventory-detail .i-detail-content .item > div > div {
-        vertical-align: middle;
-        display: inline-block;
-        margin-right: 8px; }
-        .inventory .inventory-detail .i-detail-content .item > div > div span {
-          padding-right: 8px; }
-        .inventory .inventory-detail .i-detail-content .item > div > div .item-qr {
-          text-transform: uppercase;
-          font-size: 12px;
-          color: rgba(0, 0, 0, 0.4); }
-  .inventory .inventory-detail .i-detail-footer {
-    flex: 0;
-    height: 48px; }
-    .inventory .inventory-detail .i-detail-footer button {
-      height: 100%;
-      width: 100%;
-      font-size: 16px;
-      font-family: "Camphor Pro", Nunito, Overpass, Proxima Nova, sans-serif;
-      background-color: #43A6F6;
-      color: white;
-      border: none; }
-.inventory a, .inventory a:hover, .inventory a:visited, .inventory a:-webkit-any-link {
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.64); }
-.inventory .inventoryClass {
-  display: flex;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 16px 0 15px 16px;
-  margin-left: 20px;
-  cursor: pointer;
-  background-color: white; }
-  .inventory .inventoryClass.inventoryClass-header {
-    font-family: 'Apercu Mono';
-    padding: 8px 0 7px 16px;
-    color: rgba(0, 0, 0, 0.4);
-    font-size: 10px;
-    line-height: 16px;
-    text-transform: uppercase;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
-  .inventory .inventoryClass > div {
-    padding-right: 48px;
-    white-space: nowrap;
-    overflow: ellipsis; }
-  .inventory .inventoryClass .i-icon {
-    flex: 0 0 16px; }
-    .inventory .inventoryClass .i-icon img {
-      height: 16px;
-      vertical-align: middle; }
-  .inventory .inventoryClass .i-code {
-    font-family: 'Apercu Mono';
-    flex: 2; }
-  .inventory .inventoryClass .i-outputdesc {
-    flex: 4; }
-  .inventory .inventoryClass .i-count {
-    font-family: 'Apercu Mono';
-    flex: 1;
-    text-align: right; }
-  .inventory .inventoryClass .i-unit {
-    flex: 2; }
-  .inventory .inventoryClass .i-date {
-    flex: 1;
-    text-align: right; }
-.inventory .inventoryClass:hover {
-  background-color: rgba(5, 5, 10, 0.02); }
-.inventory .inventoryClass.selected {
-  color: #43A6F6;
-  font-weight: bold; }
+      border-left: 4px solid #43A6F6;
+      flex: 0; }
+      .inventory .inventory-detail .i-detail-header .i-detail-outputdesc {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 12px;
+        text-transform: capitalize; }
+      .inventory .inventory-detail .i-detail-header .i-detail-count {
+        color: rgba(0, 0, 0, 0.4); }
+    .inventory .inventory-detail .i-detail-content {
+      flex: 1;
+      padding: 0 16px;
+      overflow: scroll; }
+      .inventory .inventory-detail .i-detail-content .task-title {
+        font-weight: bold;
+        padding-bottom: 4px;
+        display: flex;
+        flex-direction: row; }
+        .inventory .inventory-detail .i-detail-content .task-title a {
+          flex: 1; }
+        .inventory .inventory-detail .i-detail-content .task-title button {
+          border: 0;
+          background-color: rgba(0, 0, 0, 0);
+          color: #49A8F3;
+          padding: 0; }
+      .inventory .inventory-detail .i-detail-content .inventory-task {
+        margin: 0px -16px;
+        padding: 16px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05); }
+      .inventory .inventory-detail .i-detail-content .item {
+        display: flex;
+        flex-direction: row;
+        align-items: center; }
+        .inventory .inventory-detail .i-detail-content .item .item-img {
+          height: 12px;
+          width: 12px;
+          display: inline-block; }
+          .inventory .inventory-detail .i-detail-content .item .item-img img {
+            height: 12px; }
+        .inventory .inventory-detail .i-detail-content .item > div > div {
+          vertical-align: middle;
+          display: inline-block;
+          margin-right: 8px; }
+          .inventory .inventory-detail .i-detail-content .item > div > div span {
+            padding-right: 8px; }
+          .inventory .inventory-detail .i-detail-content .item > div > div .item-qr {
+            text-transform: uppercase;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.4); }
+    .inventory .inventory-detail .i-detail-footer {
+      flex: 0;
+      text-align: center;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 0 24px; }
+      .inventory .inventory-detail .i-detail-footer button {
+        width: 100%;
+        font-size: 16px;
+        font-family: "Camphor Pro", Nunito, Overpass, Proxima Nova, sans-serif;
+        background-color: #43A6F6;
+        color: white;
+        border: none;
+        margin: 16px auto;
+        padding: 16px 0; }
+      .inventory .inventory-detail .i-detail-footer div.zero-state {
+        margin: 16px auto; }
+  .inventory a, .inventory a:hover, .inventory a:visited, .inventory a:-webkit-any-link {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.64); }
+  .inventory .inventoryClass {
+    display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 16px 0 15px 16px;
+    cursor: pointer;
+    background-color: white; }
+    .inventory .inventoryClass.inventoryClass-header {
+      font-family: 'Apercu Mono';
+      padding: 8px 0 7px 16px;
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 10px;
+      line-height: 16px;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08); }
+      .inventory .inventoryClass.inventoryClass-header .i-check {
+        visibility: hidden; }
+    .inventory .inventoryClass > div {
+      padding-right: 24px;
+      white-space: nowrap;
+      overflow: ellipsis; }
+    .inventory .inventoryClass .i-icon {
+      flex: 0 0 16px; }
+      .inventory .inventoryClass .i-icon img {
+        height: 16px;
+        vertical-align: middle; }
+    .inventory .inventoryClass .i-code {
+      font-family: 'Apercu Mono';
+      flex: 2; }
+    .inventory .inventoryClass .i-outputdesc {
+      flex: 4; }
+    .inventory .inventoryClass .i-count {
+      font-family: 'Apercu Mono';
+      flex: 1;
+      text-align: right; }
+    .inventory .inventoryClass .i-unit {
+      flex: 2; }
+    .inventory .inventoryClass .i-date {
+      flex: 1;
+      text-align: right; }
+  .inventory .inventoryClass:hover {
+    background-color: rgba(5, 5, 10, 0.02); }
+  .inventory .inventoryClass.selected {
+    color: #43A6F6;
+    font-weight: bold; }
 
 .unflex {
   flex: 0; }
@@ -1440,6 +1458,17 @@ div.zero-state {
   div.zero-state.zero-state-clean {
     background-color: white; }
 
+<<<<<<< HEAD
+.page {
+  height: 100%; }
+  .page.mini {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.06);
+    margin: 50px auto; }
+    .page.mini div.content {
+      padding: 20px 16px; }
+=======
 .page.mini {
   background-color: white;
   border-radius: 4px;
@@ -1449,6 +1478,7 @@ div.zero-state {
     margin-top: 0px; }
   .page.mini div.content {
     padding: 20px 16px; }
+>>>>>>> staging
 
 .page .page-header {
   display: flex;
