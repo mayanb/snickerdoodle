@@ -130,89 +130,86 @@ ul div.menuContentWrapper div.rdr-Days {
 
 .trouble {
   max-width: 500px;
-  margin: 0 auto; }
+  margin-left: 36px;
+  margin-bottom: 36px; }
   .trouble h6 {
-    text-align: center; }
+    font-size: 14px;
+    line-height: 24px; }
   .trouble p, .trouble li {
-    font-size: 11px; }
+    font-size: 12px;
+    line-height: 16px; }
   .trouble li {
     margin-bottom: 10px; }
 
-div.labelPrinter {
-  padding-top: 50px;
-  padding-bottom: 50px; }
-  div.labelPrinter .stuff {
-    max-width: 300px;
-    margin: 0 auto;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.12);
-    padding: 20px;
-    background-color: white;
-    overflow: hidden; }
-  div.labelPrinter input {
-    line-height: 34px;
-    font-size: 15.2px;
-    border: 0;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1); }
-    div.labelPrinter input:focus {
-      outline: none; }
-  div.labelPrinter input, div.labelPrinter .multiselect, div.labelPrinter .select {
-    margin-bottom: 30px; }
-  div.labelPrinter .inputLabel {
+div.labelPrinter .stuff {
+  max-width: 300px;
+  margin-left: 36px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.12);
+  padding: 20px;
+  background-color: white;
+  overflow: hidden;
+  border-radius: 4px; }
+div.labelPrinter input {
+  line-height: 34px;
+  font-size: 15.2px; }
+  div.labelPrinter input:focus {
+    outline: none; }
+div.labelPrinter input, div.labelPrinter .multiselect, div.labelPrinter .select {
+  margin-top: 4px;
+  margin-bottom: 16px; }
+div.labelPrinter .inputLabel {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.6); }
+div.labelPrinter .marginer h2 {
+  text-align: center;
+  line-height: 48px;
+  font-weight: bold;
+  font-size: 18px; }
+div.labelPrinter button {
+  padding: 12px 16px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background-color: #3976FF;
+  width: 100%;
+  font-family: "Apercu", "Interface", "Helvetica"; }
+div.labelPrinter .regularprint {
+  max-height: 1000px; }
+div.labelPrinter .small {
+  max-height: 0;
+  overflow: hidden;
+  z-index: 997; }
+div.labelPrinter .reprint {
+  margin: -20px;
+  padding: 20px;
+  background-color: white;
+  z-index: 999; }
+  div.labelPrinter .reprint:focus {
+    outline: none; }
+div.labelPrinter button.expandReprint {
+  color: #3976FF;
+  background-color: white;
+  font-size: 13px;
+  text-align: center;
+  border: 1px solid #3976FF;
+  border-radius: 4px; }
+  div.labelPrinter button.expandReprint span {
+    flex: 1; }
+  div.labelPrinter button.expandReprint i {
+    text-align: right;
+    flex: 0;
+    color: #3976FF;
     font-size: 13px;
-    color: rgba(0, 0, 0, 0.6); }
-  div.labelPrinter .marginer {
-    padding-top: 40px; }
-    div.labelPrinter .marginer h2 {
-      text-align: center;
-      line-height: 48px; }
-  div.labelPrinter button {
-    padding: 8px 16px;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border: none;
-    border-radius: 2px;
-    background-color: #49A8F3;
-    width: 100%; }
-  div.labelPrinter .regularprint {
-    max-height: 1000px; }
-  div.labelPrinter .small {
-    max-height: 0;
-    overflow: hidden;
-    z-index: 997; }
-  div.labelPrinter .reprint {
-    margin: -20px;
-    padding: 20px;
-    background-color: white;
-    z-index: 999; }
-    div.labelPrinter .reprint:focus {
-      outline: none; }
-  div.labelPrinter button.expandReprint {
-    display: block;
-    color: #49A8F3;
-    background-color: white;
-    font-size: 13px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: row;
-    padding-left: 0px;
-    padding-right: 0px;
-    text-align: left; }
-    div.labelPrinter button.expandReprint span {
-      flex: 1; }
-    div.labelPrinter button.expandReprint i {
-      text-align: right;
-      flex: 0;
-      color: #49A8F3;
-      font-size: 13px;
-      line-height: 16px;
-      vertical-align: middle; }
-    div.labelPrinter button.expandReprint.expanded i {
-      visibility: inherit; }
+    line-height: 16px;
+    vertical-align: middle; }
+  div.labelPrinter button.expandReprint.expanded i {
+    visibility: inherit; }
 
 .labelSVG {
   background-color: white;
@@ -340,7 +337,7 @@ div#blocker, #canvastest {
       border: none;
       outline: none;
       box-shadow: none;
-      background-color: #49A8F3;
+      background-color: #3976FF;
       border-radius: 2px;
       color: white;
       font-size: 10px;
@@ -355,7 +352,7 @@ div#blocker, #canvastest {
   .task-detail .expand-i {
     visibility: hidden;
     padding-left: 4px;
-    color: #49A8F3 !important; }
+    color: #3976FF !important; }
   .task-detail .input-table-row:hover .expand-i {
     visibility: visible; }
   .task-detail .inv-circle {
@@ -375,7 +372,7 @@ div#blocker, #canvastest {
     border: none;
     outline: none;
     background-color: white;
-    color: #49A8F3; }
+    color: #3976FF; }
 
 a, a:hover, a:visited span {
   color: inherit;
@@ -383,8 +380,8 @@ a, a:hover, a:visited span {
 
 .activity {
   display: flex;
-  max-width: 900px;
-  width: 50%;
+  max-width: 800px;
+  width: 80%;
   flex-direction: column; }
   .activity .activity-process {
     width: 100%;
@@ -409,7 +406,7 @@ a, a:hover, a:visited span {
           vertical-align: middle; }
     .activity .activity-process.expanded .no, .activity .activity-process.expanded .no a i {
       visibility: visible;
-      color: #49A8F3; }
+      color: #3976FF; }
     .activity .activity-process .activity-process-row {
       display: flex;
       flex-direction: row;
@@ -448,7 +445,7 @@ a, a:hover, a:visited span {
       border: none;
       overflow: hidden; }
       .activity .activity-process.expanded .activity-process-header {
-        background-color: #49A8F3;
+        background-color: #3976FF;
         color: white; }
         .activity .activity-process.expanded .activity-process-header div.process-name {
           color: white; }
@@ -484,6 +481,8 @@ a, a:hover, a:visited span {
   .activity .dates {
     border-radius: 4px;
     border: 1px solid rgba(0, 0, 0, 0.1); }
+    .activity .dates span {
+      font-family: "Apercu", "Interface", "Helvetica"; }
 
 .dialog-shim {
   position: absolute;
@@ -513,14 +512,14 @@ a, a:hover, a:visited span {
   .dialog-box .dialog-button {
     border: none;
     outline: none;
-    background-color: #49A8F3;
+    background-color: #3976FF;
     margin-left: 16px;
     color: white;
     font-size: 14px;
     border-radius: 2px;
     padding: 8px 12px; }
   .dialog-box .dialog-cancel {
-    color: #49A8F3;
+    color: #3976FF;
     background-color: white; }
   .dialog-box .dialog-actions {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -570,7 +569,7 @@ span {
 
 .d-nav {
   z-index: 1;
-  background-color: #373A3D;
+  background-color: #3976FF;
   position: fixed;
   top: 0;
   left: 0;
@@ -578,13 +577,13 @@ span {
   width: 144px;
   display: flex;
   flex-direction: column;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 13px;
   line-height: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
   .d-nav .nav-group {
-    border-bottom: 1px solid rgba(39, 43, 46, 0.5);
+    border-bottom: 1px solid rgba(17, 79, 223, 0.6);
     padding-left: 16px; }
     .d-nav .nav-group span {
       text-transform: uppercase;
@@ -592,23 +591,22 @@ span {
       font-size: 10px;
       display: block;
       padding: 16px 0;
-      color: rgba(255, 255, 255, 0.2); }
+      color: rgba(255, 255, 255, 0.8); }
     .d-nav .nav-group li {
       margin-bottom: 16px; }
       .d-nav .nav-group li .nav-icon {
         height: 16px;
         vertical-align: top;
-        opacity: 0.4;
+        opacity: 0.6;
         margin-right: 8px; }
       .d-nav .nav-group li:last-child {
         margin-bottom: 15px; }
       .d-nav .nav-group li a.active {
-        color: rgba(255, 255, 255, 0.9); }
+        color: white; }
         .d-nav .nav-group li a.active img {
           opacity: 1; }
   .d-nav .logo {
-    background-color: #272B2E;
-    margin-bottom: 16px;
+    background-color: #0E4FDF;
     height: 128px; }
 
 .d-top {
@@ -624,7 +622,7 @@ span {
     .d-top .nav-left .filters {
       max-width: 900px; }
   .d-top .nav-team {
-    margin: 0 36px; }
+    margin-right: 36px; }
 
 div .bar {
   flex: 1; }
@@ -1140,7 +1138,9 @@ div.create-product-dialog .create-product-description {
   cursor: pointer; }
   .account span.name {
     display: block;
-    font-size: 14px; }
+    font-size: 14px;
+    font-family: "Apercu", "Interface", "Helvetica";
+    text-align: left; }
   .account span.username {
     display: block;
     color: #2198EE; }
@@ -1274,6 +1274,7 @@ div.create-product-dialog .create-product-description {
     flex: 1; }
   .inventory .inventory-header h2 {
     font-size: 20px;
+    font-weight: medium;
     line-height: 32px;
     padding: 6px 0 9px 0; }
 .inventory .rule {
@@ -1340,7 +1341,7 @@ div.create-product-dialog .create-product-description {
       .inventory .inventory-detail .i-detail-content .task-title button {
         border: 0;
         background-color: rgba(0, 0, 0, 0);
-        color: #49A8F3; }
+        color: #3976FF; }
     .inventory .inventory-detail .i-detail-content .inventory-task {
       margin: 0px -16px;
       padding: 16px;
@@ -1475,7 +1476,9 @@ div.zero-state {
   color: black; }
   .goals .goal-header button {
     margin: 0;
-    padding: 0; }
+    padding: 0;
+    font-family: "Apercu", "Interface", "Helvetica";
+    font-size: 14px; }
   .goals .goals-bottom-bar {
     padding-top: 12px;
     padding-bottom: 8px;
@@ -1530,7 +1533,8 @@ div.zero-state {
       flex: 1; }
     .goals .goal span.more {
       font-size: 10px;
-      color: #49A8F3; }
+      color: #3976FF;
+      padding-left: 4px; }
     .goals .goal .goal-details {
       display: flex; }
       .goals .goal .goal-details button {
