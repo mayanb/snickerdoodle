@@ -6,7 +6,15 @@
 	color: rgba(0,0,0,0.69);
 
 	&>div {
+		min-width: 0;
+		white-space: nowrap;
+		overflow: hidden;
 		text-overflow: ellipsis;
+		margin-right: 24px;
+
+		&:last-child {
+			margin-right: 0px;
+		}
 	}
 
 	.first {
@@ -19,7 +27,7 @@
 	}
 
 	.second {
-		flex: 2;
+		flex: 1;
 	}
 
 	.third {
@@ -27,7 +35,7 @@
 	}
 
 	.fourth {
-		flex: 3;
+		flex: 4;
 	}
 
 	.fifth {

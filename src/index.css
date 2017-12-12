@@ -1900,7 +1900,13 @@ div.zero-state {
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
   color: rgba(0, 0, 0, 0.69); }
   .activity-row > div {
-    text-overflow: ellipsis; }
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 24px; }
+    .activity-row > div:last-child {
+      margin-right: 0px; }
   .activity-row .first {
     flex: 1;
     text-align: center; }
@@ -1908,11 +1914,11 @@ div.zero-state {
       height: 16px;
       width: 16px; }
   .activity-row .second {
-    flex: 2; }
+    flex: 1; }
   .activity-row .third {
     flex: 6; }
   .activity-row .fourth {
-    flex: 3; }
+    flex: 4; }
   .activity-row .fifth {
     flex: 1; }
   .activity-row.header {
