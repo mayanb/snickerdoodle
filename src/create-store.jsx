@@ -49,6 +49,8 @@ export default function(data) {
     alert_missed_goals: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_MISSED_GOALS, stateDefault),
     alert_flagged_tasks: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_FLAGGED_TASKS, stateDefault),
     alert_anomalous_inputs: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_ANOMALOUS_INPUTS, stateDefault),
+    alert_completed_goals: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_COMPLETED_GOALS, stateDefault),
+    alert_unflagged_tasks: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_UNFLAGGED_TASKS, stateDefault),
   })
 
   const store = createStore(reducer, applyMiddleware(thunkMiddleware))

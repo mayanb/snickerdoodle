@@ -1821,6 +1821,8 @@ div.zero-state {
     color: #F14A4A; }
     .alert i.positive {
       color: #3BD533; }
+    .alert i.warning {
+      color: #F8DE00; }
   .alert:first-child {
     border-top: 1px solid rgba(0, 0, 0, 0.05); }
   .alert .alert-text {
@@ -1864,7 +1866,6 @@ div.zero-state {
     display: inline-block; }
 
 .dashboard {
-  height: 100%;
   padding-right: 352px; }
   .dashboard .dash-content {
     display: flex; }
@@ -1882,15 +1883,15 @@ div.zero-state {
     right: 0;
     margin-right: 0px;
     padding-bottom: 0;
-    margin-bottom: 0;
-    overflow-y: scroll; }
+    margin-bottom: 0; }
     .dashboard div.panel .little-header {
       margin-left: 16px; }
     .dashboard div.panel .alerts-container {
       padding-top: 48px;
       flex: 2;
       background-color: white;
-      border-left: 1px solid rgba(0, 0, 0, 0.05); }
+      border-left: 1px solid rgba(0, 0, 0, 0.05);
+      overflow-y: scroll; }
 
 .activity-row {
   display: flex;
@@ -1898,8 +1899,14 @@ div.zero-state {
   line-height: 16px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
   color: rgba(0, 0, 0, 0.69); }
+  .activity-row > div {
+    text-overflow: ellipsis; }
   .activity-row .first {
-    flex: 1; }
+    flex: 1;
+    text-align: center; }
+    .activity-row .first img {
+      height: 16px;
+      width: 16px; }
   .activity-row .second {
     flex: 2; }
   .activity-row .third {

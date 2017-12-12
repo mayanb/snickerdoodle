@@ -5,8 +5,17 @@
 	border-bottom: 1px solid rgba(0,0,0,0.07);
 	color: rgba(0,0,0,0.69);
 
+	&>div {
+		text-overflow: ellipsis;
+	}
+
 	.first {
 		flex: 1;
+		img {
+			height: 16px;
+			width: 16px;
+		}
+		text-align: center;
 	}
 
 	.second {

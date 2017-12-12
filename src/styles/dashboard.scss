@@ -1,7 +1,6 @@
 $panel-width: 320px;
 
 .dashboard {
-	height: 100%;
 	padding-right: $panel-width + 32px;
 
 	.dash-content {
@@ -26,8 +25,6 @@ $panel-width: 320px;
 		padding-bottom: 0;
 		margin-bottom: 0;
 		
-		overflow-y: scroll;
-		
 
 		.little-header {
 			margin-left: 16px; 
@@ -38,6 +35,7 @@ $panel-width: 320px;
 			flex: 2;
 			background-color: white;
 			border-left: 1px solid rgba(0,0,0,0.05);
+			overflow-y: scroll;
 		}
 	}
 }

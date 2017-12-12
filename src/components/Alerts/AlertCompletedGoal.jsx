@@ -2,16 +2,15 @@ import React from 'react'
 import {pluralize, gerund} from '../../utilities/stringutils'
 import Alert from './Alert'
 
-export default function AlertMissedGoal(props) {
+export default function AlertCompletedGoal(props) {
 	let goal = props.goal
 	let proc = gerund(goal.process_name)
 	let g = parseInt(goal.goal)
 	let prod = getProductTypeString(goal.product_code)
 	let unit = pluralize(g, goal.process_unit)
-	let alert = <span>You missed your goal of <span style={{fontWeight: 700}}>{`${proc} ${g} ${prod} ${unit}`}</span> last week.</span>
-	
+	let alert = <span>Hooray! You completed your goal of <span style={{fontWeight: 700}}>{`${proc} ${g} ${prod} ${unit}`}</span> last week.</span>
 	return (
-		<Alert warning alert={alert}>
+		<Alert alert={alert}>
 			<a href="/activity" className="alert-link">View your logs</a>
 		</Alert>
 	)

@@ -6,6 +6,9 @@ export default function Alert(props) {
 	if (props.negative) {
 		icon = 'error'
 		mood = 'negative'
+	} else if (props.warning) {
+		icon = 'warning'
+		mood = 'warning'
 	}
 
 	return (

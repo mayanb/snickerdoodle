@@ -1,5 +1,6 @@
 $alert-red: #F14A4A;
 $alert-green: #3BD533;
+$alert-yellow: #F8DE00;
 
 .alerts .alert {
 	&:last-child {
@@ -21,6 +22,10 @@ $alert-green: #3BD533;
 
 		&.positive {
 			color: $alert-green;
+		}
+
+		&.warning {
+			color: $alert-yellow;
 		}
 	}
 
@@ -44,7 +49,6 @@ $alert-green: #3BD533;
 		border-bottom: 1px dashed rgba(0,0,0,0.3);
 		font-size: 12px;
 		line-height: 16px;
-
 	}
 }
 

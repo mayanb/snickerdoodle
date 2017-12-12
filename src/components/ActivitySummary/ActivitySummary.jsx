@@ -8,7 +8,7 @@ import ActivitySummaryFollow from './ActivitySummaryFollow'
 class ActivitySummary extends React.Component {
 
 	componentDidMount() {
-
+		this.props.dispatch(actions.fetchActivity())
 	}
 
 	render() {
@@ -29,9 +29,8 @@ class ActivitySummary extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-	let act = {process_id: 1, process_name: 'Roast', process_code: 'R', product_name: 'Camino Verde 2', product_code: 'CV2', runs: 4, output: '200.00', process_unit: 'kg'}
   return {
-  	activity: [act, act, act]
+  	activity: state.activity.data
   }
 }
 

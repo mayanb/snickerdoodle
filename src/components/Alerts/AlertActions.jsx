@@ -4,10 +4,24 @@ import {
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
 } from '../../reducers/APIDataReducer'
-import { ALERT_MISSED_GOALS, ALERT_FLAGGED_TASKS, ALERT_ANOMALOUS_INPUTS } from '../../reducers/ReducerTypes'
+import { 
+  ALERT_MISSED_GOALS, 
+  ALERT_FLAGGED_TASKS, 
+  ALERT_ANOMALOUS_INPUTS,
+  ALERT_COMPLETED_GOALS,
+  ALERT_UNFLAGGED_TASKS, 
+} from '../../reducers/ReducerTypes'
+
+export function fetchCompletedGoals(user_id) {
+  return fetch('/ics/alerts/complete-goals', ALERT_COMPLETED_GOALS, user_id)
+}
+
+export function fetchUnflaggedTasks() {
+  return fetch('/ics/alerts/recently-unflagged-tasks', ALERT_UNFLAGGED_TASKS)
+}
 
 export function fetchMissedGoals() {
-  return fetch('/ics/alerts/get-incomplete-goals', ALERT_MISSED_GOALS)
+  return fetch('/ics/alerts/incomplete-goals', ALERT_MISSED_GOALS)
 }
 
 export function fetchFlaggedTasks() {
@@ -18,13 +32,14 @@ export function fetchAnomalousInputs() {
   return fetch('/ics/alerts/recent-anomolous-inputs', ALERT_ANOMALOUS_INPUTS)
 }
 
-function fetch(endpoint, type) {
+function fetch(endpoint, type, user_id) {
   return function (dispatch) {
     // dispatch an action that we are requesting a goal
     dispatch(request(type))
 
     // actually fetch 
     return api.get(endpoint)
+      .query({userprofile: user_id})
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestFailure(type, err))

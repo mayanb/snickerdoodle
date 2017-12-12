@@ -7,7 +7,7 @@ import {
 } from '../../reducers/APIDataReducer'
 import { ACTIVITY } from '../../reducers/ReducerTypes'
 
-export function fetchActivity(user_id) {
+export function fetchActivity() {
   return function (dispatch) {
     // dispatch an action that we are requesting a goal
     dispatch(requestActivity())
@@ -49,8 +49,8 @@ function requestActivitySuccess(json, timerange) {
 }
 
 function getTodayDateRange() {
-  let start = moment()
-  let end = moment(start).add(24, "hours")
+  let end = moment()
+  let start = moment(end).add(-24, "hours")
   let format = 'YYYY-MM-DD-HH-mm-ss-SSSSSS'
 
    return {
