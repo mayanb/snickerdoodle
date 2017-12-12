@@ -7,6 +7,7 @@ import {findPosition, alphabetize} from './utilities/arrayutils.jsx'
 import {apiDataReducer} from './reducers/APIDataReducer'
 import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
+import {_goals} from './reducers/GoalsReducer'
 import _users from './reducers/UserReducer'
 import * as types from './reducers/ReducerTypes'
 import {weeklyGoalPredicate, monthlyGoalPredicate} from './reducers/GoalsReducer'
@@ -26,8 +27,9 @@ function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) 
 export default function(data) {
   var reducer = combineReducers({
     users: _users,
-    weeklyGoals:  createFilteredReducer(apiDataReducer, weeklyGoalPredicate, stateDefault),
-    monthlyGoals:  createFilteredReducer(apiDataReducer, monthlyGoalPredicate, stateDefault),
+    activity: createFilteredReducer(apiDataReducer, action => action.name === types.ACTIVITY, stateDefault),
+    weeklyGoals:  createFilteredReducer(_goals, weeklyGoalPredicate, stateDefault),
+    monthlyGoals:  createFilteredReducer(_goals, monthlyGoalPredicate, stateDefault),
     members:  createFilteredReducer(apiDataReducer, action => action.name === types.MEMBERS, stateDefault), 
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault), 
   	processes: createFilteredReducer(_process, action => action.name === types.PROCESSES, stateDefault), 
@@ -43,7 +45,11 @@ export default function(data) {
     inventoryUnits: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORY_UNITS, stateDefault),
     orderItems: createFilteredReducer(apiDataReducer, action => action.name === types.ORDER_ITEMS, stateDefault),
     packingOrder: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDER, stateDefault),
-    packingOrders: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDERS, stateDefault),  })
+    packingOrders: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDERS, stateDefault), 
+    alert_missed_goals: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_MISSED_GOALS, stateDefault),
+    alert_flagged_tasks: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_FLAGGED_TASKS, stateDefault),
+    alert_anomalous_inputs: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_ANOMALOUS_INPUTS, stateDefault),
+  })
 
   const store = createStore(reducer, applyMiddleware(thunkMiddleware))
 

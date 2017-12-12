@@ -1,6 +1,7 @@
 import React from 'react' 
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Activity from '../Activity/Activity'
+import Home from '../Home/Home'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
 
@@ -51,10 +52,10 @@ function App(props) {
 		<div className="layout">
 
 			<Route path="/:section?/:id?" component={Navbar} />
+			<Route path="/:section?/:id?" component={Topbar} />
 
  		 	<div className="application-content">
- 		 		<Route path="/:section?/:id?" component={Topbar} />
-		    <Route exact path={"/"} component={Activity} />
+		    <Route exact path={"/"} component={Home} />
 		    <Route exact path={"/inventory/:id?"} component={Inventory} />
 		    <Route exact path={"/labels/"} component={ZebraPrinter} />
 		    <Route path={"/zebra/"} component={ZebraPrinter} />

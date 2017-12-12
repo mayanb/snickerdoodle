@@ -13,7 +13,6 @@
 
 .account {
 	display: flex;
-	margin: 12px;
 	cursor: pointer;
 
 	span.name {
@@ -29,7 +28,9 @@
 
 .current-account {
 	div, span, i {
+		line-height: 32px;
 		vertical-align: middle;
+		color: rgba(255,255,255,0.7);
 	}
 
 	.icon {
@@ -37,7 +38,6 @@
 	}
 
 	span.name {
-		color: #4f4f4f;
 	}
 
 	span.username {

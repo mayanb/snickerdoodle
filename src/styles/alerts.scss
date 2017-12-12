@@ -1,0 +1,87 @@
+$alert-red: #F14A4A;
+$alert-green: #3BD533;
+
+.alerts .alert {
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.alert {
+	//color: $alert-red;
+	-webkit-font-smoothing: antialiased;
+	font-size: 14px;
+	line-height: 16px;
+	border-bottom: 1px solid rgba(0,0,0,0.05);
+	margin-left: 16px;
+	padding: 16px 32px 16px 0;
+
+	i {
+		color: $alert-red;
+
+		&.positive {
+			color: $alert-green;
+		}
+	}
+
+	&:first-child {
+		border-top: 1px solid rgba(0,0,0,0.05);
+	}
+
+	.alert-text {
+		display: flex;
+	}
+
+	.alert-circle {
+		font-size: 20px;
+		margin-right: 8px;
+		vertical-align: bottom;
+		flex: 0;
+	}
+
+	.alert-link {
+		color: rgba(0,0,0,0.52);
+		border-bottom: 1px dashed rgba(0,0,0,0.3);
+		font-size: 12px;
+		line-height: 16px;
+
+	}
+}
+
+.alert-flagged-task-title {
+	font-family: 'Apercu Mono';
+	color: rgba(0,0,0,0.52);
+	line-height: 16px;
+	display: flex;
+
+	div {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		background-color: white;
+		border: 1px solid rgba(0,0,0,0.05);
+		border-radius: 8px;
+		vertical-align: bottom;
+	}
+
+	span {
+		margin-left: 8px;
+		display: inline-block;
+		border-bottom: 1px dashed rgba(0,0,0,0.3);
+	}
+
+	i {
+		display: none;
+		margin-left: 4px;
+		font-size: 14px;
+		line-height: 16px;
+		color: rgba(0,0,0,0.52);
+		vertical-align: bottom;
+	}
+
+	&:hover {
+		i {
+			display: inline-block;
+		}
+	}
+}

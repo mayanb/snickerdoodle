@@ -14,6 +14,7 @@
 	line-height: 16px;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	display: none;
 
 	.nav-group {
 		border-bottom: 1px solid rgba(39,43,46,0.5);
@@ -62,8 +63,11 @@
 
 .d-top {
 	display: flex;
-	min-height: 128px;
 	align-items: center;
+	background-color: #272736;
+	z-index: 999;
+	height: $nav-height;
+	-webkit-font-smoothing: antialiased;
 	
 	.nav-left {
 		flex: 1;
@@ -72,10 +76,37 @@
 
 		.Select-control {
 			border: none;
+			background-color: rgba(0,0,0,0);
 		}
+
+		.multiselect.inputs {
+			background-color: rgba(255,255,255,0.1);	
+			border: none;
+
+			input {
+				color: white;
+			}
+
+			div.Select.is-focused > div.Select-control {
+				background-color: rgba(0,0,0,0) !important;
+				color: rgba(255,255,255, 0.7) !important;
+			}
+		}
+
 
 		.filters {
 			max-width: 900px;
+		}
+	}
+
+	ul {
+		list-style-type: none;
+		li {
+			display: inline-block;
+			color: white;
+			padding: 0px 16px;
+			font-size: 14px; 
+			-webkit-font-smoothing: antialiased;
 		}
 	}
 

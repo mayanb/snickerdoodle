@@ -38,7 +38,6 @@ class Processes extends React.Component {
     var { data, ui, users } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type != 'a')
-
       return null
     return (
       <div className="nav-section processes">

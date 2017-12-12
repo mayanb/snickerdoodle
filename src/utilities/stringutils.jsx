@@ -7,6 +7,13 @@ export function pluralize(number, noun) {
 		return noun
 	}
 }
+
+export function gerund(infinitive) {
+  if (infinitive.endsWith('e')) {
+    return infinitive.substring(0, infinitive.length-1) + 'ing'
+  }
+  return infinitive + 'ing'
+}
     
 export function colorHash(str) {
     return colors[Math.abs(str.hashCode() % colors.length)]

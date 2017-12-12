@@ -139,7 +139,7 @@ ul div.menuContentWrapper div.rdr-Days {
   .trouble li {
     margin-bottom: 10px; }
   .trouble a {
-    color: #49A8F3; }
+    color: #0F4FDF; }
 
 div.labelPrinter {
   padding-top: 50px;
@@ -179,7 +179,7 @@ div.labelPrinter {
     cursor: pointer;
     border: none;
     border-radius: 2px;
-    background-color: #49A8F3;
+    background-color: #0F4FDF;
     width: 100%; }
   div.labelPrinter .regularprint {
     max-height: 1000px; }
@@ -196,7 +196,7 @@ div.labelPrinter {
       outline: none; }
   div.labelPrinter button.expandReprint {
     display: block;
-    color: #49A8F3;
+    color: #0F4FDF;
     background-color: white;
     font-size: 13px;
     margin-bottom: 20px;
@@ -210,7 +210,7 @@ div.labelPrinter {
     div.labelPrinter button.expandReprint i {
       text-align: right;
       flex: 0;
-      color: #49A8F3;
+      color: #0F4FDF;
       font-size: 13px;
       line-height: 16px;
       vertical-align: middle; }
@@ -343,7 +343,7 @@ div#blocker, #canvastest {
       border: none;
       outline: none;
       box-shadow: none;
-      background-color: #49A8F3;
+      background-color: #0F4FDF;
       border-radius: 2px;
       color: white;
       font-size: 10px;
@@ -358,7 +358,7 @@ div#blocker, #canvastest {
   .task-detail .expand-i {
     visibility: hidden;
     padding-left: 4px;
-    color: #49A8F3 !important; }
+    color: #0F4FDF !important; }
   .task-detail .input-table-row:hover .expand-i {
     visibility: visible; }
   .task-detail .inv-circle {
@@ -378,7 +378,7 @@ div#blocker, #canvastest {
     border: none;
     outline: none;
     background-color: white;
-    color: #49A8F3; }
+    color: #0F4FDF; }
 
 a, a:hover, a:visited span {
   color: inherit;
@@ -387,7 +387,6 @@ a, a:hover, a:visited span {
 .activity {
   display: flex;
   max-width: 900px;
-  width: 50%;
   flex-direction: column; }
   .activity .activity-process {
     width: 100%;
@@ -412,7 +411,7 @@ a, a:hover, a:visited span {
           vertical-align: middle; }
     .activity .activity-process.expanded .no, .activity .activity-process.expanded .no a i {
       visibility: visible;
-      color: #49A8F3; }
+      color: #0F4FDF; }
     .activity .activity-process .activity-process-row {
       display: flex;
       flex-direction: row;
@@ -451,7 +450,7 @@ a, a:hover, a:visited span {
       border: none;
       overflow: hidden; }
       .activity .activity-process.expanded .activity-process-header {
-        background-color: #49A8F3;
+        background-color: #0F4FDF;
         color: white; }
         .activity .activity-process.expanded .activity-process-header div.process-name {
           color: white; }
@@ -516,14 +515,14 @@ a, a:hover, a:visited span {
   .dialog-box .dialog-button {
     border: none;
     outline: none;
-    background-color: #49A8F3;
+    background-color: #0F4FDF;
     margin-left: 16px;
     color: white;
     font-size: 14px;
     border-radius: 2px;
     padding: 8px 12px; }
   .dialog-box .dialog-cancel {
-    color: #49A8F3;
+    color: #0F4FDF;
     background-color: white; }
   .dialog-box .dialog-actions {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -538,10 +537,6 @@ html, body {
   width: 100%;
   height: 100%; }
 
-.layout {
-  display: flex;
-  flex-direction: row; }
-
 .baseline-grid {
   background-image: url("baselinegrid.png");
   background-size: 16px;
@@ -554,7 +549,7 @@ html, body {
   z-index: 1; }
 
 .application-content {
-  padding-left: 144px;
+  padding-left: 0;
   flex-grow: 1; }
 
 body {
@@ -563,7 +558,8 @@ body {
   line-height: 0.9em;
   color: #4f4f4f;
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.02); }
 
 div, input, * {
   box-sizing: border-box !important; }
@@ -578,14 +574,15 @@ span {
   top: 0;
   left: 0;
   height: 100%;
-  width: 144px;
+  width: 0;
   display: flex;
   flex-direction: column;
   color: rgba(255, 255, 255, 0.4);
   font-size: 13px;
   line-height: 16px;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; }
+  -moz-osx-font-smoothing: grayscale;
+  display: none; }
   .d-nav .nav-group {
     border-bottom: 1px solid rgba(39, 43, 46, 0.5);
     padding-left: 16px; }
@@ -616,16 +613,36 @@ span {
 
 .d-top {
   display: flex;
-  min-height: 128px;
-  align-items: center; }
+  align-items: center;
+  background-color: #272736;
+  z-index: 999;
+  height: 56px;
+  -webkit-font-smoothing: antialiased; }
   .d-top .nav-left {
     flex: 1;
     flex-grow: 1;
     margin: 0px 36px; }
     .d-top .nav-left .Select-control {
+      border: none;
+      background-color: rgba(0, 0, 0, 0); }
+    .d-top .nav-left .multiselect.inputs {
+      background-color: rgba(255, 255, 255, 0.1);
       border: none; }
+      .d-top .nav-left .multiselect.inputs input {
+        color: white; }
+      .d-top .nav-left .multiselect.inputs div.Select.is-focused > div.Select-control {
+        background-color: rgba(0, 0, 0, 0) !important;
+        color: rgba(255, 255, 255, 0.7) !important; }
     .d-top .nav-left .filters {
       max-width: 900px; }
+  .d-top ul {
+    list-style-type: none; }
+    .d-top ul li {
+      display: inline-block;
+      color: white;
+      padding: 0px 16px;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased; }
   .d-top .nav-team {
     margin: 0 36px; }
 
@@ -678,7 +695,7 @@ input {
   padding: 9px 8px 10px 8px;
   outline: none; }
   input:focus {
-    border-color: #2198EE !important; }
+    border-color: #0F4FDF !important; }
   input::-webkit-input-placeholder {
     color: rgba(0, 0, 0, 0.3); }
 
@@ -725,8 +742,6 @@ textarea {
   display: inline-block;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  min-width: 32px;
-  min-height: 32px;
   margin-right: 8px; }
   .icon span {
     color: white;
@@ -742,8 +757,8 @@ textarea {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 16px; }
   .select-circle.selected {
-    border-color: #2198EE;
-    background-color: #2198EE; }
+    border-color: #0F4FDF;
+    background-color: #0F4FDF; }
 
 body div.dialog-container {
   position: fixed;
@@ -773,7 +788,7 @@ button {
   padding: 8px 12px 8px 12px;
   font-size: 12px;
   line-height: 16px;
-  background-color: #2198EE;
+  background-color: #0F4FDF;
   color: white;
   border-radius: 6px;
   border: 0;
@@ -782,11 +797,11 @@ button {
   cursor: pointer; }
   button.secondary {
     background-color: rgba(0, 0, 0, 0);
-    color: #2198EE; }
+    color: #0F4FDF; }
   button.link {
     padding: 0;
     background-color: rgba(0, 0, 0, 0);
-    color: #2198EE; }
+    color: #0F4FDF; }
   button:disabled {
     background-color: #c3c3c3;
     color: #838383; }
@@ -882,7 +897,7 @@ div.button-dropdown {
       transform: scale(1, 1); }
 
 .navbar {
-  background-color: #2198EE;
+  background-color: #0F4FDF;
   min-width: 64px;
   position: fixed;
   top: 0;
@@ -909,7 +924,7 @@ div.button-dropdown {
     .products-list-item.products-list-header .products-list-select-circle {
       visibility: hidden; }
   .products-list-item.products-selected {
-    color: #2198EE; }
+    color: #0F4FDF; }
   .products-list-item .products-list-select-circle {
     flex: 1;
     display: flex;
@@ -959,7 +974,7 @@ div.create-product-dialog .create-product-description {
     outline: none;
     resize: none; }
     div.create-product-dialog .create-product-description textarea:focus {
-      border-color: #2198EE; }
+      border-color: #0F4FDF; }
 
 .products-card {
   color: #4f4f4f;
@@ -968,7 +983,7 @@ div.create-product-dialog .create-product-description {
   .products-card .products-card-section {
     margin-bottom: 16px; }
   .products-card a.inventorylink {
-    color: #2198EE;
+    color: #0F4FDF;
     cursor: pointer; }
   .products-card .products-card-header {
     display: flex;
@@ -997,7 +1012,7 @@ div.create-product-dialog .create-product-description {
     margin-bottom: 23px; }
   .products-card .products-card-actions {
     text-align: right;
-    color: #2198EE; }
+    color: #0F4FDF; }
     .products-card .products-card-actions span {
       margin-left: 24px;
       cursor: pointer;
@@ -1070,10 +1085,10 @@ div.create-product-dialog .create-product-description {
   display: none; }
 
 .process-attribute.new-attribute {
-  color: #2198EE;
+  color: #0F4FDF;
   border: none; }
   .process-attribute.new-attribute i {
-    color: #2198EE;
+    color: #0F4FDF;
     margin-right: 4px; }
   .process-attribute.new-attribute .process-attribute-move i, .process-attribute.new-attribute .proess-attribute-more i {
     display: none; }
@@ -1139,21 +1154,20 @@ div.create-product-dialog .create-product-description {
 
 .account {
   display: flex;
-  margin: 12px;
   cursor: pointer; }
   .account span.name {
     display: block;
     font-size: 14px; }
   .account span.username {
     display: block;
-    color: #2198EE; }
+    color: #0F4FDF; }
 
 .current-account div, .current-account span, .current-account i {
-  vertical-align: middle; }
+  line-height: 32px;
+  vertical-align: middle;
+  color: rgba(255, 255, 255, 0.7); }
 .current-account .icon {
   margin-right: 8px; }
-.current-account span.name {
-  color: #4f4f4f; }
 .current-account span.username {
   text-align: left; }
 
@@ -1170,7 +1184,7 @@ div.create-product-dialog .create-product-description {
     .task-attribute.editor .attribute-content {
       height: 48px; }
     .task-attribute.editor .task-attribute-edit-button {
-      color: #2198EE;
+      color: #0F4FDF;
       cursor: normal; }
 
 .attribute-content {
@@ -1243,7 +1257,7 @@ div.create-product-dialog .create-product-description {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #2198EE;
+  background-color: #0F4FDF;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1292,7 +1306,7 @@ div.create-product-dialog .create-product-description {
   width: 100%;
   top: 0;
   left: 0;
-  padding-left: 144px; }
+  padding-left: 0; }
 .inventory .inventory-list {
   flex: 1; }
   .inventory .inventory-list.list-padded {
@@ -1343,7 +1357,7 @@ div.create-product-dialog .create-product-description {
       .inventory .inventory-detail .i-detail-content .task-title button {
         border: 0;
         background-color: rgba(0, 0, 0, 0);
-        color: #49A8F3; }
+        color: #0F4FDF; }
     .inventory .inventory-detail .i-detail-content .inventory-task {
       margin: 0px -16px;
       padding: 16px;
@@ -1443,8 +1457,7 @@ div.zero-state {
 .page.mini {
   background-color: white;
   border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  margin: 50px 32px; }
+  border: 1px solid rgba(0, 0, 0, 0.05); }
   .page.mini:first-child {
     margin-top: 0px; }
   .page.mini div.content {
@@ -1497,7 +1510,7 @@ div.zero-state {
       white-space: nowrap;
       flex: 0; }
       .goals .goals-bottom-bar .right button {
-        color: #2198EE;
+        color: #0F4FDF;
         background-color: rgba(255, 255, 255, 0);
         text-transform: uppercase;
         font-weight: 600;
@@ -1508,8 +1521,7 @@ div.zero-state {
         padding-bottom: 4px;
         -webkit-font-smoothing: antialiased; }
   .goals .goal {
-    padding: 16px;
-    margin-top: 16px;
+    padding: 12px 16px;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     margin-left: -16px;
     margin-right: -16px;
@@ -1533,7 +1545,7 @@ div.zero-state {
       flex: 1; }
     .goals .goal span.more {
       font-size: 10px;
-      color: #49A8F3; }
+      color: #0F4FDF; }
     .goals .goal .goal-details {
       display: flex; }
       .goals .goal .goal-details button {
@@ -1548,7 +1560,8 @@ div.zero-state {
       .goals .goal .goal-details .goal-details-left {
         flex: 1;
         padding-top: 3px;
-        padding-bottom: 2px; }
+        padding-bottom: 2px;
+        color: rgba(0, 0, 0, 0.5); }
         .goals .goal .goal-details .goal-details-left span {
           display: inline-block;
           font-size: 14px;
@@ -1558,19 +1571,18 @@ div.zero-state {
         font-size: 14px;
         line-height: 16px;
         letter-spacing: 5%;
-        text-transform: uppercase;
         padding-top: 5px;
         padding-bottom: 2px;
-        color: #828282;
+        color: rgba(0, 0, 0, 0.5);
         vertical-align: middle; }
         .goals .goal .goal-details .goal-details-right .blue {
-          color: #2198EE; }
+          font-weight: 700; }
     .goals .goal:hover button {
       visibility: visible; }
     .goals .goal .goal-whole-bar {
       display: flex;
-      height: 28px;
-      margin-top: 8px;
+      height: 16px;
+      margin-top: 2px;
       margin-bottom: 4px;
       background-color: rgba(0, 0, 0, 0.1);
       border-radius: 4px;
@@ -1578,8 +1590,8 @@ div.zero-state {
       .goals .goal .goal-whole-bar span {
         padding-right: 8px; }
     .goals .goal .goal-filled-bar {
-      background-color: #2198EE;
-      background: linear-gradient(to left, #2087F1, #0E4FDF);
+      background-color: #0F4FDF;
+      background: linear-gradient(to left, #0F4FDF, #5A4BDA);
       color: rgba(255, 255, 255, 0.5);
       border-radius: 4px 0 0 4px; }
     .goals .goal:hover .goal-details-right {
@@ -1619,7 +1631,7 @@ div.zero-state {
       font-weight: 700; }
     .account-integration .integration-info div.integration-account {
       flex: 0;
-      background-color: #2198EE;
+      background-color: #0F4FDF;
       display: flex;
       color: white;
       border-radius: 12px;
@@ -1641,7 +1653,7 @@ div.zero-state {
 
 .google-connect, .add-new-member {
   cursor: pointer;
-  color: #2198EE; }
+  color: #0F4FDF; }
 
 .team-members {
   background-color: rgba(187, 187, 187, 0.09);
@@ -1783,6 +1795,128 @@ div.zero-state {
     align-items: right; }
     .orderdetail-header .buttons > button {
       margin-left: 12px; }
+
+.tabs {
+  display: flex; }
+  .tabs > div {
+    margin-right: 12px;
+    padding-bottom: 8px;
+    cursor: pointer; }
+
+.active-tab {
+  color: #0F4FDF;
+  border-bottom: 4px solid #0F4FDF; }
+
+.alerts .alert:last-child {
+  margin-bottom: 0; }
+
+.alert {
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  margin-left: 16px;
+  padding: 16px 32px 16px 0; }
+  .alert i {
+    color: #F14A4A; }
+    .alert i.positive {
+      color: #3BD533; }
+  .alert:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.05); }
+  .alert .alert-text {
+    display: flex; }
+  .alert .alert-circle {
+    font-size: 20px;
+    margin-right: 8px;
+    vertical-align: bottom;
+    flex: 0; }
+  .alert .alert-link {
+    color: rgba(0, 0, 0, 0.52);
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    line-height: 16px; }
+
+.alert-flagged-task-title {
+  font-family: 'Apercu Mono';
+  color: rgba(0, 0, 0, 0.52);
+  line-height: 16px;
+  display: flex; }
+  .alert-flagged-task-title div {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    vertical-align: bottom; }
+  .alert-flagged-task-title span {
+    margin-left: 8px;
+    display: inline-block;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.3); }
+  .alert-flagged-task-title i {
+    display: none;
+    margin-left: 4px;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(0, 0, 0, 0.52);
+    vertical-align: bottom; }
+  .alert-flagged-task-title:hover i {
+    display: inline-block; }
+
+.dashboard {
+  height: 100%;
+  padding-right: 352px; }
+  .dashboard .dash-content {
+    display: flex; }
+    .dashboard .dash-content > div {
+      flex: 1;
+      margin: 0px 0px 32px 32px;
+      padding-top: 48px; }
+  .dashboard div.panel {
+    padding-top: 0;
+    display: flex;
+    width: 320px;
+    position: absolute;
+    top: 56px;
+    bottom: 0;
+    right: 0;
+    margin-right: 0px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    overflow-y: scroll; }
+    .dashboard div.panel .little-header {
+      margin-left: 16px; }
+    .dashboard div.panel .alerts-container {
+      padding-top: 48px;
+      flex: 2;
+      background-color: white;
+      border-left: 1px solid rgba(0, 0, 0, 0.05); }
+
+.activity-row {
+  display: flex;
+  padding: 8px;
+  line-height: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  color: rgba(0, 0, 0, 0.69); }
+  .activity-row .first {
+    flex: 1; }
+  .activity-row .second {
+    flex: 2; }
+  .activity-row .third {
+    flex: 6; }
+  .activity-row .fourth {
+    flex: 3; }
+  .activity-row .fifth {
+    flex: 1; }
+  .activity-row.header {
+    color: rgba(0, 0, 0, 0.52);
+    font-size: 12px; }
+
+.activity-follow {
+  color: #0F4FDF;
+  font-size: 12px;
+  text-align: right;
+  margin: 8px; }
 
 .lesmis .links line {
   stroke: #999;

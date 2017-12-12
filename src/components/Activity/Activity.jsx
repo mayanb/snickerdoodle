@@ -15,6 +15,8 @@ import * as goalTypes from '../Goals/GoalTypes'
 import Goals from '../Goals/Goals'
 import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
+import Alerts from '../Alerts/Alerts'
+import ActivitySummary from '../ActivitySummary/ActivitySummary'
 
 export default class Activity extends React.Component {
 	constructor(props) {
@@ -75,20 +77,25 @@ export default class Activity extends React.Component {
 		}
 
 		return (
-			<div>
+			<div className="dashboard">
 				{ this.renderDialog() }
 
-				<div className={`activity page ${this.state.mini?"mini":""}`}>
+				<div className={`activity goals page ${this.state.mini?"mini":""}`}>
 					<Goals timerange={goalTypes.WEEKLY} />
 				</div>
 
-				<div className={`activity page ${this.state.mini?"mini":""}`}>
-					<Goals timerange={goalTypes.MONTHLY} />
+				<div className={`activity goals page ${this.state.mini?"mini":""}`}>
+					<ActivitySummary />
 				</div>
 
+				<Alerts />
+				
+			</div>
+		)
+	}
 
-
-				<div className={`activity page ${this.state.mini?"mini":""}`}>
+	/*
+					<div className={`activity page ${this.state.mini?"mini":""}`}>
 					<div className="content">
 						<div className="activity-header page-header">
 							<h2 className="card-header">Activity Log</h2>
@@ -97,9 +104,7 @@ export default class Activity extends React.Component {
 						{contentArea}
 					</div>
 				</div>
-			</div>
-		)
-	}
+	*/
 
 	renderDialog() {
 		if (this.state.mustEnablePopupsDialog) {
@@ -197,6 +202,7 @@ export default class Activity extends React.Component {
 	}
 
 	nestProcesses(data) {
+		console.log(data)
 		let processes = {}
 		for (var s in data) {
 			let skew = data[s]

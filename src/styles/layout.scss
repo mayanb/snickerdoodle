@@ -1,9 +1,10 @@
 $sans-stack:'Apercu', 'Interface', 'Helvetica';
 $light-gray: rgba(0,0,0,0.1);
-$theme-color: #2198EE; //42AFFF;
+$theme-color: #0F4FDF; //#2198EE; //42AFFF;
 $dark-theme-color: #0068B4;
 $baseline: 8px;
-$nav-width: 144px;
+$nav-width: 0;
+$nav-height: 56px;
 
 html, body {
 	width: 100%;
@@ -12,8 +13,6 @@ html, body {
 }
 
 .layout {
-	display:flex;
-	flex-direction: row;
 }
 
 .baseline-grid {
@@ -40,6 +39,7 @@ body {
 	color: rgba(79,79,79,1);
 	padding: 0;
 	margin: 0;
+	background-color: rgba(0,0,0,0.02);
 }
 
 div, input, * {

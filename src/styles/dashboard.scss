@@ -1,0 +1,43 @@
+$panel-width: 320px;
+
+.dashboard {
+	height: 100%;
+	padding-right: $panel-width + 32px;
+
+	.dash-content {
+		display: flex;
+
+		& > div {
+			flex: 1;
+			margin: 0px 0px 32px 32px;
+			padding-top: 48px;
+		}
+	}
+
+	div.panel {
+		padding-top: 0;
+		display: flex;
+		width: $panel-width;
+		position: absolute;
+		top: $nav-height;
+		bottom: 0;
+		right: 0;
+		margin-right: 0px;	
+		padding-bottom: 0;
+		margin-bottom: 0;
+		
+		overflow-y: scroll;
+		
+
+		.little-header {
+			margin-left: 16px; 
+		}
+
+		.alerts-container {
+			padding-top: 48px;
+			flex: 2;
+			background-color: white;
+			border-left: 1px solid rgba(0,0,0,0.05);
+		}
+	}
+}

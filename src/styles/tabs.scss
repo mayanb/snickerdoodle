@@ -1,0 +1,14 @@
+.tabs {
+	display: flex;
+
+	& > div {
+		margin-right: 12px;
+		padding-bottom: 8px;
+		cursor: pointer;
+	}
+}
+
+.active-tab {
+	color: $primary;
+	border-bottom: 4px solid $primary;
+}
