@@ -141,7 +141,7 @@ ul div.menuContentWrapper div.rdr-Days {
   .trouble li {
     margin-bottom: 10px; }
   .trouble a {
-    color: #3976FF; }
+    color: #49A8F3; }
 
 div.labelPrinter .stuff {
   max-width: 300px;
@@ -179,7 +179,7 @@ div.labelPrinter button {
   cursor: pointer;
   border: none;
   border-radius: 4px;
-  background-color: #3976FF;
+  background-color: #49A8F3;
   width: 100%;
   font-family: "Apercu", "Interface", "Helvetica"; }
 div.labelPrinter .regularprint {
@@ -196,18 +196,18 @@ div.labelPrinter .reprint {
   div.labelPrinter .reprint:focus {
     outline: none; }
 div.labelPrinter button.expandReprint {
-  color: #3976FF;
+  color: #49A8F3;
   background-color: white;
   font-size: 13px;
   text-align: center;
-  border: 1px solid #3976FF;
+  border: 1px solid #49A8F3;
   border-radius: 4px; }
   div.labelPrinter button.expandReprint span {
     flex: 1; }
   div.labelPrinter button.expandReprint i {
     text-align: right;
     flex: 0;
-    color: #3976FF;
+    color: #49A8F3;
     font-size: 13px;
     line-height: 16px;
     vertical-align: middle; }
@@ -340,7 +340,7 @@ div#blocker, #canvastest {
       border: none;
       outline: none;
       box-shadow: none;
-      background-color: #3976FF;
+      background-color: #49A8F3;
       border-radius: 2px;
       color: white;
       font-size: 10px;
@@ -355,7 +355,7 @@ div#blocker, #canvastest {
   .task-detail .expand-i {
     visibility: hidden;
     padding-left: 4px;
-    color: #3976FF !important; }
+    color: #49A8F3 !important; }
   .task-detail .input-table-row:hover .expand-i {
     visibility: visible; }
   .task-detail .inv-circle {
@@ -375,7 +375,7 @@ div#blocker, #canvastest {
     border: none;
     outline: none;
     background-color: white;
-    color: #3976FF; }
+    color: #49A8F3; }
 
 a, a:hover, a:visited span {
   color: inherit;
@@ -409,7 +409,7 @@ a, a:hover, a:visited span {
           vertical-align: middle; }
     .activity .activity-process.expanded .no, .activity .activity-process.expanded .no a i {
       visibility: visible;
-      color: #3976FF; }
+      color: #49A8F3; }
     .activity .activity-process .activity-process-row {
       display: flex;
       flex-direction: row;
@@ -448,7 +448,7 @@ a, a:hover, a:visited span {
       border: none;
       overflow: hidden; }
       .activity .activity-process.expanded .activity-process-header {
-        background-color: #3976FF;
+        background-color: #49A8F3;
         color: white; }
         .activity .activity-process.expanded .activity-process-header div.process-name {
           color: white; }
@@ -515,14 +515,14 @@ a, a:hover, a:visited span {
   .dialog-box .dialog-button {
     border: none;
     outline: none;
-    background-color: #3976FF;
+    background-color: #49A8F3;
     margin-left: 16px;
     color: white;
     font-size: 14px;
     border-radius: 2px;
     padding: 8px 12px; }
   .dialog-box .dialog-cancel {
-    color: #3976FF;
+    color: #49A8F3;
     background-color: white; }
   .dialog-box .dialog-actions {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -1353,7 +1353,7 @@ div.create-product-dialog .create-product-description {
       .inventory .inventory-detail .i-detail-content .task-title button {
         border: 0;
         background-color: rgba(0, 0, 0, 0);
-        color: #3976FF; }
+        color: #49A8F3; }
     .inventory .inventory-detail .i-detail-content .inventory-task {
       margin: 0px -16px;
       padding: 16px;
@@ -1545,7 +1545,7 @@ div.zero-state {
       flex: 1; }
     .goals .goal span.more {
       font-size: 10px;
-      color: #3976FF;
+      color: #49A8F3;
       padding-left: 4px; }
     .goals .goal .goal-details {
       display: flex; }
