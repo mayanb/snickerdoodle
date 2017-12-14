@@ -10,12 +10,12 @@ $alert-yellow: #F8DE00;
 
 .alert {
 	//color: $alert-red;
+	display: flex;
 	-webkit-font-smoothing: antialiased;
 	font-size: 14px;
 	line-height: 16px;
 	border-bottom: 1px solid rgba(0,0,0,0.05);
-	margin-left: 16px;
-	padding: 16px 32px 16px 0;
+	padding: 16px;
 
 	i {
 		color: $alert-red;
@@ -44,10 +44,27 @@ $alert-yellow: #F8DE00;
 		flex: 0;
 	}
 
+	.alert-close {
+		visibility: hidden;
+		font-size: 16px;
+		color: #bdbdbd;
+	}
+
+	&:hover {
+		.alert-close {
+			visibility: visible;
+		}
+	}
+
+	.alert-actions {
+		margin-left: 28px;
+		margin-top: 4px;
+	}
+
 	.alert-link {
 		color: rgba(0,0,0,0.52);
 		border-bottom: 1px dashed rgba(0,0,0,0.3);
-		font-size: 12px;
+		font-size: 13px;
 		line-height: 16px;
 	}
 }
@@ -69,9 +86,10 @@ $alert-yellow: #F8DE00;
 	}
 
 	span {
-		margin-left: 8px;
+		margin-top: 4px;
 		display: inline-block;
 		border-bottom: 1px dashed rgba(0,0,0,0.3);
+		font-size: 13px;
 	}
 
 	i {

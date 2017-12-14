@@ -20,7 +20,7 @@ class Alerts extends React.Component {
 	}
 
 	render() {
-		let {flagged_tasks, missed_goals, anomalies, completed_goals, } = this.props
+		let { flagged_tasks, missed_goals, anomalies, completed_goals } = this.props
 		return (
 			<div className="alerts">
 				<AlertFlaggedTasks tasks={flagged_tasks}/>

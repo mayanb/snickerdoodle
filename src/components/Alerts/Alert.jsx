@@ -13,13 +13,16 @@ export default function Alert(props) {
 
 	return (
 		<div className="alert">
-			<div className="alert-text">
-				<i className={"material-icons alert-circle " + mood}>{icon}</i>
-				<span>{props.alert}</span>
+			<div className="alert-content">
+				<div className="alert-text">
+					<i className={"material-icons alert-circle " + mood}>{icon}</i>
+					<span>{props.alert}</span>
+				</div>
+				<div className="alert-actions">
+					{props.children}
+				</div>
 			</div>
-			<div style={{marginLeft: "28px", marginTop: "8px"}}>
-				{props.children}
-			</div>
+			<i className="material-icons alert-close">close</i> {/* TODO: ADD CLOSE/DISMISS FUNCTIONALITY */}
 		</div>
 	)
 }

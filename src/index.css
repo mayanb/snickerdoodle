@@ -1811,12 +1811,12 @@ div.zero-state {
   margin-bottom: 0; }
 
 .alert {
+  display: flex;
   -webkit-font-smoothing: antialiased;
   font-size: 14px;
   line-height: 16px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  margin-left: 16px;
-  padding: 16px 32px 16px 0; }
+  padding: 16px; }
   .alert i {
     color: #F14A4A; }
     .alert i.positive {
@@ -1832,10 +1832,19 @@ div.zero-state {
     margin-right: 8px;
     vertical-align: bottom;
     flex: 0; }
+  .alert .alert-close {
+    visibility: hidden;
+    font-size: 16px;
+    color: #bdbdbd; }
+  .alert:hover .alert-close {
+    visibility: visible; }
+  .alert .alert-actions {
+    margin-left: 28px;
+    margin-top: 4px; }
   .alert .alert-link {
     color: rgba(0, 0, 0, 0.52);
     border-bottom: 1px dashed rgba(0, 0, 0, 0.3);
-    font-size: 12px;
+    font-size: 13px;
     line-height: 16px; }
 
 .alert-flagged-task-title {
@@ -1852,9 +1861,10 @@ div.zero-state {
     border-radius: 8px;
     vertical-align: bottom; }
   .alert-flagged-task-title span {
-    margin-left: 8px;
+    margin-top: 4px;
     display: inline-block;
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.3); }
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.3);
+    font-size: 13px; }
   .alert-flagged-task-title i {
     display: none;
     margin-left: 4px;
