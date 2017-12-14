@@ -9,8 +9,6 @@ import * as attributeActions from './TaskAttributeActions'
 import TaskInformationTable from './TaskInformationTable'
 import TaskFlag from './TaskFlag'
 
-
-
 let dialogs = {
   deleteTask: {
     title: "Are you sure you want to delete this task?",
@@ -83,7 +81,6 @@ class Task extends React.Component {
         </div>
         <div className="task-content">
           <div>
-            <TaskFlag flagged={data.is_flagged} onUnflag={this.toggleTask} />
             <TaskInformationTable 
               attributes={data.organized_attrs}
               editingAttribute={ui.editingAttribute} 
@@ -91,12 +88,21 @@ class Task extends React.Component {
               finishEditing = {this.finishEditing}
               saveEditing={this.saveEditing}
             />
-
-            {
-              data.is_flagged?null:
-                (<button className="task_button" onClick={this.toggleTask}>Flag this item</button>)
-            }
-            <button className="task_button" onClick={this.deleteTask}>Delete Task</button>
+            <div className="task-buttons">
+              <button className="task-button" onClick={this.toggleTask}>
+                <i className="material-icons">flag</i>
+              </button>
+              <button className="task-button delete" onClick={this.deleteTask}>
+                <i className="material-icons">delete</i>
+              </button>
+            </div>
+            <TaskFlag flagged={data.is_flagged} onUnflag={this.toggleTask} />
+            <div className="task-anomaly">
+              <div>
+                <span>This task is anomalous.</span>
+              </div>
+              <i className="material-icons">close</i>
+            </div>
           </div>
           <div>
             <InputTable inputs={data.inputs}/>
@@ -156,9 +162,3 @@ const mapStateToProps = (state/*, props*/) => {
 }
 const connectedTask = connect(mapStateToProps)(Task)
 export default connectedTask
-
-/*
-
-<button className="task_button" onClick={this.closeTask}>Close Task</button>
-            
-*/

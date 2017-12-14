@@ -87,7 +87,7 @@ function BasicTaskAttribute(props) {
 
 function editButton(props) {
 	if (!props.isEditable) 
-		return <div className="task-attribute-edit-button" />
+		return (null);
 
 	return (
 		<div className="task-attribute-edit-button" onClick={props.startEditing}>

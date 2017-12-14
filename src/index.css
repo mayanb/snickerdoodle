@@ -297,7 +297,6 @@ div#blocker, #canvastest {
   .task-detail .task-attribute-table {
     border-radius: 4px;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    max-width: 400px;
     margin-bottom: 10px; }
     .task-detail .task-attribute-table .task-attribute-table-row {
       cursor: pointer;
@@ -374,11 +373,23 @@ div#blocker, #canvastest {
   .task-detail .task-row-header img {
     height: 12px;
     margin-right: 4px; }
-  .task-detail .task_button {
+  .task-detail .task-buttons {
+    display: flex; }
+  .task-detail .task-button {
     border: none;
     outline: none;
-    background-color: white;
-    color: #0F4FDF; }
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #4f4f4f;
+    font-family: "Apercu", "Interface", "Helvetica";
+    font-size: 14px;
+    padding: 12px 16px;
+    margin-top: 16px;
+    display: inline-block;
+    flex: 1; }
+    .task-detail .task-button:first-of-type {
+      margin-right: 16px; }
+    .task-detail .task-button.disabled {
+      opacity: 0.6; }
 
 a, a:hover, a:visited span {
   color: inherit;
@@ -1241,15 +1252,40 @@ div.create-product-dialog .create-product-description {
   font-size: 12px;
   padding: 8px 12px 8px 12px;
   display: flex;
-  flex-direction: row; }
+  flex-direction: row;
+  margin-top: 16px;
+  align-items: center;
+  height: 36px; }
   .task-flag > div {
     flex: 0; }
   .task-flag > div:first-child {
     flex: 1;
     flex-grow: 1; }
   .task-flag .task-flag-unflag {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.8);
     cursor: pointer; }
+
+.task-anomaly {
+  background-color: #f3b74b;
+  color: white;
+  border-radius: 4px;
+  line-height: 16px;
+  font-size: 12px;
+  padding: 8px 12px 8px 12px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+  align-items: center;
+  height: 36px; }
+  .task-anomaly > div {
+    flex: 0; }
+  .task-anomaly > div:first-child {
+    flex: 1;
+    flex-grow: 1; }
+  .task-anomaly a {
+    display: inline-block; }
+  .task-anomaly i {
+    font-size: 16px; }
 
 .login {
   position: absolute;
@@ -1843,7 +1879,7 @@ div.zero-state {
     margin-top: 4px; }
   .alert .alert-link {
     color: rgba(0, 0, 0, 0.52);
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.3);
+    border-bottom: none;
     font-size: 13px;
     line-height: 16px; }
   .alert.empty-state {
@@ -1865,7 +1901,7 @@ div.zero-state {
   .alert-flagged-task-title span {
     margin-top: 4px;
     display: inline-block;
-    border-bottom: 1px dashed rgba(0, 0, 0, 0.3);
+    border-bottom: none;
     font-size: 13px; }
   .alert-flagged-task-title i {
     display: none;
