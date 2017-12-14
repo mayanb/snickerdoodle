@@ -9,7 +9,7 @@ $alert-yellow: #F8DE00;
 }
 
 .alert {
-	//color: $alert-red;
+	// color: $alert-red;
 	display: flex;
 	-webkit-font-smoothing: antialiased;
 	font-size: 14px;
@@ -63,7 +63,7 @@ $alert-yellow: #F8DE00;
 
 	.alert-link {
 		color: rgba(0,0,0,0.52);
-		border-bottom: 1px dashed rgba(0,0,0,0.3);
+		border-bottom: none;
 		font-size: 13px;
 		line-height: 16px;
 	}
@@ -92,7 +92,7 @@ $alert-yellow: #F8DE00;
 	span {
 		margin-top: 4px;
 		display: inline-block;
-		border-bottom: 1px dashed rgba(0,0,0,0.3);
+		border-bottom: none; // 1px dashed rgba(0,0,0,0.3);
 		font-size: 13px;
 	}
 
