@@ -22,7 +22,7 @@ export default function Alert(props) {
 					{props.children}
 				</div>
 			</div>
-			<i className="material-icons alert-close">close</i> {/* TODO: ADD CLOSE/DISMISS FUNCTIONALITY */}
+			<i className="material-icons alert-close">close</i> {/* TODO: Add close/dismiss functionality */}
 		</div>
 	)
 }

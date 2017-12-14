@@ -67,6 +67,10 @@ $alert-yellow: #F8DE00;
 		font-size: 13px;
 		line-height: 16px;
 	}
+
+	&.empty-state {
+		border-bottom: none;
+	}
 }
 
 .alert-flagged-task-title {

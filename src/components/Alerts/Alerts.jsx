@@ -37,6 +37,9 @@ class Alerts extends React.Component {
 					})
 				}
 				<AlertAnomalousInputs anomalies={anomalies} />
+				{/* <div className="alert empty-state">
+					<span>You have no new alerts.</span>
+				</div> */} {/* TODO: Add logic for empty state if no alerts */}
 			</div>
 		)
 	}
