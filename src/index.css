@@ -1825,8 +1825,8 @@ div.zero-state {
       color: #F8DE00; }
   .alert:first-child {
     border-top: 1px solid rgba(0, 0, 0, 0.05); }
-  .alert .alert-text {
-    display: flex; }
+  .alert .alert-content {
+    flex: 1; }
   .alert .alert-circle {
     font-size: 20px;
     margin-right: 8px;
@@ -1835,11 +1835,11 @@ div.zero-state {
   .alert .alert-close {
     visibility: hidden;
     font-size: 16px;
-    color: #bdbdbd; }
+    color: #bdbdbd;
+    flex: 0; }
   .alert:hover .alert-close {
     visibility: visible; }
   .alert .alert-actions {
-    margin-left: 28px;
     margin-top: 4px; }
   .alert .alert-link {
     color: rgba(0, 0, 0, 0.52);

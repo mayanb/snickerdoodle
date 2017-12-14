@@ -28,7 +28,6 @@ function AlertFlaggedTaskTitle(props) {
 	return (
 		<div className="alert-flagged-task-title">
 			<a href={`/task/${props.id}`} target="_blank">
-				<div />
 				<span>{props.display}</span>
 				<i className="material-icons">open_in_new</i>
 			</a>

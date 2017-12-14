@@ -9,6 +9,7 @@ export default function AlertCompletedGoal(props) {
 	let prod = getProductTypeString(goal.product_code)
 	let unit = pluralize(g, goal.process_unit)
 	let alert = <span>Hooray! You completed your goal of <span style={{fontWeight: 700}}>{`${proc} ${g} ${prod} ${unit}`}</span> last week.</span>
+
 	return (
 		<Alert alert={alert}>
 			<a href="/activity" className="alert-link">View your logs</a>

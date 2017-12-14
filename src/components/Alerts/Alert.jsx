@@ -11,18 +11,24 @@ export default function Alert(props) {
 		mood = 'warning'
 	}
 
+	function closeAlert(e) {
+		{/* TODO: Add close/dismiss functionality */}
+	}
+
 	return (
 		<div className="alert">
+			<i className={"material-icons alert-circle " + mood}>{icon}</i>
 			<div className="alert-content">
 				<div className="alert-text">
-					<i className={"material-icons alert-circle " + mood}>{icon}</i>
 					<span>{props.alert}</span>
 				</div>
 				<div className="alert-actions">
 					{props.children}
 				</div>
 			</div>
-			<i className="material-icons alert-close">close</i> {/* TODO: Add close/dismiss functionality */}
+			<a href="#" onClick={closeAlert}>
+				<i className="material-icons alert-close">close</i>
+			</a>
 		</div>
 	)
 }
