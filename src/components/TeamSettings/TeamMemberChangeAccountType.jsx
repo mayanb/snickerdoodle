@@ -5,8 +5,8 @@ import * as actions from './MemberActions'
 import * as userActions from '../AccountMenu/UserActions'
 import ButtonDropdown from '../Card/ButtonDropdown'
 
-let admin_desc = "Here is a description of what an admin can and can't do."
-let user_desc = "Here is a description of what a regular user can and can't do."
+let admin_desc = "Admins can make changes to the factory settings."
+let user_desc = "Regular users can only create and edit tasks."
 
 class TeamMemberChangeAccountType extends React.Component {
 	constructor(props) {

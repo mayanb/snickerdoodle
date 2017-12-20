@@ -1,24 +1,29 @@
 import React from 'react'
 import Goals from '../Goals/Goals'
-import ActivitySummary from '../ActivitySummary/ActivitySummary'
+import Activity from '../Activity/Activity'
 import Alerts from '../Alerts/Alerts'
+import Card from '../Card/Card'
 
 export default function Home(props) {
 	return (
 		<div className="dashboard">
 
 		<div className="dash-content">
-			<div>
-				<BigHeader>How's it going?</BigHeader>
-				<div className={`activity goals page mini`}>
-					<Goals/>
-				</div>
-			</div>
+
 
 			<div>
-				<LittleHeader>Activity Summary</LittleHeader>
-				<div className={`activity goals page mini`}>
-					<ActivitySummary />
+
+
+				<div style={{maxWidth: "400px", minWidth: "400px"}}>
+					<BigHeader>How's it going?</BigHeader>
+					<Card>
+						<Goals/>
+					</Card>
+				</div>
+
+				<div style={{maxWidth: "900px", minWidth: "700px"}}>
+					<LittleHeader>Activity</LittleHeader>
+					<Activity />
 				</div>
 			</div>
 		</div>

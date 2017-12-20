@@ -16,6 +16,7 @@ import {
   PAGE,
   TOGGLE_EDITING
 } from '../../reducers/APIDataReducer'
+import { SWITCH_ACTIVE_GOAL_TYPE } from '../../reducers/GoalsReducer'
 import { GOALS } from '../../reducers/ReducerTypes'
 import {WEEKLY, MONTHLY} from './GoalTypes'
 import { sortByRank } from '../../utilities/arrayutils'
@@ -225,6 +226,15 @@ export function toggleEditing(timerange) {
     type: TOGGLE_EDITING,
     name: GOALS, 
     timerange: timerange
+  }
+}
+
+export function switchActiveGoalType(timerange) {
+  return {
+    type: SWITCH_ACTIVE_GOAL_TYPE,
+    name: GOALS,
+    timerange: WEEKLY,
+    set_to: timerange
   }
 }
 

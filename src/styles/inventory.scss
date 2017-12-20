@@ -265,19 +265,23 @@ div.zero-state {
 }
 
 .page {
+
     &.mini {
     background-color: white;
     border-radius: 4px;
-    border: 1px solid rgba(0,0,0,0.05);
-    //box-shadow: $shadow-0;
-    margin: 50px 32px;
+    box-shadow: $card-shadow;
 
     &:first-child {
       margin-top: 0px;
     }
 
      div.content {
-      padding: 20px 16px;
+      padding: 16px;
+    }
+
+    .act {
+      min-width: 600px;
+      width: 600px;
     }
   }
 }
