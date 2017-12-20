@@ -75,28 +75,16 @@ export default class Activity extends React.Component {
 		}
 
 		return (
-			<div>
+			<div className="activity page mini">
+			<div className="content">
 				{ this.renderDialog() }
 
-				<div className={`activity page ${this.state.mini?"mini":""}`}>
-					<Goals timerange={goalTypes.WEEKLY} />
+				<div className="activity-header page-header">
+					<h2>Logs</h2>
+					<div style={{zIndex: 0}}><Datepicker initialDates={this.state.dates} onChange={this.handleDateRangeChange.bind(this)} /></div>
 				</div>
-
-				<div className={`activity page ${this.state.mini?"mini":""}`}>
-					<Goals timerange={goalTypes.MONTHLY} />
-				</div>
-
-
-
-				<div className={`activity page ${this.state.mini?"mini":""}`}>
-					<div className="content">
-						<div className="activity-header page-header">
-							<h2 className="card-header">Activity Log</h2>
-							<div style={{zIndex: 0}}><Datepicker initialDates={this.state.dates} onChange={this.handleDateRangeChange.bind(this)} /></div>
-						</div>
-						{contentArea}
-					</div>
-				</div>
+				{contentArea}
+			</div>
 			</div>
 		)
 	}
@@ -283,7 +271,7 @@ function Process(props) {
 					third={pl(props.runs, "run")}
 					fourth={pl(parseInt(props.outputs), props.process_unit)}
 					fifth={"0 flagged"}
-					sixth={"0 experimental"}
+					sixth={"0 exp"}
 					seventh={button}
 
 				/>

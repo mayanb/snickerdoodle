@@ -9,7 +9,7 @@ import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
 import _users from './reducers/UserReducer'
 import * as types from './reducers/ReducerTypes'
-import {weeklyGoalPredicate, monthlyGoalPredicate} from './reducers/GoalsReducer'
+import {weeklyGoalPredicate, monthlyGoalPredicate, _goals} from './reducers/GoalsReducer'
 
 
 function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) {
@@ -27,8 +27,8 @@ export default function(data) {
   var reducer = combineReducers({
     users: _users,
     activity: createFilteredReducer(apiDataReducer, action => action.name === types.ACTIVITY, stateDefault),
-    weeklyGoals:  createFilteredReducer(apiDataReducer, weeklyGoalPredicate, stateDefault),
-    monthlyGoals:  createFilteredReducer(apiDataReducer, monthlyGoalPredicate, stateDefault),
+    weeklyGoals:  createFilteredReducer(_goals, weeklyGoalPredicate, stateDefault),
+    monthlyGoals:  createFilteredReducer(_goals, monthlyGoalPredicate, stateDefault),
     members:  createFilteredReducer(apiDataReducer, action => action.name === types.MEMBERS, stateDefault), 
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault), 
   	processes: createFilteredReducer(_process, action => action.name === types.PROCESSES, stateDefault), 

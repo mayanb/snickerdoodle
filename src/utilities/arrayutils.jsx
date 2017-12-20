@@ -1,3 +1,8 @@
+export function toArray(obj) {
+	if (!Array.isArray(obj))
+		return [obj]
+	return obj
+}
 
 export function findPosition(array, item, comparator) {
 	if (!comparator)

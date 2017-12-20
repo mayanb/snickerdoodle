@@ -1,6 +1,7 @@
 import React from 'react'
 import GoalBar from './GoalBar'
 import Img from '../Img/Img'
+import {pluralize} from '../../utilities/stringutils'
 
 export default function Goal(props) {
   return (
@@ -12,12 +13,12 @@ export default function Goal(props) {
       <div className="goal-main">
         <div className="goal-details">
           <div className="goal-details-left">
-            <Img className="inventory-icon" src="foil@3x" style={{height: "16px", paddingRight: "8px"}}/>
-            <span className="product">{props.goal.process_name + " " + get_product_display(props.goal.product_code)}</span>
-            <span className="more">{get_more_display(props.goal.product_code)}</span>
+            <Img className="inventory-icon" src="foil@3x" style={{height: "16px", paddingRight: "6px"}}/>
+            <span className="product">{props.goal.process_name + " " + get_product_display(props.goal.product_code, props.goal.all_product_types)}</span>
+            <span className="more">{get_more_display(props.goal.product_code, props.goal.all_product_types)}</span>
           </div>
           <div className="goal-details-right goal-buttons">
-            <span className="blue">{(props.goal.actual && !isNaN(props.goal.actual))?parseInt(props.goal.actual):"0"}</span><span>{`/${parseInt(props.goal.goal)} ${props.goal.process_unit.toUpperCase()}(S)`}</span>
+            <span className="blue">{(props.goal.actual && !isNaN(props.goal.actual))?parseInt(props.goal.actual):"0"}</span><span>{`/${parseInt(props.goal.goal)} ${pluralize(parseInt(props.goal.goal), props.goal.process_unit)}`}</span>
           </div>
         </div>
         <GoalBar {...props} />
@@ -26,7 +27,11 @@ export default function Goal(props) {
   )
 }
 
-function get_product_display(product_code) {
+function get_product_display(product_code, all) {
+  if (all) {
+    return '(all products)'
+  }
+
   if (product_code.length < 3) {
     return product_code.map(e => e.code).join(', ')
   } else {
@@ -34,7 +39,10 @@ function get_product_display(product_code) {
   }
 }
 
-function get_more_display(product_code) {
+function get_more_display(product_code, all) {
+  if (all) 
+    return ''
+
   if (product_code.length < 3) {
     return ""
   } else {

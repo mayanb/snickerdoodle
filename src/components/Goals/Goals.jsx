@@ -4,7 +4,7 @@ import update from 'immutability-helper'
 import * as types from './GoalTypes'
 import * as actions from './GoalsActions'
 import Goal from './Goal'
-import GoalHeader from './GoalHeader'
+import GoalsTabs from './GoalsTabs'
 import AddNewGoal from './AddNewGoal'
 import Sortable from '../Sortable/Container'
 import AddGoalDialog from './AddGoalDialog'
@@ -56,7 +56,7 @@ class Goals extends React.Component {
 		return (
 			<div className="goals">
 				<div className="content">
-					<GoalHeader edit={goals.data.length > 0} timerange={timerange} editable={!this.props.goals.ui.isEditing} onClick={this.toggleEditing.bind(this)}/>
+					<GoalsTabs />
 					<Sortable
 						cards={sortableGoals} 
 						canEdit={true} 
@@ -70,6 +70,17 @@ class Goals extends React.Component {
 			</div>
 		)
 	}
+
+	// goalHeader() {
+	// 	return (
+	// 		<div>
+	// 			<GoalsTabs />
+	// 			{ props.edit ? <Button secondary onClick={props.onClick}>{props.editable?"Edit":"Cancel"}</Button> : false }
+	// 		</div>
+	// 	)
+	// }
+
+	//<GoalHeader edit={goals.data.length > 0} timerange={timerange} editable={!this.props.goals.ui.isEditing} onClick={this.toggleEditing.bind(this)}/>
 
 	toggleEditing() {
 		this.props.dispatch(actions.toggleEditing(this.props.timerange))
@@ -116,9 +127,10 @@ class Goals extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-	let goals = state.weeklyGoals
-	if (props.timerange === types.MONTHLY)
-		goals = state.monthlyGoals
+	let goals = state.monthlyGoals
+	if (state.weeklyGoals.ui.active) {
+		goals = state.weeklyGoals
+	}
 
   return {
   	goals: goals,

@@ -387,7 +387,6 @@ a, a:hover, a:visited span {
 .activity {
   display: flex;
   max-width: 900px;
-  width: 50%;
   flex-direction: column; }
   .activity .activity-process {
     width: 100%;
@@ -1508,12 +1507,14 @@ div.zero-state {
 .page.mini {
   background-color: white;
   border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  margin: 50px 32px; }
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04); }
   .page.mini:first-child {
     margin-top: 0px; }
   .page.mini div.content {
-    padding: 20px 16px; }
+    padding: 16px; }
+  .page.mini .act {
+    min-width: 600px;
+    width: 600px; }
 
 .page .page-header {
   display: flex;
@@ -1574,7 +1575,6 @@ div.zero-state {
         -webkit-font-smoothing: antialiased; }
   .goals .goal {
     padding: 16px;
-    margin-top: 16px;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     margin-left: -16px;
     margin-right: -16px;
@@ -1865,31 +1865,30 @@ div.zero-state {
       margin-left: 12px; }
 
 .dashboard {
-  padding-right: 312px; }
+  padding-right: 332px; }
   .dashboard .dash-content {
     display: flex; }
     .dashboard .dash-content > div {
       flex: 1;
-      margin: 0px 0px 32px 32px;
-      padding-top: 48px; }
+      margin: 0px 0px 32px 32px; }
   .dashboard div.panel {
     padding-top: 0;
     display: flex;
-    width: 280px;
+    width: 300px;
     position: absolute;
     top: 64px;
     bottom: 0;
     right: 0;
     margin-right: 0px;
     padding-bottom: 0;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04); }
     .dashboard div.panel .little-header {
       margin-left: 16px; }
     .dashboard div.panel .alerts-container {
       padding-top: 48px;
       flex: 2;
       background-color: white;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
       overflow-y: scroll; }
 
 .alerts .alert:last-child {
@@ -1957,6 +1956,17 @@ div.zero-state {
     vertical-align: bottom; }
   .alert-flagged-task-title:hover i {
     display: inline-block; }
+
+.tabs {
+  display: flex; }
+  .tabs > div {
+    margin-right: 12px;
+    padding-bottom: 8px;
+    cursor: pointer; }
+
+.active-tab {
+  color: #0073F9;
+  border-bottom: 4px solid #0073F9; }
 
 .lesmis .links line {
   stroke: #999;
