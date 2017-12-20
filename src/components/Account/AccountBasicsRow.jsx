@@ -20,5 +20,5 @@ function renderEditIfEditable(props) {
 	if (!props.edit) {
 		return null
 	} 
-	return <span><i className="material-icons">mode_edit</i></span>
+	return <span><i className="material-icons" onClick={props.edit}>mode_edit</i></span>
 }

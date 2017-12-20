@@ -164,15 +164,16 @@ function refreshUserAccountFailure() {
 
 export function updateUserSetting(id, key, value) {
 	return function (dispatch) {
-		dispatch(requestUpdateUserSetting())
+		dispatch(requestUpdateUserSetting(key))
 
-		api.patch(`/ics/userprofiles/${id}/`)
+		api.patch(`/ics/userprofiles/edit/${id}/`)
 			.send({[key]: value})
 			.end(function (err, res) {
 				if (err || !res.ok) {
 					console.log(err)
+					dispatch(updateUserSettingFailure())
 				} else {
-					updateUserSetting()
+					dispatch(updateUserSettingSuccess(key, value))
 				}
 			})
 	}

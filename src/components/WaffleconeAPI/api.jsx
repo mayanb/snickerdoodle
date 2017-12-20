@@ -17,10 +17,7 @@ function get_active_user() {
 	return users.data[users.ui.activeUser]
 }
 
-
-
 function get(path) {
-
 	let url = urls.latest(host, path)
 	let user = {team: 1, user_id: 1}
 	try {
@@ -36,7 +33,6 @@ function get(path) {
 }
 
 function post(path) {
-
 	let url = urls.latest(host, path)
 	let team = -1
 	let token = ""
@@ -58,20 +54,16 @@ function post(path) {
 		//.set('X-CSRFToken', getCookie('csrftoken'))
 		//.withCredentials()
 		.send({userprofile: profile_id, created_by: id, team: team, team_created_by: team})
-
 }
 
 function put(path) {
-
 	let url = urls.latest(host, path)
 	let team = -1
 	let token = ""
 	try {
 		team = get_active_user().user.team
 		token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
-	} catch(e) {
-		
-	}
+	} catch(e) {}
 
 	return request('PUT', url)
 	.set('Content-Type', 'application/json')
@@ -89,5 +81,18 @@ function del(path, id) {
 
 }
 
-export default {get_active_user, get, post, del, host, put}
+function patch(path, id) {
+	let url = urls.latest(host, path)
+	let team = -1
+	let token = ""
+	try {
+		team = get_active_user().user.team
+		token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
+	} catch(e) {}
+
+	return request('PATCH', url)
+	.set('Content-Type', 'application/json')
+}
+
+export default {get_active_user, get, post, del, host, put, patch}
 

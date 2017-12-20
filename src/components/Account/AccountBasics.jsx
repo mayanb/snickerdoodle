@@ -12,7 +12,7 @@ import * as actions from '../AccountMenu/UserActions'
 let keyDisplays = {
 	password: 'Password', 
 	username_display: 'Username', 
-	email_address: 'Email Address'
+	email: 'Email Address'
 }
 
 class AccountBasics extends React.Component {
@@ -41,9 +41,9 @@ class AccountBasics extends React.Component {
 	}
 
 	renderEmailRow() {
-		let editFunction = () => this.handleStartEditing('email_address')
-		if (this.props.email_address) {
-			return <AccountBasicsRow title="Email Address" content={this.props.email_address} edit={editFunction}/>
+		let editFunction = () => this.handleStartEditing('email')
+		if (this.props.email) {
+			return <AccountBasicsRow title="Email Address" content={this.props.email} edit={editFunction}/>
 		}
 		let button = <Button link onClick={editFunction}>Set an email now</Button>
 		return  <AccountBasicsRow title="Email Address" content={button}/>
@@ -53,8 +53,8 @@ class AccountBasics extends React.Component {
 		return (
 			<div>
 				<Switch 
-					value={this.props.email_address && this.props.send_daily_email} 
-					onClick={() => this.updateUserSetting('send_daily_email', !this.props.send_daily_email)}
+					value={this.props.email && this.props.send_emails} 
+					onClick={() => this.updateUserSetting('send_emails', !this.props.send_emails)}
 				/>
 				<span style={{fontSize: "12px", marginLeft: "8px", lineHeight: "16px", display: "inline-block"}}>(Set an email address to enable)</span>
 			</div>
@@ -67,7 +67,7 @@ class AccountBasics extends React.Component {
 
 		return (
 			<AccountDetailsEdit 
-				key={this.state.key}
+				keyword={this.state.key}
 				keyDisplay={keyDisplays[this.state.key]}
 				initialValue={this.props[this.state.key]}
 				onSubmit={(value) => this.updateUserSetting(this.state.key, value)} 

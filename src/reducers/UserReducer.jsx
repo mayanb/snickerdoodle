@@ -238,7 +238,7 @@ function updateSetting(state, action) {
 
 function updateSettingSuccess(state, action) {
 	// in case you switched accounts in between 
-	if (!state.isUpdatingSetting)
+	if (!state.ui.isUpdatingSetting)
 		return state
 
 	return update(state, {
@@ -257,7 +257,7 @@ function updateSettingSuccess(state, action) {
 
 function udpateSettingFailure(state, action) {
 	// in case you switched accounts in between 
-	if (!state.isUpdatingSetting)
+	if (!state.ui.isUpdatingSetting)
 		return state
 	
 	return update(state, {
