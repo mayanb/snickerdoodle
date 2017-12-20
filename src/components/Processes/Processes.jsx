@@ -7,10 +7,7 @@ import ProcessListItem from './ProcessListItem'
 import ProcessesCard from './ProcessesCard'
 import ProductsArchiveDialog from '../Products/ProductsArchiveDialog'
 import CreateProcessDropdown from './CreateProcessDropdown'
-
-function titleRow() {
-  return <ProcessListItem header item={{code: "ID", name: "Name", unit: "Unit"}} />
-}
+import ProcessesList from './ProcessesList'
 
 class Processes extends React.Component {
   constructor(props) {
@@ -38,21 +35,14 @@ class Processes extends React.Component {
     var { data, ui, users } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type != 'a')
-
       return null
     return (
       <div className="nav-section processes">
-        <div className="nav-section-list">
-          { this.renderTitle() }
-          <PaginatedTable 
-            {...this.props}
-            onClick={this.handleSelectProcess} 
-            onPagination={this.handlePagination} 
-            Row={ProcessListItem}
-            TitleRow={titleRow}
-          />
-        </div>
-
+        <ProcessesList 
+          {...this.props} 
+          onSelect={this.handleSelectProcess} 
+          onPagination={this.handlePagination} 
+        />
         <div>
           <ProcessesCard 
             {...this.props} 

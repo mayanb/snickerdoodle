@@ -5,6 +5,7 @@ import Button from '../Card/Button'
 import Teams from '../Teams/Teams'
 import AccountMenu from '../AccountMenu/AccountMenu'
 import {TaskSelect} from '../OldComponents/Inputs'
+import Img from '../Img/Img'
 
 
 export default class Topbar extends React.Component {
@@ -23,6 +24,9 @@ export default class Topbar extends React.Component {
   render () {
     return (
       <div className="d-top">
+        <div className="nav-logo">
+          <Img src="logo@2x" height="26px" className="logo"/>
+        </div>
         <div className="nav-left">
           <TaskSelect placeholder="Search for a task or QR code" onChange={this.handleSearch} />
         </div>

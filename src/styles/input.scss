@@ -1,12 +1,13 @@
-input {
+input, select {
 	font-family: $sans-stack;
 	font-size: 14px;
-	line-height: 16px;
+	line-height: 20px;
+	height: 30px;
 	border: 1px solid $light-gray;
 	border-radius: 4px;
-	height:36px;
-	padding: 9px 8px 10px 8px;
+	padding: 4px;
 	outline: none;
+	background-color: white;
 
 	&:focus {
 		border-color: $theme-color !important;

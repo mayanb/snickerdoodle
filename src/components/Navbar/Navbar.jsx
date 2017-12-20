@@ -28,9 +28,6 @@ class Navbar extends React.Component {
           </div>
         </Link>
         <div className="bar">
-          <div className="logo" style={{display:"flex", justifyContent: "center", "alignItems": "center"}}>
-            <Img src="logo" style={{height: "96px", opacity: "0.3"}}/>
-          </div>
           <div>
             <NavigationGroup options={o1} links={l1} title={null} />
             <NavigationGroup options={o2} links={l2} title={"Printing"} />

@@ -1,18 +1,21 @@
 import React from 'react'
+import Card from '../Card/Card'
 import AccountIntegrationConnect from './AccountIntegrationConnect'
 
 export default function AccountIntegration(props) {
 	return (
-		<div className="account-integration">
-			<div className="integration-info">
-				<div>
-					<span>Google Spreadsheets</span>
+		<Card>
+			<div className="account-integration">
+				<div className="integration-info">
+					<div>
+						<span>Google Spreadsheets</span>
+					</div>
+					<AccountIntegrationConnect ext={props.ext}/>
 				</div>
-				<AccountIntegrationConnect ext={props.ext}/>
+				<div className="integration-detail">
+					<span>With the Google Drive integration, you can upload team, task, activity, and inventory information to a spreadsheet in Google Drive.</span>
+				</div>
 			</div>
-			<div className="integration-detail">
-				<span>With the Google Drive integration, you can upload team, task, activity, and inventory information to a spreadsheet in Google Drive.</span>
-			</div>
-		</div>
+		</Card>
 	)
 }

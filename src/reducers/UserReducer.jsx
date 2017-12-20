@@ -14,7 +14,12 @@ import {
 
 	REFRESH,
 	REFRESH_SUCCESS,
-	REFRESH_FAILURE
+	REFRESH_FAILURE,
+
+	REQUEST_UPDATE_SETTING,
+	REQUEST_UPDATE_SETTING_SUCCESS,
+	REQUEST_UPDATE_SETTING_FAILURE,
+
 } from '../components/AccountMenu/UserActions'
 
 function getDefaultState() {
@@ -29,7 +34,8 @@ function getDefaultState() {
 		  	isLoggingIn: false,
 		  	isLoggingOut: false,
 		  	activeUser: -1,
-		  	isAddingAccount: false
+		  	isAddingAccount: false,
+		  	isUpdatingSetting: null,
 		  }
 		}
 	}
@@ -65,6 +71,12 @@ export default function _users(state = getDefaultState(), action) {
 	    		return refreshSuccess(state, action)
 	    case REFRESH_FAILURE:
 	    		return refreshFailure(state, action)
+	    case REQUEST_UPDATE_SETTING:
+	    		return updateSetting(state, action)
+	    case REQUEST_UPDATE_SETTING_SUCCESS:
+	    		return updateSettingSuccess(state, action)
+	    case REQUEST_UPDATE_SETTING_FAILURE:
+	    		return udpateSettingFailure(state, action)
 	    default:
 	      return state
   	}
@@ -156,6 +168,7 @@ function requestLogoutSuccess(state, action) {
 			$merge: {
 				isLoggingOut: false,
 				activeUser: -1,
+				isUpdatingSetting: null,
 			}
 		}
 	})
@@ -178,7 +191,7 @@ function requestLogoutFailure(state, action) {
 function switchActiveUser(state, action) {
 	let newState = update(state, {
 		ui: {
-			$merge: {activeUser: action.id}
+			$merge: {activeUser: action.id, isUpdatingSetting: null}
 		}
 	})
 	window.localStorage.setItem('users-v5', JSON.stringify(newState))
@@ -213,4 +226,43 @@ function refreshSuccess(state, action) {
 
 function refreshFailure(state, action) {
 	return state
+}
+
+function updateSetting(state, action) {
+	return update(state, {
+		ui: {
+			isUpdatingSetting: {$set: action.key}
+		}
+	})
+}
+
+function updateSettingSuccess(state, action) {
+	// in case you switched accounts in between 
+	if (!state.isUpdatingSetting)
+		return state
+
+	return update(state, {
+		data: {
+			[state.ui.activeUser]: {
+				user: {
+					[action.key]: {$set: action.value}
+				}
+			}
+		},
+		ui: {
+			isUpdatingSetting: {$set: null}
+		}
+	})
+}
+
+function udpateSettingFailure(state, action) {
+	// in case you switched accounts in between 
+	if (!state.isUpdatingSetting)
+		return state
+	
+	return update(state, {
+		ui: {
+			isUpdatingSetting: {$set: null}
+		}
+	})
 }

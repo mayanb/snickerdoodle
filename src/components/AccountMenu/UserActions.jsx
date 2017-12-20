@@ -18,6 +18,10 @@ export const REFRESH = "REFRESH"
 export const REFRESH_SUCCESS = "REFRESH_SUCCESS"
 export const REFRESH_FAILURE = "REFRESH_FAILURE"
 
+export const REQUEST_UPDATE_SETTING = "REQUEST_UPDATE_SETTING"
+export const REQUEST_UPDATE_SETTING_SUCCESS = "REQUEST_UPDATE_SETTING_SUCCESS"
+export const REQUEST_UPDATE_SETTING_FAILURE = "REQUEST_UPDATE_SETTING_FAILURE"
+
 
 export function postRequestLogin(credentials, success, failure) {
 	return function (dispatch) {
@@ -157,3 +161,43 @@ function refreshUserAccountFailure() {
 	}
 }
 
+
+export function updateUserSetting(id, key, value) {
+	return function (dispatch) {
+		dispatch(requestUpdateUserSetting())
+
+		api.patch(`/ics/userprofiles/${id}/`)
+			.send({[key]: value})
+			.end(function (err, res) {
+				if (err || !res.ok) {
+					console.log(err)
+				} else {
+					updateUserSetting()
+				}
+			})
+	}
+}
+
+
+function requestUpdateUserSetting(key, value) {
+	return {
+		type: REQUEST_UPDATE_SETTING,
+		key: key,
+	}
+}
+
+function updateUserSettingSuccess(key, value) {
+	return {
+		type: REQUEST_UPDATE_SETTING_SUCCESS,
+		key: key,
+		value: value,
+	}
+}
+
+function updateUserSettingFailure(key, value) {
+	return {
+		type: REQUEST_UPDATE_SETTING_FAILURE,
+		key: key,
+		value: value,
+	}
+}

@@ -1,19 +1,26 @@
 $sans-stack:'Apercu', 'Interface', 'Helvetica';
+$background-color: #F8F8F8;
+$red: #DD5151;
+$black: rgba(0,0,0,0.86);
+$gray: rgba(0,0,0,0.48);
 $light-gray: rgba(0,0,0,0.1);
-$theme-color: #2198EE; //42AFFF;
+$theme-color: #0073F9; //#2198EE; //42AFFF;
 $dark-theme-color: #0068B4;
 $baseline: 8px;
 $nav-width: 144px;
+$nav-height: 64px;
+$top-padding: 48px;
+$card-shadow: 0 2px 4px 0 rgba(0,0,0,0.04);
 
-html, body {
+html, body, #root {
 	width: 100%;
 	height: 100%;
-
 }
 
 .layout {
 	display:flex;
 	flex-direction: row;
+	height: 100%;
 }
 
 .baseline-grid {
@@ -29,14 +36,19 @@ html, body {
 }
 
 .application-content {
+	padding-top: $nav-height + $top-padding;
 	padding-left: $nav-width;
+	height: 100%;
+	display: flex;
 	flex-grow: 1;
+	background-color: $background-color;
+	overflow-y: scroll;
 }
 
 body {
 	font-family: $sans-stack;
-	font-size: 0.75em;
-	line-height: 0.9em;
+	font-size: 14px;
+	line-height: 20px;
 	color: rgba(79,79,79,1);
 	padding: 0;
 	margin: 0;
@@ -47,6 +59,6 @@ div, input, * {
 }
 
 span {
-	line-height: 16px;
+	line-height: 20px;
 }
 

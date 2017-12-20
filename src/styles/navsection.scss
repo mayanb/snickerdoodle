@@ -1,15 +1,19 @@
 .nav-section {
 	display: flex;
 	flex-direction:row;
-	flex-grow: 100;
-	margin-bottom: 150px;
+	flex: 1;
 
 	&>div {
 	margin: 0px 48px;
-	flex: 7;
+	flex: 3;
 
+		&:first-child {
+			flex: 1;
+		}
+	
 		&>.card {
 			height: 100%;
+			max-width: 700px;
 		}
 
 		&:last-child {
@@ -28,6 +32,9 @@
 	}
 
 	.nav-section-list {
-		margin-top: 32px;
+		.card {
+			padding: 0;
+			
+		}
 	}
 }

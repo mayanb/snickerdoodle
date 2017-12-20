@@ -26,6 +26,7 @@ function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) 
 export default function(data) {
   var reducer = combineReducers({
     users: _users,
+    activity: createFilteredReducer(apiDataReducer, action => action.name === types.ACTIVITY, stateDefault),
     weeklyGoals:  createFilteredReducer(apiDataReducer, weeklyGoalPredicate, stateDefault),
     monthlyGoals:  createFilteredReducer(apiDataReducer, monthlyGoalPredicate, stateDefault),
     members:  createFilteredReducer(apiDataReducer, action => action.name === types.MEMBERS, stateDefault), 
@@ -43,8 +44,13 @@ export default function(data) {
     inventoryUnits: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORY_UNITS, stateDefault),
     orderItems: createFilteredReducer(apiDataReducer, action => action.name === types.ORDER_ITEMS, stateDefault),
     packingOrder: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDER, stateDefault),
-    packingOrders: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDERS, stateDefault),  })
-
+    packingOrders: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDERS, stateDefault),
+    alert_missed_goals: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_MISSED_GOALS, stateDefault),
+    alert_flagged_tasks: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_FLAGGED_TASKS, stateDefault),
+    alert_anomalous_inputs: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_ANOMALOUS_INPUTS, stateDefault),
+    alert_completed_goals: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_COMPLETED_GOALS, stateDefault),
+    alert_unflagged_tasks: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_UNFLAGGED_TASKS, stateDefault),
+  })
   const store = createStore(reducer, applyMiddleware(thunkMiddleware))
 
   return store

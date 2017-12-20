@@ -33,9 +33,8 @@ export default class ProcessCard extends React.Component {
 			<Card big={true}>
 				<div className="products-card">
 					<ElementHeader {...product} actions={this.renderMenu()}/>
-					{this.renderDescription(product)}
-					{this.renderCreatedBy(product)}
 					{this.renderRule()}
+					{this.renderDescription(product)}
 					<ProcessAttributeList />
 					{this.renderEditDialog()}
 				</div>
@@ -76,8 +75,9 @@ export default class ProcessCard extends React.Component {
 
 		return (
 			<div className={"products-card-section products-card-description " + className}>
+				<h2 className="description-header">Description</h2>
 				<span>
-					{description}
+					Apple have made the great improvements in the Interface Builder in Xcode 8. Using the size classes became more intuitive, ability to zoom your storyboard is very convenient.
 				</span>
 			</div>
 		)

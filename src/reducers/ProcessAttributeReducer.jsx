@@ -11,6 +11,9 @@ export const REQUEST_ARCHIVE_ATTRIBUTE_FAILURE = 'REQUEST_ARCHIVE_ATTRIBUTE_FAIL
 export const REQUEST_MOVE_ATTRIBUTE = 'REQUEST_MOVE_ATTRIBUTE'
 export const REQUEST_MOVE_ATTRIBUTE_SUCCESS = 'REQUEST_MOVE_ATTRIBUTE_SUCCESS'
 export const REQUEST_MOVE_ATTRIBUTE_FAILURE = 'REQUEST_MOVE_ATTRIBUTE_FAILURE'
+export const REQUEST_UPDATE_ATTRIBUTE = 'REQUEST_UPDATE_ATTRIBUTE'
+export const REQUEST_UPDATE_ATTRIBUTE_SUCCESS = 'REQUEST_UPDATE_ATTRIBUTE_SUCCESS'
+export const REQUEST_UPDATE_ATTRIBUTE_FAILURE = 'REQUEST_UPDATE_ATTRIBUTE_FAILURE'
 
 
 export function _processAttribute(state, action) {
@@ -37,9 +40,27 @@ export function _processAttribute(state, action) {
 			return requestMoveAttributeSuccess(state, action)
 		case REQUEST_MOVE_ATTRIBUTE_FAILURE:
 			return requestMoveAttributeFailure(state, action)
+		case REQUEST_UPDATE_ATTRIBUTE_SUCCESS:
+			return requestUpdateAttributeSuccess(state, action)
+
 		default:
 			return state
 	}
+}
+
+function requestUpdateAttributeSuccess(state, action) {
+	let index = state.data[action.process].attributes.findIndex((e) => e.id == action.id)
+	return update(state, {
+		data: {
+			[action.process]: {
+				attributes: {
+					[index]: { 
+						$merge: action.attribute_updates
+					}
+				}
+			}
+		}
+	})
 }
 
 function startAddingAttribute(state, action) {

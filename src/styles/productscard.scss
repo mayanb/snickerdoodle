@@ -1,11 +1,12 @@
 .products-card {
 	color: rgb(79,79,79);
-	font-size: 12px;
-	line-height: 16px;
+	font-size: 14px;
+	line-height: 20px;
 
-	.products-card-section {
-		margin-bottom: 16px;
-		//background-color: rgba(255,0,0,0.5);
+	h2 {
+		color: $gray;
+		display: block;
+		margin-bottom: 8px;
 	}
 
 	a.inventorylink {
@@ -18,14 +19,16 @@
 		flex-direction: row;
 
 		h1 {
+				font-size: 20px;
+				line-height: 40px;
+				color: $black;
 				display: inline-block;
 		}
 	}
 
 	.products-card-icon {
-		margin-top: 4px;
 		display: inline-block;
-		margin-right: 20px;
+		margin-right: 12px;
 		vertical-align: middle;
 
 	}
@@ -39,9 +42,13 @@
 		flex-grow: 1;
 	}
 
+	.products-card-description {
+		margin-bottom: 32px;
+	}
+
 	.products-card-description-empty {
-		color: rgba(0,0,0,0.3);
-		font-style: italic; 
+		// color: rgba(0,0,0,0.3);
+		// font-style: italic; 
 	}
 
 	.products-card-created-by {
@@ -51,8 +58,8 @@
 	.products-card-rule {
 		height: 1px;
 		background-color: $light-gray;
-		margin: 24px;
-		margin-bottom: 23px;
+		margin: 16px;
+		margin-bottom: 15px;
 	}
 
 	.products-card-actions {

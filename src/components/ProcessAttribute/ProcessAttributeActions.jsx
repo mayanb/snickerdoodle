@@ -11,6 +11,7 @@ import {
   REQUEST_MOVE_ATTRIBUTE,
   REQUEST_MOVE_ATTRIBUTE_SUCCESS,
   REQUEST_MOVE_ATTRIBUTE_FAILURE,
+  REQUEST_UPDATE_ATTRIBUTE_SUCCESS,
 } from '../../reducers/ProcessAttributeReducer'
 import {  PROCESSES, PROCESS_INVENTORY } from '../../reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
@@ -155,3 +156,28 @@ function requestMoveAttributeFailure(process_index) {
   }
 }
 
+export function postUpdateAttribute(p, id, updated) {
+  return function (dispatch) {
+    dispatch(requestUpdateAttributeSuccess(p, id, updated))
+
+    return api.put(`/ics/attributes/${id}/`)
+      .send(updated)
+      .end( function (err, res) {
+        if (err || !res.ok) {
+          alert("Ugh")
+        } else {
+          //dispatch(requestUpdateAttributeSuccess(p, id, updated))
+        }
+      })
+  }
+
+  function requestUpdateAttributeSuccess(p, id, updated) {
+    return {
+      type: REQUEST_UPDATE_ATTRIBUTE_SUCCESS,
+      name: PROCESSES,
+      process: p,
+      id: id,
+      attribute_updates: updated,
+    }
+  }
+}

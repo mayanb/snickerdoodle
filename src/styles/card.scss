@@ -1,6 +1,6 @@
 .card {
 	border-radius: 8px;
-	box-shadow: 0 0 13px 0 rgba(161,161,161,0.33);
+	box-shadow: $card-shadow;
 	padding: 16px;
 	overflow-x: hidden;
 	background-color:white;
@@ -13,8 +13,8 @@
 	}
 
 	&.big {
-		padding: 32px;
-		border-radius: 18px;
+		padding: 16px;
+		border-radius: 8px;
 		margin-right: 48px;
 
 		.rule {

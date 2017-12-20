@@ -1,9 +1,10 @@
 .products-list-item {
+	padding: 0 16px;
 	display:flex;
 	flex-direction: row;
 	line-height: 39px; // idk why its not doing border-box sizing
 	cursor: pointer;
-
+  
 	&.products-list-header {
 		color: rgba(0,0,0,0.3);
 		font-size: 11px;
@@ -25,11 +26,13 @@
 		// make our select box centered in the line
 		display:flex;
 		align-items: center;
+		margin-right: 8px;
 	}
 
 	.products-list-code {
 		flex: 3;
 		text-overflow: ellipsis;
+		font-weight: 700;
 	}
 
 	.products-list-name {

@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactImageFallback from 'react-image-fallback'
 
 
 export default class ProcessListItem extends React.Component {
@@ -8,13 +9,18 @@ export default class ProcessListItem extends React.Component {
 			+ (this.props.header?" products-list-header":"")
 	}
 
+
+
 	render() {
 		let { isSelected, item, onClick } = this.props
+		let errorImg = `${process.env.PUBLIC_URL}/public/img/default@3x.png`
+		let symbol = <ReactImageFallback src={process.env.PUBLIC_URL + `/img/${item.icon}@3x.png`} fallbackImage={errorImg}/>
+
 		return (
 			<div className={this.getClassNames()} onClick={onClick}>
 
 				<div className={"products-list-select-circle"}>
-					<SelectCircle isSelected={isSelected} />
+					{symbol}
 				</div>
 
 				<div className={"products-list-code"}>
@@ -23,10 +29,6 @@ export default class ProcessListItem extends React.Component {
 				<div className={"products-list-name"}>
 					{item.name}
 				</div>
-				<div className={"products-list-unit"}>
-					{item.unit}
-				</div>
-				
 			</div>
 		)
 	}

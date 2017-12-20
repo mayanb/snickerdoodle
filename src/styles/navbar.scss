@@ -1,10 +1,11 @@
 .navbar {
-	background-color: $theme-color;
+	background-color: $background-color;
 	min-width: 64px;
 	position: fixed;
 	top: 0;
 	left: 0;
 	height: 100vh;
+	border-right: 1px solid $gray;
 
 
 	// text
@@ -15,10 +16,4 @@
 		padding: 0px;
 
 	}
-}
-
-.logo {
-	min-height: 64px;
-	min-width: 64px;
-	background-color: #42AFFF;
 }

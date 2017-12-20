@@ -12,7 +12,7 @@ class Account extends React.Component {
 		return (
 			<div className="my-account">
 				<AccountHeader />
-				<AccountBasics  {...account.user} />
+				<AccountBasics />
 				<AccountIntegrations ext={this.props.match.params.ext} />
 				<AccountTeam />
 			</div>

@@ -1,12 +1,26 @@
 .my-account {
-	max-width: 420px;
+	max-width: 500px;
 	padding-left: 36px;
 
 }
 
+.account-header {
+	h2 {
+		font-weight: 700;
+		font-size: 20px;
+		line-height: 40px;
+	}
+}
+
+.account-sectionheader {
+	h3 {
+		text-transform: none;
+		color: $gray;
+	}
+}
+
 .account-basics, .account-integrations, .account-team {
-	padding-top: 10px;
-	padding-bottom: 50px;
+	margin-bottom: 50px;
 }
 
 .account-basics-row {
@@ -14,15 +28,28 @@
 	padding: 4px 0;
 
 	div {
-		flex: 1;
+		flex: 3;
+
+		&:first-child {
+			flex: 2;
+			color: $gray;
+		}
+
+		&:last-child {
+			flex: 1;
+		}
+
+		i {
+			font-size: 16px;
+			line-height: 20px;
+			cursor: pointer;
+			color: $primary;
+		}
 	}
 }
 
 .account-integration {
-	background-color: rgba(187,187,187,0.09);
 	-webkit-font-smoothing: antialiased;
-	border-radius: 4px;
-	padding: 16px;
 
 	.integration-info {
 		display: flex;
@@ -106,7 +133,8 @@
 				font-size: 14px;
 				line-height: 16px;
 				vertical-align: bottom;
-				padding-left: 2px;
+				padding-left:
+				 2px;
 			}
 		}
 

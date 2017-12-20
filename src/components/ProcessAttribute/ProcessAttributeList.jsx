@@ -23,14 +23,17 @@ class ProcessAttributeList extends React.Component {
 
 		return (
 			<div className="products-card-section products-card-attributes">
-				<h2>Attributes</h2>
+				<div className="attribute-header">
+					<h2>Attributes</h2>
+					<button onClick={this.startAddingAttribute}>Add a new attribute</button>
+				</div>
+				{ this.renderAddAttributeSection() }
 				<Sortable 
 					cards={item.attributes} 
 					canEdit={true} 
 					finishMovingCard={this.moveAttribute.bind(this)} 
 					renderer={ProcessAttribute} 
 				/>
-				{ this.renderAddAttributeSection() }
 			</div>
 		)
 	}
@@ -38,8 +41,9 @@ class ProcessAttributeList extends React.Component {
 	renderAddAttributeSection() {
 		if (this.props.ui.isAddingAttribute)
 			return (<ProcessAttributeCreator onCancel={this.finishAddingAttribute} onSubmit={this.saveAttribute}/>)
+		return null
 
-		return (<AddAttributeButton onClick={this.startAddingAttribute}/>)
+		//return (<AddAttributeButton onClick={this.startAddingAttribute}/>)
 	}
 
 	// MARK:- ACTIONS 
@@ -74,22 +78,9 @@ class ProcessAttributeList extends React.Component {
 
 
 
-function AddAttributeButton(props) {
-	let button = (
-		<span onClick={props.onClick}>
-			<i className="material-icons">add</i>
-			Add an attribute
-		</span>
-	)
-
-	return (
-		<ProcessAttribute 
-			name={button} 
-			type={""} 
-			newAttribute={true}
-		/>
-	)
-}
+// function AddAttributeButton(props) {
+// 	return <ProcessAttributeCreator onCancel={this.finishAddingAttribute} onSubmit={this.saveAttribute}/>
+// }
 
 
 const mapStateToProps = (state/*, props*/) => {
