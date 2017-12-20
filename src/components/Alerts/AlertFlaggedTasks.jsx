@@ -7,6 +7,10 @@ import Alert from './Alert'
 export default class AlertFlaggedTasks extends React.Component {
 	render() {
 		let { tasks } = this.props
+		var taskContent = JSON.parse(tasks.variable_content)
+		if (!Array.isArray(taskContent)) {
+			tasks = [taskContent]
+		}
 		if (!tasks || !tasks.length) {
 			return false
 		}

@@ -13,14 +13,42 @@ class Alerts extends React.Component {
 		let {users} = this.props
 		let user = users.data[users.ui.activeUser].user
 
-		this.props.dispatch(actions.fetchCompletedGoals(user.profile_id))
-		this.props.dispatch(actions.fetchMissedGoals(user.profile_id))
-		this.props.dispatch(actions.fetchFlaggedTasks())
-		this.props.dispatch(actions.fetchAnomalousInputs())
+		// this.props.dispatch(actions.fetchCompletedGoals(user.profile_id))
+		// this.props.dispatch(actions.fetchMissedGoals(user.profile_id))
+		// this.props.dispatch(actions.fetchFlaggedTasks())
+		// this.props.dispatch(actions.fetchAnomalousInputs())
+		this.props.dispatch(actions.fetchAlerts())
 	}
 
+	// render() {
+	// 	let {flagged_tasks, missed_goals, anomalies, completed_goals, } = this.props
+	// 	return (
+	// 		<div className="alerts">
+	// 			<AlertFlaggedTasks tasks={flagged_tasks}/>
+	// 			{
+	// 				missed_goals.map(function (g, i) {
+	// 					return <AlertMissedGoal key={i} goal={g} />
+	// 				})
+	// 			}
+	// 			{
+	// 				completed_goals.map(function (g, i) {
+	// 					console.log('completed')
+	// 					console.log(g)
+	// 					return <AlertCompletedGoal key={i} goal={g} />
+	// 				})
+	// 			}
+	// 			<AlertAnomalousInputs anomalies={anomalies} />
+	// 		</div>
+	// 	)
+	// }
 	render() {
-		let {flagged_tasks, missed_goals, anomalies, completed_goals, } = this.props
+		let {alerts } = this.props
+		var flagged_tasks = alerts.filter(e => e.alert_type == 'ft')
+		var unflagged_tasks = alerts.filter(e => e.alert_type == 'ut')
+		var missed_goals = alerts.filter(e => e.alert_type == 'ig')
+		var completed_goals = alerts.filter(e => e.alert_type == 'cg')
+		var anomalies = alerts.filter(e => e.alert_type == 'ai')
+
 		return (
 			<div className="alerts">
 				<AlertFlaggedTasks tasks={flagged_tasks}/>
@@ -40,6 +68,7 @@ class Alerts extends React.Component {
 			</div>
 		)
 	}
+
 }
 
 const mapStateToProps = (state, props) => {
@@ -49,6 +78,7 @@ const mapStateToProps = (state, props) => {
 		missed_goals: state.alert_missed_goals.data,
 		anomalies: state.alert_anomalous_inputs.data,
 		completed_goals: state.alert_completed_goals.data,
+		alerts: state.alerts.data
 	}
 }
 

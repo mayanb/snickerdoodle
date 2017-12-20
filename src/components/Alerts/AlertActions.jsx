@@ -10,26 +10,31 @@ import {
   ALERT_ANOMALOUS_INPUTS,
   ALERT_COMPLETED_GOALS,
   ALERT_UNFLAGGED_TASKS, 
+  ALERTS,
 } from '../../reducers/ReducerTypes'
 
-export function fetchCompletedGoals(user_id) {
-  return fetch('/ics/alerts/complete-goals', ALERT_COMPLETED_GOALS, user_id)
-}
+// export function fetchCompletedGoals(user_id) {
+//   return fetch('/ics/alerts/complete-goals', ALERT_COMPLETED_GOALS, user_id)
+// }
 
-export function fetchUnflaggedTasks() {
-  return fetch('/ics/alerts/recently-unflagged-tasks', ALERT_UNFLAGGED_TASKS)
-}
+// export function fetchUnflaggedTasks() {
+//   return fetch('/ics/alerts/recently-unflagged-tasks', ALERT_UNFLAGGED_TASKS)
+// }
 
-export function fetchMissedGoals() {
-  return fetch('/ics/alerts/incomplete-goals', ALERT_MISSED_GOALS)
-}
+// export function fetchMissedGoals() {
+//   return fetch('/ics/alerts/incomplete-goals', ALERT_MISSED_GOALS)
+// }
 
-export function fetchFlaggedTasks() {
-  return fetch('/ics/alerts/recently-flagged-tasks', ALERT_FLAGGED_TASKS)
-}
+// export function fetchFlaggedTasks() {
+//   return fetch('/ics/alerts/recently-flagged-tasks', ALERT_FLAGGED_TASKS)
+// }
 
-export function fetchAnomalousInputs() {
-  return fetch('/ics/alerts/recent-anomolous-inputs', ALERT_ANOMALOUS_INPUTS)
+// export function fetchAnomalousInputs() {
+//   return fetch('/ics/alerts/recent-anomolous-inputs', ALERT_ANOMALOUS_INPUTS)
+// }
+
+export function fetchAlerts() {
+  return fetch('ics/alerts/', ALERTS)
 }
 
 function fetch(endpoint, type, user_id) {
