@@ -576,6 +576,10 @@ div, input, * {
 span {
   line-height: 20px; }
 
+.new-features-card {
+  min-width: 500px;
+  max-width: 800px; }
+
 .d-nav {
   z-index: 1;
   background-color: #F8F8F8;
