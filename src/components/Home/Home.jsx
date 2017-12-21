@@ -3,39 +3,43 @@ import Goals from '../Goals/Goals'
 import Activity from '../Activity/Activity'
 import Alerts from '../Alerts/Alerts'
 import Card from '../Card/Card'
+import NewFeatures from '../NewFeatures/NewFeatures'
 
 export default function Home(props) {
 	return (
-		<div className="dashboard">
+		<div>
+			<NewFeatures />
+			<div className="dashboard">
 
-		<div className="dash-content">
-
-
-			<div>
-
-
-				<div style={{maxWidth: "400px", minWidth: "400px"}}>
-					<BigHeader>How's it going?</BigHeader>
-					<Card>
-						<Goals/>
-					</Card>
-				</div>
-
-				<div style={{maxWidth: "900px", minWidth: "700px"}}>
-					<LittleHeader>Activity</LittleHeader>
-					<Activity />
-				</div>
-			</div>
-		</div>
+			<div className="dash-content">
 
 
-			<div className="panel">
-				<div className="alerts-container">
-					<LittleHeader>Alerts</LittleHeader>
-						<Alerts />
+				<div>
+
+
+					<div style={{maxWidth: "400px", minWidth: "400px"}}>
+						<BigHeader>How's it going?</BigHeader>
+						<Card>
+							<Goals/>
+						</Card>
+					</div>
+
+					<div style={{maxWidth: "900px", minWidth: "700px"}}>
+						<LittleHeader>Activity</LittleHeader>
+						<Activity />
+					</div>
 				</div>
 			</div>
-			
+
+
+				<div className="panel">
+					<div className="alerts-container">
+						<LittleHeader>Alerts</LittleHeader>
+							<Alerts />
+					</div>
+				</div>
+				
+			</div>
 		</div>
 	)
 }

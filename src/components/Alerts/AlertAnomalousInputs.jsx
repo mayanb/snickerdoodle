@@ -4,20 +4,26 @@ import { connect } from 'react-redux'
 import {data} from './data'
 import {pluralize} from '../../utilities/stringutils'
 import Alert from './Alert'
+import {toArray} from '../../utilities/arrayutils'
 
 export default class AlertAnomalousInputs extends React.Component {
 	render() {
-		let tasks = update(this.props.anomalies, {})
+		if (!this.props.anomalies) {
+			return false
+		}
+
+		let tasks = toArray(JSON.parse(this.props.anomalies.variable_content))
 		if (!tasks || !tasks.length) {
 			return false
 		}
 
+		// filter for unique tasks
 		var task_ids = {}
 		tasks.filter(function (t) {
-			if (task_ids[t.task_id]) {
+			if (task_ids[t.task]) {
 				return false
 			} 
-			task_ids[t.id] = t
+			task_ids[t.task] = t
 			return true
 		})
 		
