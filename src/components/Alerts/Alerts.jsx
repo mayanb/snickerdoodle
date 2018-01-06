@@ -65,10 +65,6 @@ class Alerts extends React.Component {
 		// var anomalies = alerts.filter(e => e.alert_type == 'ai')
 
 		return (
-				<AlertsEmpty />
-		)
-
-		return (
 			<div className="alerts">
 				<AlertCompletedGoals isCompleted={true} goals={completed_goals} />
 				<AlertFlaggedTasks isFlagging={true} tasks={flagged_tasks}/>
