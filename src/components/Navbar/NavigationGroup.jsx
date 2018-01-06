@@ -4,16 +4,16 @@ import {NavLink} from 'react-router-dom'
 
 export default function NavigationGroup(props) {
 	let {options, links, title} = props
+
   return (
     <div className="nav-group">
-      {title?<span>{title}</span>:null}
+      {title?<span>----------------</span>:null}
       <ul>
       {
         options.map(function (x, i) {
           return (
           <li key={i}>
             <NavLink exact to={"/" + links[i]} activeClassName={"active"}>
-            <Img src={links[i]||"activity"} className="nav-icon" />
             {x}
             </NavLink>
           </li>
@@ -24,3 +24,5 @@ export default function NavigationGroup(props) {
     </div>
   )
 }
+
+// <Img src={links[i]||"activity"} className="nav-icon" />

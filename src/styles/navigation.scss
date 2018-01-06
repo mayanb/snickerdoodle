@@ -19,38 +19,32 @@
 
 	.nav-group {
 		//border-bottom: 1px solid rgba(39,43,46,0.5);
-		padding-left: 16px;
 
 		span {
 			text-transform: uppercase;
 			font-family: "Apercu Mono";
 			font-size: 10px;
 			display: block;
-			padding: 16px 0;
 			color: $gray;
 		}
 
-		li {
-			margin-bottom: 16px;
-
-			&:first-child {
-				margin-top: 16px;
-			}
+		li a {
+			display: inline-block;
+			padding: 16px 0 16px 16px;
+			width: 100%;
 
 			.nav-icon {
 				height: 16px;
 				vertical-align: top;
 				opacity: 0.4;
-				margin-right: 8px;
+				padding-right: 8px;
 			}
 
-			// make room for that border
-			&:last-child {
-				margin-bottom: 15px;
-			}
+			&.active {
+				color: $theme-color;
+				font-weight: bold;
+				background-color: #DEEDFE;
 
-			a.active {
-				color: rgba(255,255,255,0.9);
 				img {
 					opacity: 1;
 				}

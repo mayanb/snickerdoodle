@@ -11,16 +11,18 @@
 	& > span,  & > div {
 		flex: 1;
 		display: block;
-		color: $gray;
+		color: rgba(34,34,34,0.48);
 		white-space: nowrap;
 		min-width: 0;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		margin-bottom: 8px;
+		margin-right: 8px;
 
 		&:last-child {
 			flex: 2;
 			color: $black;
+			margin-right: 0px;
 		}
 	}
 

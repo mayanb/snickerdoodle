@@ -7,8 +7,8 @@ export function ElementHeader(props) {
 
 	return (
 		<div className="products-card-section products-card-header">
-			<div className="products-card-icon" style={{height: "24px"}}>
-					<Icon src="" size="40px" content={props.name}/>
+			<div className="products-card-icon" style={{height: "40px"}}>
+					<Icon src={props.icon?ic(props.icon):false} size="40px" content={" "}/>
 				</div>
 				<h1 className="products-card-code">
 					{`${props.name} (${props.code})`}
@@ -18,4 +18,8 @@ export function ElementHeader(props) {
 				</div>
 			</div>
 	)
+}
+
+function ic(str = "abcd") {
+	return `${str.substring(0, str.length-4)}@3x`
 }

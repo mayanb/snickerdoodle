@@ -11,7 +11,6 @@ export default function ProcessAttributeDatatype(props) {
 
 	return (
 		<div className="process-attribute-datatype">
-			<Img height="20px" src={img} />
 			<span>{text}</span>
 		</div>
 	)

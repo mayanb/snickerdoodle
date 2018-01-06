@@ -13,8 +13,8 @@ export default class ProcessListItem extends React.Component {
 
 	render() {
 		let { isSelected, item, onClick } = this.props
-		let errorImg = `${process.env.PUBLIC_URL}/public/img/default@3x.png`
-		let symbol = <ReactImageFallback src={process.env.PUBLIC_URL + `/img/${item.icon}@3x.png`} fallbackImage={errorImg}/>
+		let errorImg = `/img/default@3x.png`
+		let symbol = <ReactImageFallback src={`/img/${ic(item.icon)}@3x.png`} fallbackImage={errorImg}/>
 
 		return (
 			<div className={this.getClassNames()} onClick={onClick}>
@@ -39,4 +39,8 @@ function SelectCircle(props) {
 	return (
 		<div className={"select-circle" + (props.isSelected?" selected":"")}></div>
 	)
+}
+
+function ic(str = "abcd") {
+	return str.substring(0, str.length-4)
 }

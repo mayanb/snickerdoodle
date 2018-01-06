@@ -18,6 +18,7 @@
 	// selected list item should be blue
 	&.products-selected {
 		color: $theme-color;
+		background-color: #DEEDFE;
 	}
 
 	.products-list-select-circle {
@@ -27,6 +28,11 @@
 		display:flex;
 		align-items: center;
 		margin-right: 8px;
+
+		img {
+			height: 16px;
+			width: 16px;
+		}
 	}
 
 	.products-list-code {

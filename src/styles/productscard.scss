@@ -1,3 +1,7 @@
+div.processes div.card {
+	max-width: 600px;
+}
+
 .products-card {
 	color: rgb(79,79,79);
 	font-size: 14px;
@@ -23,13 +27,24 @@
 				line-height: 40px;
 				color: $black;
 				display: inline-block;
+				flex: 1;
+				font-weight: bold;
+		}
+
+		button {
+			font-size: 24px;
+			line-height: 24px;
+			vertical-align: top;
+			i {
+				vertical-align: top;
+			}
 		}
 	}
 
 	.products-card-icon {
 		display: inline-block;
 		margin-right: 12px;
-		vertical-align: middle;
+		//vertical-align: middle;
 
 	}
 
@@ -57,7 +72,7 @@
 
 	.products-card-rule {
 		height: 1px;
-		background-color: $light-gray;
+		background-color: rgba(0,0,0,0.06);
 		margin: 16px;
 		margin-bottom: 15px;
 	}

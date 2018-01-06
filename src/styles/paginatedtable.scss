@@ -37,4 +37,15 @@
 			border-top: 1px solid $light-gray;
 		}
 	}
+
+	&.border-none li {
+		border-bottom: 0px;
+		border-top: 0px;
+
+		&.header {
+			border-bottom: 1px solid $light-gray;
+		}
+	}
+
+	
 }

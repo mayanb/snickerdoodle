@@ -1,5 +1,6 @@
 import React from 'react'
 import Img from '../Img/Img'
+import {emojify} from 'react-emojione'
 
 let better_goals = [
 	'Make a single goal for multiple products (eg. track your progress for foiling any type of bar)', 
@@ -22,9 +23,9 @@ export default function NewFeaturesContent(props) {
 	return (
 		<div>
 			<div style={HEADER}>
-				<img height="24px" src={emoji("1f389")} />
+				{emojify(':tada:')}
 				<h1 style={H1}>What's new</h1>
-				<img height="24px" src={emoji("1f389")} />
+				{emojify(':tada:')}
 			</div>
 
 			<Feature title={"Better goals"} items={better_goals}/>
@@ -34,9 +35,14 @@ export default function NewFeaturesContent(props) {
 	)
 }
 
-function emoji(code) {
-	return `https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/${code}.png`
-}
+// function emoji(code) {
+// 	return emojione.shortnameToImage(code)
+// 	//return `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${code}.png` //`https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/${code}.png`
+// }
+
+//<img height="24px" src={emoji("1f389")} />
+
+// <img height="24px" src={emoji("2705")} />
 
 function Feature(props) {
 	let {title, items, special} = props
@@ -48,7 +54,7 @@ function Feature(props) {
 	return (
 		<div style={WRAPPER}>
 			<div style={HEADER}>
-				<img height="24px" src={emoji("2705")} />
+				{emojify(':white_check_mark:')}
 				<h2 style={H2}>{title}</h2>
 			</div>
 			<ul style={{listStyleType:"circle", paddingLeft: "32px"}}>

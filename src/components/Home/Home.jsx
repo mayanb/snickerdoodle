@@ -35,7 +35,7 @@ export default function Home(props) {
 				<div className="panel">
 					<div className="alerts-container">
 						<LittleHeader>Alerts</LittleHeader>
-							<Alerts />
+						<Alerts />
 					</div>
 				</div>
 				

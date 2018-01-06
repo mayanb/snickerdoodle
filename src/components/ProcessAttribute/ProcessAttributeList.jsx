@@ -24,7 +24,7 @@ class ProcessAttributeList extends React.Component {
 		return (
 			<div className="products-card-section products-card-attributes">
 				<div className="attribute-header">
-					<h2>Attributes</h2>
+					<h2>Data</h2>
 					<button onClick={this.startAddingAttribute}>Add a new attribute</button>
 				</div>
 				{ this.renderAddAttributeSection() }

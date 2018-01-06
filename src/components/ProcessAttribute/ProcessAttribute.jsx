@@ -20,7 +20,7 @@ class ProcessAttribute extends React.Component {
 					<div className="stack-horizontal">
 						<div className='process-attribute-row'>
 							<ProcessAttributeField text main name="Name" value={props.name} edit={props.edit} onChange={props.onChange}/>
-							<ProcessAttributeField switch name="Required" value={props.required} onChange={props.onChange || this.toggleRequiredOnAttribute} />
+							<ProcessAttributeField/>
 						</div>
 
 						<div className='process-attribute-row'>
@@ -45,6 +45,8 @@ class ProcessAttribute extends React.Component {
 			</div>
 		)
 	}
+
+	// <ProcessAttributeField switch name="Required" value={props.required} onChange={props.onChange || this.toggleRequiredOnAttribute} />
 
 	toggleRequiredOnAttribute() {
 		let updated = {required: !this.props.required}

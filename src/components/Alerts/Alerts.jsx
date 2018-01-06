@@ -4,6 +4,7 @@ import * as actions from './AlertActions'
 import AlertFlaggedTasks from './AlertFlaggedTasks'
 import AlertAnomalousInputs from './AlertAnomalousInputs'
 import AlertCompletedGoals from './AlertCompletedGoals'
+import AlertsEmpty from './AlertsEmpty'
 
 function getLatest(arr, type) {
 	let latest = null
@@ -62,6 +63,10 @@ class Alerts extends React.Component {
 		// var missed_goals = alerts.filter(e => e.alert_type == 'ig')
 		// var completed_goals = alerts.filter(e => e.alert_type == 'cg')
 		// var anomalies = alerts.filter(e => e.alert_type == 'ai')
+
+		return (
+				<AlertsEmpty />
+		)
 
 		return (
 			<div className="alerts">

@@ -96,3 +96,23 @@ $alert-yellow: #F8DE00;
 		}
 	}
 }
+
+.alerts-empty {
+	background-color: $light-gray;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	img {
+		filter: grayscale(100%);
+		opacity: 0.7;
+	}
+
+	span {
+		color: $gray;
+		font-size: 18px;
+		font-weight: 20px;
+		margin-bottom: 20px;
+	}
+}

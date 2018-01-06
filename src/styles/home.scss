@@ -33,6 +33,16 @@
 			flex: 2;
 			background-color: white;
 			overflow-y: scroll;
+			display: flex;
+			flex-direction: column;
+			& > span {
+				display: block;
+				flex: 0;
+			}
+
+			& > div {
+				flex: 1;
+			}
 		}
 	}
 }

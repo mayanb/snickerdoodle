@@ -7,8 +7,6 @@ import NewFeatureContent from './NewFeatureContent'
 export default class NewFeatures extends React.Component {
 	constructor(props) {
 		super(props)
-		{console.log("new features dialog")}
-		console.log(window.localStorage.getItem("newfeatures1"))
 		this.state = {
 			"isDisplaying": !window.localStorage.getItem("newfeatures1"),
 		}

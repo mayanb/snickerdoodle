@@ -23,7 +23,7 @@ export default class PaginatedTable extends React.Component {
    
 
     return (
-      <div className="paginated-table">
+      <div className={(this.border?"":"border-none ") + "paginated-table"}>
         <ul>
           <li className="header">
             <TitleRow />
