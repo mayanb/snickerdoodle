@@ -12,10 +12,6 @@ export default class ProductsListItem extends React.Component {
 		return (
 			<div className={this.getClassNames()} onClick={onClick}>
 
-				<div className={"products-list-select-circle"}>
-					<SelectCircle isSelected={isSelected} />
-				</div>
-
 				<div className={"products-list-code"}>
 					{item.code}
 				</div>
