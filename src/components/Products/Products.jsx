@@ -6,7 +6,6 @@ import * as inventoryActions from '../Inventory/InventoryActions'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDropdown from './CreateProductDropdown'
-import ProductsArchiveDialog from './ProductsArchiveDialog'
 //import {findPosition, alphabetize} from './arrayutils.jsx'
 
 import Card from '../Card/Card.jsx'
@@ -19,16 +18,9 @@ class Products extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      isArchiveOpen: false,
-      archivingObjectIndex: -1,
-    }
-
     this.handleSelectProduct = this.handleSelectProduct.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
     this.handleCreateProduct = this.handleCreateProduct.bind(this)
-    this.handleArchiveProduct = this.handleArchiveProduct.bind(this)
-    this.toggleArchive = this.toggleArchive.bind(this)
   }
 
   // fetch products on load
@@ -54,21 +46,7 @@ class Products extends React.Component {
             TitleRow={titleRow}
           />
         </div>
-        {this.renderArchiveDialog(data, ui)}
       </div>
-    )
-  }
-
-  renderArchiveDialog(data, ui) {
-    if (!this.state.isArchiveOpen)
-      return null
-
-    return (
-      <ProductsArchiveDialog
-        {...data[this.state.archivingObjectIndex]}
-        onCancel={this.toggleArchive}
-        onSubmit={() => this.handleArchiveProduct(this.state.archivingObjectIndex)}
-      />
     )
   }
 
@@ -76,7 +54,7 @@ class Products extends React.Component {
   renderTitle() {
     return (
       <div className="nav-section-header">
-        <h1>Product Lines</h1>
+        <h1>Products</h1>
         {this.renderCreateProductButton()}
       </div>
     )
@@ -98,7 +76,6 @@ class Products extends React.Component {
   /* EVENT HANDLERS */
   handleSelectProduct(index) {
     this.props.history.push('/products/' + this.props.data[index].id)
-    this.props.dispatch(actions.selectProduct(index))
   }
 
   handlePagination(direction) {
@@ -119,24 +96,6 @@ class Products extends React.Component {
     }))
   }
 
-  toggleArchive() {
-    this.setState({ isArchiveOpen: !this.state.isArchiveOpen })
-  }
-
-  handleArchiveProduct(index) {
-    let newIndex = index
-    if (newIndex == this.props.data.length - 1)
-      newIndex = index - 1
-
-    let p = this.props.data[index]
-    let c = this
-
-    this.props.dispatch(actions.postDeleteProduct(p, index, function () {
-        c.handleSelectProduct(index)
-        c.toggleArchive()
-      })
-    )
-  }
 
 
 }
