@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import * as actions from './ProductsActions.jsx'
 import * as inventoryActions from '../Inventory/InventoryActions'
 
-import ProductsCard from './ProductsCard.jsx'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDropdown from './CreateProductDropdown'
@@ -13,7 +12,7 @@ import ProductsArchiveDialog from './ProductsArchiveDialog'
 import Card from '../Card/Card.jsx'
 
 function titleRow() {
-  return <ProductsListItem header item={{code: "ID", name: "Name"}} />
+  return <ProductsListItem header item={{ code: "ID", name: "Name" }} />
 }
 
 class Products extends React.Component {
@@ -21,8 +20,8 @@ class Products extends React.Component {
     super(props)
 
     this.state = {
-      isArchiveOpen: false, 
-      archivingObjectIndex: -1, 
+      isArchiveOpen: false,
+      archivingObjectIndex: -1,
     }
 
     this.handleSelectProduct = this.handleSelectProduct.bind(this)
@@ -42,22 +41,17 @@ class Products extends React.Component {
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type != 'a')
       return null
-    
+
     return (
       <div className="nav-section products">
         <div className="nav-section-list">
-          { this.renderTitle() }
-          <PaginatedTable 
+          {this.renderTitle()}
+          <PaginatedTable
             {...this.props}
-            onClick={this.handleSelectProduct} 
-            onPagination={this.handlePagination} 
+            onClick={this.handleSelectProduct}
+            onPagination={this.handlePagination}
             Row={ProductsListItem}
             TitleRow={titleRow}
-          />
-        </div>
-        <div>
-          <ProductsCard {...this.props} 
-            onArchive={() => this.setState({isArchiveOpen: true, archivingObjectIndex: ui.selectedItem})}
           />
         </div>
         {this.renderArchiveDialog(data, ui)}
@@ -70,8 +64,8 @@ class Products extends React.Component {
       return null
 
     return (
-      <ProductsArchiveDialog 
-        {...data[this.state.archivingObjectIndex]} 
+      <ProductsArchiveDialog
+        {...data[this.state.archivingObjectIndex]}
         onCancel={this.toggleArchive}
         onSubmit={() => this.handleArchiveProduct(this.state.archivingObjectIndex)}
       />
@@ -83,7 +77,7 @@ class Products extends React.Component {
     return (
       <div className="nav-section-header">
         <h1>Product Lines</h1>
-        { this.renderCreateProductButton() }
+        {this.renderCreateProductButton()}
       </div>
     )
   }
@@ -92,7 +86,7 @@ class Products extends React.Component {
     return (
       <div className="products-list-actions">
         <div className="products-create-product">
-          <CreateProductDropdown 
+          <CreateProductDropdown
             onSubmit={this.handleCreateProduct}
             ui={this.props.ui}
           />
@@ -103,12 +97,8 @@ class Products extends React.Component {
 
   /* EVENT HANDLERS */
   handleSelectProduct(index) {
-    let product = this.props.data[index]
-    if (!product) 
-      return 
-
+    this.props.history.push('/products/' + this.props.data[index].id)
     this.props.dispatch(actions.selectProduct(index))
-    this.props.dispatch(inventoryActions.fetchInventory({products: product.code}))
   }
 
   handlePagination(direction) {
@@ -130,12 +120,12 @@ class Products extends React.Component {
   }
 
   toggleArchive() {
-    this.setState({isArchiveOpen: !this.state.isArchiveOpen})
+    this.setState({ isArchiveOpen: !this.state.isArchiveOpen })
   }
 
   handleArchiveProduct(index) {
     let newIndex = index
-    if ( newIndex == this.props.data.length - 1)
+    if (newIndex == this.props.data.length - 1)
       newIndex = index - 1
 
     let p = this.props.data[index]

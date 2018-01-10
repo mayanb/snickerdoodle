@@ -1,9 +1,10 @@
-import React from 'react' 
+import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import Activity from '../Activity/Activity'
 import Home from '../Home/Home'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
+import ProductsCard from '../Products/ProductsCard'
 
 import Movements from '../Movements/Movements'
 
@@ -48,39 +49,40 @@ export default class ApplicationLayoutStable extends React.Component {
 
 
 function App(props) {
-	return (
-		<div className="layout">
+  return (
+    <div className="layout">
 
-			<Route path="/:section?/:id?" component={Navbar} />
-			<Route path="/:section?/:id?" component={Topbar} />
+      <Route path="/:section?/:id?" component={Navbar} />
+      <Route path="/:section?/:id?" component={Topbar} />
 
- 		 	<div className="application-content">
-		    <Route exact path={"/"} component={Home} />
-		    <Route exact path={"/inventory/:id?"} component={Inventory} />
-		    <Route exact path={"/labels/"} component={ZebraPrinter} />
-		    <Route path={"/zebra/"} component={ZebraPrinter} />
-		    <Route path={"/dymo/"} component={LabelPrinter} />
-		    <Route path={"/task/:id?"} component={Task} />
-		    <Route path={"/processes/:id?"} component={Processes} />
-		    <Route path={"/products/:id?"} component={Products} />
-		    <Route path={"/attributetest"} component={TaskAttributeTest} />
-		    <Route path={"/team/:ext?"} component={TeamSettings} />
-		    <Route path={"/goals"} component={Goals} />
-		    <Route path={"/account"} component={Account} />
-		    <Route path={"/googleconnect/:ext?"} component={Account} />
-		    <Route path={"/bc/"} component={BCWrapper} />
-		    <Route path={"/packingorders/"} component={PackingOrders} />
-		    <Route path={"/barcharttest/"} component={Sortable} />
-	  	</div>
-		</div>
-	)
+      <div className="application-content">
+        <Route exact path={"/"} component={Home} />
+        <Route exact path={"/inventory/:id?"} component={Inventory} />
+        <Route exact path={"/labels/"} component={ZebraPrinter} />
+        <Route path={"/zebra/"} component={ZebraPrinter} />
+        <Route path={"/dymo/"} component={LabelPrinter} />
+        <Route path={"/task/:id?"} component={Task} />
+        <Route path={"/processes/:id?"} component={Processes} />
+        <Route exact path={"/products"} component={Products} />
+        <Route path={"/products/:id"} component={ProductsCard} />
+        <Route path={"/attributetest"} component={TaskAttributeTest} />
+        <Route path={"/team/:ext?"} component={TeamSettings} />
+        <Route path={"/goals"} component={Goals} />
+        <Route path={"/account"} component={Account} />
+        <Route path={"/googleconnect/:ext?"} component={Account} />
+        <Route path={"/bc/"} component={BCWrapper} />
+        <Route path={"/packingorders/"} component={PackingOrders} />
+        <Route path={"/barcharttest/"} component={Sortable} />
+      </div>
+    </div>
+  )
 }
 
 
 
-		    
+
 	// <Route path={"/orders/:id"} component={OrderDetail} />
-	
+
 	// render () {
 	// 	return (
 	// 		<Router>

@@ -8,7 +8,7 @@ import ProductsCardInventory from './ProductsCardInventory.jsx'
 import {ElementHeader} from '../Element/Element'
 import ElementMenu from '../Element/ElementMenu'
 
-export default class ProductsCard extends React.Component {
+export class ProductsCard extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -20,9 +20,13 @@ export default class ProductsCard extends React.Component {
 		this.handleToggleArchive = this.handleToggleArchive.bind(this)
 	}
 
+    // fetch products on load
+    componentDidMount() {
+        this.props.dispatch(actions.fetchProducts())
+    }
+
 	render() {
-		let { data, ui } = this.props
-		let product = data[ui.selectedItem]
+		let { product, ui } = this.props
 
 		if (!product)
 			return false;
@@ -113,3 +117,21 @@ export default class ProductsCard extends React.Component {
 	}
 
 }
+
+// This is our select function that will extract from the state the data slice we want to expose
+// through props to our component.
+const mapStateToProps = (state, props) => {
+    let product = state.products.data.find(product => String(product.id) === props.match.params.id)
+
+    return {
+        product: product,
+        ui: state.products.ui,
+        inventoryData: state.inventories.data,
+        users: state.users
+        // inventories: state.products.inventories
+    }
+}
+
+const connectedProductsCard = connect(mapStateToProps)(ProductsCard)
+
+export default connectedProductsCard

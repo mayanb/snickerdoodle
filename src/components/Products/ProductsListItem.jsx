@@ -4,7 +4,6 @@ import React from 'react'
 export default class ProductsListItem extends React.Component {
 	getClassNames() {
 		return "products-list-item" 
-			+ (this.props.isSelected?" products-selected":"")
 			+ (this.props.header?" products-list-header":"")
 	}
 
@@ -32,6 +31,6 @@ export default class ProductsListItem extends React.Component {
 
 function SelectCircle(props) {
 	return (
-		<div className={"select-circle" + (props.isSelected?" selected":"")}></div>
+		<div className={"select-circle"}></div>
 	)
 }
