@@ -29,6 +29,7 @@ import BCWrapper from '../D3BarChart/BCWrapper'
 import PackingOrders from '../PackingOrders/PackingOrders'
 // import OrderDetail from '../OrderDetail/OrderDetail'
 import Sortable from '../Sortable/Index'
+import ProductPage from '../ProductPage/ProductPage'
 
 
 export default class ApplicationLayoutStable extends React.Component {
@@ -55,7 +56,7 @@ function App(props) {
 			<Route path="/:section?/:id?" component={Topbar} />
 
  		 	<div className="application-content">
-		    <Route exact path={"/"} component={Home} />
+		    <Route exact path={"/"} component={ProductPage} />
 		    <Route exact path={"/inventory/:id?"} component={Inventory} />
 		    <Route exact path={"/labels/"} component={ZebraPrinter} />
 		    <Route path={"/zebra/"} component={ZebraPrinter} />

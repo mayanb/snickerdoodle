@@ -12,7 +12,7 @@ export default function Icon(props) {
 
 	return (
 		<div className="icon" style={{height: size, width:size, borderRadius: size, backgroundColor: colorHash(props.content)}}>
-			<span>{props.content.substring(0,1).toUpperCase()}</span>
+			<span style={{fontSize: parseInt(size,10)/2 + "px", lineHeight:size}}>{props.content.substring(0,1).toUpperCase()}</span>
 		</div>
 	)
 }

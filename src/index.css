@@ -741,11 +741,18 @@ textarea {
   padding: 16px;
   overflow-x: hidden;
   background-color: white; }
+  .card.nopadding {
+    padding: 0px; }
   .card .rule {
     background-color: rgba(0, 0, 0, 0.06);
     height: 1px;
     margin: 16px;
     margin-bottom: 15px; }
+  .card .cardrule-v2 {
+    background-color: rgba(0, 0, 0, 0.06);
+    margin-left: -16px;
+    width: calc(100% + 32px);
+    height: 1px; }
   .card.big {
     padding: 16px;
     border-radius: 8px;
@@ -2019,6 +2026,78 @@ div.zero-state {
 .active-tab {
   color: #0073F9;
   border-bottom: 4px solid #0073F9; }
+
+.productpage {
+  margin-left: 36px; }
+
+.productheader {
+  display: flex;
+  color: rgba(0, 0, 0, 0.87); }
+  .productheader > div {
+    display: flex;
+    flex-direction: column; }
+  .productheader .product-code {
+    font-size: 20px;
+    line-height: 24px; }
+
+.recipe {
+  margin-top: 16px; }
+  .recipe .card {
+    width: 500px; }
+  .recipe .recipe-process-header {
+    padding: 8px 16px;
+    display: flex; }
+    .recipe .recipe-process-header span {
+      flex: 1; }
+  .recipe .recipe-wrapper {
+    padding: 16px; }
+
+.recipe-formula {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  margin-bottom: 16px; }
+  .recipe-formula:last-child {
+    margin-bottom: 0; }
+  .recipe-formula > div {
+    display: flex;
+    flex-direction: column; }
+  .recipe-formula .lhs {
+    flex: 3; }
+  .recipe-formula .rhs {
+    flex: 5; }
+  .recipe-formula .lhs .name {
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.95);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+  .recipe-formula .lhs .datatype {
+    color: rgba(0, 0, 0, 0.48);
+    font-size: 12px;
+    line-height: 14px;
+    margin-top: 4px; }
+
+.recipe-formula.add-formula {
+  display: flex;
+  flex-direction: column; }
+  .recipe-formula.add-formula .formula-inputs {
+    display: flex;
+    flex-direction: row; }
+  .recipe-formula.add-formula div.formula-actions {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end; }
+
+.add-formula-section {
+  display: flex; }
+  .add-formula-section > span {
+    line-height: 36px; }
+  .add-formula-section .select-process {
+    min-width: 200px;
+    flex: 1; }
 
 .lesmis .links line {
   stroke: #999;

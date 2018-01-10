@@ -5,7 +5,7 @@ export const LOCAL_BACKEND = 'http://127.0.0.1:8000'
 export function latest(host, path) {
 	let url = host + path
 	if (path.startsWith('/ics')) {
-		url = host + '/ics/v6' + path.substring(4) 
+		url = host + '/ics/v7' + path.substring(4) 
 	}
 	return url
 }
