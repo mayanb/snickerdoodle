@@ -8,7 +8,7 @@ export default class ProductsListItem extends React.Component {
 	}
 
 	render() {
-		let { isSelected, item, onClick } = this.props
+		let { item, onClick } = this.props
 		item.owner = item.owner || 'N/A'
 		item.dateCreated = item.dateCreated || 'N/A'
 
@@ -36,8 +36,3 @@ export default class ProductsListItem extends React.Component {
 
 }
 
-function SelectCircle(props) {
-	return (
-		<div className={"select-circle"}></div>
-	)
-}
