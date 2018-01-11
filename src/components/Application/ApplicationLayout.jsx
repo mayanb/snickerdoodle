@@ -6,7 +6,6 @@ import Activity from '../Activity/Activity'
 import Home from '../Home/Home'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
-import ProductsCard from '../Products/ProductsCard'
 
 import Movements from '../Movements/Movements'
 

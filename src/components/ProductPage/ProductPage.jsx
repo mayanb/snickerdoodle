@@ -5,6 +5,7 @@ import * as actions from './ProductFormulaActions'
 import * as productActions from '../Products/ProductsActions'
 import * as processActions from '../Processes/ProcessesActions'
 import ProductFormulaSection from './ProductFormulaSection'
+import ProductMenu from './ProductMenu';
 import './styles/productpage.css'
 
 class ProductPage extends React.Component {
@@ -17,7 +18,7 @@ class ProductPage extends React.Component {
 	}
 
 	render() {
-		let {ui, data, product} = this.props
+		let {ui, data, product, dispatch} = this.props
 		let formulas = data //this.props.data
 		let groupedFormulas = groupFormulas(formulas)
 
@@ -29,7 +30,7 @@ class ProductPage extends React.Component {
 
 		return ( 
 			<div className="productpage">
-				<ProductHeader {...product}/>
+				<ProductHeader product={product} dispatch={dispatch}/>
 				<div className="recipe">
 					{
 						Object.keys(groupedFormulas).map(function (process_type, i) {
@@ -64,11 +65,12 @@ function groupFormulas(formulas) {
 function ProductHeader(props) {
 	return (
 		<div className="productheader">
-			<Icon size="44px" content={props.code}/>
+			<Icon size="44px" content={props.product.code}/>
 			<div>
-				<span className="product-code">{props.code}</span>
-				<span className="product-name">{props.name}</span>
+				<span className="product-code">{props.product.code}</span>
+				<span className="product-name">{props.product.name}</span>
 			</div>
+			<ProductMenu product={props.product} dispatch={props.dispatch}/>
 		</div>
 	)
 }
@@ -77,7 +79,8 @@ const mapStateToProps = (state/*, props*/) => {
   return {
     data: state.formulas.data,
     ui: state.formulas.ui,
-    product: state.products.data[0]
+    product: state.products.data[0],
+	  dispatch: state.dispatch
   }
 }
 
