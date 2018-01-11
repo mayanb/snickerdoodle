@@ -1,5 +1,6 @@
 import React from 'react'
 import Icon from '../Card/Icon'
+import moment from 'moment'
 
 export default class ProductsListItem extends React.Component {
 	getClassNames() {
@@ -9,8 +10,7 @@ export default class ProductsListItem extends React.Component {
 
 	render() {
 		let { item, onClick } = this.props
-		item.owner = item.owner || 'N/A'
-		item.dateCreated = item.dateCreated || 'N/A'
+		item.created_at = item.created_at || 'N/A' //Some products might not have a created_at value
 
 		return (
 			<div className={this.getClassNames()} onClick={onClick}>
@@ -23,11 +23,11 @@ export default class ProductsListItem extends React.Component {
 					{item.name}
 				</div>
 				<div className={"owner"}>
-					<Icon src="" size="20px" content={item.owner}/>
-					{item.owner}
+					<Icon src="" size="20px" content={item.username}/>
+					{item.username}
 				</div>
 				<div className={"date"}>
-					{item.dateCreated}
+					{moment(item.created_at).format("MMMM DD, YYYY")}
 				</div>
 				
 			</div>
