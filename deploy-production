@@ -1,1 +1,1 @@
-npm run build && aws s3 sync build/ s3://dashboard.usepolymer.com
+REACT_APP_BACKEND=production npm run build && aws s3 sync build/ s3://dashboard.usepolymer.com
