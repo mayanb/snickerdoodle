@@ -7,6 +7,7 @@ import {findPosition, alphabetize} from './utilities/arrayutils.jsx'
 import {apiDataReducer} from './reducers/APIDataReducer'
 import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
+import {_formula} from './reducers/FormulaReducerExtension'
 import _users from './reducers/UserReducer'
 import * as types from './reducers/ReducerTypes'
 import {weeklyGoalPredicate, monthlyGoalPredicate, _goals} from './reducers/GoalsReducer'
@@ -46,7 +47,7 @@ export default function(data) {
     packingOrder: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDER, stateDefault),
     packingOrders: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDERS, stateDefault),
     alerts: createFilteredReducer(apiDataReducer, action => action.name === types.ALERTS, stateDefault),
-    formulas: createFilteredReducer(apiDataReducer, action => action.name === types.FORMULAS, stateDefault)
+    formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault)
   })
   const store = createStore(reducer, applyMiddleware(thunkMiddleware))
 

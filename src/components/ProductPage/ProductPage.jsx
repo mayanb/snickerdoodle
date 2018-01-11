@@ -6,9 +6,6 @@ import ProductFormulaSection from './ProductFormulaSection'
 import './styles/productpage.css'
 
 let product = {name: "Camino Verde 17", code: "CV17"}
-let data = [
-	{ attribute: {process_type: 1, process_type_name: 'Roast', name: 'Temperature (F)', datatype: 'number'}, formula: '10', comparator: '<'}
-]
 
 class ProductPage extends React.Component {
 
@@ -17,7 +14,7 @@ class ProductPage extends React.Component {
 	}
 
 	render() {
-		console.log(this.props)
+		let {ui, data} = this.props
 		let formulas = data //this.props.data
 		let groupedFormulas = groupFormulas(formulas)
 
@@ -27,7 +24,12 @@ class ProductPage extends React.Component {
 				<div className="recipe">
 					{
 						Object.keys(groupedFormulas).map(function (process_type, i) {
-							return <ProductFormulaSection key={i} formulas={groupedFormulas[process_type]} />
+							return <ProductFormulaSection 
+								key={i} 
+								process_type={process_type}
+								formulas={groupedFormulas[process_type]} 
+								isAddingFormula={ui.isAddingFormula === process_type}
+							/>
 						})
 					}
 				</div>

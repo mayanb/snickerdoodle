@@ -1,0 +1,42 @@
+@import 'styles/constants.scss';
+
+.recipe-formula {
+	padding: 10px 16px;
+	display: flex;
+
+	.lhs {
+		flex: 5;
+		margin-right: 16px;
+		.name {
+			font-weight: 700;
+			color: rgba(0,0,0,0.95);
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	}
+
+	.comparator {
+		flex: 1;
+		text-align: center;
+		margin-right: 16px;
+	}
+
+	.rhs {
+		flex: 6;
+		margin-right: 16px;
+	}
+
+	.datatype {
+		flex: 2;
+		color: $gray;
+		text-align:right;
+		margin-right: 24px;
+	}
+
+	.user {
+		flex: 1;
+		margin-right: -8px;
+	}
+
+}

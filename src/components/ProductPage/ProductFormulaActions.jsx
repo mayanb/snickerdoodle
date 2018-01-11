@@ -6,19 +6,18 @@ import {
   REQUEST_CREATE,
   REQUEST_CREATE_SUCCESS,
   REQUEST_CREATE_FAILURE,
-  REQUEST_DELETE,
-  REQUEST_DELETE_SUCCESS,
-  REQUEST_DELETE_FAILURE,
-  REQUEST_EDIT,
-  REQUEST_EDIT_SUCCESS,
-  REQUEST_EDIT_ITEM,
-  REQUEST_EDIT_ITEM_SUCCESS,
-  REQUEST_EDIT_ITEM_FAILURE,
-  SELECT,
-  PAGE,
+  // REQUEST_DELETE,
+  // REQUEST_DELETE_SUCCESS,
+  // REQUEST_DELETE_FAILURE,
 } from '../../reducers/APIDataReducer'
+import {START_ADDING_FORMULA} from '../../reducers/FormulaReducerExtension'
 import { FORMULAS } from '../../reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
+
+let data = [
+  { attribute: {process_type: 1, process_type_name: 'Roast', name: 'Temperature (F)', datatype: 'Number'}, formula: '10', comparator: '<'},
+  { attribute: {process_type: 1, process_type_name: 'Roast', name: 'Start time', datatype: 'Number'}, formula: '15', comparator: '<'}
+]
 
 
 export function fetchFormulas() {
@@ -31,7 +30,7 @@ export function fetchFormulas() {
         if (err || !res.ok) {
           dispatch(requestFormulasError(err))
         } else {
-          dispatch(requestFormulasSuccess(res.body))
+          dispatch(requestFormulasSuccess(data))
         }
       })
   }
@@ -58,5 +57,64 @@ function requestFormulasSuccess(json) {
     type: REQUEST_SUCCESS,
     name: FORMULAS,
     data: json, 
+  }
+}
+
+export function postCreateFormula(json) {
+  return function (dispatch) {
+    dispatch(requestCreate(json))
+
+    //actually fetch 
+    return api.post('/ics/formula-attributes/create/')
+      .send(json)
+      .end((err, res) => {
+        if (err || !res.ok) {
+          dispatch(requestCreateFailure(err))
+        } else {
+          dispatch(finishAddingFormula())
+          dispatch(requestCreateSuccess(res.body))
+        }
+      })
+  }
+}
+
+function requestCreate(json) {
+  return {
+    type: REQUEST_CREATE,
+    name: FORMULAS,
+    item: json
+  }
+}
+
+function requestCreateSuccess(json) {
+  return {
+    type: REQUEST_CREATE_SUCCESS,
+    name: FORMULAS,
+    item: json
+  }
+}
+
+function requestCreateFailure(json) {
+  return {
+    type: REQUEST_CREATE_SUCCESS,
+    name: FORMULAS,
+    item: json
+  }
+}
+
+
+export function startAddingFormula(process_type) {
+  return {
+    type: START_ADDING_FORMULA,
+    name: FORMULAS,
+    process_type: process_type
+  }
+}
+
+export function finishAddingFormula() {
+  return {
+    type: START_ADDING_FORMULA,
+    name: FORMULAS,
+    process_type: null
   }
 }

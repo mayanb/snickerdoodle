@@ -11,8 +11,8 @@ export default function Icon(props) {
 
 
 	return (
-		<div className="icon" style={{height: size, width:size, borderRadius: size, backgroundColor: colorHash(props.content)}}>
-			<span style={{fontSize: parseInt(size,10)/2 + "px", lineHeight:size}}>{props.content.substring(0,1).toUpperCase()}</span>
+		<div className="icon" style={{height: size, width:size, minWidth:size, minHeight:size, borderRadius: size, backgroundColor: colorHash(props.content)}}>
+			<span style={{fontSize: parseInt(size,10)/2 + "px", minWidth:size, minHeight:size, lineHeight:size}}>{props.content.substring(0,1).toUpperCase()}</span>
 		</div>
 	)
 }

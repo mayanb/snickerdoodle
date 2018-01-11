@@ -5,6 +5,8 @@ import CardRule from '../Card/CardRule'
 import Button from '../Card/Button'
 import ProductFormula from './ProductFormula'
 import AddNewFormula from './AddNewFormula'
+import StartAddingFormula from './StartAddingFormula'
+import './styles/formulasection.css'
 
 export default function ProductFormulaSection(props) {
 	let {formulas} = props
@@ -12,14 +14,12 @@ export default function ProductFormulaSection(props) {
 		<Card nopadding>
 			<SectionHeader title={gerund(formulas[0].attribute.process_type_name)}/>
 			<CardRule />
-			<div className="recipe-wrapper">
-			<AddNewFormula />
 			{
 				formulas.map(function (f, i) {
 					return <ProductFormula key={i} {...f} />
 				})
 			}
-			</div>
+			{ props.isAddingFormula ? <AddNewFormula /> : <StartAddingFormula process_type={props.process_type}/>}
 		</Card>
 	)
 }
@@ -32,3 +32,4 @@ function SectionHeader(props) {
 		</div>
 	)
 }
+
