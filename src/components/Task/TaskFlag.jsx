@@ -1,4 +1,5 @@
 import React from 'react'
+import './styles/taskflag.css'
 
 export default function TaskFlag(props) {
 	if (!props.flagged)

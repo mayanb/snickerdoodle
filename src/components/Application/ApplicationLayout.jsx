@@ -1,5 +1,7 @@
 import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import './styles/layout.css'
+
 import Activity from '../Activity/Activity'
 import Home from '../Home/Home'
 import Processes from '../Processes/Processes'

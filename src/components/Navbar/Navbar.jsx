@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import NavigationGroup from './NavigationGroup'
 import NavigationFeedback from './NavigationFeedback'
 import Img from '../Img/Img'
+import './styles/navigation.css'
 
 let o1 = ["Activity Log", "Inventory"]
 let l1 = ["", "inventory"]

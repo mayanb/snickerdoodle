@@ -1,6 +1,7 @@
 import React from 'react'
 import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
+import './styles/createprocessdialog.css'
 
 export default class CreateProcessDialog extends React.Component {
 	constructor(props) {

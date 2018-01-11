@@ -1,0 +1,154 @@
+
+@import 'styles/constants.scss';
+
+.d-nav {
+	z-index: 1;
+	background-color: $background-color;
+	padding-top: $nav-height;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: $nav-width;
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid $light-gray;
+
+	color: $gray;
+	font-size: 13px;
+	line-height: 16px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	.nav-group {
+		//border-bottom: 1px solid rgba(39,43,46,0.5);
+
+		span {
+			text-transform: uppercase;
+			font-family: "Apercu Mono";
+			font-size: 10px;
+			display: block;
+			color: $gray;
+		}
+
+		li a {
+			display: inline-block;
+			padding: 16px 0 16px 16px;
+			width: 100%;
+
+			.nav-icon {
+				height: 16px;
+				vertical-align: top;
+				opacity: 0.4;
+				padding-right: 8px;
+			}
+
+			&.active {
+				color: $theme-color;
+				font-weight: bold;
+				background-color: #DEEDFE;
+
+				img {
+					opacity: 1;
+				}
+			}
+		}
+
+	}
+}
+
+.d-top {
+	height: $nav-height;
+
+	.nav-logo {
+		width: $nav-width;
+	}
+
+	img.logo {
+		margin-left: 16px;
+	}
+
+	z-index: 999;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: white;
+	box-shadow: $card-shadow;
+	display: flex;
+	align-items: center;
+	
+		.nav-left {
+		flex: 1;
+		flex-grow: 1;
+		margin: 0px 36px;
+
+		.Select-control {
+			border: none;
+			background-color: rgba(0,0,0,0);
+		}
+
+		.multiselect.inputs {
+			background-color: rgba(0,0,0,0.05);	
+			border: none;
+
+			input {
+				color: white;
+			}
+
+			div.Select.is-focused > div.Select-control {
+				background-color: rgba(0,0,0,0) !important;
+				color: rgba(255,255,255, 0.7) !important;
+			}
+		}
+
+		.filters {
+			max-width: 900px;
+		}
+	}
+
+
+	.nav-team {
+		margin: 0 36px;
+	}
+}
+
+div .bar { 
+	flex: 1;
+}
+
+.nav-feedback {
+	flex: 0;
+	align-items: flex-end;
+	margin: 16px;
+	font-size: 12px;
+	line-height: 18px;
+	span { 
+		display: block; 
+	}
+	
+	a {
+		text-decoration: underline;
+	}
+}
+
+.navbar {
+	background-color: $background-color;
+	min-width: 64px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	border-right: 1px solid $gray;
+
+
+	// text
+	color: white;
+
+	ul {
+		list-style-type: none;
+		padding: 0px;
+
+	}
+}
+

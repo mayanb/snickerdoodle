@@ -1,0 +1,53 @@
+@import 'styles/constants.scss';
+
+div.button-dropdown {
+	position: relative;
+	z-index: 1;
+
+	.button-dropdown-shim {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: rgba(0,0,0,0);
+		z-index: 1;
+		display: none;
+	}
+
+	.button-dropdown-content {
+		position: absolute;
+		top: 28px;
+		right: 0px;
+		z-index: 2;
+		//display: none;
+		transform: scale(0, 0);
+		transform-origin: right top;
+		transition: 0.2s;
+
+		&>div {
+			border-radius: 8px 0px 8px 8px;
+		}
+	}
+
+	&.expanded {
+
+		z-index: 999;
+		&>button {
+			background-color: $dark-theme-color;
+
+			&.secondary {
+				background-color: rgba(0,0,0,0);
+			}
+		}
+
+		.button-dropdown-shim {
+			display: block;
+		}
+
+		.button-dropdown-content{
+			display:block;
+			transform: scale(1, 1);
+		}
+	}
+}

@@ -4,6 +4,7 @@ import AccountHeader from './AccountHeader'
 import AccountBasics from './AccountBasics'
 import AccountIntegrations from './AccountIntegrations'
 import AccountTeam from './AccountTeam'
+import './styles/account.css'
 
 class Account extends React.Component {
 	render() {

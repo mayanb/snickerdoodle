@@ -10,6 +10,7 @@ import api from '../WaffleconeAPI/api'
 import Img from '../Img/Img'
 import Checkbox from '../Checkbox/Checkbox'
 import moment from 'moment'
+import './styles/inventory.css'
 
 export default class Inventory extends React.Component {
   constructor(props) {

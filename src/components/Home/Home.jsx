@@ -4,6 +4,7 @@ import Activity from '../Activity/Activity'
 import Alerts from '../Alerts/Alerts'
 import Card from '../Card/Card'
 import NewFeatures from '../NewFeatures/NewFeatures'
+import './styles/home.css'
 
 export default function Home(props) {
 	return (

@@ -1,0 +1,104 @@
+@import 'styles/constants.scss';
+
+div.processes div.card {
+	max-width: 600px;
+}
+
+.products-card {
+	color: rgb(79,79,79);
+	font-size: 14px;
+	line-height: 20px;
+
+	& > button {
+		margin-bottom: 30px;
+	}
+
+	h2 {
+		color: $gray;
+		display: block;
+		margin-bottom: 8px;
+	}
+
+	a.inventorylink {
+		color: $theme-color;
+		cursor: pointer;
+	}
+
+	.products-card-header {
+		display: flex;
+		flex-direction: row;
+
+		h1 {
+				font-size: 20px;
+				line-height: 40px;
+				color: $black;
+				display: inline-block;
+				flex: 1;
+				font-weight: bold;
+		}
+
+		button {
+			font-size: 24px;
+			line-height: 24px;
+			vertical-align: top;
+			i {
+				vertical-align: top;
+			}
+		}
+	}
+
+	.products-card-icon {
+		display: inline-block;
+		margin-right: 12px;
+		//vertical-align: middle;
+
+	}
+
+	.products-card-code, .products-card-name {
+		margin-right: 20px;
+	}
+
+	.products-card-name {
+		flex: 1;
+		flex-grow: 1;
+	}
+
+	.products-card-description {
+		margin-bottom: 32px;
+	}
+
+	.products-card-description-empty {
+		// color: rgba(0,0,0,0.3);
+		// font-style: italic; 
+	}
+
+	.products-card-created-by {
+		color: rgba(0,0,0,0.3);
+	}
+
+	.products-card-rule {
+		height: 1px;
+		background-color: rgba(0,0,0,0.06);
+		margin: 16px;
+		margin-bottom: 15px;
+	}
+
+	.products-card-actions {
+		text-align: right;
+		color: $theme-color;
+
+		span {
+			margin-left: 24px;
+			cursor: pointer;
+			line-height: 24px;
+			vertical-align: bottom;
+			display: inline;
+		}
+
+		i{
+			font-size: 18px;
+			line-height: 24px;
+			margin-right: 4px;
+		}
+	}
+}

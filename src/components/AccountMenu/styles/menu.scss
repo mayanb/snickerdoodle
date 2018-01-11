@@ -1,0 +1,19 @@
+@import 'styles/constants.scss';
+
+.menu .button-dropdown-content .card {
+	padding: 0px;
+}
+
+.menu-section {
+	border-bottom: 1px solid $light-gray;
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.account-menu {
+	min-width: 180px;
+} 
+
+

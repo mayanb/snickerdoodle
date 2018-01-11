@@ -1,4 +1,5 @@
 import React from 'react'
+import './styles/button.css'
 
 export default function Button({secondary, link, ...rest}) {
 	let className=secondary?" secondary ":""

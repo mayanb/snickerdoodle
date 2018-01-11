@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {Link, Redirect} from 'react-router-dom'
 import * as actions from '../AccountMenu/UserActions'
 import {shouldLogin} from '../../authentication/authentication'
+import './styles/login.css'
 
 class Login extends React.Component {
   constructor(props) {

@@ -4,7 +4,7 @@ import ProcessAttribute from './ProcessAttribute'
 import ProcessAttributeCreator from './ProcessAttributeCreator'
 import * as actions from './ProcessAttributeActions'
 import Sortable from '../Sortable/Container'
-
+import './styles/processattribute.css'
 
 
 
