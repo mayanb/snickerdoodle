@@ -3,14 +3,7 @@ import { getCookie } from '../../csrf.jsx'
 import * as urls from './urls'
 import Teams from '../Teams/Teams'
 
-
-
-// let host = 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
- // let host = 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
-// let host = 'http://127.0.0.1:8000'
-// let host = 'http://192.168.0.103:8000'
-//let host = 'http://localhost:8000'
-let host = urls.PRODUCTION_BACKEND //urls.LOCAL_BACKEND urls.PRODUCTION_BACKEND, urls.STAGING_BACKEND
+let host = urls.getBackend()
 
 function get_active_user() {
 	let users = JSON.parse(window.localStorage.getItem('users-v5'))
