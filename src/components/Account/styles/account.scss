@@ -1,0 +1,219 @@
+@import 'styles/constants.scss';
+
+.my-account {
+	max-width: 500px;
+	padding-left: 36px;
+
+}
+
+.account-header {
+	h2 {
+		font-weight: 700;
+		font-size: 20px;
+		line-height: 40px;
+	}
+}
+
+.account-sectionheader {
+	h3 {
+		text-transform: none;
+		color: $gray;
+	}
+}
+
+.account-basics, .account-integrations, .account-team {
+	margin-bottom: 50px;
+}
+
+.account-basics-row {
+	display: flex;
+	padding: 4px 0;
+
+	div {
+		flex: 3;
+
+		&:first-child {
+			flex: 2;
+			color: $gray;
+		}
+
+		&:last-child {
+			flex: 1;
+		}
+
+		i {
+			font-size: 16px;
+			line-height: 20px;
+			cursor: pointer;
+			color: $primary;
+		}
+	}
+}
+
+.account-integration {
+	-webkit-font-smoothing: antialiased;
+
+	.integration-info {
+		display: flex;
+		margin-bottom: 6px;
+		align-items: baseline;
+
+		div:first-child {
+			flex: 1;
+			flex-grow: 1;
+			font-weight: 700;
+		}
+
+		div.integration-account {
+			flex: 0;
+			background-color: $theme-color;
+			display: flex;
+			color: white;
+			border-radius: 12px;
+			text-align: right;
+			white-space: nowrap;
+			align-items: center;
+
+			span {
+				margin: 4px 0px 4px 8px;
+			}
+
+			.material-icons {
+				font-size: 10px;
+				line-height: 10px;
+				padding: 1px;
+				border: 1px solid white;
+				border-radius: 10px;
+				margin: 4px 6px;
+			}
+		}
+	}
+
+	.integration-detail {
+		color: #9A9A9A;
+		line-height: 20px;
+	}
+}
+
+.google-connect, .add-new-member {
+	cursor: pointer;
+	color: $theme-color;
+}
+
+.team-members {
+	background-color: rgba(187,187,187,0.09);
+	-webkit-font-smoothing: antialiased;
+	border-radius: 4px;
+	padding: 16px;
+	margin-top: 10px;
+
+	.member {
+		margin-bottom: 16px;
+		display: flex;
+
+		.account-circle {
+			flex: 0;
+			
+		}
+
+		.account-names {
+			flex: 1;
+
+			.account-name-real {
+				font-weight: 700;
+			}
+		}
+
+		.account-types span.btn {
+			flex: 0;
+			color: rgba(0,0,0,0.3);
+			border-bottom: 1px dashed rgba(0,0,0,0.3);
+			text-align: right;
+			vertical-align: bottom;
+
+			i {
+				font-size: 14px;
+				line-height: 16px;
+				vertical-align: bottom;
+				padding-left:
+				 2px;
+			}
+		}
+
+		span {
+			display: block;
+		}
+
+	}
+
+	.create-member {
+		.buttons {
+			display:flex;
+			justify-content: flex-end;
+		}
+
+		h2 {
+			margin-bottom: 16px;
+		}
+
+		&>div {
+			display: flex;
+			margin-bottom: 8px;
+
+			label {
+				flex: 1;
+				font-weight: 700;
+			}
+
+			input {
+				margin-left: 8px;
+			}
+
+			input, div.Select {
+				flex: 3;
+
+				div.Select-control .Select-placeholder {
+					padding-left: 8px;
+				}
+			}
+
+		}
+	}
+
+
+	.accounttype-menu {
+		min-width: 240px;
+
+		.accounttype-rule {
+			height: 1px;
+			width: 100%;
+			background-color: rgba(0,0,0,0.1);
+		}
+
+		.accounttype-option {
+			display: flex;
+			padding: 16px;
+			padding-left: 16px;
+			cursor: pointer;
+
+			.check {
+				min-width: 16px;
+				margin-right: 4px;
+				i {
+					font-size: 16px;
+					line-height: 16px;
+				}
+			}
+
+			.title {
+				font-weight: 700;
+			}
+
+			.desc {
+				color: rgba(0,0,0,0.4);
+			}
+		}
+
+	}
+
+}

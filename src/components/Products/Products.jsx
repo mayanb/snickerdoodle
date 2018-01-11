@@ -6,9 +6,10 @@ import * as inventoryActions from '../Inventory/InventoryActions'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDropdown from './CreateProductDropdown'
-//import {findPosition, alphabetize} from './arrayutils.jsx'
-
 import Card from '../Card/Card.jsx'
+import './styles/products.css'
+import './styles/navsection.css'
+
 
 function titleRow() {
   return <ProductsListItem header item={{ code: "ID", name: "Name" }} />

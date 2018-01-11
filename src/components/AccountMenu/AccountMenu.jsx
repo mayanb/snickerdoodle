@@ -7,6 +7,8 @@ import Account from './Account'
 import api from '../WaffleconeAPI/api'
 import * as actions from './UserActions'
 import { connect } from 'react-redux'
+import './styles/accounts.css'
+import './styles/menu.css'
 
 class AccountMenu extends React.Component {
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '../Card/Button'
+import './styles/taskattribute.css'
 
 
 /* Usage:

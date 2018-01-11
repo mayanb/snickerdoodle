@@ -3,6 +3,7 @@ import { defaultRanges, Calendar, DateRange } from 'react-date-range';
 import {Menu} from 'react-toolbox/lib/menu';
 import moment from 'moment-timezone';
 import ButtonDropdown from '../Card/ButtonDropdown'
+import './datepicker.css'
 
 export default class Datepicker extends React.Component {
 

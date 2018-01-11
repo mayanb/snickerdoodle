@@ -1,0 +1,83 @@
+@import 'styles/constants.scss';
+
+.account-menu {
+	min-width: 180px;
+	line-height: 16px;
+	z-index: 1;
+
+	.account-menu-section-title {
+		color: rgba(0,0,0,0.3);
+		font-size: 11px;
+		display: block;
+		margin: 16px 16px 0 16px;
+	}
+} 
+
+.account {
+	display: flex;
+	margin: 12px;
+	cursor: pointer;
+
+	span.name {
+		display: block;
+		font-size: 14px;
+	}
+
+	span.username {
+		display: block;
+		color: $theme-color;
+	}
+}
+
+.current-account {
+	div, span, i {
+		vertical-align: middle;
+	}
+
+	.icon {
+		margin-right: 8px;
+	}
+
+	span.name {
+		color: #4f4f4f;
+	}
+
+	span.username {
+		text-align: left;
+	}
+}
+
+.nav-team {
+
+	div.button-dropdown-content {
+		top: 39px;
+	}
+}
+
+h1 {
+	font-size: 20px;
+	line-height: 32px;
+	font-weight: 100;
+	color: rgba(0,0,0,0.56);
+	margin: 0;
+	padding: 0;
+}
+
+h2 {
+	font-size: 14px;
+	line-height: 24px;
+	margin: 0;
+	font-weight: 100;
+	color: rgba(0,0,0,0.89);
+}
+
+h3 {
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 16px;
+	letter-spacing: 0.7px;
+	color: #4f4f4f;
+	padding-top: 3px;
+	padding-bottom: 4px;
+	text-transform: uppercase;
+}

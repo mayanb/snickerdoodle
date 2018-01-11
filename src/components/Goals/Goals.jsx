@@ -12,6 +12,7 @@ import DeleteGoalDialog from './DeleteGoalDialog'
 import Button from '../Card/Button'
 import Card from '../Card/Card'
 import { pluralize } from '../../utilities/stringutils'
+import './styles/goals.css'
 
 class Goals extends React.Component {
 

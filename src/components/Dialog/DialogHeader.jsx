@@ -1,4 +1,5 @@
 import React from 'react'
+import './styles/dialog.css'
 
 export default function DialogHeader(props) {
 	return (

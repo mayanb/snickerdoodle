@@ -1,0 +1,95 @@
+$primary: #0073F9; // #49A8F3;
+$background-color: #FBFCFC;
+$light-grey: #eee;
+$shadow-0: 0 1px 4px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.06);
+$shadow-1: 0 1px 4px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.12);
+$shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+$font-stack: "Camphor Pro", Nunito, Overpass, Proxima Nova, sans-serif;
+$unit: 10px;
+
+$section-border: 1px solid rgba(0,0,0,0.1);
+$sidebar-width: 270px;
+$navbar-height: 50px;
+
+$z-index-navbar: 990;
+$z-index-dialog: 991;
+$z-index-edit-menu: 992;
+
+//--------
+
+$sans-stack:'Apercu', 'Interface', 'Helvetica';
+$background-color: #F8F8F8;
+$red: #DD5151;
+$black: rgba(0,0,0,0.86);
+$gray: rgba(0,0,0,0.48);
+$light-gray: rgba(0,0,0,0.06);
+$theme-color: #0073F9; //#2198EE; //42AFFF;
+$dark-theme-color: #0465D8;
+$baseline: 8px;
+$nav-width: 144px;
+$nav-height: 64px;
+$top-padding: 48px;
+$card-shadow: 0 2px 4px 0 rgba(0,0,0,0.04);
+$panel-width: 300px;
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  //src: url(iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       // /* Old file: url(iconfont/MaterialIcons-Regular.woff2) format('woff2'), */
+       // /* load new file */ 
+       // url(2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2'),
+       // url(iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+	font-family:'Material Icons';
+	font-style: normal;
+}
+
+input, select {
+	font-family: $sans-stack;
+	font-size: 14px;
+	line-height: 20px;
+	height: 30px;
+	border: 1px solid $light-gray;
+	border-radius: 4px;
+	padding: 4px;
+	outline: none;
+	background-color: white;
+
+	&:focus {
+		border-color: $theme-color !important;
+	}
+
+	&::-webkit-input-placeholder {
+		color: rgba(0,0,0,0.3);
+	}
+}
+
+label {
+	font-size: 12px;
+	line-height: 16px;
+	padding: 8px 8px 8px 0;
+}
+
+textarea {
+	border: 1px solid $light-gray;
+	border-radius: 4px;
+	padding: 8px;
+	resize: none;
+}
+
+.Select-control {
+	outline: none;
+	border-radius: 4px;
+	border: 1px solid $light-gray;
+}
+
+.Select-placeholder {
+	padding-left: 8px;
+	font-size: 14px;
+}

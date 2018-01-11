@@ -1,0 +1,50 @@
+@import 'styles/constants.scss';
+
+.dashboard {
+	padding-right: $panel-width + 32px;
+
+	.dash-content {
+		display: flex;
+
+		& > div {
+			flex: 1;
+			margin: 0px 0px 32px 32px;
+		}
+	}
+
+	div.panel {
+		padding-top: 0;
+		display: flex;
+		width: $panel-width;
+		position: absolute;
+		top: $nav-height;
+		bottom: 0;
+		right: 0;
+		margin-right: 0px;	
+		padding-bottom: 0;
+		margin-bottom: 0;
+		box-shadow: $card-shadow;
+		
+
+		.little-header {
+			margin-left: 16px; 
+		}
+
+		.alerts-container {
+			padding-top: 48px;
+			flex: 2;
+			background-color: white;
+			overflow-y: scroll;
+			display: flex;
+			flex-direction: column;
+			& > span {
+				display: block;
+				flex: 0;
+			}
+
+			& > div {
+				flex: 1;
+			}
+		}
+	}
+}

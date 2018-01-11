@@ -1,5 +1,6 @@
 import React from 'react'
 import update from 'immutability-helper'
+import './styles/paginatedtable.css'
 
 
 export default class PaginatedTable extends React.Component {

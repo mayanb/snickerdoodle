@@ -9,6 +9,7 @@ import ProductsArchiveDialog from './ProductsArchiveDialog'
 import {ElementHeader} from '../Element/Element'
 import ElementMenu from '../Element/ElementMenu'
 import { Link } from 'react-router-dom'
+import './styles/productscard.css'
 
 export class ProductsCard extends React.Component {
 	constructor(props) {
