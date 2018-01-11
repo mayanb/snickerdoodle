@@ -34,7 +34,6 @@ export function fetchProducts() {
         } else {
           //let products = formatProductResponse(res.body)
           dispatch(requestProductsSuccess(res.body.sort(alphabetize)))
-          dispatch(selectProduct(0))
 
         }
       })
@@ -64,17 +63,6 @@ function requestProductsSuccess(json) {
     data: json
   }
 }
-
-
-export function selectProduct(index) {
-  return {
-    type: SELECT,
-    index: index,
-    name: PRODUCTS,
-
-  }
-}
-
 
 export function pageProducts(direction) {
   return {

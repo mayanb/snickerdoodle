@@ -5,45 +5,51 @@ import Icon from '../Card/Icon.jsx'
 import { connect } from 'react-redux'
 import * as actions from './ProductsActions.jsx'
 import ProductsCardInventory from './ProductsCardInventory.jsx'
+import ProductsArchiveDialog from './ProductsArchiveDialog'
 import {ElementHeader} from '../Element/Element'
 import ElementMenu from '../Element/ElementMenu'
+import { Link } from 'react-router-dom'
 
-export default class ProductsCard extends React.Component {
+export class ProductsCard extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			archive: false,
+      isArchiveOpen: false,
 			edit: false
 		}
-
-		this.handleToggleArchive = this.handleToggleArchive.bind(this)
 	}
 
+    // fetch products on load
+    componentDidMount() {
+        this.props.dispatch(actions.fetchProducts())
+    }
+
 	render() {
-		let { data, ui } = this.props
-		let product = data[ui.selectedItem]
+    let { product, ui } = this.props
 
 		if (!product)
 			return false;
 
-		return (
-			<Card big={true}>
-				<div className="products-card">
-					<ElementHeader {...product} actions={this.renderMenu()}/>
-					{this.renderDescription(product)}
-					{this.renderCreatedBy(product)}
-					{this.renderRule()}
-					<ProductsCardInventory {...this.props } />
-				</div>
-				
-			</Card>
-		)
-	}
+    return (
+      <div className="products-card">
+        <button className="link">
+          <Link to="/products">Back to Products</Link>
+        </button>
+        <ElementHeader {...product} actions={this.renderMenu()} />
+        {this.renderDescription(product)}
+        {this.renderCreatedBy(product)}
+        {this.renderRule()}
+        <ProductsCardInventory {...this.props} />
+        {this.renderArchiveDialog(product, ui)}
+      </div>
+
+    )
+  }
 
 	renderMenu() {
 		return <ElementMenu
-			onArchive={this.props.onArchive} 
+			onArchive={this.handleArchive.bind(this)}
 			onEdit={() => null}
 		/>
 	}
@@ -72,7 +78,7 @@ export default class ProductsCard extends React.Component {
 							Edit
 						</span>
 
-						<span onClick={this.handleToggleArchive}>
+						<span onClick={this.toggleArchive}>
 							<i className="material-icons">delete_forever</i>
 							Archive
 						</span>
@@ -108,8 +114,52 @@ export default class ProductsCard extends React.Component {
 		)
 	}
 
-	handleToggleArchive(product) {
-		this.setState({archive: !this.state.archive})
-	}
+  renderArchiveDialog(product, ui) {
+    if (!this.state.isArchiveOpen)
+      return null
+
+    return (
+      <ProductsArchiveDialog
+        {...product}
+        onCancel={this.toggleArchive.bind(this)}
+        onSubmit={() => this.handleConfirmArchive(this.props.product)}
+      />
+    )
+  }
+
+  toggleArchive() {
+    this.setState({ isArchiveOpen: !this.state.isArchiveOpen })
+  }
+
+  handleArchive() {
+    this.toggleArchive()
+  }
+
+  handleConfirmArchive(product) {
+    let c = this
+    this.props.dispatch(actions.postDeleteProduct(product, null, function () {
+        c.props.history.push('/products')
+      })
+    )
+  }
 
 }
+
+// This is our select function that will extract from the state the data slice we want to expose
+// through props to our component.
+const mapStateToProps = (state, props) => {
+    let product = state.products.data.find(product => String(product.id) === props.match.params.id)
+
+    return {
+        product: product,
+        ui: state.products.ui,
+        dispatch: state.dispatch,
+        inventoryData: state.inventories.data,
+        users: state.users
+        // inventories: state.products.inventories
+    }
+}
+
+const connectedProductsCard = connect(mapStateToProps)(ProductsCard)
+
+export default connectedProductsCard

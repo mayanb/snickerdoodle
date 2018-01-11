@@ -941,6 +941,9 @@ div.button-dropdown {
     list-style-type: none;
     padding: 0px; }
 
+.products {
+  padding: 0 50px; }
+
 .products-list-item {
   padding: 0 16px;
   display: flex;
@@ -1015,9 +1018,12 @@ div.processes div.card {
   max-width: 600px; }
 
 .products-card {
+  padding: 0 50px;
   color: #4f4f4f;
   font-size: 14px;
   line-height: 20px; }
+  .products-card > button {
+    margin-bottom: 30px; }
   .products-card h2 {
     color: rgba(0, 0, 0, 0.48);
     display: block;
