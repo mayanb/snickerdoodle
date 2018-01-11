@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Icon from '../Card/Icon'
 import * as actions from './ProductFormulaActions'
 import ProductFormulaSection from './ProductFormulaSection'
+import './styles/productpage.css'
 
 let product = {name: "Camino Verde 17", code: "CV17"}
 let data = [

@@ -34,7 +34,7 @@ import {
 // }
 
 export function fetchAlerts() {
-  //return fetch('/ics/alerts/', ALERTS)
+  return fetch('/ics/alerts/', ALERTS)
 }
 
 function fetch(endpoint, type, user_id) {
