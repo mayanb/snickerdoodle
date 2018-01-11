@@ -1,5 +1,6 @@
 import React from 'react'
-
+import Icon from '../Card/Icon'
+import moment from 'moment'
 
 export default class ProductsListItem extends React.Component {
 	getClassNames() {
@@ -8,15 +9,25 @@ export default class ProductsListItem extends React.Component {
 	}
 
 	render() {
-		let { isSelected, item, onClick } = this.props
+		let { item, onClick } = this.props
+		item.created_at = item.created_at || 'N/A' //Some products might not have a created_at value
+
 		return (
 			<div className={this.getClassNames()} onClick={onClick}>
 
-				<div className={"products-list-code"}>
+				<div className={"code"}>
+					<Icon src="" size="20px" content={item.code}/>
 					{item.code}
 				</div>
-				<div className={"products-list-name"}>
+				<div className={"name"}>
 					{item.name}
+				</div>
+				<div className={"owner"}>
+					<Icon src="" size="20px" content={item.username}/>
+					{item.username}
+				</div>
+				<div className={"date"}>
+					{moment(item.created_at).format("MMMM DD, YYYY")}
 				</div>
 				
 			</div>
@@ -25,8 +36,3 @@ export default class ProductsListItem extends React.Component {
 
 }
 
-function SelectCircle(props) {
-	return (
-		<div className={"select-circle"}></div>
-	)
-}
