@@ -63,39 +63,7 @@
 
 	.code {
 		font-weight: bold;
-	}
-
-  
-	&.products-list-header {
-		color: rgba(0,0,0,0.3);
-		font-size: 11px;
-
-		.products-list-select-circle {
-			visibility: hidden;
-		}
-	}
-
-	.products-list-select-circle {
-		flex: 1;
-
-		// make our select box centered in the line
-		display:flex;
-		align-items: center;
-		margin-right: 8px;
-
-		img {
-			height: 16px;
-			width: 16px;
-		}
-	}
-
-	.products-list-code {
 		text-overflow: ellipsis;
-		font-weight: 700;
-	}
-
-	.products-list-unit {
-		flex: 3;
 	}
 }
 
