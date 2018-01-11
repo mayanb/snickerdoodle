@@ -1,15 +1,70 @@
 @import 'styles/constants.scss';
 
 .products {
-	padding: 0 50px;
+	padding: 0 36px;
+	min-width: 720px;
+	max-width: 1200px;
+
+	&.nav-section .nav-section-header {
+		color: $gray;
+		justify-content: space-between;
+      	margin-bottom: 44px;
+	}
+
+	.products-create-product .button-dropdown button {
+		height: 23px;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+
+	.paginated-table.border-none li.header {
+		border-bottom: none; //override PaginatedTable header border
+	}
+
+	.products-header {
+		display: flex;
+		width: 100%;
+		padding: 0 20px;
+		margin-bottom: 6px;
+		color: $gray;
+		font-size: 12px;
+	}
+
+	.header-item {
+	}
+
+	.code {
+		flex: 4;
+	}
+
+	.name {
+		flex: 8;
+	}
+
+	.owner {
+		flex: 4;
+	}
+
+	.date {
+		flex: 4;
+	}
 }
 
 .products-list-item {
-	padding: 0 16px;
 	display:flex;
 	flex-direction: row;
-	line-height: 39px; // idk why its not doing border-box sizing
 	cursor: pointer;
+	height: 40px;
+	line-height: 40px;
+	margin-bottom: 10px;
+	padding: 0 20px;
+	background-color: white;
+	box-shadow: $light-gray 0 2px 4px 0;
+
+	.code {
+		font-weight: bold;
+	}
+
   
 	&.products-list-header {
 		color: rgba(0,0,0,0.3);
@@ -18,13 +73,6 @@
 		.products-list-select-circle {
 			visibility: hidden;
 		}
-	}
-
-
-	// selected list item should be blue
-	&.products-selected {
-		color: $theme-color;
-		background-color: #DEEDFE;
 	}
 
 	.products-list-select-circle {
@@ -42,13 +90,8 @@
 	}
 
 	.products-list-code {
-		flex: 3;
 		text-overflow: ellipsis;
 		font-weight: 700;
-	}
-
-	.products-list-name {
-		flex: 8;
 	}
 
 	.products-list-unit {

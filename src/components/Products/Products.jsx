@@ -11,9 +11,6 @@ import './styles/products.css'
 import './styles/navsection.css'
 
 
-function titleRow() {
-  return <ProductsListItem header item={{ code: "ID", name: "Name" }} />
-}
 
 class Products extends React.Component {
   constructor(props) {
@@ -44,7 +41,7 @@ class Products extends React.Component {
             onClick={this.handleSelectProduct}
             onPagination={this.handlePagination}
             Row={ProductsListItem}
-            TitleRow={titleRow}
+            TitleRow={this.headerRow}
           />
         </div>
       </div>
@@ -55,24 +52,33 @@ class Products extends React.Component {
   renderTitle() {
     return (
       <div className="nav-section-header">
-        <h1>Products</h1>
+        <div>All products</div>
         {this.renderCreateProductButton()}
       </div>
     )
   }
 
-  renderCreateProductButton() {
-    return (
-      <div className="products-list-actions">
-        <div className="products-create-product">
-          <CreateProductDropdown
-            onSubmit={this.handleCreateProduct}
-            ui={this.props.ui}
-          />
-        </div>
-      </div>
-    )
+	renderCreateProductButton() {
+		return (
+			<div className="products-create-product">
+			  <CreateProductDropdown
+				  onSubmit={this.handleCreateProduct}
+				  ui={this.props.ui}
+			  />
+		  </div>
+	  )
   }
+
+	headerRow() {
+		return (
+			<div className="products-header">
+				<div className="header-item code">Code</div>
+				<div className="header-item name">Name</div>
+				<div className="header-item owner">Owner</div>
+				<div className="header-item date">Date Created</div>
+			</div>
+		)
+	}
 
   /* EVENT HANDLERS */
   handleSelectProduct(index) {
