@@ -14,23 +14,24 @@ import {START_ADDING_FORMULA} from '../../reducers/FormulaReducerExtension'
 import { FORMULAS } from '../../reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
-let data = [
-  { attribute: {process_type: 1, process_type_name: 'Roast', name: 'Temperature (F)', datatype: 'Number'}, formula: '10', comparator: '<'},
-  { attribute: {process_type: 1, process_type_name: 'Roast', name: 'Start time', datatype: 'Number'}, formula: '15', comparator: '<'}
-]
+// let data = [
+//   { attribute: {process_type: 1, process_type_name: 'Roast', name: 'Temperature (F)', datatype: 'Number'}, formula: '10', comparator: '<'},
+//   { attribute: {process_type: 1, process_type_name: 'Roast', name: 'Start time', datatype: 'Number'}, formula: '15', comparator: '<'}
+// ]
 
 
-export function fetchFormulas() {
+export function fetchFormulas(q) {
   return function (dispatch) {
     dispatch(requestFormulas())
 
     // actually fetch 
     return api.get('/ics/formula-attributes/')
+      .query(q)
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestFormulasError(err))
         } else {
-          dispatch(requestFormulasSuccess(data))
+          dispatch(requestFormulasSuccess(res.body))
         }
       })
   }

@@ -2,21 +2,30 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Icon from '../Card/Icon'
 import * as actions from './ProductFormulaActions'
+import * as productActions from '../Products/ProductsActions'
+import * as processActions from '../Processes/ProcessesActions'
 import ProductFormulaSection from './ProductFormulaSection'
 import './styles/productpage.css'
-
-let product = {name: "Camino Verde 17", code: "CV17"}
 
 class ProductPage extends React.Component {
 
 	componentDidMount() {
-		 this.props.dispatch(actions.fetchFormulas())
+		let {id} = this.props.match.params
+		this.props.dispatch(productActions.fetchProducts({id: id}))
+		this.props.dispatch(processActions.fetchProcesses())
+		this.props.dispatch(actions.fetchFormulas({product_type: id}))
 	}
 
 	render() {
-		let {ui, data} = this.props
+		let {ui, data, product} = this.props
 		let formulas = data //this.props.data
 		let groupedFormulas = groupFormulas(formulas)
+
+		console.log(data)
+
+		if (!product) {
+			return <span>Loading... </span>
+		}
 
 		return ( 
 			<div className="productpage">
@@ -27,6 +36,7 @@ class ProductPage extends React.Component {
 							return <ProductFormulaSection 
 								key={i} 
 								process_type={process_type}
+								product_type={product.id}
 								formulas={groupedFormulas[process_type]} 
 								isAddingFormula={ui.isAddingFormula === process_type}
 							/>
@@ -41,7 +51,7 @@ class ProductPage extends React.Component {
 function groupFormulas(formulas) {
 	let groupedFormulas = {}
 	formulas.map(function (formula, i) {
-		let process_type = formula.attribute.process_type
+		let process_type = (formula.attribute_obj || formula.attribute).process_type
 		if (groupedFormulas[process_type])
 			groupedFormulas[process_type].push(formula)
 		else {
@@ -66,7 +76,8 @@ function ProductHeader(props) {
 const mapStateToProps = (state/*, props*/) => {
   return {
     data: state.formulas.data,
-    ui: state.formulas.ui
+    ui: state.formulas.ui,
+    product: state.products.data[0]
   }
 }
 

@@ -21,13 +21,14 @@ import { PRODUCTS, INVENTORIES } from '../../reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
 
-export function fetchProducts() {
+export function fetchProducts(q) {
   return function (dispatch) {
     // dispatch an action that we are requesting a product
     dispatch(requestProducts())
 
     // actually fetch 
     return api.get('/ics/products/')
+      .query(q)
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestProductsFailure(err))

@@ -4,7 +4,8 @@ import './styles/formula.css'
 import Icon from '../Card/Icon'
 
 export default function ProductFormula(props) {
-	let {attribute, formula, comparator} = props
+	let {formula, comparator} = props
+	let attribute = props.attribute_obj || props.attribute
 	return (
 		<div>
 			<div className="recipe-formula">

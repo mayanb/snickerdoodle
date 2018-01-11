@@ -10,16 +10,20 @@ import './styles/formulasection.css'
 
 export default function ProductFormulaSection(props) {
 	let {formulas} = props
+	let process_type = (formulas[0].attribute_obj || formulas[0].attribute).process_name
 	return (
 		<Card nopadding>
-			<SectionHeader title={gerund(formulas[0].attribute.process_type_name)}/>
+			<SectionHeader title={gerund(process_type)}/>
 			<CardRule />
 			{
 				formulas.map(function (f, i) {
 					return <ProductFormula key={i} {...f} />
 				})
 			}
-			{ props.isAddingFormula ? <AddNewFormula /> : <StartAddingFormula process_type={props.process_type}/>}
+			{ props.isAddingFormula ? 
+					<AddNewFormula process_type={props.process_type} product_type={props.product_type} /> :
+					<StartAddingFormula process_type={props.process_type}/>
+			}
 		</Card>
 	)
 }
