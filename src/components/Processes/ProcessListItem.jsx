@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactImageFallback from 'react-image-fallback'
-
+import './styles/processlistitem.css'
 
 export default class ProcessListItem extends React.Component {
 	getClassNames() {
-		return "products-list-item" 
-			+ (this.props.isSelected?" products-selected":"")
-			+ (this.props.header?" products-list-header":"")
+		return "process-list-item"
+			+ (this.props.isSelected?" process-selected":"")
+			+ (this.props.header?" process-list-header":"")
 	}
 
 
@@ -19,14 +19,14 @@ export default class ProcessListItem extends React.Component {
 		return (
 			<div className={this.getClassNames()} onClick={onClick}>
 
-				<div className={"products-list-select-circle"}>
+				<div className={"process-list-select-circle"}>
 					{symbol}
 				</div>
 
-				<div className={"products-list-code"}>
+				<div className={"process-list-code"}>
 					{item.code}
 				</div>
-				<div className={"products-list-name"}>
+				<div className={"process-list-name"}>
 					{item.name}
 				</div>
 			</div>

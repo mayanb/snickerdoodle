@@ -67,7 +67,7 @@ function App(props) {
         <Route path={"/task/:id?"} component={Task} />
         <Route path={"/processes/:id?"} component={Processes} />
         <Route exact path={"/products"} component={Products} />
-        <Route path={"/products/:id"} component={ProductsCard} />
+        <Route path={"/products/:id"} component={ProductPage} />
         <Route path={"/attributetest"} component={TaskAttributeTest} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
         <Route path={"/goals"} component={Goals} />
