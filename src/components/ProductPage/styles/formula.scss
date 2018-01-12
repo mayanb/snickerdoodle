@@ -37,11 +37,21 @@
 	.user {
 		flex: 1;
 		margin-right: -8px;
+		div {
+			vertical-align: middle;
+		}
 	}
 
 	.delete {
 		flex: 1;
-		margin-left: 10px;
+		i {
+			color: #e74c3c;
+			line-height: 20px;
+			font-size: 20px;
+			vertical-align: middle;
+			margin-left: 16px;
+			cursor: pointer;
+		}
 	}
 
 }

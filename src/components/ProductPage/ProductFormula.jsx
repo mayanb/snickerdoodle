@@ -9,7 +9,7 @@ import * as actions from './ProductFormulaActions'
 class ProductFormula extends React.Component {
 
 	render() {
-		let { formula, comparator, dispatch, id, index } = this.props
+		let { formula, comparator, dispatch, id, index, deletable } = this.props
 		let attribute = this.props.attribute_obj || this.props.attribute
 		return (
 			<div>
@@ -29,9 +29,12 @@ class ProductFormula extends React.Component {
 					<div className="user">
 						<Icon size="20px" content="ishita" />
 					</div>
-					<div className="delete">
-						<Button link onClick={() => deleteFormula(id, index, dispatch)}>Delete</Button>
-					</div>
+					{ deletable ? 
+						<div className="delete">
+							<i className="material-icons" onClick={() => deleteFormula(id, index, dispatch)}>remove_circle</i>
+						</div> :
+						null
+					}
 				</div>
 				<CardRule />
 			</div>
