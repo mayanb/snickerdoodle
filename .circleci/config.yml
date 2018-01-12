@@ -1,0 +1,65 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+
+general:
+  branches:
+    only:
+      - staging
+
+jobs:
+  build:
+    docker:
+      - image: node:8.9.4
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      - run:
+          name: "Checking Versions"
+          command: |
+            node --version
+            npm --version
+
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+
+      - run: npm install
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+      - run:
+          name: Install AWS CLI
+          working_directory: /
+          command: |
+            apt-get update && apt-get install -y awscli
+
+      - run:
+              # TODO - fix lint errors and remove CI=false command that suppresses warnings
+          name: Build
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "staging" ]; then
+              CI=false REACT_APP_BACKEND=staging npm run build && aws --region us-west-1 s3 sync build/ s3://dashboard-staging.usepolymer.com
+            elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+              npm run build
+            else
+              npm run build
+            fi
+
+      # run tests!
+      #- run: npm test
+
+
