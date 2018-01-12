@@ -17,7 +17,7 @@ export default function ProductFormulaSection(props) {
 			<CardRule />
 			{
 				formulas.map(function (f, i) {
-					return <ProductFormula key={i} {...f} />
+					return <ProductFormula key={i} index={i} {...f} />
 				})
 			}
 			{ props.isAddingFormula ? 
