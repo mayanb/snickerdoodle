@@ -54,7 +54,7 @@ class ProcessAttributeList extends React.Component {
 
 	saveAttribute(name, type) {
 		let { process, ui } = this.props
-		let attribute = { name: name, process_type: process.id }
+		let attribute = { name: name, process_type: process.id, datatype: type }
 		this.props.dispatch(actions.saveAttribute(0, attribute))
 	}
 
