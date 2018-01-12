@@ -18,11 +18,20 @@ export default class ProductFormulaSection extends React.Component {
 	}
 
 	render() {
-		let {formulas, product_type, isAddingFormula} = this.props
-		let process_type = (formulas[0].attribute_obj || formulas[0].attribute).process_name
+		let {formulas, product_type, isAddingFormula, process_type} = this.props
+		let process_id, process_name = ""
+		if (process_type) {
+			process_id = process_type.id;
+			process_name = process_type.name
+		} else {
+			let attr = (formulas[0].attribute_obj || formulas[0].attribute)
+			process_id = attr.process_type
+			process_name = attr.process_name
+		}
+
 		return (
 			<Card nopadding>
-				<SectionHeader title={gerund(process_type)} onEdit={this.handleEdit} deletable={this.state.deletable}/>
+				<SectionHeader title={gerund(process_name)} onEdit={this.handleEdit} deletable={this.state.deletable}/>
 				<CardRule />
 				{
 					formulas.map(function (f, i) {
@@ -30,8 +39,8 @@ export default class ProductFormulaSection extends React.Component {
 					}, this)
 				}
 				{ isAddingFormula ? 
-						<AddNewFormula process_type={process_type} product_type={product_type} /> :
-						<StartAddingFormula process_type={process_type}/>
+						<AddNewFormula process_type={process_id} product_type={product_type} /> :
+						<StartAddingFormula process_type={process_id}/>
 				}
 			</Card>
 		)

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import CardRule from '../Card/CardRule'
 import './styles/formula.css'
 import Icon from '../Card/Icon'
-import Button from '../Card/Button'
 import * as actions from './ProductFormulaActions'
 
 class ProductFormula extends React.Component {

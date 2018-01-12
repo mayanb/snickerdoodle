@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import * as actions from './ProductFormulaActions'
-import Button from '../Card/Button'
 import Select from '../Inputs/Select'
 import Input from '../Inputs/Input'
 import './styles/addformula.css'
@@ -26,7 +25,7 @@ class AddNewFormula extends React.Component {
 				<div className="lhs">
 					<Select
 						clearable={false}
-						style='medium-gray' 	
+						styleType='medium-gray' 	
 						name="attribute"
 						value={this.state.attribute}
 						valueKey='id'
@@ -38,7 +37,7 @@ class AddNewFormula extends React.Component {
 				<div className="comparator">
 					<Select 
 						clearable={false}
-						style="medium-gray"
+						styleType="medium-gray"
 						name="comparator"
 						value={this.state.comparator}
 						valueKey='value'
@@ -49,7 +48,7 @@ class AddNewFormula extends React.Component {
 				</div>
 				<div className="rhs">
 					<Input 
-						style="medium-gray" 
+						styleType="medium-gray" 
 						type="text" 
 						value={this.state.formula}
 						onChange={(e) => this.handleChange('formula', e.target.value)}
@@ -88,7 +87,7 @@ class AddNewFormula extends React.Component {
 
 
 const mapStateToProps = (state, props) => { 
-	let process_type = state.processes.data.find(e => e.id === parseInt(props.process_type))
+	let process_type = state.processes.data.find(e => String(e.id) === String(props.process_type))
   return {
   	attributes: process_type.attributes
   }

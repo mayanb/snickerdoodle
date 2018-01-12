@@ -1,23 +1,65 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Select from '../Select/Select'
+import * as actions from './ProductFormulaActions'
+import Select from '../Inputs/Select'
 
 class AddSection extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			process_type: null,
+		}
+		this.handleChange = this.handleChange.bind(this)
+		this.handleAdd = this.handleAdd.bind(this)
+	}
 
 	render() {
 		return (
-			<div>
-				<span>Add a stage</span>
-				<Select />
-				<i className="material-icons">add_circle_outline</i>
+			<div className="addsection-wrapper">
+				<div className="addsection">
+					<span>Add a stage</span>
+					<Select 
+						styleType="medium-gray"
+						value={this.state.process_type}
+						valueKey="id"
+						labelKey="name"
+						options={exclude(this.props.processes, this.props.exclude)}
+						onChange={this.handleChange}
+					/>
+					<i 
+						className={"material-icons " + (this.state.process_type?'active':'')} 
+						onClick={this.handleAdd}
+					>
+						add_circle_outline
+					</i>
+				</div>
 			</div>
 		)	
 	}
 
-	handleAdd() {
-		// this.props.dispatch(action.addSection())
+	handleChange(value) {
+		this.setState({process_type: value})
 	}
 
+	handleAdd() {
+		if (!this.state.process_type) 
+			return 
+		this.props.dispatch(actions.addSection(this.state.process_type))
+
+	}
+
+}
+
+function exclude(arr = [], toExclude = []) {
+	let newArr = []
+	arr.forEach((e, i) => {
+		if (toExclude.find(k => String(k.id) === String(e.id))) {
+			console.log("excluding")
+			return
+		}
+		newArr.push(e)
+	})
+	return newArr
 }
 
 

@@ -2,6 +2,35 @@
 
 .productpage {
 	margin-left: 36px;
+
+	.addsection-wrapper {
+		display: flex;
+		justify-content: center;
+		margin-top: 16px;
+	}
+
+	.addsection {
+		display: flex;
+		min-width: 300px;
+		align-items: center;
+
+		& > div {
+			flex: 1;
+			margin-right: 8px;
+		}
+
+		& > span {
+			margin-right: 8px;
+		}
+
+		& > i{
+			color: $gray;
+			&.active {
+				color: $primary;
+			}
+		}
+		
+	}
 }
 
 .productheader {

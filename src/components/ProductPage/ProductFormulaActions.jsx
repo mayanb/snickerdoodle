@@ -5,14 +5,13 @@ import {
   REQUEST_FAILURE,
   REQUEST_CREATE,
   REQUEST_CREATE_SUCCESS,
-  REQUEST_CREATE_FAILURE,
+  // REQUEST_CREATE_FAILURE,
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
 } from '../../reducers/APIDataReducer'
-import {START_ADDING_FORMULA} from '../../reducers/FormulaReducerExtension'
+import {START_ADDING_FORMULA, ADD_SECTION} from '../../reducers/FormulaReducerExtension'
 import { FORMULAS } from '../../reducers/ReducerTypes'
-import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
 // let data = [
 //   { attribute: {process_type: 1, process_type_name: 'Roast', name: 'Temperature (F)', datatype: 'Number'}, formula: '10', comparator: '<'},
@@ -117,6 +116,14 @@ export function finishAddingFormula() {
     type: START_ADDING_FORMULA,
     name: FORMULAS,
     process_type: null
+  }
+}
+
+export function addSection(process_type) {
+  return {
+    type: ADD_SECTION,
+    name: FORMULAS,
+    process_type: process_type    
   }
 }
 

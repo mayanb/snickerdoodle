@@ -5,7 +5,8 @@ import * as actions from './ProductFormulaActions'
 import * as productActions from '../Products/ProductsActions'
 import * as processActions from '../Processes/ProcessesActions'
 import ProductFormulaSection from './ProductFormulaSection'
-import ProductMenu from './ProductMenu';
+import ProductMenu from './ProductMenu'
+import AddSection from './AddSection'
 import './styles/productpage.css'
 
 class ProductPage extends React.Component {
@@ -22,7 +23,7 @@ class ProductPage extends React.Component {
 		let formulas = data //this.props.data
 		let groupedFormulas = groupFormulas(formulas)
 
-		console.log(data)
+		let all_process_types = []
 
 		if (!product) {
 			return <span>Loading... </span>
@@ -34,21 +35,22 @@ class ProductPage extends React.Component {
 				<div className="recipe">
 					{
 						Object.keys(groupedFormulas).map(function (process_type, i) {
+							all_process_types.push({id: process_type})
 							return <ProductFormulaSection 
 								key={i} 
-								process_type={process_type}
 								product_type={product.id}
 								formulas={groupedFormulas[process_type]} 
-								isAddingFormula={ui.isAddingFormula === process_type}
+								isAddingFormula={parseInt(ui.isAddingFormula,10) === parseInt(process_type, 10)}
 							/>
 						})
 					}
+					{ this.renderAddSection(all_process_types) }
 				</div>
 			</div>
 		)
 	}
 
-	isAddingSection() {
+	renderAddSection(exclude) {
 		let {ui, product} = this.props
 		if (ui.isAddingSection) {
 			return <ProductFormulaSection
@@ -57,14 +59,15 @@ class ProductPage extends React.Component {
 				formulas={[]}
 				isAddingFormula={true}
 			/>
-		}
+		} else return <AddSection exclude={exclude}/>
 	}
 }
 
 
 function groupFormulas(formulas) {
 	let groupedFormulas = {}
-	formulas.map(function (formula, i) {
+	formulas.forEach(function (formula, i) {
+		console.log(formula)
 		let process_type = (formula.attribute_obj || formula.attribute).process_type
 		if (groupedFormulas[process_type])
 			groupedFormulas[process_type].push(formula)
