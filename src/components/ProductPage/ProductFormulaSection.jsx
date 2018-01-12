@@ -32,7 +32,6 @@ function SectionHeader(props) {
 	return (
 		<div className="recipe-process-header">
 			<span>{props.title}</span>
-			<Button link>Add</Button>
 		</div>
 	)
 }

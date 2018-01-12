@@ -46,7 +46,20 @@ class ProductPage extends React.Component {
 			</div>
 		)
 	}
+
+	isAddingSection() {
+		if (ui.isAddingSection) {
+			return <ProductFormulaSection
+				key={i}
+				process_type={isAddingSection}
+				product_type={product.id}
+				formulas={[]}
+				isAddingFormula={true}
+			/>
+		}
+	}
 }
+
 
 function groupFormulas(formulas) {
 	let groupedFormulas = {}
@@ -77,7 +90,7 @@ const mapStateToProps = (state/*, props*/) => {
   return {
     data: state.formulas.data,
     ui: state.formulas.ui,
-    product: state.products.data[0]
+    product: state.products.data[0] // we're only fetching 1 object so we can just take the first one in the list
   }
 }
 
