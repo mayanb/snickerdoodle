@@ -5,6 +5,7 @@
 /.sass-cache
 .sass-cache/
 *.css.map
+*.css
 
 # testing
 /coverage

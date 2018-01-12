@@ -1,10 +1,11 @@
 import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import './styles/layout.css'
+
 import Activity from '../Activity/Activity'
 import Home from '../Home/Home'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
-import ProductsCard from '../Products/ProductsCard'
 
 import Movements from '../Movements/Movements'
 
@@ -30,6 +31,7 @@ import BCWrapper from '../D3BarChart/BCWrapper'
 import PackingOrders from '../PackingOrders/PackingOrders'
 // import OrderDetail from '../OrderDetail/OrderDetail'
 import Sortable from '../Sortable/Index'
+import ProductPage from '../ProductPage/ProductPage'
 
 
 export default class ApplicationLayoutStable extends React.Component {
@@ -56,7 +58,7 @@ function App(props) {
       <Route path="/:section?/:id?" component={Topbar} />
 
       <div className="application-content">
-        <Route exact path={"/"} component={Home} />
+        <Route exact path={"/"} component={ProductPage} />
         <Route exact path={"/inventory/:id?"} component={Inventory} />
         <Route exact path={"/labels/"} component={ZebraPrinter} />
         <Route path={"/zebra/"} component={ZebraPrinter} />
@@ -64,7 +66,7 @@ function App(props) {
         <Route path={"/task/:id?"} component={Task} />
         <Route path={"/processes/:id?"} component={Processes} />
         <Route exact path={"/products"} component={Products} />
-        <Route path={"/products/:id"} component={ProductsCard} />
+        <Route path={"/products/:id"} component={ProductPage} />
         <Route path={"/attributetest"} component={TaskAttributeTest} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
         <Route path={"/goals"} component={Goals} />

@@ -47,7 +47,8 @@ function fetch(endpoint, type, user_id) {
       .query({userprofile: user_id})
       .end( function (err, res) {
         if (err || !res.ok) {
-          dispatch(requestFailure(type, err))
+          //dispatch(requestFailure(type, err))
+          return
         }
         dispatch(requestSuccess(type, res.body))
         api.put(`/ics/userprofiles/last-seen/${user_id}/`)

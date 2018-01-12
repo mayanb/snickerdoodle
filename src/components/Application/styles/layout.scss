@@ -1,0 +1,84 @@
+@import 'styles/reset.scss';
+@import 'styles/constants.scss';
+
+$sans-stack:'Apercu', 'Interface', 'Helvetica';
+$background-color: #F8F8F8;
+$red: #DD5151;
+$black: rgba(0,0,0,0.86);
+$gray: rgba(0,0,0,0.48);
+$light-gray: rgba(0,0,0,0.06);
+$theme-color: #0073F9; //#2198EE; //42AFFF;
+$dark-theme-color: #0465D8;
+$baseline: 8px;
+$nav-width: 144px;
+$nav-height: 64px;
+$top-padding: 48px;
+$card-shadow: 0 2px 4px 0 rgba(0,0,0,0.04);
+$panel-width: 300px;
+
+@font-face {
+ font-family: "Apercu";
+ src: url("https://s3-us-west-1.amazonaws.com/polymer-fonts/Apercu.woff") format("woff");
+}
+
+@font-face {
+ font-family: "Apercu";
+ font-weight: 700;
+ src: url("https://s3-us-west-1.amazonaws.com/polymer-fonts/Apercu-Bold.woff") format("woff");
+}
+
+html, body, #root {
+	width: 100%;
+	height: 100%;
+}
+
+.layout {
+	display:flex;
+	flex-direction: row;
+	height: 100%;
+}
+
+.baseline-grid {
+	//background-image: url('baselinegrid.png');
+	background-size: 16px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	width: 100vw;
+	opacity: 0.5;
+	z-index: 1;
+}
+
+.application-content {
+	padding-top: $nav-height + $top-padding;
+	padding-left: $nav-width;
+	height: 100%;
+	display: flex;
+	flex-grow: 1;
+	background-color: $background-color;
+	overflow-y: scroll;
+}
+
+body {
+	font-family: $sans-stack;
+	font-size: 14px;
+	line-height: 20px;
+	color: rgba(79,79,79,1);
+	padding: 0;
+	margin: 0;
+}
+
+div, input, * {
+	box-sizing: border-box !important;
+}
+
+span {
+	line-height: 20px;
+}
+
+.new-features-card {
+	min-width: 500px;
+	max-width: 800px;
+}
+

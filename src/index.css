@@ -1,9 +1,99 @@
-@import url("https://fonts.googleapis.com/css?family=Overpass+Mono|Overpass:400,700");
-@import url("https://fonts.googleapis.com/css?family=Overpass+Mono|Overpass:400,700");
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
+/*
+Error: Undefined variable: "$navbar-height".
+        on line 4 of src/styles/oldstyles/processtile.scss
+        from line 6 of src/styles/oldstyles/styles.scss
+        from line 3 of src/styles/styles.scss
+
+1: @import url('https://fonts.googleapis.com/css?family=Overpass+Mono|Overpass:400,700');
+2: 
+3: @import "oldstyles/styles";
+4: @import "layout";
+5: @import "navigation";
+6: @import "headers";
+7: @import "input";
+8: @import "card";
+9: @import "button";
+
+Backtrace:
+src/styles/oldstyles/processtile.scss:4
+src/styles/oldstyles/styles.scss:6
+src/styles/styles.scss:3
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/script/tree/variable.rb:49:in `_perform'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/script/tree/node.rb:50:in `perform'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:402:in `visit_prop'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:444:in `block (2 levels) in visit_rule'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:444:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:444:in `block in visit_rule'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:442:in `visit_rule'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:329:in `block (2 levels) in visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:329:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:329:in `block in visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:88:in `block in with_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:88:in `with_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:326:in `visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:329:in `block (2 levels) in visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:329:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:329:in `block in visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:88:in `block in with_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:88:in `with_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:326:in `visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:135:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:162:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:52:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:171:in `block in visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:183:in `with_environment'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:170:in `visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:190:in `visit_root'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:161:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/visitors/perform.rb:10:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/engine.rb:389:in `_render_with_sourcemap'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/engine.rb:307:in `render_with_sourcemap'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:462:in `update_stylesheet'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:209:in `each'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin/compiler.rb:294:in `watch'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/plugin.rb:109:in `method_missing'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/exec/sass_scss.rb:360:in `watch_or_update'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/exec/base.rb:52:in `parse'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/lib/sass/exec/base.rb:19:in `parse!'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.5.1/bin/sass:13:in `<top (required)>'
+/usr/local/bin/sass:23:in `load'
+/usr/local/bin/sass:23:in `<main>'
 */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -741,11 +831,18 @@ textarea {
   padding: 16px;
   overflow-x: hidden;
   background-color: white; }
+  .card.nopadding {
+    padding: 0px; }
   .card .rule {
     background-color: rgba(0, 0, 0, 0.06);
     height: 1px;
     margin: 16px;
     margin-bottom: 15px; }
+  .card .cardrule-v2 {
+    background-color: rgba(0, 0, 0, 0.06);
+    margin-left: -16px;
+    width: calc(100% + 32px);
+    height: 1px; }
   .card.big {
     padding: 16px;
     border-radius: 8px;
@@ -2026,6 +2123,78 @@ div.zero-state {
   color: #0073F9;
   border-bottom: 4px solid #0073F9; }
 
+.productpage {
+  margin-left: 36px; }
+
+.productheader {
+  display: flex;
+  color: rgba(0, 0, 0, 0.87); }
+  .productheader > div {
+    display: flex;
+    flex-direction: column; }
+  .productheader .product-code {
+    font-size: 20px;
+    line-height: 24px; }
+
+.recipe {
+  margin-top: 16px; }
+  .recipe .card {
+    width: 500px; }
+  .recipe .recipe-process-header {
+    padding: 8px 16px;
+    display: flex; }
+    .recipe .recipe-process-header span {
+      flex: 1; }
+  .recipe .recipe-wrapper {
+    padding: 16px; }
+
+.recipe-formula {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  margin-bottom: 16px; }
+  .recipe-formula:last-child {
+    margin-bottom: 0; }
+  .recipe-formula > div {
+    display: flex;
+    flex-direction: column; }
+  .recipe-formula .lhs {
+    flex: 3; }
+  .recipe-formula .rhs {
+    flex: 5; }
+  .recipe-formula .lhs .name {
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.95);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
+  .recipe-formula .lhs .datatype {
+    color: rgba(0, 0, 0, 0.48);
+    font-size: 12px;
+    line-height: 14px;
+    margin-top: 4px; }
+
+.recipe-formula.add-formula {
+  display: flex;
+  flex-direction: column; }
+  .recipe-formula.add-formula .formula-inputs {
+    display: flex;
+    flex-direction: row; }
+  .recipe-formula.add-formula div.formula-actions {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end; }
+
+.add-formula-section {
+  display: flex; }
+  .add-formula-section > span {
+    line-height: 36px; }
+  .add-formula-section .select-process {
+    min-width: 200px;
+    flex: 1; }
+
 .lesmis .links line {
   stroke: #999;
   stroke-opacity: 0.6; }
@@ -2043,3 +2212,8 @@ div.zero-state {
   font-style: normal; }
 
 /*# sourceMappingURL=index.css.map */
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined variable: \"$navbar-height\".\A         on line 4 of src/styles/oldstyles/processtile.scss\A         from line 6 of src/styles/oldstyles/styles.scss\A         from line 3 of src/styles/styles.scss\A \A 1: @import url('https://fonts.googleapis.com/css?family=Overpass+Mono|Overpass:400,700');\A 2: \A 3: @import \"oldstyles/styles\";\A 4: @import \"layout\";\A 5: @import \"navigation\";\A 6: @import \"headers\";\A 7: @import \"input\";\A 8: @import \"card\";\A 9: @import \"button\";"; }
+}
