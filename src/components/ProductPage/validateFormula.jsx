@@ -1,12 +1,12 @@
 import math from 'mathjs'
 
 export function validateFormula(expression, allowedAttributeIds) {
-	const pattern = /^[\d|\(|\)|\*|\+|\-|\/|\^|\{|\}]+$/;
+	const pattern = /^[\d|(|)|*|+|\-|/|^|{|}]+$/;
 	let match = new RegExp(pattern).test(expression)
 	let result = 0
 	if (match) {
 		try {
-			expression = expression.replace(/[\{\}]+/g, '');
+			expression = expression.replace(/[{}]+/g, '');
 			result = math.eval(expression)
 			if (!isNaN(result)) {
 				const forwardPattern = /\{(?=([\d]+(?=\})))/g;
@@ -31,7 +31,7 @@ export function validateFormula(expression, allowedAttributeIds) {
 				endIndexes = endIndexes.reverse()
 				if (startIndexes.length === endIndexes.length) {
 					for (let i = 0; i < startIndexes.length; i++) {
-						const attribute = parseInt(expression.substring(startIndexes[i] + 1, endIndexes[i]))
+						const attribute = parseInt(expression.substring(startIndexes[i] + 1, endIndexes[i]), 10)
 						if (!allowedAttributeIds.includes(attribute)) {
 							return false
 						}

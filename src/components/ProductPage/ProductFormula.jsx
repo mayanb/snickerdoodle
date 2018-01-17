@@ -48,9 +48,9 @@ function Pill(name) {
 function Formula(formula, attributes) {
 	const formulaHtml = []
 	const regEx = /{[0-9]+}/g;
-	let result
+	let result = regEx.exec(formula)
 	let lastMatchIndex = 0
-	while((result = regEx.exec(formula)) !== null) {
+	for(; result !== null; result = regEx.exec(formula)) {
 		const thisMatchIndex = result.index
 		formulaHtml.push(formula.slice(lastMatchIndex, thisMatchIndex))
 		const attributeId = result[0].slice(1, -1);
