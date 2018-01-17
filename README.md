@@ -6,8 +6,6 @@ You can find the most recent version of the create-react-app guide [here](https:
 - [What is `snickerdoodle`?](#what-is-snickerdoodle)
 - [Getting started](#getting-started)
 - [Adding dependencies](#adding-dependencies)
-- [Pushing your work](#pushing-your-work)
-- [Deploying](#deploying)
 - [Troubleshooting](#troubleshooting)
 
 ## What is snickerdoodle?
