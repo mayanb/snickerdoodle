@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import WalkthroughCreateUser from './WalkthroughCreateUser'
+import WalkthroughCoreConcepts from './WalkthroughCoreConcepts'
 import './styles/walkthrough.css'
 
 let sections = [
@@ -10,6 +11,10 @@ let sections = [
 class Walkthrough extends React.Component {
 	render() {
 		return <div className="walkthrough"><WalkthroughCreateUser /></div>
+
+
+
+
 		let section = this.props.user.walkthrough_progress
 		if (section < 0 || section > sections.length) {
 			// there is an error

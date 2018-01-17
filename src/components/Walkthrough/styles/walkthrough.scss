@@ -9,9 +9,12 @@
 	background-color: #F6F8F9;
 	z-index: 999;
 
-	&>div.card {
-		max-width: 800px;
+	&>div {
 		margin: 40px auto;
+	}
+
+	div.card {
+		max-width: 800px;
 		box-shadow: rgba(0,0,0,0.08) 0 0 16px;
 	}
 }
@@ -26,6 +29,13 @@
 			padding-right: 20px;
 		}
 	}
+	&>div:last-child, &>button:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.walkthrough-input, .walkthrough-hint, .walkthrough-button {
+	margin-bottom: 36px;
 }
 
 .walkthrough-input {
@@ -50,6 +60,29 @@
 .walkthrough-button {
 	font-size: 14px;
 	line-height: 20px;
-	padding: 8px;
+	padding: 16px;
 	width: 100%;
+}
+
+.walkthrough-header {
+	display: block;
+	text-align: center;
+	font-size: 17px;
+	line-height: 24px;
+	margin-bottom: 36px;
+}
+
+.walkthrough-hint {
+	display: flex;
+	background-color: #F0F5FA;
+	color: rgba(0,0,0,0.3);
+	border-radius: 4px;
+	padding: 16px;
+	align-items: center;
+
+	img {
+		opacity: 0.3;
+		margin-right: 8px;
+	}
+
 }
