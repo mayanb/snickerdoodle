@@ -9,7 +9,6 @@ You can find the most recent version of the create-react-app guide [here](https:
 - [Pushing your work](#pushing-your-work)
 - [Deploying](#deploying)
 - [Troubleshooting](#troubleshooting)
--
 
 ## What is snickerdoodle?
 
@@ -28,22 +27,6 @@ It's easy to get started with snickerdoodle. Before you start, make sure you hav
 You found a great library that you want to use as you improve snickerdoodle. Let's pretend it's called `awesomelib` and it's available on npm:
 * Run `npm install --save awesomelib`, or if `awesomelib` has more specific instructions for installing, use those.
 * When you commit your work, make sure you commit `package.json` in the root directory as well, so other people can use this library. 
-
-## Pushing your work
-First, push your work to a new  branch:
-```sh
-git checkout -b hotfix
-git add -u
-git commit -m 'added a hotfix'
-git pull origin staging
-git push origin hotfix
-```
-
-Then, make a pull request from `hotfix` to the `staging` branch. Depending on the urgency and deploy cycle. Make sure you are clear about what this pull request is trying to do, either through a descriptive branch name, a descriptive pull request comment, or a link to an issue. 
-
-## Deploying
-To deploy to staging, run `sh deploy-staging`.
-To deploy to production, run `sh deploy-production`.
 
 
 ## Troubleshooting
