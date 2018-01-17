@@ -5,7 +5,7 @@ import {
   REQUEST_FAILURE,
   REQUEST_CREATE,
   REQUEST_CREATE_SUCCESS,
-  // REQUEST_CREATE_FAILURE,
+  REQUEST_CREATE_FAILURE,
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
@@ -96,7 +96,7 @@ function requestCreateSuccess(json) {
 
 function requestCreateFailure(json) {
   return {
-    type: REQUEST_CREATE_SUCCESS,
+    type: REQUEST_CREATE_FAILURE,
     name: FORMULAS,
     item: json
   }
