@@ -2,7 +2,9 @@ import React from 'react'
 import Card from '../Card/Card'
 import WalkthroughButton from './WalkthroughButton'
 import WalkthroughInput from './WalkthroughInput'
+import WalkthroughHint from './WalkthroughHint'
 import './styles/walkthroughcreateuser.css'
+import './styles/walkthroughcreateteam.css'
 
 
 export default class WalkthroughCreateUserAndTeam extends React.Component {
@@ -23,7 +25,7 @@ export default class WalkthroughCreateUserAndTeam extends React.Component {
 		if (this.state.page === 0) {
 			return <WalkthroughCreateUser onSubmit={this.handleSubmitUser.bind(this)} />
 		} 
-		return null
+		return <WalkthroughCreateTeam />
 	}
 
 	handleSubmitUser(data) {
@@ -31,8 +33,30 @@ export default class WalkthroughCreateUserAndTeam extends React.Component {
 	}
 
 	handleSubmitTeam(data) {
-		this.setState(data)
-		//this.actions.dispatch(actions.dispatch(createUserAndTeam(this.state)))
+		// let hardSubmit = () => this.actions.dispatch(actions.dispatch(createUserAndTeam(this.state)))
+		this.setState(data) //, hardSubmit)
+	}
+}
+
+class WalkthroughCreateTeam extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {team: ""}
+	}
+
+	render() {
+		return (
+			<div className="walkthrough-create-team">
+				<Card nopadding >
+					<div className="walkthrough-form">
+						<span className="walkthrough-header">What's your team's name?</span>
+						<WalkthroughInput placeholder="teamrocket" onChange={(t) => this.setState({team: t})} />
+						<WalkthroughButton title="Continue" onClick={() => this.props.onSubmit(this.state)}/>
+						<WalkthroughHint>Teams are groups of people who work on the same production line together.</WalkthroughHint>
+					</div>
+				</Card>
+			</div>
+		)
 	}
 }
 
