@@ -27,6 +27,13 @@ $panel-width: 300px;
  src: url("https://s3-us-west-1.amazonaws.com/polymer-fonts/Apercu-Bold.woff") format("woff");
 }
 
+@font-face {
+ font-family: "Apercu Mono";
+ font-weight: 700;
+ src: url("https://s3-us-west-1.amazonaws.com/polymer-fonts/apercu-mono-regular.woff") format("woff");
+ src: url("https://s3-us-west-1.amazonaws.com/polymer-fonts/apercu-mono-regular.woff2") format("woff2");
+}
+
 html, body, #root {
 	width: 100%;
 	height: 100%;
