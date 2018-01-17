@@ -1,8 +1,6 @@
 import math from 'mathjs'
 
-export function validateFormula(expression, XallowedAttributes) {
-	let allowedAttributes = [1, 2, 23, 115]
-
+export function validateFormula(expression, allowedAttributeIds) {
 	const pattern = /^[\d|\(|\)|\*|\+|\-|\/|\^|\{|\}]+$/;
 	let match = new RegExp(pattern).test(expression)
 	let result = 0
@@ -34,8 +32,7 @@ export function validateFormula(expression, XallowedAttributes) {
 				if (startIndexes.length === endIndexes.length) {
 					for (let i = 0; i < startIndexes.length; i++) {
 						const attribute = parseInt(expression.substring(startIndexes[i] + 1, endIndexes[i]))
-						console.log('attribute', attribute)
-						if (!allowedAttributes.includes(attribute)) {
+						if (!allowedAttributeIds.includes(attribute)) {
 							return false
 						}
 					}

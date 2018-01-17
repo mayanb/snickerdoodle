@@ -29,7 +29,7 @@ class AddNewFormula extends React.Component {
 					<div className="lhs">
 						<Select
 							clearable={false}
-							styleType='medium-gray'
+							styleType='gray'
 							name="attribute"
 							value={this.state.attribute}
 							valueKey='id'
@@ -42,7 +42,7 @@ class AddNewFormula extends React.Component {
 						<Select
 							clearable={false}
 							searchable={false}
-							styleType="medium-gray"
+							styleType="gray"
 							name="comparator"
 							value={this.state.comparator}
 							valueKey='value'
@@ -82,12 +82,12 @@ class AddNewFormula extends React.Component {
 	handleConfirm() {
 		this.setState({
 			submitted: true,
-			formulaError: formulaError(this.state.formula)
+			formulaError: formulaError(this.state.formula, this.props.attributes)
 		}, this.saveFormula)
 	}
 
 	setFormulaError() {
-		this.setState({ formulaError: formulaError(this.state.formula) })
+		this.setState({ formulaError: formulaError(this.state.formula, this.props.attributes) })
 	}
 
 	saveFormula() {
@@ -95,7 +95,7 @@ class AddNewFormula extends React.Component {
 			attribute: this.state.attribute.id,
 			comparator: this.state.comparator.value,
 			product_type: this.props.product_type,
-			formula: this.state.formula,
+			formula: parseFormulaHtml(this.state.formula),
 			is_trashed: false,
 		}
 		if (!this.state.formulaError) {
@@ -104,10 +104,10 @@ class AddNewFormula extends React.Component {
 	}
 }
 
-function formulaError(formula) {
+function formulaError(formula, attributes) {
 	if (!formula) {
 		return 'Must enter a formula'
-	} else if (!validateFormula(formula)) {
+	} else if (!validateFormula(parseFormulaHtml(formula), attributes.map(attr => attr.id))) {
 		return 'Formula is invalid'
 	} else {
 		return ''
@@ -120,6 +120,15 @@ function FormulaError(error) {
 	)
 }
 
+function parseFormulaHtml(html) {
+	const formulaElement = document.createElement('html')
+	formulaElement.innerHTML = html
+	formulaElement.querySelectorAll('div.attribute-pill')
+		.forEach((el) => {
+			el.parentNode.replaceChild(document.createTextNode(`{${el.dataset.id}}`), el)
+		})
+	return formulaElement.innerText
+}
 
 const mapStateToProps = (state, props) => {
 	let process_type = state.processes.data.find(e => String(e.id) === String(props.process_type))
