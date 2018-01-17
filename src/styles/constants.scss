@@ -53,25 +53,6 @@ $green: #8ADC38;
 	font-style: normal;
 }
 
-input, select {
-	font-family: $sans-stack;
-	font-size: 14px;
-	line-height: 20px;
-	height: 30px;
-	border: 1px solid $light-gray;
-	border-radius: 4px;
-	padding: 4px;
-	outline: none;
-	background-color: white;
-
-	&:focus {
-		border-color: $theme-color !important;
-	}
-
-	&::-webkit-input-placeholder {
-		color: rgba(0,0,0,0.3);
-	}
-}
 
 label {
 	font-size: 12px;

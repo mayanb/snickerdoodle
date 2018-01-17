@@ -24,6 +24,7 @@
 		}
 
 		& > i{
+			cursor: pointer;
 			color: $gray;
 			&.active {
 				color: $primary;

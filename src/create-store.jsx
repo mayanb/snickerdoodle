@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import update from 'immutability-helper'
 import {stateDefault} from './states'
@@ -49,7 +49,10 @@ export default function(data) {
     alerts: createFilteredReducer(apiDataReducer, action => action.name === types.ALERTS, stateDefault),
     formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault)
   })
-  const store = createStore(reducer, applyMiddleware(thunkMiddleware))
+	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+	const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
+    applyMiddleware(thunkMiddleware),
+	))
 
   return store
 }
