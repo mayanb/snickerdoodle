@@ -10,6 +10,7 @@ export default class ContentEditable extends React.Component {
     render(){
         return (
         	<div id="contenteditable" ref={div => this.node = div}
+            style={{outline: 'none'}}
             onInput={this.emitChange} 
             onBlur={this.emitChange}
             onKeyDown={this.emitChange}

@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 export default function AvailableAttributes(props) {
 	let {attributes, onSelect} = props
 	return (
-			<div>
+			<div className="available-attributes">
 				{
 					attributes.map((attr, i) => {
 						return (
