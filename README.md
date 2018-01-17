@@ -16,11 +16,11 @@ The snickerdoodle repository manages the Polymer web app and all of its code. It
 
 ## Getting started
 
-It's easy to get started with snickerdoodle. Before you start, make sure you have [`npm`](https://www.npmjs.com/get-npm?utm_source=house&utm_medium=homepage&utm_campaign=free%20orgs&utm_term=Install%20npm) and [`sass`](http://sass-lang.com/install) installed.
+It's easy to get started with snickerdoodle. Before you start, make sure you have [`npm`](https://www.npmjs.com/get-npm?utm_source=house&utm_medium=homepage&utm_campaign=free%20orgs&utm_term=Install%20npm).
 * Download the snickerdoodle repository through git clone. 
 * Run `npm install` to download all dependencies.
 * Run `npm start` to start the development server. This will automatically open a browser window with the web app, or you can open `localhost:3000` in your favorite browser. It will also start watching for errors, warnings, etc. which will be displayed as both terminal output and logged to the browser.
-* Run `sh sass-start` in a different terminal window/tab to start watching for style changes. Again, errors will be displayed as terminal output and logged to the browser.
+* Run `npm start-js` to only watch for and compile JSX files
 
 ## Adding dependencies
 
