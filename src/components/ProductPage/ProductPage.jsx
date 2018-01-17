@@ -48,7 +48,7 @@ class ProductPage extends React.Component {
 						}
 						{ this.renderAddSection(all_process_types) }
 					</div>
-				</div>
+  			</div>
 				<FormulaField />
 			</div>
 		)
