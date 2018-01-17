@@ -1,0 +1,20 @@
+@import 'styles/constants.scss';
+
+.formula-field {
+	background-color: $light-gray;
+	padding: 8px;
+	line-height: 20px;
+
+//	style={{'height': '200px', 'border': '1px solid blue'}}
+}
+
+.attribute-pill {
+	display: inline-block;
+	font-size: 12px;
+	line-height: 20px;
+	color: white;	
+	-webkit-font-smoothing: antialiased;
+	padding: 0 4px;
+	background-color: orange; 
+	border-radius: 5px;
+}

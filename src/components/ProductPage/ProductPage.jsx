@@ -7,6 +7,7 @@ import * as processActions from '../Processes/ProcessesActions'
 import ProductFormulaSection from './ProductFormulaSection'
 import ProductMenu from './ProductMenu'
 import AddSection from './AddSection'
+import FormulaField from './FormulaField'
 import './styles/productpage.css'
 
 class ProductPage extends React.Component {
@@ -32,20 +33,23 @@ class ProductPage extends React.Component {
 		return ( 
 			<div className="productpage">
 				<ProductHeader product={product} dispatch={dispatch}/>
-				<div className="recipe">
-					{
-						Object.keys(groupedFormulas).map(function (process_type, i) {
-							all_process_types.push({id: process_type})
-							return <ProductFormulaSection 
-								key={i} 
-								product_type={product.id}
-								formulas={groupedFormulas[process_type]} 
-								isAddingFormula={parseInt(ui.isAddingFormula,10) === parseInt(process_type, 10)}
-							/>
-						})
-					}
-					{ this.renderAddSection(all_process_types) }
+				<div className="recipe-wrapper">
+					<div className="recipe">
+						{
+							Object.keys(groupedFormulas).map(function (process_type, i) {
+								all_process_types.push({id: process_type})
+								return <ProductFormulaSection 
+									key={i} 
+									product_type={product.id}
+									formulas={groupedFormulas[process_type]} 
+									isAddingFormula={parseInt(ui.isAddingFormula,10) === parseInt(process_type, 10)}
+								/>
+							})
+						}
+						{ this.renderAddSection(all_process_types) }
+					</div>
 				</div>
+				<FormulaField />
 			</div>
 		)
 	}
