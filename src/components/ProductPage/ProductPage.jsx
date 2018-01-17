@@ -19,7 +19,7 @@ class ProductPage extends React.Component {
 	}
 
 	render() {
-		let {ui, data, product, dispatch} = this.props
+		let {ui, data, product, dispatch, processes} = this.props
 		let formulas = data //this.props.data
 		let groupedFormulas = groupFormulas(formulas)
 
@@ -29,7 +29,7 @@ class ProductPage extends React.Component {
 			return <span>Loading... </span>
 		}
 
-		return ( 
+		 return (
 			<div className="productpage">
 				<ProductHeader product={product} dispatch={dispatch}/>
 				<div className="recipe-wrapper">
@@ -37,10 +37,13 @@ class ProductPage extends React.Component {
 						{
 							Object.keys(groupedFormulas).map(function (process_type, i) {
 								all_process_types.push({id: process_type})
-								return <ProductFormulaSection 
+								const process = processes.find(process => String(process.id) === process_type)
+								const attributes = process ? process.attributes : []
+								return <ProductFormulaSection
 									key={i} 
 									product_type={product.id}
-									formulas={groupedFormulas[process_type]} 
+									formulas={groupedFormulas[process_type]}
+									attributes={attributes}
 									isAddingFormula={parseInt(ui.isAddingFormula,10) === parseInt(process_type, 10)}
 								/>
 							})
@@ -69,7 +72,6 @@ class ProductPage extends React.Component {
 function groupFormulas(formulas) {
 	let groupedFormulas = {}
 	formulas.forEach(function (formula, i) {
-		console.log(formula)
 		let process_type = (formula.attribute_obj || formula.attribute).process_type
 		if (groupedFormulas[process_type])
 			groupedFormulas[process_type].push(formula)
@@ -98,6 +100,7 @@ const mapStateToProps = (state/*, props*/) => {
     data: state.formulas.data,
     ui: state.formulas.ui,
     product: state.products.data[0],
+	  processes: state.processes.data,
 	  dispatch: state.dispatch
   }
 }

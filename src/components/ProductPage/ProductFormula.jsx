@@ -8,7 +8,7 @@ import * as actions from './ProductFormulaActions'
 class ProductFormula extends React.Component {
 
 	render() {
-		let { formula, comparator, dispatch, id, index, deletable } = this.props
+		let { formula, comparator, dispatch, id, index, deletable, attributes } = this.props
 		let attribute = this.props.attribute_obj || this.props.attribute
 		return (
 			<div>
@@ -20,7 +20,7 @@ class ProductFormula extends React.Component {
 						<span>{comparator}</span>
 					</div>
 					<div className="rhs">
-						<span>{formula}</span>
+						<span>{Formula(formula, attributes)}</span>
 					</div>
 					<div className="datatype">
 						<span>{attribute.datatype}</span>
@@ -39,6 +39,30 @@ class ProductFormula extends React.Component {
 			</div>
 		)
 	}
+}
+
+function Pill(name) {
+	return <div className="attribute-pill">{name}</div>
+}
+
+function Formula(formula, attributes) {
+	const formulaHtml = []
+	const regEx = /{[0-9]+}/g;
+	let result
+	let lastMatchIndex = 0
+	while((result = regEx.exec(formula)) !== null) {
+		const thisMatchIndex = result.index
+		formulaHtml.push(formula.slice(lastMatchIndex, thisMatchIndex))
+		const attributeId = result[0].slice(1, -1);
+		const attribute = attributes.find(attr => String(attr.id) === attributeId)
+		const name = attribute ? attribute.name : 'N/A'
+		formulaHtml.push(Pill(name))
+		lastMatchIndex = thisMatchIndex + result[0].length
+	}
+	formulaHtml.push(formula.slice(lastMatchIndex, formula.length))
+	return (
+		<div>{formulaHtml}</div>
+	)
 }
 
 function deleteFormula(formulaId, index, dispatch) {

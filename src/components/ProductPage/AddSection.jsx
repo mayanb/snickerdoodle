@@ -19,7 +19,7 @@ class AddSection extends React.Component {
 				<div className="addsection">
 					<span>Add a stage</span>
 					<Select 
-						styleType="medium-gray"
+						styleType="gray"
 						value={this.state.process_type}
 						valueKey="id"
 						labelKey="name"
@@ -54,7 +54,6 @@ function exclude(arr = [], toExclude = []) {
 	let newArr = []
 	arr.forEach((e, i) => {
 		if (toExclude.find(k => String(k.id) === String(e.id))) {
-			console.log("excluding")
 			return
 		}
 		newArr.push(e)
