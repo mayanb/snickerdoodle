@@ -13,32 +13,38 @@ class FormulaField extends React.Component {
 		this.state = {
 			html: `1+<div class="attribute-pill" contentEditable="false">Roasting Temperature</div>*23`,
 			showDropdown: false,
+			highlighted: 0,
 		}
 		this.handleSelect = this.handleSelect.bind(this)
 	}
 
 	render() {
 		let {attributes} = this.props
-		let {html, showDropdown} = this.state
+		let {html, showDropdown, highlighted} = this.state
 		return (
-			<div>
-			<ContentEditable 
-				className="formula-field" 
-				contentEditable={true} 
-				html={html}
-				onChange={this.handleChange.bind(this)}
-			/>
-			{ showDropdown ? <AvailableAttributes attributes={attributes} onSelect={this.handleSelect}/> : null }
+			<div className="formula-field" ref="container">
+				<ContentEditable 
+					contentEditable={true} 
+					html={html}
+					onChange={this.handleChange.bind(this)}
+				/>
+				{ showDropdown ? 
+					<AvailableAttributes 
+						highlighted={highlighted}
+						attributes={attributes} 
+						onSelect={this.handleSelect}
+					/> : 
+					null }
 			</div>
 		)
 	}
 
 	handleChange(e) {
-		if (e.target.value) {
+		if (e.target.value !== null && e.target.value !== undefined) {
 			this.setState({html: e.target.value})
 		}
 
-		if (e.type == 'keydown' && e.key === 'Enter' && this.state.showDropdown === true) {
+		if (e.type === 'keydown' && e.key === 'Enter' && this.state.showDropdown === true) {
 			this.handleSelect(this.props.attributes[0])
 		}
 
