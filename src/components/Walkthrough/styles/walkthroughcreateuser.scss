@@ -1,0 +1,43 @@
+@import 'styles/constants.scss';
+
+div.walkthrough-create-user {
+	display: flex;
+
+	&>div {
+		flex: 4;
+	}
+	&>div:first-child {
+		flex: 5;
+	}
+}
+
+div.walkthrough-intro-info {
+	background-color: #F6F8F9;
+	border-right: 1px solid #DBE0E4;
+	padding: 40px;
+
+	&>div {
+		margin-bottom: 36px;
+	}
+
+	h3 {
+		font-weight: 400;
+		color: rgba(0,0,0,0.87);
+		font-size: 17px;
+		text-transform: none;
+		line-height: 20px;
+		margin-bottom: 4px;
+		letter-spacing: 0;
+	}
+	span {
+		color: rgba(0,0,0,0.35);
+		font-size: 14px;
+		line-height: 20px;
+	}
+}
+
+.walkthrough-create-user .walkthrough-form {
+	.walkthrough-input {
+		margin-bottom: 24px;
+	}
+}
