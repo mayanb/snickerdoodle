@@ -1,5 +1,4 @@
 import React from 'react'
-import {connect} from 'react-redux'
 
 export default function AvailableAttributes(props) {
 	let {attributes, onSelect} = props

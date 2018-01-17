@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from './ProductFormulaActions'
 import { validateFormula } from './validateFormula'
 import Select from '../Inputs/Select'
-import Input from '../Inputs/Input'
+import FormulaField from './FormulaField'
 import './styles/addformula.css'
 
 class AddNewFormula extends React.Component {
@@ -52,11 +52,9 @@ class AddNewFormula extends React.Component {
 						/>
 					</div>
 					<div className="rhs">
-						<Input
-							styleType="medium-gray"
-							type="text"
+						<FormulaField
 							value={this.state.formula}
-							onChange={(e) => this.handleChange('formula', e.target.value)}
+							onChange={(val) => this.handleChange('formula', val)}
 						/>
 					</div>
 					<div className="add-buttons">

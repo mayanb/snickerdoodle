@@ -4,14 +4,10 @@ import ContentEditable from '../ContentEditable/ContentEditable'
 import AvailableAttributes from './AvailableAttributes'
 import './styles/formulafield.css'
 
-const STR = 'string'
-const ATTR = 'attr'
-
 class FormulaField extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			html: `1+<div class="attribute-pill" contentEditable="false">Roasting Temperature</div>*23`,
 			showDropdown: false,
 			highlighted: 0,
 		}
@@ -20,12 +16,12 @@ class FormulaField extends React.Component {
 
 	render() {
 		let {attributes} = this.props
-		let {html, showDropdown, highlighted} = this.state
+		let {showDropdown, highlighted} = this.state
 		return (
 			<div className="formula-field" ref="container">
 				<ContentEditable 
 					contentEditable={true} 
-					html={html}
+					html={this.props.value}
 					onChange={this.handleChange.bind(this)}
 				/>
 				{ showDropdown ? 
@@ -41,7 +37,7 @@ class FormulaField extends React.Component {
 
 	handleChange(e) {
 		if (e.target.value !== null && e.target.value !== undefined) {
-			this.setState({html: e.target.value})
+			this.props.onChange(e.target.value)
 		}
 
 		if (e.type === 'keydown' && e.key === 'Enter' && this.state.showDropdown === true) {
@@ -62,9 +58,10 @@ class FormulaField extends React.Component {
 	}
 
 	handleSelect(attribute) {
-		let {html} = this.state
+		let html = this.props.value
 		let newHtml = html.substring(0, html.lastIndexOf('$')) + this.createAttribute(attribute)
-		this.setState({html: newHtml, showDropdown: false})
+		this.props.onChange(newHtml)
+		this.setState({showDropdown: false})
 	}
 }
 
