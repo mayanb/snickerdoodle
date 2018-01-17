@@ -1,11 +1,9 @@
 @import 'styles/constants.scss';
 
-$medium-light-gray: rgba(0,0,0,0.11);
-
-div.select-medium-gray {
+div.select-gray {
 	.Select-control {
 		border: none;
-		background-color: $medium-light-gray;
+		background-color: $light-gray;
 	}
 
 	.Select-placeholder {
@@ -13,7 +11,7 @@ div.select-medium-gray {
 	}
 
 	div.Select.is-focused > div.Select-control {
-		background-color: $medium-light-gray !important;
+		background-color: $light-gray !important;
 		border: none;
 		box-shadow: none;
 		//color: rgba(255,255,255, 0.7) !important;
