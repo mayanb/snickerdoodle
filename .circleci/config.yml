@@ -8,6 +8,7 @@ general:
   branches:
     only:
       - staging
+      - master
 
 jobs:
   build:
@@ -32,12 +33,12 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
 
       - run: npm install
 
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
 
@@ -48,13 +49,13 @@ jobs:
             apt-get update && apt-get install -y awscli
 
       - run:
-              # TODO - fix lint errors and remove CI=false command that suppresses warnings
-          name: Build
+              # TODO - fix lint errors and remove CI=false variables that suppress warnings
+          name: Build and deploy
           command: |
             if [ "${CIRCLE_BRANCH}" == "staging" ]; then
-              CI=false REACT_APP_BACKEND=staging npm run build && aws --region us-west-1 s3 sync build/ s3://dashboard-staging.usepolymer.com
+              CI=false bash deploy-staging
             elif [ "${CIRCLE_BRANCH}" == "master" ]; then
-              npm run build
+              CI=false bash deploy-production
             else
               npm run build
             fi
