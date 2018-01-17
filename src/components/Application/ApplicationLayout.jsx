@@ -1,21 +1,17 @@
 import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import './styles/layout.css'
-
-import Activity from '../Activity/Activity'
-import Home from '../Home/Home'
+import Walkthrough from '../Walkthrough/Walkthrough'
+//import Activity from '../Activity/Activity'
+//import Home from '../Home/Home'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
 
-import Movements from '../Movements/Movements'
-
 import ZebraPrinter from '../OldComponents/ZebraPrinter.jsx'
 import Navbar from '../Navbar/Navbar.jsx'
-import FactoryMap from '../OldComponents/FactoryMap.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../Inventory/Inventory.jsx'
 import Task from '../Task/Task.jsx'
-import Dash from '../OldComponents/Dash.jsx'
 import Goals from '../Goals/Goals'
 
 import PrivateRoute from '../Router/PrivateRoute'
@@ -25,7 +21,6 @@ import TeamSettings from '../TeamSettings/TeamSettings'
 import Account from '../Account/Account'
 
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
-import BarChartTest from '../D3BarChart/BarChartTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
 
 import PackingOrders from '../PackingOrders/PackingOrders'
@@ -58,7 +53,7 @@ function App(props) {
       <Route path="/:section?/:id?" component={Topbar} />
 
       <div className="application-content">
-        <Route exact path={"/"} component={ProductPage} />
+        <Route exact path={"/"} component={Walkthrough} />
         <Route exact path={"/inventory/:id?"} component={Inventory} />
         <Route exact path={"/labels/"} component={ZebraPrinter} />
         <Route path={"/zebra/"} component={ZebraPrinter} />
