@@ -7,7 +7,6 @@ import * as processActions from '../Processes/ProcessesActions'
 import ProductFormulaSection from './ProductFormulaSection'
 import ProductMenu from './ProductMenu'
 import AddSection from './AddSection'
-import FormulaField from './FormulaField'
 import './styles/productpage.css'
 
 class ProductPage extends React.Component {
@@ -49,7 +48,6 @@ class ProductPage extends React.Component {
 						{ this.renderAddSection(all_process_types) }
 					</div>
   			</div>
-				<FormulaField />
 			</div>
 		)
 	}
