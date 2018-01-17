@@ -4,8 +4,12 @@
 .recipe-formula.add-formula {
 	display: flex;
 
-	.datatype.add-buttons {
-		flex: 3;
+	.rhs input {
+		width: 100%;
+	}
+
+	.add-buttons {
+		flex: 1;
 		display: flex;
 		text-align: left;
 		cursor: pointer;
@@ -19,6 +23,12 @@
 			}
 		}
 	}
+}
+
+.form-error {
+	color: $red;
+	text-align: center;
+  	height: 30px;
 }
 
 .add-formula-section {
