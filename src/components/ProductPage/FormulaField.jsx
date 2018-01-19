@@ -76,7 +76,7 @@ class FormulaField extends React.Component {
 
 	handleSelect(attribute) {
 		let html = this.props.value
-		let newHtml = html.substring(0, html.lastIndexOf('$')) + this.createAttribute(attribute, this.state.attributeIndex)
+		let newHtml = html.replace('$', this.createAttribute(attribute, this.state.attributeIndex))
 		this.props.onChange(newHtml)
 		this.setState({showDropdown: false, attributeIndex: this.state.attributeIndex + 1})
 		this.restoreCursor = true
