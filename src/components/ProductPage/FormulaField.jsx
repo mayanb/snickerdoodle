@@ -19,11 +19,10 @@ class FormulaField extends React.Component {
 		const range = document.createRange()
 		const sel = document.getSelection()
 		if (this.restoreCursor) {
-			const contentEditable = document.querySelector('div#contenteditable')
-			const i = Array.from(contentEditable.childNodes).findIndex(node => {
+			const i = Array.from(this.formulaInput.node.childNodes).findIndex(node => {
 				return node.dataset && node.dataset.index === String(this.state.attributeIndex - 1)
 			})
-			range.setStart(contentEditable, i + 1)
+			range.setStart(this.formulaInput.node, i + 1)
 			sel.removeAllRanges()
 			sel.addRange(range)
 		}
