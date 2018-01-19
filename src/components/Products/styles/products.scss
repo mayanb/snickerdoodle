@@ -17,6 +17,10 @@
 		padding-bottom: 0;
 	}
 
+	.nav-section-list .products-create-product .card {
+		padding: 16px;
+	}
+
 	.paginated-table.border-none li.header {
 		border-bottom: none; //override PaginatedTable header border
 	}
@@ -90,7 +94,6 @@
 }
 
 div.create-product-dialog {
-	padding: 8px;
 
 	.create-product-error {
 		color: #f9438e;

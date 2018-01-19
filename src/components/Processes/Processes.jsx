@@ -8,6 +8,7 @@ import ProcessesCard from './ProcessesCard'
 import ProductsArchiveDialog from '../Products/ProductsArchiveDialog'
 import CreateProcessDropdown from './CreateProcessDropdown'
 import ProcessesList from './ProcessesList'
+import './styles/processes.css'
 
 class Processes extends React.Component {
   constructor(props) {
@@ -37,19 +38,22 @@ class Processes extends React.Component {
     if (account_type != 'a')
       return null
     return (
-      <div className="nav-section processes">
-        <ProcessesList 
-          {...this.props} 
-          onSelect={this.handleSelectProcess} 
-          onPagination={this.handlePagination} 
-        />
-        <div>
-          <ProcessesCard 
-            {...this.props} 
-            onArchive={() => this.setState({isArchiveOpen: true, archivingObjectIndex: ui.selectedItem})}/>
-        </div>
-        {this.renderArchiveDialog(data, ui)}
-      </div>
+	    <div className="processes">
+		    {this.renderTitle()}
+		    <div className="nav-section">
+			    <ProcessesList
+				    {...this.props}
+				    onSelect={this.handleSelectProcess}
+				    onPagination={this.handlePagination}
+			    />
+			    <div>
+				    <ProcessesCard
+					    {...this.props}
+					    onArchive={() => this.setState({ isArchiveOpen: true, archivingObjectIndex: ui.selectedItem })} />
+			    </div>
+			    {this.renderArchiveDialog(data, ui)}
+		    </div>
+	    </div>
     )
   }
 
@@ -68,7 +72,7 @@ class Processes extends React.Component {
 
   renderTitle() {
     return (
-      <div className="nav-section-header">
+      <div className="nav-section-header processes-header">
         <h1>Processes</h1>
         { this.renderCreateProductButton() }
       </div>

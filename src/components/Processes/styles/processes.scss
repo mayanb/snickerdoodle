@@ -1,0 +1,17 @@
+@import 'styles/constants.scss';
+
+div.processes {
+  width: 1020px;
+
+  .processes-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 92px 20px 48px;
+
+  }
+
+  div.card {
+    max-width: 600px;
+  }
+}
+
