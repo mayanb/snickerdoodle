@@ -10,7 +10,8 @@ class FormulaField extends React.Component {
 		this.state = {
 			showDropdown: false,
 			highlighted: 0,
-			attributeIndex: 0
+			attributeIndex: 0,
+			restoreCursor: false
 		}
 		this.handleSelect = this.handleSelect.bind(this)
 	}
@@ -18,11 +19,13 @@ class FormulaField extends React.Component {
 	componentDidUpdate() {
 		const range = document.createRange()
 		const sel = document.getSelection()
-		if (this.restoreCursor) {
+		if (this.state.restoreCursor) {
 			const i = Array.from(this.formulaInput.node.childNodes).findIndex(node => {
 				return node.dataset && node.dataset.index === String(this.state.attributeIndex - 1)
 			})
-			range.setStart(this.formulaInput.node, i + 1)
+			//Move cursor to end if the latest attribute isn't found
+			const offset = i !== -1 ? i + 1 : this.formulaInput.node.childNodes.length
+			range.setStart(this.formulaInput.node, offset)
 			sel.removeAllRanges()
 			sel.addRange(range)
 		}
@@ -51,7 +54,6 @@ class FormulaField extends React.Component {
 	}
 
 	handleChange(e) {
-		this.restoreCursor = false
 		if (e.target.value !== null && e.target.value !== undefined) {
 			this.props.onChange(e.target.value)
 		}
@@ -62,9 +64,9 @@ class FormulaField extends React.Component {
 
 		if (e.type === 'keydown') {
 			if (e.key === '$' || (/[a-zA-Z0-9]/.test(e.key) && /\$[a-zA-Z0-9]*$/.test(this.state.html))) {
-				this.setState({showDropdown: true})
+				this.setState({showDropdown: true, restoreCursor:  false})
 			} else if (e.key !== 'Shift' && e.key !== 'Enter') {
-				this.setState({showDropdown: false})
+				this.setState({showDropdown: false, restoreCursor:  false})
 			}
 		}
 	}
@@ -77,8 +79,7 @@ class FormulaField extends React.Component {
 		let html = this.props.value
 		let newHtml = html.replace('$', this.createAttribute(attribute, this.state.attributeIndex))
 		this.props.onChange(newHtml)
-		this.setState({showDropdown: false, attributeIndex: this.state.attributeIndex + 1})
-		this.restoreCursor = true
+		this.setState({showDropdown: false, attributeIndex: this.state.attributeIndex + 1, restoreCursor: true})
 	}
 }
 
