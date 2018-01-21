@@ -1,21 +1,26 @@
 import React from 'react'
-import Card from '../Card/Card'
 import WalkthroughButton from './WalkthroughButton'
 import WalkthroughInput from './WalkthroughInput'
+import { connect } from 'react-redux'
 import WalkthroughHint from './WalkthroughHint'
 import './styles/walkthroughcreateuser.css'
-import './styles/walkthroughcreateteam.css'
+//import './styles/walkthroughcreateteam.css'
+import * as memberActions from '../TeamSettings/MemberActions'
+import * as walkthroughActions from './WalkthroughActions'
+import Card from '../Card/Card'
 
 
-export default class WalkthroughCreateUserAndTeam extends React.Component {
+export class WalkthroughCreateUserAndTeam extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			first_name: "",
-			last_name: "",
-			username: "",
-			email: "",
-			password: "",
+			user: {
+				first_name: "",
+				last_name: "",
+				username: "",
+				email: "",
+				password: "",
+			},
 			team: "",
 			page: 0,
 		}
@@ -24,50 +29,62 @@ export default class WalkthroughCreateUserAndTeam extends React.Component {
 	render() {
 		if (this.state.page === 0) {
 			return <WalkthroughCreateUser onSubmit={this.handleSubmitUser.bind(this)} />
-		} 
-		return <WalkthroughCreateTeam />
+		}
+		return <WalkthroughCreateTeam onSubmit={this.handleSubmitTeam.bind(this)} />
 	}
 
-	handleSubmitUser(data) {
-		this.setState({page: 1, ...data})
+	handleSubmitUser(user) {
+		this.setState({ page: 1, user: user })
 	}
 
-	handleSubmitTeam(data) {
-		// let hardSubmit = () => this.actions.dispatch(actions.dispatch(createUserAndTeam(this.state)))
-		this.setState(data) //, hardSubmit)
+	handleSubmitTeam(team) {
+		this.setState({ team: team }, () => {
+			this.props.dispatch(walkthroughActions.postCreateTeam(this.state.team))
+				.then((res) => {
+					const newTeamId = res.item.id
+					const newUser = Object.assign({}, this.state.user, { team: newTeamId })
+					this.props.dispatch(memberActions.postCreateMember(newUser, this.props.onCompleteStage))
+				})
+		})
 	}
 }
+
+const mapStateToProps = (state/*, props*/) => {
+	return {}
+}
+
+export default connect(mapStateToProps)(WalkthroughCreateUserAndTeam)
 
 class WalkthroughCreateTeam extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {team: ""}
+		this.state = { team: "" }
 	}
 
 	render() {
 		return (
-			<div className="walkthrough-create-team">
-				<Card nopadding >
-					<div className="walkthrough-form">
-						<span className="walkthrough-header">What's your team's name?</span>
-						<WalkthroughInput placeholder="teamrocket" onChange={(t) => this.setState({team: t})} />
-						<WalkthroughButton title="Continue" onClick={() => this.props.onSubmit(this.state)}/>
+				<div className="walkthrough-create-team">
+					<Card>
+						<div className="walkthrough-form walkthrough-container">
+							<span className="walkthrough-header">What's your team's name?</span>
+							<WalkthroughInput placeholder="teamrocket" onChange={(t) => this.setState({ team: t })} />
+							<WalkthroughButton title="I made a team" onClick={() => this.props.onSubmit(this.state.team)} />
+						</div>
 						<WalkthroughHint>Teams are groups of people who work on the same production line together.</WalkthroughHint>
-					</div>
-				</Card>
-			</div>
+					</Card>
+				</div>
 		)
 	}
 }
 
 function WalkthroughCreateUser(props) {
 	return (
-		<Card nopadding>
-			<div className="walkthrough-create-user">
+		<div className="walkthrough-create-user">
+			<Card>
 				<Information />
-				<CreateUserForm onSubmit={props.onSubmit}/>
-			</div>
-		</Card>
+				<CreateUserForm onSubmit={props.onSubmit} />
+			</Card>
+		</div>
 	)
 }
 
@@ -103,23 +120,27 @@ class CreateUserForm extends React.Component {
 	}
 
 	render() {
-		let {first_name, last_name, username, email, password } = this.state
+		let { first_name, last_name, username, email, password } = this.state
 		return (
-			<div className="walkthrough-form">
+			<div className="walkthrough-form walkthrough-container">
 				<div className="next-to">
-					<WalkthroughInput value={first_name} title="First name" placeholder="Jane" onChange={(v) => this.handleChange('first_name', v)} />
-					<WalkthroughInput value={last_name} title="Last name" placeholder="Doe" onChange={(v) => this.handleChange('last_name', v)}/>
+					<WalkthroughInput value={first_name} title="First name" placeholder="Jane"
+					                  onChange={(v) => this.handleChange('first_name', v)} />
+					<WalkthroughInput value={last_name} title="Last name" placeholder="Doe"
+					                  onChange={(v) => this.handleChange('last_name', v)} />
 				</div>
-				<WalkthroughInput value={username} title="Username" placeholder="janedoe"onChange={(v) => this.handleChange('username', v)} />
-				<WalkthroughInput value={email} title="Email" placeholder="janedoe@example.com"onChange={(v) => this.handleChange('email', v)} />
-				<WalkthroughInput value={password} title="Password" type="password" placeholder="Choose a password" onChange={(v) => this.handleChange('password', v)} />
-				<WalkthroughButton title="Continue" onClick={() => this.props.onSubmit(this.state)}/>
+				<WalkthroughInput value={username} title="Username" placeholder="janedoe"
+				                  onChange={(v) => this.handleChange('username', v)} />
+				<WalkthroughInput value={email} title="Email" placeholder="janedoe@example.com"
+				                  onChange={(v) => this.handleChange('email', v)} />
+				<WalkthroughInput value={password} title="Password" type="password" placeholder="Choose a password"
+				                  onChange={(v) => this.handleChange('password', v)} />
+				<WalkthroughButton title="Continue" onClick={() => this.props.onSubmit(this.state)} />
 			</div>
 		)
 	}
 
 	handleChange(key, value) {
-		this.setState({[key]: value})
-		this.validate()
+		this.setState({ [key]: value })
 	}
 }

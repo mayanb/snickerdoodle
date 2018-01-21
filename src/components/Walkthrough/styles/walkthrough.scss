@@ -14,14 +14,14 @@
 	}
 
 	div.card {
-		max-width: 800px;
+        padding: 0;
+		max-width: 404px;
 		box-shadow: rgba(0,0,0,0.08) 0 0 16px;
+		margin: 0 auto;
 	}
 }
 
 .walkthrough-form {
-	padding: 40px;
-
 	.next-to {
 		display: flex;
 
@@ -29,12 +29,9 @@
 			padding-right: 20px;
 		}
 	}
-	&>div:last-child, &>button:last-child {
-		margin-bottom: 0;
-	}
 }
 
-.walkthrough-input, .walkthrough-hint, .walkthrough-button {
+.walkthrough-input {
 	margin-bottom: 36px;
 }
 
@@ -77,7 +74,7 @@
 	background-color: #F0F5FA;
 	color: rgba(0,0,0,0.3);
 	border-radius: 4px;
-	padding: 16px;
+	padding: 20px 50px;
 	align-items: center;
 
 	img {
@@ -85,4 +82,8 @@
 		margin-right: 8px;
 	}
 
+}
+
+.walkthrough-container {
+	padding: 40px;
 }

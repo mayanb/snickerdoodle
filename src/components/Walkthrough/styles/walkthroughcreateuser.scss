@@ -1,12 +1,13 @@
 @import 'styles/constants.scss';
 
-div.walkthrough-create-user {
+div.walkthrough-create-user div.card {
+	max-width: 875px;
 	display: flex;
 
-	&>div {
+	& > div {
 		flex: 4;
 	}
-	&>div:first-child {
+	& > div:first-child {
 		flex: 5;
 	}
 }
