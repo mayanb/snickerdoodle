@@ -120,7 +120,6 @@ function requestCreateMemberFailure(err) {
 }
 
 function requestCreateMemberSuccess(json) {
-  console.log(json)
   return {
     type: REQUEST_CREATE_SUCCESS,
     item: json,

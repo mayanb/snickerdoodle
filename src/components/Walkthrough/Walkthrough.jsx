@@ -1,44 +1,65 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import WalkthroughCreateUser from './WalkthroughCreateUser'
-import WalkthroughCoreConcepts from './WalkthroughCoreConcepts'
+import WalkthroughProcessesAndProducts from './WalkthroughProcessesAndProducts'
+import WalkthroughCreateProcess from './WalkthroughCreateProcess'
+import WalkthroughExampleApp from './WalkthroughExampleApp'
+import WalkthroughCreateProduct from './WalkthroughCreateProduct'
+import WalkthroughTrain from './WalkthroughTrain'
 import './styles/walkthrough.css'
+import * as actions from "./WalkthroughActions"
 
-let sections = [
-	<WalkthroughCreateUser />,
+const stages = [
+	WalkthroughCreateUser,
+	WalkthroughProcessesAndProducts,
+	WalkthroughCreateProcess,
+	WalkthroughExampleApp,
+	WalkthroughCreateProduct,
+	WalkthroughTrain
 ]
 
 class Walkthrough extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			stageNumber: this.props.user.walkthrough,
+		}
+	}
+
 	render() {
-		return <div className="walkthrough"><WalkthroughCreateUser /></div>
-
-
-
-
-		let section = this.props.user.walkthrough_progress
-		if (section < 0 || section > sections.length) {
+		if (isNaN(this.state.stageNumber) || this.state.stageNumber < 0 || this.state.stageNumber > stages.length) {
 			// there is an error
 			return <div />
-		} else if (section == sections.length) {
-			// user has finished the walkthrough
-			return <div />
 		}
-
+		const Stage = stages[this.state.stageNumber]
 		return (
-			<div>
-				{ sections[section] }
+			<div className="walkthrough">
+				<Stage onCompleteStage={this.handleCompleteStage.bind(this)} />
 			</div>
 		)
 	}
+
+	handleCompleteStage() {
+		if (this.state.stageNumber === (stages.length - 1)) {
+			this.props.dispatch(actions.completeWalkthrough(this.props.user))
+			this.props.history.push('/')
+		} else {
+			this.props.dispatch(actions.incrementWalkthrough(this.props.user))
+
+			//Should remove and depend on API data
+			this.setState({ stageNumber: this.state.stageNumber + 1 })
+		}
+	}
 }
+
 
 const mapStateToProps = (state/*, props*/) => {
-	let {data, ui} = state.users
-	if (ui.activeUser && ui.activeUser >= 0 && ui.activeUser < data.length) {
-		let account = data[ui.activeUser]
-  	return { user: account.user }
-  }
-  return { user: {}}
+	let { data, ui } = state.users
+	if (ui.activeUser && ui.activeUser >= 0 && data[ui.activeUser]) {
+		return { user: data[ui.activeUser].user }
+	}
+	return { user: {} }
 }
 
-export default connect(mapStateToProps)(Walkthrough)
+export default withRouter(connect(mapStateToProps)(Walkthrough))
