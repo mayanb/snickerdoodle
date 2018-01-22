@@ -1,6 +1,7 @@
 import React from 'react'
 import WalkthroughButton from './WalkthroughButton'
 import WalkthroughHint from './WalkthroughHint'
+import WalkthroughTooltip from './WalkthroughTooltip'
 import Card from '../Card/Card'
 import { connect } from 'react-redux'
 import './styles/walkthroughprocessesandproducts.css'
@@ -18,6 +19,7 @@ export class WalkthroughProcessesAndProducts extends React.Component {
 						</div>
 						<div className="core-parts">
 							<span className="bold">Processes</span> are things you can do.
+							<WalkthroughTooltip />
 							<div className="see-examples">See examples</div>
 						</div>
 						<div className="core-parts">

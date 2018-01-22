@@ -1,9 +1,7 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import update from 'immutability-helper'
 import {stateDefault} from './states'
 
-import {findPosition, alphabetize} from './utilities/arrayutils.jsx'
 import {apiDataReducer} from './reducers/APIDataReducer'
 import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
