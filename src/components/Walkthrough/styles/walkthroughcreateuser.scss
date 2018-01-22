@@ -4,6 +4,10 @@ div.walkthrough-create-user div.card {
 	max-width: 875px;
 	display: flex;
 
+	.walkthrough-input {
+		margin-bottom: 32px;
+	}
+
 	& > div {
 		flex: 4;
 	}
@@ -34,5 +38,11 @@ div.walkthrough-intro-info {
 		color: rgba(0,0,0,0.35);
 		font-size: 14px;
 		line-height: 20px;
+	}
+}
+
+.walkthrough-create-team {
+	.walkthrough-input {
+		margin-bottom: 20px;
 	}
 }
