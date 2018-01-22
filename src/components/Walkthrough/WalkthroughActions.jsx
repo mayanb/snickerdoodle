@@ -7,6 +7,9 @@ import {
 	REQUEST_CREATE_SUCCESS,
 	REQUEST_CREATE_FAILURE,
 } from '../../reducers/APIDataReducer'
+import {
+	REQUEST_UPDATE_SETTING,
+} from '../../reducers/UserReducer'
 import {WALKTHROUGH, TEAMS} from "../../reducers/ReducerTypes"
 import update from 'immutability-helper'
 
@@ -20,25 +23,24 @@ export function incrementWalkthrough(user) {
         if (err || !res.ok) {
           dispatch(requestIncrementWalkthroughError(err))
         } else {
-          dispatch(requestIncrementWalkthroughSuccess(res.body))
+          dispatch(requestIncrementWalkthroughSuccess(res.body.walkthrough))
         }
       })
   }
 }
 
-function requestIncrementWalkthrough() {
+function requestIncrementWalkthrough(walkthrough) {
   return {
-    type: REQUEST_EDIT_ITEM,
-    name: WALKTHROUGH
+    type: '',// REQUEST_UPDATE_SETTING,
+    key: 'walkthrough',
+    value: walkthrough
   }
 }
 
 function requestIncrementWalkthroughError(err) {
   alert('Oh no! Something went wrong\n' + err)
   return {
-    type: REQUEST_EDIT_ITEM_FAILURE,
-    name: WALKTHROUGH
-
+    type: ''//REQUEST_UPDATE_SETTING,
   }
 }
 

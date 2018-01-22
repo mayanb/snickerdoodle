@@ -12,12 +12,12 @@ import * as actions from "./WalkthroughActions"
 import Img from '../Img/Img'
 
 const stages = [
-	WalkthroughCreateUser,
+	<div>Error</div>,
 	WalkthroughProcessesAndProducts,
 	WalkthroughCreateProcess,
 	WalkthroughExampleApp,
 	WalkthroughCreateProduct,
-	WalkthroughTrain
+	WalkthroughTrain,
 ]
 
 class Walkthrough extends React.Component {
@@ -29,10 +29,12 @@ class Walkthrough extends React.Component {
 	}
 
 	render() {
+		// there is an error or u are not logged in, so redirect to login 
 		if (isNaN(this.state.stageNumber) || this.state.stageNumber < 0 || this.state.stageNumber > stages.length) {
-			// there is an error
+			this.props.history.push('/login')
 			return <div />
 		}
+
 		const Stage = stages[this.state.stageNumber]
 		return (
 			<div className="walkthrough">
@@ -43,6 +45,7 @@ class Walkthrough extends React.Component {
 	}
 
 	handleCompleteStage() {
+		console.log('incrementing')
 		if (this.state.stageNumber === (stages.length - 1)) {
 			this.props.dispatch(actions.completeWalkthrough(this.props.user))
 			this.props.history.push('/')

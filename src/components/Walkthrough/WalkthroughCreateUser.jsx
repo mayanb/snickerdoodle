@@ -6,8 +6,10 @@ import WalkthroughHint from './WalkthroughHint'
 import './styles/walkthroughcreateuser.css'
 //import './styles/walkthroughcreateteam.css'
 import * as memberActions from '../TeamSettings/MemberActions'
+import * as userActions from '../AccountMenu/UserActions'
 import * as walkthroughActions from './WalkthroughActions'
 import Card from '../Card/Card'
+import {Redirect} from 'react-router'
 
 
 export class WalkthroughCreateUserAndTeam extends React.Component {
@@ -23,10 +25,16 @@ export class WalkthroughCreateUserAndTeam extends React.Component {
 			},
 			team: "",
 			page: 0,
+			shouldRedirect: false,
 		}
 	}
 
 	render() {
+		// you have created a team, should go back home
+		if (this.state.shouldRedirect) {
+			return <Redirect to="/"/>
+		}
+		
 		if (this.state.page === 0) {
 			return <WalkthroughCreateUser onSubmit={this.handleSubmitUser.bind(this)} />
 		}
@@ -38,14 +46,27 @@ export class WalkthroughCreateUserAndTeam extends React.Component {
 	}
 
 	handleSubmitTeam(team) {
+		// create the team
 		this.setState({ team: team }, () => {
 			this.props.dispatch(walkthroughActions.postCreateTeam(this.state.team))
 				.then((res) => {
+
+					// create the user & login
 					const newTeamId = res.item.id
 					const newUser = Object.assign({}, this.state.user, { team: newTeamId })
-					this.props.dispatch(memberActions.postCreateMember(newUser, this.props.onCompleteStage))
+					this.props.dispatch(memberActions.postCreateMember(newUser, () => {}))
+						.then(this.handleLogin.bind(this))
 				})
+				.catch((err) => console.log("oops"))
 		})
+	}
+
+	handleLogin() {
+		let credentials = {
+			username: this.state.user.username.toLowerCase() + '_' + this.state.team.toLowerCase(), 
+			password: this.state.user.password
+		}
+		this.props.dispatch(userActions.postRequestLogin(credentials, ()=> this.setState({shouldRedirect: true})))
 	}
 }
 
