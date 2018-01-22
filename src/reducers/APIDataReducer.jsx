@@ -1,7 +1,5 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import thunkMiddleware from 'redux-thunk'
 import update from 'immutability-helper'
-import {findPosition, alphabetize} from '../utilities/arrayutils.jsx'
+import {findPosition} from '../utilities/arrayutils'
 
 export const REQUEST = 'REQUEST'
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS'
