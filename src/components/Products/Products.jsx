@@ -8,7 +8,6 @@ import ProductsListItem from './ProductsListItem'
 import CreateProductDropdown from './CreateProductDropdown'
 import Card from '../Card/Card.jsx'
 import './styles/products.css'
-import './styles/navsection.css'
 
 
 
@@ -33,17 +32,15 @@ class Products extends React.Component {
       return null
 
     return (
-      <div className="nav-section products">
-        <div className="nav-section-list">
-          {this.renderTitle()}
-          <PaginatedTable
-            {...this.props}
-            onClick={this.handleSelectProduct}
-            onPagination={this.handlePagination}
-            Row={ProductsListItem}
-            TitleRow={this.headerRow}
-          />
-        </div>
+      <div className="products">
+	      {this.renderTitle()}
+	      <PaginatedTable
+		      {...this.props}
+		      onClick={this.handleSelectProduct}
+		      onPagination={this.handlePagination}
+		      Row={ProductsListItem}
+		      TitleRow={this.headerRow}
+	      />
       </div>
     )
   }
@@ -51,7 +48,7 @@ class Products extends React.Component {
 
   renderTitle() {
     return (
-      <div className="nav-section-header">
+      <div className="section-header">
         <div>All products</div>
         {this.renderCreateProductButton()}
       </div>

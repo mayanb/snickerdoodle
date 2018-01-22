@@ -2,10 +2,13 @@
 
 .products {
 	padding: 0 36px;
+    width: 100%;
 	min-width: 720px;
 	max-width: 1200px;
 
-	&.nav-section .nav-section-header {
+	.section-header {
+        display: flex;
+		flex-direction: row;
 		color: $gray;
 		justify-content: space-between;
       	margin-bottom: 44px;
@@ -17,7 +20,7 @@
 		padding-bottom: 0;
 	}
 
-	.nav-section-list .products-create-product .card {
+	.products-create-product .card {
 		padding: 16px;
 	}
 
