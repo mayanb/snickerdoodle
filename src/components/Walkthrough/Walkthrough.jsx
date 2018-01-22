@@ -9,6 +9,7 @@ import WalkthroughCreateProduct from './WalkthroughCreateProduct'
 import WalkthroughTrain from './WalkthroughTrain'
 import './styles/walkthrough.css'
 import * as actions from "./WalkthroughActions"
+import Img from '../Img/Img'
 
 const stages = [
 	WalkthroughCreateUser,
@@ -35,6 +36,7 @@ class Walkthrough extends React.Component {
 		const Stage = stages[this.state.stageNumber]
 		return (
 			<div className="walkthrough">
+				<Img src='logo-blue'/>
 				<Stage onCompleteStage={this.handleCompleteStage.bind(this)} />
 			</div>
 		)

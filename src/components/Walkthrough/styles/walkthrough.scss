@@ -19,6 +19,13 @@
 		box-shadow: rgba(0,0,0,0.08) 0 0 16px;
 		margin: 0 auto;
 	}
+
+	&>img {
+        height: 46px;
+		margin: 20px auto 0;
+		display: block;
+	}
+
 }
 
 .walkthrough-form {
@@ -29,10 +36,6 @@
 			padding-right: 20px;
 		}
 	}
-}
-
-.walkthrough-input {
-	margin-bottom: 36px;
 }
 
 .walkthrough-input {
