@@ -2,14 +2,8 @@ import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import './styles/layout.css'
 import Walkthrough from '../Walkthrough/Walkthrough'
-<<<<<<< HEAD
 import CreateTeam from '../Walkthrough/CreateTeam'
-//import Activity from '../Activity/Activity'
 import Home from '../Home/Home'
-=======
-//import Activity from '../Activity/Activity'
-//import Home from '../Home/Home'
->>>>>>> d601a50c53d1fb115a0957340d02982ddb3a2ed5
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
 
@@ -42,7 +36,7 @@ export default class ApplicationLayoutStable extends React.Component {
       <Router>
 
           <Switch>
-            <Route path="/create" component={CreateTeam} />
+            <Route path="/create/:code?" component={CreateTeam} />
             <Route path={"/introduction"} component={Walkthrough} />
           	<Route path="/login" component={Login} />
           	<PrivateRoute component={App}/>
