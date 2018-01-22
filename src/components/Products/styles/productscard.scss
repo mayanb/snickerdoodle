@@ -1,9 +1,5 @@
 @import 'styles/constants.scss';
 
-div.processes div.card {
-	max-width: 600px;
-}
-
 .products-card {
 	color: rgb(79,79,79);
 	font-size: 14px;
@@ -69,7 +65,7 @@ div.processes div.card {
 
 	.products-card-description-empty {
 		// color: rgba(0,0,0,0.3);
-		// font-style: italic; 
+		// font-style: italic;
 	}
 
 	.products-card-created-by {
