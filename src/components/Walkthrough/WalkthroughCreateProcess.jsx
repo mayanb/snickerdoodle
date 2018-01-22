@@ -3,7 +3,8 @@ import WalkthroughButton from './WalkthroughButton'
 import WalkthroughInput from './WalkthroughInput'
 import Card from '../Card/Card'
 import WalkthroughHint from './WalkthroughHint'
-import * as processActions from '../Processes/ProcessesActions.jsx'
+import * as processActions from '../Processes/ProcessesActions'
+import * as processAttributeActions from '../ProcessAttribute/ProcessAttributeActions'
 import { connect } from 'react-redux'
 import {EditSelect} from '../ProcessAttribute/ProcessAttributeField'
 import './styles/walkthroughcreateprocess.css'
@@ -17,6 +18,11 @@ export class WalkthroughCreateProcessAndAttributes extends React.Component {
 			attributes: [],
 			pageNumber: 0
 		}
+	}
+
+	// fetch products on load
+	componentDidMount() {
+		this.props.dispatch(processActions.fetchProcesses())
 	}
 
 	render() {
@@ -40,6 +46,15 @@ export class WalkthroughCreateProcessAndAttributes extends React.Component {
 
 	handleSubmitAttributes(attributes) {
 		this.props.dispatch(processActions.postCreateProcess(this.state.process, this.props.onCompleteStage))
+			.then((res) => {
+				const processTypeId = res.item.id
+				const processTypeIndex = this.props.processes.data.findIndex((e, i, a) => e.id === processTypeId)
+				return Promise.all(attributes.map((attribute) => {
+					attribute.process_type = processTypeId;
+					return this.props.dispatch(processAttributeActions.saveAttribute(processTypeIndex, attribute))
+				}))
+			})
+			.then(() => this.props.onCompleteStage())
 	}
 }
 
@@ -81,11 +96,19 @@ class WalkthroughCreateAttributes extends React.Component {
 			attributes: [
 				{
 					name: 'Operator',
-					type: 'TEXT'
+					datatype: 'TEXT'
 				},
 				{
 					name: 'Start time',
-					type: 'TIME'
+					datatype: 'TIME'
+				},
+				{
+					name: '',
+					datatype: 'TEXT'
+				},
+				{
+					name: '',
+					datatype: 'TEXT'
 				}
 			]
 		}
@@ -93,11 +116,11 @@ class WalkthroughCreateAttributes extends React.Component {
 
 	render () {
 		const attributes = this.state.attributes.map((attribute, index) => {
+			const placeholder = attribute.name === '' ? 'Add another...' : null
 			return (
 				<div className="attribute-row" key={index}>
-					<WalkthroughInput value={attribute.name} onChange={() => ''}></WalkthroughInput>
-					<EditSelect onChange={() => ''}></EditSelect>
-					<div className="deleteAttribute"><Img src="delete"/></div>
+					<WalkthroughInput value={attribute.name} onChange={(v) => this.handleNameChange(v, index)} placeholder={placeholder}></WalkthroughInput>
+					{attribute.name ? <EditSelect onChange={(n, v) => this.handleTypeChange(v, index)} value={attribute.datatype}></EditSelect> : <div></div>}
 				</div>
 			)
 		})
@@ -110,16 +133,34 @@ class WalkthroughCreateAttributes extends React.Component {
 						<div className="subtitle">Whenever {this.props.process.name} happens, I need to know:</div>
 						{attributes}
 						<WalkthroughButton title="I added log fields"
-						                   onClick={() => this.props.onSubmit(this.state.attributes)}></WalkthroughButton>
+						                   onClick={() => this.handleSubmit()}></WalkthroughButton>
 					</div>
 				</Card>
 			</div>
 		)
 	}
+
+	handleNameChange(value, index) {
+		const newAttributes = this.state.attributes.slice()
+		newAttributes[index] = {...newAttributes[index], name: value}
+		this.setState({attributes: newAttributes})
+	}
+
+	handleTypeChange(value, index) {
+		const newAttributes = this.state.attributes.slice()
+		newAttributes[index] = {...newAttributes[index], datatype: value}
+		this.setState({attributes: newAttributes})
+	}
+
+	handleSubmit() {
+		this.props.onSubmit(this.state.attributes.filter((attribute) => attribute.name))
+	}
 }
 
 const mapStateToProps = (state/*, props*/) => {
-	return {}
+	return {
+		processes: state.processes
+	}
 }
 
 export default connect(mapStateToProps)(WalkthroughCreateProcessAndAttributes)
