@@ -28,8 +28,6 @@ import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 import BarChartTest from '../D3BarChart/BarChartTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
 
-import PackingOrders from '../PackingOrders/PackingOrders'
-// import OrderDetail from '../OrderDetail/OrderDetail'
 import Sortable from '../Sortable/Index'
 import ProductPage from '../ProductPage/ProductPage'
 
@@ -73,7 +71,6 @@ function App(props) {
         <Route path={"/account"} component={Account} />
         <Route path={"/googleconnect/:ext?"} component={Account} />
         <Route path={"/bc/"} component={BCWrapper} />
-        <Route path={"/packingorders/"} component={PackingOrders} />
         <Route path={"/barcharttest/"} component={Sortable} />
       </div>
     </div>
@@ -82,16 +79,6 @@ function App(props) {
 
 
 
-
-	// <Route path={"/orders/:id"} component={OrderDetail} />
-
-	// render () {
-	// 	return (
-	// 		<Router>
-
-	// 		</Router>
-	// 	)
-	// }
 
 
 /*
