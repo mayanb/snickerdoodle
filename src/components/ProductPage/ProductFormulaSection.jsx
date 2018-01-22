@@ -18,7 +18,7 @@ export default class ProductFormulaSection extends React.Component {
 	}
 
 	render() {
-		let {formulas, product_type, isAddingFormula, process_type} = this.props
+		let {formulas, product_type, isAddingFormula, process_type, attributes} = this.props
 		let process_id, process_name = ""
 		if (process_type) {
 			process_id = process_type.id;
@@ -35,11 +35,11 @@ export default class ProductFormulaSection extends React.Component {
 				<CardRule />
 				{
 					formulas.map(function (f, i) {
-						return <ProductFormula deletable={this.state.deletable} key={i} index={i} {...f} />
+						return <ProductFormula deletable={this.state.deletable} key={i} index={i} attributes={attributes} {...f} />
 					}, this)
 				}
 				{ isAddingFormula ? 
-						<AddNewFormula process_type={process_id} product_type={product_type} /> :
+						<AddNewFormula process_type={process_id} product_type={product_type} attributes={attributes} /> :
 						<StartAddingFormula process_type={process_id}/>
 				}
 			</Card>

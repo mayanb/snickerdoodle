@@ -24,6 +24,7 @@
 		}
 
 		& > i{
+			cursor: pointer;
 			color: $gray;
 			&.active {
 				color: $primary;
@@ -37,13 +38,17 @@
 	display: flex;
 	color: rgba(0,0,0,0.87);
 
-	&>div {
-		display: flex;
-		flex-direction: column;
-	}
-
 	.product-code {
 		font-size: 20px;
 		line-height: 24px;
+	}
+}
+
+.productpage .recipe-wrapper {
+	display: flex;
+
+	&>div {
+		display: flex;
+		flex-direction: column;
 	}
 }

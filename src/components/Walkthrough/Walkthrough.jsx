@@ -17,7 +17,7 @@ const stages = [
 	WalkthroughCreateProcess,
 	WalkthroughExampleApp,
 	WalkthroughCreateProduct,
-	WalkthroughTrain,
+	WalkthroughTrain
 ]
 
 class Walkthrough extends React.Component {
@@ -45,7 +45,6 @@ class Walkthrough extends React.Component {
 	}
 
 	handleCompleteStage() {
-		console.log('incrementing')
 		if (this.state.stageNumber === (stages.length - 1)) {
 			this.props.dispatch(actions.completeWalkthrough(this.props.user))
 			this.props.history.push('/')

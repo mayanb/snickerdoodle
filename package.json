@@ -7,6 +7,7 @@
     "immutability-helper": "^2.1.1",
     "jquery": "^3.1.1",
     "jwt-decode": "^2.2.0",
+    "mathjs": "^3.20.0",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.11",
     "node-sass-chokidar": "0.0.3",
@@ -40,5 +41,12 @@
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }

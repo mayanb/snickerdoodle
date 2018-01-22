@@ -10,6 +10,7 @@ import {
 import {
 	REQUEST_UPDATE_SETTING,
 } from '../../reducers/UserReducer'
+
 import {WALKTHROUGH, TEAMS} from "../../reducers/ReducerTypes"
 import update from 'immutability-helper'
 

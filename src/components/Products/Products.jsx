@@ -97,10 +97,11 @@ class Products extends React.Component {
   }
 
   handleCreateProduct(json) {
-    this.props.dispatch(actions.postCreateProduct(json, (id) => {
-      let index = this.props.data.findIndex((e, i, a) => e.id === id)
-      this.handleSelectProduct(index)
-    }))
+    this.props.dispatch(actions.postCreateProduct(json))
+	    .then((res) => {
+		    let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
+		    return this.handleSelectProduct(index)
+	    })
   }
 
 

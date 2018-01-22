@@ -12,6 +12,7 @@ import Card from '../Card/Card'
 import {Redirect} from 'react-router'
 
 
+
 export class WalkthroughCreateUserAndTeam extends React.Component {
 	constructor(props) {
 		super(props)

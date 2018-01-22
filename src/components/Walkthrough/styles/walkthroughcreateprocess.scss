@@ -35,32 +35,20 @@
         display: flex;
         margin-bottom: 20px;
 
-        .walkthrough-input {
+        &>div:first-child {
             margin-right: 15px;
+            width: 70%;
         }
 
-        .walkthrough-input:nth-child(1) {
-            flex: 3;
+        &>div:last-child {
+            width: 30%;
+
+            select {
+                height: 40px;
+                width: 100%;
+            }
         }
 
-        .walkthrough-input:nth-child(2) {
-            flex: 2;
-        }
-
-        select {
-            height: 40px;
-        }
-
-    }
-
-    .deleteAttribute {
-        margin: 0 20px;
-        display: flex;
-        align-items: center;
-
-        img {
-            height: 10px;
-        }
     }
 }
 
