@@ -74,19 +74,16 @@ export function pageProducts(direction) {
   }
 }
 
-export function postCreateProduct(json, success) {
+export function postCreateProduct(json) {
   return function (dispatch) {
     dispatch(requestCreateProduct())
 
     return api.post('/ics/products/')
       .send(json)
-      .end(function (err, res) {
-        if (err || !res.ok)
-          dispatch(requestCreateProductFailure(err))
-        else
-          dispatch(requestCreateProductSuccess(res.body))
-          success(res.body.id)
+      .then((res) => {
+	      return dispatch(requestCreateProductSuccess(res.body))
       })
+      .catch((err) => dispatch(requestCreateProductFailure(err)))
   }
 }
 
