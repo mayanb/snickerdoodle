@@ -38,9 +38,16 @@
 	}
 }
 
+.subtitle {
+    color: $gray;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 .walkthrough-input {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 
 	input {
 		border: 1px solid #DBE0E4;
@@ -54,6 +61,13 @@
 	.title {
 		margin-bottom: 4px;
 		color: #A1A7AC;
+	}
+
+	img {
+		position: absolute;
+		margin: 8px;
+		top: 0; 
+		right: 0;
 	}
 }
 

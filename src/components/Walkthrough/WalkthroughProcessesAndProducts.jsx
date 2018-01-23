@@ -1,6 +1,5 @@
 import React from 'react'
 import WalkthroughButton from './WalkthroughButton'
-import WalkthroughHint from './WalkthroughHint'
 import WalkthroughTooltip from './WalkthroughTooltip'
 import Card from '../Card/Card'
 import { connect } from 'react-redux'

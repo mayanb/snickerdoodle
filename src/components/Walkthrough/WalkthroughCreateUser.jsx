@@ -1,19 +1,16 @@
 import React from 'react'
 import WalkthroughButton from './WalkthroughButton'
 import WalkthroughInput from './WalkthroughInput'
-import { connect } from 'react-redux'
 import WalkthroughHint from './WalkthroughHint'
 import './styles/walkthroughcreateuser.css'
 //import './styles/walkthroughcreateteam.css'
-import * as memberActions from '../TeamSettings/MemberActions'
-import * as userActions from '../AccountMenu/UserActions'
-import * as walkthroughActions from './WalkthroughActions'
 import Card from '../Card/Card'
 import {Redirect} from 'react-router'
+import Img from '../Img/Img'
 
 
 
-export class WalkthroughCreateUserAndTeam extends React.Component {
+export default class WalkthroughCreateUserAndTeam extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -47,35 +44,9 @@ export class WalkthroughCreateUserAndTeam extends React.Component {
 	}
 
 	handleSubmitTeam(team) {
-		// create the team
-		this.setState({ team: team }, () => {
-			this.props.dispatch(walkthroughActions.postCreateTeam(this.state.team))
-				.then((res) => {
-
-					// create the user & login
-					const newTeamId = res.item.id
-					const newUser = Object.assign({}, this.state.user, { team: newTeamId })
-					this.props.dispatch(memberActions.postCreateMember(newUser, () => {}))
-						.then(this.handleLogin.bind(this))
-				})
-				.catch((err) => console.log("oops"))
-		})
-	}
-
-	handleLogin() {
-		let credentials = {
-			username: this.state.user.username.toLowerCase() + '_' + this.state.team.toLowerCase(), 
-			password: this.state.user.password
-		}
-		this.props.dispatch(userActions.postRequestLogin(credentials, ()=> this.setState({shouldRedirect: true})))
+		this.setState({ team: team }, () => this.props.onSubmit(this.state))
 	}
 }
-
-const mapStateToProps = (state/*, props*/) => {
-	return {}
-}
-
-export default connect(mapStateToProps)(WalkthroughCreateUserAndTeam)
 
 class WalkthroughCreateTeam extends React.Component {
 	constructor(props) {
@@ -113,6 +84,9 @@ function WalkthroughCreateUser(props) {
 function Information(props) {
 	return (
 		<div className="walkthrough-intro-info">
+			<div style={{textAlign: 'center'}}>
+				<Img src="intro_pic@2x" height="200px"/>
+			</div>
 			<div>
 				<h3>Know who did what, when, and how</h3>
 				<span>Understand what’s going on at your factory at all times. Use this to save time during analyses, tracebacks, and more.</span>
