@@ -8,7 +8,6 @@ import * as processAttributeActions from '../ProcessAttribute/ProcessAttributeAc
 import { connect } from 'react-redux'
 import {EditSelect} from '../ProcessAttribute/ProcessAttributeField'
 import './styles/walkthroughcreateprocess.css'
-import Img from '../Img/Img'
 
 export class WalkthroughCreateProcessAndAttributes extends React.Component {
 	constructor(props) {
@@ -31,7 +30,7 @@ export class WalkthroughCreateProcessAndAttributes extends React.Component {
 				return (
 					<WalkthroughCreateProcess onSubmit={(process) => this.handleSubmitProcess(process)}></WalkthroughCreateProcess>
 				)
-			case 1:
+			default:
 				return (
 					<WalkthroughCreateAttributes process={this.state.process}
 					                             onSubmit={(attributes) => this.handleSubmitAttributes(attributes)}>
@@ -80,7 +79,7 @@ class WalkthroughCreateProcess extends React.Component {
 							for.
 						</div>
 						<WalkthroughInput 
-							placeholder="Type your process name"
+							placeholder="Type your process name (eg. Roast, Winnow etc.)"
 						  onChange={(v) => this.setState({ process: {...this.state.process, name: v }})} 
 						/>
 						<WalkthroughInput 

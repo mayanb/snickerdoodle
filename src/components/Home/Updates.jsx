@@ -5,7 +5,7 @@ export default function Updates(props) {
 	return (
 		<div style={{flex: 1}}>
 			<Card className="updates">
-				<span>Download the app onto iPhone/iPod at <a target="_blank" href="goo.gl/qSmJE6">goo.gl/qSmJE6</a> </span>
+				<span>Download the app onto iPhone/iPod at <a target="_blank" href="https://goo.gl/qSmJE6">goo.gl/qSmJE6</a> </span>
 			</Card>
 
 			<Card className="updates">
