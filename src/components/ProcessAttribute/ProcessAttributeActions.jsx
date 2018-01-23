@@ -37,14 +37,11 @@ export function saveAttribute(index, attribute) {
 
     return api.post('/ics/attributes/')
       .send(attribute)
-      .end( function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestSaveAttributeFailure(index))
-        } else {
-          dispatch(requestSaveAttributeSuccess(index, res.body))
-          dispatch(finishAddingAttribute())
-        }
+      .then((res) => dispatch(requestSaveAttributeSuccess(index, res.body)))
+      .catch((err) => {
+        dispatch(requestSaveAttributeFailure(index))
       })
+      .finally(() => dispatch(finishAddingAttribute()))
   }
 }
 

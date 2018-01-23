@@ -32,10 +32,10 @@ export function postRequestLogin(credentials, success, failure) {
 			.end(function (err, res) {
 				if (err || !res.ok) {
 					dispatch(requestLoginFailure(err))
-					success()
+					failure()
 				} else {
 					dispatch(requestLoginSuccess(res.body))
-					failure()
+					success(res.body)
 				}
 			})
 	}

@@ -241,7 +241,7 @@ function updateSettingSuccess(state, action) {
 	if (!state.ui.isUpdatingSetting)
 		return state
 
-	return update(state, {
+	let ns = update(state, {
 		data: {
 			[state.ui.activeUser]: {
 				user: {
@@ -253,6 +253,8 @@ function updateSettingSuccess(state, action) {
 			isUpdatingSetting: {$set: null}
 		}
 	})
+	window.localStorage.setItem('users-v5', JSON.stringify(ns))
+	return ns
 }
 
 function udpateSettingFailure(state, action) {

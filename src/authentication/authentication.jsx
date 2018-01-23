@@ -27,6 +27,13 @@ export function shouldRefresh(users) {
   return !last_fetched || ((new Date() - last_fetched) / 1000 > TIME_TO_REFRESH)
 }
 
+let WALKTHROUGH_COMPLETED = -1
+export function shouldCompleteWalkthrough(users) {
+	let {data, ui} = users	
+  let walkthrough = data[ui.activeUser].user.walkthrough
+  return (walkthrough !== WALKTHROUGH_COMPLETED)
+}
+
 export function isAdmin(user) {
 	return user.account_type == 'a'
 }

@@ -94,10 +94,11 @@ class Processes extends React.Component {
   /* EVENT HANDLERS */
 
   handleCreateProcess(newProcess) {
-    this.props.dispatch(actions.postCreateProcess(newProcess, (id) => {
-      let index = this.props.data.findIndex((e, i, a) => e.id === id)
-      this.props.dispatch(actions.selectProcess(index))
-    }))
+	  this.props.dispatch(actions.postCreateProcess(newProcess))
+		  .then((res) => {
+			  let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
+			  this.props.dispatch(actions.selectProcess(index))
+		  })
   }
 
   handleNameProcess(newProcess) {

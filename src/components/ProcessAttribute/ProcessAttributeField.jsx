@@ -43,12 +43,13 @@ function EditText(props) {
 	)
 }
 
-function EditSelect(props) {
+export function EditSelect(props) {
 	return (
 		<div>
 			<select value={props.value} onChange={(e) => props.onChange(props.name, e.target.value)}>
 				<option value="TEXT">Text</option>
-				<option value="NUMBER">Number</option>
+				<option value="NUMB">Number</option>
+				<option value="TIME">Time</option>
 				<option value="USER">User</option>
 			</select>
 		</div>

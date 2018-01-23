@@ -1,0 +1,54 @@
+@import 'styles/constants.scss';
+
+.walkthrough-create-process, .walkthrough-create-attributes {
+    .walkthrough-input input {
+        height: 40px;
+    }
+
+    .subtitle {
+        color: $gray;
+        text-align: center;
+    }
+}
+
+.walkthrough-create-process {
+    .walkthrough-hint {
+        padding: 15px 10px;
+        margin-bottom: 25px;
+    }
+
+    .walkthrough-input input {
+        margin-bottom: 20px;
+    }
+}
+
+.walkthrough-create-attributes {
+    .walkthrough-header {
+        margin-bottom: 25px;
+    }
+
+    .subtitle {
+        margin-bottom: 20px;
+    }
+
+    .attribute-row {
+        display: flex;
+        margin-bottom: 20px;
+
+        &>div:first-child {
+            margin-right: 15px;
+            width: 70%;
+        }
+
+        &>div:last-child {
+            width: 30%;
+
+            select {
+                height: 40px;
+                width: 100%;
+            }
+        }
+
+    }
+}
+

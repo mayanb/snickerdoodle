@@ -1,6 +1,9 @@
 import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import './styles/layout.css'
+import Walkthrough from '../Walkthrough/Walkthrough'
+import CreateTeam from '../Walkthrough/CreateTeam'
+import Home from '../Home/Home'
 
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
@@ -33,6 +36,8 @@ export default class ApplicationLayoutStable extends React.Component {
       <Router>
 
           <Switch>
+            <Route path="/create/:code?" component={CreateTeam} />
+            <Route path={"/introduction"} component={Walkthrough} />
           	<Route path="/login" component={Login} />
           	<PrivateRoute component={App}/>
           </Switch>
@@ -50,7 +55,7 @@ function App(props) {
       <Route path="/:section?/:id?" component={Topbar} />
 
       <div className="application-content">
-        <Route exact path={"/"} component={ProductPage} />
+        <Route exact path={"/"} component={Home} />
         <Route exact path={"/inventory/:id?"} component={Inventory} />
         <Route exact path={"/labels/"} component={ZebraPrinter} />
         <Route path={"/zebra/"} component={ZebraPrinter} />
