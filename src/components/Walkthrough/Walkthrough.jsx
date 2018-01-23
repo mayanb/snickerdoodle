@@ -21,21 +21,15 @@ const stages = [
 ]
 
 class Walkthrough extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			stageNumber: this.props.user.walkthrough,
-		}
-	}
-
 	render() {
 		// there is an error or u are not logged in, so redirect to login 
-		if (isNaN(this.state.stageNumber) || this.state.stageNumber < 0 || this.state.stageNumber > stages.length) {
+		let stageNumber = this.props.user.walkthrough
+		if (isNaN(stageNumber) || stageNumber < 0 || stageNumber > stages.length) {
 			this.props.history.push('/login')
 			return <div />
 		}
 
-		const Stage = stages[this.state.stageNumber]
+		const Stage = stages[stageNumber]
 		return (
 			<div className="walkthrough">
 				<Img src='logo-blue'/>
@@ -45,14 +39,12 @@ class Walkthrough extends React.Component {
 	}
 
 	handleCompleteStage() {
-		if (this.state.stageNumber === (stages.length - 1)) {
+		let stageNumber = this.props.user.walkthrough
+		if (stageNumber === (stages.length - 1)) {
 			this.props.dispatch(actions.completeWalkthrough(this.props.user))
 			this.props.history.push('/')
 		} else {
 			this.props.dispatch(actions.incrementWalkthrough(this.props.user))
-
-			//Should remove and depend on API data
-			this.setState({ stageNumber: this.state.stageNumber + 1 })
 		}
 	}
 }

@@ -15,13 +15,13 @@ export default class CreateTeam extends React.Component {
 	}
 
 	componentDidMount() {
-		api.get('ics/use-code')
+		api.get('/ics/use-code')
 			.query({code: this.props.match.params.code})
 			.then((res) => {
 				let validity = this.validateCodeResponse(res.body) ? VALID : INVALID
-				this.setState({valid_code: validity})
+				this.setState({code_state: validity})
 			})
-			.catch((e) => this.setState({valid_code: INVALID}))
+			.catch((e) => this.setState({code_state: INVALID}))
 	}
 
 	validateCodeResponse(data) {
@@ -30,7 +30,7 @@ export default class CreateTeam extends React.Component {
 
 	render() {
 		if (this.state.code_state === INVALID) {
-			this.props.history.push('/')
+			window.location.href = 'http://usepolymer.com'
 			return null
 		}
 

@@ -30,7 +30,7 @@ export function shouldRefresh(users) {
 let WALKTHROUGH_COMPLETED = -1
 export function shouldCompleteWalkthrough(users) {
 	let {data, ui} = users	
-  let walkthrough = data[ui.activeUser].walkthrough
+  let walkthrough = data[ui.activeUser].user.walkthrough
   return (walkthrough !== WALKTHROUGH_COMPLETED)
 }
 
