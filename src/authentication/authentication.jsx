@@ -35,9 +35,9 @@ export function shouldCompleteWalkthrough(users) {
 }
 
 export function isAdmin(user) {
-	return user.account_type == 'a'
+	return user.account_type === 'a'
 }
 
 export function isRegular(user) {
-	return user.account_type == 'w'
+	return user.account_type === 'w'
 }
