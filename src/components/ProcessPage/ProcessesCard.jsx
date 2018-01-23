@@ -1,13 +1,10 @@
 import React from 'react'
 import Card from '../Card/Card.jsx'
 import Dialog from '../Card/Dialog.jsx'
-import Icon from '../Card/Icon.jsx'
-import { connect } from 'react-redux'
-import Button from '../Card/Button'
-import ButtonDropdown from '../Card/ButtonDropdown'
 import {ElementHeader} from '../Element/Element'
 import ElementMenu from '../Element/ElementMenu'
 import ProcessAttributeList from '../ProcessAttribute/ProcessAttributeList'
+import './styles/processescard.css'
 
 export default class ProcessCard extends React.Component {
 	constructor(props) {
@@ -29,9 +26,10 @@ export default class ProcessCard extends React.Component {
 
 		return (
 			<Card big={true}>
-				<div className="products-card">
+				<div className="products-card processes-card">
 					<ElementHeader {...process} actions={this.renderMenu()}/>
 					{this.renderRule()}
+					{/**this.renderCreatedBy(process)*/}
 					{this.renderDescription(process)}
 					<ProcessAttributeList process={process}/>
 					{this.renderEditDialog()}
@@ -74,9 +72,9 @@ export default class ProcessCard extends React.Component {
 		return (
 			<div className={"products-card-section products-card-description " + className}>
 				<h2 className="description-header">Description</h2>
-				<span>
-					Apple have made the great improvements in the Interface Builder in Xcode 8. Using the size classes became more intuitive, ability to zoom your storyboard is very convenient.
-				</span>
+				<div>
+					{process.description}
+				</div>
 			</div>
 		)
 	}
