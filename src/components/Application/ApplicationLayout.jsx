@@ -2,20 +2,14 @@ import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import './styles/layout.css'
 
-import Activity from '../Activity/Activity'
-import Home from '../Home/Home'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
 
-import Movements from '../Movements/Movements'
-
 import ZebraPrinter from '../OldComponents/ZebraPrinter.jsx'
 import Navbar from '../Navbar/Navbar.jsx'
-import FactoryMap from '../OldComponents/FactoryMap.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../Inventory/Inventory.jsx'
 import Task from '../Task/Task.jsx'
-import Dash from '../OldComponents/Dash.jsx'
 import Goals from '../Goals/Goals'
 
 import PrivateRoute from '../Router/PrivateRoute'
@@ -25,11 +19,11 @@ import TeamSettings from '../TeamSettings/TeamSettings'
 import Account from '../Account/Account'
 
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
-import BarChartTest from '../D3BarChart/BarChartTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
 
 import Sortable from '../Sortable/Index'
 import ProductPage from '../ProductPage/ProductPage'
+import ProcessPage from '../ProcessPage/ProcessPage'
 
 
 export default class ApplicationLayoutStable extends React.Component {
@@ -62,9 +56,10 @@ function App(props) {
         <Route path={"/zebra/"} component={ZebraPrinter} />
         <Route path={"/dymo/"} component={LabelPrinter} />
         <Route path={"/task/:id?"} component={Task} />
-        <Route path={"/processes/:id?"} component={Processes} />
+        <Route exact path={"/processes"} component={Processes} />
         <Route exact path={"/products"} component={Products} />
         <Route path={"/products/:id"} component={ProductPage} />
+	      <Route path={"/processes/:id"} component={ProcessPage} />
         <Route path={"/attributetest"} component={TaskAttributeTest} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
         <Route path={"/goals"} component={Goals} />

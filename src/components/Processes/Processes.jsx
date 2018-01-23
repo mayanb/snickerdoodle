@@ -109,13 +109,7 @@ class Processes extends React.Component {
   }
 
   handleSelectProcess(index) {
-
-    let p = this.props.data[index]
-    if (!p) 
-      return 
-
-    this.props.dispatch(actions.selectProcess(index))
-    this.props.dispatch(inventoryActions.fetchInventory({processes: p.id}))
+	  this.props.history.push('/processes/' + this.props.data[index].id)
   }
 
 	handleToggleDialog() {
