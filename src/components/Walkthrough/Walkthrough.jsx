@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import WalkthroughCreateUser from './WalkthroughCreateUser'
 import WalkthroughProcessesAndProducts from './WalkthroughProcessesAndProducts'
 import WalkthroughCreateProcess from './WalkthroughCreateProcess'
 import WalkthroughExampleApp from './WalkthroughExampleApp'

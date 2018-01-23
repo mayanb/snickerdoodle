@@ -48,3 +48,15 @@
 		}
 	}
 }
+
+.goals-card {
+	flex: 1;
+}
+
+.updates {
+	background-color: $primary;
+	color: white;
+	-webkit-font-smoothing: antialiased;
+	margin-left: 36px;
+	margin-bottom: 16px;
+}

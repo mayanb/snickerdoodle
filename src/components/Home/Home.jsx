@@ -5,6 +5,7 @@ import Alerts from '../Alerts/Alerts'
 import Card from '../Card/Card'
 import NewFeatures from '../NewFeatures/NewFeatures'
 import './styles/home.css'
+import Updates from './Updates'
 
 export default function Home(props) {
 	return (
@@ -20,9 +21,12 @@ export default function Home(props) {
 
 					<div style={{maxWidth: "400px", minWidth: "400px"}}>
 						<BigHeader>How's it going?</BigHeader>
-						<Card>
-							<Goals/>
-						</Card>
+						<div style={{display: 'flex', maxWidth: "800px", minWidth: "800px"}}>
+							<Card className="goals-card">
+								<Goals/>
+							</Card>
+							<Updates />
+						</div>
 					</div>
 
 					<div style={{maxWidth: "900px", minWidth: "700px"}}>
