@@ -10,9 +10,10 @@ import './styles/walkthrough.css'
 import * as actions from "./WalkthroughActions"
 import Img from '../Img/Img'
 import WalkthroughResources from './WalkthroughResources'
+import {shouldCompleteWalkthrough} from '../../authentication/authentication'
 
 const stages = [
-	<div>Error</div>,
+	"div",
 	WalkthroughProcessesAndProducts,
 	WalkthroughCreateProcess,
 	WalkthroughExampleApp,
@@ -25,11 +26,11 @@ class Walkthrough extends React.Component {
 	render() {
 		// there is an error or u are not logged in, so redirect to login 
 		let stageNumber = this.props.user.walkthrough
-		if (isNaN(stageNumber) || stageNumber < 0 || stageNumber > stages.length) {
+		if (isNaN(stageNumber) || !shouldCompleteWalkthrough(this.props.users)) {
 			this.props.history.push('/login')
 			return <div />
 		}
-
+		console.log()
 		const Stage = stages[stageNumber]
 		return (
 			<div className="walkthrough">
@@ -54,7 +55,7 @@ class Walkthrough extends React.Component {
 const mapStateToProps = (state/*, props*/) => {
 	let { data, ui } = state.users
 	if (ui.activeUser && ui.activeUser >= 0 && data[ui.activeUser]) {
-		return { user: data[ui.activeUser].user }
+		return { user: data[ui.activeUser].user, users: state.users }
 	}
 	return { user: {} }
 }
