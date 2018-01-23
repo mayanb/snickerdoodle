@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function WalkthroughInput({title, onChange, ...rest}) {
+export default function WalkthroughInput({title, onChange, help, ...rest}) {
 	return (
 		<div className="walkthrough-input">
 			{ title ? <span className="title">{title}</span> : null }

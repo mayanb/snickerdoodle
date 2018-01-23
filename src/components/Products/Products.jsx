@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './ProductsActions.jsx'
-import * as inventoryActions from '../Inventory/InventoryActions'
 
+import ObjectList from '../ObjectList/ObjectList'
+import ObjectListHeader from '../ObjectList/ObjectListHeader'
+import ObjectListTitle from '../ObjectList/ObjectListTitle'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
-import CreateProductDropdown from './CreateProductDropdown'
-import Card from '../Card/Card.jsx'
+import CreateProductDialog from './CreateProductDialog'
 import './styles/products.css'
-import './styles/navsection.css'
 
 
 
@@ -27,56 +27,44 @@ class Products extends React.Component {
   }
 
   render() {
-    var { data, ui, users } = this.props
+    let { users } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type != 'a')
-      return null
+    	this.props.history.push('/')
 
-    return (
-      <div className="nav-section products">
-        <div className="nav-section-list">
-          {this.renderTitle()}
-          <PaginatedTable
-            {...this.props}
-            onClick={this.handleSelectProduct}
-            onPagination={this.handlePagination}
-            Row={ProductsListItem}
-            TitleRow={this.headerRow}
-          />
-        </div>
-      </div>
-    )
+	  return (
+		  <ObjectList className="products">
+			  {this.renderTitle()}
+			  <PaginatedTable
+				  {...this.props}
+				  onClick={this.handleSelectProduct}
+				  onPagination={this.handlePagination}
+				  Row={ProductsListItem}
+				  TitleRow={this.headerRow}
+			  />
+		  </ObjectList>
+	  )
   }
-
 
   renderTitle() {
     return (
-      <div className="nav-section-header">
-        <div>All products</div>
-        {this.renderCreateProductButton()}
-      </div>
+    	<ObjectListTitle title="All products" buttonText="Create product">
+		    <CreateProductDialog
+			    onSubmit={this.handleCreateProduct.bind(this)}
+			    ui={this.props.ui}
+		    />
+	    </ObjectListTitle>
     )
-  }
-
-	renderCreateProductButton() {
-		return (
-			<div className="products-create-product">
-			  <CreateProductDropdown
-				  onSubmit={this.handleCreateProduct}
-				  ui={this.props.ui}
-			  />
-		  </div>
-	  )
   }
 
 	headerRow() {
 		return (
-			<div className="products-header">
-				<div className="header-item code">Code</div>
-				<div className="header-item name">Name</div>
-				<div className="header-item owner">Owner</div>
-				<div className="header-item date">Date Created</div>
-			</div>
+			<ObjectListHeader>
+				<div className="code">Code</div>
+				<div className="name">Name</div>
+				<div className="owner">Owner</div>
+				<div className="date">Date Created</div>
+			</ObjectListHeader>
 		)
 	}
 
@@ -89,13 +77,6 @@ class Products extends React.Component {
     this.props.dispatch(actions.pageProducts(direction))
   }
 
-  handleEditProduct(index, params) {
-    if (!this.props.data[index])
-      return
-
-    //this.props.dispatch(actions.editProduct(id, params))
-  }
-
   handleCreateProduct(json) {
     this.props.dispatch(actions.postCreateProduct(json))
 	    .then((res) => {
@@ -103,9 +84,6 @@ class Products extends React.Component {
 		    return this.handleSelectProduct(index)
 	    })
   }
-
-
-
 }
 
 // This is our select function that will extract from the state the data slice we want to expose
@@ -114,9 +92,7 @@ const mapStateToProps = (state/*, props*/) => {
   return {
     data: state.products.data,
     ui: state.products.ui,
-    inventoryData: state.inventories.data,
     users: state.users
-    // inventories: state.products.inventories
   }
 }
 

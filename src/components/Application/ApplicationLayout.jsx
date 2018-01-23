@@ -4,6 +4,7 @@ import './styles/layout.css'
 import Walkthrough from '../Walkthrough/Walkthrough'
 import CreateTeam from '../Walkthrough/CreateTeam'
 import Home from '../Home/Home'
+
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
 
@@ -23,10 +24,9 @@ import Account from '../Account/Account'
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
 
-import PackingOrders from '../PackingOrders/PackingOrders'
-// import OrderDetail from '../OrderDetail/OrderDetail'
 import Sortable from '../Sortable/Index'
 import ProductPage from '../ProductPage/ProductPage'
+import ProcessPage from '../ProcessPage/ProcessPage'
 
 
 export default class ApplicationLayoutStable extends React.Component {
@@ -61,16 +61,16 @@ function App(props) {
         <Route path={"/zebra/"} component={ZebraPrinter} />
         <Route path={"/dymo/"} component={LabelPrinter} />
         <Route path={"/task/:id?"} component={Task} />
-        <Route path={"/processes/:id?"} component={Processes} />
+        <Route exact path={"/processes"} component={Processes} />
         <Route exact path={"/products"} component={Products} />
         <Route path={"/products/:id"} component={ProductPage} />
+	      <Route path={"/processes/:id"} component={ProcessPage} />
         <Route path={"/attributetest"} component={TaskAttributeTest} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
         <Route path={"/goals"} component={Goals} />
         <Route path={"/account"} component={Account} />
         <Route path={"/googleconnect/:ext?"} component={Account} />
         <Route path={"/bc/"} component={BCWrapper} />
-        <Route path={"/packingorders/"} component={PackingOrders} />
         <Route path={"/barcharttest/"} component={Sortable} />
       </div>
     </div>
@@ -79,16 +79,6 @@ function App(props) {
 
 
 
-
-	// <Route path={"/orders/:id"} component={OrderDetail} />
-
-	// render () {
-	// 	return (
-	// 		<Router>
-
-	// 		</Router>
-	// 	)
-	// }
 
 
 /*

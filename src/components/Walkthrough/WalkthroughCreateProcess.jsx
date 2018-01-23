@@ -75,13 +75,20 @@ class WalkthroughCreateProcess extends React.Component {
 				<Card>
 					<div className="walkthrough-container">
 						<div className="walkthrough-header">Let's make your first process</div>
-						<WalkthroughHint>A process is a single step at your factory that you want to log information
-							for.</WalkthroughHint>
-						<WalkthroughInput placeholder="Type your process name"
-						                  onChange={(v) => this.setState({ process: {...this.state.process, name: v }})}></WalkthroughInput>
-						<WalkthroughInput placeholder="Type your process code"
-						                  onChange={(v) => this.setState({ process: { ...this.state.process, code: v }})}></WalkthroughInput>
-						<WalkthroughButton title="Got it" onClick={() => this.props.onSubmit(this.state.process)}></WalkthroughButton>
+						<div className="subtitle">
+						A process is a single step at your factory that you want to log information
+							for.
+						</div>
+						<WalkthroughInput 
+							placeholder="Type your process name"
+						  onChange={(v) => this.setState({ process: {...this.state.process, name: v }})} 
+						/>
+						<WalkthroughInput 
+							placeholder="Choose an abbreviation"
+						  onChange={(v) => this.setState({ process: { ...this.state.process, code: v }})} 
+						/>
+						<WalkthroughHint>A 1-3 letter abbreviation helps your team read the process on a label quickly.</WalkthroughHint>
+						<WalkthroughButton title="Continue" onClick={() => this.props.onSubmit(this.state.process)}></WalkthroughButton>
 					</div>
 				</Card>
 			</div>

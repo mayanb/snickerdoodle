@@ -1,6 +1,5 @@
 import React from 'react'
 import WalkthroughButton from './WalkthroughButton'
-import WalkthroughHint from './WalkthroughHint'
 import WalkthroughTooltip from './WalkthroughTooltip'
 import Card from '../Card/Card'
 import { connect } from 'react-redux'
@@ -28,6 +27,9 @@ export class WalkthroughProcessesAndProducts extends React.Component {
 							<div className="see-examples">
 								<WalkthroughTooltip button='See examples' tooltip="eg. Sugar, White Chocolate 50g', 'Soup 100g" />
 							</div>
+						</div>
+						<div style={{marginBottom: "24px"}}>
+							<iframe width="560" height="315" src="https://www.youtube.com/embed/ZJRr1mJA270?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 						</div>
 						<WalkthroughButton title="Got it" onClick={() => this.props.onCompleteStage()} />
 					</div>

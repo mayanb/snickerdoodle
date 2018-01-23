@@ -24,14 +24,20 @@ export class WalkthroughCreateProduct extends React.Component {
 				<Card>
 					<div className="walkthrough-container">
 						<div className="walkthrough-header">Now let's make your first product.</div>
-						<WalkthroughHint>
-							A product is any type of object you want to track in your factory. Final goods, intermediate outputs, and
+						<div className="subtitle">
+						A product is any type of object you want to track in your factory. Final goods, intermediate outputs, and
 							raw materials are all fair game!
+						</div>
+						<WalkthroughHint>
+							Examples: Sugar, Milk, White Chocolate 50g box, Small green t-shirt
 						</WalkthroughHint>
 						<WalkthroughInput placeholder="Type your product name"
-						                   onChange={(v) => this.setState({ product: { ...this.state.product, name: v }})}></WalkthroughInput>
-						<WalkthroughInput placeholder="Type your product code"
-						                  onChange={(v) => this.setState({ product: { ...this.state.product, code: v }})}></WalkthroughInput>
+						                  onChange={(v) => this.setState({ product: { ...this.state.product, name: v }})}></WalkthroughInput>
+						<WalkthroughInput 
+							placeholder="Choose a 1-3 letter abbreviation"
+						  onChange={(v) => this.setState({ product: { ...this.state.product, code: v }})} 
+						  help="An 1-3 letter abbreviation helps your team quickly read off a label"
+						/>
 					<WalkthroughButton title="I made my first product" onClick={() => this.handleSubmit()}></WalkthroughButton>
 					</div>
 				</Card>

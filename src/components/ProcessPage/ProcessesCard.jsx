@@ -7,7 +7,6 @@ import Button from '../Card/Button'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import {ElementHeader} from '../Element/Element'
 import ElementMenu from '../Element/ElementMenu'
-import ProcessesCardInventory from './ProcessesCardInventory'
 import ProcessAttributeList from '../ProcessAttribute/ProcessAttributeList'
 
 export default class ProcessCard extends React.Component {
@@ -23,18 +22,17 @@ export default class ProcessCard extends React.Component {
 	}
 
 	render() {
-		let { data, ui } = this.props
-		let product = data[ui.selectedItem]
+		let { data, ui, process } = this.props
 
-		if (!product)
+		if (!process)
 			return false;
 
 		return (
 			<Card big={true}>
 				<div className="products-card">
-					<ElementHeader {...product} actions={this.renderMenu()}/>
+					<ElementHeader {...process} actions={this.renderMenu()}/>
 					{this.renderRule()}
-					{this.renderDescription(product)}
+					{this.renderDescription(process)}
 					<ProcessAttributeList />
 					{this.renderEditDialog()}
 				</div>
@@ -65,9 +63,9 @@ export default class ProcessCard extends React.Component {
 		)
 	}
 
-	renderDescription(product) {
+	renderDescription(process) {
 		let className = ""
-		let description = product.description
+		let description = process.description
 		if (!description || description.length == 0) {
 			description = "No description"
 			className = "products-card-description-empty"
@@ -83,7 +81,7 @@ export default class ProcessCard extends React.Component {
 		)
 	}
 
-	renderCreatedBy(product) {
+	renderCreatedBy(process) {
 		return (
 			<div className="products-card-section products-card-created-by">
 				<span>

@@ -1,35 +1,30 @@
 import React from 'react'
-import Card from '../Card/Card.jsx'
-import ButtonDropdown from '../Card/ButtonDropdown.jsx'
 import Button from '../Card/Button.jsx'
+import './styles/createproductdialog.css'
 
-export default class CreateProductDropdown extends React.Component {
+export default class CreateProductDialog extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			expanded: false,
 			name: "",
 			abbreviation: "",
 			description: "", 
 			error: false,
 			too_long: false,
 		}
-
-		this.handleDropdownToggle = this.handleDropdownToggle.bind(this)
 	}
+
 	render() {
 		return (
-			<ButtonDropdown button="Create Product" expanded={this.state.expanded} onToggleDropdown={this.handleDropdownToggle}>
-				<div className="create-product-dialog">
-					{ this.renderInput("name", "Name", "eg. Maya Mountain 2016") }
-					{ this.renderInput("abbreviation", "Abbreviation", "eg. MM16") }
-					{ this.renderDescription() }
-					{ this.renderError() }
-					{ this.renderTooLongError() }
-					{ this.renderCreateButton() }
-				</div>
-			</ButtonDropdown>
+			<div className="create-product-dialog">
+				{this.renderInput("name", "Name", "eg. Maya Mountain 2016")}
+				{this.renderInput("abbreviation", "Abbreviation", "eg. MM16")}
+				{this.renderDescription()}
+				{this.renderError()}
+				{this.renderTooLongError()}
+				{this.renderCreateButton()}
+			</div>
 		)
 	}
 
@@ -81,15 +76,9 @@ export default class CreateProductDropdown extends React.Component {
 		)
 	}
 
-	handleDropdownToggle() {
-		this.setState({expanded: !this.state.expanded})
-	}
-
 	handleCreateProduct() {
 		if (!this.handleInputValidation())
 			return 
-
-		this.handleDropdownToggle()
 		this.props.onSubmit({code: this.state.abbreviation, name: this.state.name})
 	}
 

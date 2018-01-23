@@ -1,14 +1,12 @@
 @import 'styles/constants.scss';
 
 .walkthrough-processes-and-products {
+    div.card {
+    min-width: 700px;
+    text-align: center;
+    }
     .bold {
         font-weight: bold;
-    }
-
-    .subtitle {
-        color: $gray;
-        text-align: center;
-        margin-bottom: 20px;
     }
 
     .core-parts {
