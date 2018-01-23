@@ -59,7 +59,7 @@ function requestIncrementWalkthroughSuccess(json) {
 }
 
 export function completeWalkthrough(user) {
-	return progressWalkthrough(`/ics/userprofiles/complete-walkthrough/${user.id}/`)
+	return progressWalkthrough(`/ics/userprofiles/complete-walkthrough/${user.profile_id}/`)
 }
 
 export function postCreateTeam(teamName) {

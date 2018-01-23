@@ -55,8 +55,13 @@
 
 .updates {
 	background-color: $primary;
-	color: white;
+	color: rgba(255,255,255,0.7);
 	-webkit-font-smoothing: antialiased;
 	margin-left: 36px;
 	margin-bottom: 16px;
+
+	a {
+		color: white;
+		border-bottom: 1px dotted white;
+	}
 }
