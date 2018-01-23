@@ -18,8 +18,7 @@ class ProcessAttributeList extends React.Component {
 	}
 
 	render() {
-		let {data, ui} = this.props
-		let item = data[ui.selectedItem]
+		let {process, ui} = this.props
 
 		return (
 			<div className="products-card-section products-card-attributes">
@@ -29,7 +28,7 @@ class ProcessAttributeList extends React.Component {
 				</div>
 				{ this.renderAddAttributeSection() }
 				<Sortable 
-					cards={item.attributes} 
+					cards={process.attributes}
 					canEdit={true} 
 					finishMovingCard={this.moveAttribute.bind(this)} 
 					renderer={ProcessAttribute} 

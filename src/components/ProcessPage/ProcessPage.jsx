@@ -20,8 +20,6 @@ class ProcessPage extends React.Component {
 	render() {
 		let { ui, data, dispatch } = this.props
 
-		console.log('props', this.props)
-
 		if (!data) {
 			return <span>Loading... </span>
 		}

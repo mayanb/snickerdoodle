@@ -26,8 +26,8 @@ export default class ProcessesListItem extends React.Component {
 					{item.name}
 				</div>
 				<div className="owner">
-					<Icon src="" size="20px" content={item.created_by_name}/>
-					{item.created_by_name}
+					<Icon src="" size="20px" content={item.username}/>
+					{item.username}
 				</div>
 				<div className={"date"}>
 					{moment(item.created_at).format("MMMM DD, YYYY")}

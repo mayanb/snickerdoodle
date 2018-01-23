@@ -22,7 +22,7 @@ export default class ProcessCard extends React.Component {
 	}
 
 	render() {
-		let { data, ui, process } = this.props
+		let { process } = this.props
 
 		if (!process)
 			return false;
@@ -33,7 +33,7 @@ export default class ProcessCard extends React.Component {
 					<ElementHeader {...process} actions={this.renderMenu()}/>
 					{this.renderRule()}
 					{this.renderDescription(process)}
-					<ProcessAttributeList />
+					<ProcessAttributeList process={process}/>
 					{this.renderEditDialog()}
 				</div>
 			</Card>
