@@ -9,6 +9,7 @@ import WalkthroughTrain from './WalkthroughTrain'
 import './styles/walkthrough.css'
 import * as actions from "./WalkthroughActions"
 import Img from '../Img/Img'
+import WalkthroughResources from './WalkthroughResources'
 
 const stages = [
 	<div>Error</div>,
@@ -16,7 +17,8 @@ const stages = [
 	WalkthroughCreateProcess,
 	WalkthroughExampleApp,
 	WalkthroughCreateProduct,
-	WalkthroughTrain
+	WalkthroughTrain,
+	WalkthroughResources,
 ]
 
 class Walkthrough extends React.Component {

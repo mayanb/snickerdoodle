@@ -7,6 +7,7 @@ import * as userActions from '../AccountMenu/UserActions'
 import * as walkthroughActions from './WalkthroughActions'
 import {Redirect} from 'react-router'
 import Img from '../Img/Img'
+import * as processActions from '../Processes/ProcessesActions'
 
 const FETCHING = 'f'
 const INVALID = 'i'
@@ -77,13 +78,24 @@ class CreateTeam extends React.Component {
 			username: data.user.username.toLowerCase() + '_' + data.team.toLowerCase(), 
 			password: data.user.password
 		}
-		this.props.dispatch(userActions.postRequestLogin(credentials, ()=> this.setState({code_state: SHOULD_REDIRECT})))
+		this.props.dispatch(userActions.postRequestLogin(credentials, () => this.handleMoveOn()))
 	}
 
 	handleMoveOn() {
 		this.setState({code_state: SHOULD_REDIRECT})
+
 		api.get('ics/use-code')
 			.query({code: this.props.match.params.code})
+
+			let data = {
+				name: 'Label', 
+				code: 'L', 
+				icon: 'label.png', 
+				unit: 'item', 
+				output_description: 'product'
+			}
+
+		this.props.dispatch(processActions.postCreateProcess(data), () => {})
 	}
 }
 
