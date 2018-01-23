@@ -126,16 +126,11 @@ export function postCreateProcess(json, success) {
   return function (dispatch) {
     dispatch(requestCreateProcess())
 
-    return api.post('/ics/processes/')
-      .send(json)
-      .send({icon: "default.png"})
-      .end(function (err, res) {
-        if (err || !res.ok)
-          dispatch(requestCreateProcessFailure(err))
-        else
-          dispatch(requestCreateProcessSuccess(res.body))
-          success(res.body.id)
-      })
+	  return api.post('/ics/processes/')
+		  .send(json)
+		  .send({ icon: "default.png" })
+		  .then((res) => dispatch(requestCreateProcessSuccess(res.body)))
+		  .catch((err) => dispatch(requestCreateProcessFailure(err)))
   }
 }
 
