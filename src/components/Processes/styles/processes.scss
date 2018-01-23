@@ -1,14 +1,22 @@
 @import 'styles/constants.scss';
 
 div.processes {
-  width: 1020px;
-
-  .processes-header {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 92px 20px 48px;
-
+  .code {
+    flex: 4;
   }
+
+  .name {
+    flex: 8;
+  }
+
+  .owner {
+    flex: 4;
+  }
+
+  .date {
+    flex: 4;
+  }
+
 
   div.card {
     max-width: 600px;

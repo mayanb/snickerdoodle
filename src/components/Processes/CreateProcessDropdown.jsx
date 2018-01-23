@@ -13,28 +13,24 @@ export default class CreateProcessDropdown extends React.Component {
 			abbreviation: "",
 			error: false,
 			isDialogOpen: false,
-			isDropdownOpen: false,
 		}
 
 		this.handleCreate = this.handleCreate.bind(this)
 		this.handleCreateProcess = this.handleCreateProcess.bind(this)
 		this.handleToggleDialog = this.handleToggleDialog.bind(this)
-		this.handleToggleDropdown = this.handleToggleDropdown.bind(this)
 
 	}
 	
 	render() {
 		return (
 			<div>
-			<ButtonDropdown button="Create Process" onToggleDropdown={this.handleToggleDropdown} expanded={this.state.isDropdownOpen}>
 				<div className="create-product-dialog">
-					{ this.renderInput("name", "Name", "eg. Roast") }
-					{ this.renderInput("abbreviation", "Abbreviation", "eg. R") }
-					{ this.renderError() }
+					{this.renderInput("name", "Name", "eg. Roast")}
+					{this.renderInput("abbreviation", "Abbreviation", "eg. R")}
+					{this.renderError()}
 					<Button onClick={this.handleCreateProcess}>Create Process</Button>
 				</div>
-			</ButtonDropdown>
-			{ this.renderDialog() }
+				{this.renderDialog()}
 			</div>
 		)
 	}
@@ -71,10 +67,6 @@ export default class CreateProcessDropdown extends React.Component {
 		this.setState({isDialogOpen: !this.state.isDialogOpen})
 	}
 
-	handleToggleDropdown() {
-		this.setState({isDropdownOpen: !this.state.isDropdownOpen})
-	}
-
 
 	handleInputChange(e, key) {
 		this.setState({[key]: e.target.value})
@@ -99,7 +91,7 @@ export default class CreateProcessDropdown extends React.Component {
 		if(!this.handleInputValidation())
 			return 
 
-		this.setState({isDialogOpen: true, isDropdownOpen:false})
+		this.setState({isDialogOpen: true})
 	}
 
 
