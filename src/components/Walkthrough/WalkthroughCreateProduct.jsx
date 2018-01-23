@@ -6,6 +6,8 @@ import WalkthroughHint from './WalkthroughHint'
 import Card from '../Card/Card'
 import * as productActions from '../Products/ProductsActions'
 import './styles/walkthroughcreateproduct.css'
+import {validateForm} from '../../utilities/formutils'
+import WalkthroughError from './WalkthroughError'
 
 export class WalkthroughCreateProduct extends React.Component {
 	constructor(props) {
@@ -14,7 +16,8 @@ export class WalkthroughCreateProduct extends React.Component {
 			product: {
 				name: '',
 				code: ''
-			}
+			},
+			valid: true
 		}
 	}
 
@@ -38,6 +41,7 @@ export class WalkthroughCreateProduct extends React.Component {
 						  onChange={(v) => this.setState({ product: { ...this.state.product, code: v }})} 
 						  help="An 1-3 letter abbreviation helps your team quickly read off a label"
 						/>
+						{this.state.valid ? null : <WalkthroughError />}
 					<WalkthroughButton title="I made my first product" onClick={() => this.handleSubmit()}></WalkthroughButton>
 					</div>
 				</Card>
@@ -46,8 +50,12 @@ export class WalkthroughCreateProduct extends React.Component {
 	}
 
 	handleSubmit() {
-		this.props.dispatch(productActions.postCreateProduct(this.state.product))
+		let valid = validateForm(this.state.product)
+		this.setState({valid: valid})
+		if (valid) {
+			this.props.dispatch(productActions.postCreateProduct(this.state.product))
 			.then(() => this.props.onCompleteStage())
+		}
 	}
 }
 

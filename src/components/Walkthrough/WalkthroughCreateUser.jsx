@@ -7,7 +7,8 @@ import './styles/walkthroughcreateuser.css'
 import Card from '../Card/Card'
 import {Redirect} from 'react-router'
 import Img from '../Img/Img'
-
+import {validateForm} from '../../utilities/formutils'
+import WalkthroughError from './WalkthroughError'
 
 
 export default class WalkthroughCreateUserAndTeam extends React.Component {
@@ -51,7 +52,7 @@ export default class WalkthroughCreateUserAndTeam extends React.Component {
 class WalkthroughCreateTeam extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { team: "" }
+		this.state = { team: "", valid: true }
 	}
 
 	render() {
@@ -61,12 +62,21 @@ class WalkthroughCreateTeam extends React.Component {
 						<div className="walkthrough-form walkthrough-container">
 							<span className="walkthrough-header">What's your team's name?</span>
 							<WalkthroughInput placeholder="teamrocket" onChange={(t) => this.setState({ team: t })} />
-							<WalkthroughButton title="I made a team" onClick={() => this.props.onSubmit(this.state.team)} />
+							{this.state.valid ? null : <WalkthroughError />}
+							<WalkthroughButton title="I made a team" onClick={this.handleSubmit.bind(this)} />
 						</div>
 						<WalkthroughHint>Teams are groups of people who work on the same production line together.</WalkthroughHint>
 					</Card>
 				</div>
 		)
+	}
+
+	handleSubmit() {
+		let valid = validateForm(this.state)
+		this.setState({valid: valid})
+		if (valid) {
+			this.props.onSubmit(this.state.team)
+		}
 	}
 }
 
@@ -111,7 +121,8 @@ class CreateUserForm extends React.Component {
 			last_name: "",
 			username: "",
 			email: "",
-			password: ""
+			password: "", 
+			valid: true
 		}
 	}
 
@@ -131,9 +142,18 @@ class CreateUserForm extends React.Component {
 				                  onChange={(v) => this.handleChange('email', v)} />
 				<WalkthroughInput value={password} title="Password" type="password" placeholder="Choose a password"
 				                  onChange={(v) => this.handleChange('password', v)} />
-				<WalkthroughButton title="Continue" onClick={() => this.props.onSubmit(this.state)} />
+				{this.state.valid ? null : <WalkthroughError />}
+				<WalkthroughButton title="Continue" onClick={this.handleSubmit.bind(this)} />
 			</div>
 		)
+	}
+
+	handleSubmit() {
+		let valid = validateForm(this.state)
+		this.setState({valid: valid})
+		if (valid) {
+			this.props.onSubmit(this.state)
+		}
 	}
 
 	handleChange(key, value) {

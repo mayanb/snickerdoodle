@@ -8,6 +8,8 @@ import * as processAttributeActions from '../ProcessAttribute/ProcessAttributeAc
 import { connect } from 'react-redux'
 import {EditSelect} from '../ProcessAttribute/ProcessAttributeField'
 import './styles/walkthroughcreateprocess.css'
+import {validateForm} from '../../utilities/formutils'
+import WalkthroughError from './WalkthroughError'
 
 export class WalkthroughCreateProcessAndAttributes extends React.Component {
 	constructor(props) {
@@ -64,7 +66,8 @@ class WalkthroughCreateProcess extends React.Component {
 			process: {
 				name: '',
 				code: ''
-			}
+			},
+			valid: true,
 		}
 	}
 
@@ -87,11 +90,20 @@ class WalkthroughCreateProcess extends React.Component {
 						  onChange={(v) => this.setState({ process: { ...this.state.process, code: v }})} 
 						/>
 						<WalkthroughHint>A 1-3 letter abbreviation helps your team read the process on a label quickly.</WalkthroughHint>
-						<WalkthroughButton title="Continue" onClick={() => this.props.onSubmit(this.state.process)}></WalkthroughButton>
+						{this.state.valid ? null : <WalkthroughError />}
+						<WalkthroughButton title="Continue" onClick={this.handleSubmit.bind(this)}></WalkthroughButton>
 					</div>
 				</Card>
 			</div>
 		)
+	}
+
+	handleSubmit() {
+		let valid = validateForm(this.state.process)
+		this.setState({valid: valid})
+		if (valid) {
+			this.props.onSubmit(this.state.process)
+		}
 	}
 }
 
