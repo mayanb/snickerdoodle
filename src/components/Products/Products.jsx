@@ -1,12 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './ProductsActions.jsx'
-import * as inventoryActions from '../Inventory/InventoryActions'
 
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDropdown from './CreateProductDropdown'
-import Card from '../Card/Card.jsx'
 import './styles/products.css'
 
 
@@ -26,10 +24,10 @@ class Products extends React.Component {
   }
 
   render() {
-    var { data, ui, users } = this.props
+    let { users } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type != 'a')
-      return null
+    	this.props.history.push('/')
 
     return (
       <div className="products">
@@ -44,7 +42,6 @@ class Products extends React.Component {
       </div>
     )
   }
-
 
   renderTitle() {
     return (
@@ -86,22 +83,12 @@ class Products extends React.Component {
     this.props.dispatch(actions.pageProducts(direction))
   }
 
-  handleEditProduct(index, params) {
-    if (!this.props.data[index])
-      return
-
-    //this.props.dispatch(actions.editProduct(id, params))
-  }
-
   handleCreateProduct(json) {
     this.props.dispatch(actions.postCreateProduct(json, (id) => {
       let index = this.props.data.findIndex((e, i, a) => e.id === id)
       this.handleSelectProduct(index)
     }))
   }
-
-
-
 }
 
 // This is our select function that will extract from the state the data slice we want to expose
@@ -110,9 +97,7 @@ const mapStateToProps = (state/*, props*/) => {
   return {
     data: state.products.data,
     ui: state.products.ui,
-    inventoryData: state.inventories.data,
     users: state.users
-    // inventories: state.products.inventories
   }
 }
 
