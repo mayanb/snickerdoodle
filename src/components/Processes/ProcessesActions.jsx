@@ -21,13 +21,14 @@ import {  PROCESSES, PROCESS_INVENTORY } from '../../reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
 
-export function fetchProcesses() {
+export function fetchProcesses(q) {
   return function (dispatch) {
     // dispatch an action that we are requesting a process
     dispatch(requestProcesses())
 
     // actually fetch 
     return api.get('/ics/processes/')
+	    .query(q)
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestProcessesFailure(err))
