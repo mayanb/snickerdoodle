@@ -19,16 +19,18 @@ export class WalkthroughProcessesAndProducts extends React.Component {
 						</div>
 						<div className="core-parts">
 							<span className="bold">Processes</span> are things you can do.
-							<WalkthroughTooltip />
-							<div className="see-examples">See examples</div>
+							<div className="see-examples">
+								<WalkthroughTooltip button='See examples' tooltip='eg. Roast, Winnow, Grind, Melange' />
+							</div>
 						</div>
 						<div className="core-parts">
 							<span className="bold">Products</span> are things you can make.
-							<div className="see-examples">See examples</div>
+							<div className="see-examples">
+								<WalkthroughTooltip button='See examples' tooltip="eg. Sugar, White Chocolate 50g', 'Soup 100g" />
+							</div>
 						</div>
 						<WalkthroughButton title="Got it" onClick={() => this.props.onCompleteStage()} />
 					</div>
-					<WalkthroughHint>If you're a coffee factory</WalkthroughHint>
 				</Card>
 			</div>
 		)
@@ -41,7 +43,7 @@ function Header(props) {
 			<div className="walkthrough-header">Hello, team <span className="bold">{props.teamName}!</span></div>
 		)
 	} else {
-		<div className="walkthrough-header">Hello!</div>
+		return <div className="walkthrough-header">Hello!</div>
 	}
 
 }
