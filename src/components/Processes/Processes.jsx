@@ -8,15 +8,27 @@ import ObjectListTitle from '../ObjectList/ObjectListTitle'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessesListItem from './ProcessesListItem'
 import CreateProcessDropdown from './CreateProcessDropdown'
+import CreateProcessDialog from './CreateProcessDialog'
 import './styles/processes.css'
 
 class Processes extends React.Component {
   constructor(props) {
     super(props)
 
+	  this.state = {
+		  process: {
+		  	name: '',
+			  abbreviation: ''
+		  },
+		  isDialogOpen: false
+	  }
+
     this.handleSelectProcess = this.handleSelectProcess.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
-    this.handleCreateProcess = this.handleCreateProcess.bind(this)
+
+	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
+	  this.handleCreateProcess = this.handleCreateProcess.bind(this)
+	  this.handleNameProcess = this.handleNameProcess.bind(this)
   }
 
   // fetch products on load
@@ -38,8 +50,9 @@ class Processes extends React.Component {
 				    onClick={this.handleSelectProcess}
 				    onPagination={this.handlePagination}
 				    Row={ProcessesListItem}
-				    TitleRow={this.headerRow}
+				    TitleRow={this.renderHeaderRow}
 			    />
+			    {this.renderDialog()}
 		    </ObjectList>
     )
   }
@@ -48,14 +61,26 @@ class Processes extends React.Component {
     return (
 	    <ObjectListTitle title="All processes" buttonText="Create process">
 		    <CreateProcessDropdown
-			    onSubmit={this.handleCreateProcess.bind(this)}
+			    onSubmit={this.handleNameProcess}
 			    ui={this.props.ui}
 		    />
 	    </ObjectListTitle>
     )
   }
 
-	headerRow() {
+	renderDialog() {
+		return (
+			<CreateProcessDialog
+				name={this.state.process.name}
+				code={this.state.process.abbreviation}
+				isOpen={this.state.isDialogOpen}
+				onToggle={this.handleToggleDialog}
+				onCreate={this.handleCreateProcess}
+			/>
+		)
+	}
+
+	renderHeaderRow() {
 		return (
 			<ObjectListHeader>
 				<div className="code">Code</div>
@@ -75,6 +100,10 @@ class Processes extends React.Component {
     }))
   }
 
+  handleNameProcess(newProcess) {
+	  this.setState({isDialogOpen: true, process: newProcess})
+  }
+
   handlePagination(direction) {
     this.props.dispatch(actions.pageProcesses(direction))
   }
@@ -88,6 +117,11 @@ class Processes extends React.Component {
     this.props.dispatch(actions.selectProcess(index))
     this.props.dispatch(inventoryActions.fetchInventory({processes: p.id}))
   }
+
+	handleToggleDialog() {
+		this.setState({isDialogOpen: !this.state.isDialogOpen})
+	}
+
 }
 
 // This is our select function that will extract from the state the data slice we want to expose
