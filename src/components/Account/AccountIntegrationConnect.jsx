@@ -43,7 +43,7 @@ class AccountIntegrationConnect extends React.Component {
 		console.log('disconnecting')
 		let c = this
 		let profile_id = api.get_active_user().user.profile_id
-		api.post(`/ics/userprofiles/clear-token/${profile_id}/`)
+		api.put(`/ics/userprofiles/clear-token/${profile_id}/`)
 			.end(function (err, res) {
 				if (err || !res.ok) {
 					console.log(res.text)
