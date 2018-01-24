@@ -33,7 +33,7 @@ class CreateTeam extends React.Component {
 	}
 
 	validateCodeResponse(data) {
-		return (data && data.length && !data.is_used)
+		return (data && data.length && !data[0].is_used)
 	}
 
 	render() {
