@@ -1,16 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Icon from '../Card/Icon'
-import * as actions from '../ProductPage/ProductFormulaActions'
+import * as actions from '../Processes/ProcessesActions'
 import * as productActions from '../Products/ProductsActions'
+import ProductsArchiveDialog from '../Products/ProductsArchiveDialog'
 import * as processActions from '../Processes/ProcessesActions'
 import ProductFormulaSection from '../ProductPage/ProductFormulaSection'
 import ProcessesCard from './ProcessesCard'
 import ProductMenu from '../ProductPage/ProductMenu'
 import AddSection from '../ProductPage/AddSection'
 import '../ProductPage/styles/productpage.css'
+import { withRouter } from 'react-router-dom'
 
 class ProcessPage extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state ={
+			isArchiveOpen: false
+		}
+	}
 
 	componentDidMount() {
 		let { id } = this.props.match.params
@@ -18,7 +26,7 @@ class ProcessPage extends React.Component {
 	}
 
 	render() {
-		let { ui, data, dispatch } = this.props
+		let { ui, data, dispatch, history } = this.props
 
 		if (!data) {
 			return <span>Loading... </span>
@@ -26,7 +34,11 @@ class ProcessPage extends React.Component {
 
 		return (
 			<div className="productpage">
-				<ProcessesCard process={data} />
+				<ProcessesCard
+					process={data}
+					onArchive={() => this.setState({ isArchiveOpen: true, archivingObjectIndex: ui.selectedItem })}
+				/>
+				{this.renderArchiveDialog(data, dispatch, history)}
 			</div>
 		)
 	}
@@ -42,7 +54,28 @@ class ProcessPage extends React.Component {
 			/>
 		} else return <AddSection exclude={exclude} />
 	}
+
+	renderArchiveDialog(process, dispatch, history) {
+		if (!this.state.isArchiveOpen)
+			return null
+
+		return (
+			<ProductsArchiveDialog
+				{...process}
+				onCancel={this.toggleArchive}
+				onSubmit={() => this.handleConfirmArchive(process, dispatch, history)}
+			/>
+		)
+	}
+
+	handleConfirmArchive(process, dispatch, history) {
+		dispatch(actions.postDeleteProcess(process, null, function () {
+				history.push('/processes')
+			})
+		)
+	}
 }
+
 
 function ProcessHeader(props) {
 	return (
@@ -65,4 +98,4 @@ const mapStateToProps = (state/*, props*/) => {
 	}
 }
 
-export default connect(mapStateToProps)(ProcessPage)
+export default withRouter(connect(mapStateToProps)(ProcessPage))
