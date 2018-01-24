@@ -18,7 +18,7 @@ class ProcessAttributeList extends React.Component {
 	}
 
 	render() {
-		let {process, ui} = this.props
+		let {process} = this.props
 
 		return (
 			<div className="products-card-section products-card-attributes">
@@ -48,16 +48,15 @@ class ProcessAttributeList extends React.Component {
 	// MARK:- ACTIONS 
 
 	archiveAttribute(index) {
-		let {data, ui} = this.props
-		this.props.dispatch(actions.archiveAttribute(ui.selectedItem, index, data[ui.selectedItem].attributes[index]))
+		let {process, ui} = this.props
+		this.props.dispatch(actions.archiveAttribute(ui.selectedItem, index, process.attributes[index]))
 	}
 
 	saveAttribute(name, type) {
-    let {data, ui} = this.props
-    let selectedProcess = data[ui.selectedItem].id
-    let attribute = {name: name, process_type: selectedProcess}
-    this.props.dispatch(actions.saveAttribute(ui.selectedItem, attribute))
-  }
+		let { process, ui } = this.props
+		let attribute = { name: name, process_type: process.id }
+		this.props.dispatch(actions.saveAttribute(0, attribute))
+	}
 
   startAddingAttribute() {
     this.props.dispatch(actions.startAddingAttribute())
@@ -68,8 +67,8 @@ class ProcessAttributeList extends React.Component {
   }
 
   moveAttribute(id, toIndex) {
-  	let {ui, data} = this.props
-		this.props.dispatch(actions.postRequestMoveAttribute(ui.selectedItem, id, toIndex))  	
+	  let {process, ui} = this.props
+		this.props.dispatch(actions.postRequestMoveAttribute(ui.selectedItem, id, toIndex))
   }
 }
 
