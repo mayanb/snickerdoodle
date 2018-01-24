@@ -1,0 +1,26 @@
+.recipe {
+	margin-top: 16px;
+
+	.card {
+		width: 560px;
+		overflow: visible;
+		margin-bottom: 16px;
+	}
+
+	.recipe-process-header {
+		background-color: #424242;
+		color: white;
+		-webkit-font-smoothing: antialiased;
+		border-radius: 4px 4px 0 0 ;
+
+		padding: 8px 16px;
+		display: flex;
+		span {
+			flex: 1;
+		}
+
+		button.link {
+			color: rgba(255,255,255,0.7)
+		}
+	}
+}

@@ -55,7 +55,7 @@ class ProcessAttribute extends React.Component {
 
 	handleArchive() {
 		let {data, ui, index} = this.props
-		this.props.dispatch(actions.archiveAttribute(ui.selectedItem, index, data[ui.selectedItem].attributes[index]))
+		this.props.dispatch(actions.archiveAttribute(0, index, data[0].attributes[index]))
 	}
 }
 

@@ -1,0 +1,47 @@
+@import 'styles/constants.scss';
+
+.products {
+
+
+	.paginated-table.border-none li.header {
+		border-bottom: none; //override PaginatedTable header border
+	}
+
+	.code {
+		flex: 4;
+	}
+
+	.name {
+		flex: 8;
+	}
+
+	.owner {
+		flex: 4;
+	}
+
+	.date {
+		flex: 4;
+	}
+}
+
+.products-card-inventory {
+
+	.products-card-inventory-item {
+		display: flex;
+		flex-direction: row;
+		line-height: 38px;
+		border-bottom: 1px solid $light-gray;
+		cursor: pointer; 
+
+		&>div {
+			flex: 1;
+		}
+
+		&>div:last-child {
+			text-align: right;
+		}
+
+	}
+
+}
+

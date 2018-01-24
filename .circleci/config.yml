@@ -1,0 +1,66 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+
+general:
+  branches:
+    only:
+      - staging
+      - master
+
+jobs:
+  build:
+    docker:
+      - image: node:8.9.4
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+      - run:
+          name: "Checking Versions"
+          command: |
+            node --version
+            npm --version
+
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+
+      - run: npm install
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+
+      - run:
+          name: Install AWS CLI
+          working_directory: /
+          command: |
+            apt-get update && apt-get install -y awscli
+
+      - run:
+              # TODO - fix lint errors and remove CI=false variables that suppress warnings
+          name: Build and deploy
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "staging" ]; then
+              CI=false bash deploy-staging
+            elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+              CI=false bash deploy-production
+            else
+              npm run build
+            fi
+
+      # run tests!
+      #- run: npm test
+
+

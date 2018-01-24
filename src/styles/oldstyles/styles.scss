@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Overpass+Mono|Overpass:400,700');
 
-@import "reset";
-@import "layout";
-@import "filters";
-@import "processtile";
-@import "labelPrinter";
-@import "spinner";
+@import "layout.scss";
+@import "filters.scss";
+@import "processtile.scss";
+@import "labelPrinter.scss";
+@import "spinner.scss";
 //@import "inventory2";
-@import "task";
-@import "activity";
-@import "dialog";
+@import "task.scss";
+@import "activity.scss";
+@import "dialog.scss";

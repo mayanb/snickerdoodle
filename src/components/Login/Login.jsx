@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {Link, Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import * as actions from '../AccountMenu/UserActions'
 import {shouldLogin} from '../../authentication/authentication'
+import './styles/login.css'
 
 class Login extends React.Component {
   constructor(props) {
@@ -41,10 +42,10 @@ class Login extends React.Component {
   }
 
   render() {
-    if (shouldLogin(this.props.users)) {
+     if (shouldLogin(this.props.users)) {
       return this.renderLogin()
     }
-
+    
     const { from } = this.props.location.state || { from: { pathname: '/' } }
     return <Redirect to={from} />
   }

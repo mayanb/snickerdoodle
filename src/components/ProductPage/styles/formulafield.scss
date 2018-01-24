@@ -1,0 +1,47 @@
+@import 'styles/constants.scss';
+
+.formula-field {
+	background-color: $light-gray;
+	padding: 6px 8px;
+	line-height: 24px;
+	border-radius: 4px;
+	position: relative;
+	font-family: 'Apercu Mono';
+
+//	style={{'height': '200px', 'border': '1px solid blue'}}
+}
+
+.attribute-pill {
+	display: inline-block;
+	font-size: 12px;
+	line-height: 20px;	
+	-webkit-font-smoothing: antialiased;
+	padding: 0 4px;
+	background-color: none;
+	border: solid 1px $primary;
+	color: $primary;
+	border-radius: 5px;
+	margin: 0px 4px;
+	font-family: 'Apercu';
+}
+
+.available-attributes {
+	background-color: white;
+	position: absolute;
+	top: 34px;
+	left: 0;
+	width: 100%;
+	border: 1px solid $light-gray;
+	font-family: 'Apercu';
+	z-index: 1;
+
+	& > div {
+		padding: 0px 8px;
+		border-radius: 0 0 4px 4px;
+		&:hover {
+			background-color: $primary;
+			color: white;
+			-webkit-font-smoothing: antialiased;
+		}
+	}
+}

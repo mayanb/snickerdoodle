@@ -21,18 +21,18 @@ import {  PROCESSES, PROCESS_INVENTORY } from '../../reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
 
-export function fetchProcesses() {
+export function fetchProcesses(q) {
   return function (dispatch) {
     // dispatch an action that we are requesting a process
     dispatch(requestProcesses())
 
     // actually fetch 
     return api.get('/ics/processes/')
+	    .query(q)
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestProcessesFailure(err))
         } else {
-          console.log(res.body)
           // let processes = formatProcessResponse(res.body)
           // let processesArray = Object.values(processes).sort(alphabetize);
           dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize))))
@@ -127,16 +127,11 @@ export function postCreateProcess(json, success) {
   return function (dispatch) {
     dispatch(requestCreateProcess())
 
-    return api.post('/ics/processes/')
-      .send(json)
-      .send({icon: "default.png"})
-      .end(function (err, res) {
-        if (err || !res.ok)
-          dispatch(requestCreateProcessFailure(err))
-        else
-          dispatch(requestCreateProcessSuccess(res.body))
-          success(res.body.id)
-      })
+	  return api.post('/ics/processes/')
+		  .send(json)
+		  .send({ icon: "default.png" })
+		  .then((res) => dispatch(requestCreateProcessSuccess(res.body)))
+		  .catch((err) => dispatch(requestCreateProcessFailure(err)))
   }
 }
 

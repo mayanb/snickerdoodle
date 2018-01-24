@@ -21,20 +21,20 @@ import { PRODUCTS, INVENTORIES } from '../../reducers/ReducerTypes'
 import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
 
-export function fetchProducts() {
+export function fetchProducts(q) {
   return function (dispatch) {
     // dispatch an action that we are requesting a product
     dispatch(requestProducts())
 
     // actually fetch 
     return api.get('/ics/products/')
+      .query(q)
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestProductsFailure(err))
         } else {
           //let products = formatProductResponse(res.body)
           dispatch(requestProductsSuccess(res.body.sort(alphabetize)))
-          dispatch(selectProduct(0))
 
         }
       })
@@ -65,17 +65,6 @@ function requestProductsSuccess(json) {
   }
 }
 
-
-export function selectProduct(index) {
-  return {
-    type: SELECT,
-    index: index,
-    name: PRODUCTS,
-
-  }
-}
-
-
 export function pageProducts(direction) {
   return {
     type: PAGE,
@@ -85,19 +74,16 @@ export function pageProducts(direction) {
   }
 }
 
-export function postCreateProduct(json, success) {
+export function postCreateProduct(json) {
   return function (dispatch) {
     dispatch(requestCreateProduct())
 
     return api.post('/ics/products/')
       .send(json)
-      .end(function (err, res) {
-        if (err || !res.ok)
-          dispatch(requestCreateProductFailure(err))
-        else
-          dispatch(requestCreateProductSuccess(res.body))
-          success(res.body.id)
+      .then((res) => {
+	      return dispatch(requestCreateProductSuccess(res.body))
       })
+      .catch((err) => dispatch(requestCreateProductFailure(err)))
   }
 }
 

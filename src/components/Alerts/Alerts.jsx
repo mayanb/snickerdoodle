@@ -80,10 +80,6 @@ class Alerts extends React.Component {
 const mapStateToProps = (state, props) => {
 	return {
 		users: state.users,
-		flagged_tasks: state.alert_flagged_tasks.data,
-		missed_goals: state.alert_missed_goals.data,
-		anomalies: state.alert_anomalous_inputs.data,
-		completed_goals: state.alert_completed_goals.data,
 		alerts: state.alerts.data
 	}
 }

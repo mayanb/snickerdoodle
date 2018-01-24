@@ -1,6 +1,7 @@
 import React from 'react'
 import Dialog from '../Card/Dialog.jsx'
 import Button from '../Card/Button.jsx'
+import './styles/productsarchivedialog.css'
 
 export default class ProductsArchiveDialog extends React.Component {
 	render() {

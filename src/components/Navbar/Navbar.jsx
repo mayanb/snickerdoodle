@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import NavigationGroup from './NavigationGroup'
 import NavigationFeedback from './NavigationFeedback'
 import Img from '../Img/Img'
+import './styles/navigation.css'
 
 let o1 = ["Activity Log", "Inventory"]
 let l1 = ["", "inventory"]
@@ -30,7 +31,7 @@ class Navbar extends React.Component {
         <div className="bar">
           <div>
             <NavigationGroup options={o1} links={l1} title={null} />
-            <NavigationGroup options={o2} links={l2} title={"Printing"} />
+            { this.renderPrintingNavigation() }
             { this.renderAdminNavigation() }
           </div>
         </div>
@@ -44,6 +45,14 @@ class Navbar extends React.Component {
     let account_type = data[ui.activeUser].user.account_type
     if (account_type == 'a')
       return ( <NavigationGroup options={o3} links={l3} title={"My factory"} /> )
+    return null
+  }
+
+  renderPrintingNavigation() {
+    let {data, ui} = this.props.users
+    let team = data[ui.activeUser].user.team_name
+    if (team == 'alabama' || team == 'valencia')
+      return ( <NavigationGroup options={o2} links={l2} title={"Printing"} /> )
     return null
   }
 }

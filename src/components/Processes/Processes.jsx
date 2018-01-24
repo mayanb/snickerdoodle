@@ -2,28 +2,33 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './ProcessesActions.jsx'
 import * as inventoryActions from '../Inventory/InventoryActions'
+import ObjectList from '../ObjectList/ObjectList'
+import ObjectListHeader from '../ObjectList/ObjectListHeader'
+import ObjectListTitle from '../ObjectList/ObjectListTitle'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
-import ProcessListItem from './ProcessListItem'
-import ProcessesCard from './ProcessesCard'
-import ProductsArchiveDialog from '../Products/ProductsArchiveDialog'
+import ProcessesListItem from './ProcessesListItem'
 import CreateProcessDropdown from './CreateProcessDropdown'
-import ProcessesList from './ProcessesList'
+import CreateProcessDialog from './CreateProcessDialog'
+import './styles/processes.css'
 
 class Processes extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      isArchiveOpen: false, 
-      archivingObjectIndex: -1, 
-    }
+	  this.state = {
+		  process: {
+		  	name: '',
+			  abbreviation: ''
+		  },
+		  isDialogOpen: false
+	  }
 
     this.handleSelectProcess = this.handleSelectProcess.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
-    this.handleCreateProcess = this.handleCreateProcess.bind(this)
-    this.handleArchiveProcess = this.handleArchiveProcess.bind(this)
-    this.toggleArchive = this.toggleArchive.bind(this)
 
+	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
+	  this.handleCreateProcess = this.handleCreateProcess.bind(this)
+	  this.handleNameProcess = this.handleNameProcess.bind(this)
   }
 
   // fetch products on load
@@ -32,70 +37,72 @@ class Processes extends React.Component {
   }
 
   render() {
-    var { data, ui, users } = this.props
+    var { users } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type != 'a')
-      return null
-    return (
-      <div className="nav-section processes">
-        <ProcessesList 
-          {...this.props} 
-          onSelect={this.handleSelectProcess} 
-          onPagination={this.handlePagination} 
-        />
-        <div>
-          <ProcessesCard 
-            {...this.props} 
-            onArchive={() => this.setState({isArchiveOpen: true, archivingObjectIndex: ui.selectedItem})}/>
-        </div>
-        {this.renderArchiveDialog(data, ui)}
-      </div>
-    )
-  }
-
-  renderArchiveDialog(data, ui) {
-    if (!this.state.isArchiveOpen)
-      return null
+	    this.props.history.push('/')
 
     return (
-      <ProductsArchiveDialog 
-        {...data[this.state.archivingObjectIndex]} 
-        onCancel={this.toggleArchive}
-        onSubmit={() => this.handleArchiveProcess(this.state.archivingObjectIndex)}
-      />
+		    <ObjectList className="processes">
+			    {this.renderTitle()}
+			    <PaginatedTable
+				    {...this.props}
+				    onClick={this.handleSelectProcess}
+				    onPagination={this.handlePagination}
+				    Row={ProcessesListItem}
+				    TitleRow={this.renderHeaderRow}
+			    />
+			    {this.renderDialog()}
+		    </ObjectList>
     )
   }
 
   renderTitle() {
     return (
-      <div className="nav-section-header">
-        <h1>Processes</h1>
-        { this.renderCreateProductButton() }
-      </div>
+	    <ObjectListTitle title="All processes" buttonText="Create process">
+		    <CreateProcessDropdown
+			    onSubmit={this.handleNameProcess}
+			    ui={this.props.ui}
+		    />
+	    </ObjectListTitle>
     )
   }
 
-  renderCreateProductButton() {
-    return (
-      <div>
-        <div className="products-create-product">
-          <CreateProcessDropdown onSubmit={this.handleCreateProcess}/>
-        </div>
-      </div>
-    )
-  }
+	renderDialog() {
+		return (
+			<CreateProcessDialog
+				name={this.state.process.name}
+				code={this.state.process.abbreviation}
+				isOpen={this.state.isDialogOpen}
+				onToggle={this.handleToggleDialog}
+				onCreate={this.handleCreateProcess}
+			/>
+		)
+	}
+
+	renderHeaderRow() {
+		return (
+			<ObjectListHeader>
+				<div className="code">Code</div>
+				<div className="name">Name</div>
+				<div className="owner">Owner</div>
+				<div className="date">Date Created</div>
+			</ObjectListHeader>
+		)
+	}
 
   /* EVENT HANDLERS */
 
-  toggleArchive() {
-    this.setState({isArchiveOpen: !this.state.isArchiveOpen})
+  handleCreateProcess(newProcess) {
+	  this.props.dispatch(actions.postCreateProcess(newProcess))
+		  .then((res) => {
+			  let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
+			  this.props.dispatch(actions.selectProcess(index))
+		  })
   }
 
-  handleCreateProcess(newProcess) {
-    this.props.dispatch(actions.postCreateProcess(newProcess, (id) => {
-      let index = this.props.data.findIndex((e, i, a) => e.id === id)
-      this.props.dispatch(actions.selectProcess(index))
-    }))
+  handleNameProcess(newProcess) {
+	  this.setState({isDialogOpen: true, process: newProcess})
   }
 
   handlePagination(direction) {
@@ -103,29 +110,12 @@ class Processes extends React.Component {
   }
 
   handleSelectProcess(index) {
-
-    let p = this.props.data[index]
-    if (!p) 
-      return 
-
-    this.props.dispatch(actions.selectProcess(index))
-    this.props.dispatch(inventoryActions.fetchInventory({processes: p.id}))
+	  this.props.history.push('/processes/' + this.props.data[index].id)
   }
 
-  handleArchiveProcess(index) {
-    let newIndex = index
-    if ( newIndex == this.props.data.length - 1)
-      newIndex = index - 1
-
-    let p = this.props.data[index]
-    let c = this
-
-    this.props.dispatch(actions.postDeleteProcess(p, index, function () {
-        c.handleSelectProcess(index)
-        c.toggleArchive()
-      })
-    )
-  }
+	handleToggleDialog() {
+		this.setState({isDialogOpen: !this.state.isDialogOpen})
+	}
 
 }
 

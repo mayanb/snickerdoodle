@@ -5,6 +5,7 @@
 /.sass-cache
 .sass-cache/
 *.css.map
+*.css
 
 # testing
 /coverage
@@ -18,6 +19,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.idea
 
 npm-debug.log*
 yarn-debug.log*

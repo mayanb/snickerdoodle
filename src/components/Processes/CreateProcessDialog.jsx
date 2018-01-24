@@ -1,6 +1,7 @@
 import React from 'react'
 import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
+import './styles/createprocessdialog.css'
 
 export default class CreateProcessDialog extends React.Component {
 	constructor(props) {
@@ -9,7 +10,8 @@ export default class CreateProcessDialog extends React.Component {
 		this.state = {
 			number: "",
 			unit: "", 
-			outputDescription: "", 
+			outputDescription: "",
+			processDescription: "",
 			error: false, 
 		}
 
@@ -85,7 +87,9 @@ export default class CreateProcessDialog extends React.Component {
 		return (
 			<div className="create-process-description">
 				<label>Process description</label>
-				<textarea placeholder="Optional"/>
+				<textarea placeholder="Optional"
+				          value={this.state.processDescription}
+				          onChange={(e) => this.handleInputChange(e, "processDescription")} />
 			</div>
 		)
 	}
@@ -110,7 +114,7 @@ export default class CreateProcessDialog extends React.Component {
 			default_amount: this.state.number,
 			unit: this.state.unit,
 			output_desc: this.state.outputDescription,
-			description: this.state.description
+			description: this.state.processDescription
 		}
 
 		this.props.onCreate(newProcess)

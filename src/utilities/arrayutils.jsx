@@ -22,19 +22,19 @@ function positionHelper(array, item, comparator, start, end) {
 	let center = Math.trunc((start + end)/2)
 	let result = comparator(item, array[center])
 
-	if (result == -1) 
+	if (result === -1) 
 	return positionHelper(array, item, comparator, start, center - 1)
 
-	if (result == 1) 
+	if (result === 1) 
 	return positionHelper(array, item, comparator, center+1, end)
 
-	if (result == 0)
+	if (result === 0)
 	return center
 
 }
 
 export function alphabetize(a, b) {
-  if (a == b || a==null || b==null) 
+  if (a === b || a===null || b===null) 
     return 0
 
   let aName = a.code.toUpperCase()
@@ -49,7 +49,7 @@ export function alphabetize(a, b) {
 }
 
 export function sortByAccountType(a, b) {
-	if (a == b || !a || !b) {
+	if (a === b || !a || !b) {
 		return 0
 	}
 
@@ -63,9 +63,9 @@ export function sortByAccountType(a, b) {
 }
 
 export function sortByRank(a, b) {
-	if (a == b || !a || !b) {
+	if (a === b || !a || !b) {
 		return 0
 	}
 
-	return parseInt(a.rank) - parseInt(b.rank)
+	return parseInt(a.rank, 10) - parseInt(b.rank, 10)
 }

@@ -1,0 +1,45 @@
+@import 'styles/constants.scss';
+
+.create-product-dialog {
+
+    .create-product-error {
+        color: #f9438e;
+        line-height: 16px;
+        display: block;
+        margin-bottom: 12px;
+    }
+
+    .create-product-input {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 12px;
+
+        label {
+            flex: 0;
+        }
+
+        input {
+            flex: 1;
+        }
+    }
+
+    .create-product-description {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        margin-bottom: 12px;
+
+        textarea {
+            border: 1px solid $light-gray;
+            border-radius: 4px;
+            line-height: 16px;
+            padding: 8px;
+            outline: none;
+            resize: none;
+
+            &:focus {
+                border-color: $theme-color;
+            }
+        }
+    }
+}

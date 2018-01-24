@@ -1,12 +1,11 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import update from 'immutability-helper'
 import {stateDefault} from './states'
 
-import {findPosition, alphabetize} from './utilities/arrayutils.jsx'
 import {apiDataReducer} from './reducers/APIDataReducer'
 import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
+import {_formula} from './reducers/FormulaReducerExtension'
 import _users from './reducers/UserReducer'
 import * as types from './reducers/ReducerTypes'
 import {weeklyGoalPredicate, monthlyGoalPredicate, _goals} from './reducers/GoalsReducer'
@@ -42,17 +41,13 @@ export default function(data) {
     graphs: createFilteredReducer(apiDataReducer, action => action.name === types.GRAPHS, stateDefault),
     contacts: createFilteredReducer(apiDataReducer, action => action.name === types.CONTACTS, stateDefault),
     inventoryUnits: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORY_UNITS, stateDefault),
-    orderItems: createFilteredReducer(apiDataReducer, action => action.name === types.ORDER_ITEMS, stateDefault),
-    packingOrder: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDER, stateDefault),
-    packingOrders: createFilteredReducer(apiDataReducer, action => action.name === types.PACKING_ORDERS, stateDefault),
-    alert_missed_goals: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_MISSED_GOALS, stateDefault),
-    alert_flagged_tasks: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_FLAGGED_TASKS, stateDefault),
-    alert_anomalous_inputs: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_ANOMALOUS_INPUTS, stateDefault),
-    alert_completed_goals: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_COMPLETED_GOALS, stateDefault),
-    alert_unflagged_tasks: createFilteredReducer(apiDataReducer, action => action.name === types.ALERT_UNFLAGGED_TASKS, stateDefault),
     alerts: createFilteredReducer(apiDataReducer, action => action.name === types.ALERTS, stateDefault),
+    formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault)
   })
-  const store = createStore(reducer, applyMiddleware(thunkMiddleware))
+	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+	const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
+    applyMiddleware(thunkMiddleware),
+	))
 
   return store
 }

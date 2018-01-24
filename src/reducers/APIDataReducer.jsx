@@ -1,7 +1,5 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import thunkMiddleware from 'redux-thunk'
 import update from 'immutability-helper'
-import {findPosition, alphabetize} from '../utilities/arrayutils.jsx'
+import {findPosition} from '../utilities/arrayutils'
 
 export const REQUEST = 'REQUEST'
 export const REQUEST_SUCCESS = 'REQUEST_SUCCESS'
@@ -117,7 +115,6 @@ function requestFailure(state, action) {
 
 
 function requestCreate(state, action) {
-	console.log("creating?")
   return update(state, {
     ui: {
       isCreatingItem: {
@@ -128,9 +125,9 @@ function requestCreate(state, action) {
 }
 
 function requestCreateSuccess(state, action) {
-	console.log(state)
+  console.log(state)
+  console.log(action)
   let position = findPosition(state.data, action.item, action.sort)
-  console.log(position)
   return update(state, {
     ui: {
       isCreatingItem: {
