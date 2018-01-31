@@ -50,7 +50,7 @@ export default function _users(state = getDefaultState(), action) {
 	    case REQUEST_LOGIN_SUCCESS:
 	    		return requestLoginSuccess(state, action)
 	    case REQUEST_LOGIN_FAILURE:
-	    		return requestLogoutFailure(state, action)
+	    		return requestLoginFailure(state, action)
 	    case REQUEST_LOGOUT:
 	    		return requestLogout(state, action)
 	    case REQUEST_LOGOUT_SUCCESS:
@@ -141,7 +141,6 @@ function requestLoginSuccess(state, action) {
 }
 
 function requestLoginFailure(state, action) {
-	alert("something went wrong!")
 	return update(state, {
 		ui : {
 			isLoggingIn: {
