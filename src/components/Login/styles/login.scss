@@ -6,7 +6,8 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: $theme-color;
+	padding-bottom: 100px;
+	background-color: #F6F8F9;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -16,35 +17,49 @@
 	.login-box form {
 		display: flex;
 		flex-direction: column;
-		color: white;
 
 		&>input, &>button, &>span {
-			color: white;
 			margin: 10px;
 		}
 
 		input {
-			background-color: $dark-theme-color;
-			border: 0px;
-			width: 200px;
-			color: white;
-			padding-left: 8px;
+			border: 1px solid #DBE0E4;
+			border-radius: 4px;
+			width: 300px;
+			color: rgba(0,0,0,0.68);
+			padding: 8px;
+			font-size: 14px;
+			line-height: 20px;
+			outline: none;
+
+			&:focus {
+				border-color: $theme-color;
+			}
 
 			&::placeholder {
-				color: rgba(255,255,255,0.31);
+				//color: rgba(255,255,255,0.31);
 				-webkit-font-smoothing: antialiased;
 				-moz-osx-font-smoothing: grayscale;
 			}
 
 			&::-webkit-input-placeholder, &::-moz-placeholder, 
 			&:-ms-input-placeholder, &:-moz-placeholder {
-				color: rgba(255,255,255,0.3);
+				//color: rgba(255,255,255,0.3);
 			}
 		}
 
 		button {
 			background-color: #2588FF;
+			height: 36px;
+			color: white;
+			font-size: 14px;
 		}
+	}
+
+	.failMessage {
+		color: $red;
+		max-width: 300px;
+		display: block;
 	}
 }
 

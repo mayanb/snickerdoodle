@@ -1,5 +1,4 @@
 import React from 'react'
-import Img from '../Img/Img'
 import {emojify} from 'react-emojione'
 
 let better_goals = [
