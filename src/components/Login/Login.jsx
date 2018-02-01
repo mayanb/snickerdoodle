@@ -3,7 +3,11 @@ import { connect } from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import * as actions from '../AccountMenu/UserActions'
 import {shouldLogin} from '../../authentication/authentication'
+import Card from '../Card/Card'
+import Spinner from 'react-spinkit'
 import './styles/login.css'
+
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,10 +31,12 @@ class Login extends React.Component {
     this.handleAuthenticate(this.state.username, this.state.password, this.failedAuth.bind(this))
   }
 
-  failedAuth() {
+  failedAuth(err) {
+    this.setState({failedAuthentication: err})
   }
 
   handleAuthenticate() {
+    this.setState({failedAuthentication: false})
     let fail = this.failedAuth.bind(this)
     this.props.dispatch(
       actions.postRequestLogin(
@@ -39,6 +45,7 @@ class Login extends React.Component {
         fail
       )
     )
+
   }
 
   render() {
@@ -54,7 +61,7 @@ class Login extends React.Component {
     return (
       <div className="login">
         <div className="login-box">
-          {this.state.failedAuthentication ? <span>Incorrect username or password.</span> : false }
+        <Card>
           <form>
             <span>Welcome to Polymer.</span>
             <input 
@@ -81,16 +88,44 @@ class Login extends React.Component {
               name="password" 
               placeholder="password" 
             />
+            { this.renderFailedAuthentication() }
             <button 
               type="submit" 
               disabled={!this.state.username.length || !this.state.password.length} 
               className="login-submit" 
               onClick={this.handleSubmit.bind(this)}
-            >Log in</button>
+            >
+            { this.renderLoginOrLoading() }
+            </button>
           </form>
+          </Card>
         </div>
       </div>
     )
+  }
+
+  renderLoginOrLoading() {
+    if (this.props.users.ui.isLoggingIn)  {
+      return <Spinner name="three-bounce" color="white"/>
+    }
+    return 'Log in'
+  }
+
+  renderFailedAuthentication() {
+    if (this.state.failedAuthentication) {
+      return (
+        <span className="failMessage">{this.getFailedAuthMessage()}</span>
+      )
+    }
+    return null
+  }
+
+  getFailedAuthMessage() {
+    if (this.state.failedAuthentication === 400) {
+      return "Invalid team, username, or password. Try again."
+    } else {
+      return "Something went wrong. Try again later."
+    }
   }
 }
 
