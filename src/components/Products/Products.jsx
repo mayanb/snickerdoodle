@@ -29,7 +29,7 @@ class Products extends React.Component {
   render() {
     let { users } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
-    if (account_type != 'a')
+    if (account_type !== 'a')
     	this.props.history.push('/')
 
 	  return (
