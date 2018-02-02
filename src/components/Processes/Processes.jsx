@@ -43,7 +43,7 @@ class Processes extends React.Component {
 	    this.props.history.push('/')
 
     return (
-		    <ObjectList className="processes">
+		    <ObjectList className="processes" isFetchingData={this.props.ui.isFetchingData}>
 			    {this.renderTitle()}
 			    <PaginatedTable
 				    {...this.props}

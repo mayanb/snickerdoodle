@@ -33,7 +33,7 @@ class Products extends React.Component {
     	this.props.history.push('/')
 
 	  return (
-		  <ObjectList className="products">
+			<ObjectList className="products" isFetchingData={this.props.ui.isFetchingData}>
 			  {this.renderTitle()}
 			  <PaginatedTable
 				  {...this.props}
