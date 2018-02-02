@@ -90,10 +90,12 @@ function ProcessHeader(props) {
 	)
 }
 
-const mapStateToProps = (state/*, props*/) => {
+const mapStateToProps = (state, props) => {
+	const processId = props.match.params.id
+	const process = state.processes.data.find(process => String(process.id) === processId)
 	return {
 		ui: state.formulas.ui,
-		data: state.processes.data[0],
+		data: process,
 		dispatch: state.dispatch
 	}
 }
