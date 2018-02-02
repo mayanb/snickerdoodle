@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../Processes/ProcessesActions'
-import ProductsArchiveDialog from '../Products/ProductsArchiveDialog'
+import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import * as processActions from '../Processes/ProcessesActions'
 import ProcessesCard from './ProcessesCard'
 import '../ProductPage/styles/productpage.css'
@@ -32,7 +32,7 @@ class ProcessPage extends React.Component {
 			<div className="process-page">
 				<ProcessesCard
 					process={data}
-					onArchive={() => this.setState({ isArchiveOpen: true, archivingObjectIndex: ui.selectedItem })}
+					onArchive={() => this.handleArchive(ui.selectedItem)}
 				/>
 				{this.renderArchiveDialog(data, dispatch, history)}
 			</div>
@@ -44,12 +44,21 @@ class ProcessPage extends React.Component {
 			return null
 
 		return (
-			<ProductsArchiveDialog
+			<ArchiveDialog
 				{...process}
-				onCancel={this.toggleArchive}
+				onCancel={this.handleCancelArchive.bind(this)}
 				onSubmit={() => this.handleConfirmArchive(process, dispatch, history)}
 			/>
 		)
+	}
+
+	handleArchive(processId) {
+		console.log("processId")
+		this.setState({ isArchiveOpen: true, archivingObjectIndex: processId })
+	}
+
+	handleCancelArchive() {
+		this.setState({isArchiveOpen: false})
 	}
 
 	handleConfirmArchive(process, dispatch, history) {
