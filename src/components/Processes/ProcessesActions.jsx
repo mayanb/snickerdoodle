@@ -9,16 +9,11 @@ import {
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
-  REQUEST_EDIT,
-  REQUEST_EDIT_SUCCESS,
-  REQUEST_EDIT_ITEM,
-  REQUEST_EDIT_ITEM_SUCCESS,
-  REQUEST_EDIT_ITEM_FAILURE,
   SELECT,
   PAGE,
 } from '../../reducers/APIDataReducer'
 import {  PROCESSES, PROCESS_INVENTORY } from '../../reducers/ReducerTypes'
-import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
+import {alphabetize} from '../../utilities/arrayutils.jsx'
 
 
 export function fetchProcesses(q) {
@@ -210,17 +205,17 @@ function requestDeleteProcessSuccess(field, value, index) {
 }
 
 
-function formatProcessResponse(json) {
-  let processes = {}
+// function formatProcessResponse(json) {
+//   let processes = {}
   
-  if (!json)
-    return {}
+//   if (!json)
+//     return {}
 
-  for (var p of json) {
-    processes[p.id] = p
-  }
-  return processes
-}
+//   for (var p of json) {
+//     processes[p.id] = p
+//   }
+//   return processes
+// }
 
 export function pageProcesses(direction) {
   return {
