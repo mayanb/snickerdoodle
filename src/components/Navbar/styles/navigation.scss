@@ -1,4 +1,3 @@
-
 @import 'styles/constants.scss';
 
 .d-nav {
@@ -129,6 +128,20 @@ div .bar {
 	
 	a {
 		text-decoration: underline;
+	}
+
+	.expand-i {
+		visibility: hidden;
+		padding-left: 4px;
+		font-size: 12px;
+        vertial-align: bottom;
+		margin-botom: 2px;
+	}
+
+	a:hover {
+		.expand-i {
+			visibility: visible;
+		}
 	}
 }
 
