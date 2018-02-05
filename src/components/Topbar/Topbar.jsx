@@ -1,6 +1,6 @@
 import React from 'react'
 import AccountMenu from '../AccountMenu/AccountMenu'
-import {TaskSelect} from '../OldComponents/Inputs'
+import TaskSelect from '../TaskSelect/TaskSelect'
 import {NavLink} from 'react-router-dom'
 import Img from '../Img/Img'
 import './styles/topbar.css'

@@ -26,10 +26,6 @@
         flex-grow: 1;
         margin: 0px 36px;
 
-        .Select-control {
-            border: none;
-            background-color: rgba(0,0,0,0);
-        }
 
         .multiselect.inputs {
             background-color: rgba(0,0,0,0.05);
@@ -39,14 +35,6 @@
                 //color: white;
             }
 
-            div.Select.is-focused > div.Select-control {
-                background-color: rgba(0,0,0,0) !important;
-                //color: rgba(255,255,255, 0.7) !important;
-            }
-        }
-
-        .filters {
-            max-width: 900px;
         }
     }
 
