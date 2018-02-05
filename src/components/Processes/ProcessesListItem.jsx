@@ -38,6 +38,3 @@ export default class ProcessesListItem extends React.Component {
 
 }
 
-function ic(str = "abcd") {
-	return str.substring(0, str.length - 4)
-}

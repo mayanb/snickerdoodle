@@ -8,8 +8,6 @@ import './styles/account.css'
 
 class Account extends React.Component {
 	render() {
-		let {data, ui} = this.props.users
-		let account = data[ui.activeUser]
 		return (
 			<div className="my-account">
 				<AccountHeader />

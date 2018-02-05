@@ -1,18 +1,12 @@
 import React from 'react'
 import $ from 'jquery'
 import Select from 'react-select'
-import {display} from './Task.jsx'
-import update from 'immutability-helper'
-import {mountQR, printQRs_zebra, calibrate} from './qr.jsx'
-import {Label, LabelV2} from './Label.jsx'
-import {fetch} from './APIManager.jsx'
+import {printQRs_zebra, calibrate} from './qr.jsx'
 import api from '../WaffleconeAPI/api'
-//import QRCode from 'qrcodejs'
-//import {setup} as zebra from './zebra.jsx'
 
 let QRCode = window.QRCode
 
-var getOptions = function(input, callback) {
+let getOptions = function(input, callback) {
     if (input.length < 2) {
       callback(null, { optionss: [] })
     } else {
@@ -33,10 +27,6 @@ var getOptions = function(input, callback) {
   }
 
 class TaskSelect extends React.Component {
-  constructor() {
-    super();
-  }
-
   render () {
     return (
       <div className="multiselect">
@@ -118,7 +108,6 @@ export default class ZebraPrinter extends React.Component {
       data: {count : numLabels},
     })
     .done(function (data) {
-      let uuids = data.split(/\s+/)
       printQRs_zebra(data.split(/\s+/), thisObj.state.task, thisObj.state.notes)
     })
     .always(function () {
@@ -256,6 +245,7 @@ export default class ZebraPrinter extends React.Component {
   }
 }
 
+/**
 function short(str) {
   if (!str)
     return ""
@@ -272,6 +262,7 @@ function getCode(str) {
     return codes[1]
   return str
 }
+ */
 
 function getQR(item) {
   if (item && item.item_qr) {

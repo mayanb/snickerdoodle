@@ -4,14 +4,6 @@ import PropTypes from 'prop-types'
 import { DragSource, DropTarget } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 
-const style = {
-	border: '1px dashed gray',
-	padding: '0.5rem 1rem',
-	marginBottom: '.5rem',
-	backgroundColor: 'white',
-	cursor: 'move',
-}
-
 const cardSource = {
 	beginDrag(props) {
 		return {
@@ -62,11 +54,9 @@ class Card extends Component {
 	render() {
 		const {
 			renderProps,
-			isDragging,
 			connectDragSource,
 			connectDropTarget,
 		} = this.props
-		const opacity = isDragging ? 0 : 1
 
 		return connectDragSource(
 			connectDropTarget(<div><this.props.renderer {...renderProps} /></div>),

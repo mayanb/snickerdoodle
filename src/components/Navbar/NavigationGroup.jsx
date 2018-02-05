@@ -1,5 +1,4 @@
 import React from 'react'
-import Img from '../Img/Img'
 import {NavLink} from 'react-router-dom'
 
 export default function NavigationGroup(props) {

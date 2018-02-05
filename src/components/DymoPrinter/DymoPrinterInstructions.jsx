@@ -1,6 +1,5 @@
 import React from 'react'
 import Dialog from '../Card/Dialog'
-import Button from '../Card/Button'
 
 export default function DymoPrinterInstructions(props) {
 	return (

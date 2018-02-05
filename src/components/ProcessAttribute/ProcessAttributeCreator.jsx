@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from '../Card/Button'
 import ProcessAttribute from './ProcessAttribute'
 
 export default class ProcessAttributeCreator extends React.Component {

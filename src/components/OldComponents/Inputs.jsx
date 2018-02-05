@@ -1,10 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Select from 'react-select';
 import Datepicker from './Datepicker.jsx'
-import WrapMenu from './WrapMenu.jsx'
-import $ from 'jquery';
-import {display} from './Task.jsx'
 import api from '../WaffleconeAPI/api.jsx'
 
 var getOptions = function(input, callback) {

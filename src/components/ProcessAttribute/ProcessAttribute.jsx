@@ -54,13 +54,12 @@ class ProcessAttribute extends React.Component {
 	}
 
 	handleArchive() {
-		let {data, ui, index} = this.props
+		let {data, index} = this.props
 		this.props.dispatch(actions.archiveAttribute(0, index, data[0].attributes[index]))
 	}
 }
 
 const mapStateToProps = (state/*, props*/) => {
-	let {data, ui} = state.processes
   return {
     data: state.processes.data,
     ui: state.processes.ui,

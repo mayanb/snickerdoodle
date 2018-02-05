@@ -14,7 +14,7 @@ export default class ObjectListTitle extends React.Component {
 	}
 
 	render() {
-		let {title, buttonText, renderDialog } = this.props
+		let {title, buttonText } = this.props
 		return (
 			<div className="object-list-title">
 				<div>{title}</div>
