@@ -1,13 +1,10 @@
 import React from 'react'
 import $ from 'jquery'
 import Select from 'react-select'
-import {display} from './Task.jsx'
-import update from 'immutability-helper'
 import {mountQR, printQRs_dymo} from './qr.jsx'
-import {Label, LabelV2} from './Label.jsx'
+import {Label} from './Label.jsx'
 import {fetch} from './APIManager.jsx'
 import api from '../WaffleconeAPI/api'
-import TaskSelector from '../TaskSelector/TaskSelector'
 import DymoPrinterInstructions from '../DymoPrinter/DymoPrinterInstructions'
 
 let QRCode = window.QRCode

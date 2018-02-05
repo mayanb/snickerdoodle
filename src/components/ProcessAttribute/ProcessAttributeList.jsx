@@ -53,8 +53,8 @@ class ProcessAttributeList extends React.Component {
 	}
 
 	saveAttribute(name, type) {
-		let { process, ui } = this.props
-		let attribute = { name: name, process_type: process.id, datatype: type }
+		let { process } = this.props
+		let attribute = { name: name, process_type: process.id }
 		this.props.dispatch(actions.saveAttribute(0, attribute))
 	}
 
@@ -67,7 +67,7 @@ class ProcessAttributeList extends React.Component {
   }
 
   moveAttribute(id, toIndex) {
-	  let {process, ui} = this.props
+	  let {ui} = this.props
 		this.props.dispatch(actions.postRequestMoveAttribute(ui.selectedItem, id, toIndex))
   }
 }
@@ -82,7 +82,6 @@ class ProcessAttributeList extends React.Component {
 
 
 const mapStateToProps = (state/*, props*/) => {
-	let {data, ui} = state.processes
   return {
     data: state.processes.data,
     ui: state.processes.ui,

@@ -4,9 +4,6 @@ import './styles/objectlistitem.css'
 
 
 export default class ObjectListItem extends React.Component {
-	constructor(props) {
-		super(props)
-	}
 
 	render() {
 		let className = 'object-list-item'

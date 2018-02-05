@@ -1,6 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import {data} from './data'
 import {pluralize} from '../../utilities/stringutils'
 import {toArray} from '../../utilities/arrayutils'
 import Alert from './Alert'

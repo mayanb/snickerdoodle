@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import * as actions from '../AccountMenu/UserActions'
-import Button from '../Card/Button.jsx'
 import api from '../WaffleconeAPI/api.jsx'
 
 class GoogleConnect extends React.Component {

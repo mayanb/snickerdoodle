@@ -1,5 +1,5 @@
 import React from 'react';
-import { defaultRanges, Calendar, DateRange } from 'react-date-range';
+import { defaultRanges, DateRange } from 'react-date-range';
 import {Menu} from 'react-toolbox/lib/menu';
 import moment from 'moment-timezone';
 

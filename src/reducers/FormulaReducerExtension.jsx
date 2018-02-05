@@ -42,6 +42,7 @@ function startAddingFormula(state, action) {
 	})
 }
 
+/**
 function countFormulasForActiveProcess(state) {
 	let active_process = state.ui.isAddingFormula
 	var count = 0;
@@ -53,6 +54,7 @@ function countFormulasForActiveProcess(state) {
 	}
 	return count
 }
+ */
 
 function addSection(state, action) {
 	return update(state, {
