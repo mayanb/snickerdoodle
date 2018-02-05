@@ -1,20 +1,20 @@
 import React from 'react'
 import './styles/objectlist.css'
+import Spinner from 'react-spinkit'
 
 export default class ObjectList extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
-		let className = 'object-list'
-		if(this.props.className) {
-			className = `${className} ${this.props.className}`
+		let classes = 'object-list'
+		let {isFetchingData, className, ...rest} = this.props
+		if (this.props.className) {
+			classes += ` ${className}`
 		}
-
 		return (
-			<div {...this.props} className={className}>
-				{this.props.children}
+			<div {...rest} className={classes}>
+				{isFetchingData ?
+					<Spinner name="circle" /> :
+					this.props.children
+				}
 			</div>
 		)
 	}

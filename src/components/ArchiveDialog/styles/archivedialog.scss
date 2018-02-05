@@ -1,20 +1,20 @@
 @import 'styles/constants.scss';
 
-.products-archive-dialog {
+.archive-dialog {
 	h1 {
 		margin-bottom: 8px;
 	}
 	line-height: 18px;
 }
 
-.products-archive-rule {
+.archive-rule {
 	margin: 16px;
 	margin-bottom: 16px;
 	background-color: $light-gray;
 	height: 1px;
 }
 
-.products-archive-actions {
+.archive-actions {
 	display:flex;
 	flex-direction: row;
 	justify-content: flex-end;

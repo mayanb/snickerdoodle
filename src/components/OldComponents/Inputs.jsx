@@ -73,6 +73,7 @@ class TaskSelect extends React.Component {
 
 }
 
+
 class Multiselect extends React.Component {
 
  constructor() {
@@ -200,4 +201,4 @@ class Filters extends React.Component {
   }
 }
 
-export { Filters, InventoryFilter, TaskSelect };
+export { Filters, InventoryFilter };

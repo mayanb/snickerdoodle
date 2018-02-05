@@ -1,6 +1,4 @@
 import React from 'react'
-import Card from '../Card/Card.jsx'
-import ButtonDropdown from '../Card/ButtonDropdown.jsx'
 import Button from '../Card/Button.jsx'
 
 export default class NameProcessDropdown extends React.Component {
@@ -10,7 +8,7 @@ export default class NameProcessDropdown extends React.Component {
 		this.state = {
 			name: "",
 			abbreviation: "",
-			error: false,
+			errorMessage: false,
 		}
 
 		this.handleNameProcess = this.handleNameProcess.bind(this)
@@ -31,8 +29,8 @@ export default class NameProcessDropdown extends React.Component {
 	}
 
 	renderError() {
-		if (this.state.error) {
-			return <span className="create-process-error">Please make sure you've filled out a name and abbreviation.</span>
+		if (this.state.errorMessage) {
+			return <span className="create-product-error">{this.state.errorMessage}</span>
 		}
 		return null;
 	}
@@ -49,7 +47,7 @@ export default class NameProcessDropdown extends React.Component {
 
 	handleInputChange(e, key) {
 		this.setState({[key]: e.target.value})
-		if (this.state.error) {
+		if (this.state.errorMessage) {
 			this.handleInputValidation()
 		}
 	}
@@ -75,14 +73,18 @@ export default class NameProcessDropdown extends React.Component {
 	handleInputValidation() {
 		let {name, abbreviation} = this.state
 		if(!name || name.length == 0 || !abbreviation || abbreviation.length == 0) {
-			this.setState({error: true})
+			this.setState({errorMessage: "Please make sure you've filled out a name and abbreviation."})
 			return false
 		}
-		if (name.length > 20 || abbreviation.length > 10) {
-			this.setState({error: true})
+		if (name.length > 20) {
+			this.setState({errorMessage: "Please enter a name with fewer than 20 characters."})
 			return false
 		}
-		this.setState({error: false})
+		if (abbreviation.length > 10) {
+			this.setState({errorMessage: "Please enter an abbreviation with fewer than 10 characters."})
+			return false
+		}
+		this.setState({errorMessage: false})
 		return true
 
 	}

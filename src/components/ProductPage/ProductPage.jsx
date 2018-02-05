@@ -95,11 +95,13 @@ function ProductHeader(props) {
 	)
 }
 
-const mapStateToProps = (state/*, props*/) => {
+const mapStateToProps = (state, props) => {
+	const productId = props.match.params.id
+	const product = state.products.data.find(product => String(product.id) === productId)
   return {
     data: state.formulas.data,
     ui: state.formulas.ui,
-    product: state.products.data[0],
+    product: product,
 	  processes: state.processes.data,
 	  dispatch: state.dispatch
   }
