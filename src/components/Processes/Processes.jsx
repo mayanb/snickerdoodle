@@ -39,11 +39,11 @@ class Processes extends React.Component {
   render() {
     var { users } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
-    if (account_type != 'a')
+    if (account_type !== 'a')
 	    this.props.history.push('/')
 
     return (
-		    <ObjectList className="processes">
+		    <ObjectList className="processes" isFetchingData={this.props.ui.isFetchingData}>
 			    {this.renderTitle()}
 			    <PaginatedTable
 				    {...this.props}
@@ -97,7 +97,7 @@ class Processes extends React.Component {
 	  this.props.dispatch(actions.postCreateProcess(newProcess))
 		  .then((res) => {
 			  let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
-			  this.props.dispatch(actions.selectProcess(index))
+			  return this.handleSelectProcess(index)
 		  })
   }
 

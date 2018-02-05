@@ -1,16 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Icon from '../Card/Icon'
 import * as actions from '../Processes/ProcessesActions'
-import * as productActions from '../Products/ProductsActions'
-import ProductsArchiveDialog from '../Products/ProductsArchiveDialog'
+import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import * as processActions from '../Processes/ProcessesActions'
-import ProductFormulaSection from '../ProductPage/ProductFormulaSection'
 import ProcessesCard from './ProcessesCard'
-import ProductMenu from '../ProductPage/ProductMenu'
-import AddSection from '../ProductPage/AddSection'
 import '../ProductPage/styles/productpage.css'
 import { withRouter } from 'react-router-dom'
+import './styles/processpage.css'
 
 class ProcessPage extends React.Component {
 	constructor(props) {
@@ -33,26 +29,14 @@ class ProcessPage extends React.Component {
 		}
 
 		return (
-			<div className="productpage">
+			<div className="process-page">
 				<ProcessesCard
 					process={data}
-					onArchive={() => this.setState({ isArchiveOpen: true, archivingObjectIndex: ui.selectedItem })}
+					onArchive={() => this.handleArchive(ui.selectedItem)}
 				/>
 				{this.renderArchiveDialog(data, dispatch, history)}
 			</div>
 		)
-	}
-
-	renderAddSection(exclude) {
-		let { ui, product } = this.props
-		if (ui.isAddingSection) {
-			return <ProductFormulaSection
-				process_type={ui.isAddingSection}
-				product_type={product.id}
-				formulas={[]}
-				isAddingFormula={true}
-			/>
-		} else return <AddSection exclude={exclude} />
 	}
 
 	renderArchiveDialog(process, dispatch, history) {
@@ -60,12 +44,21 @@ class ProcessPage extends React.Component {
 			return null
 
 		return (
-			<ProductsArchiveDialog
+			<ArchiveDialog
 				{...process}
-				onCancel={this.toggleArchive}
+				onCancel={this.handleCancelArchive.bind(this)}
 				onSubmit={() => this.handleConfirmArchive(process, dispatch, history)}
 			/>
 		)
+	}
+
+	handleArchive(processId) {
+		console.log("processId")
+		this.setState({ isArchiveOpen: true, archivingObjectIndex: processId })
+	}
+
+	handleCancelArchive() {
+		this.setState({isArchiveOpen: false})
 	}
 
 	handleConfirmArchive(process, dispatch, history) {
@@ -76,24 +69,12 @@ class ProcessPage extends React.Component {
 	}
 }
 
-
-function ProcessHeader(props) {
-	return (
-		<div className="productheader">
-			<Icon size="44px" content={props.process.code} />
-			<div>
-				<span className="product-code">{props.process.code}</span>
-				<span className="product-name">{props.process.name}</span>
-			</div>
-			<ProductMenu product={props.product} dispatch={props.dispatch} />
-		</div>
-	)
-}
-
-const mapStateToProps = (state/*, props*/) => {
+const mapStateToProps = (state, props) => {
+	const processId = props.match.params.id
+	const process = state.processes.data.find(process => String(process.id) === processId)
 	return {
 		ui: state.formulas.ui,
-		data: state.processes.data[0],
+		data: process,
 		dispatch: state.dispatch
 	}
 }

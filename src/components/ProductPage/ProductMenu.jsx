@@ -1,7 +1,7 @@
 import React from 'react'
 import ElementMenu from '../Element/ElementMenu'
 import * as actions from '../Products/ProductsActions.jsx'
-import ProductsArchiveDialog from '../Products/ProductsArchiveDialog'
+import ProductsArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import { withRouter } from 'react-router-dom'
 
 class ProductMenu extends React.Component {

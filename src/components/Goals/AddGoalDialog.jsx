@@ -53,7 +53,7 @@ class AddGoalDialog extends React.Component {
 					<Select
 						openOnFocus	
 						value={this.state.timerange}
-						options={[{"name": "Day", "type": "d"},{"name": "Week", "type": "w"},{"name": "Month", "type": "m"}]}
+						options={[{"name": "Week", "type": "w"},{"name": "Month", "type": "m"}]}
 						labelKey={'name'}
 						valueKey={'type'}
 						placeholder="Select a time period for this goal"

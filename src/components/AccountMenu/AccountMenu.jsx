@@ -1,10 +1,9 @@
 import React from 'react'
-import Teams from '../Teams/Teams'
 import Button from '../Card/Button'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import Icon from '../Card/Icon'
 import Account from './Account'
-import api from '../WaffleconeAPI/api'
+import {Link} from 'react-router-dom'
 import * as actions from './UserActions'
 import { connect } from 'react-redux'
 import './styles/accounts.css'
@@ -95,14 +94,6 @@ class AccountMenu extends React.Component {
 	  )
 	}
 
-	renderTeamSettings() {
-	  return (
-	    <div className="menu-section">
-	      <Button secondary onClick={() => window.location.href= '/team'}>Team settings</Button>
-	    </div>
-	  )
-	}
-
 	renderAddAccount() {
 	  return (
 	    <div className="menu-section">
@@ -114,7 +105,9 @@ class AccountMenu extends React.Component {
 	renderLogout() {
 	  return (
 	    <div className="menu-section">
-	      <Button secondary onClick={() => window.location.href= '/account'}>Account settings</Button>
+		    <Link to="/account">
+			    <Button secondary>Account settings</Button>
+		    </Link>
 	    </div>
 	  )
 	}

@@ -1,12 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import ButtonDropdown from '../Card/ButtonDropdown'
-import Button from '../Card/Button'
-import Teams from '../Teams/Teams'
 import AccountMenu from '../AccountMenu/AccountMenu'
-import {TaskSelect} from '../OldComponents/Inputs'
+import TaskSelect from '../TaskSelect/TaskSelect'
+import {Link} from 'react-router-dom'
 import Img from '../Img/Img'
-import AlertDropdown from '../Alerts/AlertDropdown'
+import './styles/topbar.css'
 
 
 export default class Topbar extends React.Component {
@@ -17,17 +14,17 @@ export default class Topbar extends React.Component {
   }
 
   handleSearch(val) {
-    if (val.value && val.value != parseInt(this.props.match.params.id)) {
-      window.location.href = window.location.origin + "/task/" + val.value
+    if (val.value && val.value !== parseInt(this.props.match.params.id, 10)) {
+    	this.props.history.push(`/task/${val.value}`)
     }
   }
 
   render () {
     return (
       <div className="d-top">
-        <div className="nav-logo">
+        <Link className="nav-logo" to="/">
           <Img src="logo@2x" height="26px" className="logo"/>
-        </div>
+        </Link>
         <div className="nav-left">
           <TaskSelect placeholder="Search for a task or QR code" onChange={this.handleSearch} />
         </div>
