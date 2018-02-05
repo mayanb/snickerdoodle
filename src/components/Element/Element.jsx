@@ -1,6 +1,5 @@
 import React from 'react'
 import Icon from '../Card/Icon'
-import ButtonDropdown from '../Card/ButtonDropdown'
 
 export function ElementHeader(props) {
 

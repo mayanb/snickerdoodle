@@ -1,7 +1,6 @@
 import React from 'react'
 import Icon from '../Card/Icon'
 import {isAdmin} from '../../authentication/authentication'
-import {colorHash} from '../../utilities/stringutils'
 import TeamMemberChangeAccountType from './TeamMemberChangeAccountType'
 
 export default function Member(props) {

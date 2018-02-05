@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './ProcessesActions.jsx'
-import * as inventoryActions from '../Inventory/InventoryActions'
 import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import ObjectListTitle from '../ObjectList/ObjectListTitle'

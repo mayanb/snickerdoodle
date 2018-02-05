@@ -4,9 +4,6 @@ import Button from './Button.jsx'
 import './styles/ButtonDropdown.css'
 
 export default class ButtonDropdown extends React.Component {
-	constructor(props) {
-		super(props) 
-	}
 
 	render() {
 		let {expanded, onToggleDropdown, secondary, menu} = this.props

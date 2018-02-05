@@ -3,13 +3,10 @@ import Img from '../Img/Img'
 
 export default function Alert(props) {
 	let icon = 'positive'
-	let mood = 'positive'
 	if (props.negative) {
 		icon = 'negative'
-		mood = 'negative'
 	} else if (props.warning) {
 		icon = 'warning'
-		mood = 'warning'
 	}
 
 	return (

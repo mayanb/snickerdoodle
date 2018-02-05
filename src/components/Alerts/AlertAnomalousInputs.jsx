@@ -1,7 +1,4 @@
 import React from 'react'
-import update from 'immutability-helper'
-import { connect } from 'react-redux'
-import {data} from './data'
 import {pluralize} from '../../utilities/stringutils'
 import Alert from './Alert'
 import {toArray} from '../../utilities/arrayutils'

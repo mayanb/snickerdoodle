@@ -24,7 +24,6 @@ export function _task(state, action) {
 
 
 function markOutputUsed(state, action) {
-  let index = action.index
   return update(state, {
     data: {
     	items: {
