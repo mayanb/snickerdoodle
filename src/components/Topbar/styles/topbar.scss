@@ -1,0 +1,57 @@
+@import 'styles/constants.scss';
+
+.d-top {
+    height: $nav-height;
+
+    .nav-logo {
+        width: $nav-width;
+    }
+
+    img.logo {
+        margin-left: 16px;
+    }
+
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: $card-shadow;
+    display: flex;
+    align-items: center;
+
+    .nav-left {
+        flex: 1;
+        flex-grow: 1;
+        margin: 0px 36px;
+
+        .Select-control {
+            border: none;
+            background-color: rgba(0,0,0,0);
+        }
+
+        .multiselect.inputs {
+            background-color: rgba(0,0,0,0.05);
+            border: none;
+
+            input {
+                //color: white;
+            }
+
+            div.Select.is-focused > div.Select-control {
+                background-color: rgba(0,0,0,0) !important;
+                //color: rgba(255,255,255, 0.7) !important;
+            }
+        }
+
+        .filters {
+            max-width: 900px;
+        }
+    }
+
+
+    .nav-team {
+        margin: 0 36px;
+    }
+}
