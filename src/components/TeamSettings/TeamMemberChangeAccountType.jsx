@@ -5,8 +5,8 @@ import * as actions from './MemberActions'
 import * as userActions from '../AccountMenu/UserActions'
 import ButtonDropdown from '../Card/ButtonDropdown'
 
-let admin_desc = "Admins can make changes to the factory settings."
-let user_desc = "Regular users can only create and edit tasks."
+let adminDesc = "Admins can make changes to the factory settings."
+let regularDesc = "Regular users can only create and edit tasks."
 
 class TeamMemberChangeAccountType extends React.Component {
 	constructor(props) {
@@ -24,9 +24,9 @@ class TeamMemberChangeAccountType extends React.Component {
 	      button={this.renderButton()}
 	    >
 	      <div className="accounttype-menu">
-	        { this.renderOption("Administrator", admin_desc, 'a', this.props.member.account_type == 'a') }
+	        { this.renderOption("Administrator", adminDesc, 'a', this.props.member.account_type == 'a') }
 	        <div className="accounttype-rule" />
-	        { this.renderOption("User", user_desc, 'w', this.props.member.account_type == 'w') }
+	        { this.renderOption("Regular", regularDesc, 'w', this.props.member.account_type == 'w') }
 	      </div>
 	    </ButtonDropdown>
 	  )
