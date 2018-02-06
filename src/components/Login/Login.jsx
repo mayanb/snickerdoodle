@@ -5,6 +5,7 @@ import * as actions from '../AccountMenu/UserActions'
 import {shouldLogin} from '../../authentication/authentication'
 import Card from '../Card/Card'
 import Spinner from 'react-spinkit'
+import WalkthroughFrame from '../Walkthrough/WalkthroughFrame'
 import './styles/login.css'
 
 
@@ -59,7 +60,7 @@ class Login extends React.Component {
 
   renderLogin() {
     return (
-      <div className="login">
+      <WalkthroughFrame>
         <div className="login-box">
         <Card>
           <form>
@@ -100,7 +101,7 @@ class Login extends React.Component {
           </form>
           </Card>
         </div>
-      </div>
+      </WalkthroughFrame>
     )
   }
 
