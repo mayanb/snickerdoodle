@@ -47,7 +47,7 @@ function organizeAttributes(task) {
   let organized_attrs = [
     {attribute: -1, value: task.process_type.name, name: "Process", isEditable: false},
     {attribute: -1, value: task.product_type.name, name: "Product", isEitable: false},
-    {attribute: -1, value: task.process_type.created_by_name, name: "Production Team", isEditable: false},
+    {attribute: -1, value: task.process_type.team_created_by_name, name: "Production Team", isEditable: false},
     {attribute: -1, value: moment(task.created_at).format('MM/DD/YY h:mm a'), name: "Created at", isEditable: false},
     {attribute: -1, value: moment(task.updated_at).format('MM/DD/YY h:mm a'), name: "Updated at", isEditable: false},
   ]
