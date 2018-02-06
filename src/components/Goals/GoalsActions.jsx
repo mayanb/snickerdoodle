@@ -20,6 +20,7 @@ import { SWITCH_ACTIVE_GOAL_TYPE } from '../../reducers/GoalsReducer'
 import { GOALS } from '../../reducers/ReducerTypes'
 import {WEEKLY, MONTHLY} from './GoalTypes'
 import { sortByRank } from '../../utilities/arrayutils'
+import * as types from './GoalTypes'
 
 export function fetchGoals(user_id) {
   return function (dispatch) {
@@ -42,6 +43,10 @@ export function fetchGoals(user_id) {
 
         let monthly = goals.filter(e => e.timerange === MONTHLY)
         dispatch(requestGoalsSuccess(monthly, MONTHLY))
+
+	      if(weekly.length && !monthly.length) {
+		      dispatch(switchActiveGoalType(types.WEEKLY))
+        }
       })
   }
 }
