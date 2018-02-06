@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import WalkthroughFrame from './WalkthroughFrame'
 import WalkthroughCreateUser from './WalkthroughCreateUser'
 import api from '../WaffleconeAPI/api'
 import * as memberActions from '../TeamSettings/MemberActions'
@@ -52,10 +53,9 @@ class CreateTeam extends React.Component {
 		}
 
 		return (
-			<div className="walkthrough">
-				<Img src='logo-blue'/>
+			<WalkthroughFrame>
 				{content}
-			</div>
+			</WalkthroughFrame>
 		)
 	}
 

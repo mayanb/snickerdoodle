@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import WalkthroughFrame from './WalkthroughFrame'
 import WalkthroughProcessesAndProducts from './WalkthroughProcessesAndProducts'
 import WalkthroughCreateProcess from './WalkthroughCreateProcess'
 import WalkthroughExampleApp from './WalkthroughExampleApp'
@@ -33,10 +34,9 @@ class Walkthrough extends React.Component {
 		console.log()
 		const Stage = stages[stageNumber]
 		return (
-			<div className="walkthrough">
-				<Img src='logo-blue'/>
+			<WalkthroughFrame>
 				<Stage onCompleteStage={this.handleCompleteStage.bind(this)} />
-			</div>
+			</WalkthroughFrame>
 		)
 	}
 
