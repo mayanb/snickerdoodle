@@ -49,7 +49,7 @@ export function _processAttribute(state, action) {
 }
 
 function requestUpdateAttributeSuccess(state, action) {
-	let index = state.data[action.process].attributes.findIndex((e) => e.id == action.id)
+	let index = state.data[action.process].attributes.findIndex((e) => e.id === action.id)
 	return update(state, {
 		data: {
 			[action.process]: {
@@ -103,7 +103,7 @@ function requestSaveAttributeSuccess(state, action) {
 	})
 
 	// if we've moved on by now don't upset the isSaving stuff 
-	if (state.ui.selectedItem != action.process)
+	if (state.ui.selectedItem !== action.process)
 		return ns
 
 	return update(ns, {
@@ -115,7 +115,7 @@ function requestSaveAttributeSuccess(state, action) {
 
 function requestSaveAttributeFailure(state, action) {
 	alert("failed to save the attribute")
-	if (state.ui.selectedItem != action.process)
+	if (state.ui.selectedItem !== action.process)
 		return state
 
 	return update(state, {

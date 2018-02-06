@@ -18,7 +18,7 @@ export default function Goal(props) {
             <span className="more">{get_more_display(props.goal.product_code, props.goal.all_product_types)}</span>
           </div>
           <div className="goal-details-right goal-buttons">
-            <span className="blue">{(props.goal.actual && !isNaN(props.goal.actual))?parseInt(props.goal.actual):"0"}</span><span>{`/${parseInt(props.goal.goal)} ${pluralize(parseInt(props.goal.goal), props.goal.process_unit)}`}</span>
+            <span className="blue">{(props.goal.actual && !isNaN(props.goal.actual))?parseInt(props.goal.actual, 10):"0"}</span><span>{`/${parseInt(props.goal.goal, 10)} ${pluralize(parseInt(props.goal.goal, 10), props.goal.process_unit)}`}</span>
           </div>
         </div>
         <GoalBar {...props} />

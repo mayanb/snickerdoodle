@@ -17,13 +17,13 @@ let l3 = ["processes", "products",]
 class Navbar extends React.Component {
   render () {
     var navbarSizeClass = "bigNav"
-    if (this.props.match.params.id && this.props.match.params.section == "inventory") {
+    if (this.props.match.params.id && this.props.match.params.section === "inventory") {
       navbarSizeClass = "littleNav"
     }
 
     return (
       <div className={"d-nav " + navbarSizeClass}>
-        <Link to={(this.props.match.params.section||"") + "/"} style={{"display":(navbarSizeClass=="littleNav")?"":"none"}}>
+        <Link to={(this.props.match.params.section||"") + "/"} style={{"display":(navbarSizeClass==="littleNav")?"":"none"}}>
           <div className="pushout">
           </div>
         </Link>
@@ -42,7 +42,7 @@ class Navbar extends React.Component {
   renderAdminNavigation() {
     let {data, ui} = this.props.users
     let account_type = data[ui.activeUser].user.account_type
-    if (account_type == 'a')
+    if (account_type === 'a')
       return ( <NavigationGroup options={o3} links={l3} title={"My factory"} /> )
     return null
   }
@@ -50,7 +50,7 @@ class Navbar extends React.Component {
   renderPrintingNavigation() {
     let {data, ui} = this.props.users
     let team = data[ui.activeUser].user.team_name
-    if (team == 'alabama' || team == 'valencia')
+    if (team === 'alabama' || team === 'valencia')
       return ( <NavigationGroup options={o2} links={l2} title={"Printing"} /> )
     return null
   }

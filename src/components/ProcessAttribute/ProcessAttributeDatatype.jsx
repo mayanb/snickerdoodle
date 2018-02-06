@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ProcessAttributeDatatype(props) {
 	let text = "Text"
-	if (props.type == "NUMB") {
+	if (props.type === "NUMB") {
 		text = "Number"
 	}
 

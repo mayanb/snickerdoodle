@@ -1,9 +1,5 @@
 import React from 'react'
-import $ from 'jquery'
-import {Link} from 'react-router-dom'
-import InventoryDetail from '../OldComponents/InventoryDetail.jsx'
-import { InventoryFilter, Filters } from '../OldComponents/Inputs.jsx'
-import {fetch, requestID, ZeroState} from '../OldComponents/APIManager.jsx'
+import {requestID, ZeroState} from '../OldComponents/APIManager.jsx'
 import api from '../WaffleconeAPI/api'
 import Loading from '../OldComponents/Loading.jsx'
 import update from 'immutability-helper'
@@ -11,8 +7,6 @@ import {display} from '../OldComponents/Task.jsx'
 import moment from 'moment'
 import Datepicker from '../Datepicker/Datepicker.jsx'
 import ReactImageFallback from "react-image-fallback"
-import * as goalTypes from '../Goals/GoalTypes'
-import Goals from '../Goals/Goals'
 import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
 
@@ -55,7 +49,7 @@ export default class Activity extends React.Component {
 		let contentArea = false
 		if (this.state.loading) {
 			contentArea =  <Loading />
-		} else if (!this.state.processes || Object.values(this.state.processes).length == 0) {
+		} else if (!this.state.processes || Object.values(this.state.processes).length === 0) {
 			contentArea = <ZeroState />
 		} else {
 			contentArea = (
@@ -68,7 +62,7 @@ export default class Activity extends React.Component {
 						spreadsheet={this.attemptSpreadsheet.bind(this)} 
 						onClick={this.handleProcessClick.bind(this)} 
 						onOriginClick={this.handleOriginClick.bind(this)} 
-						expanded={this.state.expanded.process==process.process_id?this.state.expanded:null}
+						expanded={this.state.expanded.process===process.process_id?this.state.expanded:null}
 					/>
 				}, this)
 			)
@@ -100,7 +94,7 @@ export default class Activity extends React.Component {
 
 
 	handleOriginClick(process, origin) {
-		if (process == this.state.expanded.process && origin == this.state.expanded.origin) {
+		if (process === this.state.expanded.process && origin === this.state.expanded.origin) {
 			this.setState({expanded: {process: process, origin: -1}})
 		} else {
 			this.setState({expanded: {process: process, origin: origin}})
@@ -109,7 +103,7 @@ export default class Activity extends React.Component {
 	}
 
 	handleProcessClick(process) {
-		if (process == this.state.expanded.process) {
+		if (process === this.state.expanded.process) {
 			this.setState({expanded: {process: -1, origin: -1}})
 		} else {
 			this.setState({expanded: {process: process, origin: -1}})
@@ -144,7 +138,7 @@ export default class Activity extends React.Component {
 					component.setState({taskLoading: false})
 					return
 				}
-				if (component.lastTaskRequestID != rID) 
+				if (component.lastTaskRequestID !== rID)
 					return
 				component.setState({expandedTasks: res.body, taskLoading: false})
 			})
@@ -152,7 +146,6 @@ export default class Activity extends React.Component {
 
 	getActivity(range) {
 		this.setState({loading: true})
-		let url = "/ics/activity/"
 		let params = {start: toUTCString(range.start), end: toUTCString(range.end, true)}
 		let component = this
 
@@ -163,7 +156,7 @@ export default class Activity extends React.Component {
 			.query(params)
 			.end(function (err, res) {
 				let data = res.body
-				if (component.lastRequestID != rID) 
+				if (component.lastRequestID !== rID)
 					return
 
 				if (err || !res.ok)
@@ -195,8 +188,8 @@ export default class Activity extends React.Component {
 				processes[pid].runs = 0
 				processes[pid].outputs = 0
 			}
-			processes[pid].runs += parseInt(skew.runs)
-			processes[pid].outputs += parseInt(skew.outputs)
+			processes[pid].runs += parseInt(skew.runs, 10)
+			processes[pid].outputs += parseInt(skew.outputs, 10)
 			processes[pid].origins.push(skew)
 		}
 		return processes
@@ -225,7 +218,7 @@ export default class Activity extends React.Component {
 					console.log(res.body.spreadsheetId)
 					let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
 					var newWin = window.open(url, '_blank');
-					if(!newWin || newWin.closed || typeof newWin.closed=='undefined') 
+					if(!newWin || newWin.closed || typeof newWin.closed==='undefined')
 					{
 						//POPUP BLOCKED
 						c.toggleDialog('mustEnablePopupsDialog')
@@ -249,7 +242,7 @@ function Process(props) {
 				{...origin} 
 				onClick={() => props.onOriginClick(props.process_id, i)} 
 				process_unit={props.process_unit} 
-				expanded={props.expanded.origin==i}
+				expanded={props.expanded.origin===i}
 				expandedTasks={props.expandedTasks}
 			/>
 		}, this)
@@ -269,7 +262,7 @@ function Process(props) {
 					first={props.process_code}         
 					second={props.process_name}
 					third={pl(props.runs, "run")}
-					fourth={pl(parseInt(props.outputs), props.process_unit)}
+					fourth={pl(parseInt(props.outputs, 10), props.process_unit)}
 					fifth={"0 flagged"}
 					sixth={"0 exp"}
 					seventh={button}
@@ -295,7 +288,7 @@ function Origin(props) {
 					icon={props.expanded?"expand_more":"chevron_right"} 
 					first={props.product_code}
 					second={pl(props.runs, "run")}
-					third={pl(parseInt(props.outputs), props.process_unit)}
+					third={pl(parseInt(props.outputs, 10), props.process_unit)}
 					fourth={!props.flagged?"--":props.flagged + " flagged"}
 					fifth={!props.experimental?"--":props.experimental + " experimental"}
 				/>
@@ -350,7 +343,7 @@ function TaskList(props) {
 		<Row className="process-origin-task"
 			first={" "}
 			second={<a href={window.location.origin + "/task/" + props.id} target="_blank">{display(props)}</a>}
-			third={pl(parseInt(props.outputs), props.process_unit)}
+			third={pl(parseInt(props.outputs, 10), props.process_unit)}
 			fourth={"--"}
 			fifth={"--"}
 		/>
@@ -362,7 +355,7 @@ function pl(count, unit) {
 	if (count) {
 
 	}
-	if (count == 1) 
+	if (count === 1)
 		return count + " " + unit
 	return count + " " + unit + "s"
 }

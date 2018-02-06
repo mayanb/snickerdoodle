@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force'
-import { scaleOrdinal, schemeCategory20 } from 'd3-scale'
 import { event } from 'd3-selection'
 import { drag } from 'd3-drag'
 import { select } from 'd3-selection'
-import * as actions from './BarChartActions'
-import { connect } from 'react-redux'
 
 
 // class BCWrapper extends Component {
@@ -51,7 +48,6 @@ class BarChart extends Component {
       console.log(graph)
       const width = 800
       const height = 500
-      var color = scaleOrdinal(schemeCategory20);
 
       select(ref).append("svg:defs").selectAll("marker")
         .data(["end"])      // Different link/path types can be defined here

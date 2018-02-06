@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import update from 'immutability-helper'
-import * as types from './GoalTypes'
 import * as actions from './GoalsActions'
 import Goal from './Goal'
 import GoalsTabs from './GoalsTabs'
@@ -9,8 +8,6 @@ import AddNewGoal from './AddNewGoal'
 import Sortable from '../Sortable/Container'
 import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
-import Button from '../Card/Button'
-import Card from '../Card/Card'
 import { pluralize } from '../../utilities/stringutils'
 import './styles/goals.css'
 
@@ -28,13 +25,13 @@ class Goals extends React.Component {
 	}
 
 	componentDidMount() {
-		let {users, goals} = this.props
+		let {users} = this.props
 		let user = users.data[users.ui.activeUser].user
 		this.props.dispatch(actions.fetchGoals(user.profile_id))
 	}
 
 	render() {
-		let {users, goals, timerange} = this.props
+		let {goals} = this.props
 		if (!goals) 
 			return false
 
@@ -94,7 +91,7 @@ class Goals extends React.Component {
 
 	renderBottomBar(completed, total) {
 		let k = <span>You've reached <span>{completed}</span>{` of ${total} ${pluralize(total, 'goal')}.`}</span>
-		if (total == 0) {
+		if (total === 0) {
 			k = <span>You have 0 goals. Start adding goals now!</span>
 		}
 		return (

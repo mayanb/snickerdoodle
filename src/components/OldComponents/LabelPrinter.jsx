@@ -8,8 +8,6 @@ import api from '../WaffleconeAPI/api'
 import DymoPrinterInstructions from '../DymoPrinter/DymoPrinterInstructions'
 
 let QRCode = window.QRCode
-let BrowserPrint = window.BrowserPrint
-let dymo = window.dymo
 
 var getOptions = function(input, callback) {
     if (input.length < 2) {
@@ -32,10 +30,6 @@ var getOptions = function(input, callback) {
   }
 
 class TaskSelect extends React.Component {
-  constructor() {
-    super();
-
-  }
 
   render () {
     return (
@@ -91,20 +85,20 @@ export default class LabelPrinter extends React.Component {
 
   handlePrint() {
 
-    let numLabels = parseInt(this.state.numberLabels) || -1
+    let numLabels = parseInt(this.state.numberLabels, 10) || -1
 
     if (!this.state.expanded && !(numLabels > 0 && numLabels < 101)) {
       alert("Please enter a valid number between 0 and 100!")
       return
     }
 
-    if (this.state.task == "" || this.state.task.data == undefined || this.state.task.data.id == undefined) {
+    if (this.state.task === "" || this.state.task.data === undefined || this.state.task.data.id === undefined) {
       alert("Please print labels for a valid task.")
       return
     }
 
     if (this.state.expanded && 
-      (this.state.selectedItem == "" || this.state.selectedItem.data == undefined || this.state.selectedItem.data.id == undefined)) {
+      (this.state.selectedItem === "" || this.state.selectedItem.data === undefined || this.state.selectedItem.data.id === undefined)) {
         alert("Please choose a valid specific item to reprint.")
         return 
     }
@@ -123,7 +117,6 @@ export default class LabelPrinter extends React.Component {
       data: {count : numLabels},
     })
     .done(function (data) {
-      let uuids = data.split(/\s+/)
       printQRs_dymo(data.split(/\s+/), thisObj.state.qrcode)
     })
     .always(function () {
@@ -150,7 +143,7 @@ export default class LabelPrinter extends React.Component {
 
   handleTaskChange(value) {
     var v;
-    if (value != undefined && value != null && value.length != 0)
+    if (value !== undefined && value != null && value.length !== 0)
       v = value
     else 
       v = ""
@@ -176,7 +169,7 @@ export default class LabelPrinter extends React.Component {
   handleItemChange(value) {
     this.state.qrcode.clear()
     var v;
-    if (value != undefined && value != null && value.length != 0)
+    if (value !== undefined && value != null && value.length !== 0)
       v = value
     else 
       v = ""

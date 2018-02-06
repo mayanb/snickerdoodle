@@ -1,7 +1,5 @@
 import request from 'superagent'
-import { getCookie } from '../../csrf.jsx'
 import * as urls from './urls'
-import Teams from '../Teams/Teams'
 
 let host = urls.getBackend()
 
@@ -28,7 +26,7 @@ function get(path) {
 function post(path) {
 	let url = urls.latest(host, path)
 	let team = -1
-	let token = ""
+	//let token = ""
 	let id = -1
 	let profile_id = -1
 	try {
@@ -36,7 +34,7 @@ function post(path) {
 		team = user.team
 		id = user.user_id
 		profile_id = user.profile_id
-		token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
+		//token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
 	} catch(e) {
 		
 	}
@@ -51,11 +49,11 @@ function post(path) {
 
 function put(path) {
 	let url = urls.latest(host, path)
-	let team = -1
-	let token = ""
+	//let team = -1
+	//let token = ""
 	try {
-		team = get_active_user().user.team
-		token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
+		//team = get_active_user().user.team
+		//token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
 	} catch(e) {}
 
 	return request('PUT', url)
@@ -76,11 +74,11 @@ function del(path, id) {
 
 function patch(path, id) {
 	let url = urls.latest(host, path)
-	let team = -1
-	let token = ""
+	//let team = -1
+	//let token = ""
 	try {
-		team = get_active_user().user.team
-		token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
+		//team = get_active_user().user.team
+		//token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
 	} catch(e) {}
 
 	return request('PATCH', url)

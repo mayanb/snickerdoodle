@@ -1,8 +1,6 @@
 import React from 'react'
-import { TaskSelect } from '../OldComponents/Inputs.jsx'
-import {display, icon, TaskTable, OutputTable, InputTable, subs, Table, pl} from './TaskHelpers.jsx'
+import {icon, TaskTable, OutputTable, InputTable} from './TaskHelpers.jsx'
 import moment from 'moment'
-import {Dialog} from '../OldComponents/Dialog.jsx'
 import { connect } from 'react-redux'
 import * as actions from './TaskActions'
 import * as attributeActions from './TaskAttributeActions'
@@ -10,14 +8,6 @@ import TaskInformationTable from './TaskInformationTable'
 import TaskFlag from './TaskFlag'
 
 
-
-let dialogs = {
-  deleteTask: {
-    title: "Are you sure you want to delete this task?",
-    text: "You can't undo this action.",
-    okText: "Yes, I'm sure"
-  }
-}
 
 class Task extends React.Component {
   constructor(props) {
@@ -52,13 +42,8 @@ class Task extends React.Component {
     this.props.dispatch(actions.getTaskDescendents(id))
   }
 
-  printQR(index, id) {
-    let qr = this.state.task.items[index].item_qr
-    // printQRs([qr], this.state.qr)
-  }
-
   render() {
-    let { data, ui, ancestorsData, ancestorsUI, descendentsData, descendentsUI, movementsData, movementsUI } = this.props
+    let { data, ui, ancestorsData, ancestorsUI, descendentsData, descendentsUI } = this.props
     
     if (!data || (data.length===0)) {
       return (

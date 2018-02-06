@@ -102,7 +102,7 @@ export default function TaskAttributeTest(props) {
 	<div className="task-attribute-test">
 	{
 		data.attribute_values.map(function (a, i) {
-            if (i == 2) 
+            if (i === 2)
                 return <TaskAttribute key={i} name={a.att_name} value={a.value} isEditable={true} isEditing={true}/>
 			return <TaskAttribute key={i} name={a.att_name} value={a.value} isEditable={true}/>
 		})

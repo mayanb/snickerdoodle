@@ -1,7 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {InventoryDetail} from '../OldComponents/InventoryDetail.jsx'
-import { InventoryFilter} from '../OldComponents/Inputs.jsx'
 import {requestID, ZeroState} from '../OldComponents/APIManager.jsx'
 import Loading from '../OldComponents/Loading.jsx'
 import update from 'immutability-helper'
@@ -40,7 +39,7 @@ export default class Inventory extends React.Component {
     api.get("/ics/inventory/")
       .query(params)
       .end(function (err, data) {
-        if (component.latestRequestID == rid)
+        if (component.latestRequestID === rid)
           component.setState({processes : data.body, loading: false})
       })
   }
@@ -50,9 +49,11 @@ export default class Inventory extends React.Component {
 
     api.get('/ics/products/codes/')
       .end(function (err, data) {
+        /**
         let mappedProducts = data.body.map(function (product, i) {
           return {value: product.id, label: product.name}
         })
+         */
         component.setState({products: data.body})
       })
   
@@ -75,7 +76,7 @@ export default class Inventory extends React.Component {
 
   getSelectedProcess() {
     let a = this.state.processes.find(function (x) {
-      return (x.process_id == this.props.match.params.id)
+      return (x.process_id === this.props.match.params.id)
     }, this)
     return a
   }
@@ -83,7 +84,7 @@ export default class Inventory extends React.Component {
   handleDelivery(selectedCount) {
     var processIndex = 0
     for (let [index, process] of this.state.processes.entries()) {
-      if (process.process_id == this.props.match.params.id) {
+      if (process.process_id === this.props.match.params.id) {
         processIndex = index
         break
       }
@@ -132,7 +133,7 @@ class Content extends React.Component {
     var contentArea = <InventoryList  processes={props.processes} selected={props.match.params.id} />
     if (props.loading) {
       contentArea = <Loading />
-    } else if (!props.processes || props.processes.length == 0) {
+    } else if (!props.processes || props.processes.length === 0) {
       contentArea = <ZeroState filtered={props.productFilter && props.productFilter.length} />
     }
 
@@ -152,7 +153,7 @@ class Content extends React.Component {
 }
 
 function InventoryHeader(props) {
-  let a = <InventoryFilter options={props.options} onFilter={props.onFilder} selected={props.selected} />
+  //let a = <InventoryFilter options={props.options} onFilter={props.onFilder} selected={props.selected} />
   return (
       <div className="inventory-header">
          <h2>Inventory</h2>
@@ -224,7 +225,7 @@ function InventoryList(props) {
 function InventoryItem(props) {
   var teamStyle = {color: "rgba(0,0,0,0.3", paddingLeft: "4px", fontSize: "10px"}
   let currTeam = window.localStorage.getItem("team") || "1"
-  teamStyle["display"] = currTeam==props.team_id?"none":""
+  teamStyle["display"] = currTeam===props.team_id?"none":""
   let icon = props.process_icon || "default.png" 
   return (
     <div className={"inventoryClass " + isSelected(props) + " " + isHeader(props)} onClick={props.onClick}>
@@ -255,20 +256,20 @@ function InventoryItem(props) {
 }
 
 function count(c) {
-  let p = parseInt(c)
-  if (p - c != 0) 
+  let p = parseInt(c, 10)
+  if (p - c !== 0)
     return c
   return p
 }
 
 function isHeader(props) {
-  return (props.header == true) ? "inventoryClass-header" : ""
+  return (props.header === true) ? "inventoryClass-header" : ""
 }
 
 function isSelected(props) {
   if (isHeader(props))
     return false
-  return (props.process_id == props.selected) ? "selected" : ""
+  return (props.process_id === props.selected) ? "selected" : ""
 }
 
 String.prototype.sentenceCase = function() {

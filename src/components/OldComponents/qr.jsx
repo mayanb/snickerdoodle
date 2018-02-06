@@ -4,7 +4,6 @@ import api from '../WaffleconeAPI/api'
 //import QRCode from 'qrcodejs'
 //import BrowserPrint from 'browserprint'
 
-let QRCode = window.QRCode
 let BrowserPrint = window.BrowserPrint
 let dymo = window.dymo
 
@@ -44,16 +43,6 @@ function print(numLabels, text, success, always) {
 
 var errorCallback = function(errorMessage) {
   alert("Error: " + errorMessage);  
-}
-
-function short(str) {
-  if (!str)
-    return ""
-  var codes = str.split('-')
-  if (codes.length > 2) {
-    codes.splice(1, 1)
-  }
-  return codes.join('-')
 }
 
 function getCode(str) {
@@ -187,19 +176,19 @@ function getPrinter() {
   // for simplicity sake just use the first LabelWriter printer
   var printers = dymo.label.framework.getPrinters();
   console.log(printers)
-  if (!printers || printers.length == 0)
+  if (!printers || printers.length === 0)
     throw "No DYMO printers are installed. Install DYMO printers."
 
   var i = -1;
   for (var j = 0; j < printers.length; ++j) {
     var printer = printers[j];
-    if (printer.printerType == "LabelWriterPrinter" && printer.isConnected) {
+    if (printer.printerType === "LabelWriterPrinter" && printer.isConnected) {
       i = j
       break;
     }
   }
 
-  if (i == -1) 
+  if (i === -1)
     throw "No DYMO printers are connected."
 
   return printers[i].name

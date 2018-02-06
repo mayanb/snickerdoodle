@@ -85,7 +85,7 @@ class AccountMenu extends React.Component {
 	    <span className="account-menu-section-title">Switch accounts</span>
 	    {
 	      Object.keys(data).map(function (tid, i) {
-	        if (tid == ui.activeUser || !data[tid].user || !data[tid].user.username)
+	        if (tid === ui.activeUser || !data[tid].user || !data[tid].user.username)
 	          return null
 	        return <Account key={tid} onClick={(e) => this.handleTeamChange(tid)} user={data[tid].user} />
 	      }, this)

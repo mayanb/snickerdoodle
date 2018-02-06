@@ -1,7 +1,7 @@
 import { colors } from './colors'
 
 export function pluralize(number, noun) {
-	if (number != 1) {
+	if (number !== 1) {
 		return noun + 's'
 	} else {
 		return noun
@@ -20,7 +20,7 @@ export function colorHash(str) {
 }
 
 String.prototype.hashCode = function() {
-  var h = 0, l = this.length, i = 0;
+  let h = 0, l = this.length, i = 0;
   if ( l > 0 )
     while (i < l)
       h = (h << 5) - h + this.charCodeAt(i++) | 0;
