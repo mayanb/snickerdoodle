@@ -278,7 +278,7 @@ function Origin(props) {
 	var taskList = false
 	if (props.expanded) {
 		taskList = props.expandedTasks.map(function (task) {
-			return <TaskList {...task} process_unit={props.process_unit}/>
+			return <TaskList {...task} process_unit={props.process_unit} key={task.id}/>
 		})
 	}
 	return (
