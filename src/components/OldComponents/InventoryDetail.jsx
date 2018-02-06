@@ -1,13 +1,10 @@
 import React from 'react'
-import $ from 'jquery'
-import {display} from './Task.jsx'
-import {fetch, post} from './APIManager.jsx'
+import {post} from './APIManager.jsx'
 import update from 'immutability-helper'
 import {Link} from 'react-router-dom'
 import Loading from './Loading.jsx'
 import {Dropdown} from 'react-toolbox/lib/dropdown'
 import {Dialog} from './Dialog.jsx'
-import Teams from '../Teams/Teams'
 import api from '../WaffleconeAPI/api'
 
 class InventoryDetail extends React.Component {
@@ -133,7 +130,7 @@ class InventoryDetail extends React.Component {
           component.setState({loading: false})
         }
 
-        else if (component.latestRequestID == random) {
+        else if (component.latestRequestID === random) {
           let data = res.body
           let tasks = data.results
           if(u) {
@@ -158,15 +155,15 @@ class InventoryDetail extends React.Component {
     let newTask = update(task, {$merge: []})
     let totalSelected = this.state.selectedCount
 
-    if (count == 0) {
+    if (count === 0) {
       for (var i = 0; i < newTask.items.length; i++) {
         newTask.items[i].selected = true
         totalSelected += 1
       }
     } else {
-      for (var i = 0; i < newTask.items.length; i++) {
-        if (newTask.items[i].selected) {
-          newTask.items[i].selected = false
+      for (var j = 0; j < newTask.items.length; j++) {
+        if (newTask.items[j].selected) {
+          newTask.items[j].selected = false
           totalSelected -= 1
         }
       }
@@ -174,10 +171,6 @@ class InventoryDetail extends React.Component {
 
     this.setState({task: newTask, selectedCount: totalSelected})
 
-  }
-
-  updateItem(itemArray, index, merge) {
-    return update(itemArray, index)
   }
 
   handleItemSelect(taskIndex, itemIndex) {
@@ -210,8 +203,6 @@ class InventoryDetail extends React.Component {
   }
 
   deliverItems(destination, callback) {
-    let tasks = this.state.tasks
-
     let itemsToDeliver = []
     for (let task of this.state.tasks) {
       for (let item of task.items) {
@@ -225,7 +216,6 @@ class InventoryDetail extends React.Component {
 
     let users = JSON.parse(window.localStorage.getItem('users-v5'))
     let user = users.data[users.ui.activeUser].user
-    let team = user.team
     let component = this
     let url = '/ics/v4/movements/create/'
 

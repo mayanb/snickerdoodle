@@ -32,7 +32,7 @@ export default function AlertGoals(props) {
 function GoalInfo(props) {
 	return (
 		<div><span>
-			{`${gerund(props.process_name)} ${parseInt(props.goal)} ${pluralize(props.goal, props.process_unit)} ${getProductTypeString(props.product_code, props.all_product_types)}`}
+			{`${gerund(props.process_name)} ${parseInt(props.goal, 10)} ${pluralize(props.goal, props.process_unit)} ${getProductTypeString(props.product_code, props.all_product_types)}`}
 		</span></div>
 	)
 }
@@ -41,7 +41,7 @@ function getProductTypeString(product_codes, all) {
 	if (all || !product_codes || !product_codes.length ) {
 		return ""
 	}
-	if (product_codes.length == 1) {
+	if (product_codes.length === 1) {
 		return 'of ' + product_codes[0].code
 	} else {
 		return `of ${product_codes[0].code} and other`

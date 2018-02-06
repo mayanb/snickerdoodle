@@ -1,9 +1,4 @@
 import React, { Component } from 'react'
-import { forceSimulation, forceLink, forceManyBody, forceCenter } from 'd3-force'
-import { scaleOrdinal, schemeCategory20 } from 'd3-scale'
-import { event } from 'd3-selection'
-import { drag } from 'd3-drag'
-import { select } from 'd3-selection'
 import * as actions from './BarChartActions'
 import { connect } from 'react-redux'
 import BarChart from './BarChart'
@@ -28,7 +23,7 @@ class BCWrapper extends Component {
     if (graphs.ui.isFetchingData) {
       return <span>Loading...</span>
     }
-    if (!graphs.data || graphs.data.length == 0) {
+    if (!graphs.data || graphs.data.length === 0) {
       return <span>Nothing to show here</span>
     }
 

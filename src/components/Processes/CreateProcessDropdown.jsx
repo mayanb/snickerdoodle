@@ -72,7 +72,7 @@ export default class NameProcessDropdown extends React.Component {
 
 	handleInputValidation() {
 		let {name, abbreviation} = this.state
-		if(!name || name.length == 0 || !abbreviation || abbreviation.length == 0) {
+		if(!name || name.length === 0 || !abbreviation || abbreviation.length === 0) {
 			this.setState({errorMessage: "Please make sure you've filled out a name and abbreviation."})
 			return false
 		}

@@ -1,13 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './MemberActions'
-import Button from '../Card/Button'
 import CreateTeamMemberDialog from './CreateTeamMemberDialog'
 import TeamMemberList from './TeamMemberList'
-import GoogleConnect from '../GoogleConnect/GoogleConnect'
 import {isAdmin} from '../../authentication/authentication'
-
-let s = false
 
 class TeamSettings extends React.Component {
 	constructor(props) {

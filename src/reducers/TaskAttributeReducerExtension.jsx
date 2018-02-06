@@ -68,7 +68,7 @@ function requestSaveAttributeSuccess(state, action) {
 // if it failed, revert back to the old value 
 function requestSaveAttributeFailure(state, action) {
   // if the user has moved onto a different task, don't do anything
-  if (state.data.id != action.params.task)
+  if (state.data.id !== action.params.task)
     return state
 
   return update(state, {

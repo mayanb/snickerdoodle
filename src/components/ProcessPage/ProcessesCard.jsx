@@ -64,7 +64,7 @@ export default class ProcessCard extends React.Component {
 	renderDescription(process) {
 		let className = ""
 		let description = process.description
-		if (!description || description.length == 0) {
+		if (!description || description.length === 0) {
 			description = "No description"
 			className = "products-card-description-empty"
 		}

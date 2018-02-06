@@ -130,15 +130,15 @@ export default class CreateProcessDialog extends React.Component {
 	}
 
 	handleInputValidation() {
-		let {number, unit, abbreviation} = this.state
+		let {number} = this.state
 		let {name, code} = this.props
 
-		if(!number || number.length == 0 || Number.isNaN(number)) {
+		if(!number || number.length === 0 || Number.isNaN(number)) {
 			this.setState({error: true})
 			return false
 		}
 
-		if (!code || code.length == 0 || code.length > 10) {
+		if (!code || code.length === 0 || code.length > 10) {
 			this.setState({error: true})
 			return false
 		}

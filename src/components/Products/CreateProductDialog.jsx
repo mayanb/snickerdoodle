@@ -84,7 +84,7 @@ export default class CreateProductDialog extends React.Component {
 
 	handleInputValidation() {
 		let {name, abbreviation} = this.state
-		if(!name || name.length == 0 || !abbreviation || abbreviation.length == 0) {
+		if(!name || name.length === 0 || !abbreviation || abbreviation.length === 0) {
 			this.setState({error: true})
 			return false
 		}

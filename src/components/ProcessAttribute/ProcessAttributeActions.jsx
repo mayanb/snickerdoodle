@@ -8,13 +8,11 @@ import {
   REQUEST_ARCHIVE_ATTRIBUTE,
   REQUEST_ARCHIVE_ATTRIBUTE_SUCCESS,
   REQUEST_ARCHIVE_ATTRIBUTE_FAILURE,
-  REQUEST_MOVE_ATTRIBUTE,
   REQUEST_MOVE_ATTRIBUTE_SUCCESS,
   REQUEST_MOVE_ATTRIBUTE_FAILURE,
   REQUEST_UPDATE_ATTRIBUTE_SUCCESS,
 } from '../../reducers/ProcessAttributeReducer'
-import {  PROCESSES, PROCESS_INVENTORY } from '../../reducers/ReducerTypes'
-import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
+import {  PROCESSES } from '../../reducers/ReducerTypes'
 
 export function startAddingAttribute() {
   return {
@@ -124,14 +122,6 @@ export function postRequestMoveAttribute(process_index, id, new_rank) {
           dispatch(requestMoveAttributeSuccess(process_index, id, new_rank))
         }
       })
-  }
-}
-
-function requestMoveAttribute(process_index) {
-  return {
-    type: REQUEST_MOVE_ATTRIBUTE,
-    name: PROCESSES, 
-    process_index: process_index
   }
 }
 

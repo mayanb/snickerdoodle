@@ -47,7 +47,7 @@ class TaskSelect extends React.Component {
 
   handleChange(value) {
     var v;
-    if (value != undefined && value != null && value.length != 0)
+    if (value !== undefined && value != null && value.length !== 0)
       v = value
     else v = {value: ""}
 
@@ -90,7 +90,7 @@ class Multiselect extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.value != this.state.value) {
+    if (nextProps.value !== this.state.value) {
       this.setState({value: nextProps.value })
     }
   }
@@ -153,7 +153,7 @@ class Filters extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.dates != nextProps.dates) {
+    if (this.props.dates !== nextProps.dates) {
       this.setState( {
       processes: [],
       products: [],

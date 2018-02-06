@@ -5,7 +5,7 @@ import './styles/paginatedtable.css'
 
 export default class PaginatedTable extends React.Component {
 	render() {
-		let {data, ui, Row, TitleRow} = this.props
+		let {data, ui, TitleRow} = this.props
 		if (!data) {
 			return <span>Loading...</span>
 		}
@@ -13,7 +13,7 @@ export default class PaginatedTable extends React.Component {
     let keys = update(data, {})
 
 
-    if (!keys || keys.length == 0) {
+    if (!keys || keys.length === 0) {
       return <span> No items </span>
     }
 
@@ -66,7 +66,7 @@ export default class PaginatedTable extends React.Component {
 	}
 
   isSelected(k) {
-    return this.props.ui.selectedItem == k
+    return this.props.ui.selectedItem === k
   }
 
 
@@ -83,10 +83,10 @@ export default class PaginatedTable extends React.Component {
   }
 
   canPage(firstIndex, lastIndex, len, direction) {
-    if (direction == -1 && firstIndex == 0)
+    if (direction === -1 && firstIndex === 0)
       return false
 
-    if (direction == 1 && lastIndex >= len)
+    if (direction === 1 && lastIndex >= len)
       return false
 
     return true

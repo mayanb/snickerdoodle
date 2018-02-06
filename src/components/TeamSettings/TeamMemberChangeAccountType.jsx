@@ -24,9 +24,9 @@ class TeamMemberChangeAccountType extends React.Component {
 	      button={this.renderButton()}
 	    >
 	      <div className="accounttype-menu">
-	        { this.renderOption("Administrator", adminDesc, 'a', this.props.member.account_type == 'a') }
+	        { this.renderOption("Administrator", adminDesc, 'a', this.props.member.account_type === 'a') }
 	        <div className="accounttype-rule" />
-	        { this.renderOption("Regular", regularDesc, 'w', this.props.member.account_type == 'w') }
+	        { this.renderOption("Regular", regularDesc, 'w', this.props.member.account_type === 'w') }
 	      </div>
 	    </ButtonDropdown>
 	  )
@@ -63,7 +63,7 @@ class TeamMemberChangeAccountType extends React.Component {
 		let data = {id: this.props.member.id, new_account_type: value}
 		let c = this
 		this.props.dispatch(actions.postRequestEditAccountType(this.props.index, data, () => {
-			if (data.id == this.props.users.ui.activeUser) {
+			if (data.id === this.props.users.ui.activeUser) {
 				this.props.dispatch(userActions.requestRefreshUserAccount(data.id))
 			}
 			c.handleDropdownToggle()

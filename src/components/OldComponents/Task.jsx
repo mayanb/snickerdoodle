@@ -14,7 +14,7 @@ function getNotes(task) {
   }
 
   for (var attributeVal of task.attribute_values) {
-    if(attributeVal.attribute == notesID)
+    if(attributeVal.attribute === notesID)
       return attributeVal.value
   }
 
@@ -31,7 +31,7 @@ function getOperator(task) {
   }
 
   for (var attributeVal of task.attribute_values) {
-    if(attributeVal.attribute == notesID)
+    if(attributeVal.attribute === notesID)
       return attributeVal.value
   }
 
@@ -40,11 +40,11 @@ function getOperator(task) {
 
 
 function words(task) {
-  if (!task || task == undefined || task.label == undefined) {
+  if (!task || task === undefined || task.label === undefined) {
   	return ""
   }
 
-  if (task.custom_display && task.custom_display != "") 
+  if (task.custom_display && task.custom_display !== "")
     return task.custom_display
   else if (task.label_index > 0)
     return task.label + "-" + task.label_index
