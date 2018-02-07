@@ -1,8 +1,8 @@
 import React from 'react'
 import './styles/input.css'
 
-export default function Select({styleType, ...rest}) {
+export default function Input({className, ...rest}) {
 	return (
-		<input className={"input-"+styleType} {...rest} />
+		<input className={`input ${className}`} {...rest} />
 	)
 }

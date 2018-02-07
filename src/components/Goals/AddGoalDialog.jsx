@@ -5,6 +5,8 @@ import * as processActions from '../Processes/ProcessesActions'
 import * as productActions from '../Products/ProductsActions'
 import FormDialog from '../FormDialog/FormDialog'
 import Select from 'react-select';
+import FormGroup from '../Inputs/FormGroup'
+import Input from '../Inputs/Input'
 import * as types from './GoalTypes'
 
 class AddGoalDialog extends React.Component {
@@ -39,10 +41,7 @@ class AddGoalDialog extends React.Component {
 				title="Create a goal"
 				isFetchingData={this.props.isFetchingData}
 			>
-				<label>
-					Process type
-				</label>
-				<div className="form-field">
+				<FormGroup label="Process type">
 					<Select
 						openOnFocus
 						clearable={false}
@@ -53,11 +52,8 @@ class AddGoalDialog extends React.Component {
 						placeholder="Select a process type"
 						onChange={(newVal) => this.onInputChange('process_type', newVal)}
 					/>
-				</div>
-				<label>
-					Product type
-				</label>
-				<div className="form-field">
+				</FormGroup>
+				<FormGroup label="Product type">
 					<Select
 						multi={true}
 						openOnFocus
@@ -68,11 +64,8 @@ class AddGoalDialog extends React.Component {
 						placeholder="All product types"
 						onChange={(newVal) => this.onInputChange('product_type', newVal)}
 					/>
-				</div>
-				<label>
-					Date range
-				</label>
-				<div className="form-field">
+				</FormGroup>
+				<FormGroup label="Date range">
 					<Select
 						openOnFocus
 						value={this.state.timerange}
@@ -84,18 +77,15 @@ class AddGoalDialog extends React.Component {
 						placeholder="Select a time period for this goal"
 						onChange={(newVal) => this.onInputChange('timerange', newVal)}
 					/>
-				</div>
-				<label>
-					Target amount
-				</label>
-				<div className="form-field">
-					<input
+				</FormGroup>
+				<FormGroup label="Target amount">
+					<Input
 						type="text"
 						placeholder="Units"
 						value={this.state.goal}
 						onChange={(e) => this.onInputChange('goal', e.target.value)}
 					/>
-				</div>
+				</FormGroup>
 			</FormDialog>
 		)
 	}

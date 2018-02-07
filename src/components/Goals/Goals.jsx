@@ -19,7 +19,7 @@ class Goals extends React.Component {
 		this.handleDelete = this.handleDelete.bind(this)
 
 		this.state = {
-			isAddingGoal: true,
+			isAddingGoal: false,
 			isDeletingGoal: null,
 			isDeletingGoalIndex: -1,
 		}
