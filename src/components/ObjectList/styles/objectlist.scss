@@ -6,6 +6,10 @@
     min-width: 720px;
     max-width: 1200px;
 
+    .paginated-table.border-none li.header {
+        border-bottom: none; //override PaginatedTable header border
+    }
+
     .sk-spinner {
         margin: 160px auto;
     }
