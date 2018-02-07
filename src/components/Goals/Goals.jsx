@@ -35,14 +35,11 @@ class Goals extends React.Component {
 		if (!goals) 
 			return false
 
-		let completed = 0
 		let sortableGoals = []
 
 		let hd = this.handleDelete
 
 		goals.data.map(function (goal, i) {
-			if (goal.actual >= goal.goal)
-				completed += 1
 			sortableGoals.push(
 				update(
 					goal, 

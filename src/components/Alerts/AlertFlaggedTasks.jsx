@@ -18,20 +18,19 @@ export default class AlertFlaggedTasks extends React.Component {
 			alert =  `You have ${tasks.length} recently flagged ${pluralize(tasks.length, 'task')}.`
 		}
 		return (
-			<Alert negative={isFlagging} positive={!isFlagging} alert={alert}>
-				{
-					tasks.map(function (t, i) {
-						return <AlertFlaggedTaskTitle key={i} {...t} />
-					})
-				}
-			</Alert>
+			<Alert
+				negative={isFlagging}
+				positive={!isFlagging}
+				alert={alert}
+				details={tasks.map((t, i) => (<AlertFlaggedTaskTitle key={i} {...t} />))}
+			/>
 		)
 	}
 }
 
 function AlertFlaggedTaskTitle(props) {
 	return (
-		<div className="alert-flagged-task-title">
+		<div className="alert-detail">
 			<a href={`/task/${props.id}`} target="_blank">
 				<div />
 				<span>{props.display}</span>

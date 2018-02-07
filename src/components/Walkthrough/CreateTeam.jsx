@@ -7,7 +7,6 @@ import * as memberActions from '../TeamSettings/MemberActions'
 import * as userActions from '../AccountMenu/UserActions'
 import * as walkthroughActions from './WalkthroughActions'
 import {Redirect} from 'react-router'
-import Img from '../Img/Img'
 import * as processActions from '../Processes/ProcessesActions'
 
 const FETCHING = 'f'
