@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '../Card/Button'
 import Img from '../Img/Img'
 import './styles/formdialog.css'
+import Loading from '../Loading/Loading'
 
 export default function FormDialog(props) {
 	const extraClassNames = props.className ? props.className : ''
@@ -18,10 +19,12 @@ export default function FormDialog(props) {
 					/>
 				</div>
 				<div className="body">
-					{props.children}
-					<Button onClick={props.onSave}>
-						Save
-					</Button>
+					<Loading isFetchingData={props.isFetchingData}>
+						{props.children}
+						<Button onClick={props.onSave}>
+							Save
+						</Button>
+					</Loading>
 				</div>
 			</div>
 		</div>
