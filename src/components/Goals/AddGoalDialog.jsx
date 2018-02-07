@@ -4,13 +4,19 @@ import * as actions from './GoalsActions'
 import * as processActions from '../Processes/ProcessesActions'
 import * as productActions from '../Products/ProductsActions'
 import FormDialog from '../FormDialog/FormDialog'
-import Button from '../Card/Button'
 import Select from 'react-select';
+import * as types from './GoalTypes'
 
 class AddGoalDialog extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { process_type: null, product_type: null, goal: "", timerange: null }
+		this.state = {
+			process_type: null,
+			product_type: null,
+			goal: "",
+			timerange: this.props.defaultTimerange
+		}
+
 		this.handleAddGoal = this.handleAddGoal.bind(this)
 
 	}
@@ -21,6 +27,11 @@ class AddGoalDialog extends React.Component {
 	}
 
 	render() {
+		const timerangeOptions = [
+			{ "name": "Weekly", "type": types.WEEKLY },
+			{ "name": "Monthly", "type": types.MONTHLY }
+			]
+
 		return (
 			<FormDialog
 				onToggle={this.props.onToggle}
@@ -58,7 +69,9 @@ class AddGoalDialog extends React.Component {
 				<Select
 					openOnFocus
 					value={this.state.timerange}
-					options={[{ "name": "Week", "type": "w" }, { "name": "Month", "type": "m" }]}
+					searchable={false}
+					clearable={false}
+					options={timerangeOptions}
 					labelKey={'name'}
 					valueKey={'type'}
 					placeholder="Select a time period for this goal"
