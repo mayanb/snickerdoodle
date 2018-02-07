@@ -1,6 +1,31 @@
-$primary: #3976FF; // #49A8F3;
-$background-color: #FBFCFC;
-$light-grey: #eee;
+/* COLORS */
+
+$primary: rgba(0, 115, 249, 1); //#0073F9;; // #49A8F3;
+$primary-dark: rgba(0, 56, 199, 1);
+$primary-light: rgba(64, 179, 255, 1);
+$primary-ultra-light: rgba(135, 221, 255, 1);
+
+$black: rgba(0, 0, 0, 0.88);
+$gray-dark: rgba(0, 0, 0, 0.68);
+$gray: rgba(0, 0, 0, 0.48);
+$gray-light: rgba(0, 0, 0, 0.28);
+$gray-ultra-light: rgba(0, 0, 0, 0.08);
+
+$red: rgba(221, 81, 81, 1);
+$red-dark: rgba(360, 70, 82, 1);
+$red-light: rgba(232, 95, 107, 1);
+$red-ultra-light: rgba(250, 122, 150, 1);
+
+$elephant: rgba(167, 182, 192, 1);
+$elephant-dark: rgba(145, 161, 181, 1);
+$elephant-light: rgba(202, 208, 213, 1);
+$elephant-ultra-light: rgba(246, 248, 249, 1);
+
+$background-color: $elephant-ultra-light;
+$theme-color: $primary;
+
+/* ---------------------------- */
+
 $shadow-0: 0 1px 4px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.06);
 $shadow-1: 0 1px 4px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.12);
 $shadow-2: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -19,19 +44,9 @@ $z-index-edit-menu: 992;
 
 $sans-stack:'Apercu', 'Interface', 'Helvetica';
 $background-color: #F8F8F8;
-$red: #DD5151;
-$black: rgba(0,0,0,0.86);
-$gray: rgba(0,0,0,0.48);
-$medium-light-gray: rgba(0,0,0,0.11);
-$light-gray: rgba(0,0,0,0.06);
-$theme-color: #0073F9; //#2198EE; //42AFFF;
-$dark-theme-color: #0465D8;
 $baseline: 8px;
 $nav-width: 144px;
 $nav-height: 64px;
 $top-padding: 48px;
 $card-shadow: 0 0 8px 0 rgba(0,0,0,0.08);
 $panel-width: 300px;
-
-$green: #8ADC38;
-
