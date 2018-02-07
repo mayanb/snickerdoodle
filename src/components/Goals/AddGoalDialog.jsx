@@ -37,6 +37,7 @@ class AddGoalDialog extends React.Component {
 				onToggle={this.props.onToggle}
 				onSave={this.handleAddGoal}
 				title="Create a goal"
+				isFetchingData={this.props.isFetchingData}
 			>
 				<label>
 					Process type
@@ -152,10 +153,12 @@ function parseProductTypes(product_types) {
 
 
 const mapStateToProps = (state/*, props*/) => {
+	const isFetchiingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
 	return {
 		users: state.users,
 		processes: state.processes.data,
 		products: state.products.data,
+		isFetchingData: isFetchiingData
 	}
 }
 
