@@ -4,6 +4,7 @@ import * as actions from './AlertActions'
 import AlertFlaggedTasks from './AlertFlaggedTasks'
 import AlertAnomalousInputs from './AlertAnomalousInputs'
 import AlertCompletedGoals from './AlertCompletedGoals'
+import './styles/alerts.css'
 
 function getLatest(arr, type) {
 	let latest = null

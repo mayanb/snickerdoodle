@@ -9,7 +9,6 @@ import WalkthroughCreateProduct from './WalkthroughCreateProduct'
 import WalkthroughTrain from './WalkthroughTrain'
 import './styles/walkthrough.css'
 import * as actions from "./WalkthroughActions"
-import Img from '../Img/Img'
 import WalkthroughResources from './WalkthroughResources'
 import {shouldCompleteWalkthrough} from '../../authentication/authentication'
 

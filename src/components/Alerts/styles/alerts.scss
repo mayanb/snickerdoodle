@@ -10,14 +10,19 @@ $alert-yellow: #F8DE00;
 	}
 }
 
+.alert-container {
+	padding-left: 32px;
+	background-color: white;
+}
+
 .alert {
-	color: $black;
+	color: $gray;
 	-webkit-font-smoothing: antialiased;
 	font-size: 14px;
 	line-height: 20px;
 	border-bottom: 1px solid rgba(0,0,0,0.05);
-	margin-left: 16px;
-	padding: 20px 32px 20px 0;
+    padding: 24px 32px 20px 16px;
+	position: relative;
 
 	span {
 		line-height: 20px;
@@ -29,13 +34,17 @@ $alert-yellow: #F8DE00;
 		min-width: 6px;
 		max-height: 6px;
 		max-width: 6px;
-		margin-top: 7px;
-		margin-left: 7px;
 		border-radius: 4px;
+        position: absolute;
+        right: 20px;
+		margin-top: 7px;
 	}
 
 	img {
-		margin-right: 8px;
+		height: 16px;
+        position: absolute;
+		left: -8px;
+		margin-top: 2px;
 	}
 
 	&:first-child {
@@ -44,6 +53,7 @@ $alert-yellow: #F8DE00;
 
 	.alert-text {
 		display: flex;
+		margin-bottom: 4px;
 	}
 
 	.alert-circle {
@@ -59,38 +69,31 @@ $alert-yellow: #F8DE00;
 		font-size: 12px;
 		line-height: 20px;
 	}
-}
-@import 'styles/constants.scss';
 
-.alert-flagged-task-title {
-	font-family: 'Apercu Mono';
+	.view-all {
+		margin-top: 2px;
+        font-size: 12px;
+        color: $primary;
+		cursor: pointer;
+	}
+}
+
+.alert-detail {
+    font-size: 12px;
 	color: rgba(0,0,0,0.52);
-	line-height: 16px;
+	line-height: 20px;
 	display: flex;
 
-	div {
-		display: inline-block;
-		width: 16px;
-		height: 16px;
-		background-color: white;
-		border: 1px solid rgba(0,0,0,0.05);
-		border-radius: 8px;
-		vertical-align: bottom;
-	}
-
-	span {
-		margin-left: 8px;
-		display: inline-block;
-		border-bottom: 1px dashed rgba(0,0,0,0.3);
+	a {
+        display: flex;
+		align-items: center;
 	}
 
 	i {
 		display: none;
-		margin-left: 4px;
 		font-size: 14px;
-		line-height: 16px;
 		color: rgba(0,0,0,0.52);
-		vertical-align: bottom;
+		margin-left: 4px;
 	}
 
 	&:hover {
