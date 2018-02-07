@@ -30,7 +30,7 @@ class AddGoalDialog extends React.Component {
 		const timerangeOptions = [
 			{ "name": "Weekly", "type": types.WEEKLY },
 			{ "name": "Monthly", "type": types.MONTHLY }
-			]
+		]
 
 		return (
 			<FormDialog
@@ -41,51 +41,60 @@ class AddGoalDialog extends React.Component {
 				<label>
 					Process type
 				</label>
-				<Select
-					openOnFocus
-					value={this.state.process_type}
-					options={this.props.processes}
-					labelKey={'name'}
-					valueKey={'id'}
-					placeholder="Select a process type"
-					onChange={(newVal) => this.onInputChange('process_type', newVal)}
-				/>
+				<div className="form-field">
+					<Select
+						openOnFocus
+						clearable={false}
+						value={this.state.process_type}
+						options={this.props.processes}
+						labelKey={'name'}
+						valueKey={'id'}
+						placeholder="Select a process type"
+						onChange={(newVal) => this.onInputChange('process_type', newVal)}
+					/>
+				</div>
 				<label>
 					Product type
 				</label>
-				<Select
-					multi={true}
-					openOnFocus
-					value={this.state.product_type}
-					options={this.props.products}
-					labelKey={'name'}
-					valueKey={'id'}
-					placeholder="All product types"
-					onChange={(newVal) => this.onInputChange('product_type', newVal)}
-				/>
+				<div className="form-field">
+					<Select
+						multi={true}
+						openOnFocus
+						value={this.state.product_type}
+						options={this.props.products}
+						labelKey={'name'}
+						valueKey={'id'}
+						placeholder="All product types"
+						onChange={(newVal) => this.onInputChange('product_type', newVal)}
+					/>
+				</div>
 				<label>
 					Date range
 				</label>
-				<Select
-					openOnFocus
-					value={this.state.timerange}
-					searchable={false}
-					clearable={false}
-					options={timerangeOptions}
-					labelKey={'name'}
-					valueKey={'type'}
-					placeholder="Select a time period for this goal"
-					onChange={(newVal) => this.onInputChange('timerange', newVal)}
-				/>
+				<div className="form-field">
+					<Select
+						openOnFocus
+						value={this.state.timerange}
+						searchable={false}
+						clearable={false}
+						options={timerangeOptions}
+						labelKey={'name'}
+						valueKey={'type'}
+						placeholder="Select a time period for this goal"
+						onChange={(newVal) => this.onInputChange('timerange', newVal)}
+					/>
+				</div>
 				<label>
 					Target amount
 				</label>
-				<input
-					type="text"
-					placeholder="Units"
-					value={this.state.goal}
-					onChange={(e) => this.onInputChange('goal', e.target.value)}
-				/>
+				<div className="form-field">
+					<input
+						type="text"
+						placeholder="Units"
+						value={this.state.goal}
+						onChange={(e) => this.onInputChange('goal', e.target.value)}
+					/>
+				</div>
 			</FormDialog>
 		)
 	}
