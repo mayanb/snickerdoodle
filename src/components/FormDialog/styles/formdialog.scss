@@ -1,0 +1,56 @@
+@import 'styles/constants.scss';
+
+body div.dialog-container .form-dialog {
+    background-color: white;
+    width: 380px;
+    border-radius: 4px;
+    box-shadow: 0 0 11px 0 rgba(0, 0, 0, 0.09);
+
+    .header {
+        padding: 20px 16px 16px;
+        min-height: 52px;
+        border-bottom: 1px solid $medium-light-gray;
+
+        img {
+            height: 12px;
+            float: right;
+            cursor: pointer;
+        }
+    }
+
+    .body {
+        padding: 16px;
+
+    }
+
+    label {
+        font-size: 14px;
+        color: $gray;
+        margin-bottom: 8px;
+    }
+
+    .Select, input {
+        margin: 8px 0 24px;
+    }
+
+    input {
+        display: inline-block;
+        width: 100%;
+        height: 36px;
+
+        &::placeholder {
+            color: $gray;
+            font-family: Apercu;
+            font-size: 14px;
+            padding-left: 8px;
+        }
+    }
+
+    button {
+        width: 100%;
+        height: 44px;
+        border-radius: 4px;
+    }
+
+}
+
