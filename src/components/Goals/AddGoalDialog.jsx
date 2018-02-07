@@ -6,6 +6,7 @@ import * as productActions from '../Products/ProductsActions'
 import FormDialog from '../FormDialog/FormDialog'
 import Select from 'react-select';
 import FormGroup from '../Inputs/FormGroup'
+import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
 import * as types from './GoalTypes'
 
@@ -16,7 +17,8 @@ class AddGoalDialog extends React.Component {
 			process_type: null,
 			product_type: null,
 			goal: "",
-			timerange: this.props.defaultTimerange
+			timerange: this.props.defaultTimerange,
+			submitted: false
 		}
 
 		this.handleAddGoal = this.handleAddGoal.bind(this)
@@ -86,8 +88,31 @@ class AddGoalDialog extends React.Component {
 						onChange={(e) => this.onInputChange('goal', e.target.value)}
 					/>
 				</FormGroup>
+				{this.renderErrors()}
 			</FormDialog>
 		)
+	}
+
+	renderErrors() {
+		if (this.state.submitted) {
+			return (
+				<FormErrors errors={this.formErrors()}></FormErrors>
+			)
+		}
+	}
+
+	formErrors() {
+		const errors = []
+		if (!this.state.goal || this.state.goal.trim() === '' || isNaN(Number(this.state.goal))) {
+			errors.push('Goal must be a valid number')
+		}
+		if (!this.state.process_type) {
+			errors.push('Process Type must be selected')
+		}
+		if (!this.state.timerange) {
+			errors.push('Time period must be selected')
+		}
+		return errors
 	}
 
 	onInputChange(key, val) {
@@ -95,31 +120,11 @@ class AddGoalDialog extends React.Component {
 	}
 
 	handleAddGoal() {
-		console.log(this.state)
-		console.log(this.state.goal)
-		if (!this.state.goal || this.state.goal.trim() === '' || isNaN(Number(this.state.goal))) {
-			this.state.goal = undefined
-			alert('Goal must be a valid number')
-		}
-		if (!this.state.product_type) {
-			this.state.product_type = null
-			// alert('Product Type must be selected')
-		}
-		if (!this.state.process_type) {
-			this.state.process_type = undefined
-			alert('Process Type must be selected')
-		}
-
-		if (!this.state.timerange) {
-			this.state.timerange = undefined
-			alert('Time period must be selected')
-		}
-		if (this.state.process_type && this.state.goal && this.state.timerange) {
-			console.log("hi")
+		this.setState({ submitted: true })
+		if (this.formErrors().length === 0) {
 			let { users } = this.props
 			let userprofile = users.data[users.ui.activeUser].user.profile_id
 			let product_types = "ALL"
-			console.log(this.state.product_type)
 			if (this.state.product_type) {
 				product_types = parseProductTypes(this.state.product_type)
 			}
