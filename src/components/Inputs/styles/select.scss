@@ -3,7 +3,7 @@
 div.select-gray {
 	.Select-control {
 		border: none;
-		background-color: $light-gray;
+		background-color: $gray-light;
 	}
 
 	.Select-placeholder {
@@ -11,7 +11,7 @@ div.select-gray {
 	}
 
 	div.Select.is-focused > div.Select-control {
-		background-color: $light-gray !important;
+		background-color: $gray-light !important;
 		border: none;
 		box-shadow: none;
 		//color: rgba(255,255,255, 0.7) !important;

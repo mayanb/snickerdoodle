@@ -27,16 +27,16 @@
 			font-size: 20px;
 
 			&.disabled {
-				color: $light-gray;
+				color: $gray-light;
 			}
 		}
 	}
 
 	li {
-		border-bottom: 1px solid $light-gray;
+		border-bottom: 1px solid $gray-light;
 
 		&.header {
-			border-top: 1px solid $light-gray;
+			border-top: 1px solid $gray-light;
 		}
 	}
 
@@ -45,7 +45,7 @@
 		border-top: 0px;
 
 		&.header {
-			border-bottom: 1px solid $light-gray;
+			border-bottom: 1px solid $gray-light;
 		}
 	}
 

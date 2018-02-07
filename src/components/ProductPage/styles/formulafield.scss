@@ -1,7 +1,7 @@
 @import 'styles/constants.scss';
 
 .formula-field {
-	background-color: $light-gray;
+	background-color: $gray-light;
 	padding: 6px 8px;
 	line-height: 24px;
 	border-radius: 4px;
@@ -31,7 +31,7 @@
 	top: 34px;
 	left: 0;
 	width: 100%;
-	border: 1px solid $light-gray;
+	border: 1px solid $gray-light;
 	font-family: 'Apercu';
 	z-index: 1;
 
