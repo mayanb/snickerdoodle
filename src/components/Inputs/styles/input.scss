@@ -1,14 +1,23 @@
 @import 'styles/constants.scss';
 
 input.input {
-	display: inline-block;
 	width: 100%;
-	height: 36px;
+	border: 1px solid #DBE0E4;
+	border-radius: 4px;
+    color: $black;
 	font-family: Apercu;
 	font-size: 14px;
-	padding-left: 8px;
+	padding: 8px;
+	line-height: 20px;
+	outline: none;
+
+	&:focus {
+		border-color: $theme-color;
+	}
 
 	&::placeholder {
 		color: $gray;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 	}
 }
