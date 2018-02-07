@@ -49,7 +49,8 @@ export default class AccountDetailsEdit extends React.Component {
 
 	formErrors() {
 		const errors = []
-		const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+		//From http://emailregex.com/
+		const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 		if (this.props.keyword === 'email' && !EMAIL_REGEX.test(this.state.value))
 			errors.push('Please enter a valid email address.')
