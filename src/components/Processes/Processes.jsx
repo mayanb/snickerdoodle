@@ -18,7 +18,7 @@ class Processes extends React.Component {
 		  	name: '',
 			  abbreviation: ''
 		  },
-		  isAddingProcess: true
+		  isAddingProcess: false
 	  }
 
     this.handleSelectProcess = this.handleSelectProcess.bind(this)

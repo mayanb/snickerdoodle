@@ -6,7 +6,7 @@ export default function FormErrors({ className, errors }) {
 		return (
 			<div className={`form-errors ${className}`}>
 				{errors.map(error => (
-					<div>{error}</div>
+					<div key={error}>{error}</div>
 				))}
 			</div>
 		)
