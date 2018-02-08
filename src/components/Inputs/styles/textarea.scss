@@ -14,4 +14,10 @@ textarea.textarea {
     &:focus {
         border-color: $theme-color;
     }
+
+    &::placeholder {
+        color: $gray;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }

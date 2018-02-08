@@ -16,6 +16,11 @@ class Products extends React.Component {
   constructor(props) {
     super(props)
 
+	  this.state = {
+		  isAddingProduct: false
+	  }
+
+	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
     this.handleSelectProduct = this.handleSelectProduct.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
     this.handleCreateProduct = this.handleCreateProduct.bind(this)
@@ -42,19 +47,29 @@ class Products extends React.Component {
 				  Row={ProductsListItem}
 				  TitleRow={this.headerRow}
 			  />
+				{this.renderDialog()}
 		  </ObjectList>
 	  )
   }
 
   renderTitle() {
     return (
-    	<ObjectListTitle title="All products" buttonText="Create product">
-		    <CreateProductDialog
-			    onSubmit={this.handleCreateProduct.bind(this)}
-			    ui={this.props.ui}
-		    />
-	    </ObjectListTitle>
+    	<ObjectListTitle
+		    title="All products"
+		    buttonText="Create product"
+		    onToggleDialog={this.handleToggleDialog}
+	    />
     )
+  }
+
+  renderDialog() {
+	  return (
+		  <CreateProductDialog
+			  isOpen={this.state.isAddingProduct}
+			  onToggle={this.handleToggleDialog}
+			  onCreate={this.handleCreateProduct}
+		  />
+	  )
   }
 
 	headerRow() {
@@ -76,6 +91,10 @@ class Products extends React.Component {
   handlePagination(direction) {
     this.props.dispatch(actions.pageProducts(direction))
   }
+
+	handleToggleDialog() {
+		this.setState({isAddingProduct: !this.state.isAddingProduct})
+	}
 
   handleCreateProduct(json) {
     this.props.dispatch(actions.postCreateProduct(json))

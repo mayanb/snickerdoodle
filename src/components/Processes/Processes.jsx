@@ -14,19 +14,13 @@ class Processes extends React.Component {
     super(props)
 
 	  this.state = {
-		  process: {
-		  	name: '',
-			  abbreviation: ''
-		  },
 		  isAddingProcess: false
 	  }
 
     this.handleSelectProcess = this.handleSelectProcess.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
-
 	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
 	  this.handleCreateProcess = this.handleCreateProcess.bind(this)
-	  this.handleNameProcess = this.handleNameProcess.bind(this)
   }
 
   // fetch products on load
@@ -68,8 +62,6 @@ class Processes extends React.Component {
 	renderDialog() {
 		return (
 			<CreateProcessDialog
-				name={this.state.process.name}
-				code={this.state.process.abbreviation}
 				isOpen={this.state.isAddingProcess}
 				onToggle={this.handleToggleDialog}
 				onCreate={this.handleCreateProcess}
@@ -96,10 +88,6 @@ class Processes extends React.Component {
 			  let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
 			  return this.handleSelectProcess(index)
 		  })
-  }
-
-  handleNameProcess(newProcess) {
-	  this.setState({isAddingProcess: true, process: newProcess})
   }
 
   handlePagination(direction) {
