@@ -135,6 +135,7 @@ class AddGoalDialog extends React.Component {
 				goal: this.state.goal,
 				timerange: this.state.timerange.type
 			}
+			this.props.dispatch(actions.switchActiveGoalType(this.state.timerange.type))
 			this.props.dispatch(actions.postCreateGoal(data))
 			this.props.onToggle()
 		}
@@ -153,7 +154,7 @@ const mapStateToProps = (state/*, props*/) => {
 		users: state.users,
 		processes: state.processes.data,
 		products: state.products.data,
-		isFetchingData: isFetchiingData
+		isFetchingData: isFetchiingData,
 	}
 }
 
