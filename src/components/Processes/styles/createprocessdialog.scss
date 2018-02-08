@@ -1,42 +1,30 @@
-.create-process-input {
-	display:flex;
-	flex-direction: row;
-	margin-bottom: 16px;
+@import 'styles/constants.scss';
 
-	input {
-		display: inline;
+.create-process-dialog {
+    .name-abbreviation {
+        display: flex
+    }
 
-		&:last-child {
-			flex-grow: 1;
-		}
-	}
+    .name-group {
+        flex: 2;
+        margin-right: 20px;
+    }
 
-	.number {
-		border-radius: 4px 0 0 4px;
-		border-right-color: rgba(0,0,0,0);
-		width: 50px;
-		z-index: 10;
-		text-align: center;
-	}
+    .abbreviation-group {
+        flex: 1;
+    }
 
-	.unit {
-		border-radius: 0 4px 4px 0;
-		z-index: 11;
-	}
+    .output-quantity {
+        display: flex;
+
+        .number {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .unit {
+            flex: 6;
+        }
+    }
 }
 
-.create-process-description {
-	display:flex;
-	flex-direction: column;
-	margin-bottom: 16px;
-}
-
-.create-process-buttons {
-	display:flex;
-	flex-direction: row;
-	justify-content: flex-end;
-}
-
-.create-process-error {
-	margin-bottom: 16px;
-}
