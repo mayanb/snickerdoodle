@@ -2,6 +2,7 @@ import React from 'react'
 import FormDialog from '../FormDialog/FormDialog'
 import FormGroup from '../Inputs/FormGroup'
 import FormErrors from '../Inputs/FormErrors'
+import { EMAIL_REGEX } from '../../utilities/constants'
 import Input from '../Inputs/Input'
 
 export default class AccountDetailsEdit extends React.Component {
@@ -49,8 +50,6 @@ export default class AccountDetailsEdit extends React.Component {
 
 	formErrors() {
 		const errors = []
-		//From http://emailregex.com/
-		const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 		if (this.props.keyword === 'email' && !EMAIL_REGEX.test(this.state.value))
 			errors.push('Please enter a valid email address.')

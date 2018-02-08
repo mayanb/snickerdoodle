@@ -4,6 +4,7 @@ import FormDialog from '../FormDialog/FormDialog'
 import FormGroup from '../Inputs/FormGroup'
 import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
+import { EMAIL_REGEX, USERNAME_REGEX } from '../../utilities/constants'
 import './styles/createteammember.css'
 
 let account_types = [
@@ -22,6 +23,7 @@ export default class CreateTeamMemberDialog extends React.Component {
 			username: "",
 			password: "",
 			account_type: "",
+			submitted: false
 		}
 
 		this.handleSubmit = this.handleSubmit.bind(this)
@@ -33,6 +35,9 @@ export default class CreateTeamMemberDialog extends React.Component {
 	}
 
 	handleSubmit() {
+		this.setState({ submitted: true })
+		if (this.formErrors().length > 0)
+			return
 		this.props.onSubmit(this.state, () =>
 			this.props.onCancel()
 		)
@@ -49,6 +54,15 @@ export default class CreateTeamMemberDialog extends React.Component {
 				onSave={this.handleSubmit}
 				className="create-team-member"
 			>
+				{this.renderForm()}
+				{this.renderErrors()}
+			</FormDialog>
+		)
+	}
+
+	renderForm() {
+		return (
+			<div>
 				<div className="first-and-last-name">
 					<FormGroup label="First Name" className="first-name-group">
 						<Input
@@ -99,7 +113,50 @@ export default class CreateTeamMemberDialog extends React.Component {
 						placeholder="Choose an account type"
 					/>
 				</FormGroup>
-			</FormDialog>
+			</div>
 		)
+	}
+
+	renderErrors() {
+		if (this.state.submitted) {
+			return (
+				<FormErrors errors={this.formErrors()} />
+			)
+		}
+	}
+
+	formErrors() {
+		const errors = []
+		let { first_name, last_name, email, username, password, account_type } = this.state
+
+		if (!first_name || !last_name)
+			errors.push("Please make sure you've entered a first and last name.")
+
+		if((first_name && first_name.length > 30) || (last_name && last_name.length > 30))
+			errors.push("Please enter first and last names with fewer than 30 characters")
+
+		if (!email)
+			errors.push("Please make sure you've entered an email address.")
+
+		if (email && !EMAIL_REGEX.test(email))
+			errors.push('Please enter a valid email address.')
+
+		if (!username)
+			errors.push("Please make sure you've entered a username.")
+
+		if (username && !USERNAME_REGEX.test(username))
+			errors.push('Please enter a username containing only letters and numbers.')
+
+		if (username && username.length > 99)
+			//Django limits username to 150 characters. We may need 50 for the team name and 1 for the underscore
+			errors.push('Please enter a username with fewer than 99 characters')
+
+		if (!password)
+			errors.push("Please make sure you've entered a password.")
+
+		if (!account_type)
+			errors.push("Please make sure you've selected an account type.")
+
+		return errors
 	}
 }
