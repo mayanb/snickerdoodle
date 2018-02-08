@@ -1,9 +1,10 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import * as actions from './AlertActions'
 import AlertFlaggedTasks from './AlertFlaggedTasks'
 import AlertAnomalousInputs from './AlertAnomalousInputs'
 import AlertCompletedGoals from './AlertCompletedGoals'
+import Loading from '../Loading/Loading'
 import './styles/alerts.css'
 
 function getLatest(arr, type) {
@@ -20,7 +21,7 @@ function getLatest(arr, type) {
 class Alerts extends React.Component {
 
 	componentDidMount() {
-		let {users} = this.props
+		let { users } = this.props
 		let user = users.data[users.ui.activeUser].user
 
 		// this.props.dispatch(actions.fetchCompletedGoals(user.profile_id))
@@ -52,7 +53,7 @@ class Alerts extends React.Component {
 	// 	)
 	// }
 	render() {
-		let {alerts } = this.props
+		let { alerts } = this.props
 		var flagged_tasks = getLatest(alerts, 'ft')
 		var unflagged_tasks = getLatest(alerts, 'ut')
 		var missed_goals = getLatest(alerts, 'ig')
@@ -66,11 +67,13 @@ class Alerts extends React.Component {
 
 		return (
 			<div className="alerts">
-				<AlertCompletedGoals isCompleted={true} goals={completed_goals} />
-				<AlertFlaggedTasks isFlagging={true} tasks={flagged_tasks}/>
-				<AlertFlaggedTasks isFlagging={false} tasks={unflagged_tasks}/>
-				<AlertAnomalousInputs anomalies={anomalies} />
-				<AlertCompletedGoals isCompleted={false} goals={missed_goals} />
+				<Loading isFetchingData={this.props.isFetchingData}>
+					<AlertCompletedGoals isCompleted={true} goals={completed_goals} />
+					<AlertFlaggedTasks isFlagging={true} tasks={flagged_tasks} />
+					<AlertFlaggedTasks isFlagging={false} tasks={unflagged_tasks} />
+					<AlertAnomalousInputs anomalies={anomalies} />
+					<AlertCompletedGoals isCompleted={false} goals={missed_goals} />
+				</Loading>
 			</div>
 		)
 	}
@@ -80,7 +83,8 @@ class Alerts extends React.Component {
 const mapStateToProps = (state, props) => {
 	return {
 		users: state.users,
-		alerts: state.alerts.data
+		alerts: state.alerts.data,
+		isFetchingData: state.users.ui.isFetchingData || state.alerts.ui.isFetchingData
 	}
 }
 
