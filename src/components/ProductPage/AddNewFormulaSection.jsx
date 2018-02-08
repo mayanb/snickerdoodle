@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Select from 'react-select'
+import Select from '../Inputs/Select'
 import * as actions from '../Processes/ProcessesActions'
 
 class AddNewFormulaSection extends React.Component {

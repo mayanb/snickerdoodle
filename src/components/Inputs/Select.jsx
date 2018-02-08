@@ -3,9 +3,9 @@ import ReactSelect from 'react-select'
 import './styles/select.css'
 import 'react-select/dist/react-select.css';
 
-export default function Select({styleType, ...rest}) {
+export default function Select({className, ...rest}) {
 	return (
-		<div className={'select-'+styleType}>
+		<div className={`select ${className}`}>
 			<ReactSelect {...rest} />
 		</div>
 	)

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from './GoalsActions'
 import * as processActions from '../Processes/ProcessesActions'
 import * as productActions from '../Products/ProductsActions'
-import Select from 'react-select';
+import Select from '../Inputs/Select'
 import FormDialog from '../FormDialog/FormDialog'
 import FormGroup from '../Inputs/FormGroup'
 import FormErrors from '../Inputs/FormErrors'
