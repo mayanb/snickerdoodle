@@ -1,19 +1,21 @@
 @import 'styles/constants.scss';
 
-div.select-gray {
-	.Select-control {
-		border: none;
-		background-color: $gray-light;
-	}
+div.select {
+    .Select-control {
+        border: 1px solid $gray-light;
+    }
 
-	.Select-placeholder {
-		color: $gray;
-	}
+    .Select-placeholder {
+        color: $gray;
+        padding-left: 8px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 
-	div.Select.is-focused > div.Select-control {
-		background-color: $gray-light !important;
-		border: none;
-		box-shadow: none;
-		//color: rgba(255,255,255, 0.7) !important;
-	}
+    div.Select.is-focused:not(.is-open) > div.Select-control {
+        border-color: $theme-color;
+        box-shadow: none;
+        //color: rgba(255,255,255, 0.7) !important;
+    }
 }
+

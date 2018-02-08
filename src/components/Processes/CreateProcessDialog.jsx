@@ -1,6 +1,9 @@
 import React from 'react'
-import Dialog from '../Card/Dialog'
-import Button from '../Card/Button'
+import FormDialog from '../FormDialog/FormDialog'
+import FormGroup from '../Inputs/FormGroup'
+import FormErrors from '../Inputs/FormErrors'
+import Input from '../Inputs/Input'
+import Textarea from '../Inputs/Textarea'
 import './styles/createprocessdialog.css'
 
 export default class CreateProcessDialog extends React.Component {
@@ -8,11 +11,13 @@ export default class CreateProcessDialog extends React.Component {
 		super(props)
 
 		this.state = {
+			name: "",
+			code: "",
 			number: "",
-			unit: "", 
+			unit: "",
 			outputDescription: "",
 			processDescription: "",
-			error: false, 
+			submitted: false
 		}
 
 		this.handleCreate = this.handleCreate.bind(this)
@@ -24,93 +29,112 @@ export default class CreateProcessDialog extends React.Component {
 		}
 
 		return (
-			<Dialog onToggle={this.props.onToggle}>
-				<h1>Your process is almost ready...</h1>
-				<span>Fill out the following details to help your team understand this new process.</span>
-				{ this.renderRule() }
-				{ this.renderQuantityInput() }
-				{ this.renderOutputDescription() }
-				{ this.renderDescription() }
-				{ this.renderError() }
-				{ this.renderButtons() }
-			</Dialog>
+			<FormDialog
+				onToggle={this.props.onToggle}
+				onSave={this.handleCreate}
+				title="Create a process"
+				className="create-process-dialog"
+			>
+				{this.renderNameAndAbbreviation()}
+				{this.renderOutputQuantity()}
+				{this.renderOutputDescription()}
+				{this.renderProcessDescription()}
+				{this.renderErrors()}
+			</FormDialog>
 		)
 	}
 
-	renderError() {
-		if (this.state.error) {
-			return <span className="create-product-error">Please make sure you've filled out a name and abbreviation.</span>
+	renderErrors() {
+		console.log('state', this.state)
+		console.log('errors', this.formErrors())
+		if (this.state.submitted) {
+			return (
+				<FormErrors errors={this.formErrors()} />
+			)
 		}
-		return null;
 	}
 
-	renderRule() {
+	renderNameAndAbbreviation() {
 		return (
-			<div className="rule" style={{marginLeft: "-32px", marginRight: "-20px", width: "120%"}} />
+			<div className="name-abbreviation">
+				<FormGroup label="Name" className="name-group">
+					<Input
+						type="text"
+						placeholder="Roasting"
+						className="name"
+						value={this.state.name}
+						onChange={(e) => this.handleInputChange(e, "name")}
+					/>
+				</FormGroup>
+				<FormGroup label="Abbreviation" className="abbreviation-group">
+					<Input
+						type="text"
+						placeholder="ROAST"
+						className="abbreviation"
+						value={this.state.code}
+						onChange={(e) => this.handleInputChange(e, "code")}
+					/>
+				</FormGroup>
+			</div>
 		)
 	}
 
-	renderQuantityInput() {
+	renderOutputQuantity() {
 		return (
-			<div className="create-process-input">
-				<label>Expected output quantitiy</label>
-				<input 
-					className="number" 
-					placeholder="5"
-					value={this.state.number} 
-					onChange={(e)=> this.handleInputChange(e, "number")}
-				/>
-				<input 
-					className="unit"
-					placeholder="kilograms"  
-					value={this.state.unit} 
-					onChange={(e)=> this.handleInputChange(e, "unit")}
-				/>
-			</div>
+			<FormGroup label="Expected output quantity">
+				<div className="output-quantity">
+					<Input
+						type="number"
+						className="number"
+						placeholder="5"
+						value={this.state.number}
+						onChange={(e) => this.handleInputChange(e, "number")}
+					/>
+					<Input
+						type="text"
+						className="unit"
+						placeholder="kilograms"
+						value={this.state.unit}
+						onChange={(e) => this.handleInputChange(e, "unit")}
+					/>
+				</div>
+			</FormGroup>
 		)
 	}
 
 	renderOutputDescription() {
 		return (
-			<div className="create-process-input">
-				<label>Output description</label>
-				<input 
-					className="outputDescription" 
-					placeholder="eg. Roasted beans"
-					value={this.state.outputDescription} 
-					onChange={(e)=> this.handleInputChange(e, "outputDescription")}/>
-			</div>
+			<FormGroup label="Output description">
+				<Input
+					type="text"
+					placeholder="Roasted Beans"
+					value={this.state.outputDescription}
+					onChange={(e) => this.handleInputChange(e, "outputDescription")}
+				/>
+			</FormGroup>
 		)
 	}
 
-	renderDescription() {
+	renderProcessDescription() {
 		return (
-			<div className="create-process-description">
-				<label>Process description</label>
-				<textarea placeholder="Optional"
-				          value={this.state.processDescription}
-				          onChange={(e) => this.handleInputChange(e, "processDescription")} />
-			</div>
-		)
-	}
-
-	renderButtons() {
-		return (
-			<div className="create-process-buttons">
-				<Button secondary onClick={this.props.onToggle}>Cancel</Button>
-				<Button onClick={this.handleCreate}>Create process</Button>
-			</div>
+			<FormGroup label="Process description">
+					<Textarea
+						value={this.state.processDescription}
+						onChange={(e) => this.handleInputChange(e, "processDescription")}
+					/>
+			</FormGroup>
 		)
 	}
 
 	handleCreate() {
-		if (!this.handleInputValidation()) {
-			return 
+		this.setState({ submitted: true })
+		if (this.formErrors().length > 0) {
+			return
 		}
 
 		let newProcess = {
-			name: this.props.name,
-			code: this.props.code,
+			name: this.state.name,
+			code: this.state.code,
 			default_amount: this.state.number,
 			unit: this.state.unit,
 			output_desc: this.state.outputDescription,
@@ -123,34 +147,37 @@ export default class CreateProcessDialog extends React.Component {
 	}
 
 	handleInputChange(e, key) {
-		this.setState({[key]: e.target.value})
-		if (this.state.error) {
-			this.handleInputValidation()
-		}
+		this.setState({ [key]: e.target.value })
 	}
 
-	handleInputValidation() {
-		let {number} = this.state
-		let {name, code} = this.props
+	formErrors() {
+		const errors = []
+		let { name, code, number, unit, outputDescription, processDescription } = this.state
 
-		if(!number || number.length === 0 || Number.isNaN(number)) {
-			this.setState({error: true})
-			return false
-		}
+		if (!name)
+			errors.push("Please make sure you've filled out a name.")
 
-		if (!code || code.length === 0 || code.length > 10) {
-			this.setState({error: true})
-			return false
-		}
+		if (!code)
+			errors.push("Please make sure you've filled out an abbreviation.")
 
-		if(!name || name.length > 20) {
-			this.setState({error: true})
-			return false
-		}
+		if (name && name.length > 20)
+			errors.push("Please enter a name with fewer than 20 characters.")
 
-		this.setState({error: true})
-		return true
+		if (code && code.length > 10)
+			errors.push("Please enter an abbreviation with fewer than 10 characters.")
+
+		if (!number || Number.isNaN(number))
+			errors.push("Please enter a valid number for expected output quantity.")
+
+		if (!unit)
+			errors.push("Please add a unit for the expected output quantity.")
+
+		if(!outputDescription)
+			errors.push("Please make sure you've filled out an output description.")
+
+		if(!processDescription)
+			errors.push("Please make sure you've filled out an process description.")
+
+		return errors
 	}
-
-
 }

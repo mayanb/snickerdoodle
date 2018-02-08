@@ -1,5 +1,5 @@
 import React from 'react';
-import Select from 'react-select';
+import Select from '../Inputs/Select'
 import Datepicker from './Datepicker.jsx'
 import api from '../WaffleconeAPI/api.jsx'
 

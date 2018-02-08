@@ -31,20 +31,11 @@
 		}
 
 		.alerts-container {
-			padding-top: 48px;
 			flex: 2;
-			background-color: white;
-			overflow-y: scroll;
+			background-color: $background-color;
+			overflow-y: auto;
 			display: flex;
 			flex-direction: column;
-			& > span {
-				display: block;
-				flex: 0;
-			}
-
-			& > div {
-				flex: 1;
-			}
 		}
 	}
 }

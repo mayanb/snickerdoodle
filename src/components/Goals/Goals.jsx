@@ -9,6 +9,7 @@ import Sortable from '../Sortable/Container'
 import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
 import { pluralize } from '../../utilities/stringutils'
+import * as types from './GoalTypes'
 import './styles/goals.css'
 
 class Goals extends React.Component {
@@ -35,14 +36,11 @@ class Goals extends React.Component {
 		if (!goals) 
 			return false
 
-		let completed = 0
 		let sortableGoals = []
 
 		let hd = this.handleDelete
 
 		goals.data.map(function (goal, i) {
-			if (goal.actual >= goal.goal)
-				completed += 1
 			sortableGoals.push(
 				update(
 					goal, 
@@ -107,8 +105,13 @@ class Goals extends React.Component {
 	}
 
 	renderAddGoalDialog() {
-		if (this.state.isAddingGoal)
-			return <AddGoalDialog onToggle={() => this.setState({isAddingGoal: false})} />
+		if (this.state.isAddingGoal) {
+			const defaultTimerange = this.props.weeklyIsActive ? types.WEEKLY : types.MONTHLY
+			return <AddGoalDialog
+				onToggle={() => this.setState({ isAddingGoal: false })}
+				defaultTimerange={defaultTimerange}
+			/>
+		}
 		return null
 	}
 
@@ -132,7 +135,8 @@ const mapStateToProps = (state, props) => {
 
   return {
   	goals: goals,
-    users: state.users
+    users: state.users,
+	  weeklyIsActive: state.weeklyGoals.ui.active
   }
 }
 

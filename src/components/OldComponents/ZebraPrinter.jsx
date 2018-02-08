@@ -1,6 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
-import Select from 'react-select'
+import Select from '../Inputs/Select'
 import {printQRs_zebra, calibrate} from './qr.jsx'
 import api from '../WaffleconeAPI/api'
 

@@ -26,20 +26,17 @@ export default class AlertAnomalousInputs extends React.Component {
 		
 		let alert = `There are ${tasks.length} ${pluralize(tasks.length, 'task')} that have unlikely inputs. Check in to make sure everything's okay.`
 		return (
-			<Alert negative alert={alert}>
-				{
-					tasks.map(function (t, i) {
-						return <AlertFlaggedTaskTitle key={i} id={t.task} display={t.task_display} />
-					})
-				}
-			</Alert>
+			<Alert
+				negative alert={alert}
+				details={tasks.map((t, i) => (<AlertFlaggedTaskTitle key={i} id={t.task} display={t.task_display} />))}
+			/>
 		)
 	}
 }
 
 function AlertFlaggedTaskTitle(props) {
 	return (
-		<div className="alert-flagged-task-title">
+		<div className="alert-detail">
 			<a href={`/task/${props.id}`} target="_blank">
 				<span>{props.display}</span>
 				<i className="material-icons">open_in_new</i>

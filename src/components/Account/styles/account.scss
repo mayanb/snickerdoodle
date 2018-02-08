@@ -147,40 +147,6 @@
 
 	}
 
-	.create-member {
-		.buttons {
-			display:flex;
-			justify-content: flex-end;
-		}
-
-		h2 {
-			margin-bottom: 16px;
-		}
-
-		&>div {
-			display: flex;
-			margin-bottom: 8px;
-
-			label {
-				flex: 1;
-				font-weight: 700;
-			}
-
-			input {
-				margin-left: 8px;
-			}
-
-			input, div.Select {
-				flex: 3;
-
-				div.Select-control .Select-placeholder {
-					padding-left: 8px;
-				}
-			}
-
-		}
-	}
-
 
 	.accounttype-menu {
 		min-width: 240px;

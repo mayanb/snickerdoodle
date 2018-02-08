@@ -1,17 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import update from 'immutability-helper'
 import * as actions from './GoalsActions'
 import * as processActions from '../Processes/ProcessesActions'
 import * as productActions from '../Products/ProductsActions'
-import Dialog from '../Card/Dialog'
-import Button from '../Card/Button'
-import Select from 'react-select';
+import Select from '../Inputs/Select'
+import FormDialog from '../FormDialog/FormDialog'
+import FormGroup from '../Inputs/FormGroup'
+import FormErrors from '../Inputs/FormErrors'
+import Input from '../Inputs/Input'
+import * as types from './GoalTypes'
 
 class AddGoalDialog extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {process_type: null, product_type: null, goal: "", timerange: null}
+		this.state = {
+			process_type: null,
+			product_type: null,
+			goal: "",
+			timerange: this.props.defaultTimerange,
+			submitted: false
+		}
+
 		this.handleAddGoal = this.handleAddGoal.bind(this)
 
 	}
@@ -22,119 +31,114 @@ class AddGoalDialog extends React.Component {
 	}
 
 	render() {
+		const timerangeOptions = [
+			{ "name": "Weekly", "type": types.WEEKLY },
+			{ "name": "Monthly", "type": types.MONTHLY }
+		]
+
 		return (
-			<Dialog>
-				<h1>Make a new goal</h1>
-				<div style={{maxWidth: "300px"}} >
-				<div>
+			<FormDialog
+				onToggle={this.props.onToggle}
+				onSave={this.handleAddGoal}
+				title="Create a goal"
+				isFetchingData={this.props.isFetchingData}
+			>
+				<FormGroup label="Process type">
 					<Select
 						openOnFocus
+						clearable={false}
 						value={this.state.process_type}
 						options={this.props.processes}
 						labelKey={'name'}
 						valueKey={'id'}
-						placeholder="Select a process type to track"
+						placeholder="Select a process type"
 						onChange={(newVal) => this.onInputChange('process_type', newVal)}
 					/>
-				</div>
-				<div>
-					<Select 
+				</FormGroup>
+				<FormGroup label="Product type">
+					<Select
 						multi={true}
 						openOnFocus
 						value={this.state.product_type}
 						options={this.props.products}
 						labelKey={'name'}
 						valueKey={'id'}
-						placeholder="Select a product type - default is all"
+						placeholder="All product types"
 						onChange={(newVal) => this.onInputChange('product_type', newVal)}
 					/>
-				</div>
-				<div>
+				</FormGroup>
+				<FormGroup label="Date range">
 					<Select
-						openOnFocus	
+						openOnFocus
 						value={this.state.timerange}
-						options={[{"name": "Week", "type": "w"},{"name": "Month", "type": "m"}]}
+						searchable={false}
+						clearable={false}
+						options={timerangeOptions}
 						labelKey={'name'}
 						valueKey={'type'}
 						placeholder="Select a time period for this goal"
 						onChange={(newVal) => this.onInputChange('timerange', newVal)}
 					/>
-				</div>
-					<input 
-						type="text" 
-						placeholder="Target amount" 
-						value={this.state.goal} 
+				</FormGroup>
+				<FormGroup label="Target amount">
+					<Input
+						type="text"
+						placeholder="Units"
+						value={this.state.goal}
 						onChange={(e) => this.onInputChange('goal', e.target.value)}
 					/>
-					<span>{this.state.process?`${this.state.process_type.unit}(s)`:"units"}</span>
-				</div>
-				{ this.renderRule() }
-				{ this.renderButtons() }
-			</Dialog>
+				</FormGroup>
+				{this.renderErrors()}
+			</FormDialog>
 		)
 	}
 
-	renderRule() {
-		return (
-			<div className="rule" style={{marginLeft: "-32px", marginRight: "-20px", width: "120%"}} />
-		)
+	renderErrors() {
+		if (this.state.submitted) {
+			return (
+				<FormErrors errors={this.formErrors()}></FormErrors>
+			)
+		}
 	}
 
-
-	renderButtons() {
-		return (
-			<div className="create-process-buttons">
-				<Button secondary onClick={this.props.onToggle}>Cancel</Button>
-				<Button onClick={this.handleAddGoal}>Create</Button>
-			</div>
-		)
+	formErrors() {
+		const errors = []
+		if (!this.state.goal || this.state.goal.trim() === '' || isNaN(Number(this.state.goal))) {
+			errors.push('Goal must be a valid number')
+		}
+		if (!this.state.process_type) {
+			errors.push('Process Type must be selected')
+		}
+		if (!this.state.timerange) {
+			errors.push('Time period must be selected')
+		}
+		return errors
 	}
 
 	onInputChange(key, val) {
-		this.setState({[key]: val})
+		this.setState({ [key]: val })
 	}
 
 	handleAddGoal() {
-		console.log(this.state)
-		console.log(this.state.goal)
-		if(!this.state.goal || this.state.goal.trim() === '' || isNaN(Number(this.state.goal)) ) {
-			this.state.goal = undefined
-			alert('Goal must be a valid number')
-		}
-		if(!this.state.product_type) {
-			this.state.product_type = null
-			// alert('Product Type must be selected')
-		}
-		if(!this.state.process_type) {
-			this.state.process_type = undefined
-			alert('Process Type must be selected')
-		}
-
-		if(!this.state.timerange) {
-			this.state.timerange = undefined
-			alert('Time period must be selected')
-		}
-		if(this.state.process_type && this.state.goal && this.state.timerange) {
-			console.log("hi")
-			let {users} = this.props 
+		this.setState({ submitted: true })
+		if (this.formErrors().length === 0) {
+			let { users } = this.props
 			let userprofile = users.data[users.ui.activeUser].user.profile_id
 			let product_types = "ALL"
-			console.log(this.state.product_type)
-			if (this.state.product_type)
-			{
+			if (this.state.product_type) {
 				product_types = parseProductTypes(this.state.product_type)
 			}
 			let data = {
-				userprofile: userprofile, 
-				process_type: this.state.process_type.id, 
+				userprofile: userprofile,
+				process_type: this.state.process_type.id,
 				input_products: product_types,
-				goal: this.state.goal, 
-				timerange: this.state.timerange.type 
+				goal: this.state.goal,
+				timerange: this.state.timerange.type
 			}
 			this.props.dispatch(actions.postCreateGoal(data))
 			this.props.onToggle()
 		}
-		
+
 	}
 }
 
@@ -143,13 +147,14 @@ function parseProductTypes(product_types) {
 }
 
 
-
 const mapStateToProps = (state/*, props*/) => {
-  return {
-  	users: state.users,
-    processes: state.processes.data,
-    products: state.products.data,
-  }
+	const isFetchiingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
+	return {
+		users: state.users,
+		processes: state.processes.data,
+		products: state.products.data,
+		isFetchingData: isFetchiingData
+	}
 }
 
 const connectedAddGoalDialog = connect(mapStateToProps)(AddGoalDialog)

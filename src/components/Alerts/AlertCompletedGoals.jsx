@@ -19,21 +19,20 @@ export default function AlertGoals(props) {
 		alert = `Hooray! You completed ${goals.length} ${pluralize(goals.length, 'goal')} last week. `
 	}
 	return (
-		<Alert positive={isCompleted} negative={!isCompleted} alert={alert}>
-			{
-				goals.map(function (t, i) {
-					return <GoalInfo key={i} {...t} />
-				})
-			}
-		</Alert>
+		<Alert
+			positive={isCompleted}
+			negative={!isCompleted}
+			alert={alert}
+			details={goals.map((t, i) => (<GoalInfo key={i} {...t} />))}
+		/>
 	)
 }
 
 function GoalInfo(props) {
 	return (
-		<div><span>
+		<div className='alert-detail'>
 			{`${gerund(props.process_name)} ${parseInt(props.goal, 10)} ${pluralize(props.goal, props.process_unit)} ${getProductTypeString(props.product_code, props.all_product_types)}`}
-		</span></div>
+		</div>
 	)
 }
 

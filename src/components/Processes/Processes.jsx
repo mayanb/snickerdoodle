@@ -6,7 +6,6 @@ import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import ObjectListTitle from '../ObjectList/ObjectListTitle'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessesListItem from './ProcessesListItem'
-import CreateProcessDropdown from './CreateProcessDropdown'
 import CreateProcessDialog from './CreateProcessDialog'
 import './styles/processes.css'
 
@@ -15,19 +14,13 @@ class Processes extends React.Component {
     super(props)
 
 	  this.state = {
-		  process: {
-		  	name: '',
-			  abbreviation: ''
-		  },
-		  isDialogOpen: false
+		  isAddingProcess: false
 	  }
 
     this.handleSelectProcess = this.handleSelectProcess.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
-
 	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
 	  this.handleCreateProcess = this.handleCreateProcess.bind(this)
-	  this.handleNameProcess = this.handleNameProcess.bind(this)
   }
 
   // fetch products on load
@@ -58,21 +51,18 @@ class Processes extends React.Component {
 
   renderTitle() {
     return (
-	    <ObjectListTitle title="All processes" buttonText="Create process">
-		    <CreateProcessDropdown
-			    onSubmit={this.handleNameProcess}
-			    ui={this.props.ui}
-		    />
-	    </ObjectListTitle>
+	    <ObjectListTitle
+		    title="All processes"
+		    buttonText="Create process"
+		    onToggleDialog={this.handleToggleDialog}
+	    />
     )
   }
 
 	renderDialog() {
 		return (
 			<CreateProcessDialog
-				name={this.state.process.name}
-				code={this.state.process.abbreviation}
-				isOpen={this.state.isDialogOpen}
+				isOpen={this.state.isAddingProcess}
 				onToggle={this.handleToggleDialog}
 				onCreate={this.handleCreateProcess}
 			/>
@@ -100,10 +90,6 @@ class Processes extends React.Component {
 		  })
   }
 
-  handleNameProcess(newProcess) {
-	  this.setState({isDialogOpen: true, process: newProcess})
-  }
-
   handlePagination(direction) {
     this.props.dispatch(actions.pageProcesses(direction))
   }
@@ -113,7 +99,7 @@ class Processes extends React.Component {
   }
 
 	handleToggleDialog() {
-		this.setState({isDialogOpen: !this.state.isDialogOpen})
+		this.setState({isAddingProcess: !this.state.isAddingProcess})
 	}
 
 }

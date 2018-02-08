@@ -1,6 +1,6 @@
 import React from 'react'
 import $ from 'jquery'
-import Select from 'react-select'
+import Select from '../Inputs/Select'
 import {mountQR, printQRs_dymo} from './qr.jsx'
 import {Label} from './Label.jsx'
 import {fetch} from './APIManager.jsx'

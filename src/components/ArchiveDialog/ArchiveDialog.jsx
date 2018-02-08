@@ -6,7 +6,7 @@ import './styles/archivedialog.css'
 export default class ArchiveDialog extends React.Component {
 	render() {
 		return (
-			<Dialog>
+			<Dialog onToggle={this.props.onCancel}>
 				<div className="archive-dialog">
 					<h1>Archive</h1>
 					<span>{`Are you sure you want to remove ${this.props.name} (${this.props.code}) from your active list?`}</span>

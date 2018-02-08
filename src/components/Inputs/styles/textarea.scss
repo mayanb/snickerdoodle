@@ -1,0 +1,23 @@
+@import 'styles/constants.scss';
+
+textarea.textarea {
+    width: 100%;
+    border: 1px solid $gray-light;
+    border-radius: 4px;
+    padding: 8px;
+    resize: none;
+    outline: none;
+    color: $black;
+    font-family: Apercu;
+    font-size: 14px;
+
+    &:focus {
+        border-color: $theme-color;
+    }
+
+    &::placeholder {
+        color: $gray;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}

@@ -1,0 +1,14 @@
+@import 'styles/constants.scss';
+
+.form-group {
+    label {
+        font-size: 14px;
+        color: $gray;
+        margin-bottom: 8px;
+    }
+
+    .form-field {
+        margin: 8px 0 24px;
+    }
+}
+

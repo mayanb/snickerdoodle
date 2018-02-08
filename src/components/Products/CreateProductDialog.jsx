@@ -1,5 +1,9 @@
 import React from 'react'
-import Button from '../Card/Button.jsx'
+import FormDialog from '../FormDialog/FormDialog'
+import FormGroup from '../Inputs/FormGroup'
+import FormErrors from '../Inputs/FormErrors'
+import Textarea from '../Inputs/Textarea'
+import Input from '../Inputs/Input'
 import './styles/createproductdialog.css'
 
 export default class CreateProductDialog extends React.Component {
@@ -9,94 +13,108 @@ export default class CreateProductDialog extends React.Component {
 		this.state = {
 			name: "",
 			abbreviation: "",
-			description: "", 
+			description: "",
 			error: false,
 			too_long: false,
 		}
+
+		this.handleCreateProduct = this.handleCreateProduct.bind(this)
 	}
 
 	render() {
+		if (!this.props.isOpen) {
+			return null
+		}
+
 		return (
-			<div className="create-product-dialog">
-				{this.renderInput("name", "Name", "eg. Maya Mountain 2016")}
-				{this.renderInput("abbreviation", "Abbreviation", "eg. MM16")}
-				{this.renderDescription()}
-				{this.renderError()}
-				{this.renderTooLongError()}
-				{this.renderCreateButton()}
-			</div>
+			<FormDialog
+				onToggle={this.props.onToggle}
+				onSave={this.handleCreateProduct}
+				title="Create a product"
+			>
+				<div className="create-product-dialog">
+					{this.renderName()}
+					{this.renderAbbreviation()}
+					{this.renderDescription()}
+					{this.renderErrors()}
+				</div>
+			</FormDialog>
 		)
 	}
 
-	renderCreateButton() {
-		if (this.props.ui.isCreatingItem)
-			return <Button disabled>Creating...</Button>
+	renderErrors() {
+		if (this.state.submitted) {
+			return <FormErrors errors={this.formErrors()} />
+		}
+	}
 
+	renderName() {
 		return (
-			<Button onClick={this.handleCreateProduct.bind(this)}>Create product</Button>
+			<FormGroup label="Name">
+				<Input
+					type="text"
+					placeholder="e.g. Maya Mountain 2016"
+					value={this.state.name}
+					onChange={(e) => this.handleInputChange(e, 'name')}
+				/>
+			</FormGroup>
 		)
 	}
 
-	renderError() {
-		if (this.state.error) {
-			return <span className="create-product-error">Please make sure you've filled out a name and abbreviation.</span>
-		}
-		return null;
-	}
-
-	renderTooLongError() {
-		if (this.state.too_long) {
-			return <span className="create-product-error">The product name must be under 30 characters and the abbreviation under 10.</span>
-		}
-		return null;
-	}
-
-	renderInput(key, label, placeholder,) {
+	renderAbbreviation() {
 		return (
-			<div className="create-product-input">
-				<label>{label}</label>
-				<input type="text" value={this.state[key]} placeholder={placeholder} onChange={(e) => this.handleInputChange(e, key)} />
-			</div>
+			<FormGroup label="Abbreviation">
+				<Input
+					type="text"
+					placeholder="e.g. MM16"
+					value={this.state.abbreviation}
+					onChange={(e) => this.handleInputChange(e, 'abbreviation')}
+				/>
+			</FormGroup>
 		)
-	}
-
-	handleInputChange(e, key) {
-		this.setState({[key]: e.target.value})
-		if (this.state.error || this.state.too_long) {
-			this.handleInputValidation()
-		}
 	}
 
 	renderDescription() {
 		return (
-			<div className="create-product-description">
-				<label>Description (optional)</label>
-				<textarea placeholder="max 50 characters"/> 
-			</div>
+			<FormGroup label="Description">
+					<Textarea
+						placeholder="max 50 characters"
+						value={this.state.description}
+						onChange={(e) => this.handleInputChange(e, "description")}
+					/>
+			</FormGroup>
 		)
 	}
 
+	handleInputChange(e, key) {
+		this.setState({ [key]: e.target.value })
+	}
+
 	handleCreateProduct() {
-		if (!this.handleInputValidation())
-			return 
-		this.props.onSubmit({code: this.state.abbreviation, name: this.state.name})
+		this.setState({ submitted: true })
+		if (this.formErrors().length > 0)
+			return
+
+		this.props.onCreate({
+			code: this.state.abbreviation,
+			name: this.state.name,
+			description: this.state.name
+		})
 	}
 
-	handleInputValidation() {
-		let {name, abbreviation} = this.state
-		if(!name || name.length === 0 || !abbreviation || abbreviation.length === 0) {
-			this.setState({error: true})
-			return false
-		}
-		if (name.length > 30 || abbreviation.length > 10) {
-			// this.setState({error: true})
-			this.setState({too_long: true})
-			return false
-		}
-		this.setState({error: false})
-		return true
+	formErrors() {
+		const errors = [];
+		let { name, abbreviation, description } = this.state
+		if (!name || !abbreviation)
+			errors.push("Please make sure you've filled out a name and abbreviation.")
+
+		if (name.length > 30 || abbreviation.length > 10)
+			errors.push("The product name must be under 30 characters and the abbreviation under 10.")
+
+		if (description.length > 50)
+			errors.push("The product description must be under 50 characters.")
+
+		return errors;
 	}
-
-
 }
 
