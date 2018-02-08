@@ -1,11 +1,14 @@
 import React from 'react'
-import Dialog from '../Card/Dialog'
-import Button from '../Card/Button'
-import Select from 'react-select'
+import Select from '../Inputs/Select'
+import FormDialog from '../FormDialog/FormDialog'
+import FormGroup from '../Inputs/FormGroup'
+import FormErrors from '../Inputs/FormErrors'
+import Input from '../Inputs/Input'
+import './styles/createteammember.css'
 
 let account_types = [
-	{value: 'a', label: 'Administrator'},
-	{value: 'w', label: 'User'}
+	{ value: 'a', label: 'Administrator' },
+	{ value: 'w', label: 'Regular' }
 ]
 
 export default class CreateTeamMemberDialog extends React.Component {
@@ -14,6 +17,8 @@ export default class CreateTeamMemberDialog extends React.Component {
 
 		this.state = {
 			first_name: "",
+			last_name: "",
+			email: "",
 			username: "",
 			password: "",
 			account_type: "",
@@ -24,12 +29,12 @@ export default class CreateTeamMemberDialog extends React.Component {
 	}
 
 	handleInputChange(e, key) {
-		this.setState({[key]: e.target.value})
+		this.setState({ [key]: e.target.value })
 	}
 
 	handleSubmit() {
 		this.props.onSubmit(this.state, () =>
-			this.props.onCancel() 
+			this.props.onCancel()
 		)
 	}
 
@@ -38,52 +43,63 @@ export default class CreateTeamMemberDialog extends React.Component {
 			return null;
 
 		return (
-			<Dialog onToggle={this.props.onCancel} >
-				<div className="create-member">
-					<h2>Add a team member</h2>
-					<div>
-						<label>Name</label>
-						<input 
-							placeholder="Jane Doe"  
-							value={this.state.first_name} 
-							onChange={(e)=> this.handleInputChange(e, "first_name")}
+			<FormDialog
+				onToggle={this.props.onCancel}
+				title="Add a team member"
+				onSave={this.handleSubmit}
+				className="create-team-member"
+			>
+				<div className="first-and-last-name">
+					<FormGroup label="First Name" className="first-name-group">
+						<Input
+							placeholder="Jane"
+							value={this.state.first_name}
+							onChange={(e) => this.handleInputChange(e, "first_name")}
 						/>
-					</div>
-					<div>
-						<label>Username</label>
-						<input 
-							className="username" 
-							placeholder="letters & numbers only"
-							value={this.state.username} 
-							onChange={(e)=> this.handleInputChange(e, "username")}
+					</FormGroup>
+					<FormGroup label="Last Name" className="last-name-group">
+						<Input
+							placeholder="Doe"
+							value={this.state.last_name}
+							onChange={(e) => this.handleInputChange(e, "last_name")}
 						/>
-					</div>
-					<div>
-						<label>Password</label>
-						<input 
-							type="password"
-							placeholder="***"  
-							value={this.state.password} 
-							onChange={(e)=> this.handleInputChange(e, "password")}
-						/>
-					</div>
-					<div>
-						<label>Account type</label>
-						<Select
-		          value={this.state.account_type}
-		          searchable={false}
-		          clearable={false}
-		          options={account_types}
-		          onChange={(e)=> this.handleInputChange({target: {value: e.value}}, "account_type")}
-		          placeholder="Choose an account type"
-		        />
-					</div>
-					<div className="buttons">
-						<Button secondary onClick={this.props.onCancel}>Cancel</Button>
-						<Button onClick={this.handleSubmit}>Add team member</Button>
-					</div>
+					</FormGroup>
 				</div>
-			</Dialog>
+				<FormGroup label="Email">
+					<Input
+						className="email"
+						placeholder="jane@example.com"
+						value={this.state.email}
+						onChange={(e) => this.handleInputChange(e, "email")}
+					/>
+				</FormGroup>
+				<FormGroup label="Username">
+					<Input
+						className="username"
+						placeholder="letters & numbers only"
+						value={this.state.username}
+						onChange={(e) => this.handleInputChange(e, "username")}
+					/>
+				</FormGroup>
+				<FormGroup label="Password">
+					<Input
+						type="password"
+						placeholder="***"
+						value={this.state.password}
+						onChange={(e) => this.handleInputChange(e, "password")}
+					/>
+				</FormGroup>
+				<FormGroup label="Account type">
+					<Select
+						value={this.state.account_type}
+						searchable={false}
+						clearable={false}
+						options={account_types}
+						onChange={(e) => this.handleInputChange({ target: { value: e.value } }, "account_type")}
+						placeholder="Choose an account type"
+					/>
+				</FormGroup>
+			</FormDialog>
 		)
 	}
 }

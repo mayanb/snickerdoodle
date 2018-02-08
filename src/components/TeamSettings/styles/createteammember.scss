@@ -1,0 +1,16 @@
+@import 'styles/constants.scss';
+
+.create-team-member {
+    .first-and-last-name {
+        display: flex;
+    }
+
+    .first-name-group {
+        margin-right: 20px;
+    }
+
+    .first-name-group, .last-name-group {
+        flex: 1;
+    }
+}
+
