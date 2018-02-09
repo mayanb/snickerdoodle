@@ -14,6 +14,10 @@ class GoalsTabs extends React.Component {
 		super(props)
 		this.toggleEditing = this.toggleEditing.bind(this)
 		this.handleTab = this.handleTab.bind(this)
+
+		this.state = {
+			editMessage: "Edit"
+		}
 	}
 	render() {
 		let tabs = [
@@ -25,7 +29,7 @@ class GoalsTabs extends React.Component {
 				<div style={tab_style}>
 					<Tabs tabs={tabs} onTab={this.handleTab}/>
 				</div>
-				<Button link style={btn_style} onClick={this.toggleEditing}>Edit</Button>
+				<Button link style={btn_style} onClick={this.toggleEditing}>{this.state.editMessage}</Button>
 			</div>
 		)
 	}
@@ -35,6 +39,11 @@ class GoalsTabs extends React.Component {
 	}
 
 	toggleEditing() {
+		if(this.state.editMessage === "Edit") {
+			this.setState({editMessage: "Done"})
+		} else {
+			this.setState({editMessage: "Edit"})
+		}
 		this.props.dispatch(actions.toggleEditing(this.props.timerange))
 	}
 }

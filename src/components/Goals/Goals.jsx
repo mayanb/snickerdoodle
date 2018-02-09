@@ -8,6 +8,7 @@ import AddNewGoal from './AddNewGoal'
 import Sortable from '../Sortable/Container'
 import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
+import Loading from '../OldComponents/Loading.jsx'
 import { pluralize } from '../../utilities/stringutils'
 import * as types from './GoalTypes'
 import './styles/goals.css'
@@ -34,7 +35,9 @@ class Goals extends React.Component {
 	render() {
 		let {goals} = this.props
 		if (!goals) 
-			return false
+			return this.renderLoadingGoals()
+		if (goals.ui.isFetchingData)
+			return this.renderLoadingGoals()
 
 		let sortableGoals = []
 
@@ -123,6 +126,15 @@ class Goals extends React.Component {
 
 	handleDelete(goal, i) {
 		this.setState({isDeletingGoal: goal, isDeletingGoalIndex: i})
+	}
+
+	renderLoadingGoals() {
+		return (<div className="goals">
+			<div className="content">
+				<GoalsTabs />
+				<Loading />
+			</div>
+		</div>)
 	}
 
 }
