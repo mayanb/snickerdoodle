@@ -82,9 +82,13 @@ class CreateTeam extends React.Component {
 
 	handleMoveOn() {
 		this.setState({code_state: SHOULD_REDIRECT})
-
-		api.get('ics/use-code')
+		console.log(this.props.match.params.code)
+		api.get('/ics/use-code')
 			.query({code: this.props.match.params.code})
+			.then((res) => {
+				console.log(res)
+			})
+			.catch((e) => console.log(e))
 
 			let data = {
 				name: 'Label', 
