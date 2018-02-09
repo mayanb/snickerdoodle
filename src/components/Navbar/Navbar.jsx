@@ -29,7 +29,8 @@ class Navbar extends React.Component {
         </Link>
         <div className="bar">
           <div>
-            <NavigationGroup options={o1} links={l1} title={null} />
+            
+            { this.renderActivityLogAndInventoryNavigation() }
             { this.renderPrintingNavigation() }
             { this.renderAdminNavigation() }
           </div>
@@ -53,6 +54,18 @@ class Navbar extends React.Component {
     if (team === 'alabama' || team === 'valencia')
       return ( <NavigationGroup options={o2} links={l2} title={"Printing"} /> )
     return null
+  }
+
+  renderActivityLogAndInventoryNavigation() {
+    let o1 = ["Activity Log"]
+    let l1 = [""]
+    let {data, ui} = this.props.users
+    let team = data[ui.activeUser].user.team_name
+    if (team === 'alabama' || team === 'valencia')
+      o1 = ["Activity Log", "Inventory"]
+      l1 = ["", "inventory"]
+    return <NavigationGroup options={o1} links={l1} title={null} />
+
   }
 }
 
