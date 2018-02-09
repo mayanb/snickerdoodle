@@ -268,7 +268,7 @@ function Item(props) {
     <div className="item" onClick={props.onClick}>
       <div className="flex">
         <div className="item-img">
-          <img src={src} />
+          <img src={src} alt="item"/>
         </div>
         <div>
           <span className="item-qr">{qr.substring(qr.length - 6)}</span>

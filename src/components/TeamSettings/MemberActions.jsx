@@ -6,15 +6,11 @@ import {
   REQUEST_CREATE,
   REQUEST_CREATE_SUCCESS,
   REQUEST_CREATE_FAILURE,
-  REQUEST_DELETE,
-  REQUEST_DELETE_SUCCESS,
-  REQUEST_DELETE_FAILURE,
   REQUEST_EDIT_ITEM,
   REQUEST_EDIT_ITEM_SUCCESS,
   SELECT,
   PAGE,
 } from '../../reducers/APIDataReducer'
-import update from 'immutability-helper'
 import { MEMBERS } from '../../reducers/ReducerTypes'
 import { sortByAccountType } from '../../utilities/arrayutils'
 
