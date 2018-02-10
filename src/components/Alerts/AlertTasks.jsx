@@ -1,7 +1,6 @@
 import React from 'react'
 import Alert from './Alert'
 import TaskDialog from '../TaskDialog/TaskDialog'
-import { pluralize } from '../../utilities/stringutils'
 
 export default class AlertFlaggedTasks extends React.Component {
 	constructor(props) {

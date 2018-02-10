@@ -1,5 +1,5 @@
 import React from 'react';
-import { defaultRanges, Calendar, DateRange } from 'react-date-range';
+import { defaultRanges, DateRange } from 'react-date-range';
 import moment from 'moment-timezone';
 import ButtonDropdown from '../Card/ButtonDropdown'
 import './datepicker.css'
@@ -68,8 +68,7 @@ export default class Datepicker extends React.Component {
   }
 
   render() {
-    const format = 'MM/DD/YY';
-    const { expanded, predefined } = this.state;
+    const { expanded } = this.state;
 
     return (
       <ButtonDropdown 

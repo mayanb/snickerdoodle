@@ -18,7 +18,7 @@ export default function TaskDialog(props) {
 	)
 }
 
-function Task(task) {
+function Task(task)  {
 	return (
 		<Link key={task.id} className="task" to={`/task/${task.id}`}>
 			<ProcessTypeIcon task={task}/>
@@ -33,7 +33,7 @@ function Task(task) {
 function ProcessTypeIcon({task}) {
 	const filename = task.process_type ? task.process_type.icon : ''
 		return (
-		<img className="task-icon" src={icon(filename)} />
+		<img className="task-icon" src={icon(filename)} alt="Process Type"/>
 		)
 }
 

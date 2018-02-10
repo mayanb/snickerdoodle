@@ -9,7 +9,7 @@ import {
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
-  REQUEST_REORDER,
+  //REQUEST_REORDER,
   REQUEST_REORDER_SUCCESS,
   REQUEST_REORDER_FAILURE,
   SELECT,
@@ -200,6 +200,7 @@ export function postRequestReorder(goal, new_rank) {
 }
 
 
+/**
 function requestReorder(goal) {
   return {
     type: REQUEST_REORDER,
@@ -207,6 +208,7 @@ function requestReorder(goal) {
     timerange: goal.timerange,
   }
 }
+ */
 
 function requestReorderSuccess(goal, new_rank) {
   return {

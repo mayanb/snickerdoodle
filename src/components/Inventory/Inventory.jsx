@@ -272,6 +272,7 @@ function isSelected(props) {
   return (props.process_id === props.selected) ? "selected" : ""
 }
 
+//eslint-disable-next-line
 String.prototype.sentenceCase = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }

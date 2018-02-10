@@ -26,7 +26,7 @@ export default function MemberList(props) {
 
 function numAdmins(members) {
 	let adminCount = 0
-	members.map(function (m, i) {
+	members.forEach(function (m, i) {
 		if (isAdmin(m))
 			adminCount++
 	})

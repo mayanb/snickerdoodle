@@ -5,9 +5,6 @@ import NavigationGroup from './NavigationGroup'
 import NavigationFeedback from './NavigationFeedback'
 import './styles/navigation.css'
 
-let o1 = ["Activity Log", "Inventory"]
-let l1 = ["", "inventory"]
-
 let o2= [ "Zebra labels", "Dymo labels"]
 let l2 = ["labels", "dymo"]
 

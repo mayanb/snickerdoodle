@@ -180,7 +180,7 @@ export function OutputTable(props) {
 
 export function InputTable(props) {
   let grouped = {};
-  (props.inputs || []).map(function (input, i) {
+  (props.inputs || []).forEach(function (input, i) {
     if (grouped[input.input_task]) {
       grouped[input.input_task].push(input)
     } else {

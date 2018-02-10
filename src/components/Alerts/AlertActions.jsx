@@ -2,14 +2,9 @@ import api from '../WaffleconeAPI/api.jsx'
 import {
   REQUEST, 
   REQUEST_SUCCESS, 
-  REQUEST_FAILURE,
+  //REQUEST_FAILURE,
 } from '../../reducers/APIDataReducer'
-import { 
-  ALERT_MISSED_GOALS, 
-  ALERT_FLAGGED_TASKS, 
-  ALERT_ANOMALOUS_INPUTS,
-  ALERT_COMPLETED_GOALS,
-  ALERT_UNFLAGGED_TASKS, 
+import {
   ALERTS,
 } from '../../reducers/ReducerTypes'
 
@@ -63,6 +58,7 @@ function request(type) {
   }
 }
 
+/**
 function requestFailure(type, err) {
   alert('Oh no! Something went wrong\n' + err)
   return {
@@ -70,6 +66,7 @@ function requestFailure(type, err) {
     name: type
   }
 }
+ */
 
 function requestSuccess(type, json) {
   return {
