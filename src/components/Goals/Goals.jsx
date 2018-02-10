@@ -43,7 +43,7 @@ class Goals extends React.Component {
 
 		let hd = this.handleDelete
 
-		goals.data.map(function (goal, i) {
+		goals.data.forEach(function (goal, i) {
 			sortableGoals.push(
 				update(
 					goal, 

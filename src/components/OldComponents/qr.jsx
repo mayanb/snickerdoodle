@@ -1,6 +1,4 @@
 //import dymo from 'dymo'
-import $ from 'jquery'
-import api from '../WaffleconeAPI/api'
 //import QRCode from 'qrcodejs'
 //import BrowserPrint from 'browserprint'
 
@@ -28,6 +26,7 @@ function init() {
   }
 }
 
+/**
 function print(numLabels, text, success, always) {
   $.ajax({
       url: api.host + "/codes/",
@@ -40,6 +39,7 @@ function print(numLabels, text, success, always) {
     always()
   })
 }
+ */
 
 var errorCallback = function(errorMessage) {
   alert("Error: " + errorMessage);  

@@ -7,11 +7,6 @@ import {
   REQUEST_CREATE,
   REQUEST_CREATE_SUCCESS,
   REQUEST_CREATE_FAILURE,
-  REQUEST_DELETE,
-  REQUEST_DELETE_SUCCESS,
-  REQUEST_DELETE_FAILURE,
-  SELECT,
-  PAGE,
 } from '../../reducers/APIDataReducer'
 import {
     REQUEST_EDIT_TASK,
@@ -19,7 +14,6 @@ import {
     MARK_OUTPUT_USED,
 } from '../../reducers/TaskReducerExtension'
 import {  TASK, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
-import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
 
 export function getTask(task) {
 
@@ -52,9 +46,9 @@ function organizeAttributes(task) {
     {attribute: -1, value: moment(task.updated_at).format('MM/DD/YY h:mm a'), name: "Updated at", isEditable: false},
   ]
 
-  attributes.map(function (attr, i) {
+  attributes.forEach(function (attr, i) {
     let val = values.find(function (e) {
-      return (e.attribute == attr.id)
+      return (e.attribute === attr.id)
     })
     organized_attrs.push({attribute: attr.id, value: val?val.value:"", name: attr.name, isEditable: true, isEditing: false})
   })

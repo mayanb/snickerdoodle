@@ -1,8 +1,5 @@
 import api from '../WaffleconeAPI/api.jsx'
 import {
-  REQUEST_EDIT_ITEM,
-  REQUEST_EDIT_ITEM_SUCCESS,
-  REQUEST_EDIT_ITEM_FAILURE,
 	REQUEST_CREATE,
 	REQUEST_CREATE_SUCCESS,
 	REQUEST_CREATE_FAILURE,
@@ -13,7 +10,7 @@ import {
 	REQUEST_UPDATE_SETTING_FAILURE,
 } from '../AccountMenu/UserActions'
 
-import {WALKTHROUGH, TEAMS} from "../../reducers/ReducerTypes"
+import {TEAMS} from "../../reducers/ReducerTypes"
 
 function progressWalkthrough(endpoint) {
 	return function (dispatch) {
