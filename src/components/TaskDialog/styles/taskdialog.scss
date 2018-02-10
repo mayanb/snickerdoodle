@@ -1,0 +1,37 @@
+@import 'styles/constants.scss';
+
+.task-dialog {
+    background-color: white;
+    width: 380px;
+    border-radius: 4px;
+    box-shadow: 0 0 11px 0 rgba(0, 0, 0, 0.09);
+
+    .body {
+        padding-left: 16px;
+        height: 460px;
+        overflow: auto;
+    }
+
+    .task {
+        padding: 16px 0;
+        border-bottom: 1px solid $gray-ultra-light;
+        display: flex;
+    }
+
+    .task-icon {
+        height: 40px;
+        width: 40px;
+    }
+
+    .info {
+        margin-left: 12px;
+    }
+
+    .code {
+        color: $black;
+    }
+
+    .name {
+        color: $gray;
+    }
+}

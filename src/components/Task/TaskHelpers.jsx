@@ -1,9 +1,16 @@
 import moment from 'moment'
 import React from 'react'
+import { gerund } from '../../utilities/stringutils'
 
 
 export function display(task) {
   return words(task).toUpperCase()
+}
+
+export function description(task) {
+	const processed = task.process_type && task.process_type.name ? gerund(task.process_type.name) : 'Processed'
+	const product = task.product_type && task.product_type.name ? task.product_type.name : 'a product'
+	return `${processed} ${product} on ${moment(task.created_at).format('M/D')}`
 }
 
 export function getNotes(task) {
@@ -57,7 +64,7 @@ export function words(task) {
 
 export function getAttributesToColumnNumbers(attributes) {
   var cols = {}
-  attributes.map(function (a, i) {
+  attributes.forEach(function (a, i) {
     cols[a.id] = i
   })
   return cols
@@ -68,7 +75,7 @@ export function taskAsRow(process,task, cols) {
   
   var attrArray = Array(process.attributes.length).fill('')
   
-  task.attribute_values.map(function (av) {
+  task.attribute_values.forEach(function (av) {
     var col = cols[av.attribute]
     attrArray[col] = av.value.replace(/"/g, '""');
   })
@@ -125,7 +132,7 @@ export function TaskTable(props) {
             className="task-attribute-table-row input-table-row"
           >
             <span className="task-row-header">
-            <img src={icon(task.process_type.icon)} />
+            <img src={icon(task.process_type.icon)} alt="process type"/>
             {task.display}
             <i className="material-icons expand-i">open_in_new</i>
             </span>
@@ -231,3 +238,4 @@ export function Table(props) {
     </div>
   )
 }
+

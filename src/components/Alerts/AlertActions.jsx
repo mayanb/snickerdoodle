@@ -33,8 +33,8 @@ import {
 //   return fetch('/ics/alerts/recent-anomolous-inputs', ALERT_ANOMALOUS_INPUTS)
 // }
 
-export function fetchAlerts() {
-  return fetch('/ics/alerts/', ALERTS)
+export function fetchAlerts(user_id) {
+  return fetch('/ics/alerts/', ALERTS) //, user_id)
 }
 
 function fetch(endpoint, type, user_id) {
