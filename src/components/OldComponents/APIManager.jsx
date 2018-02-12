@@ -12,10 +12,6 @@ function fetch(url, params) {
   return $.get(url, params)
 }
 
-function refreshToken() {
-
-}
-
 function post(url, params, headers) {
 
   while (refreshing) {

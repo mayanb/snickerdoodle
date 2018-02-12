@@ -62,7 +62,7 @@ function printQRs_zebra(uuids, task, notes) {
   console.log("printing")
   try {
     var zpl = ""
-    uuids.map(function (uuid) {
+    uuids.forEach(function (uuid) {
       zpl += `
         ^XA
         ^FO30,36
@@ -125,7 +125,7 @@ function printQRs_dymo(uuids, qrcode) {
       var canvas = document.getElementById('canvastest').querySelector('canvas')
       var ctx = canvas.getContext('2d');
 
-      uuids.map(function (uuid) {
+      uuids.forEach(function (uuid) {
         createBackingImage(ctx, img, uuid)
         let backingImage = canvas.toDataURL().substr('data:image/png;base64,'.length)
         let qrImage = getQRimage(qrcode, uuid)
@@ -177,7 +177,7 @@ function getPrinter() {
   var printers = dymo.label.framework.getPrinters();
   console.log(printers)
   if (!printers || printers.length === 0)
-    throw "No DYMO printers are installed. Install DYMO printers."
+    throw new Error("No DYMO printers are installed. Install DYMO printers.")
 
   var i = -1;
   for (var j = 0; j < printers.length; ++j) {
@@ -189,7 +189,7 @@ function getPrinter() {
   }
 
   if (i === -1)
-    throw "No DYMO printers are connected."
+    throw new Error("No DYMO printers are connected.")
 
   return printers[i].name
 

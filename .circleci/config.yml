@@ -4,12 +4,6 @@
 #
 version: 2
 
-general:
-  branches:
-    only:
-      - staging
-      - master
-
 jobs:
   build:
     docker:

@@ -1,14 +1,9 @@
 import React from 'react'
 import {pluralize, gerund} from '../../utilities/stringutils'
 import Alert from './Alert'
-import {toArray} from '../../utilities/arrayutils'
 
 export default function AlertGoals(props) {
 	let { goals, isCompleted } = props
-	if (!goals) {
-		return false
-	}
-	goals = toArray(JSON.parse(goals.variable_content))
 
 	if (!goals || !goals.length) {
 			return false
@@ -23,8 +18,9 @@ export default function AlertGoals(props) {
 			positive={isCompleted}
 			negative={!isCompleted}
 			alert={alert}
-			details={goals.map((t, i) => (<GoalInfo key={i} {...t} />))}
-		/>
+		>
+			{goals.map((t, i) => (<GoalInfo key={i} {...t} />))}
+		</Alert>
 	)
 }
 

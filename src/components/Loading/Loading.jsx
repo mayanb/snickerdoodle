@@ -3,7 +3,6 @@ import Spinner from 'react-spinkit'
 import './styles/loading.css'
 
 export default function Loading({ isFetchingData, children }) {
-	console.log('children', children)
 	if (isFetchingData)
 		return (
 			<div className="loading">

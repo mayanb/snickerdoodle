@@ -1,0 +1,13 @@
+@import 'styles/constants.scss';
+
+.dialog-header {
+    padding: 20px 16px 16px;
+    min-height: 52px;
+    border-bottom: 1px solid $gray-ultra-light;
+
+    img {
+        height: 12px;
+        float: right;
+        cursor: pointer;
+    }
+}
