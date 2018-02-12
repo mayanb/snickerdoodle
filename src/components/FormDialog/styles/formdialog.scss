@@ -6,17 +6,6 @@ body div.dialog-container .form-dialog {
     border-radius: 4px;
     box-shadow: 0 0 11px 0 rgba(0, 0, 0, 0.09);
 
-    .header {
-        padding: 20px 16px 16px;
-        min-height: 52px;
-        border-bottom: 1px solid $gray-ultra-light;
-
-        img {
-            height: 12px;
-            float: right;
-            cursor: pointer;
-        }
-    }
 
     .body {
         padding: 16px;

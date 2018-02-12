@@ -13,11 +13,15 @@ import * as types from './GoalTypes'
 class AddGoalDialog extends React.Component {
 	constructor(props) {
 		super(props)
+		let timeRangeName = "Weekly"
+		if(this.props.defaultTimerange === 'm') {
+			timeRangeName = "Monthly"
+		}
 		this.state = {
 			process_type: null,
-			product_type: null,
+			product_type: null, //{id: -1, name: "All product types"},
 			goal: "",
-			timerange: this.props.defaultTimerange,
+			timerange: {type: this.props.defaultTimerange, name: timeRangeName},
 			submitted: false
 		}
 
@@ -31,10 +35,19 @@ class AddGoalDialog extends React.Component {
 	}
 
 	render() {
+		let {products, isFetchingData} = this.props
 		const timerangeOptions = [
 			{ "name": "Weekly", "type": types.WEEKLY },
 			{ "name": "Monthly", "type": types.MONTHLY }
 		]
+
+		if(products.length > 0 && !isFetchingData) {
+			if(!products.map(e => e.id).includes(-1)) {
+				products.unshift({id: -1, name: "All product types", className: "defaultSelectOptionStyle"});
+				console.log(products)
+			}
+		}
+		console.log(products)
 
 		return (
 			<FormDialog
@@ -116,10 +129,19 @@ class AddGoalDialog extends React.Component {
 	}
 
 	onInputChange(key, val) {
-		this.setState({ [key]: val })
+		console.log(val)
+		if(Array.isArray(val)) {
+			let val2 = JSON.parse(JSON.stringify(val))
+			val2.forEach((el)=>{el.className = null})
+			this.setState({ [key]: val2 })
+		} else {
+			this.setState({ [key]: val })
+		}
 	}
 
 	handleAddGoal() {
+		console.log("hiii")
+		console.log(this.state.product_type)
 		this.setState({ submitted: true })
 		if (this.formErrors().length === 0) {
 			let { users } = this.props
@@ -135,6 +157,8 @@ class AddGoalDialog extends React.Component {
 				goal: this.state.goal,
 				timerange: this.state.timerange.type
 			}
+			console.log(data)
+			this.props.dispatch(actions.switchActiveGoalType(this.state.timerange.type))
 			this.props.dispatch(actions.postCreateGoal(data))
 			this.props.onToggle()
 		}
@@ -143,6 +167,9 @@ class AddGoalDialog extends React.Component {
 }
 
 function parseProductTypes(product_types) {
+	if(product_types.map(e => e.id).includes(-1)) {
+		return "ALL"
+	}
 	return product_types.map(e => e.id).join(",")
 }
 
@@ -153,7 +180,7 @@ const mapStateToProps = (state/*, props*/) => {
 		users: state.users,
 		processes: state.processes.data,
 		products: state.products.data,
-		isFetchingData: isFetchiingData
+		isFetchingData: isFetchiingData,
 	}
 }
 

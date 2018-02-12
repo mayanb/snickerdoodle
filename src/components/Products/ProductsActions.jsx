@@ -9,16 +9,10 @@ import {
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
-  REQUEST_EDIT,
-  REQUEST_EDIT_SUCCESS,
-  REQUEST_EDIT_ITEM,
-  REQUEST_EDIT_ITEM_SUCCESS,
-  REQUEST_EDIT_ITEM_FAILURE,
-  SELECT,
   PAGE,
 } from '../../reducers/APIDataReducer'
-import { PRODUCTS, INVENTORIES } from '../../reducers/ReducerTypes'
-import {findPosition, alphabetize} from '../../utilities/arrayutils.jsx'
+import { PRODUCTS } from '../../reducers/ReducerTypes'
+import {alphabetize} from '../../utilities/arrayutils.jsx'
 
 
 export function fetchProducts(q) {
@@ -113,6 +107,7 @@ function requestCreateProductSuccess(json) {
   }
 }
 
+/**
 function formatProductResponse(json) {
   let products = {}
   
@@ -124,6 +119,7 @@ function formatProductResponse(json) {
   }
   return products
 }
+ */
 
 export function postDeleteProduct(p, index, callback) {
   return function (dispatch) {

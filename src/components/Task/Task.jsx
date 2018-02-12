@@ -61,7 +61,7 @@ class Task extends React.Component {
         {dialog}
         <div className="task-header">
           <div className="header-left">
-            <img src={icon(data.process_type.icon)} />
+            <img src={icon(data.process_type.icon)} alt="process type"/>
             <span>{data.display}</span>
           </div>
           <span>{moment(data.created_at).format('dddd, MMMM Do YYYY, h:mm a')}</span>

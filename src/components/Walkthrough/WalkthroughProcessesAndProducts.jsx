@@ -29,7 +29,7 @@ export class WalkthroughProcessesAndProducts extends React.Component {
 							</div>
 						</div>
 						<div style={{marginBottom: "24px"}}>
-							<iframe width="560" height="315" src="https://www.youtube.com/embed/ZJRr1mJA270?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+							<iframe title="Processes and Products Video" width="560" height="315" src="https://www.youtube.com/embed/ZJRr1mJA270?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 						</div>
 						<WalkthroughButton title="Got it" onClick={() => this.props.onCompleteStage()} />
 					</div>

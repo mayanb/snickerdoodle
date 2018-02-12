@@ -19,6 +19,7 @@ export function colorHash(str) {
     return colors[Math.abs(str.hashCode() % colors.length)]
 }
 
+//eslint-disable-next-line
 String.prototype.hashCode = function() {
   let h = 0, l = this.length, i = 0;
   if ( l > 0 )

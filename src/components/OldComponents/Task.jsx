@@ -55,7 +55,7 @@ function words(task) {
 
 function getAttributesToColumnNumbers(attributes) {
 	var cols = {}
-	attributes.map(function (a, i) {
+	attributes.forEach(function (a, i) {
 		cols[a.id] = i
 	})
 	return cols
@@ -66,7 +66,7 @@ function taskAsRow(process,task, cols) {
 	
 	var attrArray = Array(process.attributes.length).fill('')
 	
-	task.attribute_values.map(function (av) {
+	task.attribute_values.forEach(function (av) {
 		var col = cols[av.attribute]
 		attrArray[col] = av.value.replace(/"/g, '""');
 	})

@@ -128,7 +128,7 @@ export default class CreateProcessDialog extends React.Component {
 
 	handleCreate() {
 		this.setState({ submitted: true })
-		if (this.formErrors.length > 0) {
+		if (this.formErrors().length > 0) {
 			return
 		}
 

@@ -1,15 +1,17 @@
 import React from 'react'
-import './styles/dialog.css'
+import Img from '../Img/Img'
+import './styles/dialogheader.css'
 
 export default function DialogHeader(props) {
 	return (
 		<div className="dialog-header">
-			<h2>{props.children}</h2>
-			<Rule />
+				{props.children}
+				<Img
+					className="cancel"
+					onClick={props.onToggle}
+					src="delete"
+				/>
 		</div>
 	)
 }
 
-function Rule(props) {
-	return <div className="rule" style={{marginLeft: "-32px", marginRight: "-20px", width: "120%"}}/>
-}

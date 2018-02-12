@@ -13,7 +13,7 @@ export function _task(state, action) {
 	switch (action.type) {
 	  case MARK_OUTPUT_USED:
     	return markOutputUsed(ns, action)
-    case REQUEST_EDIT_TASK:
+    //case REQUEST_EDIT_TASK:
     	//return requestEditTask(ns, action)
     case REQUEST_EDIT_TASK_SUCCESS:
     	return requestEditTaskSuccess(ns, action)
