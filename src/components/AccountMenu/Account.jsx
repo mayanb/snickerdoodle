@@ -6,7 +6,7 @@ export default function Account(props) {
 	return (
 		<div className="account" onClick={onClick}>
 			<div>
-				<Icon size="32px" content={user.first_name}/>
+				<Icon size="32px" content={user.username_display}/>
 			</div>
 			<div>
 				<span className="name">{user.team_name}</span>
