@@ -28,6 +28,8 @@ import Sortable from '../Sortable/Index'
 import ProductPage from '../ProductPage/ProductPage'
 import ProcessPage from '../ProcessPage/ProcessPage'
 
+import Registration from '../Registration/Registration'
+
 
 export default class ApplicationLayoutStable extends React.Component {
 
@@ -72,6 +74,7 @@ function App(props) {
         <Route path={"/googleconnect/:ext?"} component={Account} />
         <Route path={"/bc/"} component={BCWrapper} />
         <Route path={"/barcharttest/"} component={Sortable} />
+        <Route path={"/registration/"} component={Registration} />
       </div>
     </div>
   )
