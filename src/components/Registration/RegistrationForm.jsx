@@ -22,7 +22,7 @@ export default function RegistrationForm(props) {
 	return (
 		<WalkthroughFrame>
 			<Card>
-				<div className="registration-form">
+				<form className="registration-form">
 					<div className="walkthrough-header">
 						{'Welcome to team '}
 						{ teamName }
@@ -34,7 +34,7 @@ export default function RegistrationForm(props) {
 							className="username"
 							placeholder="letters & numbers only"
 							value={username}
-							onChange={(e) => onChange(e.value, "username")}
+							onChange={(e) => onChange(e.target.value, "username")}
 						/>
 					</FormGroup>
 					<FormGroup label="Password">
@@ -42,7 +42,7 @@ export default function RegistrationForm(props) {
 							type="password"
 							placeholder="***"
 							value={password}
-							onChange={(e) => onChange(e.value, "password")}
+							onChange={(e) => onChange(e.target.value, "password")}
 						/>
 					</FormGroup>
 					<FormGroup label="Retype password">
@@ -50,12 +50,12 @@ export default function RegistrationForm(props) {
 							type="password"
 							placeholder="***"
 							value={retyped_password}
-							onChange={(e) => onChange(e.value, "retyped_password")}
+							onChange={(e) => onChange(e.target.value, "retyped_password")}
 						/>
 					</FormGroup>
-					{ errors && errors.length && <FormErrors errors={errors}/> }
+					{ errors && <FormErrors errors={errors}/> }
 					<button onClick={onSubmit}>Done</button>
-				</div>
+				</form>
 			</Card>
 		</WalkthroughFrame>
 	)

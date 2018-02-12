@@ -1,10 +1,15 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import {Redirect} from 'react-router'
+import * as actions from '../AccountMenu/UserActions'
 import { USERNAME_REGEX } from '../../utilities/constants'
+import { getStoredUsername } from '../../utilities/userutils'
 import api from '../WaffleconeAPI/api'
 import RegistrationForm from './RegistrationForm'
 import './styles/registration.css'
 
-export default class Registration extends React.Component {
+
+class Registration extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -14,10 +19,12 @@ export default class Registration extends React.Component {
 			isFetchingInitialData: false,
 			userprofile: null,
 			errors: null,
+			shouldRedirect: false,
 		}
 
 		this.handleInputChange = this.handleInputChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleAuthenticate = this.handleAuthenticate.bind(this)
 	}
 
 	componentDidMount() {
@@ -25,8 +32,9 @@ export default class Registration extends React.Component {
 	}
 
 	render() {
-		let { 
+		let {
 			isFetchingInitialData, 
+			shouldRedirect,
 			userprofile,
 			errors
 		} = this.state
@@ -35,6 +43,8 @@ export default class Registration extends React.Component {
 			return <div>Loading...</div>
 		} else if (!userprofile) {
 			return <div>Error</div>
+		} else if (shouldRedirect) {
+			return <Redirect to='/login' />
 		} else {
 			return(
 				<RegistrationForm 
@@ -51,29 +61,51 @@ export default class Registration extends React.Component {
 		this.setState({ [key]: value })
 	}
 
-	handleSubmit() {
-		this.setState({ errors: this.formErrors() })
-		// save the username and password
-		// go to login page??
+	handleSubmit(e) {
+		let { userprofile_id } = this.props.match.params
+		let { password, username } = this.state
+
+		// make sure the HTML form element doesnt force a redirect
+		e.preventDefault()
+
+		this.setState({ errors: this.formErrors(), isSubmitting: true })
+		api.put(`/ics/userprofiles/change-username-password/${userprofile_id}/`)
+			.send({ new_password: password, new_username: username})
+			.then(this.handleAuthenticate).catch(e => {
+				this.setState({ isSubmitting: false })
+				console.log(e)
+			})
 	}
+
+	handleAuthenticate() {
+		let { userprofile, username, password } = this.state
+		let { team_name } = userprofile
+    this.props.dispatch(actions.postRequestLogin({
+    	username: getStoredUsername(username, team_name), 
+    	password: password
+    })).then(res => {
+			this.setState({ shouldRedirect: true, isSubmitting: false })
+    })
+  }
 
 	formErrors() {
 		const errors = []
 		let { username, password, retyped_password } = this.state
+		console.log(this.state)
 
 		if (!username || !password ) {
 			errors.push("Please make sure you've entered a username and password.")
 		}
 
 		if (!USERNAME_REGEX.test(username)) {
-			errors.push("Please enter a username containing only numbers and letters.")
+			errors.push("Please enter a username that has only numbers and letters.")
 		}
 
 		if (password !== retyped_password) {
 			errors.push("Both passwords must match.")
 		}
 
-		return errors
+		return errors.length ? errors : null
 	}
 
 	getUserprofileData() {
@@ -89,5 +121,10 @@ export default class Registration extends React.Component {
 				this.setState({ isFetchingInitialData: false })
 			})
 	}
-
 }
+
+const mapStateToProps = (state/*, props*/) => {
+  return {}
+}
+
+export default connect(mapStateToProps)(Registration)

@@ -41,6 +41,7 @@ export default class ApplicationLayoutStable extends React.Component {
             <Route path="/create/:code?" component={CreateTeam} />
             <Route path={"/introduction"} component={Walkthrough} />
           	<Route path="/login" component={Login} />
+            <Route path={"/join/:userprofile_id?"} component={Registration} />
           	<PrivateRoute component={App}/>
           </Switch>
       </Router>
@@ -74,7 +75,6 @@ function App(props) {
         <Route path={"/googleconnect/:ext?"} component={Account} />
         <Route path={"/bc/"} component={BCWrapper} />
         <Route path={"/barcharttest/"} component={Sortable} />
-        <Route path={"/registration/"} component={Registration} />
       </div>
     </div>
   )
