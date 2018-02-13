@@ -65,7 +65,7 @@ class CreateTeam extends React.Component {
 
 				// create the user & login
 				const newTeamId = res.item.id
-				const newUser = Object.assign({}, data.user, { team: newTeamId })
+				const newUser = Object.assign({}, data.user, { team: newTeamId, invited: false })
 				this.props.dispatch(memberActions.postCreateMember(newUser, () => {}))
 					.then(() => this.handleLogin(data))
 			})
