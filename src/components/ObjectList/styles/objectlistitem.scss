@@ -6,14 +6,14 @@
     cursor: pointer;
     height: 40px;
     line-height: 40px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     padding: 0 20px;
     background-color: white;
     border-radius: 4px;
-    box-shadow: $gray-ultra-light 0 2px 4px 0;
+    //box-shadow: $gray-ultra-light 0 2px 4px 0;
 
     &:hover {
-        box-shadow: $gray-ultra-light 0 2px 4px 2px;
+        box-shadow: rgba($elephant-light, 0.2) 0 2px 2px 2px;
     }
 
     &>div:first-child {
