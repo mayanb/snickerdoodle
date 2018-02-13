@@ -19,7 +19,9 @@ class Registration extends React.Component {
 			isFetchingInitialData: false,
 			userprofile: null,
 			errors: null,
+			apiError: null,
 			shouldRedirect: false,
+			isSubmitting: false,
 		}
 
 		this.handleInputChange = this.handleInputChange.bind(this)
@@ -36,12 +38,11 @@ class Registration extends React.Component {
 			isFetchingInitialData, 
 			shouldRedirect,
 			userprofile,
-			errors
+			errors, 
+			apiError
 		} = this.state
 
-		if (isFetchingInitialData) {
-			return <div>Loading...</div>
-		} else if (!userprofile) {
+		if (!isFetchingInitialData && !userprofile) {
 			return <div>Error</div>
 		} else if (shouldRedirect) {
 			return <Redirect to='/login' />
@@ -51,7 +52,7 @@ class Registration extends React.Component {
 					{...this.state} 
 					onChange={this.handleInputChange}
 					onSubmit={this.handleSubmit}
-					errors={ errors && this.formErrors() }
+					errors={ errors ? this.formErrors() : [apiError] }
 				/>
 			)
 		}
@@ -72,9 +73,16 @@ class Registration extends React.Component {
 		api.put(`/ics/userprofiles/change-username-password/${userprofile_id}/`)
 			.send({ new_password: password, new_username: username})
 			.then(this.handleAuthenticate).catch(e => {
-				this.setState({ isSubmitting: false })
-				console.log(e)
+				this.setState({ isSubmitting: false, apiError: this.parseAPIError(e) })
 			})
+	}
+
+	parseAPIError(err) {
+		try {
+			return Object.values(err.response.body)[0]
+		} catch(e)  {
+			return "Something went wrong. Try again later."
+		}
 	}
 
 	handleAuthenticate() {

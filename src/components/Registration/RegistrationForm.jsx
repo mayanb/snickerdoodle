@@ -4,31 +4,35 @@ import Card from '../Card/Card'
 import FormGroup from '../Inputs/FormGroup'
 import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
+import Loading from '../Loading/Loading'
+import Spinner from 'react-spinkit'
 
 export default function RegistrationForm(props) {
 	let { 
+		isFetchingInitialData,
+		isSubmitting,
 		username, 
 		password, 
 		retyped_password, 
 		userprofile,
 		onChange,
 		errors,
-		onSubmit
+		onSubmit,
 	} = props
 
-
-	let teamName = <span style={{fontWeight: 'bold'}}>{userprofile.team_name}</span>
+	let teamName = userprofile && <span style={{fontWeight: 'bold'}}>{userprofile.team_name}</span>
 
 	return (
 		<WalkthroughFrame>
+			<Loading isFetchingData={isFetchingInitialData} spinnerProps={{color: "#aaaaaa"}}>
 			<Card>
 				<form className="registration-form">
 					<div className="walkthrough-header">
-						{'Welcome to team '}
+						{`Hi ${userprofile && userprofile.first_name}! Welcome to team `}
 						{ teamName }
 						{'!'}
 					</div>
-					<div className="subtitle">Finish settig up your account by choosing a username and password.</div>
+					<div className="subtitle">Finish setting up your account by choosing a username and password.</div>
 					<FormGroup label="Username">
 						<Input
 							className="username"
@@ -54,9 +58,12 @@ export default function RegistrationForm(props) {
 						/>
 					</FormGroup>
 					{ errors && <FormErrors errors={errors}/> }
-					<button onClick={onSubmit}>Done</button>
+					<button onClick={onSubmit}>
+						{isSubmitting ? <Spinner name="three-bounce" fadeIn='quarter' style={{height: '20px'}}color="white" /> : 'Submit'}
+					</button>
 				</form>
 			</Card>
+			</Loading>
 		</WalkthroughFrame>
 	)
 }
