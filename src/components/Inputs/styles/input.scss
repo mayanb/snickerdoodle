@@ -2,9 +2,9 @@
 
 input.input {
 	width: 100%;
-	border: 1px solid $gray-light;
+	border: 1px solid $elephant-light;
 	border-radius: 4px;
-    color: $black;
+  color: $black;
 	font-family: Apercu;
 	font-size: 14px;
 	padding: 8px;
@@ -16,7 +16,7 @@ input.input {
 	}
 
 	&::placeholder {
-		color: $gray;
+		color: $elephant;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 	}

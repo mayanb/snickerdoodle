@@ -27,16 +27,15 @@ export function postRequestLogin(credentials, success, failure) {
 	return function (dispatch) {
 		dispatch(requestLogin())
 
-		api.post('/auth/login/')
+		return api.post('/auth/login/')
 			.send(credentials)
-			.end(function (err, res) {
-				if (err || !res.ok) {
-					dispatch(requestLoginFailure(err))
-					failure(res.status || err)
-				} else {
-					dispatch(requestLoginSuccess(res.body))
-					success(res.body)
-				}
+			.then(res => {
+				dispatch(requestLoginSuccess(res.body))
+				success && success(res.body)
+			})
+			.catch(err => {
+				dispatch(requestLoginFailure(err))
+				throw err
 			})
 	}
 }

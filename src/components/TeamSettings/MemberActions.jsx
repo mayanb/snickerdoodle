@@ -77,31 +77,10 @@ export function pageMembers(direction) {
   }
 }
 
-// export function postCreateMember(json, success) {
-//   return function (dispatch) {
-//     dispatch(requestCreateMember())
-
-//     let data = update(json, {
-//       $merge: { username: json.username.toLowerCase()}
-//     })
-
-//     return api.post('/ics/users/create/')
-//       .send(json)
-//       .end(function (err, res) {
-//         if (err || !res.ok)
-//           dispatch(requestCreateMemberFailure(err))
-//         else {
-//           dispatch(requestCreateMemberSuccess(res.body))
-//           success(res.body.id)
-//         }
-//       })
-//   }
-// }
-
 export function postCreateMember(json, success) {
   return function (dispatch) {
     dispatch(requestCreateMember())
-    let data = {...json, username: json.username.toLowerCase()}
+    let data = {...json, username: json.username.toLowerCase() }
     return api.post('/ics/users/create/')
       .send(data)
       .then((res) => {

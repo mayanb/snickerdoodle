@@ -3,8 +3,10 @@
 .form-group {
     label {
         font-size: 14px;
-        color: $gray;
+        color: $elephant;
         margin-bottom: 8px;
+        -webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
     }
 
     .form-field {
