@@ -109,6 +109,11 @@ class Registration extends React.Component {
 			errors.push("Please enter a username that has only numbers and letters.")
 		}
 
+		if (username && username.length > 99) {
+			//Django limits username to 150 characters. We may need 50 for the team name and 1 for the underscore
+			errors.push('Please enter a username with fewer than 99 characters')
+		}
+
 		if (password !== retyped_password) {
 			errors.push("Both passwords must match.")
 		}

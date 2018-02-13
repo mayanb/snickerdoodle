@@ -6,10 +6,10 @@ import TeamMemberChangeAccountType from './TeamMemberChangeAccountType'
 export default function Member(props) {
 	return (
 	<div className="member">
-		<Icon content={props.member.username_display}/>
+		<Icon content={props.member.first_name}/>
 		<div className="account-names">
 			<span className="account-name-real">{`${props.member.first_name} ${props.member.last_name}`}</span>
-			<span>{props.member.username_display.toLowerCase()}</span>
+			<span>{getUsernameOrPending(props.member)}</span>
 		</div>
 		<div className="account-types">
 		{ 
@@ -21,4 +21,10 @@ export default function Member(props) {
 		</div>
 	</div>
 	)
+}
+
+function getUsernameOrPending(user) {
+	if (user.username_display.includes('-'))
+		return <span style={{opacity: "0.5"}}>Pending</span>
+	else return user.username_display.toLowerCase()
 }
