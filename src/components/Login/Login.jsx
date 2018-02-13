@@ -23,8 +23,12 @@ class Login extends React.Component {
     }
   }
 
+	handleChangeToLowerCase(which, val) {
+  	this.handleChange(which, val.toLowerCase())
+	}
+
   handleChange(which, val) {
-    this.setState({[which] : val})
+    this.setState({[which] : val })
   }
 
   handleSubmit(e) {
@@ -68,7 +72,7 @@ class Login extends React.Component {
             <input 
               type="text" 
               value={this.state.team_name} 
-              onChange={(e) => this.handleChange('team_name', e.target.value)}
+              onChange={(e) => this.handleChangeToLowerCase('team_name', e.target.value)}
               className="login-username"
               name="team_name" 
               placeholder="team name" 
@@ -76,7 +80,7 @@ class Login extends React.Component {
             <input 
               type="text" 
               value={this.state.username} 
-              onChange={(e) => this.handleChange('username', e.target.value)}
+              onChange={(e) => this.handleChangeToLowerCase('username', e.target.value)}
               className="login-username"
               name="username" 
               placeholder="username" 

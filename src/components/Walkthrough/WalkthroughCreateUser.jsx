@@ -61,7 +61,11 @@ class WalkthroughCreateTeam extends React.Component {
 					<Card>
 						<div className="walkthrough-form walkthrough-container">
 							<span className="walkthrough-header">What's your team's name?</span>
-							<WalkthroughInput placeholder="teamrocket" onChange={(t) => this.setState({ team: t })} />
+							<WalkthroughInput
+								placeholder="teamrocket"
+								onChange={(t) => this.setState({ team: t.toLowerCase() })}
+								value={this.state.team}
+							/>
 							{this.state.valid ? null : <WalkthroughError />}
 							<WalkthroughButton title="I made a team" onClick={this.handleSubmit.bind(this)} />
 						</div>
@@ -137,7 +141,7 @@ class CreateUserForm extends React.Component {
 					                  onChange={(v) => this.handleChange('last_name', v)} />
 				</div>
 				<WalkthroughInput value={username} title="Username" placeholder="janedoe"
-				                  onChange={(v) => this.handleChange('username', v)} />
+				                  onChange={(v) => this.handleChange('username', v.toLowerCase())} />
 				<WalkthroughInput value={email} title="Email" placeholder="janedoe@example.com"
 				                  onChange={(v) => this.handleChange('email', v)} />
 				<WalkthroughInput value={password} title="Password" type="password" placeholder="Choose a password"
