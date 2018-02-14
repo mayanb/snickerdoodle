@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import LineChartTooltip from './LineChartTooltip'
-import './styles/productiontrends.css'
+import './styles/trendslinechart.css'
 
 import {
 	scaleTime,
@@ -208,7 +208,7 @@ export default class TrendsLineChart extends React.Component {
 
 	render() {
 		return (
-			<div style={{ position: 'relative' }}>
+			<div className="trends-line-chart">
 				<svg ref={node => this.node = node} />
 				<LineChartTooltip
 					x={this.state.hover && this.state.hover.x}
