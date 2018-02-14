@@ -46,8 +46,9 @@ class ProcessAttribute extends React.Component {
 							<Button secondary onClick={props.onCancel}>Cancel</Button>
 							<Button onClick={props.onSubmit}>Add</Button>
 					</div>
-					{this.renderDeleteAttributeDialog()}
+					
 			</div>
+
 		)
 	}
 
@@ -57,21 +58,9 @@ class ProcessAttribute extends React.Component {
 	}
 
 	handleArchive() {
-		this.setState({isDeletingAttribute: true})
+		this.props.onDelete()
 	}
 
-	handleDeleteAttribute() {
-		let {data, index} = this.props
-		this.props.dispatch(actions.archiveAttribute(0, index, data[0].attributes[index]))
-		this.setState({isDeletingAttribute: null})
-	}
-
-	renderDeleteAttributeDialog() {
-		let {data, index} = this.props
-		if (this.state.isDeletingAttribute)
-			return <ProcessAttributeDeleteDialog index={index} data={data} attrName={data[0].attributes[index].name} onToggle={() => this.setState({isDeletingAttribute: null})} onDelete={() => this.handleDeleteAttribute()} />
-		return null
-	}
 }
 
 const mapStateToProps = (state/*, props*/) => {

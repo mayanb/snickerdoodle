@@ -4,7 +4,11 @@ import * as actions from './ProcessAttributeActions'
 import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
 
-export default class ProcessAttributeDeleteDialog extends React.Component {
+class ProcessAttributeDeleteDialog extends React.Component {
+	constructor(props) {
+		super(props)
+	}
+
 	render() {
 
 		return (
@@ -34,3 +38,12 @@ export default class ProcessAttributeDeleteDialog extends React.Component {
 	}
 
 }
+
+const mapStateToProps = (state/*, props*/) => {
+  return {
+  	data: state.data
+  }
+}
+
+const connectedProcessAttributeDeleteDialog = connect(mapStateToProps)(ProcessAttributeDeleteDialog)
+export default connectedProcessAttributeDeleteDialog
