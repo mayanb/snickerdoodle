@@ -4,11 +4,16 @@ import * as actions from './ProcessAttributeActions'
 import ProcessAttributeField from './ProcessAttributeField'
 import Button from '../Card/Button'
 import Img from '../Img/Img'
+import ProcessAttributeDeleteDialog from './ProcessAttributeDeleteDialog'
+
 
 class ProcessAttribute extends React.Component {
 	constructor(props) {
 		super(props)
 		this.toggleRequiredOnAttribute = this.toggleRequiredOnAttribute.bind(this)
+		this.state = {
+			isDeletingAttribute: null,
+		}
 	}
 
 	render() {
@@ -41,12 +46,10 @@ class ProcessAttribute extends React.Component {
 							<Button secondary onClick={props.onCancel}>Cancel</Button>
 							<Button onClick={props.onSubmit}>Add</Button>
 					</div>
-
+					{this.renderDeleteAttributeDialog()}
 			</div>
 		)
 	}
-
-	// <ProcessAttributeField switch name="Required" value={props.required} onChange={props.onChange || this.toggleRequiredOnAttribute} />
 
 	toggleRequiredOnAttribute() {
 		let updated = {required: !this.props.required}
@@ -54,8 +57,20 @@ class ProcessAttribute extends React.Component {
 	}
 
 	handleArchive() {
+		this.setState({isDeletingAttribute: true})
+	}
+
+	handleDeleteAttribute() {
 		let {data, index} = this.props
 		this.props.dispatch(actions.archiveAttribute(0, index, data[0].attributes[index]))
+		this.setState({isDeletingAttribute: null})
+	}
+
+	renderDeleteAttributeDialog() {
+		let {data, index} = this.props
+		if (this.state.isDeletingAttribute)
+			return <ProcessAttributeDeleteDialog index={index} data={data} attrName={data[0].attributes[index].name} onToggle={() => this.setState({isDeletingAttribute: null})} onDelete={() => this.handleDeleteAttribute()} />
+		return null
 	}
 }
 
