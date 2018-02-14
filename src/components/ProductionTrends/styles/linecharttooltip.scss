@@ -1,0 +1,17 @@
+@import 'styles/constants.scss';
+
+.line-chart-tooltip {
+    position: absolute;
+    background-color: $gray;
+    color: $elephant-ultra-light;
+    border-radius: 4px;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+        font-weight: bold;
+    }
+}

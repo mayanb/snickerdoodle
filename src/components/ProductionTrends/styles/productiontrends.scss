@@ -1,0 +1,39 @@
+@import 'styles/constants.scss';
+
+.production-trends {
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .x.axis path {
+        display: none;
+    }
+
+    .line {
+        fill: none;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+
+    .overlay {
+        fill: none;
+        pointer-events: all;
+    }
+
+    .focus circle {
+        fill: $elephant-light;
+        stroke: $elephant-dark;
+        stroke-width: 5px;
+    }
+
+    .hover-line {
+        stroke: $elephant-light;
+        stroke-width: 2px;
+        stroke-dasharray: 3,3;
+    }
+
+}

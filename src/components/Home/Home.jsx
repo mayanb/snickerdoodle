@@ -3,6 +3,7 @@ import Goals from '../Goals/Goals'
 import Activity from '../Activity/Activity'
 import Alerts from '../Alerts/Alerts'
 import Card from '../Card/Card'
+import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import NewFeatures from '../NewFeatures/NewFeatures'
 import './styles/home.css'
 import Updates from './Updates'
@@ -18,6 +19,10 @@ export default function Home(props) {
 
 				<div>
 
+
+					<div style={{maxWidth: "400px", minWidth: "400px"}}>
+						<ProductionTrends />
+					</div>
 
 					<div style={{maxWidth: "400px", minWidth: "400px"}}>
 						<BigHeader>How's it going?</BigHeader>
