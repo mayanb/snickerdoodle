@@ -1,14 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import * as actions from './ProcessAttributeActions'
 import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
 
 class ProcessAttributeDeleteDialog extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
 
 		return (

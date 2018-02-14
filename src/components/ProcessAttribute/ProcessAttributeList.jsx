@@ -88,7 +88,7 @@ class ProcessAttributeList extends React.Component {
 	}
 
 	renderDeleteAttributeDialog() {
-		let {data, index} = this.props
+		let {data} = this.props
 		if (this.state.isDeletingAttribute)
 			return <ProcessAttributeDeleteDialog attribute={this.state.isDeletingAttribute} index={this.state.isDeletingAttributeIndex} data={data} attrName={this.state.isDeletingAttribute.name} onToggle={() => this.setState({isDeletingAttribute: null})} onDelete={() => this.handleDeleteAttribute()} />
 		return null

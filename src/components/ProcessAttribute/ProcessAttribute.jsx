@@ -4,8 +4,6 @@ import * as actions from './ProcessAttributeActions'
 import ProcessAttributeField from './ProcessAttributeField'
 import Button from '../Card/Button'
 import Img from '../Img/Img'
-import ProcessAttributeDeleteDialog from './ProcessAttributeDeleteDialog'
-
 
 class ProcessAttribute extends React.Component {
 	constructor(props) {
