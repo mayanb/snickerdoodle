@@ -9,6 +9,9 @@ class ProcessAttribute extends React.Component {
 	constructor(props) {
 		super(props)
 		this.toggleRequiredOnAttribute = this.toggleRequiredOnAttribute.bind(this)
+		this.state = {
+			isDeletingAttribute: null,
+		}
 	}
 
 	render() {
@@ -41,12 +44,11 @@ class ProcessAttribute extends React.Component {
 							<Button secondary onClick={props.onCancel}>Cancel</Button>
 							<Button onClick={props.onSubmit}>Add</Button>
 					</div>
-
+					
 			</div>
+
 		)
 	}
-
-	// <ProcessAttributeField switch name="Required" value={props.required} onChange={props.onChange || this.toggleRequiredOnAttribute} />
 
 	toggleRequiredOnAttribute() {
 		let updated = {required: !this.props.required}
@@ -54,9 +56,9 @@ class ProcessAttribute extends React.Component {
 	}
 
 	handleArchive() {
-		let {data, index} = this.props
-		this.props.dispatch(actions.archiveAttribute(0, index, data[0].attributes[index]))
+		this.props.onDelete()
 	}
+
 }
 
 const mapStateToProps = (state/*, props*/) => {
