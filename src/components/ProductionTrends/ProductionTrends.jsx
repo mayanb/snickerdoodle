@@ -30,71 +30,10 @@ class ProductionTrends extends React.Component {
 	}
 
 	render() {
-		const mockData = [
-			{
-				name: 'This Year',
-				values: [
-					{
-						date: '20170801',
-						value: 63.4,
-					},
-					{
-						date: '20170901',
-						value: 58.0,
-					},
-					{
-						date: '20171001',
-						value: 53.3,
-					},
-					{
-						date: '20171101',
-						value: 55.7,
-					},
-					{
-						date: '20171201',
-						value: 64.2,
-					},
-					{
-						date: '20180101',
-						value: 57.9,
-					}
-				]
-			},
-			{
-				name: 'Last Year',
-				values: [
-					{
-						date: '20170801',
-						value: 62.7
-					},
-					{
-						date: '20170901',
-						value: 59.9
-					},
-					{
-						date: '20171001',
-						value: 59.1
-					},
-					{
-						date: '20171101',
-						value: 58.8
-					},
-					{
-						date: '20171201',
-						value: 58.7
-					},
-					{
-						date: '20180101',
-						value: 56.7
-					},
-				]
-			}
-		]
 
 		//Set default process type
 		if(this.props.processes.length && !this.state.processType) {
 			const foil = this.props.processes.find(p => p.name === 'Foil')
-			console.log('foil', foil)
 			this.setState({processType: foil}, this.handleSearch)
 		}
 
@@ -131,7 +70,7 @@ class ProductionTrends extends React.Component {
 
 	handleSearch() {
 		this.props.dispatch(productionTrendsActions.fetchProductionTrends({
-			process_type: this.state.processType,
+			process_type: this.state.processType.id,
 			start: this.state.start,
 			end: this.state.end
 		}))
@@ -143,7 +82,6 @@ class ProductionTrends extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
-	console.log('state', state)
 	return {
 		processes: state.processes.data,
 		productionTrends: state.productionTrends.data,

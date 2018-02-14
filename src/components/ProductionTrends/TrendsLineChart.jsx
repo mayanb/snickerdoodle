@@ -17,6 +17,7 @@ import {
 	max,
 	mouse,
 	bisector,
+	timeMonth
 } from 'd3'
 
 const TOOLTIP_WIDTH = 120
@@ -39,15 +40,11 @@ export default class TrendsLineChart extends React.Component {
 	}
 
 	componentDidUpdate(preProps) {
-		console.log('preProps', preProps)
-		console.log('this.props', this.props)
-		console.log('equal', preProps.data === this.props.data)
 		if (!(preProps.data === this.props.data))
 			this.renderD3()
 	}
 
 	renderD3() {
-		console.log('renderd3 props', this.props)
 		if(!this.props.data || !this.props.data.length)
 			return
 
@@ -76,6 +73,9 @@ export default class TrendsLineChart extends React.Component {
 		const _line = line()
 			.x(d => x(d.date))
 			.y(d => y(d.value))
+
+		//Clean up old chart
+		select(ref).selectAll("*").remove();
 
 		const svg = select(ref)
 			.attr("width", width + margin.left + margin.right)
@@ -119,6 +119,7 @@ export default class TrendsLineChart extends React.Component {
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
 			.call(axisBottom(x)
+				.ticks(timeMonth)
 				.tickFormat(d => moment(d).format("MMM YY"))
 			)
 
@@ -232,7 +233,6 @@ export default class TrendsLineChart extends React.Component {
 }
 
 function convertChartData(data) {
-	console.log('data', data)
 	const thisYear = {
 		name: 'This Year',
 		values: data.map(datum => ({
