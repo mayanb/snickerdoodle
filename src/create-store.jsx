@@ -42,7 +42,8 @@ export default function(data) {
     contacts: createFilteredReducer(apiDataReducer, action => action.name === types.CONTACTS, stateDefault),
     inventoryUnits: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORY_UNITS, stateDefault),
     alerts: createFilteredReducer(apiDataReducer, action => action.name === types.ALERTS, stateDefault),
-    formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault)
+    formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault),
+	  productionTrends: createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTION_TRENDS, stateDefault),
   })
 	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 	const store = createStore(reducer, /* preloadedState, */ composeEnhancers(

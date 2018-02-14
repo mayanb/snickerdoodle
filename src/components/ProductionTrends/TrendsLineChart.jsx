@@ -39,11 +39,18 @@ export default class TrendsLineChart extends React.Component {
 	}
 
 	componentDidUpdate(preProps) {
-		if (!preProps.data === this.props.data)
+		console.log('preProps', preProps)
+		console.log('this.props', this.props)
+		console.log('equal', preProps.data === this.props.data)
+		if (!(preProps.data === this.props.data))
 			this.renderD3()
 	}
 
 	renderD3() {
+		console.log('renderd3 props', this.props)
+		if(!this.props.data || !this.props.data.length)
+			return
+
 		const ref = this.node
 
 		const chartData = convertChartData(this.props.data)
@@ -225,18 +232,20 @@ export default class TrendsLineChart extends React.Component {
 }
 
 function convertChartData(data) {
-	return data.map(series => {
-		series.values = series.values.map(d => {
-			d.date = moment(d.date, 'YYYYMMDD')
-			return d
-		})
-		return series
-	})
+	console.log('data', data)
+	const thisYear = {
+		name: 'This Year',
+		values: data.map(datum => ({
+			date: moment(datum.bucket),
+			value: datum.total_amount
+		}))
+	}
+	return [thisYear]
 }
 
 function convertTooltipData(data) {
 	return data[0].values.map(thisYearDatum => {
-		const lastYearDatum = data[1].values.find(d => d.date.unix() === thisYearDatum.date.unix())
+		//const lastYearDatum = data[1].values.find(d => d.date.unix() === thisYearDatum.date.unix())
 		return {
 			date: thisYearDatum.date,
 			values: [
@@ -245,9 +254,15 @@ function convertTooltipData(data) {
 					value: thisYearDatum.value
 				},
 				{
+					name: 'Last Year',
+					value: 'N/A'
+				}
+				/**
+				{
 					name: data[1].name,
 					value: lastYearDatum.value
 				}
+				 */
 			]
 		}
 	})

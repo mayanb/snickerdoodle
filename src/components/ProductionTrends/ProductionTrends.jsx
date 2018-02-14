@@ -1,24 +1,32 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
+import * as productionTrendsActions from '../ProductionTrends/ProductionTrendsActions.jsx'
 import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
 import Select from '../Inputs/Select'
 import './styles/productiontrends.css'
+
+import moment from 'moment'
+import { toUTCString } from '../../utilities/dateutils'
 
 class ProductionTrends extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.state = {
-			processType: null
+			processType: null,
+			start: toUTCString('2017-09-01'),
+			end: toUTCString('2018-01-31')
 		}
 
-		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
+		this.handleSearch = this.handleSearch.bind(this)
+
 	}
 
 	componentDidMount() {
 		this.props.dispatch(processesActions.fetchProcesses())
+
 	}
 
 	render() {
@@ -86,7 +94,8 @@ class ProductionTrends extends React.Component {
 		//Set default process type
 		if(this.props.processes.length && !this.state.processType) {
 			const foil = this.props.processes.find(p => p.name === 'Foil')
-			this.setState({processType: foil})
+			console.log('foil', foil)
+			this.setState({processType: foil}, this.handleSearch)
 		}
 
 		return (
@@ -114,20 +123,30 @@ class ProductionTrends extends React.Component {
 							onChange={(newVal) => this.handleProcessTypeChange(newVal)}
 						/>
 					</div>
-					<TrendsLineChart data={mockData} />
+					<TrendsLineChart data={this.props.productionTrends} />
 				</Loading>
 			</div>
 		)
 	}
 
+	handleSearch() {
+		this.props.dispatch(productionTrendsActions.fetchProductionTrends({
+			process_type: this.state.processType,
+			start: this.state.start,
+			end: this.state.end
+		}))
+	}
+
 	handleProcessTypeChange(newVal) {
-		this.setState({ processType: newVal })
+		this.setState({ processType: newVal }, this.handleSearch)
 	}
 }
 
 const mapStateToProps = (state/*, props*/) => {
+	console.log('state', state)
 	return {
 		processes: state.processes.data,
+		productionTrends: state.productionTrends.data,
 		ui: state.processes.ui,
 	}
 }
