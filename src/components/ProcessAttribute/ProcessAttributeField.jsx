@@ -1,6 +1,9 @@
 import React from 'react'
 import Switch from '../Switch/Switch'
 import ProcessAttributeDatatype from './ProcessAttributeDatatype'
+import Select2 from '../Inputs/Select'
+import Input from '../Inputs/Input'
+import FormGroup from '../Inputs/FormGroup'
 
 export default function ProcessAttributeField(props) {
 	return (
@@ -36,23 +39,40 @@ function Text(props) {
 }
 
 function EditText(props) {
-	return (
+	return(
 		<div>
-			<input type="text" placeholder="eg. Temperature" value={props.value} onChange={(e) => props.onChange(props.name, e.target.value)} />
+			<FormGroup>
+			<Input
+			type="text"
+			placeholder="eg. Temperature"
+			value={props.value}
+			onChange={(e) => props.onChange(props.name, e.target.value)}
+			/>
+			</FormGroup>
 		</div>
 	)
 }
 
 export function EditSelect(props) {
+
+	let selectOptions = [{value: "TEXT", name: "Text"}, {value: "NUMB", name: "Number"}, {value: "TIME", name: "Time"}, {value: "USER", name: "User"}]
 	return (
-		<div>
-			<select value={props.value} onChange={(e) => props.onChange(props.name, e.target.value)}>
-				<option value="TEXT">Text</option>
-				<option value="NUMB">Number</option>
-				<option value="TIME">Time</option>
-				<option value="USER">User</option>
-			</select>
+		<div className='process-attribute-select'>
+		<FormGroup>
+		<Select2
+			openOnFocus
+			value={props.value}
+			searchable={false}
+			clearable={false}
+			options={selectOptions}
+			labelKey={'name'}
+			valueKey={'value'}
+			placeholder="Select a datatype"
+			onChange={(e) => props.onChange(props.name, e.value)}
+		/>
+		</FormGroup>
 		</div>
+
 	)
 
 }
