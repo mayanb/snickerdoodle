@@ -10,6 +10,7 @@ import Datepicker from '../Datepicker/Datepicker.jsx'
 import ReactImageFallback from "react-image-fallback"
 import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
+import './styles/activity.css'
 
 export default class Activity extends React.Component {
 	constructor(props) {
@@ -70,16 +71,20 @@ export default class Activity extends React.Component {
 		}
 
 		return (
-			<div className="activity page mini">
-			<div className="content">
-				{ this.renderDialog() }
+			<div className="activity">
+				<LittleHeader>Activity</LittleHeader>
+				<div className="page mini">
+					<div className="content">
+						{this.renderDialog()}
 
-				<div className="activity-header page-header">
-					<h2>Logs</h2>
-					<div style={{zIndex: 0}}><Datepicker initialDates={this.state.dates} onChange={this.handleDateRangeChange.bind(this)} /></div>
+						<div className="activity-header page-header">
+							<h2>Logs</h2>
+							<div style={{ zIndex: 0 }}><Datepicker initialDates={this.state.dates}
+							                                       onChange={this.handleDateRangeChange.bind(this)} /></div>
+						</div>
+						{contentArea}
+					</div>
 				</div>
-				{contentArea}
-			</div>
 			</div>
 		)
 	}
@@ -231,6 +236,13 @@ export default class Activity extends React.Component {
 
 }
 
+function LittleHeader(props) {
+	return (
+		<span className="little-header" style={{fontSize: "14px", lineHeight: "16px", color: '#445562', padding: "16px 0px", display: 'block'}}>
+			{props.children}
+		</span>
+	)
+}
 
 function Process(props) {
 	let origins = false

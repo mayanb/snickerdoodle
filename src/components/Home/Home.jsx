@@ -33,11 +33,6 @@ export default function Home(props) {
 							<Updates />
 						</div>
 					</div>
-
-					<div style={{maxWidth: "900px", minWidth: "700px"}}>
-						<LittleHeader>Activity</LittleHeader>
-						<Activity />
-					</div>
 				</div>
 			</div>
 
@@ -61,10 +56,3 @@ function BigHeader(props) {
 	)
 }
 
-function LittleHeader(props) {
-	return (
-		<span className="little-header" style={{fontSize: "14px", lineHeight: "16px", color: '#445562', padding: "16px 0px", display: 'block'}}>
-			{props.children}
-		</span>
-	)
-}

@@ -16,9 +16,13 @@ $z-index-dialog: 991;
 $z-index-edit-menu: 992;
 
 .activity {
-  display: flex;
+  min-width: 700px;
   max-width: 900px;
-  flex-direction: column;
+  margin-left: 32px;
+
+  .page.mini {
+    flex-direction: column;
+  }
 
   .activity-process {
     width: 100%;

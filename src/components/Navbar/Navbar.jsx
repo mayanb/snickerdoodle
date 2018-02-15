@@ -54,13 +54,13 @@ class Navbar extends React.Component {
   }
 
   renderActivityLogAndInventoryNavigation() {
-    let o1 = ["Activity Log"]
-    let l1 = [""]
+    let o1 = ["Dashboard", "Activity Log"]
+    let l1 = ["", "activity-log"]
     let {data, ui} = this.props.users
     let team = data[ui.activeUser].user.team_name
     if (team === 'alabama' || team === 'valencia')
-      o1 = ["Activity Log", "Inventory"]
-      l1 = ["", "inventory"]
+      o1 = ["Dashboard", "Activity Log", "Inventory"]
+      l1 = ["", "activity-log", "inventory"]
     return <NavigationGroup options={o1} links={l1} title={null} />
 
   }
