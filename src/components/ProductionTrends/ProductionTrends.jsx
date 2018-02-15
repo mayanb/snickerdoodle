@@ -6,7 +6,6 @@ import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
 import Select from '../Inputs/Select'
 import './styles/productiontrends.css'
-import { toUTCString } from '../../utilities/dateutils'
 import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
 
 class ProductionTrends extends React.Component {
@@ -15,8 +14,6 @@ class ProductionTrends extends React.Component {
 
 		this.state = {
 			processType: null,
-			start: toUTCString('2017-01-01'),
-			end: toUTCString('2020-12-31')
 		}
 
 		this.handleSearch = this.handleSearch.bind(this)
@@ -53,12 +50,12 @@ class ProductionTrends extends React.Component {
 						/>
 					</div>
 					<div className="charts">
-						<TrendsLineChart data={this.props.productionTrends} />
+						<TrendsLineChart data={this.props.recentMonths} />
 						<div className="cumulatives">
 							<Subtitle>Cumulative total this week</Subtitle>
-							<CumulativeAreaChart data={this.props.productionTrends} />
+							<CumulativeAreaChart data={this.props.weekToDate} name="This Week" />
 							<Subtitle>Cumulative total this month</Subtitle>
-							<CumulativeAreaChart data={this.props.productionTrends} />
+							<CumulativeAreaChart data={this.props.monthToDate} name="This Month" />
 						</div>
 					</div>
 				</Loading>
@@ -67,23 +64,13 @@ class ProductionTrends extends React.Component {
 	}
 
 	handleSearch() {
-		this.props.dispatch(productionTrendsActions.fetchProductionTrends({
-			process_type: this.state.processType.id,
-			start: this.state.start,
-			end: this.state.end
-		}))
+		this.props.dispatch(productionTrendsActions.fetchRecentMonths(this.state.processType.id))
+		this.props.dispatch(productionTrendsActions.fetchMonthToDate(this.state.processType.id))
+		this.props.dispatch(productionTrendsActions.fetchWeekToDate(this.state.processType.id))
 	}
 
 	handleProcessTypeChange(newVal) {
 		this.setState({ processType: newVal }, this.handleSearch)
-	}
-}
-
-const mapStateToProps = (state/*, props*/) => {
-	return {
-		processes: state.processes.data,
-		productionTrends: state.productionTrends.data,
-		ui: state.processes.ui,
 	}
 }
 
@@ -97,6 +84,16 @@ function Subtitle(props) {
 	return (
 		<div className="trends-subtitle">{props.children}</div>
 	)
+}
+
+const mapStateToProps = (state/*, props*/) => {
+	return {
+		processes: state.processes.data,
+		recentMonths: state.productionTrends[productionTrendsActions.RECENT_MONTHS].data,
+		monthToDate: state.productionTrends[productionTrendsActions.MONTH_TO_DATE].data,
+		weekToDate: state.productionTrends[productionTrendsActions.WEEK_TO_DATE].data,
+		ui: state.processes.ui,
+	}
 }
 
 const connectedProductionTrends = connect(mapStateToProps)(ProductionTrends)

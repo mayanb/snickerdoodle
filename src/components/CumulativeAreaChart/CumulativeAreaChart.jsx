@@ -52,7 +52,7 @@ export default class CumulativeAreaChart extends React.Component {
 
 		const ref = this.node
 
-		const chartData = convertChartData(this.props.data)
+		const chartData = convertChartData(this.props.data, this.props.name)
 		const tooltipData = convertTooltipData(chartData)
 
 		const margin = {
@@ -256,10 +256,10 @@ export default class CumulativeAreaChart extends React.Component {
 
 }
 
-function convertChartData(data) {
+function convertChartData(data, name) {
 	const totalAmounts = data.map(d => d.total_amount)
 	const thisYear = {
-		name: 'This Year',
+		name: name,
 		values: data.map((datum, i) => ({
 			date: moment(datum.bucket),
 			value: sum(totalAmounts.slice(0, i+1))
