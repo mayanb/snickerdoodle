@@ -39,11 +39,6 @@ function Text(props) {
 }
 
 function EditText(props) {
-	// return (
-	// 	<div>
-	// 		<input className='process-attribute-input' type="text" placeholder="eg. Temperature" value={props.value} onChange={(e) => props.onChange(props.name, e.target.value)} />
-	// 	</div>
-	// )
 	return(
 		<div>
 			<FormGroup>
@@ -59,16 +54,6 @@ function EditText(props) {
 }
 
 export function EditSelect(props) {
-	// return(
-	// 	<div>
-	// 			<select value={props.value} onChange={(e) => props.onChange(props.name, e.target.value)} className='process-attribute-select'>
-	// 				<option value="TEXT">Text</option>
-	// 				<option value="NUMB">Number</option>
-	// 				<option value="TIME">Time</option>
-	// 				<option value="USER">User</option>
-	// 			</select>
-	// 		</div>
-	// )
 
 	let selectOptions = [{value: "TEXT", name: "Text"}, {value: "NUMB", name: "Number"}, {value: "TIME", name: "Time"}, {value: "USER", name: "User"}]
 	return (
