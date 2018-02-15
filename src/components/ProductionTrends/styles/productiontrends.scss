@@ -5,4 +5,27 @@
     .options {
         margin-bottom: 32px;
     }
+
+    .charts {
+        display: flex;
+    }
+
+    .cumulative {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .trends-title {
+        font-size: 20px;
+        line-height: 32px;
+        color: $gray-dark;
+        padding-top: 5px;
+        padding-bottom: 11px;
+    }
+
+    .trends-subtitle {
+        font-size: 14px;
+        margin-top: 5px;
+        margin-bottom: 11px;
+    }
 }

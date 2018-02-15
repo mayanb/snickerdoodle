@@ -6,8 +6,8 @@ import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
 import Select from '../Inputs/Select'
 import './styles/productiontrends.css'
-import moment from 'moment'
 import { toUTCString } from '../../utilities/dateutils'
+import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
 
 class ProductionTrends extends React.Component {
 	constructor(props) {
@@ -31,24 +31,15 @@ class ProductionTrends extends React.Component {
 	render() {
 
 		//Set default process type
-		if(this.props.processes.length && !this.state.processType) {
+		if (this.props.processes.length && !this.state.processType) {
 			const foil = this.props.processes.find(p => p.name === 'Foil')
-			this.setState({processType: foil}, this.handleSearch)
+			this.setState({ processType: foil }, this.handleSearch)
 		}
 
 		return (
 			<div className="production-trends">
 				<Loading isFetchingData={this.props.ui.isFetchingData}>
-					<span style={{
-						fontSize: "20px",
-						lineHeight: "32px",
-						color: '#445562',
-						paddingTop: '5px',
-						paddingBottom: '11px',
-						display: 'block'
-					}}>
-						Production Trends
-					</span>
+					<Title>Production Trends</Title>
 					<div className="options">
 						<Select
 							openOnFocus
@@ -61,7 +52,15 @@ class ProductionTrends extends React.Component {
 							onChange={(newVal) => this.handleProcessTypeChange(newVal)}
 						/>
 					</div>
-					<TrendsLineChart data={this.props.productionTrends} />
+					<div className="charts">
+						<TrendsLineChart data={this.props.productionTrends} />
+						<div className="cumulatives">
+							<Subtitle>Cumulative total this week</Subtitle>
+							<CumulativeAreaChart data={this.props.productionTrends} />
+							<Subtitle>Cumulative total this month</Subtitle>
+							<CumulativeAreaChart data={this.props.productionTrends} />
+						</div>
+					</div>
 				</Loading>
 			</div>
 		)
@@ -86,6 +85,18 @@ const mapStateToProps = (state/*, props*/) => {
 		productionTrends: state.productionTrends.data,
 		ui: state.processes.ui,
 	}
+}
+
+function Title(props) {
+	return (
+		<div className="trends-title">{props.children}</div>
+	)
+}
+
+function Subtitle(props) {
+	return (
+		<div className="trends-subtitle">{props.children}</div>
+	)
 }
 
 const connectedProductionTrends = connect(mapStateToProps)(ProductionTrends)
