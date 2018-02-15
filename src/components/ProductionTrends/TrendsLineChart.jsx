@@ -97,7 +97,7 @@ export default class TrendsLineChart extends React.Component {
 		let dataMax = max(chartData, c => {
 				return max(c.values, v => v.value)
 			})
-		let maxY = Math.min(dataMedian * 2, dataMax + dataMedian/4.0) 
+		let maxY = Math.max(dataMedian * 2, dataMax + dataMedian/4.0)
 
 		// 1. find the best bucket size for this scale
 		// 2. make the maxY a multiple of the bucket size
