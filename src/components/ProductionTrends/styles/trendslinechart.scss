@@ -11,7 +11,7 @@
     }
 
     .x.axis path {
-        display: none;
+        //display: none;
     }
 
     .line {
@@ -25,16 +25,31 @@
         pointer-events: all;
     }
 
-    .focus circle {
-        fill: $elephant-light;
-        stroke: $elephant-dark;
-        stroke-width: 5px;
+    .data-circle {
+        stroke: steelblue;
+        stroke-width: 2px;
+        fill: $background-color;
+    }
+
+    .grid line {
+        stroke: $elephant-light;
+        stroke-opacity: 0.7;
+        shape-rendering: crispEdges;
+    }
+
+    .grid path {
+        stroke-width: 0;
     }
 
     .hover-line {
-        stroke: $elephant-light;
+        stroke: $black;
         stroke-width: 2px;
-        stroke-dasharray: 3, 3;
+        // stroke-dasharray: 3, 3;
     }
+
+    .hover-circle {
+        stroke: $black;
+    }
+
 
 }

@@ -1,17 +1,32 @@
 @import 'styles/constants.scss';
 
+$tooltip-background-color: rgba(31,36,41,1);
+
 .line-chart-tooltip {
     position: absolute;
-    background-color: $gray;
+    background-color: $tooltip-background-color;
     color: $elephant-ultra-light;
-    border-radius: 4px;
+    border-radius: 2px;
     pointer-events: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    box-shadow: rgba(0,0,0,0.3) 0 2px 12px;
+    -webkit-font-smoothing: antialiased;
 
     .title {
         font-weight: bold;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -8px;
+        border-width: 8px;
+        border-style: solid;
+        border-color: $tooltip-background-color transparent transparent transparent;
     }
 }

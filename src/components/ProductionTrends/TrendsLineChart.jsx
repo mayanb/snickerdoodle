@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import { findBestBucketSize, getTicks } from '../../utilities/graphutils'
 import LineChartTooltip from './LineChartTooltip'
 import './styles/trendslinechart.css'
 
@@ -13,8 +14,8 @@ import {
 	line,
 	select,
 	extent,
-	min,
 	max,
+	median,
 	mouse,
 	bisector,
 	timeMonth
@@ -60,7 +61,7 @@ export default class TrendsLineChart extends React.Component {
 				left: 50
 			},
 			width = 900 - margin.left - margin.right,
-			height = 500 - margin.top - margin.bottom
+			height = 300 - margin.top - margin.bottom
 
 
 		const x = scaleTime()
@@ -88,14 +89,24 @@ export default class TrendsLineChart extends React.Component {
 
 		x.domain(extent(chartData[0].values, d => d.date))
 
-		y.domain([
-			min(chartData, c => {
-				return min(c.values, v => v.value)
-			}),
-			max(chartData, c => {
+		// do some math to find a good scale for this graph
+		// so that the line appears kind of in the middle
+		let dataMedian = median(chartData, c => {
+				return median(c.values, v => v.value)
+			})
+		let dataMax = max(chartData, c => {
 				return max(c.values, v => v.value)
 			})
-		])
+		let maxY = Math.min(dataMedian * 2, dataMax + dataMedian/4.0) 
+
+		// 1. find the best bucket size for this scale
+		// 2. make the maxY a multiple of the bucket size
+		// 3. find the ticks for this maxY & bucketsize
+		let bestBucketSize = findBestBucketSize(maxY)
+		maxY = Math.ceil(maxY/bestBucketSize) * bestBucketSize
+		let ticks = getTicks(bestBucketSize, maxY)
+
+		y.domain([0, maxY])
 
 		const legend = svg.selectAll('g')
 			.data(chartData)
@@ -115,6 +126,7 @@ export default class TrendsLineChart extends React.Component {
 			.attr('y', (d, i) => (i * 20) + 9)
 			.text(d => d.name)
 
+		// add the X axis
 		svg.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
@@ -123,14 +135,26 @@ export default class TrendsLineChart extends React.Component {
 				.tickFormat(d => moment(d).format("MMM YY"))
 			)
 
+		// add the Y axis
 		svg.append("g")
 			.attr("class", "y axis")
-			.call(axisLeft(y))
+			.call(axisLeft(y).tickValues(ticks))
 			.append("text")
 			.attr("transform", "rotate(-90)")
 			.attr("y", 6)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
+
+		// add the X gridlines
+		svg.append("g")
+			.attr("class", "grid")
+			.attr("transform", "translate(0," + height + ")")
+			.call(axisBottom(x).ticks(timeMonth).tickFormat("").tickSize(-height))
+
+		// add the Y gridlines
+		svg.append("g")
+			.attr("class", "grid")
+			.call(axisLeft(y).tickValues(ticks).tickSize(-width).tickFormat(""))
 
 		const series = svg.selectAll(".series")
 			.data(chartData)
@@ -142,6 +166,14 @@ export default class TrendsLineChart extends React.Component {
 			.attr("d", d => _line(d.values))
 			.style("stroke", d => color(d.name))
 
+		series.selectAll("circles")
+			.data(d => d.values)
+			.enter().append("circle")
+			.attr("class", "data-circle")
+			.attr("r", 4)
+			.attr("cx", d => {let xv = x(d.date); console.log(d); return xv})
+			.attr("cy", d => y(d.value))
+
 		series.append("text")
 			.datum(d => ({
 				name: d.name,
@@ -152,14 +184,14 @@ export default class TrendsLineChart extends React.Component {
 			.attr("dy", ".35em")
 			.text(d => d.name)
 
-		const mouseG = svg.append("g")
-			.attr("class", "mouse-over-effects")
+		// const mouseG = svg.append("g")
+		// 	.attr("class", "mouse-over-effects")
 
-		mouseG.append("path") // this is the black vertical line to follow mouse
-			.attr("class", "mouse-line")
-			.style("stroke", "black")
-			.style("stroke-width", "1px")
-			.style("opaseries", "0")
+		// mouseG.append("path") // this is the black vertical line to follow mouse
+		// 	.attr("class", "mouse-line")
+		// 	.style("stroke", "black")
+		// 	.style("stroke-width", "1px")
+		// 	.style("opaseries", "0")
 
 		const focus = svg.append("g")
 			.attr("class", "focus")
@@ -169,6 +201,12 @@ export default class TrendsLineChart extends React.Component {
 			.attr("class", "x-hover-line hover-line")
 			.attr("y1", 0)
 			.attr("y2", height)
+
+		let focusCircle = focus.append("circle")
+			.attr("class", "data-circle hover-circle")
+			.attr("r", 4)
+			.attr("cx", 0)
+			.attr("cy", 0)
 
 		const updateHover = this.updateHover.bind(this)
 
@@ -196,13 +234,14 @@ export default class TrendsLineChart extends React.Component {
 			const xValue = x(d.date)
 			const yValue = y(maxValue)
 
-			focus.attr("transform", "translate(" + xValue + "," + yValue + ")")
-			focus.select(".x-hover-line").attr("y2", height - yValue)
+			focus.attr("transform", "translate(" + xValue + ",0)")
+			focusCircle.attr("transform", "translate(0," + yValue + ")")
+			focus.select(".x-hover-line").attr("y2", height)
 
 			updateHover(
 				{
 					x: xValue + margin.left - TOOLTIP_WIDTH / 2,
-					y: yValue + margin.top - TOOLTIP_HEIGHT,
+					y: 0 + margin.top - TOOLTIP_HEIGHT,
 					thisYear: d.values[0].value,
 					lastYear: d.values[1].value
 				}

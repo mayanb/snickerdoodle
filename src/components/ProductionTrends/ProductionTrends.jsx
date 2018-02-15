@@ -6,7 +6,6 @@ import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
 import Select from '../Inputs/Select'
 import './styles/productiontrends.css'
-
 import moment from 'moment'
 import { toUTCString } from '../../utilities/dateutils'
 
@@ -16,8 +15,8 @@ class ProductionTrends extends React.Component {
 
 		this.state = {
 			processType: null,
-			start: toUTCString('2017-09-01'),
-			end: toUTCString('2018-01-31')
+			start: toUTCString('2017-01-01'),
+			end: toUTCString('2020-12-31')
 		}
 
 		this.handleSearch = this.handleSearch.bind(this)
