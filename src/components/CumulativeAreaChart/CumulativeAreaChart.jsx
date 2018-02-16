@@ -115,7 +115,10 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("transform", "translate(0," + height + ")")
 			.call(axisBottom(x)
 				.ticks(timeDay.every(tickLabelFrequency))
-				.tickFormat(d => moment(d).format("M/D"))
+				.tickFormat(d => {
+					const format = this.props.labelDays ? 'ddd' : 'M/D'
+					return moment(d).format(format)
+				})
 			)
 
 		// add the Y axis

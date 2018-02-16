@@ -58,7 +58,7 @@ class ProductionTrends extends React.Component {
 					<div className="cumulatives">
 						<div>
 							<Subtitle>Week to date (cumulative total)</Subtitle>
-							<CumulativeAreaChart data={this.props.weekToDate} unitLabel={unitLabel} />
+							<CumulativeAreaChart data={this.props.weekToDate} unitLabel={unitLabel} labelDays={true} />
 						</div>
 						<div>
 							<Subtitle>Month to date (cumulative total)</Subtitle>
