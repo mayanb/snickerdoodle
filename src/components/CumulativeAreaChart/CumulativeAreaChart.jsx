@@ -57,7 +57,7 @@ export default class CumulativeAreaChart extends React.Component {
 				top: 20,
 				right: 80,
 				bottom: 30,
-				left: 50
+				left: 55
 			},
 			width = 500 - margin.left - margin.right,
 			height = 200 - margin.top - margin.bottom
@@ -129,6 +129,16 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("y", 6)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
+
+		// add the Y axis label
+		svg.append("text")
+			.attr("class", "y-axis-label")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 0 - margin.left)
+			.attr("x",0 - (height / 2))
+			.attr("dy", "1em")
+			.style("text-anchor", "middle")
+			.text(this.props.unitLabel);
 
 		// add the X gridlines
 		svg.append("g")

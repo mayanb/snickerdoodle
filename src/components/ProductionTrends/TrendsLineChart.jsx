@@ -55,7 +55,7 @@ export default class TrendsLineChart extends React.Component {
 				top: 20,
 				right: 80,
 				bottom: 30,
-				left: 50
+				left: 60
 			},
 			width = 1000 - margin.left - margin.right,
 			height = 300 - margin.top - margin.bottom
@@ -116,6 +116,16 @@ export default class TrendsLineChart extends React.Component {
 			.attr("y", 6)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
+
+		// add the Y axis label
+		svg.append("text")
+			.attr("class", "y-axis-label")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 0 - margin.left)
+			.attr("x",0 - (height / 2))
+			.attr("dy", "1em")
+			.style("text-anchor", "middle")
+			.text(this.props.unitLabel);
 
 		// add the X gridlines
 		svg.append("g")
@@ -182,9 +192,8 @@ export default class TrendsLineChart extends React.Component {
 				d1 = chartData[i],
 				d = x0 - d0.date > d1.date - x0 ? d1 : d0
 
-			const maxValue = max(d, (x) => x.value)
 			const xValue = x(d.date)
-			const yValue = y(maxValue)
+			const yValue = y(d.value)
 
 			focus.attr("transform", "translate(" + xValue + ",0)")
 			focusCircle.attr("transform", "translate(0," + yValue + ")")
@@ -230,16 +239,3 @@ function convertChartData(data) {
 	}))
 }
 
-function convertTooltipData(data) {
-	return data[0].values.map(datum => {
-		return {
-			date: datum.date,
-			values: [
-				{
-					name: data[0].name,
-					value: datum.value
-				}
-			]
-		}
-	})
-}

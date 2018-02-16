@@ -30,7 +30,7 @@ export function fetchRecentMonths(processType) {
         if (err || !res.ok) {
           dispatch(requestRecentMonthsFailure(err))
         } else {
-          dispatch(requestRecentMonthsSuccess(res.body))
+          dispatch(requestRecentMonthsSuccess(addMissingMonths(res.body)))
         }
       })
   }
@@ -161,6 +161,23 @@ function requestWeekToDateSuccess(json) {
 		query: WEEK_TO_DATE,
 		data: json,
 	}
+}
+
+function addMissingMonths(data) {
+	const endMonth = moment().startOf('month')
+	const startMonth = endMonth.subtract(12, 'months')
+	return Array.from({length: 13}, (x,i) => i)
+		.map(i => {
+			const date = startMonth.clone().add(i, 'months')
+			const dateString = date.format('YYYY-MM-DD')
+			const existingData = data.find(datum => dateString === datum.bucket.slice(0, 10))
+			return existingData ?
+				existingData :
+				{
+					bucket: dateString,
+					total_amount: 0
+				}
+		})
 }
 
 function addMissingDates(data, start) {

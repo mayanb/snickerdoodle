@@ -1,6 +1,10 @@
 const SUGGESTED_NUM_TICKS = 3
 
 export function findBestBucketSize(num) {
+	// handle case where num is zero
+	if(num <= 0)
+		return 1
+
 	let okBucketSizes = [1, 2, 3, 4, 5, 10, 25, 50, 100, 200, 250, 500, 1000, 2000, 5000, 10000, 25000, 50000, 100000]
 	let calculatedBucketSize = num/(SUGGESTED_NUM_TICKS+1) // add 1 to get the number of buckets
 

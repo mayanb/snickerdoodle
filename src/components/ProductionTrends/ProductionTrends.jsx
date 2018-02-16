@@ -7,6 +7,7 @@ import TrendsLineChart from './TrendsLineChart'
 import Select from '../Inputs/Select'
 import './styles/productiontrends.css'
 import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
+import { pluralize } from "../../utilities/stringutils"
 
 class ProductionTrends extends React.Component {
 	constructor(props) {
@@ -33,6 +34,9 @@ class ProductionTrends extends React.Component {
 			this.setState({ processType: foil }, this.handleSearch)
 		}
 
+
+		const unitLabel = this.state.processType ? pluralize(2, this.state.processType.unit) : ''
+
 		return (
 			<div className="production-trends">
 				<Loading isFetchingData={this.props.ui.isFetchingData}>
@@ -49,10 +53,10 @@ class ProductionTrends extends React.Component {
 							onChange={(newVal) => this.handleProcessTypeChange(newVal)}
 						/>
 					</div>
-					<TrendsLineChart data={this.props.recentMonths} />
+					<TrendsLineChart data={this.props.recentMonths} unitLabel={unitLabel} />
 					<div className="cumulatives">
-						<CumulativeAreaChart data={this.props.weekToDate} />
-						<CumulativeAreaChart data={this.props.monthToDate} />
+						<CumulativeAreaChart data={this.props.weekToDate} unitLabel={unitLabel} />
+						<CumulativeAreaChart data={this.props.monthToDate} unitLabel={unitLabel} />
 					</div>
 				</Loading>
 			</div>
