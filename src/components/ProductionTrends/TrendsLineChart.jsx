@@ -122,7 +122,7 @@ export default class TrendsLineChart extends React.Component {
 			.attr("class", "y-axis-label")
 			.attr("transform", "rotate(-90)")
 			.attr("y", 0 - margin.left)
-			.attr("x",0 - (height / 2))
+			.attr("x", 0 - (height / 2))
 			.attr("dy", "1em")
 			.style("text-anchor", "middle")
 			.text(this.props.unitLabel);
@@ -221,11 +221,16 @@ export default class TrendsLineChart extends React.Component {
 				<LineChartTooltip
 					x={this.state.hover && this.state.hover.x}
 					y={this.state.hover && this.state.hover.y}
-					period={this.state.hover && this.state.hover.period}
-					total={this.state.hover && this.state.hover.total}
 					height={TOOLTIP_HEIGHT}
 					width={TOOLTIP_WIDTH}
-				/>
+				>
+					<div>
+						<span className="title">Month: </span>{this.state.hover && this.state.hover.period}
+					</div>
+					<div>
+						<span className="title">Total: </span>{this.state.hover && this.state.hover.total}
+					</div>
+				</LineChartTooltip>
 			</div>
 		)
 	}

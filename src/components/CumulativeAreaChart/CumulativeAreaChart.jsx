@@ -20,8 +20,8 @@ import {
 	timeDay
 } from 'd3'
 
-const TOOLTIP_WIDTH = 120
-const TOOLTIP_HEIGHT = 60
+const TOOLTIP_WIDTH = 188
+const TOOLTIP_HEIGHT = 84
 
 export default class CumulativeAreaChart extends React.Component {
 
@@ -220,7 +220,8 @@ export default class CumulativeAreaChart extends React.Component {
 				{
 					x: xValue + margin.left - TOOLTIP_WIDTH / 2,
 					y: 0 + margin.top - TOOLTIP_HEIGHT,
-					total: d.values[0].value,
+					value: d.values[0].value,
+					change: d.values[0].change,
 					period: moment(d.date).format('M/D')
 				}
 			)
@@ -238,11 +239,19 @@ export default class CumulativeAreaChart extends React.Component {
 				<LineChartTooltip
 					x={this.state.hover && this.state.hover.x}
 					y={this.state.hover && this.state.hover.y}
-					period={this.state.hover && this.state.hover.period}
-					total={this.state.hover && this.state.hover.total}
 					height={TOOLTIP_HEIGHT}
 					width={TOOLTIP_WIDTH}
-				/>
+				>
+					<div>
+						<span className="title">Day: </span>{this.state.hover && this.state.hover.period}
+					</div>
+					<div>
+						<span className="title">Daily total: </span>{this.state.hover && this.state.hover.change}
+					</div>
+					<div>
+						<span className="title">Cumulative total: </span>{this.state.hover && this.state.hover.value}
+					</div>
+				</LineChartTooltip>
 			</div>
 		)
 	}
@@ -255,7 +264,8 @@ function convertChartData(data, name) {
 		name: name,
 		values: data.map((datum, i) => ({
 			date: moment(datum.bucket),
-			value: sum(totalAmounts.slice(0, i+1))
+			value: sum(totalAmounts.slice(0, i+1)),
+			change: datum.total_amount
 		}))
 	}
 	return [total]
@@ -269,7 +279,8 @@ function convertTooltipData(data) {
 			values: [
 				{
 					name: data[0].name,
-					value: totalDatum.value
+					value: totalDatum.value,
+					change: totalDatum.change
 				},
 				{
 					name: 'Last Year',
