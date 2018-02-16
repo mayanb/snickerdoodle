@@ -15,10 +15,10 @@
     }
 
     .area {
-        stroke: $gray-dark;
+        stroke: $primary-light;
         stroke-width: 1.5px;
-        fill: $gray-light;
-        opacity: 0.5;
+        fill: $primary-light;
+        opacity: 0.3;
     }
 
     .y-axis-label {
@@ -31,8 +31,8 @@
     }
 
     .data-circle {
-        stroke: $gray-dark;
-        fill: $gray-dark;
+        stroke: $primary-light;
+        fill: $primary-light;
         stroke-width: 2px;
     }
 
