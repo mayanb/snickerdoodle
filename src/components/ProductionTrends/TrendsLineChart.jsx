@@ -53,7 +53,7 @@ export default class TrendsLineChart extends React.Component {
 
 		const margin = {
 				top: 20,
-				right: 80,
+				right: 20,
 				bottom: 30,
 				left: 60
 			},

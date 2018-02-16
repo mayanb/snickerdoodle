@@ -20,9 +20,7 @@ export default function Home(props) {
 				<div>
 
 
-					<div style={{maxWidth: "400px", minWidth: "400px"}}>
-						<ProductionTrends />
-					</div>
+					<ProductionTrends />
 
 					<div style={{maxWidth: "400px", minWidth: "400px"}}>
 						<BigHeader>How's it going?</BigHeader>

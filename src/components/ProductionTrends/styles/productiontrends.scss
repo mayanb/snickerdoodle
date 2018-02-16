@@ -5,6 +5,14 @@
 
     .options {
         margin-bottom: 32px;
+        padding-right: 18px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .select {
+            width: 400px;
+        }
     }
 
     .cumulatives {

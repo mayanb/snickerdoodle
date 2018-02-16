@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
+import * as productsActions from '../Products/ProductsActions.jsx'
 import * as productionTrendsActions from '../ProductionTrends/ProductionTrendsActions.jsx'
 import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
@@ -15,6 +16,7 @@ class ProductionTrends extends React.Component {
 
 		this.state = {
 			processType: null,
+			productType: null
 		}
 
 		this.handleSearch = this.handleSearch.bind(this)
@@ -23,7 +25,7 @@ class ProductionTrends extends React.Component {
 
 	componentDidMount() {
 		this.props.dispatch(processesActions.fetchProcesses())
-
+		this.props.dispatch(productsActions.fetchProducts())
 	}
 
 	render() {
@@ -39,20 +41,9 @@ class ProductionTrends extends React.Component {
 
 		return (
 			<div className="production-trends">
-				<Loading isFetchingData={this.props.ui.isFetchingData}>
+				<Loading isFetchingData={this.props.isFetchingData}>
 					<Title>Production Trends</Title>
-					<div className="options">
-						<Select
-							openOnFocus
-							clearable={false}
-							value={this.state.processType}
-							options={this.props.processes}
-							labelKey={'name'}
-							valueKey={'id'}
-							placeholder="Select a process type"
-							onChange={(newVal) => this.handleProcessTypeChange(newVal)}
-						/>
-					</div>
+					{this.renderOptions()}
 					<Subtitle>Past 12 months (total per month)</Subtitle>
 					<TrendsLineChart data={this.props.recentMonths} unitLabel={unitLabel} />
 					<div className="cumulatives">
@@ -70,6 +61,33 @@ class ProductionTrends extends React.Component {
 		)
 	}
 
+	renderOptions() {
+		return (
+			<div className="options">
+				<Select
+					openOnFocus
+					clearable={false}
+					value={this.state.processType}
+					options={this.props.processes}
+					labelKey={'name'}
+					valueKey={'id'}
+					placeholder="Select a process type"
+					onChange={(newVal) => this.handleProcessTypeChange(newVal)}
+				/>
+				<Select
+					openOnFocus
+					multi={true}
+					value={this.state.productType}
+					options={this.props.products}
+					labelKey={'name'}
+					valueKey={'id'}
+					placeholder="All product types"
+					onChange={(newVal) => this.handleProductTypeChange(newVal)}
+				/>
+			</div>
+		)
+	}
+
 	handleSearch() {
 		this.props.dispatch(productionTrendsActions.fetchRecentMonths(this.state.processType.id))
 		this.props.dispatch(productionTrendsActions.fetchMonthToDate(this.state.processType.id))
@@ -78,6 +96,10 @@ class ProductionTrends extends React.Component {
 
 	handleProcessTypeChange(newVal) {
 		this.setState({ processType: newVal }, this.handleSearch)
+	}
+
+	handleProductTypeChange(newVal) {
+		this.setState({ productType: newVal }, this.handleSearch)
 	}
 }
 
@@ -94,12 +116,14 @@ function Subtitle(props) {
 }
 
 const mapStateToProps = (state/*, props*/) => {
+	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
 	return {
 		processes: state.processes.data,
+		products: state.products.data,
 		recentMonths: state.productionTrends[productionTrendsActions.RECENT_MONTHS].data,
 		monthToDate: state.productionTrends[productionTrendsActions.MONTH_TO_DATE].data,
 		weekToDate: state.productionTrends[productionTrendsActions.WEEK_TO_DATE].data,
-		ui: state.processes.ui,
+		isFetchingData: isFetchingData
 	}
 }
 
