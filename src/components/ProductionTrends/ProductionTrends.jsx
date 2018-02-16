@@ -16,7 +16,7 @@ class ProductionTrends extends React.Component {
 
 		this.state = {
 			processType: null,
-			productType: null
+			productTypes: []
 		}
 
 		this.handleSearch = this.handleSearch.bind(this)
@@ -77,7 +77,7 @@ class ProductionTrends extends React.Component {
 				<Select
 					openOnFocus
 					multi={true}
-					value={this.state.productType}
+					value={this.state.productTypes}
 					options={this.props.products}
 					labelKey={'name'}
 					valueKey={'id'}
@@ -89,9 +89,9 @@ class ProductionTrends extends React.Component {
 	}
 
 	handleSearch() {
-		this.props.dispatch(productionTrendsActions.fetchRecentMonths(this.state.processType.id))
-		this.props.dispatch(productionTrendsActions.fetchMonthToDate(this.state.processType.id))
-		this.props.dispatch(productionTrendsActions.fetchWeekToDate(this.state.processType.id))
+		this.props.dispatch(productionTrendsActions.fetchRecentMonths(this.state.processType, this.state.productTypes))
+		this.props.dispatch(productionTrendsActions.fetchMonthToDate(this.state.processType, this.state.productTypes))
+		this.props.dispatch(productionTrendsActions.fetchWeekToDate(this.state.processType, this.state.productTypes))
 	}
 
 	handleProcessTypeChange(newVal) {
@@ -99,7 +99,7 @@ class ProductionTrends extends React.Component {
 	}
 
 	handleProductTypeChange(newVal) {
-		this.setState({ productType: newVal }, this.handleSearch)
+		this.setState({ productTypes: newVal }, this.handleSearch)
 	}
 }
 

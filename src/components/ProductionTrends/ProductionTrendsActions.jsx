@@ -14,19 +14,26 @@ export const WEEK_TO_DATE = 'WEEK_TO_DATE'
 
 const PATH = '/graphs/production-actuals/'
 
+function convertParams(start, processType, productTypes, bucket) {
+	const q = {
+		start: toUTCString(start),
+		end: toUTCString(today().add(1, 'days')),
+		process_type: processType.id,
+		bucket: bucket
+	}
+	if (productTypes.length)
+		q.product_types = productTypes.map(p => p.id).join(',')
 
-export function fetchRecentMonths(processType) {
+	return q
+}
+
+
+export function fetchRecentMonths(processType, productTypes) {
 	return function (dispatch) {
 		dispatch(requestRecentMonths())
 
-		const q = {
-			process_type: processType,
-			start: toUTCString(today().subtract(12, 'months')),
-			end: toUTCString(today().add(1, 'days'))
-		}
-
 		return api.get(PATH)
-			.query(q)
+			.query(convertParams(today().subtract(12, 'months'),  processType, productTypes, 'month'))
 			.end(function (err, res) {
 				if (err || !res.ok) {
 					dispatch(requestRecentMonthsFailure(err))
@@ -67,22 +74,15 @@ function requestRecentMonthsSuccess(json) {
 	}
 }
 
-export function fetchMonthToDate(processType) {
+export function fetchMonthToDate(processType, productTypes) {
 	return function (dispatch) {
 		dispatch(requestMonthToDate())
 
 		const end = today()
 		const start = end.clone().startOf('month')
 
-		const q = {
-			bucket: 'day',
-			process_type: processType,
-			start: toUTCString(start),
-			end: toUTCString(today().add(1, 'days'))
-		}
-
 		return api.get(PATH)
-			.query(q)
+			.query(convertParams(start,  processType, productTypes, 'day'))
 			.end(function (err, res) {
 				if (err || !res.ok) {
 					dispatch(requestMonthToDateFailure(err))
@@ -121,22 +121,15 @@ function requestMonthToDateSuccess(json) {
 	}
 }
 
-export function fetchWeekToDate(processType) {
+export function fetchWeekToDate(processType, productTypes) {
 	return function (dispatch) {
 		dispatch(requestWeekToDate())
 
 		const end = today()
 		const start = end.clone().startOf('week')
 
-		const q = {
-			bucket: 'day',
-			process_type: processType,
-			start: toUTCString(start),
-			end: toUTCString(today().add(1, 'days'))
-		}
-
 		return api.get(PATH)
-			.query(q)
+			.query(convertParams(start,  processType, productTypes, 'day'))
 			.end(function (err, res) {
 				if (err || !res.ok) {
 					dispatch(requestWeekToDateFailure(err))
