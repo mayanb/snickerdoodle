@@ -228,7 +228,7 @@ export default class TrendsLineChart extends React.Component {
 						<span className="title">Month: </span>{this.state.hover && this.state.hover.period}
 					</div>
 					<div>
-						<span className="title">Total: </span>{this.state.hover && this.state.hover.total}
+						<span className="title">Total: </span>{this.state.hover && this.state.hover.total.toLocaleString()}
 					</div>
 				</LineChartTooltip>
 			</div>

@@ -107,10 +107,8 @@ export default class CumulativeAreaChart extends React.Component {
 
 		y.domain([0, maxY])
 
-		let tickLabelFrequency = 1
-		if(this.props.name === 'This Month') {
-			tickLabelFrequency = Math.floor(moment().date() / 10) + 1
-		}
+		const tickLabelFrequency = Math.floor(chartData[0].values.length / 10) + 1
+
 		// add the X axis
 		svg.append("g")
 			.attr("class", "x axis")
@@ -228,10 +226,10 @@ export default class CumulativeAreaChart extends React.Component {
 						<span className="title">Day: </span>{this.state.hover && this.state.hover.period}
 					</div>
 					<div>
-						<span className="title">Daily total: </span>{this.state.hover && this.state.hover.change}
+						<span className="title">Daily total: </span>{this.state.hover && this.state.hover.change.toLocaleString()}
 					</div>
 					<div>
-						<span className="title">Cumulative total: </span>{this.state.hover && this.state.hover.value}
+						<span className="title">Cumulative total: </span>{this.state.hover && this.state.hover.value.toLocaleString()}
 					</div>
 				</LineChartTooltip>
 			</div>

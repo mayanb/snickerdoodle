@@ -15,6 +15,6 @@ export function toUTCString(momentDate) {
 }
 
 export function compareDates(date1, date2) {
-	const format = 'YYYY-DD-MM'
+	const format = 'YYYY-MM-DD'
 	return date1.format(format) === date2.format(format)
 }
