@@ -5,6 +5,7 @@ import {
   REQUEST_TRENDS_FAILURE,
 } from '../../reducers/ProductionTrendsReducer'
 import {  PRODUCTION_TRENDS } from '../../reducers/ReducerTypes'
+import moment from 'moment'
 import { toUTCString } from '../../utilities/dateutils'
 
 export const RECENT_MONTHS = 'RECENT_MONTHS'
@@ -19,8 +20,8 @@ export function fetchRecentMonths(processType) {
 
 	  const q = {
     	process_type: processType,
-		  start: toUTCString('2017-01-01'),
-		  end: toUTCString('2020-12-31')
+		  start: toUTCString(moment().subtract(12, 'months')),
+		  end: toUTCString(moment())
 	  }
 
     return api.get(PATH)
@@ -68,8 +69,8 @@ export function fetchMonthToDate(processType) {
 		const q = {
 			bucket: 'day',
 			process_type: processType,
-			start: toUTCString('2018-02-01'),
-			end: toUTCString('2018-02-15')
+			start: toUTCString(moment().startOf('month')),
+			end: toUTCString(moment())
 		}
 
 		return api.get(PATH)
@@ -117,8 +118,8 @@ export function fetchWeekToDate(processType) {
 		const q = {
 			bucket: 'day',
 			process_type: processType,
-			start: toUTCString('2018-02-05'),
-			end: toUTCString('2018-02-09')
+			start: toUTCString(moment().startOf('week')),
+			end: toUTCString(moment())
 		}
 
 		return api.get(PATH)

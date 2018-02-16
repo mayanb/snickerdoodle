@@ -5,7 +5,7 @@ import Loading from '../OldComponents/Loading.jsx'
 import update from 'immutability-helper'
 import {display} from '../OldComponents/Task.jsx'
 import moment from 'moment'
-import { toUTCString } from '../../utilities/dateutils'
+import { dateToUTCString } from '../../utilities/dateutils'
 import Datepicker from '../Datepicker/Datepicker.jsx'
 import ReactImageFallback from "react-image-fallback"
 import MustEnablePopupsDialog from './MustEnablePopupsDialog'
@@ -125,8 +125,8 @@ export default class Activity extends React.Component {
 		let params = {
 			process_type: processID, 
 			product_type: productID, 
-			start: toUTCString(range.start), 
-			end: toUTCString(range.end, true)
+			start: dateToUTCString(range.start),
+			end: dateToUTCString(range.end, true)
 		}
 
 		let url = "/ics/activity/detail/"
@@ -152,7 +152,7 @@ export default class Activity extends React.Component {
 
 	getActivity(range) {
 		this.setState({loading: true})
-		let params = {start: toUTCString(range.start), end: toUTCString(range.end, true)}
+		let params = {start: dateToUTCString(range.start), end: dateToUTCString(range.end, true)}
 		let component = this
 
 		let rID = requestID()
@@ -264,7 +264,7 @@ function Process(props) {
 	let user_id = api.get_active_user().user.user_id
 
 	let button = <button 
-		onClick={(e) => props.spreadsheet({"user_id": user_id, "process": props.process_id, "start": toUTCString(props.dates.start), "end": toUTCString(props.dates.end, true)})}
+		onClick={(e) => props.spreadsheet({"user_id": user_id, "process": props.process_id, "start": dateToUTCString(props.dates.start), "end": dateToUTCString(props.dates.end, true)})}
 	><i className="material-icons" >file_download</i></button>
 
 	return (
