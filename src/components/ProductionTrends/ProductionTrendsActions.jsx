@@ -6,7 +6,7 @@ import {
 } from '../../reducers/ProductionTrendsReducer'
 import {  PRODUCTION_TRENDS } from '../../reducers/ReducerTypes'
 import moment from 'moment'
-import { toUTCString } from '../../utilities/dateutils'
+import { toUTCString, compareDates } from '../../utilities/dateutils'
 
 export const RECENT_MONTHS = 'RECENT_MONTHS'
 export const MONTH_TO_DATE = 'MONTH_TO_DATE'
@@ -66,10 +66,12 @@ export function fetchMonthToDate(processType) {
 	return function (dispatch) {
 		dispatch(requestMonthToDate())
 
+		const start = moment().startOf('month')
+
 		const q = {
 			bucket: 'day',
 			process_type: processType,
-			start: toUTCString(moment().startOf('month')),
+			start: toUTCString(start),
 			end: toUTCString(moment())
 		}
 
@@ -79,7 +81,7 @@ export function fetchMonthToDate(processType) {
 				if (err || !res.ok) {
 					dispatch(requestMonthToDateFailure(err))
 				} else {
-					dispatch(requestMonthToDateSuccess(res.body))
+					dispatch(requestMonthToDateSuccess(addMissingDates(res.body, start)))
 				}
 			})
 	}
@@ -114,11 +116,12 @@ function requestMonthToDateSuccess(json) {
 export function fetchWeekToDate(processType) {
 	return function (dispatch) {
 		dispatch(requestWeekToDate())
+		const start = moment().startOf('week')
 
 		const q = {
 			bucket: 'day',
 			process_type: processType,
-			start: toUTCString(moment().startOf('week')),
+			start: toUTCString(start),
 			end: toUTCString(moment())
 		}
 
@@ -128,7 +131,7 @@ export function fetchWeekToDate(processType) {
 				if (err || !res.ok) {
 					dispatch(requestWeekToDateFailure(err))
 				} else {
-					dispatch(requestWeekToDateSuccess(res.body))
+					dispatch(requestWeekToDateSuccess(addMissingDates(res.body, start)))
 				}
 			})
 	}
@@ -158,4 +161,21 @@ function requestWeekToDateSuccess(json) {
 		query: WEEK_TO_DATE,
 		data: json,
 	}
+}
+
+function addMissingDates(data, start) {
+	const startDay = start.date()
+	const endDay = moment().date()
+	return Array.from({length: endDay - startDay + 1}, (x,i) => i + startDay)
+		.map(day => {
+			const date = moment([moment().year(), moment().month(), day])
+			const dateString = date.format('YYYY-MM-DD')
+			const existingData = data.find(datum => dateString === datum.bucket)
+			return existingData ?
+				existingData :
+				{
+					bucket: dateString,
+					total_amount: 0
+				}
+		})
 }

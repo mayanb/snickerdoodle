@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles/linecharttooltip.css'
 
-export default function Tooltip({ x, y, lastYear, thisYear, height, width }) {
+export default function Tooltip({ x, y, period, total, height, width }) {
 	if (!x && !y) {
 		return null
 	}
@@ -14,10 +14,10 @@ export default function Tooltip({ x, y, lastYear, thisYear, height, width }) {
 			width: width
 		}}>
 			<div>
-				<span className="title">This Year: </span>{thisYear}
+				<span className="title">Period: </span>{period}
 			</div>
 			<div>
-				<span className="title">Last Year: </span>{lastYear}
+				<span className="title">Total: </span>{total}
 			</div>
 		</div>
 	)

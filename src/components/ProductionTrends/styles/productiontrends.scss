@@ -1,18 +1,15 @@
 @import 'styles/constants.scss';
 
 .production-trends {
+    margin-bottom: 80px;
 
     .options {
         margin-bottom: 32px;
     }
 
-    .charts {
+    .cumulatives {
         display: flex;
-    }
-
-    .cumulative {
-        display: flex;
-        flex-direction: column;
+        margin-top: 32px;
     }
 
     .trends-title {

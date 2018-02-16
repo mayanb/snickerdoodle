@@ -7,8 +7,6 @@ import './styles/cumulativeareachart.css'
 import {
 	scaleTime,
 	scaleLinear,
-	scaleOrdinal,
-	schemeCategory10,
 	axisBottom,
 	axisLeft,
 	area,
@@ -19,7 +17,7 @@ import {
 	sum,
 	mouse,
 	bisector,
-	timeMonth
+	timeDay
 } from 'd3'
 
 const TOOLTIP_WIDTH = 120
@@ -61,7 +59,7 @@ export default class CumulativeAreaChart extends React.Component {
 				bottom: 30,
 				left: 50
 			},
-			width = 400 - margin.left - margin.right,
+			width = 500 - margin.left - margin.right,
 			height = 200 - margin.top - margin.bottom
 
 
@@ -86,6 +84,8 @@ export default class CumulativeAreaChart extends React.Component {
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
+		//const start = this.props.name === 'This Week' ? moment().startOf('week').toDate() : moment().startOf('month').toDate()
+		//x.domain([start, moment().toDate()])
 		x.domain(extent(chartData[0].values, d => d.date))
 
 		// do some math to find a good scale for this graph
@@ -101,21 +101,23 @@ export default class CumulativeAreaChart extends React.Component {
 		// 1. find the best bucket size for this scale
 		// 2. make the maxY a multiple of the bucket size
 		// 3. find the ticks for this maxY & bucketsize
-		console.log('maxY', maxY)
 		let bestBucketSize = findBestBucketSize(maxY)
-		console.log('bestBucketSize', bestBucketSize)
 		maxY = Math.ceil(maxY / bestBucketSize) * bestBucketSize
 		let ticks = getTicks(bestBucketSize, maxY)
 
 		y.domain([0, maxY])
 
+		let tickLabelFrequency = 1
+		if(this.props.name === 'This Month') {
+			tickLabelFrequency = Math.floor(moment().date() / 10) + 1
+		}
 		// add the X axis
 		svg.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + height + ")")
 			.call(axisBottom(x)
-				.ticks(timeMonth)
-				.tickFormat(d => moment(d).format("MMM YY"))
+				.ticks(timeDay.every(tickLabelFrequency))
+				.tickFormat(d => moment(d).format("M/D"))
 			)
 
 		// add the Y axis
@@ -132,7 +134,7 @@ export default class CumulativeAreaChart extends React.Component {
 		svg.append("g")
 			.attr("class", "grid")
 			.attr("transform", "translate(0," + height + ")")
-			.call(axisBottom(x).ticks(timeMonth).tickFormat("").tickSize(-height))
+			.call(axisBottom(x).ticks(timeDay).tickFormat("").tickSize(-height))
 
 		// add the Y gridlines
 		svg.append("g")
@@ -158,25 +160,6 @@ export default class CumulativeAreaChart extends React.Component {
 				return xv
 			})
 			.attr("cy", d => y(d.value))
-
-		series.append("text")
-			.datum(d => ({
-				name: d.name,
-				value: d.values[d.values.length - 1]
-			}))
-			.attr("transform", d => "translate(" + x(d.value.date) + "," + y(d.value.value) + ")")
-			.attr("x", 3)
-			.attr("dy", ".35em")
-			.text(d => d.name)
-
-		// const mouseG = svg.append("g")
-		// 	.attr("class", "mouse-over-effects")
-
-		// mouseG.append("path") // this is the black vertical line to follow mouse
-		// 	.attr("class", "mouse-line")
-		// 	.style("stroke", "black")
-		// 	.style("stroke-width", "1px")
-		// 	.style("opaseries", "0")
 
 		const focus = svg.append("g")
 			.attr("class", "focus")
@@ -227,8 +210,8 @@ export default class CumulativeAreaChart extends React.Component {
 				{
 					x: xValue + margin.left - TOOLTIP_WIDTH / 2,
 					y: 0 + margin.top - TOOLTIP_HEIGHT,
-					thisYear: d.values[0].value,
-					lastYear: d.values[1].value
+					total: d.values[0].value,
+					period: moment(d.date).format('M/D')
 				}
 			)
 		}
@@ -245,8 +228,8 @@ export default class CumulativeAreaChart extends React.Component {
 				<LineChartTooltip
 					x={this.state.hover && this.state.hover.x}
 					y={this.state.hover && this.state.hover.y}
-					lastYear={this.state.hover && this.state.hover.lastYear}
-					thisYear={this.state.hover && this.state.hover.thisYear}
+					period={this.state.hover && this.state.hover.period}
+					total={this.state.hover && this.state.hover.total}
 					height={TOOLTIP_HEIGHT}
 					width={TOOLTIP_WIDTH}
 				/>
@@ -258,25 +241,25 @@ export default class CumulativeAreaChart extends React.Component {
 
 function convertChartData(data, name) {
 	const totalAmounts = data.map(d => d.total_amount)
-	const thisYear = {
+	const total = {
 		name: name,
 		values: data.map((datum, i) => ({
 			date: moment(datum.bucket),
 			value: sum(totalAmounts.slice(0, i+1))
 		}))
 	}
-	return [thisYear]
+	return [total]
 }
 
 function convertTooltipData(data) {
-	return data[0].values.map(thisYearDatum => {
-		//const lastYearDatum = data[1].values.find(d => d.date.unix() === thisYearDatum.date.unix())
+	return data[0].values.map(totalDatum => {
+		//const periodDatum = data[1].values.find(d => d.date.unix() === totalDatum.date.unix())
 		return {
-			date: thisYearDatum.date,
+			date: totalDatum.date,
 			values: [
 				{
 					name: data[0].name,
-					value: thisYearDatum.value
+					value: totalDatum.value
 				},
 				{
 					name: 'Last Year',
@@ -285,7 +268,7 @@ function convertTooltipData(data) {
 				/**
 				 {
 					 name: data[1].name,
-					 value: lastYearDatum.value
+					 value: periodDatum.value
 				 }
 				 */
 			]

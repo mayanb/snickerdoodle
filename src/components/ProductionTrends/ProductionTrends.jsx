@@ -49,14 +49,10 @@ class ProductionTrends extends React.Component {
 							onChange={(newVal) => this.handleProcessTypeChange(newVal)}
 						/>
 					</div>
-					<div className="charts">
-						<TrendsLineChart data={this.props.recentMonths} />
-						<div className="cumulatives">
-							<Subtitle>Cumulative total this week</Subtitle>
-							<CumulativeAreaChart data={this.props.weekToDate} name="This Week" />
-							<Subtitle>Cumulative total this month</Subtitle>
-							<CumulativeAreaChart data={this.props.monthToDate} name="This Month" />
-						</div>
+					<TrendsLineChart data={this.props.recentMonths} />
+					<div className="cumulatives">
+						<CumulativeAreaChart data={this.props.weekToDate} />
+						<CumulativeAreaChart data={this.props.monthToDate} />
 					</div>
 				</Loading>
 			</div>

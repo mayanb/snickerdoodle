@@ -13,3 +13,8 @@ export function dateToUTCString(dateString, addOne) {
 export function toUTCString(momentDate) {
 	return momentDate.utc().format('YYYY-MM-DD-HH-mm-ss-SSSSSS')
 }
+
+export function compareDates(date1, date2) {
+	const format = 'YYYY-DD-MM'
+	return date1.format(format) === date2.format(format)
+}
