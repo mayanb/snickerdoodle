@@ -160,17 +160,6 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("class", "area")
 			.attr("d", d => _area(d.values))
 
-		series.selectAll("circles")
-			.data(d => d.values)
-			.enter().append("circle")
-			.attr("class", "data-circle")
-			.attr("r", 2)
-			.attr("cx", d => {
-				let xv = x(d.date);
-				return xv
-			})
-			.attr("cy", d => y(d.value))
-
 		const focus = svg.append("g")
 			.attr("class", "focus")
 			.style("display", "none")
@@ -179,12 +168,6 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("class", "x-hover-line hover-line")
 			.attr("y1", 0)
 			.attr("y2", height)
-
-		let focusCircle = focus.append("circle")
-			.attr("class", "data-circle hover-circle")
-			.attr("r", 4)
-			.attr("cx", 0)
-			.attr("cy", 0)
 
 		const updateHover = this.updateHover.bind(this)
 
@@ -213,7 +196,6 @@ export default class CumulativeAreaChart extends React.Component {
 			const yValue = y(maxValue)
 
 			focus.attr("transform", "translate(" + xValue + ",0)")
-			focusCircle.attr("transform", "translate(0," + yValue + ")")
 			focus.select(".x-hover-line").attr("y2", height)
 
 			updateHover(
