@@ -1,6 +1,5 @@
 import React from 'react'
 import Goals from '../Goals/Goals'
-import Activity from '../Activity/Activity'
 import Alerts from '../Alerts/Alerts'
 import Card from '../Card/Card'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'

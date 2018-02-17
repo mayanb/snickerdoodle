@@ -51,7 +51,6 @@ export default class CumulativeAreaChart extends React.Component {
 		const ref = this.node
 
 		const chartData = convertChartData(this.props.data, this.props.name)
-		const tooltipData = convertTooltipData(chartData)
 
 		const margin = {
 				top: 20,
@@ -86,16 +85,12 @@ export default class CumulativeAreaChart extends React.Component {
 
 		//const start = this.props.name === 'This Week' ? moment().startOf('week').toDate() : moment().startOf('month').toDate()
 		//x.domain([start, moment().toDate()])
-		x.domain(extent(chartData[0].values, d => d.date))
+		x.domain(extent(chartData, d => d.date))
 
 		// do some math to find a good scale for this graph
 		// so that the line appears kind of in the middle
-		let dataMedian = median(chartData, c => {
-			return median(c.values, v => v.value)
-		})
-		let dataMax = max(chartData, c => {
-			return max(c.values, v => v.value)
-		})
+		let dataMedian = median(chartData, d => d.value)
+		let dataMax = max(chartData, d => d.value)
 		let maxY = Math.max(dataMedian * 2, dataMax + dataMedian / 4.0)
 
 		// 1. find the best bucket size for this scale
@@ -107,7 +102,7 @@ export default class CumulativeAreaChart extends React.Component {
 
 		y.domain([0, maxY])
 
-		const tickLabelFrequency = Math.floor(chartData[0].values.length / 10) + 1
+		const tickLabelFrequency = Math.floor(chartData.length / 10) + 1
 
 		// add the X axis
 		svg.append("g")
@@ -136,7 +131,7 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("class", "y-axis-label")
 			.attr("transform", "rotate(-90)")
 			.attr("y", 0 - margin.left)
-			.attr("x",0 - (height / 2))
+			.attr("x", 0 - (height / 2))
 			.attr("dy", "1em")
 			.style("text-anchor", "middle")
 			.text(this.props.unitLabel);
@@ -153,13 +148,13 @@ export default class CumulativeAreaChart extends React.Component {
 			.call(axisLeft(y).tickValues(ticks).tickSize(-width).tickFormat(""))
 
 		const series = svg.selectAll(".series")
-			.data(chartData)
+			.data([chartData])
 			.enter().append("g")
 			.attr("class", "series")
 
 		series.append("path")
 			.attr("class", "area")
-			.attr("d", d => _area(d.values))
+			.attr("d", _area)
 
 		const focus = svg.append("g")
 			.attr("class", "focus")
@@ -187,14 +182,12 @@ export default class CumulativeAreaChart extends React.Component {
 			const bisectDate = bisector(d => d.date).left
 
 			const x0 = x.invert(mouse(this)[0]),
-				i = bisectDate(tooltipData, x0, 1),
-				d0 = tooltipData[i - 1],
-				d1 = tooltipData[i],
+				i = bisectDate(chartData, x0, 1),
+				d0 = chartData[i - 1],
+				d1 = chartData[i],
 				d = x0 - d0.date > d1.date - x0 ? d1 : d0
 
-			const maxValue = max(d.values, (x) => x.value)
 			const xValue = x(d.date)
-			const yValue = y(maxValue)
 
 			focus.attr("transform", "translate(" + xValue + ",0)")
 			focus.select(".x-hover-line").attr("y2", height)
@@ -203,8 +196,8 @@ export default class CumulativeAreaChart extends React.Component {
 				{
 					x: xValue + margin.left - TOOLTIP_WIDTH / 2,
 					y: 0 + margin.top - TOOLTIP_HEIGHT,
-					value: d.values[0].value,
-					change: d.values[0].change,
+					value: d.value,
+					change: d.change,
 					period: moment(d.date).format('M/D')
 				}
 			)
@@ -232,7 +225,8 @@ export default class CumulativeAreaChart extends React.Component {
 						<span className="title">Daily total: </span>{this.state.hover && this.state.hover.change.toLocaleString()}
 					</div>
 					<div>
-						<span className="title">Cumulative total: </span>{this.state.hover && this.state.hover.value.toLocaleString()}
+						<span
+							className="title">Cumulative total: </span>{this.state.hover && this.state.hover.value.toLocaleString()}
 					</div>
 				</LineChartTooltip>
 			</div>
@@ -241,41 +235,12 @@ export default class CumulativeAreaChart extends React.Component {
 
 }
 
-function convertChartData(data, name) {
+function convertChartData(data) {
 	const totalAmounts = data.map(d => d.total_amount)
-	const total = {
-		name: name,
-		values: data.map((datum, i) => ({
-			date: moment(datum.bucket),
-			value: sum(totalAmounts.slice(0, i+1)),
-			change: datum.total_amount
-		}))
-	}
-	return [total]
+	return data.map((datum, i) => ({
+		date: moment(datum.bucket),
+		value: sum(totalAmounts.slice(0, i + 1)),
+		change: datum.total_amount
+	}))
 }
 
-function convertTooltipData(data) {
-	return data[0].values.map(totalDatum => {
-		//const periodDatum = data[1].values.find(d => d.date.unix() === totalDatum.date.unix())
-		return {
-			date: totalDatum.date,
-			values: [
-				{
-					name: data[0].name,
-					value: totalDatum.value,
-					change: totalDatum.change
-				},
-				{
-					name: 'Last Year',
-					value: 'N/A'
-				}
-				/**
-				 {
-					 name: data[1].name,
-					 value: periodDatum.value
-				 }
-				 */
-			]
-		}
-	})
-}
