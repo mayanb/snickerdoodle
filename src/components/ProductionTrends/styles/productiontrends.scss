@@ -32,5 +32,36 @@
         font-size: 14px;
         margin-top: 5px;
         margin-bottom: 11px;
+        display: flex;
+    }
+
+    .help {
+        display: flex;
+        align-items: center;
+        margin-left: 8px;
+        position: relative;
+
+        img {
+            height: 20px;
+        }
+
+        &:hover .help-tooltip {
+            display: block;
+        }
+
+        .help-tooltip {
+            background-color: white;
+            border: 1px solid $gray;
+            border-radius: 4px;
+            padding: 12px;
+            line-height: 20px;
+            display: none;
+            font-size: 12px;
+            width: 200px;
+            position: absolute;
+            bottom: 28px;
+            right: -95px;
+            z-index: 1000;
+        }
     }
 }

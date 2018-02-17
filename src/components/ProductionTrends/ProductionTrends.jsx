@@ -8,6 +8,7 @@ import TrendsLineChart from './TrendsLineChart'
 import Select from '../Inputs/Select'
 import './styles/productiontrends.css'
 import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
+import Img from '../Img/Img'
 import { pluralize } from "../../utilities/stringutils"
 
 class ProductionTrends extends React.Component {
@@ -44,15 +45,24 @@ class ProductionTrends extends React.Component {
 				<Loading isFetchingData={this.props.isFetchingData}>
 					<Title>Production Trends</Title>
 					{this.renderOptions()}
-					<Subtitle>Past 12 months (total per month)</Subtitle>
+					<Subtitle>
+						Past 12 months (total per month)
+						<Help>Displays total production for each month</Help>
+					</Subtitle>
 					<TrendsLineChart data={this.props.recentMonths} unitLabel={unitLabel} />
 					<div className="cumulatives">
 						<div>
-							<Subtitle>Week to date (cumulative total)</Subtitle>
+							<Subtitle>
+								Week to date (cumulative total)
+								<Help>Displays this week's cumulative total production for each day</Help>
+							</Subtitle>
 							<CumulativeAreaChart data={this.props.weekToDate} unitLabel={unitLabel} labelDays={true} />
 						</div>
 						<div>
-							<Subtitle>Month to date (cumulative total)</Subtitle>
+							<Subtitle>
+								Month to date (cumulative total)
+								<Help>Displays this month's cumulative total production for each day</Help>
+							</Subtitle>
 							<CumulativeAreaChart data={this.props.monthToDate} unitLabel={unitLabel} />
 						</div>
 					</div>
@@ -112,6 +122,17 @@ function Title(props) {
 function Subtitle(props) {
 	return (
 		<div className="trends-subtitle">{props.children}</div>
+	)
+}
+
+function Help({children}) {
+	return (
+		<div className="help">
+			<Img src="help@2x"/>
+			<div className="help-tooltip">
+				{children}
+			</div>
+		</div>
 	)
 }
 
