@@ -301,7 +301,7 @@ function Origin(props) {
 function Row(props) {
 	var symbol = false 
 	if (props.img) {
-		let errorImg = `${process.env.PUBLIC_URL}/public/img/default@3x.png`
+		let errorImg = `${process.env.PUBLIC_URL}/img/default@3x.png`
 		symbol = <ReactImageFallback src={process.env.PUBLIC_URL + `/img/${props.img}@3x.png`} fallbackImage={errorImg}/>
 	} else if (props.icon) {
 		symbol = <span><i className="material-icons arrow">{props.icon}</i></span>
