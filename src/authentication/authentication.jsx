@@ -1,4 +1,5 @@
 import jwt_decode from 'jwt-decode'
+import moment from 'moment'
 
 export function shouldLogin(users) {
 	try {
@@ -22,9 +23,9 @@ export function shouldLogin(users) {
 
 const TIME_TO_REFRESH = 200 // in seconds
 export function shouldRefresh(users) {
-	let {data, ui} = users	
-  let last_fetched = data[ui.activeUser].last_fetched
-  return !last_fetched || ((new Date() - last_fetched) / 1000 > TIME_TO_REFRESH)
+	let {data, ui} = users
+  let last_fetched = data[ui.activeUser].user.last_fetched
+  return !last_fetched || ((moment() - moment(last_fetched)) / 1000 > TIME_TO_REFRESH)
 }
 
 let WALKTHROUGH_COMPLETED = -1
