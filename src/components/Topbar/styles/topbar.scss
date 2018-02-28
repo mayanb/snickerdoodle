@@ -2,6 +2,7 @@
 
 .d-top {
     height: $nav-height;
+    padding-left: $nav-width;
 
     .nav-logo {
         width: $nav-width;
@@ -11,13 +12,14 @@
         margin-left: 16px;
     }
 
-    z-index: 999;
+    z-index: 998;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     background-color: white;
-    box-shadow: $card-shadow;
+    //box-shadow: $card-shadow;
+    border-bottom: 1px solid $gray-ultra-light;
     display: flex;
     align-items: center;
 
@@ -38,8 +40,39 @@
         }
     }
 
-
-    .nav-team {
+    .nav-right {
+        flex: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         margin: 0 36px;
+
+        i.alerts {
+            color: $primary;
+            margin: 0 36px;
+        }
     }
+
+    .nav-team button {
+        padding: 0;
+    }
+
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 250px;
+    max-height: 300px;
+    overflow-y: scroll;
+    z-index: 1;
+}
+
+.dropdown.expanded .dropdown-content {
+    display: block;
 }

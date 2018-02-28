@@ -13,7 +13,7 @@ export default function Home(props) {
 			<NewFeatures />
 			<div className="dashboard">
 
-			<div className="dash-content">
+			<div className="">
 
 
 				<div>
@@ -31,14 +31,9 @@ export default function Home(props) {
 						</div>
 					</div>
 				</div>
+
+				
 			</div>
-
-
-				<div className="panel">
-					<div className="alerts-container">
-						<Alerts />
-					</div>
-				</div>
 				
 			</div>
 		</div>

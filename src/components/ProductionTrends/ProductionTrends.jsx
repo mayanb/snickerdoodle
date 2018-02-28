@@ -44,26 +44,28 @@ class ProductionTrends extends React.Component {
 			<div className="production-trends">
 				<Loading isFetchingData={this.props.isFetchingData}>
 					<Title>Production Trends</Title>
-					{this.renderOptions()}
-					<Subtitle>
-						Past 12 months (total per month)
-						<Help>Displays total production for each month</Help>
-					</Subtitle>
-					<TrendsLineChart data={this.props.recentMonths} unitLabel={unitLabel} />
-					<div className="cumulatives">
-						<div>
-							<Subtitle>
-								Week to date (cumulative total)
-								<Help>Displays this week's cumulative total production for each day</Help>
-							</Subtitle>
-							<CumulativeAreaChart data={this.props.weekToDate} unitLabel={unitLabel} labelDays={true} />
-						</div>
-						<div>
-							<Subtitle>
-								Month to date (cumulative total)
-								<Help>Displays this month's cumulative total production for each day</Help>
-							</Subtitle>
-							<CumulativeAreaChart data={this.props.monthToDate} unitLabel={unitLabel} />
+					<div style={{marginLeft: '32px'}}>
+						{this.renderOptions()}
+						<Subtitle>
+							Past 12 months (total per month)
+							<Help>Displays total production for each month</Help>
+						</Subtitle>
+						<TrendsLineChart data={this.props.recentMonths} unitLabel={unitLabel} />
+						<div className="cumulatives">
+							<div>
+								<Subtitle>
+									Week to date (cumulative total)
+									<Help>Displays this week's cumulative total production for each day</Help>
+								</Subtitle>
+								<CumulativeAreaChart data={this.props.weekToDate} unitLabel={unitLabel} labelDays={true} />
+							</div>
+							<div>
+								<Subtitle>
+									Month to date (cumulative total)
+									<Help>Displays this month's cumulative total production for each day</Help>
+								</Subtitle>
+								<CumulativeAreaChart data={this.props.monthToDate} unitLabel={unitLabel} />
+							</div>
 						</div>
 					</div>
 				</Loading>

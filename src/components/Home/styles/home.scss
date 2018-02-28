@@ -1,7 +1,8 @@
 @import 'styles/constants.scss';
 
 .dashboard {
-	padding-right: $panel-width + 32px;
+	width: calc(100vw - #{$nav-width});
+	//padding-right: $panel-width;
 
 	.dash-content {
 		display: flex;

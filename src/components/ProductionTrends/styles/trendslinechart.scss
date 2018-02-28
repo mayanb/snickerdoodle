@@ -16,7 +16,7 @@
 
     .line {
         fill: none;
-        stroke: $primary-light;
+        stroke: $primary;
         stroke-width: 1.5px;
     }
 
@@ -30,7 +30,7 @@
     }
 
     .data-circle {
-        stroke: $primary-light;
+        stroke: $primary;
         stroke-width: 2px;
         fill: $background-color;
     }
