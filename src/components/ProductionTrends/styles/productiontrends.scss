@@ -4,16 +4,21 @@
     margin-bottom: 80px;
 
     .options {
-        margin-bottom: 32px;
-        padding-right: 18px;
         display: flex;
         justify-content: flex-end;
-        width: 100%;
 
         .select {
             margin-left: 24px;
             width: 200px;
         }
+    }
+
+    .every-month-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 18px;
+        margin-bottom: 12px;
     }
 
     .cumulatives {

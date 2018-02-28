@@ -48,11 +48,13 @@ class ProductionTrends extends React.Component {
 				<Loading isFetchingData={this.props.isFetchingData}>
 					<Title>Production Trends</Title>
 					<div className="trends-content">
-						{this.renderOptions()}
-						<Subtitle>
-							<b>How much do you make&nbsp;</b> every month?
-							<Help>Displays total production for each month</Help>
-						</Subtitle>
+						<div className="every-month-header">
+							<Subtitle>
+								<b>How much do you make&nbsp;</b> every month?
+								<Help>Displays total production for each month</Help>
+							</Subtitle>
+							{this.renderOptions()}
+						</div>
 						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={this.props.recentMonths} unitLabel={unitLabel} />
 						<div className="cumulatives">
 							<div>
