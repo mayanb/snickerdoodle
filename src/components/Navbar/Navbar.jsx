@@ -58,9 +58,10 @@ class Navbar extends React.Component {
     let l1 = [""]
     let {data, ui} = this.props.users
     let team = data[ui.activeUser].user.team_name
-    if (team === 'alabama' || team === 'valencia')
-      o1 = ["Activity Log", "Inventory"]
-      l1 = ["", "inventory"]
+    if (team === 'alabama' || team === 'valencia') {
+	    o1 = ["Activity Log", "Inventory"]
+	    l1 = ["", "inventory"]
+    }
     return <NavigationGroup options={o1} links={l1} title={null} />
 
   }
