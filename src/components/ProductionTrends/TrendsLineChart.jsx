@@ -9,6 +9,7 @@ import {
 	scaleLinear,
 	axisBottom,
 	axisLeft,
+	axisRight,
 	line,
 	select,
 	extent,
@@ -21,6 +22,7 @@ import {
 
 const TOOLTIP_WIDTH = 120
 const TOOLTIP_HEIGHT = 60
+
 
 export default class TrendsLineChart extends React.Component {
 
@@ -55,10 +57,10 @@ export default class TrendsLineChart extends React.Component {
 				top: 20,
 				right: 20,
 				bottom: 30,
-				left: 60
+				left: 40
 			},
-			width = 1000 - margin.left - margin.right,
-			height = 300 - margin.top - margin.bottom
+			width = this.props.width - margin.left - margin.right,
+			height = this.props.height - margin.top - margin.bottom
 
 
 		const x = scaleTime()
@@ -106,26 +108,26 @@ export default class TrendsLineChart extends React.Component {
 				.ticks(timeMonth)
 				.tickFormat(d => moment(d).format("MMM YY"))
 			)
-
+			
 		// add the Y axis
 		svg.append("g")
 			.attr("class", "y axis")
 			.call(axisLeft(y).tickValues(ticks))
 			.append("text")
-			.attr("transform", "rotate(-90)")
+			.attr("transform", "translate(" + 800 + ",0)")
 			.attr("y", 6)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
 
 		// add the Y axis label
-		svg.append("text")
-			.attr("class", "y-axis-label")
-			.attr("transform", "rotate(-90)")
-			.attr("y", 0 - margin.left)
-			.attr("x", 0 - (height / 2))
-			.attr("dy", "1em")
-			.style("text-anchor", "middle")
-			.text(this.props.unitLabel);
+		// svg.append("text")
+		// 	.attr("class", "y-axis-label")
+		// 	.attr("transform", "rotate(-90)")
+		// 	.attr("y", 0 - margin.left)
+		// 	.attr("x", 0 - (height / 2))
+		// 	.attr("dy", "1em")
+		// 	.style("text-anchor", "middle")
+		// 	.text(this.props.unitLabel);
 
 		// add the X gridlines
 		svg.append("g")

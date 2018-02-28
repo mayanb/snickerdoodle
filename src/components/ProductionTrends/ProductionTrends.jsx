@@ -11,6 +11,9 @@ import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
 import Img from '../Img/Img'
 import { pluralize } from "../../utilities/stringutils"
 
+const CHART_HEIGHT = 200
+const CHART_WIDTH = 900
+
 class ProductionTrends extends React.Component {
 	constructor(props) {
 		super(props)
@@ -44,27 +47,27 @@ class ProductionTrends extends React.Component {
 			<div className="production-trends">
 				<Loading isFetchingData={this.props.isFetchingData}>
 					<Title>Production Trends</Title>
-					<div style={{marginLeft: '32px'}}>
+					<div className="trends-content">
 						{this.renderOptions()}
 						<Subtitle>
-							Past 12 months (total per month)
+							<b>How much do you make&nbsp;</b> every month?
 							<Help>Displays total production for each month</Help>
 						</Subtitle>
-						<TrendsLineChart data={this.props.recentMonths} unitLabel={unitLabel} />
+						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={this.props.recentMonths} unitLabel={unitLabel} />
 						<div className="cumulatives">
 							<div>
 								<Subtitle>
-									Week to date (cumulative total)
+									What did you make <b>&nbsp;this week?</b>
 									<Help>Displays this week's cumulative total production for each day</Help>
 								</Subtitle>
-								<CumulativeAreaChart data={this.props.weekToDate} unitLabel={unitLabel} labelDays={true} />
+								<CumulativeAreaChart width={CHART_WIDTH/2} height={CHART_HEIGHT} data={this.props.weekToDate} unitLabel={unitLabel} labelDays={true} />
 							</div>
 							<div>
 								<Subtitle>
-									Month to date (cumulative total)
+									What did you make <b>&nbsp;this month?</b>
 									<Help>Displays this month's cumulative total production for each day</Help>
 								</Subtitle>
-								<CumulativeAreaChart data={this.props.monthToDate} unitLabel={unitLabel} />
+								<CumulativeAreaChart width={CHART_WIDTH/2} height={CHART_HEIGHT} data={this.props.monthToDate} unitLabel={unitLabel} />
 							</div>
 						</div>
 					</div>
@@ -81,7 +84,8 @@ class ProductionTrends extends React.Component {
 					clearable={false}
 					value={this.state.processType}
 					options={this.props.processes}
-					labelKey={'name'}
+					optionRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
+					valueRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
 					valueKey={'id'}
 					placeholder="Select a process type"
 					onChange={(newVal) => this.handleProcessTypeChange(newVal)}

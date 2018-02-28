@@ -2,12 +2,23 @@
 
 .trends-line-chart {
     position: relative;
+    overflow: visible;
 
     .axis path,
     .axis line {
         fill: none;
-        stroke: #000;
+        stroke: $elephant-light;
         shape-rendering: crispEdges;
+    }
+
+    .axis .tick line {
+        opacity: 0;
+    }
+
+    .axis text {
+        margin-top: 4px;
+        fill: $gray;
+
     }
 
     .x.axis path {

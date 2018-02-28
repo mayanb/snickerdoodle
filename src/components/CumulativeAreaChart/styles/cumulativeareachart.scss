@@ -6,8 +6,11 @@
     .axis path,
     .axis line {
         fill: none;
-        stroke: #000;
+        stroke: $elephant-light;
         shape-rendering: crispEdges;
+    }
+    .axis text {
+        fill: $gray;
     }
 
     .x.axis path {
@@ -18,7 +21,7 @@
         stroke: $primary-light;
         stroke-width: 1.5px;
         fill: $primary-light;
-        opacity: 0.3;
+        opacity: 0.8;
     }
 
     .y-axis-label {

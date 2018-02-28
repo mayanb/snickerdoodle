@@ -7,11 +7,12 @@
         margin-bottom: 32px;
         padding-right: 18px;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         width: 100%;
 
         .select {
-            width: 400px;
+            margin-left: 24px;
+            width: 200px;
         }
     }
 
@@ -26,14 +27,16 @@
         color: white;
         padding: 12px 32px;
         background-color: $primary;
-        -webkit-font-smoothing: antialased;
+        -webkit-font-smoothing: antialiased;
     }
 
     .trends-subtitle {
         font-size: 14px;
-        margin-top: 5px;
-        margin-bottom: 11px;
+        margin-top: 4px;
+        margin-left: 40px;
         display: flex;
+        color: $black;
+        -webkit-font-smoothing: antialiased;
     }
 
     .help {
@@ -64,5 +67,11 @@
             right: -95px;
             z-index: 1000;
         }
+    }
+
+    .trends-content {
+        margin-left: 32px;
+        max-width: 900px;
+        margin-top: 32px;
     }
 }
