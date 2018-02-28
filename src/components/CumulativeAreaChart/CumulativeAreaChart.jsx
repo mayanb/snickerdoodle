@@ -48,6 +48,7 @@ export default class CumulativeAreaChart extends React.Component {
 		if (!this.props.data || !this.props.data.length)
 			return
 
+
 		const ref = this.node
 
 		const chartData = convertChartData(this.props.data, this.props.name)
@@ -73,6 +74,7 @@ export default class CumulativeAreaChart extends React.Component {
 			.x(d => x(d.date))
 			.y0(height)
 			.y1(d => y(d.value))
+			.defined(d => d.value !== null)
 
 		//Clean up old chart
 		select(ref).selectAll("*").remove();
@@ -212,24 +214,32 @@ export default class CumulativeAreaChart extends React.Component {
 		return (
 			<div className="cumulative-area-chart">
 				<svg ref={node => this.node = node} />
-				<LineChartTooltip
-					x={this.state.hover && this.state.hover.x}
-					y={this.state.hover && this.state.hover.y}
-					height={TOOLTIP_HEIGHT}
-					width={TOOLTIP_WIDTH}
-				>
-					<div>
-						<span className="title">Day: </span>{this.state.hover && this.state.hover.period}
-					</div>
-					<div>
-						<span className="title">Daily total: </span>{this.state.hover && this.state.hover.change.toLocaleString()}
-					</div>
-					<div>
-						<span
-							className="title">Cumulative total: </span>{this.state.hover && this.state.hover.value.toLocaleString()}
-					</div>
-				</LineChartTooltip>
+				{this.state.hover ? this.renderTooltip() : null}
 			</div>
+		)
+	}
+
+	renderTooltip() {
+		const dailyTotal = this.state.hover.change !== null ? this.state.hover.change.toLocaleString() : 'N/A'
+		const cumulativeTotal = this.state.hover.value !== null ? this.state.hover.value.toLocaleString() : 'N/A'
+		return (
+			<LineChartTooltip
+				x={this.state.hover.x}
+				y={this.state.hover.y}
+				height={TOOLTIP_HEIGHT}
+				width={TOOLTIP_WIDTH}
+			>
+				<div>
+					<span className="title">Day: </span>{this.state.hover.period}
+				</div>
+				<div>
+					<span className="title">Daily total: </span>{dailyTotal}
+				</div>
+				<div>
+						<span
+							className="title">Cumulative total: </span>{cumulativeTotal}
+				</div>
+			</LineChartTooltip>
 		)
 	}
 
@@ -237,10 +247,13 @@ export default class CumulativeAreaChart extends React.Component {
 
 function convertChartData(data) {
 	const totalAmounts = data.map(d => d.total_amount)
-	return data.map((datum, i) => ({
-		date: moment(datum.bucket),
-		value: sum(totalAmounts.slice(0, i + 1)),
-		change: datum.total_amount
-	}))
+	return data.map((datum, i) => {
+		const value = datum.total_amount !== null ? sum(totalAmounts.slice(0, i + 1)) : null
+		return {
+			date: moment(datum.bucket),
+			value: value,
+			change: datum.total_amount
+		}
+	})
 }
 

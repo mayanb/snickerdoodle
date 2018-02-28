@@ -39,7 +39,7 @@ export function fetchRecentMonths(processType, productTypes) {
 					dispatch(requestRecentMonthsFailure(err))
 				} else {
 					const end = today().startOf('month')
-					const start = end.clone().subtract(12, 'months')
+					const start = today().startOf('month').subtract(12, 'months')
 					dispatch(requestRecentMonthsSuccess(
 						addMissingPeriods(res.body, start, end, 'months')
 					))
@@ -78,8 +78,8 @@ export function fetchMonthToDate(processType, productTypes) {
 	return function (dispatch) {
 		dispatch(requestMonthToDate())
 
-		const end = today()
-		const start = end.clone().startOf('month')
+		const start = today().startOf('month')
+		const end = today().endOf('month').startOf('day')
 
 		return api.get(PATH)
 			.query(convertParams(start,  processType, productTypes, 'day'))
@@ -125,8 +125,8 @@ export function fetchWeekToDate(processType, productTypes) {
 	return function (dispatch) {
 		dispatch(requestWeekToDate())
 
-		const end = today()
-		const start = end.clone().startOf('week')
+		const start = today().startOf('week')
+		const end = today().endOf('week').startOf('day')
 
 		return api.get(PATH)
 			.query(convertParams(start,  processType, productTypes, 'day'))
@@ -169,11 +169,9 @@ function requestWeekToDateSuccess(json) {
 }
 
 function addMissingPeriods(data, start, end, periodType) {
-	const numPeriods = periodDifference(start, end, periodType) + 1
-
-	return Array.from({ length: numPeriods }, (x, i) => i)
-		.map(i => {
-			const date = start.clone().add(i, periodType)
+	const pastDaysEnd = today() < end ? today() : end
+	const pastDays = dateArray(start, pastDaysEnd, periodType)
+		.map(date => {
 			const existingData = data.find(datum => compareDates(date, moment(datum.bucket)))
 			return existingData ?
 				existingData :
@@ -183,6 +181,25 @@ function addMissingPeriods(data, start, end, periodType) {
 				}
 		})
 
+	const futureDays = dateArray(today().add(1, periodType), end, periodType)
+		.map(date => {
+			return {
+				bucket: date.format('YYYY-MM-DD'),
+				total_amount: null
+			}
+		})
+	return pastDays.concat(futureDays)
+}
+
+function dateArray(start, end, periodType) {
+	if (start > end)
+		return []
+
+	const numPeriods = periodDifference(start, end, periodType) + 1
+	return Array.from({ length: numPeriods }, (x, i) => i)
+		.map(i => {
+			return start.clone().add(i, periodType)
+		})
 }
 
 function today() {
