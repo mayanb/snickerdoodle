@@ -11,7 +11,7 @@ class PrivateRoute extends React.Component {
 
 		if (shouldLogin(rest.users)) {
 			return (
-				<Route {...rest} render={props => (
+				<Route render={props => (
 					<Redirect to={{
 						pathname: '/login',
 						state: { from: props.location }
