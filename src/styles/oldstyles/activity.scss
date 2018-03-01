@@ -46,6 +46,14 @@ $z-index-edit-menu: 992;
           vertical-align: middle;
         }
       }
+
+      .loading-indicator {
+        height: 44px;
+        width: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
 
     &.expanded {
