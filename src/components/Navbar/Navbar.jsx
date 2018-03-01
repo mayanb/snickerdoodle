@@ -6,12 +6,12 @@ import NavigationFeedback from './NavigationFeedback'
 import Img from '../Img/Img'
 import './styles/navigation.css'
 
-let group2 = [ 
+let group2 = [
   {title: 'Zebra Printing', icon: 'printing@2x', link: 'labels'},
   {title: 'Dymo Printing', icon: 'printing@2x', link: 'dymo'},
 ]
 
-let group3 = [ 
+let group3 = [
   {title: 'Processes', icon: 'processes', link: 'processes'},
   {title: 'Products', icon: 'products', link: 'products'},
 ]
@@ -68,7 +68,7 @@ class Navbar extends React.Component {
   }
 
   renderActivityLogAndInventoryNavigation() {
-    let group1 = [ 
+    let group1 = [
       {title: 'Dashboard', icon: 'dashboard@2x', link: ''},
       {title: 'Activity Log', icon: 'activity@2x', link: '/activity-log'},
     ]
