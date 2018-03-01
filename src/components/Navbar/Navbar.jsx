@@ -7,20 +7,14 @@ import Img from '../Img/Img'
 import './styles/navigation.css'
 
 let group2 = [ 
-  {title: 'Zebra Printing', icon: 'printing@2x', link: 'labels'},
-  {title: 'Dymo Printing', icon: 'printing@2x', link: 'dymo'},
+  {title: 'Zebra Printing', icon: 'printing-zebra@2x', link: 'labels'},
+  {title: 'Dymo Printing', icon: 'printing-dymo@2x', link: 'dymo'},
 ]
 
 let group3 = [ 
-  {title: 'Processes', icon: 'processes', link: 'processes'},
-  {title: 'Products', icon: 'products', link: 'products'},
+  {title: 'Processes', icon: 'processes@2x', link: 'processes'},
+  {title: 'Products', icon: 'products@2x', link: 'products'},
 ]
-
-let o2= [ "Z", "DD"]
-let l2 = ["labels", "dymo"]
-
-let o3 = ["P", "P",]
-let l3 = ["processes", "products",]
 
 class Navbar extends React.Component {
   render () {

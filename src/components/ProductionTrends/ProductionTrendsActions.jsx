@@ -57,7 +57,6 @@ function requestRecentMonths() {
 }
 
 function requestRecentMonthsFailure(err) {
-	alert('Oh no! Something went wrong\n' + err)
 	return {
 		type: REQUEST_TRENDS_FAILURE,
 		name: PRODUCTION_TRENDS,
@@ -104,7 +103,6 @@ function requestMonthToDate() {
 }
 
 function requestMonthToDateFailure(err) {
-	alert('Oh no! Something went wrong\n' + err)
 	return {
 		type: REQUEST_TRENDS_FAILURE,
 		name: PRODUCTION_TRENDS,
@@ -151,7 +149,6 @@ function requestWeekToDate() {
 }
 
 function requestWeekToDateFailure(err) {
-	alert('Oh no! Something went wrong\n' + err)
 	return {
 		type: REQUEST_TRENDS_FAILURE,
 		name: PRODUCTION_TRENDS,
