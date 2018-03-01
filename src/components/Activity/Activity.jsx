@@ -9,6 +9,7 @@ import Datepicker from '../Datepicker/Datepicker.jsx'
 import ReactImageFallback from "react-image-fallback"
 import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
+import Spinner from 'react-spinkit'
 
 export default class Activity extends React.Component {
 	constructor(props) {
@@ -198,80 +199,96 @@ export default class Activity extends React.Component {
 	attemptSpreadsheet(params) {
 		let is_connected = api.get_active_user().user.has_gauth_token
 		if (is_connected) {
-			this.createSpreadsheet(params)
+			return this.createSpreadsheet(params)
 		}
 		else {
 			this.toggleDialog('mustConnectGoogleDialog')
+			return new Promise(resolve => resolve())
 		}
 	}
 
 	createSpreadsheet(params) {
 		let c = this
-		api.post('/gauth/create-spreadsheet/')
+		return api.post('/gauth/create-spreadsheet/')
 			.type('form')
 			.send(params)
-			.end(function (err, res) {
-				if (err || !res.ok) {
-					alert("ugh something went wrong\n" + err)				
+			.then(res => {
+				console.log(res.body.spreadsheetId)
+				let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
+				let newWin = window.open(url, '_blank');
+				if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+					//POPUP BLOCKED
+					c.toggleDialog('mustEnablePopupsDialog')
 				}
-				else {
-					console.log(res.body.spreadsheetId)
-					let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
-					var newWin = window.open(url, '_blank');
-					if(!newWin || newWin.closed || typeof newWin.closed==='undefined')
-					{
-						//POPUP BLOCKED
-						c.toggleDialog('mustEnablePopupsDialog')
-					}
-				}
-				// window.location.href = res.text
+			})
+			.catch(err => {
+				alert("ugh something went wrong\n" + err)
 			})
 	}
 
 }
 
 
-function Process(props) {
-	let origins = false
+class Process extends React.Component {
 
-
-	if (props.expanded != null) {
-		origins = props.origins.map(function (origin, i) {
-			return <Origin 
-				key={i} 
-				{...origin} 
-				onClick={() => props.onOriginClick(props.process_id, i)} 
-				process_unit={props.process_unit} 
-				expanded={props.expanded.origin===i}
-				expandedTasks={props.expandedTasks}
-			/>
-		}, this)
+	constructor(props) {
+		super(props)
+		this.state = { loadingSpreadsheet: false }
+		this.handleCreateSpreadsheet = this.handleCreateSpreadsheet.bind(this)
 	}
 
-	let user_id = api.get_active_user().user.user_id
+	render() {
+		let origins = false
+		let props = this.props
 
-	let button = <button 
-		onClick={(e) => props.spreadsheet({"user_id": user_id, "process": props.process_id, "start": toUTCString(props.dates.start), "end": toUTCString(props.dates.end, true)})}
-	><i className="material-icons" >file_download</i></button>
-
-	return (
-		<div className={ "activity-process " + (props.expanded?"expanded":"")}> 
-			<div onClick={() => props.onClick(props.process_id)}>
-				<Row className="activity-process-header"
-					img={props.process_name.toLowerCase().replace(/\s/g, '')}
-					first={props.process_code}         
-					second={props.process_name}
-					third={pl(props.runs, "run")}
-					fourth={pl(parseInt(props.outputs, 10), props.process_unit)}
-					fifth={"0 flagged"}
-					sixth={"0 exp"}
-					seventh={button}
-
+		if (props.expanded != null) {
+			origins = props.origins.map(function (origin, i) {
+				return <Origin
+					key={i}
+					{...origin}
+					onClick={() => props.onOriginClick(props.process_id, i)}
+					process_unit={props.process_unit}
+					expanded={props.expanded.origin === i}
+					expandedTasks={props.expandedTasks}
 				/>
+			}, this)
+		}
+
+		let button = this.state.loadingSpreadsheet ?
+			<div className="loading-indicator"><Spinner name="circle" color="white" fadeIn="none"/></div> :
+			<button onClick={this.handleCreateSpreadsheet}><i className="material-icons">file_download</i></button>
+
+		return (
+			<div className={"activity-process " + (props.expanded ? "expanded" : "")}>
+				<div onClick={() => props.onClick(props.process_id)}>
+					<Row className="activity-process-header"
+					     img={props.process_name.toLowerCase().replace(/\s/g, '')}
+					     first={props.process_code}
+					     second={props.process_name}
+					     third={pl(props.runs, "run")}
+					     fourth={pl(parseInt(props.outputs, 10), props.process_unit)}
+					     fifth={"0 flagged"}
+					     sixth={"0 exp"}
+					     seventh={button}
+
+					/>
+				</div>
+				{origins}
 			</div>
-			{origins}
-		</div>
-	)
+		)
+	}
+
+	handleCreateSpreadsheet(e) {
+		e.stopPropagation()
+		let user_id = api.get_active_user().user.user_id
+		this.setState({ loadingSpreadsheet: true })
+		this.props.spreadsheet({
+			"user_id": user_id,
+			"process": this.props.process_id,
+			"start": toUTCString(this.props.dates.start),
+			"end": toUTCString(this.props.dates.end, true)
+		}).finally(() => this.setState({ loadingSpreadsheet: false }))
+	}
 }
 
 function Origin(props) {
