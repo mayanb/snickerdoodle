@@ -1,8 +1,6 @@
 import React from 'react'
 import AccountMenu from '../AccountMenu/AccountMenu'
 import TaskSelect from '../TaskSelect/TaskSelect'
-import {Link} from 'react-router-dom'
-import Img from '../Img/Img'
 import Button from '../Card/Button'
 import Alerts from '../Alerts/Alerts'
 import './styles/topbar.css'

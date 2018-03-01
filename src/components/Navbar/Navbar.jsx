@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import NavigationGroup from './NavigationGroup'
-import NavigationFeedback from './NavigationFeedback'
 import Img from '../Img/Img'
 import './styles/navigation.css'
 
@@ -15,12 +14,6 @@ let group3 = [
   {title: 'Processes', icon: 'processes', link: 'processes'},
   {title: 'Products', icon: 'products', link: 'products'},
 ]
-
-let o2= [ "Z", "DD"]
-let l2 = ["labels", "dymo"]
-
-let o3 = ["P", "P",]
-let l3 = ["processes", "products",]
 
 class Navbar extends React.Component {
   render () {
