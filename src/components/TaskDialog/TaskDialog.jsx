@@ -1,33 +1,52 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import './styles/taskdialog.css'
 import DialogHeader from '../Dialog/DialogHeader'
 import { icon, description } from '../Task/TaskHelpers.jsx'
 import {Link} from 'react-router-dom'
+import { HIDE_MODAL_TYPE } from '../../reducers/ModalReducer'
+import { MODAL } from '../../reducers/ReducerTypes'
 
-export default function TaskDialog(props) {
-	return (
-		<div className="dialog-container">
-			<div className="dialog-shim" onClick={props.onToggle} />
-			<div className={"dialog-card task-dialog"}>
-				<DialogHeader onToggle={props.onToggle}>Tasks</DialogHeader>
-				<div className="body">
-					{props.tasks.map(Task)}
+class TaskDialog extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.renderTask = this.renderTask.bind(this)
+		this.hideTaskDialog = this.hideTaskDialog.bind(this)
+	}
+
+	render() {
+		return (
+			<div className="dialog-container">
+				<div className="dialog-shim" onClick={this.hideTaskDialog} />
+				<div className={"dialog-card task-dialog"}>
+					<DialogHeader onToggle={this.hideTaskDialog}>Tasks</DialogHeader>
+					<div className="body">
+						{this.props.tasks.map(this.renderTask)}
+					</div>
 				</div>
 			</div>
-		</div>
-	)
-}
+		)
+	}
 
-function Task(task)  {
-	return (
-		<Link key={task.id} className="task" to={`/task/${task.id}`}>
-			<ProcessTypeIcon task={task}/>
-			<div className="info">
-				<div className="code">{task.display}</div>
-				<div className="name">{description(task)}</div>
-			</div>
-		</Link>
-	)
+	renderTask(task) {
+		return (
+			<Link key={task.id} className="task" to={`/task/${task.id}`} onClick={this.hideTaskDialog}>
+				<ProcessTypeIcon task={task}/>
+				<div className="info">
+					<div className="code">{task.display}</div>
+					<div className="name">{description(task)}</div>
+				</div>
+			</Link>
+		)
+	}
+
+	hideTaskDialog() {
+		this.props.dispatch({
+			name: MODAL,
+			type: HIDE_MODAL_TYPE,
+		})
+	}
 }
 
 function ProcessTypeIcon({task}) {
@@ -37,3 +56,4 @@ function ProcessTypeIcon({task}) {
 		)
 }
 
+export default connect(() => {})(TaskDialog)

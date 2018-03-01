@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import NavigationGroup from './NavigationGroup'
-import NavigationFeedback from './NavigationFeedback'
 import Img from '../Img/Img'
 import './styles/navigation.css'
 
@@ -62,7 +61,7 @@ class Navbar extends React.Component {
   }
 
   renderActivityLogAndInventoryNavigation() {
-    let group1 = [ 
+    let group1 = [
       {title: 'Dashboard', icon: 'dashboard@2x', link: ''},
       {title: 'Activity Log', icon: 'activity@2x', link: '/activity-log'},
     ]

@@ -42,3 +42,9 @@ export const productionTrendsStateDefault = {
 	}
 }
 
+export const modalStateDefault = {
+	modalType: null,
+	modalProps: {}
+}
+
+

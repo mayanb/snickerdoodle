@@ -9,7 +9,6 @@ import {
 	scaleLinear,
 	axisBottom,
 	axisLeft,
-	axisRight,
 	line,
 	select,
 	extent,

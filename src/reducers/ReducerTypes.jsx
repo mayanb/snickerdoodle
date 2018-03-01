@@ -18,3 +18,5 @@ export const FORMULAS = 'FORMULAS'
 export const WALKTHROUGH = 'WALKTHROUGH'
 export const TEAMS = 'TEAMS'
 export const PRODUCTION_TRENDS = 'PRODUCTION_TRENDS'
+export const MODAL = 'MODAL'
+
