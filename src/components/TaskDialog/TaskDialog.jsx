@@ -11,6 +11,7 @@ class TaskDialog extends React.Component {
 	constructor(props) {
 		super(props)
 
+		this.renderTask = this.renderTask.bind(this)
 		this.hideTaskDialog = this.hideTaskDialog.bind(this)
 	}
 
@@ -21,10 +22,22 @@ class TaskDialog extends React.Component {
 				<div className={"dialog-card task-dialog"}>
 					<DialogHeader onToggle={this.hideTaskDialog}>Tasks</DialogHeader>
 					<div className="body">
-						{this.props.tasks.map(Task)}
+						{this.props.tasks.map(this.renderTask)}
 					</div>
 				</div>
 			</div>
+		)
+	}
+
+	renderTask(task) {
+		return (
+			<Link key={task.id} className="task" to={`/task/${task.id}`} onClick={this.hideTaskDialog}>
+				<ProcessTypeIcon task={task}/>
+				<div className="info">
+					<div className="code">{task.display}</div>
+					<div className="name">{description(task)}</div>
+				</div>
+			</Link>
 		)
 	}
 
@@ -34,18 +47,6 @@ class TaskDialog extends React.Component {
 			type: HIDE_MODAL_TYPE,
 		})
 	}
-}
-
-function Task(task)  {
-	return (
-		<Link key={task.id} className="task" to={`/task/${task.id}`}>
-			<ProcessTypeIcon task={task}/>
-			<div className="info">
-				<div className="code">{task.display}</div>
-				<div className="name">{description(task)}</div>
-			</div>
-		</Link>
-	)
 }
 
 function ProcessTypeIcon({task}) {
