@@ -1,14 +1,14 @@
 import React from 'react'
 import Alert from './Alert'
-import TaskDialog from '../TaskDialog/TaskDialog'
+import { connect } from 'react-redux'
+import { SHOW_MODAL_TYPE } from '../../reducers/ModalReducer'
+import { MODAL } from '../../reducers/ReducerTypes'
 
-export default class AlertFlaggedTasks extends React.Component {
+class AlertFlaggedTasks extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { showAlertDetails: false }
 
-		this.renderTaskDialog = this.renderTaskDialog.bind(this)
-		this.toggleTaskDialog = this.toggleTaskDialog.bind(this)
+		this.showTaskDialog = this.showTaskDialog.bind(this)
 	}
 
 	render() {
@@ -21,30 +21,23 @@ export default class AlertFlaggedTasks extends React.Component {
 			>
 				{tasks.slice(0, 3).map((t, i) => (<AlertFlaggedTaskTitle key={i} {...t} />))}
 				{tasks.length > 3 ?
-					<div className="view-all" onClick={this.toggleTaskDialog}>View all {tasks.length} tasks</div> :
+					<div className="view-all" onClick={this.showTaskDialog}>View all {tasks.length} tasks</div> :
 					null
 				}
-				{this.renderTaskDialog()}
 			</Alert>
 		)
 	}
 
-	renderTaskDialog() {
-		if (this.state.showAlertDetails) {
-			return (
-				<TaskDialog
-					title={this.props.alert}
-					tasks={this.props.tasks}
-					onToggle={this.toggleTaskDialog}
-				/>
-			)
-		} else {
-			return null
-		}
-	}
-
-	toggleTaskDialog() {
-		this.setState({ showAlertDetails: !this.state.showAlertDetails })
+	showTaskDialog() {
+		this.props.dispatch({
+			name: MODAL,
+			type: SHOW_MODAL_TYPE,
+			modalType: 'TASK_DIALOG',
+			modalProps: {
+				title: this.props.alert,
+				tasks: this.props.tasks
+			}
+		})
 	}
 }
 
@@ -59,3 +52,5 @@ function AlertFlaggedTaskTitle(props) {
 		</div>
 	)
 }
+
+export default connect(() => {})(AlertFlaggedTasks)
