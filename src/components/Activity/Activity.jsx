@@ -5,10 +5,12 @@ import Loading from '../OldComponents/Loading.jsx'
 import update from 'immutability-helper'
 import {display} from '../OldComponents/Task.jsx'
 import moment from 'moment'
+import { dateToUTCString } from '../../utilities/dateutils'
 import Datepicker from '../Datepicker/Datepicker.jsx'
 import ReactImageFallback from "react-image-fallback"
 import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
+import './styles/activity.css'
 import Spinner from 'react-spinkit'
 
 export default class Activity extends React.Component {
@@ -70,16 +72,20 @@ export default class Activity extends React.Component {
 		}
 
 		return (
-			<div className="activity page mini">
-			<div className="content">
-				{ this.renderDialog() }
+			<div className="activity">
+				<LittleHeader>Activity</LittleHeader>
+				<div className="page mini">
+					<div className="content">
+						{this.renderDialog()}
 
-				<div className="activity-header page-header">
-					<h2>Logs</h2>
-					<div style={{zIndex: 0}}><Datepicker initialDates={this.state.dates} onChange={this.handleDateRangeChange.bind(this)} /></div>
+						<div className="activity-header page-header">
+							<h2>Logs</h2>
+							<div style={{ zIndex: 0 }}><Datepicker initialDates={this.state.dates}
+							                                       onChange={this.handleDateRangeChange.bind(this)} /></div>
+						</div>
+						{contentArea}
+					</div>
 				</div>
-				{contentArea}
-			</div>
 			</div>
 		)
 	}
@@ -120,8 +126,8 @@ export default class Activity extends React.Component {
 		let params = {
 			process_type: processID, 
 			product_type: productID, 
-			start: toUTCString(range.start), 
-			end: toUTCString(range.end, true)
+			start: dateToUTCString(range.start),
+			end: dateToUTCString(range.end, true)
 		}
 
 		let url = "/ics/activity/detail/"
@@ -147,7 +153,7 @@ export default class Activity extends React.Component {
 
 	getActivity(range) {
 		this.setState({loading: true})
-		let params = {start: toUTCString(range.start), end: toUTCString(range.end, true)}
+		let params = {start: dateToUTCString(range.start), end: dateToUTCString(range.end, true)}
 		let component = this
 
 		let rID = requestID()
@@ -228,6 +234,13 @@ export default class Activity extends React.Component {
 
 }
 
+function LittleHeader(props) {
+	return (
+		<span className="little-header" style={{fontSize: "14px", lineHeight: "16px", color: '#445562', padding: "16px 0px", display: 'block'}}>
+			{props.children}
+		</span>
+	)
+}
 
 class Process extends React.Component {
 
@@ -255,8 +268,9 @@ class Process extends React.Component {
 		}
 
 		let button = this.state.loadingSpreadsheet ?
-			<div className="loading-indicator"><Spinner name="circle" color="white" fadeIn="none"/></div> :
+			<div className="loading-indicator"><Spinner name="circle" color="white" fadeIn="none" /></div> :
 			<button onClick={this.handleCreateSpreadsheet}><i className="material-icons">file_download</i></button>
+
 
 		return (
 			<div className={"activity-process " + (props.expanded ? "expanded" : "")}>
@@ -285,8 +299,8 @@ class Process extends React.Component {
 		this.props.spreadsheet({
 			"user_id": user_id,
 			"process": this.props.process_id,
-			"start": toUTCString(this.props.dates.start),
-			"end": toUTCString(this.props.dates.end, true)
+			"start": dateToUTCString(this.props.dates.start),
+			"end": dateToUTCString(this.props.dates.end, true)
 		}).finally(() => this.setState({ loadingSpreadsheet: false }))
 	}
 }
@@ -378,12 +392,4 @@ function pl(count, unit) {
 }
 
 
-function toUTCString(dateString, addOne) {
-	var m = moment(dateString + " 00:00:00")
 
-	if (addOne) {
-		m.add(24, "hours")
-	}
-
-	return m.utc().format('YYYY-MM-DD-HH-mm-ss-SSSSSS')
-}

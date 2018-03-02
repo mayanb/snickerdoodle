@@ -11,6 +11,8 @@ $gray: rgba(0, 0, 0, 0.48);
 $gray-light: rgba(0, 0, 0, 0.28);
 $gray-ultra-light: rgba(0, 0, 0, 0.08);
 
+$gray-extra-dark: rgba(42,45,52,1.0);
+
 $red: rgba(221, 81, 81, 1);
 $red-dark: rgba(360, 70, 82, 1);
 $red-light: rgba(232, 95, 107, 1);
@@ -49,7 +51,7 @@ $z-index-edit-menu: 992;
 
 $sans-stack:'Apercu', 'Interface', 'Helvetica';
 $baseline: 8px;
-$nav-width: 144px;
+$nav-width: 64px;
 $nav-height: 64px;
 $top-padding: 48px;
 $card-shadow: 0 0 8px 0 rgba(0,0,0,0.08);

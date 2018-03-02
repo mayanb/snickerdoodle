@@ -1,15 +1,13 @@
 import React from 'react'
 import AccountMenu from '../AccountMenu/AccountMenu'
 import TaskSelect from '../TaskSelect/TaskSelect'
-import {Link} from 'react-router-dom'
-import Img from '../Img/Img'
+import Alerts from '../Alerts/Alerts'
 import './styles/topbar.css'
 
 
 export default class Topbar extends React.Component {
   constructor(props) {
     super(props)
-
     this.handleSearch = this.handleSearch.bind(this)
   }
 
@@ -19,19 +17,22 @@ export default class Topbar extends React.Component {
     }
   }
 
+
   render () {
     return (
       <div className="d-top">
-        <Link className="nav-logo" to="/">
-          <Img src="logo@2x" height="26px" className="logo"/>
-        </Link>
         <div className="nav-left">
           <TaskSelect placeholder="Search for a task or QR code" onChange={this.handleSearch} />
         </div>
+        <div className="nav-right">
+          <Alerts />
           <div className="nav-team">
             <AccountMenu />
           </div>
+        </div>
       </div>
     )
   }
 }
+
+

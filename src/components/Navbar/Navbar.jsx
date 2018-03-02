@@ -2,14 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import NavigationGroup from './NavigationGroup'
-import NavigationFeedback from './NavigationFeedback'
+import Img from '../Img/Img'
 import './styles/navigation.css'
 
-let o2= [ "Zebra labels", "Dymo labels"]
-let l2 = ["labels", "dymo"]
+let group2 = [ 
+  {title: 'Zebra Printing', icon: 'printing-zebra@2x', link: 'labels'},
+  {title: 'Dymo Printing', icon: 'printing-dymo@2x', link: 'dymo'},
+]
 
-let o3 = ["Processes", "Products",]
-let l3 = ["processes", "products",]
+let group3 = [ 
+  {title: 'Processes', icon: 'processes@2x', link: 'processes'},
+  {title: 'Products', icon: 'products@2x', link: 'products'},
+]
 
 class Navbar extends React.Component {
   render () {
@@ -20,6 +24,9 @@ class Navbar extends React.Component {
 
     return (
       <div className={"d-nav " + navbarSizeClass}>
+        <Link className="nav-logo" to="/">
+          <Img src="logo" height="64px" className="logo"/>
+        </Link>
         <Link to={(this.props.match.params.section||"") + "/"} style={{"display":(navbarSizeClass==="littleNav")?"":"none"}}>
           <div className="pushout">
           </div>
@@ -32,7 +39,7 @@ class Navbar extends React.Component {
             { this.renderAdminNavigation() }
           </div>
         </div>
-        <NavigationFeedback />
+        <a href="" target="_blank" className="navbar-help"><i className="material-icons">help_outline</i></a>
       </div>
     )
   }
@@ -41,7 +48,7 @@ class Navbar extends React.Component {
     let {data, ui} = this.props.users
     let account_type = data[ui.activeUser].user.account_type
     if (account_type === 'a')
-      return ( <NavigationGroup options={o3} links={l3} title={"My factory"} /> )
+      return ( <NavigationGroup group={group3} title={"My factory"} /> )
     return null
   }
 
@@ -49,20 +56,21 @@ class Navbar extends React.Component {
     let {data, ui} = this.props.users
     let team = data[ui.activeUser].user.team_name
     if (team === 'alabama' || team === 'valencia')
-      return ( <NavigationGroup options={o2} links={l2} title={"Printing"} /> )
+      return ( <NavigationGroup group={group2} title={"Printing"} /> )
     return null
   }
 
   renderActivityLogAndInventoryNavigation() {
-    let o1 = ["Activity Log"]
-    let l1 = [""]
+    let group1 = [
+      {title: 'Dashboard', icon: 'dashboard@2x', link: ''},
+      {title: 'Activity Log', icon: 'activity@2x', link: 'activity-log'},
+    ]
     let {data, ui} = this.props.users
     let team = data[ui.activeUser].user.team_name
     if (team === 'alabama' || team === 'valencia') {
-	    o1 = ["Activity Log", "Inventory"]
-	    l1 = ["", "inventory"]
+      group1.push({title: 'Inventory', icon: 'inventory@2x', link: 'inventory'})
     }
-    return <NavigationGroup options={o1} links={l1} title={null} />
+    return <NavigationGroup group={group1} title={null} />
 
   }
 }

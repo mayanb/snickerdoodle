@@ -1,51 +1,56 @@
 import React from 'react'
 import Goals from '../Goals/Goals'
-import Activity from '../Activity/Activity'
-import Alerts from '../Alerts/Alerts'
 import Card from '../Card/Card'
+import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import NewFeatures from '../NewFeatures/NewFeatures'
 import './styles/home.css'
 import Updates from './Updates'
 
-export default function Home(props) {
-	return (
-		<div>
-			<NewFeatures />
-			<div className="dashboard">
 
-			<div className="dash-content">
+export default class Home extends React.Component {
+	constructor(props) {
+		super(props)
 
+		this.state = {
+			tabs: ['Production trends', 'Goals'],
+			activeTab: 0,
+		}
 
-				<div>
+		this.handleTab = this.handleTab.bind(this)
+	}
 
+	handleTab(i) {
+		this.setState({activeTab: i})
+	}
 
-					<div style={{maxWidth: "400px", minWidth: "400px"}}>
-						<BigHeader>How's it going?</BigHeader>
-						<div style={{display: 'flex', maxWidth: "800px", minWidth: "800px"}}>
-							<Card className="goals-card">
-								<Goals/>
-							</Card>
-							<Updates />
-						</div>
-					</div>
-
-					<div style={{maxWidth: "900px", minWidth: "700px"}}>
-						<LittleHeader>Activity</LittleHeader>
-						<Activity />
-					</div>
+	renderGoals() {
+		return (
+			<div style={{maxWidth: "400px", minWidth: "400px", marginLeft: "36px"}}>
+				<BigHeader>How's it going?</BigHeader>
+				<div style={{display: 'flex', maxWidth: "800px", minWidth: "800px"}}>
+					<Card className="goals-card">
+						<Goals/>
+					</Card>
+					<Updates />
 				</div>
 			</div>
+		)
+	}
 
-
-				<div className="panel">
-					<div className="alerts-container">
-						<Alerts />
-					</div>
-				</div>
-				
+	render() {
+		return (
+			<div>
+				<NewFeatures />
+				<div className="dashboard">
+					<Title>Dashboard</Title>
+					<Tabs {...this.state} onTab={this.handleTab}/>
+					{
+						this.state.activeTab===0 ? <ProductionTrends /> : this.renderGoals()
+					}
+				</div>		
 			</div>
-		</div>
-	)
+		)
+	}
 }
 
 function BigHeader(props) {
@@ -56,10 +61,31 @@ function BigHeader(props) {
 	)
 }
 
-function LittleHeader(props) {
+function Tabs({tabs, activeTab, onTab}) {
 	return (
-		<span className="little-header" style={{fontSize: "14px", lineHeight: "16px", color: '#445562', padding: "16px 0px", display: 'block'}}>
-			{props.children}
-		</span>
+		<div className="home-tabs">
+			{
+				tabs.map((t, i) => {
+					return <Tab title={t} key={i} active={activeTab===i} onTab={() => onTab(i)} />
+				})
+			}
+		</div>
 	)
 }
+
+function Tab({title, active, onTab}) {
+	return (
+		<div className={`home-tab ${active && 'active'}`} onClick={onTab}>
+			<span>{title}</span>
+		</div>
+	)
+}
+
+
+
+function Title(props) {
+	return (
+		<div className="home-title">{props.children}</div>
+	)
+}
+

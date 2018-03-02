@@ -1,9 +1,8 @@
 @import 'styles/constants.scss';
 
 .d-nav {
-	z-index: 1;
+	z-index: 901;
 	background-color: $background-color;
-	padding-top: $nav-height;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -13,27 +12,27 @@
 	flex-direction: column;
 	border-right: 1px solid $gray-light;
 
-	color: $gray;
+	background-color: $gray-extra-dark;
+
+	color: white;
 	font-size: 13px;
 	line-height: 16px;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 
-	.nav-group {
-		//border-bottom: 1px solid rgba(39,43,46,0.5);
+	box-shadow: 5px 0 5px 5px rbga(0,0,0,0.1);
 
-		span {
-			text-transform: uppercase;
-			font-family: "Apercu Mono";
-			font-size: 10px;
-			display: block;
-			color: $gray;
-		}
+	.nav-group {
+		border-bottom: 1px solid rgba(255,255,255,0.1);
 
 		li a {
 			display: inline-block;
 			padding: 16px 0 16px 16px;
 			width: 100%;
+			color: rgba(255,255,255,0.5);
+			img {
+				opacity: 0.5;
+			}
 
 			.nav-icon {
 				height: 16px;
@@ -43,10 +42,8 @@
 			}
 
 			&.active {
-				color: $theme-color;
+				color: white;
 				font-weight: bold;
-				background-color: #DEEDFE;
-
 				img {
 					opacity: 1;
 				}
@@ -90,6 +87,12 @@ div .bar {
 	}
 }
 
+.navbar-help {
+	width: $nav-width;
+	text-align: center;
+	margin-bottom: 24px;
+}
+
 .navbar {
 	background-color: $background-color;
 	min-width: 64px;
@@ -109,4 +112,43 @@ div .bar {
 
 	}
 }
+
+.nav-tooltip {
+    position: relative;
+    display: inline-block;
+	width: 100%;
+}
+
+.nav-tooltip .tooltiptext {
+    visibility: hidden;
+    //width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 4px 8px;
+    position: absolute;
+    z-index: 1;
+    top: calc(50% - 15px);
+    left: $nav-width + 5px;
+    white-space: nowrap;
+}
+
+// arrow
+.nav-tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+
+.nav-tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+
 

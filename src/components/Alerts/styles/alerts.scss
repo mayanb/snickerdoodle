@@ -13,6 +13,7 @@ $alert-yellow: #F8DE00;
 .alert-container {
 	padding-left: 32px;
 	background-color: white;
+	z-index: 999;
 }
 
 .alert {

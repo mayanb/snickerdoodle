@@ -1,0 +1,70 @@
+@import 'styles/constants.scss';
+
+.trends-line-chart {
+    position: relative;
+    overflow: visible;
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: $elephant-light;
+        shape-rendering: crispEdges;
+    }
+
+    .axis .tick line {
+        opacity: 0;
+    }
+
+    .axis text {
+        margin-top: 4px;
+        fill: $gray;
+
+    }
+
+    .x.axis path {
+        //display: none;
+    }
+
+    .line {
+        fill: none;
+        stroke: $primary;
+        stroke-width: 1.5px;
+    }
+
+    .y-axis-label {
+        font-size: 12px;
+    }
+
+    .overlay {
+        fill: none;
+        pointer-events: all;
+    }
+
+    .data-circle {
+        stroke: $primary;
+        stroke-width: 2px;
+        fill: $background-color;
+    }
+
+    .grid line {
+        stroke: $elephant-light;
+        stroke-opacity: 0.7;
+        shape-rendering: crispEdges;
+    }
+
+    .grid path {
+        stroke-width: 0;
+    }
+
+    .hover-line {
+        stroke: $black;
+        stroke-width: 2px;
+        // stroke-dasharray: 3, 3;
+    }
+
+    .hover-circle {
+        stroke: $black;
+    }
+
+
+}
