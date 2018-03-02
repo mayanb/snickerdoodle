@@ -1,5 +1,14 @@
 @import 'styles/constants.scss';
 
+.home-title {
+    font-size: 20px;
+    line-height: 32px;
+    color: white;
+    padding: 12px 36px;
+    background-color: $primary;
+    -webkit-font-smoothing: antialiased;
+}
+
 .dashboard {
 	width: calc(100vw - #{$nav-width});
 	//padding-right: $panel-width;
@@ -55,5 +64,26 @@
 	a {
 		color: white;
 		border-bottom: 1px dotted white;
+	}
+}
+
+.home-tabs {
+	display: flex;
+	color: $gray;
+	border-bottom: 1px solid $gray-ultra-light;
+	padding-left: 36px;
+
+
+	.home-tab {
+		padding: 8px 0;
+		line-height: 20px;
+		margin-right: 24px;
+		cursor: pointer;
+
+		&.active {
+			color: $primary;
+			border-bottom: 4px solid $primary;
+			padding-bottom: 4px; // to account for the 4px decrease 
+		}
 	}
 }

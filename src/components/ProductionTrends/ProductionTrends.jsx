@@ -120,12 +120,6 @@ class ProductionTrends extends React.Component {
 	}
 }
 
-function Title(props) {
-	return (
-		<div className="trends-title">{props.children}</div>
-	)
-}
-
 function Subtitle(props) {
 	return (
 		<div className="trends-subtitle">{props.children}</div>
