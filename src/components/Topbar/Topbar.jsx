@@ -1,7 +1,6 @@
 import React from 'react'
 import AccountMenu from '../AccountMenu/AccountMenu'
 import TaskSelect from '../TaskSelect/TaskSelect'
-import Button from '../Card/Button'
 import Alerts from '../Alerts/Alerts'
 import './styles/topbar.css'
 
@@ -9,13 +8,7 @@ import './styles/topbar.css'
 export default class Topbar extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      expanded: false
-    }
-
     this.handleSearch = this.handleSearch.bind(this)
-    this.handleToggleAlerts = this.handleToggleAlerts.bind(this)
   }
 
   handleSearch(val) {
@@ -24,9 +17,6 @@ export default class Topbar extends React.Component {
     }
   }
 
-  handleToggleAlerts() {
-    this.setState({expanded: !this.state.expanded})
-  }
 
   render () {
     return (
@@ -35,7 +25,7 @@ export default class Topbar extends React.Component {
           <TaskSelect placeholder="Search for a task or QR code" onChange={this.handleSearch} />
         </div>
         <div className="nav-right">
-          <AlertsDropdown expanded={this.state.expanded} onToggle={this.handleToggleAlerts}/>
+          <Alerts />
           <div className="nav-team">
             <AccountMenu />
           </div>
@@ -45,13 +35,4 @@ export default class Topbar extends React.Component {
   }
 }
 
-function AlertsDropdown({expanded, onToggle}) {
-  return (
-    <div className={`dropdown ${expanded && 'expanded'}`}>
-      <Button link onClick={onToggle}><i className="material-icons alerts">notifications</i></Button>
-      <div className="card nopadding dropdown-content">
-        <Alerts />
-      </div>
-    </div>
-  )
-}
+

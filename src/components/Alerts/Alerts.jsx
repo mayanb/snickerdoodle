@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Button from '../Card/Button'
+import Img from '../Img/Img'
 import * as actions from './AlertActions'
 import AlertFlaggedTask from './AlertFlaggedTask'
 import AlertUnflaggedTask from './AlertUnflaggedTask'
@@ -11,6 +13,15 @@ import './styles/alerts.css'
 
 class Alerts extends React.Component {
 
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			expanded: false
+		}
+		this.handleToggleAlerts = this.handleToggleAlerts.bind(this)
+	}
+
 	componentDidMount() {
 		let { users } = this.props
 		let user = users.data[users.ui.activeUser].user
@@ -18,20 +29,36 @@ class Alerts extends React.Component {
 	}
 
 	render() {
-		let { flaggedTasks, unflaggedTasks, completedGoals, missedGoals, anomalies } = this.props
+		let { flaggedTasks, unflaggedTasks, completedGoals, missedGoals, anomalies, anyAlerts } = this.props
 
 		return (
-			<div className="alerts">
-				<Loading isFetchingData={this.props.isFetchingData}>
-					<AlertCompletedGoals isCompleted={true} goals={completedGoals} />
-					<AlertFlaggedTask tasks={flaggedTasks}/>
-					<AlertUnflaggedTask tasks={unflaggedTasks} />
-					<AlertAnomalousInputs tasks={anomalies} />
-					<AlertCompletedGoals isCompleted={false} goals={missedGoals} />
-				</Loading>
+			<div className={`dropdown ${this.state.expanded && 'expanded'}`}>
+				<Button link onClick={this.handleToggleAlerts}>
+					{DropdownIcon({anyAlerts: anyAlerts})}
+				</Button>
+				<div className="card nopadding dropdown-content">
+					<div className="alerts">
+						<Loading isFetchingData={this.props.isFetchingData}>
+							<AlertCompletedGoals isCompleted={true} goals={completedGoals} />
+							<AlertFlaggedTask tasks={flaggedTasks} />
+							<AlertUnflaggedTask tasks={unflaggedTasks} />
+							<AlertAnomalousInputs tasks={anomalies} />
+							<AlertCompletedGoals isCompleted={false} goals={missedGoals} />
+						</Loading>
+					</div>
+				</div>
 			</div>
 		)
 	}
+
+	handleToggleAlerts() {
+		this.setState({expanded: !this.state.expanded})
+	}
+}
+
+function DropdownIcon({anyAlerts}) {
+	const src = anyAlerts ? 'yesalerts@2x' : 'noalerts@2x'
+	return <Img src={src} height="24px" className="alerts" />
 }
 
 function getLatest(arr, type) {
@@ -72,6 +99,7 @@ const mapStateToProps = (state, rops) => {
 
 	return {
 		users: state.users,
+		anyAlerts: !!alerts.length,
 		isFetchingData: state.users.ui.isFetchingData || state.alerts.ui.isFetchingData,
 		flaggedTasks: getLatest(alerts, 'ft'),
 		unflaggedTasks: getLatest(alerts, 'ut'),
