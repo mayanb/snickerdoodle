@@ -3,12 +3,13 @@ import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
 import NewFeatureContent from './NewFeatureContent'
 
+const FEATURE_VERSION = 'newfeatures2'
 
 export default class NewFeatures extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			"isDisplaying": !window.localStorage.getItem("newfeatures2"),
+			"isDisplaying": !window.localStorage.getItem(FEATURE_VERSION),
 		}
 
 		this.handleClose = this.handleClose.bind(this)
@@ -16,10 +17,8 @@ export default class NewFeatures extends React.Component {
 
 	handleClose() {
 		this.setState({isDisplaying: false})
-		window.localStorage.setItem("newfeatures1", true)
-
+		window.localStorage.setItem(FEATURE_VERSION, true)
 	}
-
 
 	render() {
 		if (!this.state.isDisplaying)
