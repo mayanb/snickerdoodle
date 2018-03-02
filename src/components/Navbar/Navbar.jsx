@@ -63,7 +63,7 @@ class Navbar extends React.Component {
   renderActivityLogAndInventoryNavigation() {
     let group1 = [
       {title: 'Dashboard', icon: 'dashboard@2x', link: ''},
-      {title: 'Activity Log', icon: 'activity@2x', link: '/activity-log'},
+      {title: 'Activity Log', icon: 'activity@2x', link: 'activity-log'},
     ]
     let {data, ui} = this.props.users
     let team = data[ui.activeUser].user.team_name
