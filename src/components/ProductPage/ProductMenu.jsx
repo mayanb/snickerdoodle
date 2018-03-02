@@ -3,6 +3,8 @@ import ElementMenu from '../Element/ElementMenu'
 import * as actions from '../Products/ProductsActions.jsx'
 import ProductsArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import { withRouter } from 'react-router-dom'
+import './styles/productmenu.css'
+
 
 class ProductMenu extends React.Component {
 	constructor(props) {
@@ -15,8 +17,8 @@ class ProductMenu extends React.Component {
 	render() {
 		let { product, dispatch, history } = this.props
 
-		return (<div>
-				<ElementMenu
+		return (<div className="product-menu">
+				<ElementMenu 
 					onArchive={this.toggleArchive.bind(this)}
 				/>
 				{this.renderArchiveDialog(product, dispatch, history)}

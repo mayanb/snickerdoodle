@@ -1,14 +1,17 @@
 import React from 'react'
 
-export default function ProcessAttributeDatatype(props) {
-	let text = "Text"
-	if (props.type === "NUMB") {
-		text = "Number"
-	}
+const DATA_TYPE_LABELS = {
+	TEXT: 'Text',
+	NUMB: 'Number',
+	DATE: 'Date',
+	TIME: 'Time',
+	USER: 'User'
+}
 
+export default function ProcessAttributeDatatype(props) {
 	return (
 		<div className="process-attribute-datatype">
-			<span>{text}</span>
+			<span>{DATA_TYPE_LABELS[props.type]}</span>
 		</div>
 	)
 }

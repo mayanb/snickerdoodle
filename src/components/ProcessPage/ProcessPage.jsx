@@ -7,12 +7,14 @@ import ProcessesCard from './ProcessesCard'
 import '../ProductPage/styles/productpage.css'
 import { withRouter } from 'react-router-dom'
 import './styles/processpage.css'
+import Loading from '../Loading/Loading'
 
 class ProcessPage extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state ={
-			isArchiveOpen: false
+			isArchiveOpen: false,
+			isArchiving: false,
 		}
 	}
 
@@ -30,11 +32,13 @@ class ProcessPage extends React.Component {
 
 		return (
 			<div className="process-page">
-				<ProcessesCard
-					process={data}
-					onArchive={() => this.handleArchive(ui.selectedItem)}
-				/>
-				{this.renderArchiveDialog(data, dispatch, history)}
+				<Loading isfetchingData={this.state.isArchiving}>
+					<ProcessesCard
+						process={data}
+						onArchive={() => this.handleArchive(ui.selectedItem)}
+					/>
+					{this.renderArchiveDialog(data, dispatch, history)}
+				</Loading>
 			</div>
 		)
 	}
@@ -62,6 +66,7 @@ class ProcessPage extends React.Component {
 	}
 
 	handleConfirmArchive(process, dispatch, history) {
+		this.setState({isArchiving: true})
 		dispatch(actions.postDeleteProcess(process, null, function () {
 				history.push('/processes')
 			})

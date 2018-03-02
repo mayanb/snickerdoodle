@@ -1,4 +1,5 @@
 import api from '../WaffleconeAPI/api'
+import moment from 'moment'
 
 export const REQUEST_LOGIN = "REQUEST_LOGIN"
 export const REQUEST_LOGIN_SUCCESS = "REQUEST_LOGIN_SUCCESS"
@@ -148,6 +149,7 @@ function refreshUserAccount() {
 }
 
 function refreshUserAccountSuccess(data) {
+	data.last_fetched = moment().format()
 	return {
 		type: REFRESH_SUCCESS,
 		data: data,

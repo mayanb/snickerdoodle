@@ -86,8 +86,8 @@ function ProductHeader(props) {
 	return (
 		<div className="productheader">
 			<Icon size="44px" content={props.product.code}/>
-			<div>
-				<span className="product-code">{props.product.code}</span>
+			<div className="product-header-code-name">
+				<span className="product-code">{props.product.code}  </span>
 				<span className="product-name">{props.product.name}</span>
 			</div>
 			<ProductMenu product={props.product} dispatch={props.dispatch}/>
