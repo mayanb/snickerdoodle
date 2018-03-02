@@ -3,6 +3,7 @@
 $tooltip-background-color: rgba(31,36,41,1);
 
 .line-chart-tooltip {
+    z-index: 2;
     position: absolute;
     background-color: $tooltip-background-color;
     color: $elephant-ultra-light;

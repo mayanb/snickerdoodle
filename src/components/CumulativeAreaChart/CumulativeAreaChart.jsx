@@ -200,7 +200,7 @@ export default class CumulativeAreaChart extends React.Component {
 					y: 0 + margin.top - TOOLTIP_HEIGHT,
 					value: d.value,
 					change: d.change,
-					period: moment(d.date).format('M/D')
+					period: moment(d.date).format('MMM D')
 				}
 			)
 		}
