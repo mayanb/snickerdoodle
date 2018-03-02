@@ -1,0 +1,48 @@
+@import 'styles/constants.scss';
+
+
+.features {
+	border-left: 4px solid $primary;
+	padding: 16px;
+	border-bottom: 1px solid $gray-ultra-light;
+	border-top: 1px solid $gray-ultra-light;
+}
+
+.nf {
+	line-height: 20px;
+	font-size: 14px;
+	letter-spacing: 0;
+	-webkit-font-smoothing: antialiased;
+
+	padding-top: 16px;
+	&:first-child {
+		padding-top: 0;
+	}
+}
+
+.nf-pill {
+	display: inline-block;
+	border-radius: 10px;
+
+	font-size: 12px;
+	line-height: 20px;
+	padding: 0 8px;
+	color: white;
+	margin-right: 4px;
+
+	&.improvement {
+		background-color: $purple;
+	}
+
+	&.new-feature {
+		background-color: #1ddbb1;
+	}
+}
+
+.nf-title {
+	font-weight: 700;
+}
+
+.nf-content {
+
+}

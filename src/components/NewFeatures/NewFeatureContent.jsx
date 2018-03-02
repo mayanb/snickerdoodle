@@ -1,67 +1,50 @@
 import React from 'react'
 import {emojify} from 'react-emojione'
+import './styles/newfeatures.css'
 
-let better_goals = [
-	'Make a single goal for multiple products (eg. track your progress for foiling any type of bar)', 
-	'Delete and reorder goals by hitting “edit”'
-]
+let nfs = [{
+	title: 'Create and delete attributes.',
+	content: 'Minor bug fixes when you create and edit an attribute.',
+	type: 'improvement',
+}, {
+	title: 'Create google spreadsheets.',
+	content: 'We fixed a bug that prevented your Google account from being properly connected. If this still doesn\'t work for you, shoot us a line and we\'ll help you reconnect your account.',
+	type: 'improvement',
+}, {
+	title: 'Chat with us, anytime.',
+	content: 'Use the chat feature in the bottom right of any screen to send us a message and we\'ll get back to you within a couple of hours.',
+	type: 'new-feature',
+}]
 
-let daily_report_emails = [
-	'Get goals and notifications right in your inbox through a daily email.'
-]
-let email_special = <span>Set your email address in <a style={{color: "#0073F9"}} href="/account">account settings</a></span>
 
-let notifications = [
-	'Get notified on your homepage about flagged tasks, goal progress, and tasks with weird inputs.'
-]
-
-
-let HEADER = {fontSmoothing: 'antialiased', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px'}
+let HEADER = {fontSmoothing: 'antialiased', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}
 let H1 = {color: "#0073F9", padding: "0 8px"}
 export default function NewFeaturesContent(props) {
 	return (
-		<div>
-			<div style={HEADER}>
+		<div style={{margin: "-16px"}}>
+			<div style={HEADER} className="new-feature-header">
 				{emojify(':tada:')}
 				<h1 style={H1}>What's new</h1>
 				{emojify(':tada:')}
 			</div>
 
-			<Feature title={"Better goals"} items={better_goals}/>
-			<Feature title={"Daily report emails"} items={daily_report_emails} special={email_special}/>
-			<Feature title={"Notifications"} items={notifications}/>
+			<div className="features">
+				{
+					nfs.map((e, i) => {
+						return <Feature {...e} key={i} />
+					})
+				}
+			</div>
 		</div>
 	)
 }
 
-// function emoji(code) {
-// 	return emojione.shortnameToImage(code)
-// 	//return `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${code}.png` //`https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/${code}.png`
-// }
-
-//<img height="24px" src={emoji("1f389")} />
-
-// <img height="24px" src={emoji("2705")} />
-
-function Feature(props) {
-	let {title, items, special} = props
-	let WRAPPER = {margin:"24px 0"}
-	let HEADER = {display: 'flex',marginBottom: "4px"}
-	let H2 = {padding: "0 8px", lineHeight: "24px", fontSize: "20px"}
-	let LI = {color: "#0073F9"}
-	let LI_SPAN = {color: "rgba(0,0,0,0.6)"}
+function Feature({title, type, content}) {
 	return (
-		<div style={WRAPPER}>
-			<div style={HEADER}>
-				{emojify(':white_check_mark:')}
-				<h2 style={H2}>{title}</h2>
-			</div>
-			<ul style={{listStyleType:"circle", paddingLeft: "32px"}}>
-					{ items.map((i) => <li style={LI}><span style={LI_SPAN}>{i}</span></li>) }
-					{ 
-						special?(<li style={LI}><span style={LI_SPAN}>{special}</span></li>):false
-					}
-			</ul>
+		<div className="nf">
+			<span className={`nf-pill ${type || 'new-feature'}`}>{type==='improvement'?'Improvement':'New feature'}</span>
+			<span className="nf-title">{title}&nbsp;</span>
+			<span className="nf-content">{content}</span>
 		</div>
 	)
 }
