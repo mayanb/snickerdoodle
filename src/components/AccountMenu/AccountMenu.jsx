@@ -105,7 +105,7 @@ class AccountMenu extends React.Component {
 	renderLogout() {
 	  return (
 	    <div className="menu-section">
-		    <Link to="/account">
+		    <Link to="/account" onClick={this.handleDropdownToggle}>
 			    <Button secondary>Account settings</Button>
 		    </Link>
 	    </div>
