@@ -46,7 +46,6 @@ class ProductionTrends extends React.Component {
 		return (
 			<div className="production-trends">
 				<Loading isFetchingData={this.props.isFetchingData}>
-					<Title>Production Trends</Title>
 					<div className="trends-content">
 						<div className="every-month-header">
 							<Subtitle>
