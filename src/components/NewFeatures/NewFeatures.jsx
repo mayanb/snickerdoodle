@@ -8,7 +8,7 @@ export default class NewFeatures extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			"isDisplaying": !window.localStorage.getItem("newfeatures1"),
+			"isDisplaying": !window.localStorage.getItem("newfeatures2"),
 		}
 
 		this.handleClose = this.handleClose.bind(this)
@@ -28,8 +28,8 @@ export default class NewFeatures extends React.Component {
 		return (
 			<Dialog onToggle={this.handleClose} className='new-features-card'>
 				<NewFeatureContent />
-				<div style={{display: 'flex', alignItems: 'flex-end', 'justifyContent': 'flex-end'}}>
-					<Button secondary onClick={this.handleClose}>Close</Button>
+				<div style={{display: 'flex', alignItems: 'flex-end', 'justifyContent': 'center', marginTop: '24px'}}>
+					<Button link onClick={this.handleClose}>Close</Button>
 				</div>
 			</Dialog>
 
