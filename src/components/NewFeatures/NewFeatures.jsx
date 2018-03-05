@@ -3,7 +3,7 @@ import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
 import NewFeatureContent from './NewFeatureContent'
 
-const FEATURE_VERSION = 'newfeatures2'
+const FEATURE_VERSION = 'newfeatures2-1'
 
 export default class NewFeatures extends React.Component {
 	constructor(props) {
