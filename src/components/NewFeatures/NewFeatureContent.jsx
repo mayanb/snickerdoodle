@@ -14,6 +14,10 @@ let nfs = [{
 	title: 'Chat with us, anytime.',
 	content: 'Use the chat feature in the bottom right of any screen to send us a message and we\'ll get back to you within a couple of hours.',
 	type: 'new-feature',
+}, {
+	title: 'Insightful metrics.',
+	content: 'View your weekly, monthly, and historic production achievements through handy graphs on the dashboard. Your goals are still visible in the dashboard under the "Goals" tab.',
+	type: 'new-feature',
 }]
 
 

@@ -1,0 +1,74 @@
+@import 'styles/constants.scss';
+
+.production-trends {
+    margin-bottom: 80px;
+    z-index: 0;
+
+    .options {
+        display: flex;
+        justify-content: flex-end;
+
+        .select {
+            margin-left: 24px;
+            width: 200px;
+        }
+    }
+
+    .every-month-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 18px;
+        margin-bottom: 12px;
+    }
+
+    .cumulatives {
+        display: flex;
+        margin-top: 32px;
+    }
+
+    .trends-subtitle {
+        font-size: 14px;
+        margin-top: 4px;
+        margin-left: 40px;
+        display: flex;
+        color: $black;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .help {
+        display: flex;
+        align-items: center;
+        margin-left: 8px;
+        position: relative;
+
+        img {
+            height: 20px;
+        }
+
+        &:hover .help-tooltip {
+            display: block;
+        }
+
+        .help-tooltip {
+            background-color: white;
+            border: 1px solid $gray;
+            border-radius: 4px;
+            padding: 12px;
+            line-height: 20px;
+            display: none;
+            font-size: 12px;
+            width: 200px;
+            position: absolute;
+            bottom: 28px;
+            right: -95px;
+            z-index: 1000;
+        }
+    }
+
+    .trends-content {
+        margin-left: 36px;
+        max-width: 900px;
+        margin-top: 32px;
+    }
+}

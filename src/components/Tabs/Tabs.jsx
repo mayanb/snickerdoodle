@@ -1,6 +1,13 @@
 import React from 'react'
 import './styles/tabs.css'
 
+
+/*
+takes in:
+tabs = { title: String , active: bool }
+onTab = function (tab)
+*/
+
 export default function Tabs(props) {
 	return (
 		<div className="tabs">

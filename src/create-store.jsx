@@ -1,12 +1,14 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import {stateDefault} from './states'
+import {stateDefault, productionTrendsStateDefault, modalStateDefault} from './states'
 
 import {apiDataReducer} from './reducers/APIDataReducer'
 import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
 import {_formula} from './reducers/FormulaReducerExtension'
 import _users from './reducers/UserReducer'
+import { _modal } from './reducers/ModalReducer'
+import productionTrendsReducer from './reducers/ProductionTrendsReducer'
 import * as types from './reducers/ReducerTypes'
 import {weeklyGoalPredicate, monthlyGoalPredicate, _goals} from './reducers/GoalsReducer'
 
@@ -42,7 +44,9 @@ export default function(data) {
     contacts: createFilteredReducer(apiDataReducer, action => action.name === types.CONTACTS, stateDefault),
     inventoryUnits: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORY_UNITS, stateDefault),
     alerts: createFilteredReducer(apiDataReducer, action => action.name === types.ALERTS, stateDefault),
-    formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault)
+    formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault),
+	  productionTrends: createFilteredReducer(productionTrendsReducer, action => action.name === types.PRODUCTION_TRENDS, productionTrendsStateDefault),
+	  modal: createFilteredReducer(_modal, action => action.name === types.MODAL, modalStateDefault),
   })
 	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 	const store = createStore(reducer, /* preloadedState, */ composeEnhancers(

@@ -2,7 +2,10 @@ import { colors } from './colors'
 
 export function pluralize(number, noun) {
 	if (number !== 1) {
-		return noun + 's'
+    let re = /([szx]|sh|ch)$/
+    if (re.test(noun))
+		  return noun + 'es'
+    else return noun + 's'
 	} else {
 		return noun
 	}

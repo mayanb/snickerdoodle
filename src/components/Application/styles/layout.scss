@@ -58,12 +58,12 @@ html, body, #root {
 }
 
 .application-content {
-	padding-top: $nav-height + $top-padding;
+	padding-top: $nav-height;
 	padding-left: $nav-width;
 	height: 100%;
 	display: flex;
 	flex-grow: 1;
-	background-color: $background-color;
+	background-color: rgba($background-color, 0.5);
 	overflow-y: scroll;
 }
 

@@ -1,25 +1,33 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
+import Img from '../Img/Img'
 
-export default function NavigationGroup(props) {
-	let {options, links, title} = props
+export default function NavigationGroup({group}) {
 
   return (
     <div className="nav-group">
-      {title?<span>----------------</span>:null}
       <ul>
       {
-        options.map(function (x, i) {
+        group.map(function (x, i) {
           return (
           <li key={i}>
-            <NavLink exact to={"/" + links[i]} activeClassName={"active"}>
-            {x}
-            </NavLink>
+            <NavigationItem {...x} />
           </li>
           )
         }, this )
       }
       </ul>
+    </div>
+  )
+}
+
+function NavigationItem({title, link, icon}) {
+  return (
+    <div className="nav-tooltip">
+      <NavLink exact to={"/" + link} activeClassName={"active"}>
+        <Img src={icon} width="24px" className="logo"/>
+      </NavLink>
+      <span className="tooltiptext">{title}</span>
     </div>
   )
 }
