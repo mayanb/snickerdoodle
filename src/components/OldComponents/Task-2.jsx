@@ -1,7 +1,7 @@
 import React from 'react'
 import $ from 'jquery'
 import {Link} from 'react-router-dom'
-import InventoryDetail from './InventoryDetail.jsx'
+import InventoryDetail from '../Inventory/InventoryDetail.jsx'
 import { TaskSelect } from './Inputs.jsx'
 import {fetch, post} from './APIManager.jsx'
 import {display, icon} from './Task.jsx'
