@@ -13,7 +13,6 @@ import './styles/inventory.css'
 class Inventory extends React.Component {
   constructor(props) {
     super(props)
-    this.handleSelectProcess = this.handleSelectProcess.bind(this)
     this.latestRequestID = -1
     this.state = {
       selected: -1,
@@ -31,10 +30,6 @@ class Inventory extends React.Component {
     return a
   }
 
-  handleSelectProcess(processId) {
-	  this.props.dispatch(actions.fetchInventoryItems(processId))
-  }
-
   render() {
     let props = this.props
 
@@ -46,7 +41,6 @@ class Inventory extends React.Component {
 
           <Content 
             {...props}
-	          onSelectProcess={this.handleSelectProcess}
             loading={this.props.ui.isFetchingData}
 	          inventories={Object.values(this.props.data)}
             selectedProcess={this.getSelectedProcess()}
@@ -73,7 +67,6 @@ class Content extends React.Component {
     let props = this.props
     var contentArea = <InventoryList
       inventories={props.inventories}
-      onSelectProcess={props.onSelectProcess}
       selected={props.match.params.id}
     />
     if (props.loading) {
@@ -86,10 +79,9 @@ class Content extends React.Component {
       <div className="halves">
         {contentArea}
         <InventoryDetail 
-          {...props.selectedProcess} 
-          match={props.match}
+          processId={props.match.params.id}
           showDetail={props.match.params.id}
-          loading={props.ui.isFetchingItemsData}
+          loading={props.ui.isFetchingData || props.ui.isFetchingItemsData}
         />
       </div>
     )
@@ -119,7 +111,7 @@ function InventoryList(props) {
         props.inventories.map(function (process, i) {
           return  (
             <Link key={i} to={ "/inventory/" + process.process_id}>
-              <InventoryItem i={i} selected={props.selected} onSelectProcess={props.onSelectProcess} {...process}/>
+              <InventoryItem i={i} selected={props.selected} {...process}/>
             </Link>
           )
         }, this)
@@ -135,8 +127,7 @@ function InventoryItem(props) {
   teamStyle["display"] = currTeam===props.team_id?"none":""
   let icon = props.process_icon || "default.png" 
   return (
-    <div className={"inventoryClass " + isSelected(props) + " " + isHeader(props)}
-         onClick={() => props.onSelectProcess(props.process_id)}>
+    <div className={"inventoryClass " + isSelected(props) + " " + isHeader(props)}>
       <div className="i-check">
         <Checkbox size="16px" checked={isSelected(props)} />
       </div>

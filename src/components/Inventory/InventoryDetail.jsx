@@ -19,30 +19,28 @@ class InventoryDetail extends React.Component {
 			dialog: false
 		}
 
-		this.handleLoadClick = this.handleLoadClick.bind(this)
 		this.fetchInventoryDetail = this.fetchInventoryDetail.bind(this)
 	}
 
 	componentDidMount() {
-		if (this.props.match.params.id)
-			this.fetchInventoryDetail()
+		if (this.props.processId)
+			this.fetchInventoryDetail(this.props.processId)
 	}
 
 	componentWillReceiveProps(nextProps) {
-		//if (this.props.match.params.id !== nextProps.match.params.id)
-		//this.props.dispatch(actions.fetchInventoryItems(nextProps.props.match.params.id))
+		if(this.props.processId !== nextProps.processId) {
+			this.fetchInventoryDetail(nextProps.processId)
+		}
 	}
 
-	handleLoadClick() {
-		//this.getInventoryItems(this.props, this.state.next)
-	}
-
-	fetchInventoryDetail() {
-		this.props.dispatch(actions.fetchInventoryItems(this.props.match.params.id))
+	fetchInventoryDetail(processId) {
+		this.props.dispatch(actions.fetchInventoryItems(processId))
+		this.setState({ selectedItems: {} })
 	}
 
 	render() {
 		let props = this.props
+		let process = props.data
 
 		var contentArea = <ItemList
 			tasks={props.data.tasks}
@@ -73,13 +71,13 @@ class InventoryDetail extends React.Component {
 				{dialog}
 				<div className="i-detail-header">
 					<div className="i-detail-outputdesc" style={{ display: "flex", flexDirection: "row" }}>
-						<span style={{ flex: "1" }}>{this.props.output_desc}</span>
+						<span style={{ flex: "1" }}>{process.output_desc}</span>
 						<span><Link to="/inventory/">
               <i style={{ verticalAlign: "middle", fontSize: "16px", flex: "0" }} className="material-icons">close</i>
             </Link></span>
 					</div>
 					<div className="i-detail-count">
-						<span>{(this.props.count || 0) + " " + this.props.unit + "s"}</span>
+						<span>{(process.count || 0) + " " + process.unit + "s"}</span>
 					</div>
 				</div>
 				<div className="i-detail-content">
@@ -94,7 +92,7 @@ class InventoryDetail extends React.Component {
 	}
 
 	handleSelectAllToggle(taskIndex) {
-		let items = this.props.tasks[taskIndex].items
+		let items = this.props.data.tasks[taskIndex].items
 		const selectedItems = Object.assign({}, this.state.selectedItems)
 
 		const taskSelectedCount = items.reduce((count, item) => {
@@ -108,7 +106,7 @@ class InventoryDetail extends React.Component {
 	}
 
 	handleItemSelect(taskIndex, itemIndex) {
-		const item = this.props.tasks[taskIndex].items[itemIndex]
+		const item = this.props.data.tasks[taskIndex].items[itemIndex]
 		const selectedItems = Object.assign({}, this.state.selectedItems)
 		selectedItems[item.id] = !selectedItems[item.id]
 		this.setState({ selectedItems: selectedItems })
@@ -117,7 +115,7 @@ class InventoryDetail extends React.Component {
 	deliverItems(destination, callback) {
 		let itemsToDeliver = Object.keys(this.state.selectedItems)
 			.filter(id => this.state.selectedItems[id])
-			.map(id => ({item: id}))
+			.map(id => ({ item: id }))
 
 		let users = JSON.parse(window.localStorage.getItem('users-v5'))
 		let user = users.data[users.ui.activeUser].user
@@ -145,7 +143,7 @@ class InventoryDetail extends React.Component {
 				if (callback)
 					callback()
 				component.props.dispatch(actions.fetchInventory())
-				component.fetchInventoryDetail()
+				component.fetchInventoryDetail(component.props.processId)
 			}).fail(function (req, err) {
 			alert(`Couldn't deliver the items. :( \n ${err}`)
 		})
@@ -153,7 +151,7 @@ class InventoryDetail extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-	const data = state.inventories.data[props.process_id] || {}
+	const data = state.inventories.data[props.processId] || {}
 	return {
 		data: data
 	}
