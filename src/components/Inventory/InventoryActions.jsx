@@ -1,50 +1,79 @@
 import api from '../WaffleconeAPI/api.jsx'
 import {
-  REQUEST, 
-  REQUEST_SUCCESS, 
-  REQUEST_FAILURE,
-} from '../../reducers/APIDataReducer'
+	REQUEST_INVENTORY,
+	REQUEST_INVENTORY_SUCCESS,
+	REQUEST_INVENTORY_FAILURE,
+  REQUEST_ITEMS,
+  REQUEST_ITEMS_SUCCESS,
+  REQUEST_ITEMS_FAILURE
+} from '../../reducers/InventoryReducer'
 import { INVENTORIES } from '../../reducers/ReducerTypes'
 
 
-export function fetchInventory(filter) {
-  console.log(filter)
-
+export function fetchInventory() {
   return function (dispatch) {
-    // dispatch an action that we are requesting inventory
-    dispatch(requestProductInventory())
-    return api.get('/ics/inventory')
-      .query(filter)
-      .end(function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestProductInventoryFailure(err))
-        } else {
-          dispatch(requestProductInventorySuccess(res.body))
-        }
-      })
+    dispatch(requestInventory())
+	  return api.get('/ics/inventory/')
+		  .then(res => dispatch(requestInventorySuccess(res.body)))
+		  .catch(err => dispatch(requestInventoryFailure(err)))
   }
 }
 
-function requestProductInventory() {
+function requestInventory() {
   return {
     name: INVENTORIES,
-    type: REQUEST
+    type: REQUEST_INVENTORY
   }
 }
 
-function requestProductInventoryFailure(err) {
+function requestInventoryFailure(err) {
   alert('Oh no! Something went wrong\n' + err)
   console.log(err)
   return {
-    type: REQUEST_FAILURE,
+    type: REQUEST_INVENTORY_FAILURE,
     name: INVENTORIES,
   }
 }
 
-function requestProductInventorySuccess(json) {
+function requestInventorySuccess(json) {
   return {
-    type: REQUEST_SUCCESS,
+    type: REQUEST_INVENTORY_SUCCESS,
     data: json,
     name: INVENTORIES,
+  }
+}
+
+export function fetchInventoryItems(processId) {
+  return function (dispatch) {
+    dispatch(requestInventoryItems())
+    return api.get('/ics/inventory/detail-test/')
+      .query({ process: processId })
+	    .then(res => dispatch(requestInventoryItemsSuccess(res.body, processId)))
+	    .catch(err => dispatch(requestInventoryItemsFailure(err)))
+  }
+}
+
+function requestInventoryItems() {
+  return {
+    name: INVENTORIES,
+    type: REQUEST_ITEMS
+  }
+}
+
+function requestInventoryItemsFailure(err) {
+  alert('Oh no! Something went wrong\n' + err)
+  console.log(err)
+  return {
+    type: REQUEST_ITEMS_FAILURE,
+    name: INVENTORIES,
+  }
+}
+
+function requestInventoryItemsSuccess(json, processId) {
+  return {
+    type: REQUEST_ITEMS_SUCCESS,
+    data: json,
+    name: INVENTORIES,
+    processId: processId
   }
 }
