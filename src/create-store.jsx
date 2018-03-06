@@ -1,11 +1,12 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import {stateDefault, productionTrendsStateDefault, modalStateDefault} from './states'
+import { stateDefault, productionTrendsStateDefault, modalStateDefault, inventoriesStateDefault } from './states'
 
 import {apiDataReducer} from './reducers/APIDataReducer'
 import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
 import {_formula} from './reducers/FormulaReducerExtension'
+import { _inventory } from './reducers/InventoryReducer'
 import _users from './reducers/UserReducer'
 import { _modal } from './reducers/ModalReducer'
 import productionTrendsReducer from './reducers/ProductionTrendsReducer'
@@ -34,7 +35,7 @@ export default function(data) {
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault), 
   	processes: createFilteredReducer(_process, action => action.name === types.PROCESSES, stateDefault), 
   	movements: createFilteredReducer(apiDataReducer, action => action.name === types.MOVEMENTS, stateDefault), 
-  	inventories: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORIES, stateDefault), 
+  	inventories: createFilteredReducer(_inventory, action => action.name === types.INVENTORIES, inventoriesStateDefault),
   	task: createFilteredReducer(_task, action => action.name === types.TASK, stateDefault), 
   	taskDescendents: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_DESCENDENTS, stateDefault), 
   	taskAncestors: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_ANCESTORS, stateDefault), 
