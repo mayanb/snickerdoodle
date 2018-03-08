@@ -48,8 +48,9 @@ export default function(data) {
     formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault),
 	  productionTrends: createFilteredReducer(productionTrendsReducer, action => action.name === types.PRODUCTION_TRENDS, productionTrendsStateDefault),
 	  modal: createFilteredReducer(_modal, action => action.name === types.MODAL, modalStateDefault),
+    inventory2: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORY_2, stateDefault),
   })
-	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 	const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
     applyMiddleware(thunkMiddleware),
 	))

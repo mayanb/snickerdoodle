@@ -1,6 +1,7 @@
 import React from 'react'
 import Goals from '../Goals/Goals'
 import Card from '../Card/Card'
+import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import NewFeatures from '../NewFeatures/NewFeatures'
 import './styles/home.css'
@@ -42,7 +43,7 @@ export default class Home extends React.Component {
 			<div>
 				<NewFeatures />
 				<div className="dashboard">
-					<Title>Dashboard</Title>
+					<ApplicationSectionHeader>Dashboard</ApplicationSectionHeader>
 					<Tabs {...this.state} onTab={this.handleTab}/>
 					{
 						this.state.activeTab===0 ? <ProductionTrends /> : this.renderGoals()
@@ -80,12 +81,3 @@ function Tab({title, active, onTab}) {
 		</div>
 	)
 }
-
-
-
-function Title(props) {
-	return (
-		<div className="home-title">{props.children}</div>
-	)
-}
-

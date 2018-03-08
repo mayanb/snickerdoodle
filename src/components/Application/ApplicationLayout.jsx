@@ -33,6 +33,8 @@ import Registration from '../Registration/Registration'
 
 import Modal from '../Modal/Modal'
 
+import Inventory2 from '../Inventory2/Inventory'
+
 export default class ApplicationLayoutStable extends React.Component {
 
   render () {
@@ -79,6 +81,7 @@ function App(props) {
         <Route path={"/googleconnect/:ext?"} component={Account} />
         <Route path={"/bc/"} component={BCWrapper} />
         <Route path={"/barcharttest/"} component={Sortable} />
+        <Route path="/pagination-test" component={Inventory2} />
       </div>
     </div>
   )

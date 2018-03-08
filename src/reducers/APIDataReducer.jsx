@@ -90,15 +90,18 @@ function request(state, action) {
 }
 
 function requestSuccess(state, action) {
+  let updateData = action.append ? 
+    { $push: action.data } :
+    { $set: action.data }
+
   return update(state, {
     ui: {
       $merge: {
         isFetchingData: false,
+        more: action.more, 
       }
     },
-    data: {
-      $set: action.data
-    }
+    data: updateData,
   })
 }
 

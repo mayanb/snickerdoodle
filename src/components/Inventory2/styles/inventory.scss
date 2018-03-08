@@ -1,0 +1,5 @@
+@import 'styles/constants.scss';
+
+.inventory2-container {
+	width: calc(100vw - #{$nav-width});
+}
