@@ -20,7 +20,7 @@ export default function InventoryListRow({item, onClick, isSelected}) {
 			<div className="inv-col inv-icon"><InventoryIcon icon={icon} /></div>
 			<div className="inv-col inv-title">{`${process_name} ${product_name}`}</div>
 			<div className="inv-col inv-code">{`${process_code}-${product_code}`}</div>
-			<div className="inv-col inv-amount">{`${amount} ${pluralize(amount,unit)}`}</div>
+			<div className="inv-col inv-amount">{`${formatNumber(amount)} ${pluralize(amount,unit)}`}</div>
 		</div>
 	)
 }
@@ -35,4 +35,8 @@ function InventoryIcon({icon}) {
 			/>
 		</div>
 	)
+}
+
+function formatNumber(amount) {
+	return parseInt(amount, 10).toLocaleString()
 }
