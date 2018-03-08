@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import * as actions from './InventoryActions'
 import InventoryListRow from './InventoryListRow'
+import './styles/inventorylist.css'
 
 class InventoryList extends React.Component {
 	constructor(props) {
@@ -29,7 +30,6 @@ class InventoryList extends React.Component {
 
 	handleSelectRow(i) {
 		this.props.dispatch(actions.selectInventory(i))
-		console.log(this.props.ui.selectedItem)
 	}
 
 	handlePagination(direction) {

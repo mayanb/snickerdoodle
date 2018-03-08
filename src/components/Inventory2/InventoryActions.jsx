@@ -11,7 +11,7 @@ import {  INVENTORY_2 } from '../../reducers/ReducerTypes'
 export function fetchInitialInventory() {
   return dispatch => {
     dispatch(requestInventory())
-    return api.get('/ics/tasks/search/')
+    return api.get('/ics/inventories/')
       .then(({body}) => {
         dispatch(requestInventorySuccess(body.results, body.next))
       })
