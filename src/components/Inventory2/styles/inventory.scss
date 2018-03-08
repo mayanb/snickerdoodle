@@ -3,3 +3,15 @@
 .inventory2-container {
 	width: calc(100vw - #{$nav-width});
 }
+
+.inventory2-content {
+	display: flex;
+
+	.inventory-list-container {
+		flex: 3;
+	}
+
+	.inventory-drawer-container {
+		flex: 1;
+	}
+}

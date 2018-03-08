@@ -38,11 +38,11 @@ export function fetchMoreInventory(page) {
   }
 }
 
-export function selectInventory(id) {
+export function selectInventory(index) {
   return {
     type: SELECT,
-    index: id,
-    name: INVENTORY_2
+    index: index,
+    name: INVENTORY_2,
   }
 }
 
