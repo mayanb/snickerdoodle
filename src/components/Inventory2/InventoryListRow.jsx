@@ -1,8 +1,6 @@
 import React from 'react'
-import { pluralize } from '../../utilities/stringutils'
-import Img from '../Img/Img'
-
-const DEFAULT_ICON = '/img/default@3x.png'
+import { pluralize, formatNumber } from '../../utilities/stringutils'
+import InventoryIcon from './InventoryIcon'
 
 export default function InventoryListRow({item, onClick, isSelected}) {
 	let {
@@ -23,20 +21,4 @@ export default function InventoryListRow({item, onClick, isSelected}) {
 			<div className="inv-col inv-amount">{`${formatNumber(amount)} ${pluralize(amount,unit)}`}</div>
 		</div>
 	)
-}
-
-function InventoryIcon({icon}) {
-	return (
-		<div className="icon-circ">
-			<Img 
-				height={16}
-				src={icon.substring(0, icon.length - 4) + "@3x"} 
-				onError={e => e.target.src = DEFAULT_ICON}
-			/>
-		</div>
-	)
-}
-
-function formatNumber(amount) {
-	return parseInt(amount, 10).toLocaleString()
 }

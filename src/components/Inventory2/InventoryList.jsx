@@ -23,7 +23,6 @@ class InventoryList extends React.Component {
 				onClick={this.handleSelectRow}
 				onPagination={this.handlePagination}
 				Row={InventoryListRow}
-				TitleRow={"div"}
 			/>
 		)
 	}

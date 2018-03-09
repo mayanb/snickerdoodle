@@ -22,6 +22,10 @@ export function colorHash(str) {
     return colors[Math.abs(str.hashCode() % colors.length)]
 }
 
+export function formatNumber(amount) {
+  return parseInt(amount, 10).toLocaleString()
+}
+
 //eslint-disable-next-line
 String.prototype.hashCode = function() {
   let h = 0, l = this.length, i = 0;

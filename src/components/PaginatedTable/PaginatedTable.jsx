@@ -39,15 +39,17 @@ export default class PaginatedTable extends React.Component {
 
     return (
       <div className={(this.border?"":"border-none ") + "paginated-table"}>
+        { this.renderPagination(firstIndex, lastIndex, totalLen, this.handlePagination.bind(this)) }
         <ul>
+        {TitleRow && (
           <li className="header">
             <TitleRow />
           </li>
+        )}
           {
             this.renderRows(firstIndex, lastIndex, keys)
           }
         </ul>
-        { this.renderPagination(firstIndex, lastIndex, totalLen, this.handlePagination.bind(this)) }
       </div>
     )
 	}

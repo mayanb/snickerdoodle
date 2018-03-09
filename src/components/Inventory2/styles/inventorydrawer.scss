@@ -3,6 +3,41 @@
 .inventory-drawer {
 	height: 100%;
 	width: 100%;
-	background-color: $red;
-	color: white;
+	background-color: white;
+	border-left: 1px solid $gray-ultra-light;
+
+	.inv-drawer-title {
+		padding-left: 16px;
+		display: flex;
+		align-items: center;
+		height: 48px;
+		font-size: 18px;
+		border-bottom: 1px solid $gray-ultra-light;
+	}
+
+	.adjusted-amount {
+		.adjusted-amount-header {
+
+			padding: 4px 16px 4px 52px;
+			border-bottom: 1px solid $gray-ultra-light;
+
+			.in-stock {
+				font-size: 12px;
+				line-height: 18px;
+				color: $gray-light;
+				margin-left: 4px;
+			}
+
+			.amt {
+				font-size: 18px;
+				line-height: 24px;
+			}
+		}
+	}
+
+	.inv-adjuster {
+		display: flex;
+		padding: 16px;
+		border-bottom: 1px solid $gray-ultra-light;
+	}
 }

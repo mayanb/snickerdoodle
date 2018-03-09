@@ -9,9 +9,11 @@
 	cursor: pointer;
 
 	&.selected-inv-row {
-		color: white;
-		background-color: $primary-light;
-		-webkit-font-smoothing: antialiased;
+//		color: white;
+		border-bottom: 1px solid rgba(0,0,0,0);
+		box-shadow: 0px 2px 4px 0px $gray-ultra-light;
+		background-color: white;
+		font-weight: 500;
 	}
 
 	.inv-col {
@@ -21,16 +23,14 @@
 		&.inv-icon {
 			flex: 0;
 			margin: 12px 4px 12px 0;
-
-			.icon-circ {
-				height: 24px;
-				width: 24px;
-				border-radius: 12px;
-				background-color: white;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
 		}
 	}
+}
+
+.inv-icon-circ {
+	border-radius: 12px;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
