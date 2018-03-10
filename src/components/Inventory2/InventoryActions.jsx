@@ -1,11 +1,17 @@
 import api from '../WaffleconeAPI/api.jsx'
 import {
-  REQUEST, 
-  REQUEST_SUCCESS, 
+  REQUEST,
+  REQUEST_SUCCESS,
   REQUEST_FAILURE,
   SELECT,
   PAGE,
 } from '../../reducers/APIDataReducer'
+import {
+	REQUEST_HISTORY,
+	REQUEST_HISTORY_SUCCESS,
+	REQUEST_HISTORY_FAILURE,
+} from '../../reducers/Inventory2ReducerExtension'
+
 import {  INVENTORY_2 } from '../../reducers/ReducerTypes'
 
 export function fetchInitialInventory() {
@@ -77,6 +83,42 @@ function requestInventorySuccess(json, more, append=false) {
     more: more,
     append: append,
   }
+}
+
+export function fetchInventoryHistory(teamId, processId, productId) {
+	return function (dispatch) {
+		dispatch(requestInventoryHistory())
+		console.log('fetching inventory history')
+		return api.get('/ics/adjustment-history/')
+			.query({ process_type: processId, product_type: productId, team: teamId })
+			.then(res => dispatch(requestInventoryHistorySuccess(res.body, processId, productId)))
+			.catch(err => dispatch(requestInventoryHistoryFailure(err)))
+	}
+}
+
+function requestInventoryHistory() {
+	return {
+		name: INVENTORY_2,
+		type: REQUEST_HISTORY
+	}
+}
+
+function requestInventoryHistoryFailure(err) {
+	console.error('Oh no! Something went wrong\n' + err)
+	return {
+		type: REQUEST_HISTORY_FAILURE,
+		name: INVENTORY_2,
+	}
+}
+
+function requestInventoryHistorySuccess(json, processId, productId) {
+	return {
+		type: REQUEST_HISTORY_SUCCESS,
+		data: json,
+		name: INVENTORY_2,
+		processId: processId,
+		productId: productId,
+	}
 }
 
 

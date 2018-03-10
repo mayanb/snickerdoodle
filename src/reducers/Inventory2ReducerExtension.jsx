@@ -1,34 +1,30 @@
 import update from 'immutability-helper'
+import { apiDataReducer } from './APIDataReducer'
 
 export const START_ADJUSTMENT = 'REQUEST_INVENTORY'
 export const ADJUSTMENT_SUCCESS = 'REQUEST_INVENTORY_SUCCESS'
 export const ADJUSTMENT_FAILURE = 'REQUEST_INVENTORY_FAILURE'
 export const REQUEST_HISTORY = 'REQUEST_HISTORY'
-export const HISTORY_SUCCESS = 'HISTORY_SUCCESS'
-export const HISTORY_FAILURE = 'HISTORY_FAILURE'
+export const REQUEST_HISTORY_SUCCESS = 'HISTORY_SUCCESS'
+export const REQUEST_HISTORY_FAILURE = 'HISTORY_FAILURE'
 
 export function _inventory2(state, action) {
-	switch(action.type) {
+	let ns = apiDataReducer(state, action)
+	switch (action.type) {
 		case START_ADJUSTMENT:
-			startAdjustment(state, action)
-			break
+			return startAdjustment(state, action)
 		case ADJUSTMENT_SUCCESS:
-			adjustmentSuccess(state, action)
-			break
+			return adjustmentSuccess(state, action)
 		case ADJUSTMENT_FAILURE:
-			adjustmentFailure(state, action)
-			break
+			return adjustmentFailure(state, action)
 		case REQUEST_HISTORY:
-			requestHistory(state, action)
-			break
-		case HISTORY_SUCCESS:
-			historySuccess(state, action)
-			break
-		case HISTORY_FAILURE:
-			historyFailure(state, action)
-			break
+			return requestHistory(state, action)
+		case REQUEST_HISTORY_SUCCESS:
+			return historySuccess(state, action)
+		case REQUEST_HISTORY_FAILURE:
+			return historyFailure(state, action)
 		default:
-			return state
+			return ns
 	}
 }
 
@@ -55,7 +51,7 @@ function adjustmentSuccess(state, action) {
 	return update(state, {
 		ui: {
 			$merge: { isAdjusting: false }
-		}, 
+		},
 		data: {
 			[index]: {
 				$merge: { amount: action.amount }
@@ -79,14 +75,16 @@ function requestHistory(state, action) {
 }
 
 function historySuccess(state, action) {
-	let index = getIndexOfInventory(action.process_type, action.product_type)
+	console.log("action", action)
+	let index = getIndexOfInventory(state, action.processId, action.productId)
+	console.log('index', index)
 	return update(state, {
 		ui: {
 			$merge: { isFetchingHistory: false }
 		},
 		data: {
 			[index]: {
-				$merge: { history: action.history }
+				$merge: { history: action.data }
 			}
 		}
 	})

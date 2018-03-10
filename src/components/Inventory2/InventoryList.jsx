@@ -29,6 +29,8 @@ class InventoryList extends React.Component {
 
 	handleSelectRow(i) {
 		this.props.dispatch(actions.selectInventory(i))
+		const inventory = this.props.data[i]
+		this.props.dispatch(actions.fetchInventoryHistory(this.props.teamId, inventory.process_id, inventory.product_id))
 	}
 
 	handlePagination(direction) {
@@ -41,11 +43,14 @@ class InventoryList extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
+	let ui = state.inventory2.ui
+	let teamId = ui.activeUser && state.users.data[ui.activeUser] && state.users.data[ui.activeUser].user.team
 	return {
 		//data: mock_data,
 		//ui: { page_size: mock_data.length, currentPage: 0 }
 		data: state.inventory2.data,
 		ui: state.inventory2.ui,
+		teamId: teamId
 	}
 }
 
