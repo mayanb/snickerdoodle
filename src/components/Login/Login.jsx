@@ -21,6 +21,8 @@ class Login extends React.Component {
       team_name: "",
       failedAuthentication: false
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleFailedAuthentication = this.handleFailedAuthentication.bind(this)
   }
 
 	handleChangeToLowerCase(which, val) {
@@ -33,24 +35,20 @@ class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    this.handleAuthenticate(this.state.username, this.state.password, this.failedAuth.bind(this))
+    this.handleAuthenticate()
   }
 
-  failedAuth(err) {
-    this.setState({failedAuthentication: err})
+  handleFailedAuthentication(e) {
+    this.setState({failedAuthentication: this.getFailedAuthMessage(e)})
   }
 
   handleAuthenticate() {
-    this.setState({failedAuthentication: false})
-    let fail = this.failedAuth.bind(this)
-    this.props.dispatch(
-      actions.postRequestLogin(
-        {username: this.state.username.toLowerCase() + '_' + this.state.team_name.toLowerCase(), password: this.state.password},
-        () => null, 
-        fail
-      )
-    )
-
+    let { username, team_name } = this.state
+    this.setState({failedAuthentication: null})
+    this.props.dispatch(actions.postRequestLogin({ 
+      username: `${username}_${team_name}`.toLowerCase(),
+      password: this.state.password
+    })).catch(this.handleFailedAuthentication)
   }
 
   render() {
@@ -98,7 +96,7 @@ class Login extends React.Component {
               type="submit" 
               disabled={!this.state.username.length || !this.state.password.length} 
               className="login-submit" 
-              onClick={this.handleSubmit.bind(this)}
+              onClick={this.handleSubmit}
             >
             { this.renderLoginOrLoading() }
             </button>
@@ -119,14 +117,14 @@ class Login extends React.Component {
   renderFailedAuthentication() {
     if (this.state.failedAuthentication) {
       return (
-        <span className="failMessage">{this.getFailedAuthMessage()}</span>
+        <span className="failMessage">{this.state.failedAuthentication}</span>
       )
     }
     return null
   }
 
-  getFailedAuthMessage() {
-    if (this.state.failedAuthentication === 400) {
+  getFailedAuthMessage(error) {
+    if (error.status === 400) {
       return "Invalid team, username, or password. Try again."
     } else {
       return "Something went wrong. Try again later."
