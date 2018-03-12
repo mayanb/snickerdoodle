@@ -25,7 +25,7 @@ export const REQUEST_UPDATE_SETTING_FAILURE = "REQUEST_UPDATE_SETTING_FAILURE"
 
 
 export function postRequestLogin(credentials, success, failure) {
-	return function (dispatch) {
+	return dispatch => {
 		dispatch(requestLogin())
 
 		return api.post('/auth/login/')
