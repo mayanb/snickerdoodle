@@ -6,11 +6,18 @@ import {
 } from '../../reducers/Inventory2ReducerExtension'
 import {  INVENTORY_2 } from '../../reducers/ReducerTypes'
 
-export function requestCreateAdjustment(payload) {
+export function requestCreateAdjustment(userId, processId, productId, amount) {
 	return dispatch => {
 		dispatch(startCreatingAdjustment())
-		api.post('ics/adjustments/')
-			.send(payload)
+		const data = {
+				created_by: userId,
+				process_type: processId,
+				product_type: productId,
+				amount: amount
+			}
+			console.log('data', data)
+		return api.post('/ics/adjustments/')
+			.send(data)
 			.then(res => {
 				dispatch(createAdjustmentSuccess(res.body))
 			})

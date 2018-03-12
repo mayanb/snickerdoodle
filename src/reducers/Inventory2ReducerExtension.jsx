@@ -47,7 +47,7 @@ function startAdjustment(state, action) {
 }
 
 function adjustmentSuccess(state, action) {
-	let index = getIndexOfInventory(action.process_type, action.product_type)
+	let index = getIndexOfInventory(state, action.process_type, action.product_type)
 	return update(state, {
 		ui: {
 			$merge: { isAdjusting: false }

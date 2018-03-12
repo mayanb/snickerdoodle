@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import InventoryIcon from './InventoryIcon'
 import InventoryDrawerAdjustedAmount from './InventoryDrawerAdjustedAmount'
-import * as actions from './InventoryActions'
 import './styles/inventorydrawer.css'
 
 class InventoryDrawer extends React.Component {
