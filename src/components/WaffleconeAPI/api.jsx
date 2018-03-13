@@ -9,7 +9,7 @@ function get_active_user() {
 }
 
 function get(path) {
-	let url = urls.latest(host, path)
+	let url = path.startsWith('http')?path:urls.latest(host, path)
 	let user = {team: 1, user_id: 1}
 	try {
 		user = get_active_user().user

@@ -13,7 +13,7 @@ export let stateDefault = {
 		isEditingItem: false,
 		currentPage: 0,
 		page_size: 10,
-		selectedItem: 4,
+		selectedItem: null,
 		error: null
 	}
 }

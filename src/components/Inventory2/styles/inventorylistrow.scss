@@ -1,0 +1,47 @@
+@import 'styles/constants.scss';
+
+.inv-row {
+	display: flex;
+	min-height: 48px;
+	line-height: 48px;
+	border-bottom: 1px solid $gray-ultra-light;
+	padding: 0 36px;
+	cursor: pointer;
+
+	&.selected-inv-row {
+//		color: white;
+		border-bottom: 1px solid rgba(0,0,0,0);
+		box-shadow: 0px 2px 4px 0px $gray-ultra-light;
+		background-color: white;
+		font-weight: 500;
+	}
+
+	.inv-col {
+		margin: 0 4px;
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+        white-space: nowrap;
+
+		&.inv-icon {
+			flex: 0 0 24px;
+			margin: 12px 4px 12px 0;
+		}
+
+		&.inv-title {
+			flex: 4;
+		}
+
+		&.inv-code {
+			flex: 2;
+		}
+	}
+}
+
+.inv-icon-circ {
+	border-radius: 12px;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

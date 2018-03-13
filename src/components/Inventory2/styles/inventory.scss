@@ -1,0 +1,18 @@
+@import 'styles/constants.scss';
+
+.inventory2-container {
+	width: calc(100vw - #{$nav-width});
+}
+
+.inventory2-content {
+	display: flex;
+	height: calc(100% - #{$section-header-height});
+
+	.inventory-list-container {
+		flex: 11;
+	}
+
+	.inventory-drawer-container {
+        width: 368px;
+	}
+}

@@ -7,6 +7,7 @@ import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
 import {_formula} from './reducers/FormulaReducerExtension'
 import { _inventory } from './reducers/InventoryReducer'
+import { _inventory2 } from './reducers/Inventory2ReducerExtension'
 import _users from './reducers/UserReducer'
 import { _modal } from './reducers/ModalReducer'
 import productionTrendsReducer from './reducers/ProductionTrendsReducer'
@@ -48,8 +49,9 @@ export default function(data) {
     formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault),
 	  productionTrends: createFilteredReducer(productionTrendsReducer, action => action.name === types.PRODUCTION_TRENDS, productionTrendsStateDefault),
 	  modal: createFilteredReducer(_modal, action => action.name === types.MODAL, modalStateDefault),
+    inventory2: createFilteredReducer(_inventory2, action => action.name === types.INVENTORY_2, stateDefault),
   })
-	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 	const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
     applyMiddleware(thunkMiddleware),
 	))

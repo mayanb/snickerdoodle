@@ -2,10 +2,24 @@ import React from 'react'
 import update from 'immutability-helper'
 import './styles/paginatedtable.css'
 
+/*
+
+takes in { data, ui, Row, TitleRow, onClick, onPagination }
+
+ui = {
+  page_size: INT,
+  currentPage: INT,
+  selectedItem: INDEX,
+}
+
+*/
+
 
 export default class PaginatedTable extends React.Component {
 	render() {
 		let {data, ui, TitleRow} = this.props
+
+    // TODO: change this to be if there are no items in current page && IS FETCHING 
 		if (!data) {
 			return <span>Loading...</span>
 		}
@@ -25,15 +39,17 @@ export default class PaginatedTable extends React.Component {
 
     return (
       <div className={(this.border?"":"border-none ") + "paginated-table"}>
+        { this.renderPagination(firstIndex, lastIndex, totalLen, this.handlePagination.bind(this)) }
         <ul>
+        {TitleRow && (
           <li className="header">
             <TitleRow />
           </li>
+        )}
           {
             this.renderRows(firstIndex, lastIndex, keys)
           }
         </ul>
-        { this.renderPagination(firstIndex, lastIndex, totalLen, this.handlePagination.bind(this)) }
       </div>
     )
 	}
@@ -51,7 +67,7 @@ export default class PaginatedTable extends React.Component {
   }
 
 	renderPagination(firstIndex, lastIndex, len, onPagination) {
-		let detail = `${firstIndex+1}-${lastIndex} of ${len} items`
+		let detail = `${firstIndex+1}-${lastIndex} of ${this.props.ui.more ? 'over ' : ''}${len} items`
 
     let disabledBack = this.canPage(firstIndex,lastIndex, len, -1)?"":" disabled"
     let disabledFwd = this.canPage(firstIndex,lastIndex, len, +1)?"":" disabled"
@@ -83,12 +99,17 @@ export default class PaginatedTable extends React.Component {
   }
 
   canPage(firstIndex, lastIndex, len, direction) {
+    // if im trying to go backwards but im on the first page
     if (direction === -1 && firstIndex === 0)
       return false
 
-    if (direction === 1 && lastIndex >= len)
-      return false
-
+    // if im trying to go fowards but im on the last page
+    if (direction === 1 && lastIndex >= len) {
+      // if there's no more from the ui to fetch 
+      if (!this.props.ui.more) {
+        return false
+      }
+    }
     return true
   }
 }
