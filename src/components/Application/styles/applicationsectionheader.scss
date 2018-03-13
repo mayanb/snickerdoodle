@@ -2,9 +2,10 @@
 
 .app-section-header {
     font-size: 20px;
-    line-height: 32px;
+    height: $section-header-height;
+    line-height: $section-header-height;
     color: white;
-    padding: 12px 36px;
+    padding: 0 36px;
     background-color: $primary;
     -webkit-font-smoothing: antialiased;
 }

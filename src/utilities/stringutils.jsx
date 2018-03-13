@@ -1,7 +1,7 @@
 import { colors } from './colors'
 
 export function pluralize(number, noun) {
-	if (number !== 1) {
+	if (parseInt(number, 10) !== 1) {
     let re = /([szx]|sh|ch)$/
     if (re.test(noun))
 		  return noun + 'es'
@@ -24,6 +24,10 @@ export function colorHash(str) {
 
 export function formatNumber(amount) {
   return parseInt(amount, 10).toLocaleString()
+}
+
+export function formatAmount(amount, unit) {
+	return `${formatNumber(amount)} ${pluralize(amount, unit)}`
 }
 
 //eslint-disable-next-line

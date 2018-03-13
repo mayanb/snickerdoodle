@@ -75,7 +75,6 @@ function requestInventoryFailure(err) {
 }
 
 function requestInventorySuccess(json, more, append=false) {
-  console.log(append)
   return {
     type: REQUEST_SUCCESS,
     name: INVENTORY_2,
@@ -88,7 +87,6 @@ function requestInventorySuccess(json, more, append=false) {
 export function fetchInventoryHistory(teamId, processId, productId) {
 	return function (dispatch) {
 		dispatch(requestInventoryHistory())
-		console.log('fetching inventory history')
 		return api.get('/ics/adjustment-history/')
 			.query({ process_type: processId, product_type: productId, team: teamId })
 			.then(res => dispatch(requestInventoryHistorySuccess(res.body, processId, productId)))

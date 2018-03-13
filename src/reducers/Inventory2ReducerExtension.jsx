@@ -75,16 +75,19 @@ function requestHistory(state, action) {
 }
 
 function historySuccess(state, action) {
-	console.log("action", action)
 	let index = getIndexOfInventory(state, action.processId, action.productId)
-	console.log('index', index)
+	const annotatedHistory = annotateHistory(action.data)
+	const endAmount = annotatedHistory[0].data.endAmount
 	return update(state, {
 		ui: {
 			$merge: { isFetchingHistory: false }
 		},
 		data: {
 			[index]: {
-				$merge: { history: action.data }
+				$merge: {
+					history: annotatedHistory,
+					adjusted_amount: endAmount
+				}
 			}
 		}
 	})
@@ -96,4 +99,23 @@ function historyFailure(state, action) {
 			$merge: { isFetchingHistory: false }
 		}
 	})
+}
+
+function annotateHistory(data) {
+	let startDate = new Date(1, 0, 1)
+	let startAmount = 0
+	let annotatedHistory = data.slice().reverse()
+		//Exclude item summaries with zero created or used amounts
+		.filter(item => item.type === 'adjustment' || item.data.created_amount > 0 || item.data.used_amount > 0)
+
+	annotatedHistory.forEach(item => {
+		item.data.startDate = startDate
+		item.data.startAmount = startAmount
+		item.data.endDate = item.date
+		item.data.endAmount = item.type === 'adjustment' ? item.data.amount : startAmount + item.data.created_amount - item.data.used_amount
+
+		startDate = item.data.endDate
+		startAmount = item.data.endAmount
+	})
+	return annotatedHistory.reverse()
 }

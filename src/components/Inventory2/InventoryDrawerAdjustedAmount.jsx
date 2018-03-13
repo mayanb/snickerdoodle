@@ -1,23 +1,10 @@
 import React from 'react'
-import { pluralize, formatNumber } from '../../utilities/stringutils'
-import { connect } from 'react-redux'
-import * as actions from './AdjustmentActions'
 import Input from '../Inputs/Input'
+import { inventoryName } from './inventoryUtils'
+import { formatAmount, pluralize } from '../../utilities/stringutils'
+import Button from '../Card/Button'
 
-export default function InventoryDrawerAdjustedAmount({ inventory }) {
-	let { adjusted_amount: amount, process_unit: unit } = inventory
-	return (
-		<div className="adjusted-amount">
-			<div className="adjusted-amount-header">
-				<span className="amt">{`${formatNumber(amount)} ${pluralize(amount, unit)}`}</span>
-				<span className="in-stock">In stock</span>
-			</div>
-			<Adjuster unit={unit} />
-		</div>
-	)
-}
-
-class UnconnectedAdjuster extends React.Component {
+export default class InventoryDrawerAdjustedAmount extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -25,50 +12,44 @@ class UnconnectedAdjuster extends React.Component {
 		}
 
 		this.handleAmountChange = this.handleAmountChange.bind(this)
-		this.handleSave = this.handleSave.bind(this)
 	}
 
 	handleAmountChange(e) {
 		this.setState({ amount: e.target.value })
 	}
 
-	handleSave() {
-		this.props.dispatch(actions.requestCreateAdjustment(
-			this.props.userId,
-			this.props.selectedInventory.process_id,
-			this.props.selectedInventory.product_id,
-			this.state.amount
-		))
-	}
-
 	render() {
-		let { unit } = this.props
+		const { inventory, onSaveAdjustment } = this.props
+		const unit = inventory.process_unit
+		let discrepancy = ''
+		if (inventory.history && inventory.history.length && this.state.amount) {
+			const discrepancyAmount = this.state.amount - inventory.history[0].data.endAmount
+			discrepancy = `Discrepancy: ${formatAmount(discrepancyAmount, unit)}`
+		}
 		return (
 			<div className="inv-adjuster">
-				<div>What is the actual stock of this product?</div>
-				<div>
-					<Input
-						type="number"
-						value={this.state.amount}
-						onChange={e => this.handleAmountChange(e)}
-					/>
-					<span>Discrepancy: {unit}</span>
-					<button onClick={this.handleSave}>Save</button>
+				<div className="question">
+					<span className="bold">What is the actual stock of</span> {inventoryName(inventory)}?
+				</div>
+				<div className="form">
+					<div className="input-container">
+						<Input
+							autoFocus
+							type="number"
+							value={this.state.amount}
+							onChange={e => this.handleAmountChange(e)}
+						/>
+						<span className="unit-label">{pluralize(parseInt(this.state.amount, 10), unit)}</span>
+					</div>
+					<div className="discrepancy">{discrepancy}</div>
+					<Button
+						onClick={() => onSaveAdjustment(this.state.amount)}
+						disabled={this.state.amount === ''}
+					>
+						Save
+					</Button>
 				</div>
 			</div>
 		)
 	}
 }
-
-const mapStateToProps = (state/*, props*/) => {
-	console.log('state', state)
-	let data = state.inventory2.data
-	let ui = state.inventory2.ui
-	let selectedInventory = ui.selectedItem && data[ui.selectedItem]
-	return {
-		userId: state.users.data[state.users.ui.activeUser].user.user_id,
-		selectedInventory: selectedInventory,
-	}
-}
-
-const Adjuster = connect(mapStateToProps)(UnconnectedAdjuster)

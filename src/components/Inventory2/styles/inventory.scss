@@ -6,12 +6,13 @@
 
 .inventory2-content {
 	display: flex;
+	height: calc(100% - #{$section-header-height});
 
 	.inventory-list-container {
 		flex: 11;
 	}
 
 	.inventory-drawer-container {
-		flex: 5;
+        width: 368px;
 	}
 }

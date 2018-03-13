@@ -24,6 +24,14 @@
 			flex: 0;
 			margin: 12px 4px 12px 0;
 		}
+
+		&.inv-title {
+			flex: 4;
+		}
+
+		&.inv-code {
+			flex: 2;
+		}
 	}
 }
 
