@@ -5,7 +5,7 @@
 	min-height: 48px;
 	line-height: 48px;
 	border-bottom: 1px solid $gray-ultra-light;
-	padding-left: 36px;
+	padding: 0 36px;
 	cursor: pointer;
 
 	&.selected-inv-row {
@@ -19,6 +19,9 @@
 	.inv-col {
 		margin: 0 4px;
 		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+        white-space: nowrap;
 
 		&.inv-icon {
 			flex: 0;

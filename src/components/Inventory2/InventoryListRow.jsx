@@ -2,6 +2,7 @@ import React from 'react'
 import { formatAmount } from '../../utilities/stringutils'
 import { inventoryName } from './inventoryUtils'
 import InventoryIcon from './InventoryIcon'
+import './styles/inventorylistrow.css'
 
 export default function InventoryListRow({item, onClick, isSelected}) {
 	let {

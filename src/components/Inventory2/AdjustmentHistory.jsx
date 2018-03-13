@@ -61,7 +61,7 @@ function ItemSummary({ data, unit }) {
 
 function FormattedDate({ date }) {
 	return (
-		<span className="formatted-date">
+		<span className="formatted-date" title={moment(date).format('MMM D, YYYY HH:mm:ss A')}>
 			{moment(date).format('MMM D, YYYY')}
 		</span>
 	)

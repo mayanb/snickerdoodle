@@ -44,7 +44,7 @@ export default class InventoryDrawerAdjustedAmount extends React.Component {
 					<div className="discrepancy">{discrepancy}</div>
 					<Button
 						onClick={() => onSaveAdjustment(this.state.amount)}
-						disabled={this.state.amount === ''}
+						disabled={this.state.amount === '' || this.state.amount < 0}
 					>
 						Save
 					</Button>

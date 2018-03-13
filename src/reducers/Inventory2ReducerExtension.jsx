@@ -62,7 +62,9 @@ function adjustmentSuccess(state, action) {
 
 function adjustmentFailure(state, action) {
 	return update(state, {
-		$merge: { isAdjusting: false }
+		ui: {
+			$merge: { isAdjusting: false }
+		}
 	})
 }
 

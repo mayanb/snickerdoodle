@@ -62,13 +62,16 @@ class InventoryDrawer extends React.Component {
 	handleSaveAdjustment(amount) {
 		this.handleToggleAddAdjustment()
 		this.props.dispatch(adjustmentActions.requestCreateAdjustment(
-			this.props.userId,
+			this.props.userProfileId,
 			this.props.selectedInventory.process_id,
 			this.props.selectedInventory.product_id,
 			amount
 		))
 			.then(() => {
 				this.fetchHistory(this.props.teamId, this.props.selectedInventory.process_id, this.props.selectedInventory.product_id)
+			})
+			.catch(() => {
+
 			})
 	}
 }
@@ -79,7 +82,7 @@ const mapStateToProps = (state/*, props*/) => {
 	let teamId = ui.activeUser && state.users.data[ui.activeUser] && state.users.data[ui.activeUser].user.team
 	let selectedInventory = data[ui.selectedItem] || {}
 	return {
-		userId: state.users.data[state.users.ui.activeUser].user.user_id,
+		userProfileId: state.users.data[state.users.ui.activeUser].user.id,
 		ui: state.inventory2.ui,
 		teamId: teamId,
 		selectedInventory: selectedInventory,

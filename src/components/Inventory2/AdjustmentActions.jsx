@@ -6,11 +6,11 @@ import {
 } from '../../reducers/Inventory2ReducerExtension'
 import {  INVENTORY_2 } from '../../reducers/ReducerTypes'
 
-export function requestCreateAdjustment(userId, processId, productId, amount) {
+export function requestCreateAdjustment(userProfileId, processId, productId, amount) {
 	return dispatch => {
 		dispatch(startCreatingAdjustment())
 		const data = {
-				created_by: userId,
+				userprofile: userProfileId,
 				process_type: processId,
 				product_type: productId,
 				amount: amount
@@ -22,7 +22,7 @@ export function requestCreateAdjustment(userId, processId, productId, amount) {
 				dispatch(createAdjustmentSuccess(res.body))
 			})
 			.catch(e => {
-				dispatch(createAdjustmentFailure())
+				dispatch(createAdjustmentFailure(e))
 				console.log(e)
 				throw e
 			})
@@ -44,7 +44,8 @@ function createAdjustmentSuccess(json) {
 	}
 }
 
-function createAdjustmentFailure() {
+function createAdjustmentFailure(err) {
+	alert('Oh no! Something went wrong while saving the adjustment\n' + err)
 	return {
 		type: ADJUSTMENT_FAILURE,
 		name: INVENTORY_2,

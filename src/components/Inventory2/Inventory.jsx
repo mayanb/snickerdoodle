@@ -7,7 +7,6 @@ import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import InventoryListRow from './InventoryListRow'
 import Loading from '../Loading/Loading'
 import './styles/inventory.css'
-import './styles/inventorylist.css'
 
 export class Inventory extends React.Component {
 	constructor(props) {
