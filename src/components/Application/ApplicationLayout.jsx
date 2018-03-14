@@ -32,6 +32,7 @@ import ProcessPage from '../ProcessPage/ProcessPage'
 import Registration from '../Registration/Registration'
 
 import Modal from '../Modal/Modal'
+import NewFeatures from '../NewFeatures/NewFeatures'
 
 import Inventory2 from '../Inventory2/Inventory'
 
@@ -62,6 +63,7 @@ function App(props) {
       <Route path="/:section?/:id?" component={Topbar} />
 
       <Modal />
+	    <NewFeatures />
       <div className="application-content">
         <Route exact path={"/"} component={Home} />
 	      <Route exact path={"/activity-log"} component={Activity} />
