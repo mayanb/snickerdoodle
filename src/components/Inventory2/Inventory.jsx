@@ -14,8 +14,8 @@ export class Inventory extends React.Component {
 		super(props)
 
 		this.state = {
-			processType: null,
-			productType: null
+			processTypes: [],
+			productTypes: []
 		}
 
 		this.handleSelectRow = this.handleSelectRow.bind(this)
@@ -29,7 +29,7 @@ export class Inventory extends React.Component {
 	}
 
 	fetchInventory() {
-		this.props.dispatch(actions.fetchInitialInventory(this.state.processType, this.state.productType))
+		this.props.dispatch(actions.fetchInitialInventory(this.state.processTypes, this.state.productTypes))
 		this.props.dispatch(actions.resetPageInventory())
 	}
 
@@ -75,10 +75,10 @@ export class Inventory extends React.Component {
 		dispatch(actions.pageInventory(direction))
 	}
 
-	handleFilter(processType, productType) {
+	handleFilter(processTypes, productTypes) {
 		this.setState({
-			processType: processType,
-			productType: productType
+			processTypes: processTypes,
+			productTypes: productTypes
 		}, this.fetchInventory)
 	}
 }

@@ -10,8 +10,8 @@ class InventoryFilters extends React.Component {
 		super(props)
 
 		this.state = {
-			processType: null,
-			productType: null
+			processTypes: [],
+			productTypes: []
 		}
 
 		this.handleFilter = this.handleFilter.bind(this)
@@ -30,22 +30,22 @@ class InventoryFilters extends React.Component {
 			<div className='inventory-filters'>
 					<Select
 						openOnFocus
-						value={this.state.processType}
+						value={this.state.processTypes}
 						options={this.props.processes}
+						multi={true}
 						optionRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
 						valueRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
 						valueKey={'id'}
-						simpleValue={true}
 						placeholder="All process types"
 						onChange={(newVal) => this.handleProcessTypeChange(newVal)}
 					/>
 					<Select
 						openOnFocus
-						value={this.state.productType}
+						value={this.state.productTypes}
 						options={this.props.products}
+						multi={true}
 						labelKey={'name'}
 						valueKey={'id'}
-						simpleValue={true}
 						placeholder="All product types"
 						onChange={(newVal) => this.handleProductTypeChange(newVal)}
 					/>
@@ -55,15 +55,15 @@ class InventoryFilters extends React.Component {
 	}
 
 	handleProcessTypeChange(newVal) {
-		this.setState({ processType: newVal }, this.handleFilter)
+		this.setState({ processTypes: newVal.map(o => o.id) }, this.handleFilter)
 	}
 
 	handleProductTypeChange(newVal) {
-		this.setState({ productType: newVal }, this.handleFilter)
+		this.setState({ productTypes: newVal.map(o => o.id) }, this.handleFilter)
 	}
 
 	handleFilter() {
-		this.props.onFilter(this.state.processType, this.state.productType)
+		this.props.onFilter(this.state.processTypes, this.state.productTypes)
 	}
 }
 

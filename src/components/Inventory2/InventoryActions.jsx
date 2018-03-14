@@ -15,14 +15,14 @@ import {
 
 import {  INVENTORY_2 } from '../../reducers/ReducerTypes'
 
-export function fetchInitialInventory(processId, productId) {
+export function fetchInitialInventory(processIds, productIds) {
   return dispatch => {
     dispatch(requestInventory())
 	  const query = {}
-	  if(processId)
-	  	query.process_type = processId
-	  if(productId)
-		  query.product_type = productId
+	  if(processIds.length)
+	  	query.process_types = processIds.join(',')
+	  if(productIds.length)
+		  query.product_types = productIds.join(',')
 	  return api.get('/ics/inventories/')
 		  .query(query)
 		  .then(({ body }) => {
