@@ -2,6 +2,23 @@
 
 .inventory2-container {
 	width: calc(100vw - #{$nav-width});
+	position: relative;
+
+	.inventory-filters {
+		position: absolute;
+		top: $section-header-height + 8px;
+		left: 36px;
+	}
+
+	.select {
+		width: 200px;
+        display: inline-block;
+		margin-right: 32px;
+	}
+
+	.no-items {
+		margin: 36px;
+	}
 }
 
 .inventory2-content {
@@ -10,6 +27,7 @@
 
 	.inventory-list-container {
 		flex: 11;
+		margin-top: 20px;
 	}
 
 	.inventory-drawer-container {

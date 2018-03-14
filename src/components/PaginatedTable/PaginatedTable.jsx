@@ -28,7 +28,7 @@ export default class PaginatedTable extends React.Component {
 
 
     if (!keys || keys.length === 0) {
-      return <span> No items </span>
+      return <div className="no-items"> No items </div>
     }
 
     let firstIndex = ui.currentPage * ui.page_size

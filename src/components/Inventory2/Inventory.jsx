@@ -4,6 +4,7 @@ import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import * as actions from './InventoryActions'
 import InventoryDrawer from './InventoryDrawer'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
+import InventoryFilters from './InventoryFilters'
 import InventoryListRow from './InventoryListRow'
 import Loading from '../Loading/Loading'
 import './styles/inventory.css'
@@ -12,13 +13,27 @@ export class Inventory extends React.Component {
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			processType: null,
+			productType: null
+		}
+
 		this.handleSelectRow = this.handleSelectRow.bind(this)
 		this.handlePagination = this.handlePagination.bind(this)
+		this.handleFilter = this.handleFilter.bind(this)
+		this.fetchInventory = this.fetchInventory.bind(this)
 	}
 
 	componentDidMount() {
-		this.props.dispatch(actions.fetchInitialInventory())
+		this.fetchInventory()
 	}
+
+	fetchInventory() {
+		this.props.dispatch(actions.fetchInitialInventory(this.state.processType, this.state.productType))
+		this.props.dispatch(actions.resetPageInventory())
+	}
+
+
 
 	render() {
 		let { ui } = this.props
@@ -26,6 +41,9 @@ export class Inventory extends React.Component {
 			<div className="inventory2-container">
 				<ApplicationSectionHeader>Inventory</ApplicationSectionHeader>
 
+				<InventoryFilters
+					onFilter={this.handleFilter}
+				/>
 				<div className="inventory2-content">
 					<div className="inventory-list-container">
 						<Loading isFetchingData={ui.isFetchingData}>
@@ -55,6 +73,13 @@ export class Inventory extends React.Component {
 			dispatch(actions.fetchMoreInventory(ui.more))
 		}
 		dispatch(actions.pageInventory(direction))
+	}
+
+	handleFilter(processType, productType) {
+		this.setState({
+			processType: processType,
+			productType: productType
+		}, this.fetchInventory)
 	}
 }
 
