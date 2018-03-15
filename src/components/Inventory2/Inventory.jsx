@@ -4,6 +4,7 @@ import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import * as actions from './InventoryActions'
 import InventoryDrawer from './InventoryDrawer'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
+import InventoryFilters from './InventoryFilters'
 import InventoryListRow from './InventoryListRow'
 import Loading from '../Loading/Loading'
 import './styles/inventory.css'
@@ -12,13 +13,27 @@ export class Inventory extends React.Component {
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			processTypes: [],
+			productTypes: []
+		}
+
 		this.handleSelectRow = this.handleSelectRow.bind(this)
 		this.handlePagination = this.handlePagination.bind(this)
+		this.handleFilter = this.handleFilter.bind(this)
+		this.fetchInventory = this.fetchInventory.bind(this)
 	}
 
 	componentDidMount() {
-		this.props.dispatch(actions.fetchInitialInventory())
+		this.fetchInventory()
 	}
+
+	fetchInventory() {
+		this.props.dispatch(actions.fetchInitialInventory(this.state.processTypes, this.state.productTypes))
+		this.props.dispatch(actions.resetPageInventory())
+	}
+
+
 
 	render() {
 		let { ui } = this.props
@@ -28,6 +43,9 @@ export class Inventory extends React.Component {
 
 				<div className="inventory2-content">
 					<div className="inventory-list-container">
+						<InventoryFilters
+							onFilter={this.handleFilter}
+						/>
 						<Loading isFetchingData={ui.isFetchingData}>
 							<PaginatedTable
 								ui={this.props.ui}
@@ -55,6 +73,13 @@ export class Inventory extends React.Component {
 			dispatch(actions.fetchMoreInventory(ui.more))
 		}
 		dispatch(actions.pageInventory(direction))
+	}
+
+	handleFilter(processTypes, productTypes) {
+		this.setState({
+			processTypes: processTypes,
+			productTypes: productTypes
+		}, this.fetchInventory)
 	}
 }
 

@@ -5,6 +5,7 @@ import {
   REQUEST_FAILURE,
   SELECT,
   PAGE,
+	RESET_PAGE,
 } from '../../reducers/APIDataReducer'
 import {
 	REQUEST_HISTORY,
@@ -14,13 +15,19 @@ import {
 
 import {  INVENTORY_2 } from '../../reducers/ReducerTypes'
 
-export function fetchInitialInventory() {
+export function fetchInitialInventory(processIds, productIds) {
   return dispatch => {
     dispatch(requestInventory())
-    return api.get('/ics/inventories/')
-      .then(({body}) => {
-        dispatch(requestInventorySuccess(body.results, body.next))
-      })
+	  const query = {}
+	  if(processIds.length)
+	  	query.process_types = processIds.join(',')
+	  if(productIds.length)
+		  query.product_types = productIds.join(',')
+	  return api.get('/ics/inventories/')
+		  .query(query)
+		  .then(({ body }) => {
+			  dispatch(requestInventorySuccess(body.results, body.next))
+		  })
       .catch(e => {
         dispatch(requestInventoryFailure(e))
         console.log(e)
@@ -58,6 +65,14 @@ export function pageInventory(direction) {
     direction: direction,
     name: INVENTORY_2
   }
+}
+
+export function resetPageInventory(direction) {
+	return {
+		type: RESET_PAGE,
+		direction: direction,
+		name: INVENTORY_2
+	}
 }
 
 function requestInventory() {

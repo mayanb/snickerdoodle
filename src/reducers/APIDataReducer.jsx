@@ -18,6 +18,7 @@ export const REQUEST_REORDER_SUCCESS = 'REQUEST_REORDER_SUCCESS'
 export const REQUEST_REORDER_FAILURE = 'REQUEST_REORDER_FAILURE'
 export const SELECT = 'SELECT'
 export const PAGE = 'PAGE'
+export const RESET_PAGE = 'RESET_PAGE'
 export const TOGGLE_EDITING = 'TOGGLE_EDITING'
 
 export function apiDataReducer(state, action) {
@@ -61,6 +62,8 @@ export function apiDataReducer(state, action) {
       return select(state, action)
     case PAGE:
       return page(state, action)
+	  case RESET_PAGE:
+		  return resetPage(state, action)
     case TOGGLE_EDITING:
       return toggleEditing(state, action)
     default:
@@ -295,4 +298,14 @@ function page(state, action) {
       }
     }
   })
+}
+
+function resetPage(state, action) {
+	return update(state, {
+		ui: {
+			currentPage: {
+				$set: 0
+			}
+		}
+	})
 }

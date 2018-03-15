@@ -12,7 +12,7 @@ export let stateDefault = {
 		isDeletingItem: false,
 		isEditingItem: false,
 		currentPage: 0,
-		page_size: 10,
+		page_size: 20,
 		selectedItem: null,
 		error: null
 	}
