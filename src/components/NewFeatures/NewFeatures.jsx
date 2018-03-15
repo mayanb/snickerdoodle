@@ -2,10 +2,12 @@ import React from 'react'
 import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
 import NewFeatureContent from './NewFeatureContent'
+import { withRouter } from 'react-router'
 
 const FEATURE_VERSION = 'newfeatures2-1'
+const FEATURE_PATHNAME = '/inventory'
 
-export default class NewFeatures extends React.Component {
+class NewFeatures extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -21,7 +23,7 @@ export default class NewFeatures extends React.Component {
 	}
 
 	render() {
-		if (!this.state.isDisplaying)
+		if (!this.state.isDisplaying || !(this.props.location.pathname === FEATURE_PATHNAME))
 			return null;
 		
 		return (
@@ -36,3 +38,5 @@ export default class NewFeatures extends React.Component {
 
 	}
 }
+
+export default withRouter(NewFeatures)

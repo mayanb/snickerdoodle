@@ -67,16 +67,19 @@ export default class PaginatedTable extends React.Component {
   }
 
 	renderPagination(firstIndex, lastIndex, len, onPagination) {
-		let detail = `${firstIndex+1}-${lastIndex} of ${this.props.ui.more ? 'over ' : ''}${len} items`
+		let detail = `Showing ${firstIndex+1}-${lastIndex} of ${this.props.ui.more ? 'over ' : ''}${len} results`
 
     let disabledBack = this.canPage(firstIndex,lastIndex, len, -1)?"":" disabled"
     let disabledFwd = this.canPage(firstIndex,lastIndex, len, +1)?"":" disabled"
 
     return (
       <div className="pagination">
-        <span>{detail}</span>
-        <i className={"pagination-arrow material-icons" + disabledBack} onClick={() => onPagination(-1)}>keyboard_arrow_left</i>
-        <i className={"pagination-arrow material-icons" + disabledFwd} onClick={() => onPagination(1)}>keyboard_arrow_right</i>
+        <div className="pagination-info">{detail}</div>
+	      <div className="pagination-links">
+		      <span className={"pagination-link" + disabledBack} onClick={() => onPagination(-1)}>Prev</span>
+		      <span className={"pagination-pipe" + disabledBack + disabledFwd}>|</span>
+		      <span className={"pagination-link" + disabledFwd} onClick={() => onPagination(1)}>Next</span>
+	      </div>
       </div>
     )
 	}

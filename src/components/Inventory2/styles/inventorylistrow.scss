@@ -8,6 +8,7 @@
 	padding: 0 36px;
 	cursor: pointer;
 
+
 	&.selected-inv-row {
 //		color: white;
 		border-bottom: 1px solid rgba(0,0,0,0);
@@ -36,6 +37,10 @@
 			flex: 2;
 		}
 	}
+}
+
+li:first-child .inv-row {
+	border-top: 1px solid $gray-ultra-light;
 }
 
 .inv-icon-circ {

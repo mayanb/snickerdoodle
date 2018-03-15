@@ -41,11 +41,11 @@ export class Inventory extends React.Component {
 			<div className="inventory2-container">
 				<ApplicationSectionHeader>Inventory</ApplicationSectionHeader>
 
-				<InventoryFilters
-					onFilter={this.handleFilter}
-				/>
 				<div className="inventory2-content">
 					<div className="inventory-list-container">
+						<InventoryFilters
+							onFilter={this.handleFilter}
+						/>
 						<Loading isFetchingData={ui.isFetchingData}>
 							<PaginatedTable
 								ui={this.props.ui}
