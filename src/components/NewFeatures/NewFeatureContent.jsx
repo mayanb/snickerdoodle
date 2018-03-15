@@ -20,7 +20,7 @@ const nfs = [{
 			<br />
 			<p>
 				{'If you do need to move specific items, you can do it through the Polymer iOS app. '} 
-				<a href="https://polymer.helpscoutdocs.com/article/4-managing-your-inventory" target="_blank" style={{color: "#0079F3"}}>Learn more at our Helpdesk.</a> 
+				<a href="https://polymer.helpscoutdocs.com/article/4-managing-your-inventory" target="_blank"  rel="noopener noreferrer" style={{color: "#0079F3"}}>Learn more at our Helpdesk.</a>
 			</p>
 		</div>
 	),
@@ -58,23 +58,4 @@ function Feature({title, type, content}) {
 		</div>
 	)
 }
-
-const nfsOld = [{
-	title: 'Create and delete attributes.',
-	content: 'Minor bug fixes when you create and edit an attribute.',
-	type: 'improvement',
-}, {
-	title: 'Create google spreadsheets.',
-	content: 'We fixed a bug that prevented your Google account from being properly connected. If this still doesn\'t work for you, shoot us a line and we\'ll help you reconnect your account.',
-	type: 'improvement',
-}, {
-	title: 'Chat with us, anytime.',
-	content: 'Use the chat feature in the bottom right of any screen to send us a message and we\'ll get back to you within a couple of hours.',
-	type: 'new-feature',
-}, {
-	title: 'Insightful metrics.',
-	content: 'View your weekly, monthly, and historic production achievements through handy graphs on the dashboard. Your goals are still visible in the dashboard under the "Goals" tab.',
-	type: 'new-feature',
-}]
-
 
