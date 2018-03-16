@@ -39,7 +39,7 @@ class Navbar extends React.Component {
             { this.renderAdminNavigation() }
           </div>
         </div>
-        <a href="" target="_blank" className="navbar-help"><i className="material-icons">help_outline</i></a>
+        <a href="https://polymer.helpscoutdocs.com" target="_blank" className="navbar-help"><i className="material-icons">help_outline</i></a>
       </div>
     )
   }
