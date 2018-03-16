@@ -1,0 +1,38 @@
+@import 'styles/constants.scss';
+
+.inventory2-container {
+	width: calc(100vw - #{$nav-width});
+
+}
+
+.inventory2-content {
+	display: flex;
+	height: calc(100% - #{$section-header-height});
+
+	.inventory-filters {
+		display: flex;
+		margin: 24px 36px;
+	}
+
+	.pagination {
+		padding: 0 36px;
+	}
+
+	.select {
+		width: 300px;
+		display: inline-block;
+		margin-right: 32px;
+	}
+
+	.no-items {
+		margin: 36px;
+	}
+
+	.inventory-list-container {
+		flex: 11;
+	}
+
+	.inventory-drawer-container {
+        width: 368px;
+	}
+}

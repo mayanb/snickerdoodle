@@ -26,6 +26,7 @@ button {
 	&:disabled {
 		background-color: #c3c3c3;
 		color: #838383;
+		cursor: not-allowed;
 	}
 
 }

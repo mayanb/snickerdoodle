@@ -6,7 +6,7 @@ export default function Loading({ isFetchingData, spinnerProps, children }) {
 	if (isFetchingData)
 		return (
 			<div className="loading">
-				<Spinner name={"circle"} {...spinnerProps} />
+				<Spinner fadeIn="quarter" name={"circle"} {...spinnerProps} />
 			</div>
 		)
 	else

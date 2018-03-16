@@ -1,0 +1,138 @@
+@import 'styles/constants.scss';
+
+.inventory-drawer {
+	min-height: 100%;
+	height: fit-content;
+	width: 368px;
+	background-color: white;
+	border-left: 1px solid $gray-ultra-light;
+
+	.bold {
+		font-weight: bold;
+	}
+
+	.inv-drawer-title {
+        padding: 16px 0 12px 16px;
+		display: flex;
+		align-items: center;
+        line-height: 28px;
+		font-size: 18px;
+		border-bottom: 1px solid $gray-ultra-light;
+		position: relative;
+
+		.cancel {
+			position: absolute;
+			right: 20px;
+			bottom: 8px;
+			line-height: 14px;
+			font-size: 14px;
+			color: $primary;
+			cursor: pointer;
+		}
+	}
+
+	.inv-icon-circ {
+		align-self: flex-start;
+		margin-top: -4px;
+        margin-right: 12px;
+	}
+
+	.add-adjustment {
+		height: 28px;
+		width: 100%;
+		color: white;
+		font-size: 12px;
+        background-color: $primary;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+        cursor: pointer;
+	}
+
+	.inv-adjuster {
+		display: flex;
+		justify-content: space-between;
+		padding: 16px;
+		border-bottom: 1px solid $gray-ultra-light;
+
+		.question {
+			width: 168px;
+		}
+
+		.form {
+			width: 140px;
+            display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+		}
+
+		.input-container {
+			position: relative;
+		}
+
+		.input {
+			padding: 0 8px;
+			height: 28px;
+			line-height: 28px;
+            border-color: $gray-ultra-light;
+		}
+
+		//Hide the number input arrows which obscure the unit label
+		input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		.unit-label {
+			line-height: 28px;
+            position: absolute;
+			right: 8px;
+            color: $gray-light;
+		}
+
+		.discrepancy {
+			font-size: 12px;
+			color: $gray;
+            margin-bottom: 12px;
+			min-height: 20px;
+		}
+
+		button {
+			padding: 0 16px;
+			height: 24px;
+		}
+	}
+}
+
+.history-item {
+	padding: 24px 24px 12px;
+    line-height: 20px;
+
+	.description {
+		margin-bottom: 4px;
+	}
+
+	.adjustment {
+
+	}
+
+	.adjustment-pill {
+		display: inline-block;
+		background-color: $orange;
+		height: 16px;
+		line-height: 16px;
+		padding: 0 8px;
+		font-size: 12px;
+		color: white;
+		border-radius: 100px;
+		margin-right: 8px;
+	}
+
+	.formatted-date {
+		color: $gray-light;
+	}
+
+	.date-range {
+		color: $gray-light;
+	}
+}

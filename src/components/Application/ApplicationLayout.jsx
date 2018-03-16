@@ -32,6 +32,9 @@ import ProcessPage from '../ProcessPage/ProcessPage'
 import Registration from '../Registration/Registration'
 
 import Modal from '../Modal/Modal'
+import NewFeatures from '../NewFeatures/NewFeatures'
+
+import Inventory2 from '../Inventory2/Inventory'
 
 export default class ApplicationLayoutStable extends React.Component {
 
@@ -60,10 +63,12 @@ function App(props) {
       <Route path="/:section?/:id?" component={Topbar} />
 
       <Modal />
+	    <NewFeatures />
       <div className="application-content">
         <Route exact path={"/"} component={Home} />
 	      <Route exact path={"/activity-log"} component={Activity} />
-        <Route exact path={"/inventory/:id?"} component={Inventory} />
+	      <Route path="/inventory" component={Inventory2} />
+        <Route exact path={"/old-inventory"} component={Inventory} />
         <Route exact path={"/labels/"} component={ZebraPrinter} />
         <Route path={"/zebra/"} component={ZebraPrinter} />
         <Route path={"/dymo/"} component={LabelPrinter} />

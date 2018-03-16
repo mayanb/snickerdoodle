@@ -1,1 +1,3 @@
-REACT_APP_BACKEND=staging npm run build && aws --region us-west-1 s3 sync build/ s3://dashboard-staging.usepolymer.com
+REACT_APP_BACKEND=staging npm run build && \
+    aws --region us-west-1 s3 sync build/ s3://dashboard-staging.usepolymer.com && \
+    aws --region us-west-1 s3 cp build/index.html s3://dashboard-staging.usepolymer.com --cache-control no-cache

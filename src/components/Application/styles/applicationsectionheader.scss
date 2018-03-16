@@ -1,0 +1,11 @@
+@import 'styles/constants.scss';
+
+.app-section-header {
+    font-size: 20px;
+    height: $section-header-height;
+    line-height: $section-header-height;
+    color: white;
+    padding: 0 36px;
+    background-color: $primary;
+    -webkit-font-smoothing: antialiased;
+}
