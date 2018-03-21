@@ -68,7 +68,7 @@ function App(props) {
         <Route exact path={"/"} component={Home} />
 	      <Route exact path={"/activity-log"} component={Activity} />
 	      <Route path="/inventory" component={Inventory2} />
-        <Route exact path={"/old-inventory"} component={Inventory} />
+	      <Route exact path={"/old-inventory/:id?"} component={Inventory} />
         <Route exact path={"/labels/"} component={ZebraPrinter} />
         <Route path={"/zebra/"} component={ZebraPrinter} />
         <Route path={"/dymo/"} component={LabelPrinter} />
