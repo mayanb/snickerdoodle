@@ -7,9 +7,9 @@ import { shouldLogin, shouldRefresh, shouldCompleteWalkthrough } from '../../aut
 class PrivateRoute extends React.Component {
 
 	render() {
-		let { Component, ...rest } = this.props
+		let { component, users, dispatch } = this.props
 
-		if (shouldLogin(rest.users)) {
+		if (shouldLogin(users)) {
 			return (
 				<Route render={props => (
 					<Redirect to={{
@@ -20,13 +20,13 @@ class PrivateRoute extends React.Component {
 				} />
 			)
 		} else {
-			if (shouldRefresh(rest.users)) {
-				rest.dispatch(actions.requestRefreshUserAccount(rest.users.ui.activeUser))
+			if (shouldRefresh(users)) {
+				dispatch(actions.requestRefreshUserAccount(users.ui.activeUser))
 			}
 
-			if (shouldCompleteWalkthrough(rest.users)) {
+			if (shouldCompleteWalkthrough(users)) {
 				return (
-					<Route {...rest} render={props => (
+					<Route render={props => (
 						<Redirect to={{
 							pathname: '/introduction',
 							state: { from: props.location }
@@ -36,7 +36,7 @@ class PrivateRoute extends React.Component {
 				)
 			}
 
-			return <Route {...rest} render={props => (<Component {...rest} />)} />
+			return <Route component={component} />
 		}
 	}
 }

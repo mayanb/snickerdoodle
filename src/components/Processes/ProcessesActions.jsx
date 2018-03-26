@@ -24,15 +24,8 @@ export function fetchProcesses(q) {
     // actually fetch 
     return api.get('/ics/processes/')
 	    .query(q)
-      .end( function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestProcessesFailure(err))
-        } else {
-          // let processes = formatProcessResponse(res.body)
-          // let processesArray = Object.values(processes).sort(alphabetize);
-          dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize))))
-        }
-      })
+      .then(res => dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize)))))
+      .catch(err => dispatch(requestProcessesFailure(err)))
   }
 }
 
