@@ -29,7 +29,6 @@ export function fetchGoals(user_id) {
 
     // actually fetch 
     return api.get('/ics/goals/')
-      .query({userprofile: user_id})
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestGoalsFailure(err))
