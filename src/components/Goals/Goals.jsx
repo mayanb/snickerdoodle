@@ -56,8 +56,6 @@ class Goals extends React.Component {
 			)
 		})
 
-		console.log(goalsByUsername)
-
 		return (
 			<div className="goals">
 				<div className="content">
@@ -72,8 +70,6 @@ class Goals extends React.Component {
 			</div>
 		)
 	}
-
-
 
 	// goalHeader() {
 	// 	return (
