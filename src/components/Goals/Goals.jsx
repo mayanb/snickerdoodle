@@ -2,10 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import update from 'immutability-helper'
 import * as actions from './GoalsActions'
-import Goal from './Goal'
 import GoalsTabs from './GoalsTabs'
 import AddNewGoal from './AddNewGoal'
-import Sortable from '../Sortable/Container'
+import GoalsByUsername from './GoalsByUsername'
 import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
 import Loading from '../OldComponents/Loading.jsx'
@@ -34,34 +33,36 @@ class Goals extends React.Component {
 
 	render() {
 		let {goals} = this.props
+		console.log(goals)
 		if (!goals) 
 			return this.renderLoadingGoals()
 		if (goals.ui.isFetchingData)
 			return this.renderLoadingGoals()
 
-		let sortableGoals = []
+		let goalsByUsername = {}
 
-		let hd = this.handleDelete
+		let handleDelete = this.handleDelete
 
 		goals.data.forEach(function (goal, i) {
-			sortableGoals.push(
+			const username = goal.username_created_by
+			if (!goalsByUsername[username])
+                goalsByUsername[username] = []
+			goalsByUsername[username].push(
 				update(
-					goal, 
-					{$merge: {goal: goal, editable: goals.ui.isEditing, onDelete: () => hd(goal, i) }}
+					goal, {
+						$merge: { goal: goal, editable: goals.ui.isEditing, onDelete: () => handleDelete(goal, i) }
+					}
 				)
 			)
 		})
+
+		console.log(goalsByUsername)
 
 		return (
 			<div className="goals">
 				<div className="content">
 					<GoalsTabs />
-					<Sortable
-						cards={sortableGoals} 
-						canEdit={true} 
-						finishMovingCard={this.moveGoal.bind(this)} 
-						renderer={Goal} 
-					/>
+					{Object.keys(goalsByUsername).map((username, i) => <GoalsByUsername key={i} goals={goalsByUsername[username]}/>)}
 					<AddNewGoal onClick={() => this.setState({isAddingGoal: true})}/>
 					{this.renderAddGoalDialog()}
 					{this.renderDeleteGoalDialog()}
@@ -69,6 +70,8 @@ class Goals extends React.Component {
 			</div>
 		)
 	}
+
+
 
 	// goalHeader() {
 	// 	return (
