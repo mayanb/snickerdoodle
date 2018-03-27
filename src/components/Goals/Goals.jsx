@@ -86,14 +86,9 @@ class Goals extends React.Component {
 
 	//<GoalHeader edit={goals.data.length > 0} timerange={timerange} editable={!this.props.goals.ui.isEditing} onClick={this.toggleEditing.bind(this)}/>
 
-	toggleEditing() {
-		this.props.dispatch(actions.toggleEditing(this.props.timerange))
-	}
-
-	moveGoal(id, toIndex) {
-		let goal = this.props.goals.data.find(e => e.id === id)
-			this.props.dispatch(actions.postRequestReorder(goal, toIndex))
-	}
+	// toggleEditing() {
+	// 	this.props.dispatch(actions.toggleEditing(this.props.timerange))
+	// }
 
 	renderBottomBar(completed, total) {
 		let k = <span>You've reached <span>{completed}</span>{` of ${total} ${pluralize(total, 'goal')}.`}</span>

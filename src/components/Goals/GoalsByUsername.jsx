@@ -1,18 +1,14 @@
 import React from 'react'
 import Goal from "./Goal"
 import Sortable from '../Sortable/Container'
+import Card from '../Card/Card'
 import './styles/goals-by-username.css'
 
 export default function GoalsByUsername(props) {
 	return (
 		<div className="goals-by-username">
 			<GoalsByUsernameHeader index={props.index} username={props.username}/>
-            <Sortable
-				cards={props.goals}
-                canEdit={true}
-                // finishMovingCard={this.moveGoal.bind(this)}
-                renderer={Goal}
-            />
+			{props.goals.map((goal, i) => <Goal key={i} goal={goal}/>)}
 		</div>
 	)
 }
@@ -24,3 +20,4 @@ function GoalsByUsernameHeader(props) {
 		</span>
     )
 }
+
