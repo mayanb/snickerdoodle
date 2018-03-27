@@ -62,7 +62,9 @@ class Goals extends React.Component {
 			<div className="goals">
 				<div className="content">
 					<GoalsTabs />
-					{Object.keys(goalsByUsername).map((username, i) => <GoalsByUsername key={i} goals={goalsByUsername[username]}/>)}
+					{Object.keys(goalsByUsername).map((username, i) =>
+						<GoalsByUsername key={i} index={i} username={username} goals={goalsByUsername[username]}/>)
+					}
 					<AddNewGoal onClick={() => this.setState({isAddingGoal: true})}/>
 					{this.renderAddGoalDialog()}
 					{this.renderDeleteGoalDialog()}
