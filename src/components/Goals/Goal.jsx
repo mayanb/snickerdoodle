@@ -22,7 +22,6 @@ export default function Goal(props) {
           </div>
         </div>
         <GoalBar {...props} />
-        <div>Created by: {props.goal.username_created_by}</div>
       </div>
     </div>
   )
