@@ -6,7 +6,13 @@ export default function GoalsByUsername(props) {
 	return (
 		<div className='goals-by-username'>
 			<GoalsByUsernameHeader index={props.index} username={props.username}/>
-			{props.goals.map((goal, i) => <Goal key={i} goal={goal} editable={goal.editable} onDelete={goal.onDelete}/>)}
+			{props.goals.map((goal, i) =>
+				<Goal
+					key={i}
+					goal={goal}
+					onDelete={goal.onDelete}
+				/>
+			)}
 		</div>
 	)
 }
