@@ -110,7 +110,7 @@ function InventoryList(props) {
       {
         props.inventories.map(function (process, i) {
           return  (
-            <Link key={i} to={ "/inventory/" + process.process_id}>
+            <Link key={i} to={ "/old-inventory/" + process.process_id}>
               <InventoryItem i={i} selected={props.selected} {...process}/>
             </Link>
           )

@@ -1,5 +1,7 @@
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
+import Raven from "raven-js"
+import createRavenMiddleware from "raven-for-redux"
 import { stateDefault, productionTrendsStateDefault, modalStateDefault, inventoriesStateDefault } from './states'
 
 import {apiDataReducer} from './reducers/APIDataReducer'
@@ -14,6 +16,9 @@ import productionTrendsReducer from './reducers/ProductionTrendsReducer'
 import * as types from './reducers/ReducerTypes'
 import {weeklyGoalPredicate, monthlyGoalPredicate, _goals} from './reducers/GoalsReducer'
 
+Raven.config('https://8c758a47f63642cba6d88e88b0d54227@sentry.io/465008', {
+	environment: process.env.REACT_APP_BACKEND
+}).install()
 
 function createFilteredReducer(reducerFunction, reducerPredicate, defaultState) {
     return (state, action) => {
@@ -53,7 +58,11 @@ export default function(data) {
   })
 	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 	const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
-    applyMiddleware(thunkMiddleware),
+    applyMiddleware(
+    	thunkMiddleware,
+	    createRavenMiddleware(Raven, {
+		    // Optionally pass some options here.
+	    })),
 	))
 
   return store

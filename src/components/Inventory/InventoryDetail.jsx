@@ -28,7 +28,7 @@ class InventoryDetail extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if(this.props.processId !== nextProps.processId) {
+		if(nextProps.showDetail && this.props.processId !== nextProps.processId) {
 			this.fetchInventoryDetail(nextProps.processId)
 		}
 	}
@@ -72,7 +72,7 @@ class InventoryDetail extends React.Component {
 				<div className="i-detail-header">
 					<div className="i-detail-outputdesc" style={{ display: "flex", flexDirection: "row" }}>
 						<span style={{ flex: "1" }}>{process.output_desc}</span>
-						<span><Link to="/inventory/">
+						<span><Link to="/old-inventory/">
               <i style={{ verticalAlign: "middle", fontSize: "16px", flex: "0" }} className="material-icons">close</i>
             </Link></span>
 					</div>

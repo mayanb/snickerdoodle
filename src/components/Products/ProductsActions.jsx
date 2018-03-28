@@ -23,15 +23,8 @@ export function fetchProducts(q) {
     // actually fetch 
     return api.get('/ics/products/')
       .query(q)
-      .end( function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestProductsFailure(err))
-        } else {
-          //let products = formatProductResponse(res.body)
-          dispatch(requestProductsSuccess(res.body.sort(alphabetize)))
-
-        }
-      })
+      .then(res => dispatch(requestProductsSuccess(res.body.sort(alphabetize))))
+      .catch(err => dispatch(requestProductsFailure(err)))
   }
 }
 

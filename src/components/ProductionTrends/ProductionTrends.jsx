@@ -28,19 +28,20 @@ class ProductionTrends extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.dispatch(processesActions.fetchProcesses())
-		this.props.dispatch(productsActions.fetchProducts())
+		Promise.all([
+			this.props.dispatch(processesActions.fetchProcesses()),
+			this.props.dispatch(productsActions.fetchProducts())
+		])
+			.then(() => {
+				//Set default process type
+				if (this.props.processes.length && !this.state.processType) {
+					const foil = this.props.processes.find(p => p.name === 'Foil')
+					this.setState({ processType: foil }, this.handleSearch)
+				}
+			})
 	}
 
 	render() {
-
-		//Set default process type
-		if (this.props.processes.length && !this.state.processType) {
-			const foil = this.props.processes.find(p => p.name === 'Foil')
-			this.setState({ processType: foil }, this.handleSearch)
-		}
-
-
 		const unitLabel = this.state.processType ? pluralize(2, this.state.processType.unit) : ''
 
 		return (
