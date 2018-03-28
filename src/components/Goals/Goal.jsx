@@ -6,7 +6,7 @@ import {pluralize} from '../../utilities/stringutils'
 export default function Goal(props) {
   return (
     <div className="goal">
-      <div className="remove-goal" style={{display: props.editable?"block":"none"}}>
+      <div className="remove-goal" style={{display: props.editable ? "block" : "none"}}>
         <i className="material-icons">reorder</i>
         <i className="material-icons" onClick={props.onDelete}>remove_circle</i>
       </div>
