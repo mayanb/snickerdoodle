@@ -33,8 +33,7 @@ class Goals extends React.Component {
 
 	render() {
 		let {goals} = this.props
-		console.log(goals)
-		if (!goals) 
+		if (!goals)
 			return this.renderLoadingGoals()
 		if (goals.ui.isFetchingData)
 			return this.renderLoadingGoals()
@@ -60,10 +59,10 @@ class Goals extends React.Component {
 			<div className="goals">
 				<div className="content">
 					<GoalsTabs />
+                    <AddNewGoal onClick={() => this.setState({isAddingGoal: true})}/>
 					{Object.keys(goalsByUsername).map((username, i) =>
 						<GoalsByUsername key={i} index={i} username={username} goals={goalsByUsername[username]}/>)
 					}
-					<AddNewGoal onClick={() => this.setState({isAddingGoal: true})}/>
 					{this.renderAddGoalDialog()}
 					{this.renderDeleteGoalDialog()}
 				</div>
