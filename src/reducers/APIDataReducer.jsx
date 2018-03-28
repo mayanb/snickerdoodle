@@ -131,8 +131,6 @@ function requestCreate(state, action) {
 }
 
 function requestCreateSuccess(state, action) {
-  console.log(state)
-  console.log(action)
   let position = findPosition(state.data, action.item, action.sort)
   return update(state, {
     ui: {

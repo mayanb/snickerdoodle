@@ -25,7 +25,6 @@ export function _goals(state, action) {
 }
 
 function switchActiveGoalType(state, action) {
-	console.log(action.timerange + " " + action.set_to)
 	return update(state, {
 		ui: {
 			active: {$set: action.timerange === action.set_to}
