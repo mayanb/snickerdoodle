@@ -2,10 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import update from 'immutability-helper'
 import * as actions from './GoalsActions'
-import Goal from './Goal'
 import GoalsTabs from './GoalsTabs'
 import AddNewGoal from './AddNewGoal'
-import Sortable from '../Sortable/Container'
+import GoalsByUsername from './GoalsByUsername'
 import AddGoalDialog from './AddGoalDialog'
 import DeleteGoalDialog from './DeleteGoalDialog'
 import Loading from '../OldComponents/Loading.jsx'
@@ -34,20 +33,24 @@ class Goals extends React.Component {
 
 	render() {
 		let {goals} = this.props
-		if (!goals) 
+		if (!goals)
 			return this.renderLoadingGoals()
 		if (goals.ui.isFetchingData)
 			return this.renderLoadingGoals()
 
-		let sortableGoals = []
+		let goalsByUsername = {}
 
-		let hd = this.handleDelete
+		let handleDelete = this.handleDelete
 
 		goals.data.forEach(function (goal, i) {
-			sortableGoals.push(
+			const username = goal.username_created_by
+			if (!goalsByUsername[username])
+                goalsByUsername[username] = []
+			goalsByUsername[username].push(
 				update(
-					goal, 
-					{$merge: {goal: goal, editable: goals.ui.isEditing, onDelete: () => hd(goal, i) }}
+					goal, {
+						$merge: { goal: goal, editable: goals.ui.isEditing, onDelete: () => handleDelete(goal, i) }
+					}
 				)
 			)
 		})
@@ -56,13 +59,10 @@ class Goals extends React.Component {
 			<div className="goals">
 				<div className="content">
 					<GoalsTabs />
-					<Sortable
-						cards={sortableGoals} 
-						canEdit={true} 
-						finishMovingCard={this.moveGoal.bind(this)} 
-						renderer={Goal} 
-					/>
-					<AddNewGoal onClick={() => this.setState({isAddingGoal: true})}/>
+                    <AddNewGoal onClick={() => this.setState({isAddingGoal: true})}/>
+					{Object.keys(goalsByUsername).map((username, i) =>
+						<GoalsByUsername key={i} index={i} username={username} goals={goalsByUsername[username]}/>)
+					}
 					{this.renderAddGoalDialog()}
 					{this.renderDeleteGoalDialog()}
 				</div>
@@ -81,14 +81,9 @@ class Goals extends React.Component {
 
 	//<GoalHeader edit={goals.data.length > 0} timerange={timerange} editable={!this.props.goals.ui.isEditing} onClick={this.toggleEditing.bind(this)}/>
 
-	toggleEditing() {
-		this.props.dispatch(actions.toggleEditing(this.props.timerange))
-	}
-
-	moveGoal(id, toIndex) {
-		let goal = this.props.goals.data.find(e => e.id === id)
-			this.props.dispatch(actions.postRequestReorder(goal, toIndex))
-	}
+	// toggleEditing() {
+	// 	this.props.dispatch(actions.toggleEditing(this.props.timerange))
+	// }
 
 	renderBottomBar(completed, total) {
 		let k = <span>You've reached <span>{completed}</span>{` of ${total} ${pluralize(total, 'goal')}.`}</span>
