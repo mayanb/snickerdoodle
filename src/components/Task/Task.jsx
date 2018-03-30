@@ -1,5 +1,6 @@
 import React from 'react'
-import {icon, TaskTable, OutputTable, InputTable} from './TaskHelpers.jsx'
+import {icon, TaskTable, TaskOutputTable} from './TaskHelpers.jsx'
+import TaskInputTable from './TaskInputTable'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import * as actions from './TaskActions'
@@ -53,7 +54,7 @@ class Task extends React.Component {
     }
 
     let dialog = false;
-
+    console.log('data (task data): ', data)
     return (
       <div className="task-detail">
         {dialog}
@@ -82,8 +83,8 @@ class Task extends React.Component {
             <button className="task_button" onClick={this.deleteTask}>Delete Task</button>
           </div>
           <div>
-            <InputTable inputs={data.inputs}/>
-            {this.teamUsesOutputs() && <OutputTable outputs={data.items} onMark={this.markAsUsed}/>}
+            <TaskInputTable data={data}/>
+            {this.teamUsesOutputs() && <TaskOutputTable outputs={data.items} onMark={this.markAsUsed}/>}
             <TaskTable title="Ancestors" tasks={ancestorsData} loading={ancestorsUI.isFetchingData}/>
             <TaskTable title="Descendents" tasks={descendentsData} loading={descendentsUI.isFetchingData}/>
           </div>

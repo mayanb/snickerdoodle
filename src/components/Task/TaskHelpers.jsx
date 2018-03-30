@@ -145,8 +145,7 @@ export function TaskTable(props) {
   )
 }
 
-export function OutputTable(props) {
-  // let team = window.localStorage.getItem("team") || "1"
+export function TaskOutputTable(props) {
   let users = JSON.parse(window.localStorage.getItem('users-v5'))
   let user = users.data[users.ui.activeUser].user
   let team = user.team
@@ -171,37 +170,6 @@ export function OutputTable(props) {
             </span>
             <span className="items-inventory">{inventory}</span>
           </div>
-        )
-      })
-    }
-    </Table>
-  )
-}
-
-export function InputTable(props) {
-  let grouped = {};
-  (props.inputs || []).forEach(function (input, i) {
-    if (grouped[input.input_task]) {
-      grouped[input.input_task].push(input)
-    } else {
-      grouped[input.input_task] = [input]
-    }
-  })
-  return (
-    <Table title={`Inputs (${(props.inputs || []).length})`}>
-    {
-      Object.values(grouped).map(function (group, i) {
-        return (
-            <a href={window.location.origin + "/task/" + group[0].input_task} 
-              target="_blank" key={i} 
-              className="task-attribute-table-row input-table-row"
-            >
-              <span>
-                {group[0].input_task_display}
-                <i className="material-icons expand-i">open_in_new</i>
-              </span>
-              <span className="input-count">{pl(group.length, "item")}</span>
-            </a>
         )
       })
     }
