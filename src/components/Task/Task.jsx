@@ -53,9 +53,7 @@ class Task extends React.Component {
     }
 
     let dialog = false;
-    // if(this.state.showDialog) {
-    //   dialog = <Dialog {...this.state.activeDialog} />
-    // }
+
     return (
       <div className="task-detail">
         {dialog}
@@ -85,13 +83,22 @@ class Task extends React.Component {
           </div>
           <div>
             <InputTable inputs={data.inputs}/>
-            <OutputTable outputs={data.items} onMark={this.markAsUsed}/>
+            {this.teamUsesOutputs() && <OutputTable outputs={data.items} onMark={this.markAsUsed}/>}
             <TaskTable title="Ancestors" tasks={ancestorsData} loading={ancestorsUI.isFetchingData}/>
             <TaskTable title="Descendents" tasks={descendentsData} loading={descendentsUI.isFetchingData}/>
           </div>
         </div>
       </div>
     )
+  }
+  
+  // TEMP: For optional printing transition, to allow Dandelion to continue using outputs
+  teamUsesOutputs() {
+		const {data, ui} = this.props.users
+    const teamID = parseInt(data[ui.activeUser].user.team)
+    const teamIDsWhoUseOutputs = new Set([1 /* -> Alabama */, 2  /* -> Valencia */])
+    console.log("teamID: ", teamID, "Set:", teamIDsWhoUseOutputs)
+    return teamIDsWhoUseOutputs.has(teamID)
   }
 
   startEditing(index) {
@@ -129,6 +136,7 @@ class Task extends React.Component {
 
 const mapStateToProps = (state/*, props*/) => {
   return {
+    users: state.users,
     data: state.task.data,
     ui: state.task.ui,
     ancestorsData: state.taskAncestors.data,
@@ -141,9 +149,3 @@ const mapStateToProps = (state/*, props*/) => {
 }
 const connectedTask = connect(mapStateToProps)(Task)
 export default connectedTask
-
-/*
-
-<button className="task_button" onClick={this.closeTask}>Close Task</button>
-            
-*/

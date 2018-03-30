@@ -59,7 +59,7 @@ class AccountMenu extends React.Component {
 	}
 
 	renderCurrentAccount() {
-		let {data, ui} = this.props.users
+		const {data, ui} = this.props.users
 
 		return (
 			<div className="current-account account">
