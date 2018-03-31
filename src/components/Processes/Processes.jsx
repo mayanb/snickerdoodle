@@ -8,55 +8,49 @@ import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessesListItem from './ProcessesListItem'
 import CreateProcessDialog from './CreateProcessDialog'
 import './styles/processes.css'
+import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
+
 
 class Processes extends React.Component {
   constructor(props) {
-    super(props)
+	super(props)
 
 	  this.state = {
 		  isAddingProcess: false
 	  }
 
-    this.handleSelectProcess = this.handleSelectProcess.bind(this)
-    this.handlePagination = this.handlePagination.bind(this)
-	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
-	  this.handleCreateProcess = this.handleCreateProcess.bind(this)
+	this.handleSelectProcess = this.handleSelectProcess.bind(this)
+	this.handlePagination = this.handlePagination.bind(this)
+	this.handleToggleDialog = this.handleToggleDialog.bind(this)
+	this.handleCreateProcess = this.handleCreateProcess.bind(this)
   }
 
   // fetch products on load
   componentDidMount() {
-    this.props.dispatch(actions.fetchProcesses())
+	this.props.dispatch(actions.fetchProcesses())
   }
 
   render() {
-    var { users } = this.props
-    let account_type = users.data[users.ui.activeUser].user.account_type
-    if (account_type !== 'a')
-	    this.props.history.push('/')
+	var { users } = this.props
+	let account_type = users.data[users.ui.activeUser].user.account_type
+	if (account_type !== 'a')
+		this.props.history.push('/')
 
-    return (
-		    <ObjectList className="processes" isFetchingData={this.props.ui.isFetchingData}>
-			    {this.renderTitle()}
-			    <PaginatedTable
-				    {...this.props}
-				    onClick={this.handleSelectProcess}
-				    onPagination={this.handlePagination}
-				    Row={ProcessesListItem}
-				    TitleRow={this.renderHeaderRow}
-			    />
-			    {this.renderDialog()}
-		    </ObjectList>
-    )
-  }
-
-  renderTitle() {
-    return (
-	    <ObjectListTitle
-		    title="All processes"
-		    buttonText="Create process"
-		    onToggleDialog={this.handleToggleDialog}
-	    />
-    )
+	return (
+		<div className="processes-container">
+			<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
+			<ObjectList className="processes" isFetchingData={this.props.ui.isFetchingData}>
+				<PaginatedTable
+					{...this.props}
+					onClick={this.handleSelectProcess}
+					onPagination={this.handlePagination}
+					Row={ProcessesListItem}
+					TitleRow={this.renderHeaderRow}
+				/>
+				{this.renderDialog()}
+			</ObjectList>
+		</div>
+	)
   }
 
 	renderDialog() {
@@ -91,7 +85,7 @@ class Processes extends React.Component {
   }
 
   handlePagination(direction) {
-    this.props.dispatch(actions.pageProcesses(direction))
+	this.props.dispatch(actions.pageProcesses(direction))
   }
 
   handleSelectProcess(index) {
@@ -108,10 +102,10 @@ class Processes extends React.Component {
 // through props to our component.
 const mapStateToProps = (state/*, props*/) => {
   return {
-    data: state.processes.data,
-    ui: state.processes.ui,
-    inventoryData: state.inventories.data,
-    users: state.users
+	data: state.processes.data,
+	ui: state.processes.ui,
+	inventoryData: state.inventories.data,
+	users: state.users
   }
 }
 

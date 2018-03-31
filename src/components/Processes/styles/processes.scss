@@ -1,5 +1,10 @@
 @import 'styles/constants.scss';
 
+.processes-container {
+  width: calc(100vw - #{$nav-width});
+
+}
+
 div.processes {
   .code {
     flex: 4;

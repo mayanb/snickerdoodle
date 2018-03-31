@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom'
 import './styles/processpage.css'
 import Loading from '../Loading/Loading'
 
+
 class ProcessPage extends React.Component {
 	constructor(props) {
 		super(props)
