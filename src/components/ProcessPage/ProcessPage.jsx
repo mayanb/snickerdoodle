@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../Processes/ProcessesActions'
+import ProcessPageHeader from './ProcessPageHeader'
 import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import * as processActions from '../Processes/ProcessesActions'
-import ProcessesCard from './ProcessesCard'
+import ProcessInformation from './ProcessInformation'
+import ProcessAttributeList from '../ProcessAttribute/ProcessAttributeList'
 import '../ProductPage/styles/productpage.css'
 import { withRouter } from 'react-router-dom'
 import './styles/processpage.css'
@@ -24,7 +26,7 @@ class ProcessPage extends React.Component {
 	}
 
 	render() {
-		let { ui, data, dispatch, history } = this.props
+		let { data, dispatch, history } = this.props
 
 		if (!data) {
 			return <span>Loading... </span>
@@ -32,11 +34,12 @@ class ProcessPage extends React.Component {
 
 		return (
 			<div className="process-page">
+				<ProcessPageHeader processName={data.name}/>
 				<Loading isfetchingData={this.state.isArchiving}>
-					<ProcessesCard
-						process={data}
-						onArchive={() => this.handleArchive(ui.selectedItem)}
-					/>
+					<div className="process-page-content">
+						<ProcessInformation {...data}/>
+						<ProcessAttributeList process={data} />
+					</div>
 					{this.renderArchiveDialog(data, dispatch, history)}
 				</Loading>
 			</div>
@@ -83,5 +86,11 @@ const mapStateToProps = (state, props) => {
 		dispatch: state.dispatch
 	}
 }
+
+/*
+					<ProcessesCard
+						process={data}
+						onArchive={() => this.handleArchive(ui.selectedItem)}
+					/> */
 
 export default withRouter(connect(mapStateToProps)(ProcessPage))

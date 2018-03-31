@@ -1,9 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Slide} from '../Animations/Animations'
 import * as actions from './ProcessAttributeActions'
+import Wrapper from './ProcessAttributeWrapper'
+import Submissions from './ProcessAttributeSubmissions'
+import ProcessAttributeDatatype from './ProcessAttributeDatatype'
 import ProcessAttributeField from './ProcessAttributeField'
-import Button from '../Card/Button'
-import Img from '../Img/Img'
+import Button from '../Button/Button'
+import './styles/processattribute.css'
 
 class ProcessAttribute extends React.Component {
 	constructor(props) {
@@ -15,38 +19,26 @@ class ProcessAttribute extends React.Component {
 	}
 
 	render() {
-		let props = this.props
-
+		let {name, datatype, index, onDelete} = this.props
+		if (this.props.selected) {
+			return (
+				<Wrapper className="selected" index={index} deletable={true}>
+					<div className="process-attr-inputs">
+						<ProcessAttributeField edit name="Name" />
+						<ProcessAttributeField edit select name="Type" />
+					</div>
+					<Submissions name={name}/>
+					<Button>Save</Button>
+				</Wrapper>
+			)
+		}
 		return (
-			<div className={"process-attribute stack-horizontal" + (props.newAttribute?"new-attribute":"")}>
-				<div className="stack-vertical">
-					<div className="stack-horizontal">
-						<div className='process-attribute-row'>
-							<ProcessAttributeField text main name="Name" value={props.name} edit={props.edit} onChange={props.onChange}/>
-							<ProcessAttributeField/>
-						</div>
-
-						<div className='process-attribute-row'>
-							<ProcessAttributeField select name="Datatype" value={props.datatype||"Text"} edit={props.edit} onChange={props.onChange}/>
-							<ProcessAttributeField/>
-						</div>
-					</div>
-
-					<div style={{visibility: props.edit?"hidden":"visible"}} className="drag-handle">
-						<Img src="drag@2x" />
-						<span className="process-attribute-more" onClick={props.newAttribute?()=>null:this.handleArchive.bind(this)} >
-							Delete
-						</span>
-					</div>
-				</div>
-
-					<div style={{display: props.edit?"":"none"}} className='process-attribute-row buttons'>
-							<Button secondary onClick={props.onCancel}>Cancel</Button>
-							<Button onClick={props.onSubmit}>Add</Button>
-					</div>
-					
-			</div>
-
+			<Slide>
+			<Wrapper index={index+1} onDelete={onDelete}>
+				<span className="process-attr-name">{name}</span>
+				<ProcessAttributeDatatype type={datatype}/>
+			</Wrapper>
+			</Slide>
 		)
 	}
 

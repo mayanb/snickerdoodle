@@ -8,7 +8,6 @@ import FormGroup from '../Inputs/FormGroup'
 export default function ProcessAttributeField(props) {
 	return (
 		<div className="process-attribute-field">
-			<span className={props.edit?"edit":""}>{props.name}</span>
 			<ProcessAttributeFieldValue {...props} />
 		</div>
 	)
@@ -46,7 +45,7 @@ function EditText(props) {
 			type="text"
 			placeholder="eg. Temperature"
 			value={props.value}
-			onChange={(e) => props.onChange(props.name, e.target.value)}
+			onChange={props.onChange}
 			/>
 			</FormGroup>
 		</div>
@@ -68,7 +67,7 @@ export function EditSelect(props) {
 			labelKey={'name'}
 			valueKey={'value'}
 			placeholder="Select a datatype"
-			onChange={(e) => props.onChange(props.name, e.value)}
+			onChange={props.onChange}
 		/>
 		</FormGroup>
 		</div>

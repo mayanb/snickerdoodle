@@ -1,0 +1,23 @@
+@import 'styles/constants.scss';
+
+.button {
+	border-radius: 2px;
+	font-size: 14px;
+	&:hover {
+		box-shadow: rgba(0,0,0,0.3) 0 2px 6px;
+	}
+}
+
+.button.button-gray {
+	background-color: $gray-ultra-light;
+	color: $gray;
+}
+
+.button.button-disabled {
+	background-color: $gray-ultra-light;
+	color: $gray;
+	&:hover {
+		box-shadow: none;
+		cursor: not-allowed;
+	}
+}

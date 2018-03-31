@@ -75,6 +75,7 @@ function finishAddingAttribute(state, action) {
 	return update(state, {
 		ui: {
 			$merge: {
+				isSavingAttribute: false,
 				isAddingAttribute: false,
 			}
 		}

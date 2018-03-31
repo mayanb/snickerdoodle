@@ -1,83 +1,96 @@
 @import 'styles/constants.scss';
 @import './processattributefield.scss';
 
-.attribute-header {
+.process-attr-wrapper {
 	display: flex;
-
-	h2 {
-		flex: 1;
-	}
-
-	button {
+	align-items: center;
+	.process-attr-handle, .process-attr-delete {
 		flex: 0;
-		white-space: nowrap;
-		color: $primary;
-		background-color: white;
-		padding: 0;
-		margin: 0;
-		font-size: 14px;
-		line-height: 20px;
-		margin-bottom: 8px;
+	}
+	.process-attribute {
+		flex: 1;
 	}
 }
 
 .process-attribute {
 	cursor: default;
-	border: 1px solid $gray-light;
-	border-radius: 4px;
-	margin-bottom: 16px;
+	box-shadow: rgba($gray-ultra-light, 0.1) 0 0 10px 0;
+	margin: 8px 0;
 	padding: 16px;
+	display: flex;
 
-	.stack-vertical {
-		display: flex;
-		flex-direction: row;
-	}
-
-	.stack-horizontal {
-		display: flex;
-		flex-direction: column;
-	}
-
-	div {
+	div, .process-attr-name, .process-attr-handle > span {
 		flex: 1;
 	}
 
-	.drag-handle, .process-attribute-more {
-		flex: 0;
-		flex-basis: content;
-		text-align: right;
-		cursor: pointer;
-		color: $red;
-		img {
-			width: 16px;
-			opacity: 0.3;
-		}
+	.process-attr-name {
+		color: $gray-dark;
 	}
+}
 
-	.process-attribute-row {
-		//display: flex;
+.process-attr-delete, .process-attr-handle {
+	display: flex;
+	align-items: center;
+	i {
+		vertical-align:middle;
+		font-size: 16px;
+		color: $primary;
+		visibility: hidden;
+	}
+	span {
+		vertical-align: middle;
+		width: 32px;
+		max-width: 32px;
+		overflow-x: hidden;
+		color: $gray-dark;
+	}
+}
 
-		.process-attribute-field {
-			//flex: 2;
-			&:last-child {
-				//flex: 2;
+.process-attr-delete {
+	margin-left: 16px;
+}
+
+.process-attr-wrapper.selected, .process-attribute-new  {
+	.process-attribute {
+		display: flex;
+		flex-direction: column;
+		box-shadow: rgba($gray-ultra-light, 0.2) 0 0 10px 0;
+
+		& > div.process-attr-inputs {
+			display: flex;
+			flex-direction: row;
+
+			& > div {
+				flex: 1;
 			}
 		}
 	}
 
-	.buttons {
-		display: flex;
-		justify-content: flex-end;
+}
+
+.process-attribute-new {
+	div.process-attr-handle i, span {
+		visibility: visible;
+		color: $gray-light;
+	}
+
+	.process-attribute {
+		margin-right: 32px;
 	}
 }
 
-// handle new attribute stuff {
-.process-attribute.new-attribute {
-	color: $theme-color;
-	border: none;
 
-	i {
-		color: $theme-color;
-		margin-right: 4px;
+/* HOVER STUFF */
+.process-attr-wrapper {
+	&:hover {
+		.process-attr-handle i {
+			visibility: visible;
+		}
+		.process-attr-delete i {
+			visibility: visible;
+		}
+		.process-attribute {
+			box-shadow: rgba($gray-ultra-light, 0.2) 0 0 10px 0;
+		}
 	}
 }
