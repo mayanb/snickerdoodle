@@ -13,7 +13,7 @@
 }
 
 .process-attribute {
-	cursor: default;
+	cursor: pointer;
 	box-shadow: rgba($gray-ultra-light, 0.1) 0 0 10px 0;
 	margin: 8px 0;
 	padding: 16px;
@@ -42,7 +42,7 @@
 		width: 32px;
 		max-width: 32px;
 		overflow-x: hidden;
-		color: $gray-dark;
+		color: $gray-light;
 	}
 }
 

@@ -11,6 +11,7 @@ import {
   REQUEST_MOVE_ATTRIBUTE_SUCCESS,
   REQUEST_MOVE_ATTRIBUTE_FAILURE,
   REQUEST_UPDATE_ATTRIBUTE_SUCCESS,
+  SELECT_ATTRIBUTE,
 } from '../../reducers/ProcessAttributeReducer'
 import {  PROCESSES } from '../../reducers/ReducerTypes'
 
@@ -140,6 +141,15 @@ function requestMoveAttributeFailure(process_index) {
     type: REQUEST_MOVE_ATTRIBUTE_FAILURE,
     name: PROCESSES,
     process_index: process_index,
+  }
+}
+
+export function selectAttribute(process_index, id) {
+  return {
+    type: SELECT_ATTRIBUTE,
+    name: PROCESSES,
+    process_index: process_index,
+    id: id,
   }
 }
 

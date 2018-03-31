@@ -19,10 +19,11 @@ class ProcessAttribute extends React.Component {
 	}
 
 	render() {
-		let {name, datatype, index, onDelete} = this.props
-		if (this.props.selected) {
+		let {isSelected, name, datatype, rank, index, onDelete, onSelect} = this.props
+		if (isSelected) {
 			return (
-				<Wrapper className="selected" index={index} deletable={true}>
+				<Slide>
+				<Wrapper className="selected" index={rank} onDelete={onDelete}>
 					<div className="process-attr-inputs">
 						<ProcessAttributeField edit name="Name" />
 						<ProcessAttributeField edit select name="Type" />
@@ -30,11 +31,12 @@ class ProcessAttribute extends React.Component {
 					<Submissions name={name}/>
 					<Button>Save</Button>
 				</Wrapper>
+				</Slide>
 			)
 		}
 		return (
 			<Slide>
-			<Wrapper index={index+1} onDelete={onDelete}>
+			<Wrapper index={rank} onDelete={onDelete} onClick={onSelect}>
 				<span className="process-attr-name">{name}</span>
 				<ProcessAttributeDatatype type={datatype}/>
 			</Wrapper>
@@ -45,10 +47,6 @@ class ProcessAttribute extends React.Component {
 	toggleRequiredOnAttribute() {
 		let updated = {required: !this.props.required}
 		this.props.dispatch(actions.postUpdateAttribute(this.props.ui.selectedItem, this.props.id, updated))
-	}
-
-	handleArchive() {
-		this.props.onDelete()
 	}
 
 }

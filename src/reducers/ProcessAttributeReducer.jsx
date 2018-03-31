@@ -14,6 +14,7 @@ export const REQUEST_MOVE_ATTRIBUTE_FAILURE = 'REQUEST_MOVE_ATTRIBUTE_FAILURE'
 export const REQUEST_UPDATE_ATTRIBUTE = 'REQUEST_UPDATE_ATTRIBUTE'
 export const REQUEST_UPDATE_ATTRIBUTE_SUCCESS = 'REQUEST_UPDATE_ATTRIBUTE_SUCCESS'
 export const REQUEST_UPDATE_ATTRIBUTE_FAILURE = 'REQUEST_UPDATE_ATTRIBUTE_FAILURE'
+export const SELECT_ATTRIBUTE = 'SELECT_ATTRIBUTE'
 
 
 export function _processAttribute(state, action) {
@@ -42,7 +43,8 @@ export function _processAttribute(state, action) {
 			return requestMoveAttributeFailure(state, action)
 		case REQUEST_UPDATE_ATTRIBUTE_SUCCESS:
 			return requestUpdateAttributeSuccess(state, action)
-
+		case SELECT_ATTRIBUTE:
+			return selectAttribute(state, action)
 		default:
 			return state
 	}
@@ -66,7 +68,10 @@ function requestUpdateAttributeSuccess(state, action) {
 function startAddingAttribute(state, action) {
 	return update(state, {
 		ui: {
-			$merge: { isAddingAttribute: true }
+			$merge: { 
+				isAddingAttribute: true,
+				selectedAttribute: -1, 
+			}
 		}
 	})
 }
@@ -201,3 +206,10 @@ function requestMoveAttributeFailure(state, action) {
 	})
 }
 
+function selectAttribute(state, action) {
+	return update(state, {
+		ui: {
+			$set: { selectedAttribute: action.id }
+		}
+	})
+}

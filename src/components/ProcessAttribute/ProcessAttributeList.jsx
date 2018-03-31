@@ -26,15 +26,22 @@ class ProcessAttributeList extends React.Component {
 
 	render() {
 		let {process, ui} = this.props
-		let hd = this.handleDelete
+		let hd = this.handleDelete.bind(this)
+		let sel = this.handleSelect.bind(this)
 
 		let sortableAttributes = []
 		process.attributes.forEach(function (attr, i) {
 			console.log(attr.id, attr.rank)
 			sortableAttributes.push(
 				update(
-					attr, 
-					{$merge: {attribute: attr, key: i, onDelete: () => hd(attr, i) }}
+					attr, {
+						$merge: { 
+							isSelected: attr.id === ui.selectedAttribute, 
+							key: i, 
+							onDelete: () => hd(attr, i),
+							onSelect: () => sel(attr),
+						}
+					}
 				)
 			)
 		})
@@ -111,6 +118,11 @@ class ProcessAttributeList extends React.Component {
 
 	handleDelete(attr, i) {
 		this.setState({isDeletingAttribute: attr, isDeletingAttributeIndex: i})
+	}
+
+	handleSelect(attr) {
+		let {dispatch, process_index} = this.props
+		dispatch(actions.selectAttribute(process_index, attr.id))
 	}
 
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import Handle from './ProcessAttributeHandle'
 
-export default function Wrapper({className, index, onDelete, children}) {
+export default function Wrapper({className, index, onDelete, onClick, children}) {
 	let delete_component = onDelete && (
 		<div className="process-attr-delete">
 			<i className="material-icons" onClick={onDelete}>delete</i>
@@ -11,7 +11,7 @@ export default function Wrapper({className, index, onDelete, children}) {
 	return (
 		<div className={"process-attr-wrapper " + className}>
 			<Handle index={index} />
-			<div className="process-attribute">
+			<div className="process-attribute" onClick={onClick}>
 				{children}
 			</div>
 			{delete_component}
