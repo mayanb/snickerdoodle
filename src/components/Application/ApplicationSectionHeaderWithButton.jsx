@@ -1,6 +1,5 @@
 import React from 'react'
 import './styles/applicationsectionheaderwithbutton.css'
-import Button from '../Card/Button.jsx'
 
 export default class ApplicationSectionHeaderWithButton extends React.Component {
 	render() {

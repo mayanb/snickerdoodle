@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import * as actions from './ProcessesActions.jsx'
 import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
-import ObjectListTitle from '../ObjectList/ObjectListTitle'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessesListItem from './ProcessesListItem'
 import CreateProcessDialog from './CreateProcessDialog'
@@ -66,9 +65,13 @@ class Processes extends React.Component {
 	renderHeaderRow() {
 		return (
 			<ObjectListHeader>
+				<div className="icon">Icon</div>
 				<div className="code">Code</div>
 				<div className="name">Name</div>
-				<div className="owner">Owner</div>
+				<div className="description">Description</div>
+				<div className="default-amount">Default Amount</div>
+				<div className="last-used">Last Used</div>
+				<div className="owner">Created by</div>
 				<div className="date">Date Created</div>
 			</ObjectListHeader>
 		)

@@ -7,11 +7,11 @@
 
 div.processes {
   .code {
-    flex: 4;
+    flex: 2;
   }
 
   .name {
-    flex: 8;
+    flex: 4;
   }
 
   .owner {
@@ -20,6 +20,23 @@ div.processes {
 
   .date {
     flex: 4;
+  }
+
+  .icon {
+    flex: 1;
+    background-color: transparent;
+  }
+
+  .description {
+    flex: 4;
+  }
+
+  .default-amount {
+    flex: 4;
+  }
+
+  .last-used {
+    flex: 3;
   }
 
 
