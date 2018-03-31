@@ -1,12 +1,15 @@
 import React from 'react'
-import {icon, TaskTable, TaskOutputTable} from './TaskHelpers.jsx'
-import TaskInputTable from './TaskInputTable'
-import moment from 'moment'
 import { connect } from 'react-redux'
+import moment from 'moment'
+import { formatAmount } from "../../utilities/stringutils"
+import {icon, TaskTable} from './TaskHelpers.jsx'
+import TaskInputTable from './TaskInputTable'
+import TaskOutputTable from './TaskOutputTable'
 import * as actions from './TaskActions'
 import * as attributeActions from './TaskAttributeActions'
 import TaskInformationTable from './TaskInformationTable'
 import TaskFlag from './TaskFlag'
+import './styles/task.css'
 
 
 
@@ -62,6 +65,7 @@ class Task extends React.Component {
           <div className="header-left">
             <img src={icon(data.process_type.icon)} alt="process type"/>
             <span>{data.display}</span>
+            <div className='batch-size'>{this.getBatchSizeDisplayText(data)}</div>
           </div>
           <span>{moment(data.created_at).format('dddd, MMMM Do YYYY, h:mm a')}</span>
         </div>
@@ -93,12 +97,16 @@ class Task extends React.Component {
     )
   }
   
+  getBatchSizeDisplayText({items, process_type}) {
+		const batchAmount = items.reduce((sum, item) => sum + parseInt(item.amount), 0)
+    return `Batch Size: ${formatAmount(batchAmount, process_type.unit)}`
+  }
+  
   // TEMP: For optional printing transition, to allow Dandelion to continue using outputs
   teamUsesOutputs() {
 		const {data, ui} = this.props.users
     const teamID = parseInt(data[ui.activeUser].user.team)
     const teamIDsWhoUseOutputs = new Set([1 /* -> Alabama */, 2  /* -> Valencia */])
-    console.log("teamID: ", teamID, "Set:", teamIDsWhoUseOutputs)
     return teamIDsWhoUseOutputs.has(teamID)
   }
 

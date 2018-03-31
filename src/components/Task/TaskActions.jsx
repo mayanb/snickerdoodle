@@ -22,7 +22,6 @@ export function getTask(task) {
     dispatch(requestTask())
     // actually fetch 
     return api.get(`/ics/tasks/${task}/`)
-      // .query({id: task})
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestTaskFailure(err))

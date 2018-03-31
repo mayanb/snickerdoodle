@@ -1,6 +1,7 @@
 $primary: #0073F9; // #49A8F3;
 
 .task-detail {
+  margin-top: 18px;
   margin-left: 36px;
   max-width: 900px;
 
@@ -15,7 +16,7 @@ $primary: #0073F9; // #49A8F3;
       flex: 1;
       display: inline-block;
       line-height: 20px;
-      padding: 10px 0px;
+      padding-top: 3px;
     }
 
     h1:first-child {
@@ -23,7 +24,6 @@ $primary: #0073F9; // #49A8F3;
     }
 
     .header-left span {
-      background-color: red;
       font-size: 20px;
       font-weight: bold;
       line-height: 20px;
@@ -34,6 +34,11 @@ $primary: #0073F9; // #49A8F3;
     .header-left img {
       width: 20px;
       vertical-align: middle;
+    }
+    
+    div.batch-size {
+      margin-left: 20px;
+      padding-left: 10px;
     }
   }
 
