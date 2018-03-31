@@ -4,19 +4,22 @@ import { Table } from './TaskHelpers'
 
 export default function TaskInputTable(props) {
 	const { data } = props
-  let grouped = {};
+  let groupedByTask = {};
   (data.inputs || []).forEach(function (input, i) {
-    if (grouped[input.input_task]) {
-      grouped[input.input_task].push(input)
+    if (groupedByTask[input.input_task]) {
+      groupedByTask[input.input_task].push(input)
     } else {
-      grouped[input.input_task] = [input]
+      groupedByTask[input.input_task] = [input]
     }
   })
+  console.log('groupedByTask: ', groupedByTask)
   
+  // For each unique task, only  group[0] is displayed (!?)
   return (
     <Table title={'Inputs'}>
     {
-      Object.values(grouped).map(function (group, i) {
+      Object.values(groupedByTask).map(function (group, i) {
+        console.log("group", group)
         return (
             <a href={window.location.origin + '/task/' + group[0].input_task}
               target='_blank' key={i}
@@ -26,11 +29,23 @@ export default function TaskInputTable(props) {
                 {group[0].input_task_display}
                 <i className='material-icons expand-i'>open_in_new</i>
               </span>
-              <span className='input-count'>{formatAmount(Math.round(parseInt(data.inputs[0].input_item_amount, 10)), data.process_type.unit)}</span>
+              <span className='input-count'>{getInputAmountDisplayText(group)}</span>
             </a>
         )
       })
     }
     </Table>
   )
+}
+
+function getInputAmountDisplayText(group) {
+  if (isNewDataModel(group)) {
+		return formatAmount(Math.round(parseInt(group.amount, 10)), group[0].unit)
+  } else {
+    return `unit: ${group[0].unit}`
+  }
+}
+
+function isNewDataModel(group) {
+  return group.amount
 }
