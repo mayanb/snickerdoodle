@@ -19,7 +19,7 @@ class ProcessAttribute extends React.Component {
 	}
 
 	render() {
-		let {isSelected, name, datatype, rank, index, onDelete, onSelect} = this.props
+		let {isSelected, name, datatype, rank, onDelete, onSelect} = this.props
 		if (isSelected) {
 			return (
 				<Slide>
