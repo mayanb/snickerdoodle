@@ -1,6 +1,6 @@
 import React from 'react'
 import { formatAmount } from "../../utilities/stringutils"
-import { Table, pl } from './TaskHelpers'
+import { Table } from './TaskHelpers'
 
 export default function TaskInputTable(props) {
 	const { data } = props
@@ -12,7 +12,6 @@ export default function TaskInputTable(props) {
       grouped[input.input_task] = [input]
     }
   })
-  
   
   return (
     <Table title={'Inputs'}>

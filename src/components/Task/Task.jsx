@@ -11,8 +11,6 @@ import TaskInformationTable from './TaskInformationTable'
 import TaskFlag from './TaskFlag'
 import './styles/task.css'
 
-
-
 class Task extends React.Component {
   constructor(props) {
     super(props)
@@ -26,20 +24,7 @@ class Task extends React.Component {
     this.saveEditing = this.saveEditing.bind(this)
   }
 
-  componentWillMount() {
-    //mountQR()
-  }
-
   componentDidMount() {
-    // let q = new QRCode(document.getElementById("qrtest"), {
-    //   text: "",
-    //   width: 128,
-    //   height: 128,
-    //   colorDark : "#000000",
-    //   colorLight : "#ffffff",
-    //   correctLevel : QRCode.CorrectLevel.Q
-    // })
-    // this.setState({qrcode: q})
     let id = this.props.match.params.id
     this.props.dispatch(actions.getTask(id))
     this.props.dispatch(actions.getTaskAncestors(id))
@@ -57,7 +42,6 @@ class Task extends React.Component {
     }
 
     let dialog = false;
-    console.log('data (task data): ', data)
     return (
       <div className="task-detail">
         {dialog}

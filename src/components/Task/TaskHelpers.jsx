@@ -2,7 +2,6 @@ import moment from 'moment'
 import React from 'react'
 import { gerund } from '../../utilities/stringutils'
 
-
 export function display(task) {
   return words(task).toUpperCase()
 }
@@ -47,7 +46,6 @@ export function getOperator(task) {
   return ""
 }
 
-
 export function words(task) {
   if (!task || task === undefined || task.label === undefined) {
     return ""
@@ -60,7 +58,6 @@ export function words(task) {
   else
     return task.label
 }
-
 
 export function getAttributesToColumnNumbers(attributes) {
   var cols = {}
@@ -109,7 +106,6 @@ export function icon(k) {
   return process.env.PUBLIC_URL + "/img/" + i + "@3x.png"
 }
 
-
 export function pl(count, unit) {
   if (count) {
 
@@ -118,7 +114,6 @@ export function pl(count, unit) {
     return count + " " + unit
   return count + " " + unit + "s"
 }
-
 
 export function TaskTable(props) {
   return (
