@@ -26,7 +26,7 @@ export default function TaskInputTable(props) {
                 {group[0].input_task_display}
                 <i className='material-icons expand-i'>open_in_new</i>
               </span>
-              <span className='input-count'>{formatAmount(Math.round(parseInt(data.inputs[0].input_item_amount)), data.process_type.unit)}</span>
+              <span className='input-count'>{formatAmount(Math.round(parseInt(data.inputs[0].input_item_amount, 10)), data.process_type.unit)}</span>
             </a>
         )
       })

@@ -82,14 +82,14 @@ class Task extends React.Component {
   }
   
   getBatchSizeDisplayText({items, process_type}) {
-		const batchAmount = items.reduce((sum, item) => sum + parseInt(item.amount), 0)
+		const batchAmount = items.reduce((sum, item) => sum + parseInt(item.amount, 10), 0)
     return `Batch Size: ${formatAmount(batchAmount, process_type.unit)}`
   }
   
   // TEMP: For optional printing transition, to allow Dandelion to continue using outputs
   teamUsesOutputs() {
 		const {data, ui} = this.props.users
-    const teamID = parseInt(data[ui.activeUser].user.team)
+    const teamID = parseInt(data[ui.activeUser].user.team, 10)
     const teamIDsWhoUseOutputs = new Set([1 /* -> Alabama */, 2  /* -> Valencia */])
     return teamIDsWhoUseOutputs.has(teamID)
   }
