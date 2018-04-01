@@ -36,7 +36,7 @@ class ProcessPage extends React.Component {
 
 		return (
 			<div className="process-page">
-				<ProcessPageHeader processName={data.name}/>
+				<ProcessPageHeader processName={data.name} onBack={() => history.push('/processes')}/>
 				<Loading isfetchingData={this.state.isArchiving}>
 					<div className="process-page-content">
 						<ProcessInformation {...data} onArchive={this.handleArchive}/>
