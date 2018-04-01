@@ -10,7 +10,7 @@
         border-bottom: none; //override PaginatedTable header border
     }
 
-    .sk-spinner {
+    & > .sk-spinner {
         margin: 160px auto;
     }
 }

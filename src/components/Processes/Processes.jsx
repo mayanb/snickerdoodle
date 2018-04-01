@@ -100,6 +100,7 @@ class Processes extends React.Component {
 		return (
 			<ArchiveDialog
 				{...p}
+				isArchiving={this.state.isArchiving}
 				onCancel={this.handleCancelArchive.bind(this)}
 				onSubmit={() => this.handleConfirmArchive()}
 			/>
@@ -159,12 +160,15 @@ class Processes extends React.Component {
 	}
 
 	handleConfirmArchive() {
+		if (this.state.isArchiving) {
+			return 
+		}
+
 		let p = this.props.data[this.state.archivingObjectIndex]
-		this.setState({isArchiving: true, isArchiveOpen: false})
+		this.setState({isArchiving: true})
 		this.props.dispatch(actions.postDeleteProcess(p, this.state.archivingObjectIndex))
+			.then(() => this.setState({isArchiving: false, isArchiveOpen: false}))
 	}
-
-
 }
 
 // This is our select function that will extract from the state the data slice we want to expose

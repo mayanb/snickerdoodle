@@ -3,7 +3,7 @@ import Dialog from '../Card/Dialog.jsx'
 import Button from '../Button/Button.jsx'
 import './styles/archivedialog.css'
 
-export default function ArchiveDialog({onCancel, onSubmit, code, name}) {
+export default function ArchiveDialog({onCancel, onSubmit, isArchiving, code, name}) {
 	return (
 		<Dialog onToggle={onCancel}>
 			<div className="archive-dialog">
@@ -16,7 +16,7 @@ export default function ArchiveDialog({onCancel, onSubmit, code, name}) {
 				<span className="emphasized">{` (${code}) ${name} `}</span>
 				<span>from your factory?</span>
 				<div className="archive-actions">
-					<Button wide type="red" onClick={onSubmit}>Delete process</Button>
+					<Button wide type="red" isLoading={isArchiving} onClick={onSubmit}>Delete process</Button>
 				</div>
 			</div>
 		</Dialog>
