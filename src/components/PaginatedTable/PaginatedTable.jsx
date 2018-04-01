@@ -59,7 +59,12 @@ export default class PaginatedTable extends React.Component {
     for (let i=firstIndex; i < lastIndex; i++)
     {
       rows.push(<li key={i} >
-                  <this.props.Row item={keys[i]} isSelected={this.isSelected(i)} onClick={(e) => this.props.onClick(i)} />
+                  <this.props.Row 
+                    item={keys[i]} 
+                    isSelected={this.isSelected(i)} 
+                    onClick={(e) => this.props.onClick(i)} 
+                    onArchive={this.props.onArchive}
+                    onDuplicate={this.props.onDuplicate}/>
                 </li>)
               
    }

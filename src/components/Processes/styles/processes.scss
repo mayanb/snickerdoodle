@@ -15,7 +15,7 @@ div.processes {
   }
 
   .owner {
-    flex: 4;
+    flex: 3;
   }
 
   .date {
@@ -37,6 +37,10 @@ div.processes {
 
   .last-used {
     flex: 3;
+  }
+
+  .create-button {
+    flex: 1;
   }
 
 
