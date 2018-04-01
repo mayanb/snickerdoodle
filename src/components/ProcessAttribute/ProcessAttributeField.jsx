@@ -37,19 +37,34 @@ function Text(props) {
 	return <span style={{fontWeight: props.main?"700":"300"}}>{props.value}</span>
 }
 
-function EditText(props) {
-	return(
-		<div>
-			<FormGroup>
-			<Input
-			type="text"
-			placeholder="eg. Temperature"
-			value={props.value}
-			onChange={props.onChange}
-			/>
-			</FormGroup>
-		</div>
-	)
+class EditText extends React.Component {
+	constructor(props) {
+		super(props)
+		this.inputRef = null
+	}
+
+	componentDidMount() {
+		if (this.inputRef) {
+			this.inputRef.focus()
+		}
+	}
+
+	render() {
+		let { value, onChange } = this.props
+		return(
+			<div>
+				<FormGroup>
+				<Input
+					type="text"
+					placeholder="eg. Temperature"
+					value={value}
+					onChange={onChange}
+					ref={(e) => this.inputRef = e } 
+				/>
+				</FormGroup>
+			</div>
+		)
+	}
 }
 
 export function EditSelect(props) {

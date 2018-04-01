@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Slide} from '../Animations/Animations'
 import * as actions from './ProcessAttributeActions'
 import Wrapper from './ProcessAttributeWrapper'
 import Submissions from './ProcessAttributeSubmissions'
@@ -15,40 +14,49 @@ class ProcessAttribute extends React.Component {
 		this.toggleRequiredOnAttribute = this.toggleRequiredOnAttribute.bind(this)
 		this.state = {
 			isDeletingAttribute: null,
+			editingName: props.name,
+			editingType: props.datatype
+		}
+	}
+
+	componentWillReceiveProps(np) {
+		let { editingName, editingType } = this.state
+		if (np.name !== editingName || np.datatype !== editingType) {
+			this.setState({editingType: np.datatype, editingName: np.name})
 		}
 	}
 
 	render() {
-		let {isSelected, name, datatype, rank, onDelete, onSelect} = this.props
+		let {isSelected, name, datatype, rank, last_five_values, onDelete, onSelect, onUpdate} = this.props
+		let { editingName, editingType } = this.state
 		if (isSelected) {
 			return (
-				<Slide>
 				<Wrapper className="selected" index={rank} onDelete={onDelete}>
 					<div className="process-attr-inputs">
-						<ProcessAttributeField edit name="Name" />
-						<ProcessAttributeField edit select name="Type" />
+						<ProcessAttributeField focus edit name="Name" value={editingName} onChange={(e) => this.handleChange('editingName', e.target.value)} />
+						<ProcessAttributeField edit select name="Type" value={editingType} onChange={(e) => this.handleChange('editingType', e.value)} />
 					</div>
-					<Submissions name={name}/>
-					<Button>Save</Button>
+					<Submissions name={editingName} recent={last_five_values}/>
+					<Button onClick={() => onUpdate({name: editingName, datatype: editingType})}>Save</Button>
 				</Wrapper>
-				</Slide>
 			)
 		}
 		return (
-			<Slide>
 			<Wrapper index={rank} onDelete={onDelete} onClick={onSelect}>
 				<span className="process-attr-name">{name}</span>
 				<ProcessAttributeDatatype type={datatype}/>
 			</Wrapper>
-			</Slide>
 		)
+	}
+
+	handleChange(key, value) {
+		this.setState({ [key] : value })
 	}
 
 	toggleRequiredOnAttribute() {
 		let updated = {required: !this.props.required}
 		this.props.dispatch(actions.postUpdateAttribute(this.props.ui.selectedItem, this.props.id, updated))
 	}
-
 }
 
 const mapStateToProps = (state/*, props*/) => {

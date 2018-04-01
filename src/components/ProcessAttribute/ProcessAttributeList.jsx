@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import update from 'immutability-helper'
 import Button from '../Button/Button'
 import ProcessAttribute from './ProcessAttribute'
 import ProcessAttributeNew from './ProcessAttributeNew'
@@ -18,6 +17,7 @@ class ProcessAttributeList extends React.Component {
 		this.finishAddingAttribute = this.finishAddingAttribute.bind(this)
 		this.archiveAttribute = this.archiveAttribute.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
+		this.handleSelect = this.handleSelect.bind(this)
 		this.state = {
 			isDeletingAttribute: null,
 			isDeletingAttributeIndex: -1,
@@ -25,41 +25,19 @@ class ProcessAttributeList extends React.Component {
 	}
 
 	render() {
-		let {process, ui} = this.props
-		let hd = this.handleDelete.bind(this)
-		let sel = this.handleSelect.bind(this)
-
-		let sortableAttributes = []
-		process.attributes.forEach(function (attr, i) {
-			console.log(attr.id, attr.rank)
-			sortableAttributes.push(
-				update(
-					attr, {
-						$merge: { 
-							isSelected: attr.id === ui.selectedAttribute, 
-							key: i, 
-							onDelete: () => hd(attr, i),
-							onSelect: () => sel(attr),
-						}
-					}
-				)
-			)
-		})
-
+		let {ui} = this.props
+		let sortableAttributes = this.constructAttributeList()
 		return (
 			<div className="process-attributes">
-
 				<ProcessAttributesHeader 
 					onAdd={this.startAddingAttribute}
 					onCancel={this.finishAddingAttribute} 
 					isAdding={ui.isAddingAttribute}
 				/>
-
 				<div className="process-attr-list-header">
 					<span>Name</span>
 					<span>Type</span>
 				</div>
-
 				<Slide>
 				{ 
 					ui.isAddingAttribute && <ProcessAttributeNew 
@@ -68,7 +46,6 @@ class ProcessAttributeList extends React.Component {
 					/> 
 				}
 				</Slide>
-
 				<Sortable 
 					cards={sortableAttributes}
 					canEdit={true} 
@@ -79,6 +56,35 @@ class ProcessAttributeList extends React.Component {
 				{this.renderDeleteAttributeDialog()}
 			</div>
 		)
+	}
+
+	renderDeleteAttributeDialog() {
+		let { isDeletingAttribute, isDeletingAttributeIndex } = this.state
+		let {data} = this.props
+		return ( isDeletingAttribute && 
+			<ProcessAttributeDeleteDialog 
+				attribute={isDeletingAttribute} 
+				index={isDeletingAttributeIndex} 
+				data={data} 
+				attrName={isDeletingAttribute.name} 
+				onToggle={() => this.setState({isDeletingAttribute: null})} 
+				onDelete={() => this.handleDeleteAttribute()} 
+			/>
+		)
+	}
+
+	constructAttributeList() {
+		let { process, ui } = this.props
+		return process.attributes.map((attr, i) => { 
+			return {
+				...attr,
+				key: i, 
+				isSelected: attr.id === ui.selectedAttribute, 
+				onDelete: () => this.handleDelete(attr, i),
+				onSelect: () => this.handleSelect(attr),
+				onUpdate: (newAttr) => this.handleUpdate(attr, newAttr)
+			}
+		})
 	}
 
 	// MARK:- ACTIONS 
@@ -101,28 +107,25 @@ class ProcessAttributeList extends React.Component {
 		this.setState({isDeletingAttribute: null})
 	}
 
-	renderDeleteAttributeDialog() {
-		let { isDeletingAttribute, isDeletingAttributeIndex } = this.state
-		let {data} = this.props
-		return ( isDeletingAttribute && 
-			<ProcessAttributeDeleteDialog 
-				attribute={isDeletingAttribute} 
-				index={isDeletingAttributeIndex} 
-				data={data} 
-				attrName={isDeletingAttribute.name} 
-				onToggle={() => this.setState({isDeletingAttribute: null})} 
-				onDelete={() => this.handleDeleteAttribute()} 
-			/>
-		)
-	}
-
 	handleDelete(attr, i) {
 		this.setState({isDeletingAttribute: attr, isDeletingAttributeIndex: i})
 	}
 
 	handleSelect(attr) {
-		let {dispatch, process_index} = this.props
+		let {dispatch, process_index, ui} = this.props
+		if (ui.isUpdatingAttribute || ui.isSavingAttribute || ui.selectedAttribute === attr.id) {
+			return
+		}
 		dispatch(actions.selectAttribute(process_index, attr.id))
+		if (!attr.last_five_values) {
+			dispatch(actions.fetchAttributeDetails(process_index, attr.id))
+		}
+	}
+
+	handleUpdate(attr, updatedAttr) {
+		let { dispatch, process_index } = this.props
+		dispatch(actions.postUpdateAttribute(process_index, attr.id, updatedAttr))
+		dispatch(actions.selectAttribute(process_index, -1))
 	}
 
 
@@ -137,6 +140,11 @@ class ProcessAttributeList extends React.Component {
   moveAttribute(id, toIndex) {
 	  let {process_index} = this.props
 		this.props.dispatch(actions.postRequestMoveAttribute(process_index, id, toIndex))
+  }
+
+  fetchAttributeDetails(id) {
+  	let {process_index} = this.props
+  	this.props.dispatch(actions.fetchAttributeDetails(process_index, id))
   }
 }
 
