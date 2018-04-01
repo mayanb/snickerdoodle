@@ -20,7 +20,7 @@ export default class DuplicateProcessDialog extends React.Component {
 			submitted: false
 		}
 
-		this.handleCreate = this.handleCreate.bind(this)
+		this.handleDuplicate = this.handleDuplicate.bind(this)
 	}
 
 	render() {
@@ -31,7 +31,7 @@ export default class DuplicateProcessDialog extends React.Component {
 		return (
 			<FormDialog
 				onToggle={this.props.onToggle}
-				onSave={this.handleCreate}
+				onSave={this.handleDuplicate}
 				title="Duplicate a process"
 				className="create-process-dialog"
 			>
@@ -126,7 +126,7 @@ export default class DuplicateProcessDialog extends React.Component {
 		)
 	}
 
-	handleCreate() {
+	handleDuplicate() {
 		this.setState({ submitted: true })
 		if (this.formErrors().length > 0) {
 			return
@@ -141,7 +141,7 @@ export default class DuplicateProcessDialog extends React.Component {
 			description: this.state.processDescription
 		}
 
-		this.props.onCreate(newProcess)
+		this.props.onDuplicate(newProcess)
 		this.props.onToggle()
 
 	}
