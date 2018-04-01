@@ -74,7 +74,7 @@ export function archiveAttribute(process_index, attribute_index, attribute) {
   return function (dispatch) {
     dispatch(requestArchiveAttribute(process_index, attribute_index))
 
-    return api.put(`/ics/attributes/${attribute.id}/`)
+    return api.patch(`/ics/attributes/${attribute.id}/`)
       .send({is_trashed: true})
       .end(function (err, res) {
         if (err || !res.ok) {

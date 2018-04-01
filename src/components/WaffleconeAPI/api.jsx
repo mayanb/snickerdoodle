@@ -72,18 +72,24 @@ function del(path, id) {
 
 }
 
-function patch(path, id) {
+function patch(path) {
 	let url = urls.latest(host, path)
-	//let team = -1
-	//let token = ""
+	let team = -1
+	let id = -1
+	let profile_id = -1
 	try {
-		//team = get_active_user().user.team
-		//token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
-	} catch(e) {}
+		let user = get_active_user().user
+		team = user.team
+		id = user.user_id
+		profile_id = user.profile_id
+	} catch(e) {
+		
+	}
 
-	return request('PATCH', url)
-	.set('Content-Type', 'application/json')
+	return request
+		.patch(url)
+		.set('Content-Type', 'application/json')
+		.send({userprofile: profile_id, created_by: id, team: team, team_created_by: team})
 }
-
 export default {get_active_user, get, post, del, host, put, patch}
 
