@@ -1,25 +1,38 @@
 @import 'styles/constants.scss';
 
 .archive-dialog {
-	h1 {
-		margin-bottom: 8px;
+	.archive-dialog-header {
+		display: flex;
+		span {
+			flex: 1;
+			color: $gray-dark;
+		}
+
+		i {
+			font-size: 16px;
+			color: $gray-light;
+
+		}
 	}
-	line-height: 18px;
+
+	.emphasized {
+		font-weight: 700;
+	}
 }
 
 .archive-rule {
-	margin: 16px;
-	margin-bottom: 16px;
-	background-color: $gray-light;
+	background-color: $gray-ultra-light;
 	height: 1px;
+	margin-top: 12px;
+	margin-bottom: 12px;
 }
 
 .archive-actions {
 	display:flex;
 	flex-direction: row;
-	justify-content: flex-end;
+	margin-top: 24px;
 
 	button {
-		margin-left: 16px;
+		flex: 1;
 	}
 }

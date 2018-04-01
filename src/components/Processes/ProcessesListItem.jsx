@@ -26,6 +26,11 @@ export default class ProcessesListItem extends React.Component {
 		this.setState({expanded: !this.state.expanded })
 	}
 
+	handleDropdownOption(fn) {
+		this.setState({ expanded: !this.state.expanded })
+		fn(this.props.index)
+	}
+
 	renderOptionsButton() {
 		return (
 			<div className="process-options">
@@ -35,17 +40,17 @@ export default class ProcessesListItem extends React.Component {
 	}
 
 	renderProcessOptions() {
-		let { onArchive, onDuplicate, index } = this.props
+		let { onArchive, onDuplicate } = this.props
 		return (
 			<div className="menu-section">
 				<div style={{minWidth: "100px"}}>
-					<ButtonStopClickPropagate secondary onClick={() => onDuplicate(index)}>
+					<ButtonStopClickPropagate secondary onClick={() => this.handleDropdownOption(onDuplicate)}>
 						<i className="material-icons">content_copy</i>
 						<span>Duplicate</span>
 					</ButtonStopClickPropagate>
 				</div>				
 				<div style={{minWidth: "100px"}}>
-					<ButtonStopClickPropagate secondary onClick={() => onArchive(index)}>
+					<ButtonStopClickPropagate secondary onClick={() => this.handleDropdownOption(onArchive)}>
 						<i className="material-icons">delete_forever</i>
 						<span>Delete</span>
 					</ButtonStopClickPropagate>

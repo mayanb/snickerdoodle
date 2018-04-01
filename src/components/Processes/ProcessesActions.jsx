@@ -149,7 +149,7 @@ function requestCreateProcessSuccess(json) {
   }
 }
 
-export function postDeleteProcess(p, index, callback) {
+export function postDeleteProcess(p, index) {
   return function (dispatch) {
     dispatch(requestDeleteProcess(index))
 
@@ -160,13 +160,12 @@ export function postDeleteProcess(p, index, callback) {
         created_by: p.created_by,
         team_created_by: p.team_created_by,
         is_trashed: true,
-        })
+      })
       .end(function (err, res) {
         if (err || !res.ok)
           dispatch(requestDeleteProcessFailure(index, err))
         else {
           dispatch(requestDeleteProcessSuccess("is_trashed", true, index))
-          callback()
         }
       })
   }

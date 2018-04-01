@@ -93,12 +93,13 @@ class Processes extends React.Component {
 	}
 
 	renderArchiveDialog() {
-		if (!this.state.isArchiveOpen)
+		if (!this.state.isArchiveOpen) {
 			return null
-
+		}
+		let p = this.props.data[this.state.archivingObjectIndex]
 		return (
 			<ArchiveDialog
-				{...process}
+				{...p}
 				onCancel={this.handleCancelArchive.bind(this)}
 				onSubmit={() => this.handleConfirmArchive()}
 			/>
@@ -121,30 +122,28 @@ class Processes extends React.Component {
 
   /* EVENT HANDLERS */
 
-  	handleCreateProcess(newProcess) {
-	  	this.props.dispatch(actions.postCreateProcess(newProcess))
-		  	.then((res) => {
-			  	let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
-			  	return this.handleSelectProcess(index)
-		  	})
-  	}
+	handleCreateProcess(newProcess) {
+  	this.props.dispatch(actions.postCreateProcess(newProcess))
+	  	.then((res) => {
+		  	let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
+		  	return this.handleSelectProcess(index)
+	  	})
+	}
 
-  	handlePagination(direction) {
+	handlePagination(direction) {
 		this.props.dispatch(actions.pageProcesses(direction))
-  	}
+	}
 
-  	handleSelectProcess(index) {
-	  	this.props.history.push('/processes/' + this.props.data[index].id)
-  	}
+	handleSelectProcess(index) {
+  	this.props.history.push('/processes/' + this.props.data[index].id)
+	}
 
 	handleToggleDialog() {
 		this.setState({isAddingProcess: !this.state.isAddingProcess})
 	}
 
-	handleArchive() {
-		// console.log("processId")
-		// console.log(index)
-		this.setState({ isArchiveOpen: true, archivingObjectIndex: 4 })
+	handleArchive(index) {
+		this.setState({ isArchiveOpen: true, archivingObjectIndex: index })
 	}
 
 	handleDuplicate() {
@@ -160,11 +159,9 @@ class Processes extends React.Component {
 	}
 
 	handleConfirmArchive() {
-		this.setState({isArchiving: true})
-		// dispatch(actions.postDeleteProcess(process, null, function () {
-		// 		history.push('/processes')
-		// 	})
-		// )
+		let p = this.props.data[this.state.archivingObjectIndex]
+		this.setState({isArchiving: true, isArchiveOpen: false})
+		this.props.dispatch(actions.postDeleteProcess(p, this.state.archivingObjectIndex))
 	}
 
 
