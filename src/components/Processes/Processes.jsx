@@ -31,6 +31,7 @@ class Processes extends React.Component {
 	this.handleCreateProcess = this.handleCreateProcess.bind(this)
 	this.handleArchive = this.handleArchive.bind(this)
 	this.handleDuplicate = this.handleDuplicate.bind(this)
+	this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
   }
 
   // fetch products on load
@@ -114,7 +115,8 @@ class Processes extends React.Component {
 			<DuplicateProcessDialog
 				isOpen={this.state.isDuplicateOpen}
 				onToggle={this.handleCancelDuplicate.bind(this)}
-				onCreate={this.handleCreateProcess}
+				onDuplicate={this.handleDuplicateProcess}
+				isDuplicating={this.state.isDuplicating}
 			/>
 			
 		)
@@ -147,8 +149,9 @@ class Processes extends React.Component {
 		this.setState({ isArchiveOpen: true, archivingObjectIndex: index })
 	}
 
-	handleDuplicate() {
-		this.setState({ isDuplicateOpen: true, duplicatingObjectIndex: 5})
+	handleDuplicate(index) {
+		console.log("handleDuplicate")
+		this.setState({ isDuplicateOpen: true, duplicatingObjectIndex: index})
 	}
 
 	handleCancelArchive() {
@@ -168,6 +171,23 @@ class Processes extends React.Component {
 		this.setState({isArchiving: true})
 		this.props.dispatch(actions.postDeleteProcess(p, this.state.archivingObjectIndex))
 			.then(() => this.setState({isArchiving: false, isArchiveOpen: false}))
+	}
+
+	handleDuplicateProcess(newProcess) {
+		console.log("handleConfirmDuplicate")
+		if (this.state.isDuplicating) {
+			return 
+		}
+		let p = this.props.data[this.state.duplicatingObjectIndex]
+		let json = newProcess
+		json["duplicateID"] = p.id
+		this.setState({isDuplicating: true})
+		this.props.dispatch(actions.postDuplicateProcess(json))
+			.then((res) => {
+				this.setState({isDuplicating: false, isDuplicateOpen: false})
+				let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
+				return this.handleSelectProcess(index)
+			})
 	}
 }
 
