@@ -193,6 +193,7 @@ function requestAttributeDetails() {
 }
 
 function requestAttributeDetailsSuccess(p, id, details) {
+  console.log(details)
   return {
     type: REQUEST_ATTRIBUTE_DETAILS_SUCCESS,
     name: PROCESSES,

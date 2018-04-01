@@ -1,12 +1,15 @@
 import React from 'react'
-import Img from '../Img/Img'
 import {pluralize} from '../../utilities/stringutils'
+import Img from '../Img/Img'
+import Button from '../Button/Button'
+import ProcessPageEditForm from './ProcessPageEditForm'
 
 export default function ProcessInformation({icon, code, name, description, default_amount, unit}) {
 	return (
 		<div className="process-information">
 			<ProcessInformationHeader icon={icon} code={code} name={name} />
 			<ProcessBasicInformation description={description} batchSize={default_amount} unit={unit}/>
+			<ProcessPageEditForm />
 		</div>
 	)
 }
@@ -16,6 +19,7 @@ function ProcessInformationHeader({icon, code, name}) {
 		<div className="process-information-header">
 			<Img src={ic(icon)} height="30px" />
 			<span>{`(${code}) ${name}`}</span>
+			<Button type="gray">Edit</Button>
 		</div>
 	)
 }

@@ -31,6 +31,7 @@ export default class ProcessAttributeNew extends React.Component {
 					/>
 				</div>
 				<Button 
+					wide
 					isLoading={isLoading} 
 					onClick={this.handleSubmit}
 					type={!this.stateIsValid() && 'disabled'}
