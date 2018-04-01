@@ -54,8 +54,7 @@ class Processes extends React.Component {
 					onPagination={this.handlePagination}
 					Row={ProcessesListItem}
 					TitleRow={this.renderHeaderRow}
-					onArchive={this.handleArchive}
-					onDuplicate={this.handleDuplicate}
+					extra={{onArchive: this.handleArchive, onDuplicate: this.handleDuplicate}}
 				/>
 				{this.renderDialog()}
 				{this.renderArchiveDialog()}

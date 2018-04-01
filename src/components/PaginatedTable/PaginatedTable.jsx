@@ -60,16 +60,22 @@ export default class PaginatedTable extends React.Component {
     {
       rows.push(<li key={i} >
                   <this.props.Row 
-                    item={keys[i]} 
+                    item={keys[i]}
+                    index={i} 
                     isSelected={this.isSelected(i)} 
                     onClick={(e) => this.props.onClick(i)} 
-                    onArchive={this.props.onArchive}
-                    onDuplicate={this.props.onDuplicate}/>
+                    {...this.props.extra}
+                  />
                 </li>)
               
    }
    return rows
   }
+
+  /*
+                      onArchive={this.props.onArchive}
+                    onDuplicate={this.props.onDuplicate}
+                  */
 
 	renderPagination(firstIndex, lastIndex, len, onPagination) {
 		let detail = `Showing ${firstIndex+1}-${lastIndex} of ${this.props.ui.more ? 'over ' : ''}${len} results`

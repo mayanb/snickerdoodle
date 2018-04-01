@@ -14,8 +14,6 @@ export default class ProcessesListItem extends React.Component {
 		super(props)
 		this.state = {expanded: false}
 		this.handleDropdownToggle = this.handleDropdownToggle.bind(this)
-		this.handleArchive = this.handleArchive.bind(this)
-		this.handleDuplicate = this.handleDuplicate.bind(this)
 	}
 
 	getClassNames() {
@@ -28,16 +26,6 @@ export default class ProcessesListItem extends React.Component {
 		this.setState({expanded: !this.state.expanded })
 	}
 
-	handleArchive() {
-		this.props.onArchive()
-		this.setState({ isArchiveOpen: true, expanded: !this.state.expanded })
-	}
-
-	handleDuplicate() {
-		this.props.onDuplicate()
-		this.setState({ isDuplicateOpen: true, expanded: !this.state.expanded })
-	}
-
 	renderOptionsButton() {
 		return (
 			<div className="process-options">
@@ -47,16 +35,17 @@ export default class ProcessesListItem extends React.Component {
 	}
 
 	renderProcessOptions() {
+		let { onArchive, onDuplicate, index } = this.props
 		return (
 			<div className="menu-section">
 				<div style={{minWidth: "100px"}}>
-					<ButtonStopClickPropagate secondary onClick={this.handleDuplicate}>
+					<ButtonStopClickPropagate secondary onClick={() => onDuplicate(index)}>
 						<i className="material-icons">content_copy</i>
 						<span>Duplicate</span>
 					</ButtonStopClickPropagate>
 				</div>				
 				<div style={{minWidth: "100px"}}>
-					<ButtonStopClickPropagate secondary onClick={this.handleArchive}>
+					<ButtonStopClickPropagate secondary onClick={() => onArchive(index)}>
 						<i className="material-icons">delete_forever</i>
 						<span>Delete</span>
 					</ButtonStopClickPropagate>
