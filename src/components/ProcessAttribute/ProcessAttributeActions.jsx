@@ -159,7 +159,7 @@ export function postUpdateAttribute(p, id, updated) {
   return function (dispatch) {
     dispatch(requestUpdateAttributeSuccess(p, id, updated))
 
-    return api.put(`/ics/attributes/${id}/`)
+    return api.patch(`/ics/attributes/${id}/`)
       .send(updated)
       .then(res => console.log(res))
       .catch(e => alert('ugh'))
