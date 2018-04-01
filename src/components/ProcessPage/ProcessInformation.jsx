@@ -4,12 +4,12 @@ import Img from '../Img/Img'
 import Button from '../Button/Button'
 import ProcessPageEditForm from './ProcessPageEditForm'
 
-export default function ProcessInformation({icon, code, name, description, default_amount, unit}) {
+export default function ProcessInformation({icon, code, name, description, default_amount, unit, onArchive}) {
 	return (
 		<div className="process-information">
 			<ProcessInformationHeader icon={icon} code={code} name={name} />
 			<ProcessBasicInformation description={description} batchSize={default_amount} unit={unit}/>
-			<ProcessPageEditForm />
+			<ProcessPageEditForm onArchive={onArchive}/>
 		</div>
 	)
 }

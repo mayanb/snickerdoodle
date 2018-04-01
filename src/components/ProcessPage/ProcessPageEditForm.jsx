@@ -7,7 +7,7 @@ export default class ProcessPageEditForm extends React.Component {
 		return (
 			<div className='process-edit-form'>
 				<Button wide type="dark-gray">Duplicate this process</Button>
-				<Button wide type="red">Delete this process</Button>
+				<Button wide type="red" onClick={this.props.onArchive}>Delete this process</Button>
 			</div>
 		)
 	}

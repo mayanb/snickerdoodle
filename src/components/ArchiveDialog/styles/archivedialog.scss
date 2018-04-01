@@ -34,5 +34,9 @@
 
 	button {
 		flex: 1;
+
+		&:first-child {
+			margin-right: 12px;
+		}
 	}
 }
