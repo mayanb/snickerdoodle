@@ -1,0 +1,25 @@
+.slide-enter {
+	max-height: 1px;
+	opacity: 0.1;
+	overflow-y: hidden;
+}
+
+.slide-enter.slide-enter-active {
+	overflow-y: hidden;
+	max-height: 999px;
+	opacity: 1;
+	transition: max-height 400ms ease-in, opacity 400ms ease-in;
+}
+
+.slide-leave {
+	max-height: 150px;
+	opacity: 1;
+	overflow-y: hidden;
+}
+
+.slide-leave.slide-leave-active {
+	overflow-y: hidden;
+	max-height: 1px;
+	opacity: 0.01;
+	transition: max-height 200ms ease, opacity 200ms ease;
+}
