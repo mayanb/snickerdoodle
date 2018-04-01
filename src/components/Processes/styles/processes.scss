@@ -1,7 +1,7 @@
 @import 'styles/constants.scss';
 
 .processes-container {
-  width: calc(100vw - #{$nav-width});
+  width: calc(100vw);
 
 }
 
@@ -41,11 +41,6 @@ div.processes {
 
   .create-button {
     flex: 1;
-  }
-
-
-  div.card {
-    max-width: 600px;
   }
 }
 
