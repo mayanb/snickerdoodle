@@ -16,6 +16,7 @@ export default function ArchiveDialog({onCancel, onSubmit, isArchiving, code, na
 				<span className="emphasized">{` (${code}) ${name} `}</span>
 				<span>from your factory?</span>
 				<div className="archive-actions">
+					<Button wide type="blue-outline" onClick={onCancel}>Cancel</Button>
 					<Button wide type="red" isLoading={isArchiving} onClick={onSubmit}>Delete process</Button>
 				</div>
 			</div>

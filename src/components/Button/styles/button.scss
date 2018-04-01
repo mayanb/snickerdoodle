@@ -8,7 +8,7 @@
 		box-shadow: rgba(0,0,0,0.3) 0 2px 6px;
 	}
 
-	&.wide {
+	&.button-wide {
 		padding: 12px 0;
 	}
 }
@@ -28,11 +28,21 @@
 	color: white;
 }
 
-.button.button-disabled {
+.button.button-blue-outline {
+	background-color: white;
+	border: 1px solid $primary;
+	color: $primary;
+}
+
+.button.button-loading {
 	background-color: $gray-ultra-light;
 	color: $gray;
 	&:hover {
 		box-shadow: none;
 		cursor: not-allowed;
+	}
+
+	&.button-red {
+		background-color: $red-ultra-light;
 	}
 }
