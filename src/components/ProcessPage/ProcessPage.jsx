@@ -19,6 +19,7 @@ class ProcessPage extends React.Component {
 			isArchiveOpen: false,
 			isArchiving: false,
 		}
+		this.handleArchive = this.handleArchive.bind(this)
 	}
 
 	componentDidMount() {
@@ -38,7 +39,7 @@ class ProcessPage extends React.Component {
 				<ProcessPageHeader processName={data.name}/>
 				<Loading isfetchingData={this.state.isArchiving}>
 					<div className="process-page-content">
-						<ProcessInformation {...data}/>
+						<ProcessInformation {...data} onArchive={this.handleArchive}/>
 						<ProcessAttributeList process={data} />
 					</div>
 					{this.renderArchiveDialog(data, dispatch, history)}
@@ -53,45 +54,44 @@ class ProcessPage extends React.Component {
 
 		return (
 			<ArchiveDialog
-				{...process}
+				{...this.props.data}
+				isArchiving={this.state.isArchiving}
 				onCancel={this.handleCancelArchive.bind(this)}
-				onSubmit={() => this.handleConfirmArchive(process, dispatch, history)}
+				onSubmit={() => this.handleConfirmArchive()}
 			/>
 		)
 	}
 
-	handleArchive(processId) {
-		console.log("processId")
-		this.setState({ isArchiveOpen: true, archivingObjectIndex: processId })
+	handleArchive() {
+		this.setState({ isArchiveOpen: true })
 	}
 
 	handleCancelArchive() {
 		this.setState({isArchiveOpen: false})
 	}
 
-	handleConfirmArchive(process, dispatch, history) {
+	handleConfirmArchive() {
+		if (this.state.isArchiving) {
+			return 
+		}
 		this.setState({isArchiving: true})
-		dispatch(actions.postDeleteProcess(process, null, function () {
-				history.push('/processes')
+		this.props.dispatch(actions.postDeleteProcess(this.props.data, this.props.index))
+			.then(() => {
+				this.setState({ isArchiving: false, isArchiveOpen: false })
+				this.props.history.push('/processes')
 			})
-		)
 	}
 }
 
 const mapStateToProps = (state, props) => {
 	const processId = props.match.params.id
-	const process = state.processes.data.find(process => String(process.id) === processId)
+	const index = state.processes.data.findIndex(process => String(process.id) === processId)
 	return {
 		ui: state.formulas.ui,
-		data: process,
+		data: state.processes.data[index],
+		index: index,
 		dispatch: state.dispatch
 	}
 }
-
-/*
-					<ProcessesCard
-						process={data}
-						onArchive={() => this.handleArchive(ui.selectedItem)}
-					/> */
 
 export default withRouter(connect(mapStateToProps)(ProcessPage))
