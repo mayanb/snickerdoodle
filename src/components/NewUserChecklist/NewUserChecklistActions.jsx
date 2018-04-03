@@ -3,17 +3,8 @@ import {
 	REQUEST, 
 	REQUEST_SUCCESS, 
 	REQUEST_FAILURE,
-	REQUEST_CREATE,
-	REQUEST_CREATE_SUCCESS,
-	REQUEST_CREATE_FAILURE,
-	REQUEST_DELETE,
-	REQUEST_DELETE_SUCCESS,
-	REQUEST_DELETE_FAILURE,
-	SELECT,
-	PAGE,
 } from '../../reducers/APIDataReducer'
 import {  TEAMS, TASKS } from '../../reducers/ReducerTypes'
-import {alphabetize} from '../../utilities/arrayutils.jsx'
 
 
 export function fetchTeams(q) {
@@ -24,7 +15,7 @@ export function fetchTeams(q) {
 		// actually fetch 
 		return api.get('/ics/teams/2')
 			.query(q)
-			.then(res => dispatch(requestTeamsSuccess(res.body)
+			.then(res => dispatch(requestTeamsSuccess(res.body)))
 			.catch(err => dispatch(requestTeamsFailure(err)))
 	}
 }
@@ -57,10 +48,10 @@ function requestTeamsSuccess(json) {
 export function fetchTasks(q) {
 	return function (dispatch) {
 		// dispatch an action that we are requesting a process
-		dispatch(requestTeams())
+		dispatch(requestTasks())
 
 		// actually fetch 
-		return api.get('/ics/tasks/')
+		return api.get('/ics/tasks/?team=24')
 			//need to pass in team: 24 or whatever the team id is
 			// yesterday = new Date()
 			// yesterday.setDate(yesterday.getDate() - 1)
@@ -71,8 +62,8 @@ export function fetchTasks(q) {
 
 			// .query(q)
 			.query({team: 24})
-			.then(res => dispatch(requestTasksSuccess(res.body)
-			.catch(err => dispatch(requestTaskssFailure(err)))
+			.then(res => dispatch(requestTasksSuccess(res.body)))
+			.catch(err => dispatch(requestTasksFailure(err)))
 	}
 }
 

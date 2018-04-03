@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from './NewUserChecklistActions.jsx'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 
-export default function NewUserChecklist(props) {
+class NewUserChecklist extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -12,18 +12,21 @@ export default function NewUserChecklist(props) {
 
 	}
 	componentDidMount() {
+		console.log("fetching")
 		this.props.dispatch(actions.fetchTeams())
 		this.props.dispatch(actions.fetchTasks())
 	}
 
-	return (
-		let{ teams, tasks} = this.state
+	render() { 
+		let{ teams, tasks} = this.props
 		console.log(teams)
 		console.log(tasks)
-		<div>
-			<ApplicationSectionHeader>Onboard your factory</ApplicationSectionHeader>
-		</div>
-	)
+		return (
+			<div>
+				<ApplicationSectionHeader>Onboard your factory</ApplicationSectionHeader>
+			</div>
+		)	
+	}
 }
 
 const mapStateToProps = (state/*, props*/) => {

@@ -38,6 +38,7 @@ export default function(data) {
     weeklyGoals:  createFilteredReducer(_goals, weeklyGoalPredicate, stateDefault),
     monthlyGoals:  createFilteredReducer(_goals, monthlyGoalPredicate, stateDefault),
     members:  createFilteredReducer(apiDataReducer, action => action.name === types.MEMBERS, stateDefault), 
+    teams: createFilteredReducer(apiDataReducer, action => action.name === types.TEAMS, stateDefault), 
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault), 
   	processes: createFilteredReducer(_process, action => action.name === types.PROCESSES, stateDefault), 
   	movements: createFilteredReducer(apiDataReducer, action => action.name === types.MOVEMENTS, stateDefault), 
