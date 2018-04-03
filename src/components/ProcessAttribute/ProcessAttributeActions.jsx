@@ -11,6 +11,9 @@ import {
   REQUEST_MOVE_ATTRIBUTE_SUCCESS,
   REQUEST_MOVE_ATTRIBUTE_FAILURE,
   REQUEST_UPDATE_ATTRIBUTE_SUCCESS,
+  SELECT_ATTRIBUTE,
+  REQUEST_ATTRIBUTE_DETAILS,
+  REQUEST_ATTRIBUTE_DETAILS_SUCCESS,
 } from '../../reducers/ProcessAttributeReducer'
 import {  PROCESSES } from '../../reducers/ReducerTypes'
 
@@ -71,7 +74,7 @@ export function archiveAttribute(process_index, attribute_index, attribute) {
   return function (dispatch) {
     dispatch(requestArchiveAttribute(process_index, attribute_index))
 
-    return api.put(`/ics/attributes/${attribute.id}/`)
+    return api.patch(`/ics/attributes/${attribute.id}/`)
       .send({is_trashed: true})
       .end(function (err, res) {
         if (err || !res.ok) {
@@ -143,19 +146,23 @@ function requestMoveAttributeFailure(process_index) {
   }
 }
 
+export function selectAttribute(process_index, id) {
+  return {
+    type: SELECT_ATTRIBUTE,
+    name: PROCESSES,
+    process_index: process_index,
+    id: id,
+  }
+}
+
 export function postUpdateAttribute(p, id, updated) {
   return function (dispatch) {
     dispatch(requestUpdateAttributeSuccess(p, id, updated))
 
-    return api.put(`/ics/attributes/${id}/`)
+    return api.patch(`/ics/attributes/${id}/`)
       .send(updated)
-      .end( function (err, res) {
-        if (err || !res.ok) {
-          alert("Ugh")
-        } else {
-          //dispatch(requestUpdateAttributeSuccess(p, id, updated))
-        }
-      })
+      .then(res => console.log(res))
+      .catch(e => alert('ugh'))
   }
 
   function requestUpdateAttributeSuccess(p, id, updated) {
@@ -166,5 +173,32 @@ export function postUpdateAttribute(p, id, updated) {
       id: id,
       attribute_updates: updated,
     }
+  }
+}
+
+export function fetchAttributeDetails(p, id) {
+  return dispatch => {
+    dispatch(requestAttributeDetails())
+    return api.get(`/ics/attributes/${id}`)
+      .then(res => dispatch(requestAttributeDetailsSuccess(p, id, res.body)))
+      .catch(e => console.log(e))
+  }
+}
+
+function requestAttributeDetails() {
+  return {
+    type: REQUEST_ATTRIBUTE_DETAILS,
+    name: PROCESSES,
+  }
+}
+
+function requestAttributeDetailsSuccess(p, id, details) {
+  console.log(details)
+  return {
+    type: REQUEST_ATTRIBUTE_DETAILS_SUCCESS,
+    name: PROCESSES,
+    process: p,
+    id: id, 
+    details: details
   }
 }

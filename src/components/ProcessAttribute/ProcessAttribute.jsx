@@ -1,9 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import * as actions from './ProcessAttributeActions'
+import Wrapper from './ProcessAttributeWrapper'
+import Submissions from './ProcessAttributeSubmissions'
+import ProcessAttributeDatatype from './ProcessAttributeDatatype'
 import ProcessAttributeField from './ProcessAttributeField'
-import Button from '../Card/Button'
-import Img from '../Img/Img'
+import Button from '../Button/Button'
+import './styles/processattribute.css'
 
 class ProcessAttribute extends React.Component {
 	constructor(props) {
@@ -11,54 +14,49 @@ class ProcessAttribute extends React.Component {
 		this.toggleRequiredOnAttribute = this.toggleRequiredOnAttribute.bind(this)
 		this.state = {
 			isDeletingAttribute: null,
+			editingName: props.name,
+			editingType: props.datatype
+		}
+	}
+
+	componentWillReceiveProps(np) {
+		let { editingName, editingType } = this.state
+		if (np.name !== editingName || np.datatype !== editingType) {
+			this.setState({editingType: np.datatype, editingName: np.name})
 		}
 	}
 
 	render() {
-		let props = this.props
-
+		let {isSelected, name, datatype, rank, last_five_values, onDelete, onSelect, onUpdate} = this.props
+		let { editingName, editingType } = this.state
+		if (isSelected) {
+			return (
+				<Wrapper className="selected" index={rank} onDelete={onDelete}>
+					<div className="process-attr-inputs">
+						<ProcessAttributeField focus edit name="Name" value={editingName} onChange={(e) => this.handleChange('editingName', e.target.value)} />
+						<ProcessAttributeField edit select name="Type" value={editingType} onChange={(e) => this.handleChange('editingType', e.value)} />
+					</div>
+					<Submissions name={editingName} recent={last_five_values}/>
+					<Button wide onClick={() => onUpdate({name: editingName, datatype: editingType})}>Save</Button>
+				</Wrapper>
+			)
+		}
 		return (
-			<div className={"process-attribute stack-horizontal" + (props.newAttribute?"new-attribute":"")}>
-				<div className="stack-vertical">
-					<div className="stack-horizontal">
-						<div className='process-attribute-row'>
-							<ProcessAttributeField text main name="Name" value={props.name} edit={props.edit} onChange={props.onChange}/>
-							<ProcessAttributeField/>
-						</div>
-
-						<div className='process-attribute-row'>
-							<ProcessAttributeField select name="Datatype" value={props.datatype||"Text"} edit={props.edit} onChange={props.onChange}/>
-							<ProcessAttributeField/>
-						</div>
-					</div>
-
-					<div style={{visibility: props.edit?"hidden":"visible"}} className="drag-handle">
-						<Img src="drag@2x" />
-						<span className="process-attribute-more" onClick={props.newAttribute?()=>null:this.handleArchive.bind(this)} >
-							Delete
-						</span>
-					</div>
-				</div>
-
-					<div style={{display: props.edit?"":"none"}} className='process-attribute-row buttons'>
-							<Button secondary onClick={props.onCancel}>Cancel</Button>
-							<Button onClick={props.onSubmit}>Add</Button>
-					</div>
-					
-			</div>
-
+			<Wrapper index={rank} onDelete={onDelete} onClick={onSelect}>
+				<span className="process-attr-name">{name}</span>
+				<ProcessAttributeDatatype type={datatype}/>
+			</Wrapper>
 		)
+	}
+
+	handleChange(key, value) {
+		this.setState({ [key] : value })
 	}
 
 	toggleRequiredOnAttribute() {
 		let updated = {required: !this.props.required}
 		this.props.dispatch(actions.postUpdateAttribute(this.props.ui.selectedItem, this.props.id, updated))
 	}
-
-	handleArchive() {
-		this.props.onDelete()
-	}
-
 }
 
 const mapStateToProps = (state/*, props*/) => {

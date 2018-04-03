@@ -1,25 +1,46 @@
 @import 'styles/constants.scss';
 
+.processes-container {
+  width: calc(100vw);
+
+}
+
 div.processes {
   .code {
-    flex: 4;
+    flex: 2;
   }
 
   .name {
-    flex: 8;
+    flex: 4;
   }
 
   .owner {
-    flex: 4;
+    flex: 3;
   }
 
   .date {
     flex: 4;
   }
 
+  .icon {
+    flex: 1;
+    background-color: transparent;
+  }
 
-  div.card {
-    max-width: 600px;
+  .description {
+    flex: 4;
+  }
+
+  .default-amount {
+    flex: 4;
+  }
+
+  .last-used {
+    flex: 3;
+  }
+
+  .create-button {
+    flex: 1;
   }
 }
 
