@@ -16,7 +16,6 @@ function get(path) {
 	} catch(e) {
 
 	}
-	console.log(url)
 	return request
 		.get(url)
 		//.withCredentials()

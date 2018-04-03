@@ -12,14 +12,12 @@ export default function TaskInputTable(props) {
       groupedByTask[input.input_task] = [input]
     }
   })
-  console.log('groupedByTask: ', groupedByTask)
   
   // For each unique task, only  group[0] is displayed (!?)
   return (
     <Table title={'Inputs'}>
     {
       Object.values(groupedByTask).map(function (group, i) {
-        console.log("group", group)
         return (
             <a href={window.location.origin + '/task/' + group[0].input_task}
               target='_blank' key={i}
