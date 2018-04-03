@@ -9,7 +9,6 @@ import {  TEAMS, TASKS } from '../../reducers/ReducerTypes'
 
 export function fetchTeams(teamID) {
 	return function (dispatch) {
-		// dispatch an action that we are requesting a process
 		dispatch(requestTeams())
 
 		// actually fetch 
