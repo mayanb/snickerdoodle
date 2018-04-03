@@ -26,7 +26,6 @@ import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
 
 import Sortable from '../Sortable/Index'
-import ProductPage from '../ProductPage/ProductPage'
 import ProcessPage from '../ProcessPage/ProcessPage'
 
 import Registration from '../Registration/Registration'
@@ -77,7 +76,6 @@ function App(props) {
         <Route path={"/task/:id?"} component={Task} />
         <Route exact path={"/processes"} component={Processes} />
         <Route exact path={"/products"} component={Products} />
-        <Route path={"/products/:id"} component={ProductPage} />
 	      <Route path={"/processes/:id"} component={ProcessPage} />
         <Route path={"/attributetest"} component={TaskAttributeTest} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
