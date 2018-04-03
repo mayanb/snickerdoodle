@@ -9,8 +9,7 @@ import './styles/newuserchecklist.css'
 
 class NewUserChecklist extends React.Component {
 	componentDidMount() {
-		console.log("fetching")
-		this.props.dispatch(actions.fetchTeams())
+		this.props.dispatch(actions.fetchTeams(this.props.user.team))
 		this.props.dispatch(actions.fetchTasks())
 	}
 
@@ -20,7 +19,7 @@ class NewUserChecklist extends React.Component {
 			//return loading
 			return null
 		}
-		
+
 		const checklist_items = this.getChecklistItems()
 		return (
 			<div className="new-user-checklist-container">
@@ -38,8 +37,8 @@ class NewUserChecklist extends React.Component {
 	}
 
 	getChecklistItems() {
-		data.forEach((e, i) => {
-			e.isDone = e.condition && e.condition(this.props)
+		data.forEach(e => {
+			e.isDone = e.condition(this.props)
 		})
 		data.sort((a, b) => a.isDone ? 1 : -1)
 		return data

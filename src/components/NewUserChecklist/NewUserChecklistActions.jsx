@@ -7,14 +7,12 @@ import {
 import {  TEAMS, TASKS } from '../../reducers/ReducerTypes'
 
 
-export function fetchTeams(q) {
+export function fetchTeams(id) {
 	return function (dispatch) {
-		// dispatch an action that we are requesting a process
 		dispatch(requestTeams())
 
 		// actually fetch 
-		return api.get('/ics/teams/2')
-			.query(q)
+		return api.get(`/ics/teams/${id}/`)
 			.then(res => dispatch(requestTeamsSuccess(res.body)))
 			.catch(err => dispatch(requestTeamsFailure(err)))
 	}
