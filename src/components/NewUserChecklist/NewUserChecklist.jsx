@@ -10,7 +10,7 @@ import './styles/newuserchecklist.css'
 class NewUserChecklist extends React.Component {
 	componentDidMount() {
 		this.props.dispatch(actions.fetchTeams(this.props.user.team))
-		this.props.dispatch(actions.fetchTasks())
+		this.props.dispatch(actions.fetchTasks(this.props.user.team))
 	}
 
 	render() { 
@@ -77,7 +77,7 @@ const data = [
 		header: 'Add log fields for your processes',
 		text: 'Build your logs by adding the fields you want your production team to fill out. You’ll define log fields for each process; for example, in the “Roasting” process you can add Temperature as log field.',
 		link: '/processes',
-		condition: ({teams}) => teams.processes && teams.processes.filter(e => e.attributes.length > 0).length > 0,
+		condition: ({teams}) => teams.processes && teams.processes.some(e => e.attributes.length > 0),
 	}, {
 		header: 'List your products',
 		text: 'Products are everything you make or use in your production facility. Products include finished items you sell like bars of chocolate, or raw ingredients like sugar. ',
