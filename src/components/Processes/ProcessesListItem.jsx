@@ -97,7 +97,7 @@ export default class ProcessesListItem extends React.Component {
 					{moment(item.created_at).format("MMMM DD, YYYY")}
 				</div>
 
-				<div className="create-button">
+				<div className="more-options-button">
 					<ButtonDropdown 
 			            menu
 			            expanded={expanded} 
