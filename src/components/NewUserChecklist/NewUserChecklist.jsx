@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './NewUserChecklistActions.jsx'
+import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 
 export default function NewUserChecklist(props) {
 	constructor(props) {
@@ -19,7 +20,9 @@ export default function NewUserChecklist(props) {
 		let{ teams, tasks} = this.state
 		console.log(teams)
 		console.log(tasks)
-		<div />
+		<div>
+			<ApplicationSectionHeader>Onboard your factory</ApplicationSectionHeader>
+		</div>
 	)
 }
 
