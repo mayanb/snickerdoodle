@@ -1,0 +1,36 @@
+@import 'styles/constants.scss';
+
+.new-user-checklist-container {
+	width: calc(100vw - #{$nav-width});
+
+	.new-user-checklist {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 0 36px;
+	}
+
+	.good-morning {
+		padding-top: 24px;
+		font-size: 40px;
+		line-height: 66px;
+	}
+
+	.checklist-help {
+		margin-bottom: 24px;
+		i {
+			font-size: 14px;
+			line-height: 22px;
+			vertical-align: middle;
+		}
+
+		a {
+			color: $primary;
+		}
+	}
+
+	.checklist-title {
+		width: 600px;
+		font-weight: 700;
+	}
+}
