@@ -5,7 +5,7 @@ import {
 	REQUEST_FAILURE,
 } from '../../reducers/APIDataReducer'
 import {  TEAMS, TASKS } from '../../reducers/ReducerTypes'
-
+import moment from 'moment'
 
 export function fetchTeams(teamID) {
 	return function (dispatch) {
@@ -44,14 +44,12 @@ function requestTeamsSuccess(json) {
 
 
 export function fetchTasks(teamID) {
-	// yesterday = new Date()
-	// yesterday.setDate(yesterday.getDate() -1)
-	// start = DateFormatter.format(yesterday)
-	// end = DateFormatter.format(new Date())
+	let startDate = moment().subtract(3,'d').format('YYYY-MM-DD');
+	let endDate = moment(new Date()).format("YYYY-MM-DD")
 	return function (dispatch) {
 		dispatch(requestTasks())
 		return api.get('/ics/tasks/')
-			.query({team: teamID, is_open: true})//, start: startDate, end: endDate})
+			.query({team: teamID, is_open: true, start: startDate, end: endDate})
 			.then(res => dispatch(requestTasksSuccess(res.body)))
 			.catch(err => dispatch(requestTasksFailure(err)))
 	}
