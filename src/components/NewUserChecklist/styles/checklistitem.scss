@@ -9,6 +9,7 @@
 	box-shadow: $gray-ultra-light 0 0 6px;
 	display: flex;
 	overflow: hidden;
+	cursor: pointer;
 
 	.checklist-item-circle {
 		margin: 16px 0 16px 16px;
@@ -28,13 +29,6 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-		}
-
-		&.checklist-item-done {
-			.checklist-item-circle i {
-				font-size: 26px;
-				color: green;
-			}
 		}
 	}
 
@@ -60,5 +54,28 @@
 		align-items: center;
 		background-color: $primary;
 		color: white;
+	}
+
+
+	&.checklist-item-done {
+		.checklist-item-circle div {
+			border: 0px;
+			i {
+				font-size: 26px;
+				color: #B4EF67;
+			}
+		}
+
+	 span.checklist-item-header {
+			color: $gray;
+		}
+
+		span.checklist-item-text {
+			color: $gray-light;
+		}
+
+		.checklist-item-link {
+			background-color: rgba($primary, 0.5);
+		}
 	}
 }
