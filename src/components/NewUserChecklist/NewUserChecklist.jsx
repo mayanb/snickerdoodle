@@ -33,7 +33,7 @@ class NewUserChecklist extends React.Component {
 
 	getChecklistItems() {
 		data.forEach((e, i) => {
-			// e.isDone = calculateIsDone()
+			// e.isDone = e.condition(this.props)
 		})
 		data.sort((a, b) => a.isDone ? 1 : -1)
 		return data
@@ -67,6 +67,9 @@ const data = [
 		header: 'List some processes',
 		text: 'Processes are the different steps you take to make things in your production facility. Some examples include: Roasting, Winnowing, Melanging, Tempering, and Packaging.',
 		link: '/processes',
+		condition: ({team}) => {
+			return team.processes.length > 0
+		},
 	}, {
 		header: 'Add log fields for your processes',
 		text: 'Build your logs by adding the fields you want your production team to fill out. You’ll define log fields for each process; for example, in the “Roasting” process you can add Temperature as log field.',
