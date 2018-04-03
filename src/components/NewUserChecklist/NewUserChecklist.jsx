@@ -19,23 +19,8 @@ class NewUserChecklist extends React.Component {
 		if(teamsUI.isFetchingData || tasksUI.isFetchingData || !teams || !tasks) {
 			//return loading
 			return null
-		} else {
-			if(teams.processes && teams.processes.length > 0) {
-				console.log("create process is done")
-				if(teams.processes.filter(e => e.attributes.length > 0)) {
-					console.log("create attributes is done")
-				}
-			}
-			if(teams.products && teams.products.length > 0) {
-				console.log("create products is done")
-			}
-			if(teams.users && teams.users.length > 1) {
-				console.log("invite team is done")
-			}
-			if(tasks && tasks.length > 0) {
-				console.log("create task is done")
-			}
 		}
+		
 		const checklist_items = this.getChecklistItems()
 		return (
 			<div className="new-user-checklist-container">
