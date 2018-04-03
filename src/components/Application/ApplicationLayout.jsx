@@ -36,6 +36,8 @@ import NewFeatures from '../NewFeatures/NewFeatures'
 
 import Inventory2 from '../Inventory2/Inventory'
 
+import NewUserChecklist from '../NewUserChecklist/NewUserChecklist'
+
 export default class ApplicationLayoutStable extends React.Component {
 
   render () {
@@ -84,6 +86,7 @@ function App(props) {
         <Route path={"/googleconnect/:ext?"} component={Account} />
         <Route path={"/bc/"} component={BCWrapper} />
         <Route path={"/barcharttest/"} component={Sortable} />
+        <Route path={"/checklist/"} component={NewUserChecklist} />
       </div>
     </div>
   )
