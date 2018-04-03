@@ -11,9 +11,11 @@
 	.pagination {
 		width: 100%;
 		font-size: 14px;
-		line-height: 40px;
+		line-height: 60px;
         display: flex;
 		justify-content: space-between;
+		padding-left: 40px;
+		padding-right: 60px;
 
 		.pagination-info {
             font-weight: bold;
