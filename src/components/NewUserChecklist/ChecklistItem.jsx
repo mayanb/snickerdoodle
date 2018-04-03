@@ -3,7 +3,7 @@ import './styles/checklistitem.css'
 
 export default function ChecklistItem({ header, text, link, isDone }) {
 	return (
-		<div className={"checklist-item " + (isDone && "checklist-item-done")}>
+		<div className={"checklist-item " + (isDone && " checklist-item-done")}>
 			<div className="checklist-item-circle">
 				<div>
 					{isDone && <i className="material-icons">check_circle</i>}
