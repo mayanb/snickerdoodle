@@ -10,8 +10,10 @@ import './styles/newuserchecklist.css'
 class NewUserChecklist extends React.Component {
 	componentDidMount() {
 		console.log("fetching")
-		this.props.dispatch(actions.fetchTeams())
-		this.props.dispatch(actions.fetchTasks())
+		console.log(this.props.user)
+		let user = this.props.user
+		this.props.dispatch(actions.fetchTeams(user.team))
+		this.props.dispatch(actions.fetchTasks(user.team))
 	}
 
 	render() { 
@@ -20,9 +22,10 @@ class NewUserChecklist extends React.Component {
 			//return loading
 			return null
 		} else {
+			console.log(tasks)
 			if(teams.processes && teams.processes.length > 0) {
 				console.log("create process is done")
-				if(teams.processes.filter(e => e.attributes.length > 0)) {
+				if(teams.processes.some(e => e.attributes.length > 0)) {
 					console.log("create attributes is done")
 				}
 			}

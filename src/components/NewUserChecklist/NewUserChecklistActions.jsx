@@ -7,14 +7,13 @@ import {
 import {  TEAMS, TASKS } from '../../reducers/ReducerTypes'
 
 
-export function fetchTeams(q) {
+export function fetchTeams(teamID) {
 	return function (dispatch) {
 		// dispatch an action that we are requesting a process
 		dispatch(requestTeams())
 
 		// actually fetch 
-		return api.get('/ics/teams/2')
-			.query(q)
+		return api.get(`/ics/teams/${teamID}`)
 			.then(res => dispatch(requestTeamsSuccess(res.body)))
 			.catch(err => dispatch(requestTeamsFailure(err)))
 	}
@@ -45,23 +44,15 @@ function requestTeamsSuccess(json) {
 }
 
 
-export function fetchTasks(q) {
+export function fetchTasks(teamID) {
+	// yesterday = new Date()
+	// yesterday.setDate(yesterday.getDate() -1)
+	// start = DateFormatter.format(yesterday)
+	// end = DateFormatter.format(new Date())
 	return function (dispatch) {
-		// dispatch an action that we are requesting a process
 		dispatch(requestTasks())
-
-		// actually fetch 
-		return api.get('/ics/tasks/?team=24')
-			//need to pass in team: 24 or whatever the team id is
-			// yesterday = new Date()
-			// yesterday.setDate(yesterday.getDate() - 1)
-			// {team: 24,
-			// is_open: true,
-			// start: DateFormatter.format(yesterday),
-			// end: DateFormatter.format(new Date())}
-
-			// .query(q)
-			.query({team: 24})
+		return api.get('/ics/tasks/')
+			.query({team: teamID, is_open: true})//, start: startDate, end: endDate})
 			.then(res => dispatch(requestTasksSuccess(res.body)))
 			.catch(err => dispatch(requestTasksFailure(err)))
 	}
