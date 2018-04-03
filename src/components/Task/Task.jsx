@@ -82,7 +82,7 @@ class Task extends React.Component {
   }
   
   getBatchSizeDisplayText({items, process_type}) {
-		const batchAmount = items.reduce((sum, item) => sum + parseInt(item.amount, 10), 0)
+		const batchAmount = items.reduce((sum, item) => sum + parseFloat(item.amount), 0)
     return `Batch Size: ${formatAmount(batchAmount, process_type.unit)}`
   }
   
