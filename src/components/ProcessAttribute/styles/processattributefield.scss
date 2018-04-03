@@ -3,10 +3,19 @@
 .process-attribute-field {
 	display: flex;
 	line-height: 20px;
-	max-width: 280px;
 
 	&:first-child {
 		margin-right: 16px;
+	}
+	//max-width: 280px;
+
+	& > div {
+		max-width: 280px;
+	}
+
+	input {
+		margin-right: 16px;
+		max-width: 280px; 
 		flex: 1;
 	}
 
@@ -17,7 +26,6 @@
 		white-space: nowrap;
 		min-width: 0;
 		text-overflow: ellipsis;
-		margin-bottom: 8px;
 		margin-right: 8px;
 
 		&:last-child {

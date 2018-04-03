@@ -8,10 +8,10 @@ const DATA_TYPE_LABELS = {
 	USER: 'User'
 }
 
-export default function ProcessAttributeDatatype(props) {
+export default function ProcessAttributeDatatype({type}) {
 	return (
 		<div className="process-attribute-datatype">
-			<span>{DATA_TYPE_LABELS[props.type]}</span>
+			<span>{DATA_TYPE_LABELS[type]}</span>
 		</div>
 	)
 }

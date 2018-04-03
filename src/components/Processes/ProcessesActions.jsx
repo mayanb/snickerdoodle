@@ -123,6 +123,19 @@ export function postCreateProcess(json, success) {
   }
 }
 
+export function postDuplicateProcess(json, success) {
+  return function (dispatch) {
+    dispatch(requestCreateProcess())
+    //change this endpoint to processes-duplicate or something
+    //right now passing in the process ID to duplicate as duplicateID
+    return api.post('/ics/processes/')
+      .send(json)
+      .send({ icon: "default.png" })
+      .then((res) => dispatch(requestCreateProcessSuccess(res.body)))
+      .catch((err) => dispatch(requestCreateProcessFailure(err)))
+  }
+}
+
 
 function requestCreateProcess() {
   return {
@@ -149,7 +162,7 @@ function requestCreateProcessSuccess(json) {
   }
 }
 
-export function postDeleteProcess(p, index, callback) {
+export function postDeleteProcess(p, index) {
   return function (dispatch) {
     dispatch(requestDeleteProcess(index))
 
@@ -160,15 +173,9 @@ export function postDeleteProcess(p, index, callback) {
         created_by: p.created_by,
         team_created_by: p.team_created_by,
         is_trashed: true,
-        })
-      .end(function (err, res) {
-        if (err || !res.ok)
-          dispatch(requestDeleteProcessFailure(index, err))
-        else {
-          dispatch(requestDeleteProcessSuccess("is_trashed", true, index))
-          callback()
-        }
       })
+      .then(() => dispatch(requestDeleteProcessSuccess(index)))
+      .catch(err => dispatch(requestDeleteProcessFailure(index, err)))
   }
 }
 
@@ -189,7 +196,7 @@ function requestDeleteProcessFailure(index, err) {
   }
 }
 
-function requestDeleteProcessSuccess(field, value, index) {
+function requestDeleteProcessSuccess(index) {
   return {
     type: REQUEST_DELETE_SUCCESS,
     name: PROCESSES,
