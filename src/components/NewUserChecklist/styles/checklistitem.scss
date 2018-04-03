@@ -25,6 +25,16 @@
 			height: 24px;
 			border: 1px solid $gray-ultra-light;
 			border-radius: 16px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		&.checklist-item-done {
+			.checklist-item-circle i {
+				font-size: 26px;
+				color: green;
+			}
 		}
 	}
 

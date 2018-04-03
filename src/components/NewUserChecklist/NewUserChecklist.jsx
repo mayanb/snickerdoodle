@@ -21,24 +21,8 @@ class NewUserChecklist extends React.Component {
 		if(teamsUI.isFetchingData || tasksUI.isFetchingData || !teams || !tasks) {
 			//return loading
 			return null
-		} else {
-			console.log(tasks)
-			if(teams.processes && teams.processes.length > 0) {
-				console.log("create process is done")
-				if(teams.processes.some(e => e.attributes.length > 0)) {
-					console.log("create attributes is done")
-				}
-			}
-			if(teams.products && teams.products.length > 0) {
-				console.log("create products is done")
-			}
-			if(teams.users && teams.users.length > 1) {
-				console.log("invite team is done")
-			}
-			if(tasks && tasks.length > 0) {
-				console.log("create task is done")
-			}
 		}
+		
 		const checklist_items = this.getChecklistItems()
 		return (
 			<div className="new-user-checklist-container">
@@ -57,7 +41,7 @@ class NewUserChecklist extends React.Component {
 
 	getChecklistItems() {
 		data.forEach((e, i) => {
-			// e.isDone = e.condition(this.props)
+			e.isDone = e.condition && e.condition(this.props)
 		})
 		data.sort((a, b) => a.isDone ? 1 : -1)
 		return data
@@ -91,25 +75,27 @@ const data = [
 		header: 'List some processes',
 		text: 'Processes are the different steps you take to make things in your production facility. Some examples include: Roasting, Winnowing, Melanging, Tempering, and Packaging.',
 		link: '/processes',
-		condition: ({team}) => {
-			return team.processes.length > 0
-		},
+		condition: ({teams}) => teams.processes && teams.processes.length > 0,
 	}, {
 		header: 'Add log fields for your processes',
 		text: 'Build your logs by adding the fields you want your production team to fill out. You’ll define log fields for each process; for example, in the “Roasting” process you can add Temperature as log field.',
 		link: '/processes',
+		condition: ({teams}) => teams.processes && teams.processes.filter(e => e.attributes.length > 0).length > 0,
 	}, {
 		header: 'List your products',
 		text: 'Products are everything you make or use in your production facility. Products include finished items you sell like bars of chocolate, or raw ingredients like sugar. ',
 		link: '/products',
+		condition: ({teams}) => teams.products && teams.products.length > 0,
 	}, {
 		header: 'Create your first task',
 		text: 'When a production team member wants to record what they are working on, they’ll create a new task in the Polymer iOS app. You can then see what they are working on in your dashboard. ',
 		link: '/firsttask',
+		condition: ({tasks}) => tasks && tasks.length > 0,
 	}, {
 		header: 'Invite your team members',
 		text: 'Invite everyone on your production and management team to use Polymer. Add their name and email, and we’ll send them a link to set up their account. With different users, you’ll have detailed information on what everyone is working on. ',
 		link: '/account',
+		condition: ({teams}) => teams.users && teams.users.length > 1,
 	},
 ]
 
