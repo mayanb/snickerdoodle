@@ -43,6 +43,7 @@ export default function(data) {
   	movements: createFilteredReducer(apiDataReducer, action => action.name === types.MOVEMENTS, stateDefault), 
   	inventories: createFilteredReducer(_inventory, action => action.name === types.INVENTORIES, inventoriesStateDefault),
   	task: createFilteredReducer(_task, action => action.name === types.TASK, stateDefault), 
+    tasks: createFilteredReducer(apiDataReducer, action => action.name === types.TASKS, stateDefault), 
   	taskDescendents: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_DESCENDENTS, stateDefault), 
   	taskAncestors: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_ANCESTORS, stateDefault), 
   	taskAttribute: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_ATTRIBUTE, stateDefault), 
