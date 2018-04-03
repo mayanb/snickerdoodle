@@ -25,6 +25,9 @@ div.processes {
   .icon {
     flex: 1;
     background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .description {
@@ -39,7 +42,7 @@ div.processes {
     flex: 3;
   }
 
-  .create-button {
+  .more-options-button {
     flex: 1;
   }
 }

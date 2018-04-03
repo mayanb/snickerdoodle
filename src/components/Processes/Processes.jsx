@@ -88,7 +88,7 @@ class Processes extends React.Component {
 				<div className="last-used">Last Used</div>
 				<div className="owner">Created by</div>
 				<div className="date">Date Created</div>
-				<div className="create-button"></div>
+				<div className="more-options-button"></div>
 			</ObjectListHeader>
 		)
 	}
@@ -101,6 +101,7 @@ class Processes extends React.Component {
 		return (
 			<ArchiveDialog
 				{...p}
+				type="process"
 				isArchiving={this.state.isArchiving}
 				onCancel={this.handleCancelArchive.bind(this)}
 				onSubmit={() => this.handleConfirmArchive()}

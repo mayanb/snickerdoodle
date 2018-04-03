@@ -17,8 +17,10 @@ export default function ProcessInformation({icon, code, name, description, defau
 function ProcessInformationHeader({icon, code, name}) {
 	return (
 		<div className="process-information-header">
-			<Img src={ic(icon)} height="30px" />
-			<span>{`(${code}) ${name}`}</span>
+			<div className="process-name">
+				<Img src={ic(icon)} height="30px" />
+				<span>{`(${code}) ${name}`}</span>
+			</div>
 			<Button type="gray">Edit</Button>
 		</div>
 	)

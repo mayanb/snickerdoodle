@@ -3,12 +3,12 @@ import Dialog from '../Card/Dialog.jsx'
 import Button from '../Button/Button.jsx'
 import './styles/archivedialog.css'
 
-export default function ArchiveDialog({onCancel, onSubmit, isArchiving, code, name}) {
+export default function ArchiveDialog({onCancel, onSubmit, isArchiving, code, name, type}) {
 	return (
 		<Dialog onToggle={onCancel}>
 			<div className="archive-dialog">
 				<div className="archive-dialog-header">
-					<span>Delete process</span>
+					<span>Delete {type}</span>
 					<i className="material-icons" onClick={onCancel}>close</i>
 				</div>
 				<div className="archive-rule" style={{marginLeft: "-32px", marginRight: "-20px", width: "120%"}} />
@@ -17,7 +17,7 @@ export default function ArchiveDialog({onCancel, onSubmit, isArchiving, code, na
 				<span>from your factory?</span>
 				<div className="archive-actions">
 					<Button wide type="blue-outline" onClick={onCancel}>Cancel</Button>
-					<Button wide type="red" isLoading={isArchiving} onClick={onSubmit}>Delete process</Button>
+					<Button wide type="red" isLoading={isArchiving} onClick={onSubmit}>Delete {type}</Button>
 				</div>
 			</div>
 		</Dialog>

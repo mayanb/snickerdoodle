@@ -2,11 +2,9 @@ import React from 'react'
 import ObjectListItem from '../ObjectList/ObjectListItem'
 import moment from 'moment'
 import {icon} from '../Task/TaskHelpers.jsx'
-import './styles/processlistitem.css'
 import {pluralize} from '../../utilities/stringutils'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import ButtonStopClickPropagate from '../Card/ButtonStopClickPropagate'
-// import {Link} from 'react-router-dom'
 
 export default class ProcessesListItem extends React.Component {
 
@@ -31,14 +29,6 @@ export default class ProcessesListItem extends React.Component {
 		fn(this.props.index)
 	}
 
-	renderOptionsButton() {
-		return (
-			<div className="process-options">
-				...
-			</div>
-		)
-	}
-
 	renderProcessOptions() {
 		let { onArchive, onDuplicate } = this.props
 		return (
@@ -52,7 +42,7 @@ export default class ProcessesListItem extends React.Component {
 				<div style={{minWidth: "100px"}}>
 					<ButtonStopClickPropagate secondary onClick={() => this.handleDropdownOption(onArchive)}>
 						<i className="material-icons">delete_forever</i>
-						<span>Delete</span>
+						<span>Archive</span>
 					</ButtonStopClickPropagate>
 				</div>
 			</div>
@@ -102,7 +92,7 @@ export default class ProcessesListItem extends React.Component {
 			            menu
 			            expanded={expanded} 
 			            onToggleDropdown={this.handleDropdownToggle}
-			            button={this.renderOptionsButton()}
+			            button={<i className="material-icons">more_horiz</i>}
 	          		>
 		            <div className="account-menu">
 		              { this.renderProcessOptions() }

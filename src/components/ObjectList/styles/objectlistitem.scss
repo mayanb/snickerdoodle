@@ -18,5 +18,30 @@
         font-weight: bold;
         text-overflow: ellipsis;
     }
+
+
+    .icon-img {
+        width: 25px;
+
+    }
+
+    .more-options-button {
+        align-self: center;
+        display: flex;
+        flex-direction: row-reverse;
+
+        .button-dropdown > button {
+            height: 24px;
+            width: 24px;
+            background-color: transparent;
+            border: 1px solid $elephant;
+            padding: 0;
+
+            i {
+                color: $elephant;
+                font-size: 20px;
+            }
+        }
+    }
 }
 

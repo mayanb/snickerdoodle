@@ -117,9 +117,6 @@ function formatProductResponse(json) {
 export function postDeleteProduct(p, index, callback) {
   return function (dispatch) {
     dispatch(requestDeleteProduct(index))
-    console.log(p.name)
-    console.log(p.created_by)
-    console.log(p.team_created_by)
 
     return api.put(`/ics/products/${p.id}/`)
       .send({ 
@@ -129,14 +126,8 @@ export function postDeleteProduct(p, index, callback) {
           team_created_by: p.team_created_by,
           is_trashed: true,
         })
-      .end(function (err, res) {
-        if (err || !res.ok)
-          dispatch(requestDeleteProductFailure(index, err))
-        else {
-          dispatch(requestDeleteProductSuccess("is_trashed", true, index))
-          callback()
-        }
-      })
+	    .then(() => dispatch(requestDeleteProductSuccess(index)))
+	    .catch(err => dispatch(requestDeleteProductFailure(index, err)))
   }
 }
 
