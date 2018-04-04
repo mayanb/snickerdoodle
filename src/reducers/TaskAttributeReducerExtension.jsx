@@ -1,17 +1,11 @@
 import update from 'immutability-helper'
 
-export const START_EDITING_ATTRIBUTE = 'START_EDITING_ATTRIBUTE'
-export const FINISH_EDITING_ATTRIBUTE = 'FINISH_EDITING_ATTRIBUTE'
 export const REQUEST_SAVE_ATTRIBUTE = 'REQUEST_SAVE_ATTRIBUTE'
 export const REQUEST_SAVE_ATTRIBUTE_SUCCESS = 'REQUEST_SAVE_ATTRIBUTE_SUCCESS'
 export const REQUEST_SAVE_ATTRIBUTE_FAILURE = 'REQUEST_SAVE_ATTRIBUTE_FAILURE'
 
 export function _taskAttribute(state, action) {
 	switch (action.type) {
-	  case START_EDITING_ATTRIBUTE:
-      return startEditingAttribute(state, action)
-    case FINISH_EDITING_ATTRIBUTE:
-      return finishEditingAttribute(state,action)
     case REQUEST_SAVE_ATTRIBUTE:
       return requestSaveAttribute(state, action)
     case REQUEST_SAVE_ATTRIBUTE_SUCCESS:
@@ -21,28 +15,6 @@ export function _taskAttribute(state, action) {
     default:
     	return state
    }
-}
-
-function startEditingAttribute(state, action) {
-  return update(state, {
-    ui: {
-      $merge: {
-        editingAttribute: action.index,
-        isSavingAttribute: false
-      }
-    }
-  })
-}
-
-function finishEditingAttribute(state, action) {
-  return update(state, {
-    ui: {
-      $merge: {
-        editingAttribute: undefined,
-        isSavingAttribute: false
-      }
-    }
-  })
 }
 
 // acts as if everything has already been saved

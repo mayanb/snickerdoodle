@@ -1,27 +1,11 @@
 import api from '../WaffleconeAPI/api.jsx'
 import { TASK } from '../../reducers/ReducerTypes'
 import {
-  START_EDITING_ATTRIBUTE,
-  FINISH_EDITING_ATTRIBUTE,
-  REQUEST_SAVE_ATTRIBUTE, 
+  REQUEST_SAVE_ATTRIBUTE,
   REQUEST_SAVE_ATTRIBUTE_SUCCESS, 
   REQUEST_SAVE_ATTRIBUTE_FAILURE
 } from '../../reducers/TaskAttributeReducerExtension'
 
-export function startEditingAttribute(index) {
-  return {
-    type: START_EDITING_ATTRIBUTE,
-    name: TASK,
-    index: index
-  }
-}
-
-export function finishEditingAttribute(index) {
-	return {
-		type: FINISH_EDITING_ATTRIBUTE,
-		name: TASK
-	}
-}
 
 export function requestSaveAttribute(index, params) {
 	return {

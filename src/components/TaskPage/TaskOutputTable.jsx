@@ -2,9 +2,6 @@ import React from 'react'
 import { Table, subs } from './TaskHelpers'
 
 export default function TaskOutputTable(props) {
-	let users = JSON.parse(window.localStorage.getItem('users-v5'))
-	let user = users.data[users.ui.activeUser].user
-	let team = user.team
 	return (
 		<Table title={`Outputs (${(props.outputs || []).length})`}>
 			{

@@ -1,5 +1,4 @@
 import React from 'react'
-import './styles/task.css'
 import TaskInputTable from './TaskInputTable'
 import TaskOutputTable from './TaskOutputTable'
 import { connect } from 'react-redux'
