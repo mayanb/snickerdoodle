@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Button from '../Button/Button'
+import ZeroState from './ProcessAttributeZeroState'
 import ProcessAttribute from './ProcessAttribute'
 import ProcessAttributeNew from './ProcessAttributeNew'
 import * as actions from './ProcessAttributeActions'
@@ -26,7 +27,7 @@ class ProcessAttributeList extends React.Component {
 
 	render() {
 		let {ui} = this.props
-		let sortableAttributes = this.constructAttributeList()
+
 		return (
 			<div className="process-attributes">
 				<ProcessAttributesHeader 
@@ -34,6 +35,20 @@ class ProcessAttributeList extends React.Component {
 					onCancel={this.finishAddingAttribute} 
 					isAdding={ui.isAddingAttribute}
 				/>
+				{this.renderList()}
+				{this.renderDeleteAttributeDialog()}
+			</div>
+		)
+	}
+
+	renderList() {
+		let {ui} = this.props
+		let attrs = this.constructAttributeList()
+		if (!attrs.length && !ui.isAddingAttribute) {
+			return <ZeroState />
+		} 
+		return (
+			<div>
 				<div className="process-attr-list-header">
 					<span>Name</span>
 					<span>Type</span>
@@ -47,13 +62,11 @@ class ProcessAttributeList extends React.Component {
 				}
 				</Slide>
 				<Sortable 
-					cards={sortableAttributes}
+					cards={attrs}
 					canEdit={true} 
 					finishMovingCard={this.moveAttribute.bind(this)} 
 					renderer={ProcessAttribute} 
 				/>
-
-				{this.renderDeleteAttributeDialog()}
 			</div>
 		)
 	}

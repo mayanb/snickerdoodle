@@ -1,13 +1,15 @@
 import React from 'react'
-import {icon, TaskTable, OutputTable, InputTable} from './TaskHelpers.jsx'
-import moment from 'moment'
 import { connect } from 'react-redux'
+import moment from 'moment'
+import { formatAmount } from "../../utilities/stringutils"
+import {icon, TaskTable} from './TaskHelpers.jsx'
+import TaskInputTable from './TaskInputTable'
+import TaskOutputTable from './TaskOutputTable'
 import * as actions from './TaskActions'
 import * as attributeActions from './TaskAttributeActions'
 import TaskInformationTable from './TaskInformationTable'
 import TaskFlag from './TaskFlag'
-
-
+import './styles/task.css'
 
 class Task extends React.Component {
   constructor(props) {
@@ -22,20 +24,7 @@ class Task extends React.Component {
     this.saveEditing = this.saveEditing.bind(this)
   }
 
-  componentWillMount() {
-    //mountQR()
-  }
-
   componentDidMount() {
-    // let q = new QRCode(document.getElementById("qrtest"), {
-    //   text: "",
-    //   width: 128,
-    //   height: 128,
-    //   colorDark : "#000000",
-    //   colorLight : "#ffffff",
-    //   correctLevel : QRCode.CorrectLevel.Q
-    // })
-    // this.setState({qrcode: q})
     let id = this.props.match.params.id
     this.props.dispatch(actions.getTask(id))
     this.props.dispatch(actions.getTaskAncestors(id))
@@ -53,9 +42,6 @@ class Task extends React.Component {
     }
 
     let dialog = false;
-    // if(this.state.showDialog) {
-    //   dialog = <Dialog {...this.state.activeDialog} />
-    // }
     return (
       <div className="task-detail">
         {dialog}
@@ -63,6 +49,7 @@ class Task extends React.Component {
           <div className="header-left">
             <img src={icon(data.process_type.icon)} alt="process type"/>
             <span>{data.display}</span>
+            <div className='batch-size'>{this.getBatchSizeDisplayText(data)}</div>
           </div>
           <span>{moment(data.created_at).format('dddd, MMMM Do YYYY, h:mm a')}</span>
         </div>
@@ -84,14 +71,27 @@ class Task extends React.Component {
             <button className="task_button" onClick={this.deleteTask}>Delete Task</button>
           </div>
           <div>
-            <InputTable inputs={data.inputs}/>
-            <OutputTable outputs={data.items} onMark={this.markAsUsed}/>
+            <TaskInputTable data={data}/>
+            {this.teamUsesOutputs() && <TaskOutputTable outputs={data.items} onMark={this.markAsUsed}/>}
             <TaskTable title="Ancestors" tasks={ancestorsData} loading={ancestorsUI.isFetchingData}/>
             <TaskTable title="Descendents" tasks={descendentsData} loading={descendentsUI.isFetchingData}/>
           </div>
         </div>
       </div>
     )
+  }
+  
+  getBatchSizeDisplayText({items, process_type}) {
+		const batchAmount = items.reduce((sum, item) => sum + parseFloat(item.amount), 0)
+    return `Batch Size: ${formatAmount(batchAmount, process_type.unit)}`
+  }
+  
+  // TEMP: For optional printing transition, to allow Dandelion to continue using outputs
+  teamUsesOutputs() {
+		const {data, ui} = this.props.users
+    const teamID = parseInt(data[ui.activeUser].user.team, 10)
+    const teamIDsWhoUseOutputs = new Set([1 /* -> Alabama */, 2  /* -> Valencia */])
+    return teamIDsWhoUseOutputs.has(teamID)
   }
 
   startEditing(index) {
@@ -129,6 +129,7 @@ class Task extends React.Component {
 
 const mapStateToProps = (state/*, props*/) => {
   return {
+    users: state.users,
     data: state.task.data,
     ui: state.task.ui,
     ancestorsData: state.taskAncestors.data,
@@ -141,9 +142,3 @@ const mapStateToProps = (state/*, props*/) => {
 }
 const connectedTask = connect(mapStateToProps)(Task)
 export default connectedTask
-
-/*
-
-<button className="task_button" onClick={this.closeTask}>Close Task</button>
-            
-*/
