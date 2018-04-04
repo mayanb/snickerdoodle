@@ -23,6 +23,7 @@ class TaskPage extends React.Component {
 
     this.handleFlagTask = this.handleFlagTask.bind(this)
 	  this.handleDelete = this.handleDelete.bind(this)
+	  this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
 
     this.markAsUsed = this.markAsUsed.bind(this)
     this.closeTask = this.closeTask.bind(this)
@@ -49,6 +50,14 @@ class TaskPage extends React.Component {
       .then(() => this.props.history.push('/activity-log'))
 	}
 
+	handleSaveAttribute(attributeId, value) {
+		const data = this.props.data
+		let task = this.props.data.id
+		const index = data.attributesWithValues.findIndex(a => a.id === attributeId)
+		let params = { attribute: attributeId, task: task, value: value }
+		return this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
+	}
+
   render() {
     let { data, ui, ancestorsData, ancestorsUI, descendentsData, descendentsUI } = this.props
 
@@ -65,14 +74,16 @@ class TaskPage extends React.Component {
     return (
       <div>
 	      <div className="task-page">
-		      <TaskHeader task={this.props.data} onToggleFlag={this.handleFlagTask}/>
+		      <TaskHeader task={data} onToggleFlag={this.handleFlagTask}/>
 		      <div className="task-container">
-			      <ProductHistory task={this.props.data}>
+			      <ProductHistory task={data}>
 				      <TaskTable title="Ancestors" tasks={ancestorsData} loading={ancestorsUI.isFetchingData}/>
 				      <TaskTable title="Descendents" tasks={descendentsData} loading={descendentsUI.isFetchingData}/>
             </ProductHistory>
-			      <TaskMain task={this.props.data}
-			                attributes={attributesWithValues(data.process_type.attributes, data.attribute_values)} />
+			      <TaskMain task={data}
+			                attributes={data.attributesWithValues}
+			                onSaveAttribute={this.handleSaveAttribute}
+			      />
 			      <TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={data.label} />
 		      </div>
 	      </div>
@@ -153,15 +164,6 @@ class TaskPage extends React.Component {
   markAsUsed(index, id) {
     this.props.dispatch(actions.markAsUsed(index, id))
   }
-}
-
-function attributesWithValues(attributes, attributeValues) {
-  const sortedAttributeValues = attributeValues.sort().reverse() //Sort to find most recent
-  return attributes.map(attribute => {
-	  const valueObject = sortedAttributeValues.find(val => val.attribute === attribute.id)
-	  attribute.value = valueObject ? valueObject.value : ''
-	  return attribute
-  })
 }
 
 const mapStateToProps = (state/*, props*/) => {

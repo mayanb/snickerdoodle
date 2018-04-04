@@ -7,14 +7,17 @@ import moment from 'moment'
 
 export default class TaskMain extends React.Component {
 	render() {
-		const { task, attributes } = this.props
+		const { task, attributes, onSaveAttribute } = this.props
 		console.log('attributes', attributes)
 		return (
 			<div className="task-main">
 				<div className="task-main-container">
 					<TaskName task={task} />
 					<TaskInfo task={task} />
-					<TaskForm taskAttributes={attributes} />
+					<TaskForm
+						taskAttributes={attributes}
+						onSave={onSaveAttribute}
+					/>
 				</div>
 			</div>
 		)

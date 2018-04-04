@@ -15,19 +15,31 @@
         position: relative;
     }
 
-    .form-button {
+    .form-buttons {
         display: none;
-        justify-content: center;
-        align-items: center;
         position: absolute;
         top: 6px;
+        right: 0;
+
+        &.loading {
+            display: flex;
+            top: 8px;
+            right: 6px;
+        }
+    }
+
+    .form-button {
+        margin-right: 6px;
+        justify-content: center;
+        align-items: center;
+        height: 26px;
         border-radius: 4px;
         border-width: 1px;
         border-style: solid;
         cursor: pointer;
     }
 
-    input:focus ~ .form-button {
+    input:focus ~ .form-buttons {
         display: flex;
     }
 

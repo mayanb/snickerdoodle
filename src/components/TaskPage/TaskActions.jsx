@@ -27,10 +27,20 @@ export function getTask(task) {
           dispatch(requestTaskFailure(err))
         } else {
           let organized = organizeAttributes(res.body)
+	        organized.attributesWithValues = attributesWithValues(organized.process_type.attributes, organized.attribute_values)
           dispatch(requestTaskSuccess(organized))
         }
       })
   }
+}
+
+function attributesWithValues(attributes, attributeValues) {
+	const sortedAttributeValues = attributeValues.sort((a, b) => b.id - a.id) //Sort to find most recent
+	return attributes.map(attribute => {
+		const valueObject = sortedAttributeValues.find(val => val.attribute === attribute.id)
+		attribute.value = valueObject ? valueObject.value : ''
+		return attribute
+	})
 }
 
 function organizeAttributes(task) {
