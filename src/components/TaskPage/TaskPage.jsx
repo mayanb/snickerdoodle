@@ -1,5 +1,5 @@
 import React from 'react'
-import {icon, TaskTable, OutputTable, InputTable} from './TaskHelpers.jsx'
+import {icon, TaskTable} from './TaskHelpers.jsx'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import * as actions from './TaskActions'
@@ -11,6 +11,10 @@ import ProductHistory from './ProductHistory'
 import TaskMain from './TaskMain'
 import TaskQR from './TaskQR'
 import './styles/taskpage.css'
+import './styles/task.css'
+
+import TaskInputTable from './TaskInputTable'
+import TaskOutputTable from './TaskOutputTable'
 
 
 class TaskPage extends React.Component {
@@ -72,7 +76,6 @@ class TaskPage extends React.Component {
 			      <TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={data.label} />
 		      </div>
 	      </div>
-	      {/**
 	      <div className="task-detail">
 		      {dialog}
 		      <div className="task-header">
@@ -100,17 +103,24 @@ class TaskPage extends React.Component {
 				      <button className="task_button" onClick={this.deleteTask}>Delete Task</button>
 			      </div>
 			      <div>
-				      <InputTable inputs={data.inputs} />
-				      <OutputTable outputs={data.items} onMark={this.markAsUsed} />
+	            <TaskInputTable data={data}/>
+	            {this.teamUsesOutputs() && <TaskOutputTable outputs={data.items} onMark={this.markAsUsed}/>}
 				      <TaskTable title="Ancestors" tasks={ancestorsData} loading={ancestorsUI.isFetchingData} />
 				      <TaskTable title="Descendents" tasks={descendentsData} loading={descendentsUI.isFetchingData} />
 			      </div>
 		      </div>
 	      </div>
-	       **/}
       </div>
     )
   }
+
+	// TEMP: For optional printing transition, to allow Dandelion to continue using outputs
+	teamUsesOutputs() {
+		const { data, ui } = this.props.users
+		const teamID = parseInt(data[ui.activeUser].user.team, 10)
+		const teamIDsWhoUseOutputs = new Set([1 /* -> Alabama */, 2  /* -> Valencia */])
+		return teamIDsWhoUseOutputs.has(teamID)
+	}
 
   startEditing(index) {
     this.props.dispatch(attributeActions.startEditingAttribute(index))
@@ -156,6 +166,7 @@ function attributesWithValues(attributes, attributeValues) {
 
 const mapStateToProps = (state/*, props*/) => {
   return {
+	  users: state.users,
     data: state.task.data,
     ui: state.task.ui,
     ancestorsData: state.taskAncestors.data,

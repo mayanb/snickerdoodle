@@ -2,7 +2,6 @@ import moment from 'moment'
 import React from 'react'
 import { gerund } from '../../utilities/stringutils'
 
-
 export function display(task) {
   return words(task).toUpperCase()
 }
@@ -47,7 +46,6 @@ export function getOperator(task) {
   return ""
 }
 
-
 export function words(task) {
   if (!task || task === undefined || task.label === undefined) {
     return ""
@@ -60,7 +58,6 @@ export function words(task) {
   else
     return task.label
 }
-
 
 export function getAttributesToColumnNumbers(attributes) {
   var cols = {}
@@ -109,7 +106,6 @@ export function icon(k) {
   return process.env.PUBLIC_URL + "/img/" + i + "@3x.png"
 }
 
-
 export function pl(count, unit) {
   if (count) {
 
@@ -118,7 +114,6 @@ export function pl(count, unit) {
     return count + " " + unit
   return count + " " + unit + "s"
 }
-
 
 export function TaskTable(props) {
   return (
@@ -145,87 +140,23 @@ export function TaskTable(props) {
   )
 }
 
-export function OutputTable(props) {
-  // let team = window.localStorage.getItem("team") || "1"
-  let users = JSON.parse(window.localStorage.getItem('users-v5'))
-  let user = users.data[users.ui.activeUser].user
-  let team = user.team
-  return (
-    <Table title={`Outputs (${(props.outputs || []).length})`}>
-    {
-      (props.outputs || []).map(function (item, i) {
-        let isInInventory = (!item.is_used && item.team_inventory && item.team_inventory.toString() === team)
-        var inventory = false
-        var markAsUsed = false
-        if (isInInventory) {
-          inventory = <span className="items-inventory"><div className="inv-circle"></div>Inventory</span>
-          markAsUsed = <button className="small-mark-button" onClick={() => props.onMark(i, item.id)} >MARK AS USED</button>
-        }
-        return (
-          <div key={item.id} className="task-attribute-table-row output-table-row">
-            <span className="items-qr">
-              <i className="material-icons">select_all</i>
-              {subs(item.item_qr)}
-              <button style={{display: "none"}}className="small-print-button">PRINT</button>
-              {markAsUsed}
-            </span>
-            <span className="items-inventory">{inventory}</span>
-          </div>
-        )
-      })
-    }
-    </Table>
-  )
-}
-
-export function InputTable(props) {
-  let grouped = {};
-  (props.inputs || []).forEach(function (input, i) {
-    if (grouped[input.input_task]) {
-      grouped[input.input_task].push(input)
-    } else {
-      grouped[input.input_task] = [input]
-    }
-  })
-  return (
-    <Table title={`Inputs (${(props.inputs || []).length})`}>
-    {
-      Object.values(grouped).map(function (group, i) {
-        return (
-            <a href={window.location.origin + "/task/" + group[0].input_task} 
-              target="_blank" key={i} 
-              className="task-attribute-table-row input-table-row"
-            >
-              <span>
-                {group[0].input_task_display}
-                <i className="material-icons expand-i">open_in_new</i>
-              </span>
-              <span className="input-count">{pl(group.length, "item")}</span>
-            </a>
-        )
-      })
-    }
-    </Table>
-  )
-}
-
 export function subs(qr) {
   return qr.substring(qr.length-6)
 }
 
-export function Table(props) {
+export function Table({children, title}) {
   let inside = (
     <div className="task-attribute-table-row zero-state zero-state-clean"> <span> Nothing to show here ¯ \_(ツ)_/¯ </span></div>
   )
-  if (props.children) {
-    inside = props.children
+  if (children) {
+    inside = children
   }
 
   let header = false
-  if (props.title) {
+  if (title) {
     header = (
       <div className="task-attribute-table-row task-attribute-table-row-header">
-        <span>{props.title}</span>
+        <span>{title}</span>
         <span />
       </div>
     )

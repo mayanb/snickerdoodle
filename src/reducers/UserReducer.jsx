@@ -121,12 +121,13 @@ function requestLogin(state, action) {
 }
 
 function requestLoginSuccess(state, action) {
-	let newState = update(state, {
+	let newState;
+	newState = update(state, {
 		data: {
 			$merge: {
 				[action.response.user.profile_id]: action.response
 			}
-		}, 
+		},
 		ui: {
 			$merge: {
 				isLoggingIn: false,
@@ -134,7 +135,7 @@ function requestLoginSuccess(state, action) {
 				isAddingAccount: false,
 			}
 		}
-	})
+	});
 
 	window.localStorage.setItem('users-v5', JSON.stringify(newState))
 	return newState
