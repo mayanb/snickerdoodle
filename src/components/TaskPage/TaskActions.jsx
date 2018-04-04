@@ -290,8 +290,6 @@ export function toggleTask(task) {
 }
 
 export function deleteTask(task) {
-  console.log("delete")
-  console.log(task)
   return function (dispatch) {
     dispatch((requestEditTask()))
     return api.put(`/ics/tasks/edit/${task.id}/`)
@@ -304,14 +302,8 @@ export function deleteTask(task) {
         is_flagged: task.is_flagged, 
         experiment: null 
       })
-      .end(function (err, res) {
-        if (err || !res.ok) {
-          //dispatch(requestEditTaskFailure(err))
-        } else {
-          dispatch(requestEditTaskSuccess("is_trashed", true))
-          //dispatch(requestEditTaskSuccessExtension(index))
-        }
-      })
+      .then(() => dispatch(requestEditTaskSuccess("is_trashed", true)))
+      .catch(e => console.log("Error", e))
   }
 }
 

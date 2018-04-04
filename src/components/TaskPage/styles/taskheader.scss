@@ -1,0 +1,29 @@
+@import 'styles/constants.scss';
+
+.task-header {
+    font-size: 20px;
+    height: $section-header-height;
+    line-height: $section-header-height;
+    color: white;
+    padding: 0 36px;
+    background-color: $primary;
+    -webkit-font-smoothing: antialiased;
+
+    &.flagged {
+        background-color: $red;
+
+        .header-button {
+            color: $red;
+        }
+    }
+
+    .header-button {
+        margin: 0 auto;
+        background-color: white;
+        color: $primary;
+        float: right;
+        font-size: 15px;
+        margin-top: $section-header-height/2 - 18;
+    }
+
+}

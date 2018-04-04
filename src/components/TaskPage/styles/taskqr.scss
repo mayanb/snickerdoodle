@@ -1,0 +1,31 @@
+@import 'styles/constants.scss';
+
+.task-qr {
+    width: 188px;
+    padding-top: 40px;
+
+    .title {
+        color: $elephant;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .qr-code-container {
+        margin-bottom: 28px;
+        height: 188px;
+        width: 188px;
+        padding: 8px;
+        box-shadow: $gray-dark 0 2px 4px 0;
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .delete-task {
+        button {
+            width: 100%;
+        }
+    }
+}

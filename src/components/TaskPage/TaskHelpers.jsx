@@ -89,7 +89,7 @@ export function toCSV(process, tasks) {
 
   var attributeColumns = getAttributesToColumnNumbers(process.attributes)
 
-  var arr = ['Task', 'Inputs', 'Outputs', 'Date Created']
+  var arr = ['TaskPage', 'Inputs', 'Outputs', 'Date Created']
   var attrArr = process.attributes.map(function (a) { return a.name.replace(/"/g, '""') })
 
   var firstRow = [ '"' + arr.concat(attrArr).join('","') + '"']

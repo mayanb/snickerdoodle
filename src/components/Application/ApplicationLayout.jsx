@@ -13,7 +13,7 @@ import ZebraPrinter from '../OldComponents/ZebraPrinter.jsx'
 import Navbar from '../Navbar/Navbar.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../Inventory/Inventory.jsx'
-import Task from '../Task/Task.jsx'
+import Task from '../TaskPage/TaskPage.jsx'
 import Goals from '../Goals/Goals'
 
 import PrivateRoute from '../Router/PrivateRoute'

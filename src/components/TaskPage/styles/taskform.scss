@@ -1,0 +1,46 @@
+@import 'styles/constants.scss';
+
+.task-form {
+
+    .form-label {
+        color: $elephant;
+        margin-bottom: 8px;
+    }
+
+    .attribute-field {
+        margin-bottom: 20px;
+    }
+
+    .input-container {
+        position: relative;
+    }
+
+    .form-button {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 6px;
+        border-radius: 4px;
+        border-width: 1px;
+        border-style: solid;
+        cursor: pointer;
+    }
+
+    input:focus ~ .form-button {
+        display: flex;
+    }
+
+    .save {
+        right: 6px;
+        background-color: $primary;
+        border-color: $primary;
+        color: white;
+    }
+
+    .reset {
+        right: 40px;
+        color: $gray;
+        border-color: $gray;
+    }
+}
