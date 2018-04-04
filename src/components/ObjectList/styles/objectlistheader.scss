@@ -3,7 +3,7 @@
 .object-list-header {
     display: flex;
     width: 100%;
-    padding: 0 36px;
+    padding: 0 $object-list-right-padding 0 $object-list-left-padding;
     margin-bottom: 6px;
     color: $elephant;
     font-size: 12px;

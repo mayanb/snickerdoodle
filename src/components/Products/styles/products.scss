@@ -1,6 +1,7 @@
 @import 'styles/constants.scss';
 
 .products {
+	width: 100%;
 
 
 	.paginated-table.border-none li.header {
@@ -21,6 +22,10 @@
 
 	.date {
 		flex: 4;
+	}
+
+	.more-options-button {
+		flex: 1;
 	}
 }
 

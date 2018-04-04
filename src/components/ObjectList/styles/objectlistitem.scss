@@ -3,10 +3,9 @@
 .object-list-item {
     display:flex;
     flex-direction: row;
-    cursor: pointer;
     height: 40px;
     line-height: 40px;
-    padding: 0 36px;
+    padding: 0 $object-list-right-padding 0 $object-list-left-padding;
     border-bottom: 1px solid $gray-ultra-light;
     //box-shadow: $gray-ultra-light 0 2px 4px 0;
 
@@ -17,6 +16,35 @@
     &>div:first-child {
         font-weight: bold;
         text-overflow: ellipsis;
+    }
+
+
+    .icon-img {
+        width: 25px;
+
+    }
+
+    .more-options-button {
+        align-self: center;
+        display: flex;
+        flex-direction: row-reverse;
+
+        .button-dropdown > button {
+            height: 24px;
+            width: 24px;
+            background-color: transparent;
+            border: 1px solid $elephant;
+            padding: 0;
+
+            i {
+                color: $elephant;
+                font-size: 20px;
+            }
+        }
+
+        .button-dropdown.expanded > button {
+            background-color: $primary;
+        }
     }
 }
 

@@ -63,7 +63,7 @@ export default class PaginatedTable extends React.Component {
                     item={keys[i]}
                     index={i} 
                     isSelected={this.isSelected(i)} 
-                    onClick={(e) => this.props.onClick(i)} 
+                    onClick={(e) => this.props.onClick ? this.props.onClick(i) : null}
                     {...this.props.extra}
                   />
                 </li>)

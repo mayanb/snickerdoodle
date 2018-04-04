@@ -14,8 +14,7 @@
 		line-height: 60px;
         display: flex;
 		justify-content: space-between;
-		padding-left: 40px;
-		padding-right: 60px;
+		padding: 0 $object-list-right-padding 0 $object-list-left-padding;
 
 		.pagination-info {
             font-weight: bold;
