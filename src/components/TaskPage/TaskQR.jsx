@@ -2,6 +2,8 @@ import React from 'react'
 import Button from '../Button/Button'
 import './styles/taskqr.css'
 
+import TaskInputsAndOutputs from './TaskInputsAndOutputs'
+
 export default class TaskQR extends React.Component {
 
 	componentDidMount() {
@@ -23,6 +25,7 @@ export default class TaskQR extends React.Component {
 				<div className="delete-task">
 					<Button wide type="red" onClick={onDelete}>Delete {name}</Button>
 				</div>
+				<TaskInputsAndOutputs />
 			</div>
 		)
 	}
