@@ -11,7 +11,6 @@ export default class TaskQR extends React.Component {
 	}
 
 	render() {
-		console.log('props', this.props)
 		const { name, onDelete } = this.props
 		return (
 			<div className="task-qr">

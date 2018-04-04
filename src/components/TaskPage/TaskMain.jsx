@@ -8,7 +8,6 @@ import moment from 'moment'
 export default class TaskMain extends React.Component {
 	render() {
 		const { task, attributes, onSaveAttribute } = this.props
-		console.log('attributes', attributes)
 		return (
 			<div className="task-main">
 				<div className="task-main-container">
@@ -34,7 +33,7 @@ function TaskName({ task }) {
 				<img src={icon(task.process_type.icon)} alt="process type" />
 				<div>
 					<span className="name">{task.label}</span>
-					<i className="material-icons">trending_flat</i>
+					<i className="material-icons">arrow_forward</i>
 					<span className="default-output">{formatAmount(task.total_amount, task.process_type.unit)}</span>
 				</div>
 			</div>

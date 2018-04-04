@@ -23,7 +23,7 @@ export function colorHash(str) {
 }
 
 export function formatNumber(amount) {
-  return amount.toLocaleString()
+  return Number(amount).toLocaleString()
 }
 
 export function formatAmount(amount, unit) {
