@@ -77,8 +77,6 @@ class TaskPage extends React.Component {
 		      <TaskHeader task={data} onToggleFlag={this.handleFlagTask}/>
 		      <div className="task-container">
 			      <ProductHistory task={data}>
-				      <TaskTable title="Ancestors" tasks={ancestorsData} loading={ancestorsUI.isFetchingData}/>
-				      <TaskTable title="Descendents" tasks={descendentsData} loading={descendentsUI.isFetchingData}/>
             </ProductHistory>
 			      <TaskMain task={data}
 			                attributes={data.attributesWithValues}

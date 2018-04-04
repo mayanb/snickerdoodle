@@ -9,10 +9,49 @@
     .title {
         padding-left: 12px;
         color: $elephant;
+        margin-bottom: 20px;
     }
 
-    .task-detail {
-        margin-left: 0;
-        margin-top: 12px;
+    .focus-box {
+        padding: 20px 0;
+        background-color: white;
+        width: 100%;
+        border-radius: 4px;
+        box-shadow: $gray-ultra-light 0 0 10px 0;
+    }
+
+    .task-summary {
+        display: flex;
+        margin-bottom: 12px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .task-icon {
+            width: 52px;
+            flex-grow: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .task-icon img {
+            height: 20px;
+            opacity: 0.5;
+        }
+
+        .task-amount {
+            font-size: 12px;
+        }
+
+        &.selected {
+            color: black;
+
+            .task-icon img {
+                opacity: 1;
+            }
+
+        }
     }
 }
