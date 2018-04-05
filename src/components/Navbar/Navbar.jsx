@@ -65,11 +65,7 @@ class Navbar extends React.Component {
       {title: 'Dashboard', icon: 'dashboard@2x', link: ''},
       {title: 'Activity Log', icon: 'activity@2x', link: 'activity-log'},
     ]
-    let {data, ui} = this.props.users
-    let team = data[ui.activeUser].user.team_name
-    if (team === 'alabama' || team === 'valencia') {
-      group1.push({title: 'Inventory', icon: 'inventory@2x', link: 'inventory'})
-    }
+    group1.push({title: 'Inventory', icon: 'inventory@2x', link: 'inventory'})
     return <NavigationGroup group={group1} title={null} />
 
   }
