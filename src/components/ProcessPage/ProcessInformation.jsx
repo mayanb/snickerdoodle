@@ -21,7 +21,7 @@ function ProcessInformationHeader({icon, code, name, isEditingBasicInfo, onSubmi
 				<Img src={ic(icon)} height="30px" />
 				<span>{`(${code}) ${name}`}</span>
 			</div>
-			<Button type="gray" onClick={onSubmitBasicInfo}>{isEditingBasicInfo ? 'Save' : 'Edit'}</Button>
+			<Button type={isEditingBasicInfo ? 'blue' : 'gray'} onClick={onSubmitBasicInfo}>{isEditingBasicInfo ? 'Save' : 'Edit'}</Button>
 		</div>
 	)
 }

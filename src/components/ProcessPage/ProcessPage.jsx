@@ -44,7 +44,13 @@ class ProcessPage extends React.Component {
 				<ProcessPageHeader processName={data.name} onBack={() => history.push('/processes')}/>
 				<Loading isfetchingData={this.state.isArchiving}>
 					<div className="process-page-content">
-						<ProcessInformation {...data} onArchive={this.handleArchive} onDuplicate={this.handleDuplicate} isEditingBasicInfo={this.state.isEditingBasicInfo} onSubmitBasicInfo={this.handleEditBasicInfo}/>
+						<ProcessInformation
+							{...data}
+							onArchive={this.handleArchive}
+							onDuplicate={this.handleDuplicate}
+							isEditingBasicInfo={this.state.isEditingBasicInfo}
+							onSubmitBasicInfo={this.handleEditBasicInfo}
+						/>
 						<ProcessAttributeList process={data} />
 					</div>
 					{this.renderArchiveDialog(data, dispatch, history)}
