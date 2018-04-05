@@ -38,7 +38,7 @@ class ProductHistory extends React.Component {
 
 const mapStateToProps = (state/*, props*/) => {
 	const ancestors = state.taskAncestors.data || []
-	const descendents = state.taskAncestors.data || []
+	const descendents = state.taskDescendents.data || []
 	return {
 		ancestors: ancestors,
 		ancestorsUI: state.taskAncestors.ui,

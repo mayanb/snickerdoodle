@@ -4,7 +4,6 @@ import { Table } from './TaskHelpers'
 
 export default function TaskInputTable(props) {
 	const { data } = props
-  console.log('Task INput data', data)
   let groupedByTask = {};
   (data.inputs || []).forEach(function (input, i) {
     if (groupedByTask[input.input_task]) {
@@ -14,7 +13,6 @@ export default function TaskInputTable(props) {
     }
   })
 
-  console.log('groupedByTask', groupedByTask)
   // For each unique task, only  group[0] is displayed (!?)
   return (
     <Table title={'Inputs'}>
@@ -39,11 +37,8 @@ export default function TaskInputTable(props) {
 }
 
 function getInputAmountDisplayText(group) {
-  if (isNewDataModel(group)) {
-		return formatAmount(Math.round(parseInt(group.amount, 10)), group[0].unit)
-  } else {
-    return `unit: ${group[0].unit}`
-  }
+	const amount = isNewDataModel(group) ? group.amount : group[0].input_item_amount
+	return formatAmount(amount, group[0].unit)
 }
 
 function isNewDataModel(group) {

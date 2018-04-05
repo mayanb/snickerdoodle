@@ -93,7 +93,7 @@ export function getTaskAncestors(task) {
   return function (dispatch) {
     // dispatch an action that we are requesting inventory
     dispatch(requestTaskAncestors())
-    return api.get('/ics/tasks')
+    return api.get('/ics/tasks/')
       .query({child: task})
       .end(function (err, res) {
         if (err || !res.ok) {
@@ -136,7 +136,7 @@ export function getTaskDescendents(task) {
   return function (dispatch) {
     // dispatch an action that we are requesting inventory
     dispatch(requestTaskDescendents())
-    return api.get('/ics/tasks')
+    return api.get('/ics/tasks/')
       .query({parent: task})
       .end(function (err, res) {
         if (err || !res.ok) {
