@@ -41,7 +41,7 @@ class Processes extends React.Component {
   }
 
   render() {
-	var { users, ui, data } = this.props
+	var { users, ui } = this.props
 	let account_type = users.data[users.ui.activeUser].user.account_type
 	if (account_type !== 'a')
 		this.props.history.push('/')
