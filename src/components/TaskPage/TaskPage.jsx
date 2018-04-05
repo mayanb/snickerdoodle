@@ -24,19 +24,18 @@ class TaskPage extends React.Component {
 	}
 
 	handleFlagTask() {
-		this.props.dispatch(actions.toggleTask(this.props.data))
+		this.props.dispatch(actions.toggleTask(this.props.task))
 	}
 
 	handleDelete() {
-		this.props.dispatch(actions.deleteTask(this.props.data))
+		this.props.dispatch(actions.deleteTask(this.props.task))
 			.then(() => this.props.history.push('/activity-log'))
 	}
 
 	handleSaveAttribute(attributeId, value) {
-		const data = this.props.data
-		let task = this.props.data.id
-		const index = data.attributesWithValues.findIndex(a => a.id === attributeId)
-		let params = { attribute: attributeId, task: task, value: value }
+		const task = this.props.task
+		const index = task.attributesWithValues.findIndex(a => a.id === attributeId)
+		let params = { attribute: attributeId, task: task.id, value: value }
 		return this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
 	}
 
