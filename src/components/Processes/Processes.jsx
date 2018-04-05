@@ -10,6 +10,7 @@ import DuplicateProcessDialog from './DuplicateProcessDialog'
 import './styles/processes.css'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
 import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
+import Img from '../Img/Img'
 
 class Processes extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class Processes extends React.Component {
   }
 
   render() {
-	var { users } = this.props
+	var { users, ui, data } = this.props
 	let account_type = users.data[users.ui.activeUser].user.account_type
 	if (account_type !== 'a')
 		this.props.history.push('/')
@@ -48,21 +49,29 @@ class Processes extends React.Component {
 	return (
 		<div className="processes-container">
 			<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
-			<ObjectList className="processes" isFetchingData={this.props.ui.isFetchingData}>
-				<PaginatedTable
-					{...this.props}
-					onClick={this.handleSelectProcess}
-					onPagination={this.handlePagination}
-					Row={ProcessesListItem}
-					TitleRow={this.renderHeaderRow}
-					extra={{onArchive: this.handleArchive, onDuplicate: this.handleDuplicate}}
-				/>
-				{this.renderDialog()}
-				{this.renderArchiveDialog()}
-				{this.renderDuplicateDialog()}
-			</ObjectList>
+			{ !ui.isFetchingData && (!data || !data.length) ? this.renderZeroState() : 
+				<ObjectList className="processes" isFetchingData={ui.isFetchingData}>
+					<PaginatedTable
+						{...this.props}
+						onClick={this.handleSelectProcess}
+						onPagination={this.handlePagination}
+						Row={ProcessesListItem}
+						TitleRow={this.renderHeaderRow}
+						extra={{onArchive: this.handleArchive, onDuplicate: this.handleDuplicate}}
+					/>
+					{this.renderDialog()}
+					{this.renderArchiveDialog()}
+					{this.renderDuplicateDialog()}
+				</ObjectList>
+			}
 		</div>
 	)
+  }
+
+  renderZeroState() {
+  	return (
+  		<Img useExtension src="process-zero-state.svg" />
+  	)
   }
 
   // this.handleSelectProcess

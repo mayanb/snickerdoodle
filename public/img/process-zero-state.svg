@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400px" height="555px" viewBox="0 0 1400 555" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>process-zero-state</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="100%" x2="50%" y2="0.825095663%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="1400" height="555"></rect>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="process-zero-state">
+            <g id="Group-2">
+                <mask id="mask-3" fill="white">
+                    <use xlink:href="#path-2"></use>
+                </mask>
+                <use id="Mask" fill="url(#linearGradient-1)" xlink:href="#path-2"></use>
+                <g id="Group" mask="url(#mask-3)" stroke="#000000" stroke-opacity="0.08">
+                    <g transform="translate(22.000000, 41.000000)" id="Rectangle">
+                        <rect x="0.5" y="0.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="48.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="96.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="144.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="192.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="240.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="288.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="336.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="384.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="432.5" width="1348" height="39"></rect>
+                        <rect x="0.5" y="480.5" width="1348" height="39"></rect>
+                    </g>
+                </g>
+            </g>
+            <text id="You-have-no-processe" font-family="SFProText-Bold, SF Pro Text" font-size="16" font-weight="bold" fill="#000000">
+                <tspan x="586.960938" y="151">You have no processes yet!</tspan>
+            </text>
+            <text id="Add-processes-to-you" font-family="SFProText-Regular, SF Pro Text" font-size="14" font-weight="normal" line-spacing="22" fill="#000000">
+                <tspan x="550.84668" y="180">Add processes to your factory by clicking the </tspan>
+                <tspan x="568.770508" y="202" font-family="SFProText-Bold, SF Pro Text" font-weight="bold">Create Process</tspan>
+                <tspan x="675.875977" y="202"> button in the top-right. </tspan>
+            </text>
+            <text id="View-Help-Center" font-family="SFProText-Regular, SF Pro Text" font-size="14" font-weight="normal" line-spacing="19" fill="#0079F3">
+                <tspan x="654.214844" y="238">View Help Center</tspan>
+            </text>
+            <g id="ic_library_books_black_24px" transform="translate(624.000000, 223.000000)">
+                <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
+                <path d="M4,6 L2,6 L2,20 C2,21.1 2.9,22 4,22 L18,22 L18,20 L4,20 L4,6 Z M20,2 L8,2 C6.9,2 6,2.9 6,4 L6,16 C6,17.1 6.9,18 8,18 L20,18 C21.1,18 22,17.1 22,16 L22,4 C22,2.9 21.1,2 20,2 Z M19,11 L9,11 L9,9 L19,9 L19,11 Z M15,15 L9,15 L9,13 L15,13 L15,15 Z M19,7 L9,7 L9,5 L19,5 L19,7 Z" id="Shape" fill="#0079F3" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
