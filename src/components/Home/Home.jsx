@@ -4,7 +4,6 @@ import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import './styles/home.css'
-import Updates from './Updates'
 
 
 export default class Home extends React.Component {
@@ -31,7 +30,6 @@ export default class Home extends React.Component {
 					<Card className="goals-card">
 						<Goals/>
 					</Card>
-					<Updates />
 				</div>
 			</div>
 		)
