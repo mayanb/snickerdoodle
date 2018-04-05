@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './ProductsActions.jsx'
-
+import Img from '../Img/Img'
 import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
@@ -37,7 +37,7 @@ class Products extends React.Component {
   }
 
   render() {
-    let { users } = this.props
+    let { users, ui, data } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type !== 'a')
     	this.props.history.push('/')
@@ -46,19 +46,30 @@ class Products extends React.Component {
 	  	<div className="products">
 			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
 			                                      title="Products" />
-			  <ObjectList className="products" isFetchingData={this.props.ui.isFetchingData}>
-				  <PaginatedTable
-					  {...this.props}
-					  onPagination={this.handlePagination}
-					  Row={ProductsListItem}
-					  TitleRow={this.headerRow}
-					  extra={{onArchive: this.handleArchive}}
-				  />
-				  {this.renderDialog()}
-				  {this.renderArchiveDialog()}
-			  </ObjectList>
+
+				{ !ui.isFetchingData && (!data || !data.length) ? this.renderZeroState() :
+				  <ObjectList className="products" isFetchingData={ui.isFetchingData}>
+					  <PaginatedTable
+						  {...this.props}
+						  onPagination={this.handlePagination}
+						  Row={ProductsListItem}
+						  TitleRow={this.headerRow}
+						  extra={{onArchive: this.handleArchive}}
+					  />
+					  {this.renderDialog()}
+					  {this.renderArchiveDialog()}
+				  </ObjectList>
+				}
 		  </div>
 	  )
+  }
+
+   renderZeroState() {
+  	return (
+  		<div style={{width: "100%", height: "70%", display: "flex", alignItems: "center", justifyContent: "center"}}>
+	  		<Img style={{cursor: "pointer"}} onClick={() => window.location = 'https://polymer.helpscoutdocs.com'} useExtension src="product-zero-state.svg" />
+	  	</div>
+  	)
   }
 
   renderDialog() {
