@@ -62,7 +62,7 @@ function TaskSummary({ task, selected, history }) {
 			</div>
 			<div className="task-text">
 				<div className="task-name">
-					{task.label || task.display}
+					{task.display}
 				</div>
 				<div className="task-amount">
 					{formattedAmount}

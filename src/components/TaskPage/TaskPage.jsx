@@ -58,7 +58,7 @@ class TaskPage extends React.Component {
 					          attributes={task.attributesWithValues}
 					          onSaveAttribute={this.handleSaveAttribute}
 					/>
-					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.label} />
+					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.display} />
 				</div>
 			</div>
 		)

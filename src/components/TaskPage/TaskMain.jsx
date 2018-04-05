@@ -32,7 +32,7 @@ function TaskName({ task }) {
 			<div className="name-row">
 				<img src={icon(task.process_type.icon)} alt="process type" />
 				<div>
-					<span className="name">{task.label}</span>
+					<span className="name">{task.display}</span>
 					<i className="material-icons">arrow_forward</i>
 					<span className="default-output">{formatAmount(task.total_amount, task.process_type.unit)}</span>
 				</div>

@@ -1,13 +1,14 @@
 import React from 'react'
 import Button from '../Button/Button'
 import './styles/taskqr.css'
+import Img from '../Img/Img'
 
 import TaskInputsAndOutputs from './TaskInputsAndOutputs'
 
 export default class TaskQR extends React.Component {
 
 	componentDidMount() {
-		if(this.props.qrCode) {
+		if (this.props.qrCode) {
 			new window.QRCode(this.taskQRCode, this.props.qrCode)
 		}
 	}
@@ -17,6 +18,7 @@ export default class TaskQR extends React.Component {
 		return (
 			<div className="task-qr">
 				<div className="title">
+					<Img src="qrcode@2x" />
 					Scan to Open in App
 				</div>
 				<div className="qr-code-container">

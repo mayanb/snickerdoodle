@@ -4,6 +4,7 @@ import { Table } from './TaskHelpers'
 
 export default function TaskInputTable(props) {
 	const { data } = props
+  console.log('Task INput data', data)
   let groupedByTask = {};
   (data.inputs || []).forEach(function (input, i) {
     if (groupedByTask[input.input_task]) {
@@ -12,7 +13,8 @@ export default function TaskInputTable(props) {
       groupedByTask[input.input_task] = [input]
     }
   })
-  
+
+  console.log('groupedByTask', groupedByTask)
   // For each unique task, only  group[0] is displayed (!?)
   return (
     <Table title={'Inputs'}>

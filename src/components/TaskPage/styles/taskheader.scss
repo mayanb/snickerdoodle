@@ -3,7 +3,9 @@
 .task-header {
     font-size: 20px;
     height: $section-header-height;
-    line-height: $section-header-height;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     color: white;
     padding: 0 36px;
     background-color: $primary;
@@ -17,13 +19,21 @@
         }
     }
 
+    .title {
+        display: flex;
+        align-items: center;
+
+        i {
+            cursor: pointer;
+            margin-right: 8px;
+            opacity: 0.5;
+        }
+    }
+
     .header-button {
-        margin: 0 auto;
         background-color: white;
         color: $primary;
-        float: right;
         font-size: 15px;
-        margin-top: $section-header-height/2 - 18;
     }
 
 }

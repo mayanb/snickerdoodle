@@ -30,13 +30,19 @@
 
     .form-button {
         margin-right: 6px;
+        display: flex;
         justify-content: center;
         align-items: center;
         height: 26px;
+        width: 26px;
         border-radius: 4px;
         border-width: 1px;
         border-style: solid;
         cursor: pointer;
+
+        i {
+            font-size: 20px;
+        }
     }
 
     input:focus ~ .form-buttons {
@@ -52,7 +58,7 @@
 
     .reset {
         right: 40px;
-        color: $gray;
-        border-color: $gray;
+        color: $elephant;
+        border-color: $elephant;
     }
 }
