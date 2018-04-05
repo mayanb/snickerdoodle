@@ -134,7 +134,6 @@ export function postDuplicateProcess(json, success) {
   }
 }
 
-
 function requestCreateProcess() {
   return {
     type: REQUEST_CREATE, 
