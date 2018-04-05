@@ -49,7 +49,6 @@ class Processes extends React.Component {
 	return (
 		<div className="processes-container">
 			<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
-			{ !ui.isFetchingData && (!data || !data.length) ? this.renderZeroState() : 
 				<ObjectList className="processes" isFetchingData={ui.isFetchingData}>
 					<PaginatedTable
 						{...this.props}
@@ -63,7 +62,6 @@ class Processes extends React.Component {
 					{this.renderArchiveDialog()}
 					{this.renderDuplicateDialog()}
 				</ObjectList>
-			}
 		</div>
 	)
   }

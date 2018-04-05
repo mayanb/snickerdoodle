@@ -37,7 +37,7 @@ class Products extends React.Component {
   }
 
   render() {
-    let { users, ui, data } = this.props
+    let { users, ui } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type !== 'a')
     	this.props.history.push('/')
@@ -47,7 +47,6 @@ class Products extends React.Component {
 			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
 			                                      title="Products" />
 
-				{ !ui.isFetchingData && (!data || !data.length) ? this.renderZeroState() :
 				  <ObjectList className="products" isFetchingData={ui.isFetchingData}>
 					  <PaginatedTable
 						  {...this.props}
@@ -59,7 +58,6 @@ class Products extends React.Component {
 					  {this.renderDialog()}
 					  {this.renderArchiveDialog()}
 				  </ObjectList>
-				}
 		  </div>
 	  )
   }
