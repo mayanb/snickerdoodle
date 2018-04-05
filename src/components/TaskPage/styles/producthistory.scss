@@ -1,0 +1,94 @@
+@import 'styles/constants.scss';
+
+.product-history {
+    background-color: $elephant-ultra-light;
+    width: 260px;
+    min-height: 100%;
+    padding: $task-page-top-padding 12px 0;
+
+    .title {
+        padding-left: 12px;
+        color: $elephant;
+        margin-bottom: 20px;
+    }
+
+    .focus-box {
+        padding: 16px 0;
+        margin: 20px 0;
+        background-color: white;
+        width: 100%;
+        border-radius: 4px;
+        box-shadow: $gray-ultra-light 0 0 10px 0;
+    }
+
+    .inputs-label {
+        display: flex;
+        align-items: center;
+        height: 16px;
+        width: 80px;
+        margin-left: 52px;
+        margin-bottom: 12px;
+        padding: 0 8px;
+        background-color: $primary-ultra-light;
+        border-radius: 10px;
+        color: $gray-dark;
+        font-size: 10px;
+        text-transform: uppercase;
+
+        i {
+            font-size: 10px;
+            margin-right: 4px;
+        }
+    }
+
+    .task-summary {
+        display: flex;
+        margin-bottom: 12px;
+        cursor: pointer;
+        position: relative;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .task-icon {
+            width: 52px;
+            flex-grow: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .task-icon img {
+            height: 20px;
+            opacity: 0.5;
+        }
+
+        .task-amount {
+            font-size: 12px;
+        }
+
+        &.selected {
+            color: black;
+
+            .task-icon img {
+                opacity: 1;
+            }
+
+        }
+
+        .expand-i {
+            visibility: hidden;
+            font-size: 12px;
+            position: absolute;
+            top: 0;
+            right: 12px;
+        }
+
+        &:hover {
+            .expand-i {
+                visibility: visible;
+            }
+        }
+    }
+}
