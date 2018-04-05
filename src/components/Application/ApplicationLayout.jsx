@@ -13,7 +13,7 @@ import ZebraPrinter from '../OldComponents/ZebraPrinter.jsx'
 import Navbar from '../Navbar/Navbar.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
 import Inventory from '../Inventory/Inventory.jsx'
-import Task from '../Task/Task.jsx'
+import Task from '../TaskPage/TaskPage.jsx'
 import Goals from '../Goals/Goals'
 
 import PrivateRoute from '../Router/PrivateRoute'
@@ -26,7 +26,6 @@ import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
 
 import Sortable from '../Sortable/Index'
-import ProductPage from '../ProductPage/ProductPage'
 import ProcessPage from '../ProcessPage/ProcessPage'
 
 import Registration from '../Registration/Registration'
@@ -35,6 +34,8 @@ import Modal from '../Modal/Modal'
 import NewFeatures from '../NewFeatures/NewFeatures'
 
 import Inventory2 from '../Inventory2/Inventory'
+
+import NewUserChecklist from '../NewUserChecklist/NewUserChecklist'
 
 export default class ApplicationLayoutStable extends React.Component {
 
@@ -75,7 +76,6 @@ function App(props) {
         <Route path={"/task/:id?"} component={Task} />
         <Route exact path={"/processes"} component={Processes} />
         <Route exact path={"/products"} component={Products} />
-        <Route path={"/products/:id"} component={ProductPage} />
 	      <Route path={"/processes/:id"} component={ProcessPage} />
         <Route path={"/attributetest"} component={TaskAttributeTest} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
@@ -84,6 +84,7 @@ function App(props) {
         <Route path={"/googleconnect/:ext?"} component={Account} />
         <Route path={"/bc/"} component={BCWrapper} />
         <Route path={"/barcharttest/"} component={Sortable} />
+        <Route path={"/checklist/"} component={NewUserChecklist} />
       </div>
     </div>
   )

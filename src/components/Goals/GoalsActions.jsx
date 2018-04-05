@@ -29,14 +29,10 @@ export function fetchGoals(user_id) {
 
     // actually fetch 
     return api.get('/ics/goals/')
-      .query({userprofile: user_id})
       .end( function (err, res) {
         if (err || !res.ok) {
           dispatch(requestGoalsFailure(err))
         }
-
-        console.log(res.body)
-
         let goals = res.body.sort(sortByRank)
         let weekly = goals.filter(e => e.timerange === WEEKLY)
         dispatch(requestGoalsSuccess(weekly, WEEKLY))

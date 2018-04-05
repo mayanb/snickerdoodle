@@ -23,15 +23,8 @@ export function fetchProducts(q) {
     // actually fetch 
     return api.get('/ics/products/')
       .query(q)
-      .end( function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestProductsFailure(err))
-        } else {
-          //let products = formatProductResponse(res.body)
-          dispatch(requestProductsSuccess(res.body.sort(alphabetize)))
-
-        }
-      })
+      .then(res => dispatch(requestProductsSuccess(res.body.sort(alphabetize))))
+      .catch(err => dispatch(requestProductsFailure(err)))
   }
 }
 
@@ -124,9 +117,6 @@ function formatProductResponse(json) {
 export function postDeleteProduct(p, index, callback) {
   return function (dispatch) {
     dispatch(requestDeleteProduct(index))
-    console.log(p.name)
-    console.log(p.created_by)
-    console.log(p.team_created_by)
 
     return api.put(`/ics/products/${p.id}/`)
       .send({ 
@@ -136,14 +126,8 @@ export function postDeleteProduct(p, index, callback) {
           team_created_by: p.team_created_by,
           is_trashed: true,
         })
-      .end(function (err, res) {
-        if (err || !res.ok)
-          dispatch(requestDeleteProductFailure(index, err))
-        else {
-          dispatch(requestDeleteProductSuccess("is_trashed", true, index))
-          callback()
-        }
-      })
+	    .then(() => dispatch(requestDeleteProductSuccess(index)))
+	    .catch(err => dispatch(requestDeleteProductFailure(index, err)))
   }
 }
 

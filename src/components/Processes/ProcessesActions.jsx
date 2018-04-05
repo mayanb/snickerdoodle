@@ -24,15 +24,8 @@ export function fetchProcesses(q) {
     // actually fetch 
     return api.get('/ics/processes/')
 	    .query(q)
-      .end( function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestProcessesFailure(err))
-        } else {
-          // let processes = formatProcessResponse(res.body)
-          // let processesArray = Object.values(processes).sort(alphabetize);
-          dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize))))
-        }
-      })
+      .then(res => dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize)))))
+      .catch(err => dispatch(requestProcessesFailure(err)))
   }
 }
 
@@ -130,6 +123,16 @@ export function postCreateProcess(json, success) {
   }
 }
 
+export function postDuplicateProcess(json, success) {
+  return function (dispatch) {
+    dispatch(requestCreateProcess())
+    return api.post('/ics/processes/duplicate/')
+      .send(json)
+      .send({ icon: "default.png" })
+      .then((res) => dispatch(requestCreateProcessSuccess(res.body)))
+      .catch((err) => dispatch(requestCreateProcessFailure(err)))
+  }
+}
 
 function requestCreateProcess() {
   return {
@@ -156,7 +159,7 @@ function requestCreateProcessSuccess(json) {
   }
 }
 
-export function postDeleteProcess(p, index, callback) {
+export function postDeleteProcess(p, index) {
   return function (dispatch) {
     dispatch(requestDeleteProcess(index))
 
@@ -167,15 +170,9 @@ export function postDeleteProcess(p, index, callback) {
         created_by: p.created_by,
         team_created_by: p.team_created_by,
         is_trashed: true,
-        })
-      .end(function (err, res) {
-        if (err || !res.ok)
-          dispatch(requestDeleteProcessFailure(index, err))
-        else {
-          dispatch(requestDeleteProcessSuccess("is_trashed", true, index))
-          callback()
-        }
       })
+      .then(() => dispatch(requestDeleteProcessSuccess(index)))
+      .catch(err => dispatch(requestDeleteProcessFailure(index, err)))
   }
 }
 
@@ -196,7 +193,7 @@ function requestDeleteProcessFailure(index, err) {
   }
 }
 
-function requestDeleteProcessSuccess(field, value, index) {
+function requestDeleteProcessSuccess(index) {
   return {
     type: REQUEST_DELETE_SUCCESS,
     name: PROCESSES,

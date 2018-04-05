@@ -28,11 +28,12 @@ export function shouldRefresh(users) {
   return !last_fetched || ((moment() - moment(last_fetched)) / 1000 > TIME_TO_REFRESH)
 }
 
-let WALKTHROUGH_COMPLETED = -1
+//let WALKTHROUGH_COMPLETED = -1
 export function shouldCompleteWalkthrough(users) {
-	let {data, ui} = users	
-  let walkthrough = data[ui.activeUser].user.walkthrough
-  return (walkthrough > 0 && walkthrough !== WALKTHROUGH_COMPLETED)
+	return false
+	// let {data, ui} = users	
+ //  let walkthrough = data[ui.activeUser].user.walkthrough
+ //  return (walkthrough > 0 && walkthrough !== WALKTHROUGH_COMPLETED)
 }
 
 export function isAdmin(user) {

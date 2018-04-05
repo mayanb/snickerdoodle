@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function GoalBar(props) {
-	let {achieved, proportion} = getDisplayProportions(props.goal)
+	let {achieved, proportion} = getDisplayProportions(props.goal.goal)
 
 	return (
 		<div className={"goal-whole-bar " + (achieved?"goal-achieved":"")}>

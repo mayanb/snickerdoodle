@@ -14,7 +14,9 @@ export const REQUEST_MOVE_ATTRIBUTE_FAILURE = 'REQUEST_MOVE_ATTRIBUTE_FAILURE'
 export const REQUEST_UPDATE_ATTRIBUTE = 'REQUEST_UPDATE_ATTRIBUTE'
 export const REQUEST_UPDATE_ATTRIBUTE_SUCCESS = 'REQUEST_UPDATE_ATTRIBUTE_SUCCESS'
 export const REQUEST_UPDATE_ATTRIBUTE_FAILURE = 'REQUEST_UPDATE_ATTRIBUTE_FAILURE'
-
+export const SELECT_ATTRIBUTE = 'SELECT_ATTRIBUTE'
+export const REQUEST_ATTRIBUTE_DETAILS = 'REQUEST_ATTRIBUTE_DETAILS'
+export const REQUEST_ATTRIBUTE_DETAILS_SUCCESS = 'REQUEST_ATTRIBUTE_DETAILS_SUCCESS'
 
 export function _processAttribute(state, action) {
 	switch(action.type) {
@@ -42,11 +44,27 @@ export function _processAttribute(state, action) {
 			return requestMoveAttributeFailure(state, action)
 		case REQUEST_UPDATE_ATTRIBUTE_SUCCESS:
 			return requestUpdateAttributeSuccess(state, action)
-
+		case SELECT_ATTRIBUTE:
+			return selectAttribute(state, action)
+		case REQUEST_ATTRIBUTE_DETAILS:
+			return requestAttributeDetails(state, action)
+		case REQUEST_ATTRIBUTE_DETAILS_SUCCESS:
+			return requestAttributeDetailsSuccess(state, action)
 		default:
 			return state
 	}
 }
+
+// function requestUpdateAttribute(state, action) {
+// 	let index = state.data[action.process].attributes.findIndex((e) => e.id === action.id)
+// 	return update(state, {
+// 		ui: {
+// 			$merge: { 
+// 				isUpdatingAttribute: true 
+// 			}
+// 		}
+// 	})
+// }
 
 function requestUpdateAttributeSuccess(state, action) {
 	let index = state.data[action.process].attributes.findIndex((e) => e.id === action.id)
@@ -59,6 +77,10 @@ function requestUpdateAttributeSuccess(state, action) {
 					}
 				}
 			}
+		}, ui: {
+			$merge: {
+				isUpdatingAttribute: false
+			}
 		}
 	})
 }
@@ -66,7 +88,10 @@ function requestUpdateAttributeSuccess(state, action) {
 function startAddingAttribute(state, action) {
 	return update(state, {
 		ui: {
-			$merge: { isAddingAttribute: true }
+			$merge: { 
+				isAddingAttribute: true,
+				selectedAttribute: -1, 
+			}
 		}
 	})
 }
@@ -75,6 +100,7 @@ function finishAddingAttribute(state, action) {
 	return update(state, {
 		ui: {
 			$merge: {
+				isSavingAttribute: false,
 				isAddingAttribute: false,
 			}
 		}
@@ -200,3 +226,37 @@ function requestMoveAttributeFailure(state, action) {
 	})
 }
 
+function selectAttribute(state, action) {
+	return update(state, {
+		ui: {
+			$merge: { selectedAttribute: action.id }
+		}
+	})
+}
+
+function requestAttributeDetails(state, action) {
+	return update(state, {
+		ui: {
+			$merge: { isFetchingAttributeDetails: true }
+		}
+	})
+}
+
+function requestAttributeDetailsSuccess(state, action) {
+	let attrs = state.data[action.process].attributes
+	let index = attrs.findIndex((e) => e.id === action.id)
+	return update(state, {
+		ui: {
+			$merge: { isFetchingAttributeDetails: false }
+		}, 
+		data: {
+			[action.process]: {
+				attributes: {
+					[index]: {
+						$merge: action.details,
+					}
+				}
+			}
+		}
+	})
+}

@@ -4,12 +4,12 @@ import * as actions from './ProductsActions.jsx'
 
 import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
-import ObjectListTitle from '../ObjectList/ObjectListTitle'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDialog from './CreateProductDialog'
+import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
+import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import './styles/products.css'
-
 
 
 class Products extends React.Component {
@@ -17,13 +17,18 @@ class Products extends React.Component {
     super(props)
 
 	  this.state = {
-		  isAddingProduct: false
+		  isAddingProduct: false,
+		  isAddingProcess: false,
+		  isArchiveOpen: false,
+		  isArchiving: false,
+		  archivingObjectIndex: null,
+		  isDuplicateOpen: false,
 	  }
 
 	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
-    this.handleSelectProduct = this.handleSelectProduct.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
     this.handleCreateProduct = this.handleCreateProduct.bind(this)
+	  this.handleArchive = this.handleArchive.bind(this)
   }
 
   // fetch products on load
@@ -38,28 +43,22 @@ class Products extends React.Component {
     	this.props.history.push('/')
 
 	  return (
-			<ObjectList className="products" isFetchingData={this.props.ui.isFetchingData}>
-			  {this.renderTitle()}
-			  <PaginatedTable
-				  {...this.props}
-				  onClick={this.handleSelectProduct}
-				  onPagination={this.handlePagination}
-				  Row={ProductsListItem}
-				  TitleRow={this.headerRow}
-			  />
-				{this.renderDialog()}
-		  </ObjectList>
+	  	<div className="products">
+			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
+			                                      title="Products" />
+			  <ObjectList className="products" isFetchingData={this.props.ui.isFetchingData}>
+				  <PaginatedTable
+					  {...this.props}
+					  onPagination={this.handlePagination}
+					  Row={ProductsListItem}
+					  TitleRow={this.headerRow}
+					  extra={{onArchive: this.handleArchive}}
+				  />
+				  {this.renderDialog()}
+				  {this.renderArchiveDialog()}
+			  </ObjectList>
+		  </div>
 	  )
-  }
-
-  renderTitle() {
-    return (
-    	<ObjectListTitle
-		    title="All products"
-		    buttonText="Create product"
-		    onToggleDialog={this.handleToggleDialog}
-	    />
-    )
   }
 
   renderDialog() {
@@ -72,6 +71,22 @@ class Products extends React.Component {
 	  )
   }
 
+	renderArchiveDialog() {
+		if (!this.state.isArchiveOpen) {
+			return null
+		}
+		let p = this.props.data[this.state.archivingObjectIndex]
+		return (
+			<ArchiveDialog
+				{...p}
+				type="product"
+				isArchiving={this.state.isArchiving}
+				onCancel={this.handleCancelArchive.bind(this)}
+				onSubmit={() => this.handleConfirmArchive()}
+			/>
+		)
+	}
+
 	headerRow() {
 		return (
 			<ObjectListHeader>
@@ -79,15 +94,12 @@ class Products extends React.Component {
 				<div className="name">Name</div>
 				<div className="owner">Owner</div>
 				<div className="date">Date Created</div>
+				<div className="more-options-button"></div>
 			</ObjectListHeader>
 		)
 	}
 
   /* EVENT HANDLERS */
-  handleSelectProduct(index) {
-    this.props.history.push('/products/' + this.props.data[index].id)
-  }
-
   handlePagination(direction) {
     this.props.dispatch(actions.pageProducts(direction))
   }
@@ -99,10 +111,30 @@ class Products extends React.Component {
   handleCreateProduct(json) {
     this.props.dispatch(actions.postCreateProduct(json))
 	    .then((res) => {
-		    let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
-		    return this.handleSelectProduct(index)
+	    	this.props.dispatch(actions.fetchProducts())
+		    this.handleToggleDialog()
 	    })
   }
+
+	handleArchive(index) {
+		this.setState({ isArchiveOpen: true, archivingObjectIndex: index })
+	}
+
+	handleCancelArchive() {
+		this.setState({isArchiveOpen: false})
+	}
+
+	handleConfirmArchive() {
+		if (this.state.isArchiving) {
+			return
+		}
+
+		let p = this.props.data[this.state.archivingObjectIndex]
+		this.setState({isArchiving: true})
+		this.props.dispatch(actions.postDeleteProduct(p, this.state.archivingObjectIndex))
+			.then(() => this.setState({isArchiving: false, isArchiveOpen: false}))
+	}
+
 }
 
 // This is our select function that will extract from the state the data slice we want to expose

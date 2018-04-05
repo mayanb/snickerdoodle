@@ -140,7 +140,6 @@ class AddGoalDialog extends React.Component {
 	}
 
 	handleAddGoal() {
-		console.log("hiii")
 		console.log(this.state.product_type)
 		this.setState({ submitted: true })
 		if (this.formErrors().length === 0) {
@@ -175,12 +174,12 @@ function parseProductTypes(product_types) {
 
 
 const mapStateToProps = (state/*, props*/) => {
-	const isFetchiingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
+	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
 	return {
 		users: state.users,
 		processes: state.processes.data,
 		products: state.products.data,
-		isFetchingData: isFetchiingData,
+		isFetchingData: isFetchingData,
 	}
 }
 

@@ -12,11 +12,6 @@ class DeleteGoalDialog extends React.Component {
 	}
 
 	render() {
-		// if (!this.props.isOpen) {
-		// 	console.log(this.props.isOpen)
-		// 	return null
-		// }
-
 		return (
 			<Dialog onToggle={this.props.onToggle}>
 				<h1>Remove goal</h1>

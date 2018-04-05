@@ -1,22 +1,25 @@
 import React from 'react'
 import Dialog from '../Card/Dialog.jsx'
-import Button from '../Card/Button.jsx'
+import Button from '../Button/Button.jsx'
 import './styles/archivedialog.css'
 
-export default class ArchiveDialog extends React.Component {
-	render() {
-		return (
-			<Dialog onToggle={this.props.onCancel}>
-				<div className="archive-dialog">
-					<h1>Archive</h1>
-					<span>{`Are you sure you want to remove ${this.props.name} (${this.props.code}) from your active list?`}</span>
-					<div className="archive-rule" style={{marginLeft: "-32px", marginRight: "-20px", width: "120%"}} />
-					<div className="archive-actions">
-						<Button secondary onClick={this.props.onCancel}>Cancel</Button>
-						<Button onClick={this.props.onSubmit}>Yes, archive!</Button>
-					</div>
+export default function ArchiveDialog({onCancel, onSubmit, isArchiving, code, name, type}) {
+	return (
+		<Dialog onToggle={onCancel}>
+			<div className="archive-dialog">
+				<div className="archive-dialog-header">
+					<span>Delete {type}</span>
+					<i className="material-icons" onClick={onCancel}>close</i>
 				</div>
-			</Dialog>
-		)
-	}
+				<div className="archive-rule" style={{marginLeft: "-32px", marginRight: "-20px", width: "120%"}} />
+				<span>Are you sure you want to delete</span>
+				<span className="emphasized">{` (${code}) ${name} `}</span>
+				<span>from your factory?</span>
+				<div className="archive-actions">
+					<Button wide type="blue-outline" onClick={onCancel}>Cancel</Button>
+					<Button wide type="red" isLoading={isArchiving} onClick={onSubmit}>Delete {type}</Button>
+				</div>
+			</div>
+		</Dialog>
+	)
 }

@@ -1,13 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../Processes/ProcessesActions'
+import ProcessPageHeader from './ProcessPageHeader'
 import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import * as processActions from '../Processes/ProcessesActions'
-import ProcessesCard from './ProcessesCard'
-import '../ProductPage/styles/productpage.css'
+import ProcessInformation from './ProcessInformation'
+import ProcessAttributeList from '../ProcessAttribute/ProcessAttributeList'
 import { withRouter } from 'react-router-dom'
 import './styles/processpage.css'
 import Loading from '../Loading/Loading'
+import DuplicateProcessDialog from '../Processes/DuplicateProcessDialog'
+
 
 class ProcessPage extends React.Component {
 	constructor(props) {
@@ -16,6 +19,10 @@ class ProcessPage extends React.Component {
 			isArchiveOpen: false,
 			isArchiving: false,
 		}
+		this.handleArchive = this.handleArchive.bind(this)
+		this.handleDuplicate = this.handleDuplicate.bind(this)
+		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
+
 	}
 
 	componentDidMount() {
@@ -24,7 +31,7 @@ class ProcessPage extends React.Component {
 	}
 
 	render() {
-		let { ui, data, dispatch, history } = this.props
+		let { data, dispatch, history } = this.props
 
 		if (!data) {
 			return <span>Loading... </span>
@@ -32,12 +39,14 @@ class ProcessPage extends React.Component {
 
 		return (
 			<div className="process-page">
+				<ProcessPageHeader processName={data.name} onBack={() => history.push('/processes')}/>
 				<Loading isfetchingData={this.state.isArchiving}>
-					<ProcessesCard
-						process={data}
-						onArchive={() => this.handleArchive(ui.selectedItem)}
-					/>
+					<div className="process-page-content">
+						<ProcessInformation {...data} onArchive={this.handleArchive} onDuplicate={this.handleDuplicate}/>
+						<ProcessAttributeList process={data} />
+					</div>
 					{this.renderArchiveDialog(data, dispatch, history)}
+					{this.renderDuplicateDialog()}
 				</Loading>
 			</div>
 		)
@@ -49,37 +58,79 @@ class ProcessPage extends React.Component {
 
 		return (
 			<ArchiveDialog
-				{...process}
+				{...this.props.data}
+				isArchiving={this.state.isArchiving}
 				onCancel={this.handleCancelArchive.bind(this)}
-				onSubmit={() => this.handleConfirmArchive(process, dispatch, history)}
+				onSubmit={() => this.handleConfirmArchive()}
 			/>
 		)
 	}
 
-	handleArchive(processId) {
-		console.log("processId")
-		this.setState({ isArchiveOpen: true, archivingObjectIndex: processId })
+	renderDuplicateDialog() {
+		if (!this.state.isDuplicateOpen)
+			return null
+		return (
+			<DuplicateProcessDialog
+				isOpen={this.state.isDuplicateOpen}
+				onToggle={this.handleCancelDuplicate.bind(this)}
+				onDuplicate={this.handleDuplicateProcess}
+				isDuplicating={this.state.isDuplicating}
+			/>
+			
+		)
+	}
+
+	handleArchive() {
+		this.setState({ isArchiveOpen: true })
 	}
 
 	handleCancelArchive() {
 		this.setState({isArchiveOpen: false})
 	}
 
-	handleConfirmArchive(process, dispatch, history) {
+	handleConfirmArchive() {
+		if (this.state.isArchiving) {
+			return 
+		}
 		this.setState({isArchiving: true})
-		dispatch(actions.postDeleteProcess(process, null, function () {
-				history.push('/processes')
+		this.props.dispatch(actions.postDeleteProcess(this.props.data, this.props.index))
+			.then(() => {
+				this.setState({ isArchiving: false, isArchiveOpen: false })
+				this.props.history.push('/processes')
 			})
-		)
+	}
+
+	handleDuplicate(index) {
+		this.setState({ isDuplicateOpen: true })
+	}
+
+	handleCancelDuplicate() {
+		this.setState({isDuplicateOpen: false})
+	}
+
+	handleDuplicateProcess(newProcess) {
+		if (this.state.isDuplicating) {
+			return 
+		}
+		let p = this.props.data
+		let json = newProcess
+		json["duplicate_id"] = p.id
+		this.setState({isDuplicating: true})
+		this.props.dispatch(actions.postDuplicateProcess(json))
+			.then((res) => {
+				this.setState({isDuplicating: false, isDuplicateOpen: false})
+				this.props.history.push('/processes/' + res.item.id)
+			})
 	}
 }
 
 const mapStateToProps = (state, props) => {
 	const processId = props.match.params.id
-	const process = state.processes.data.find(process => String(process.id) === processId)
+	const index = state.processes.data.findIndex(process => String(process.id) === processId)
 	return {
 		ui: state.formulas.ui,
-		data: process,
+		data: state.processes.data[index],
+		index: index,
 		dispatch: state.dispatch
 	}
 }
