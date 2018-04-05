@@ -70,7 +70,9 @@ class Processes extends React.Component {
 
   renderZeroState() {
   	return (
-  		<Img useExtension src="process-zero-state.svg" />
+  		<div style={{width: "100%", height: "70%", display: "flex", alignItems: "center", justifyContent: "center"}}>
+	  		<Img style={{cursor: "pointer"}} onClick={() => window.location = 'https://polymer.helpscoutdocs.com'} useExtension src="process-zero-state.svg" />
+	  	</div>
   	)
   }
 
