@@ -85,20 +85,18 @@ class CreateTeam extends React.Component {
 		console.log(this.props.match.params.code)
 		api.get('/ics/use-code')
 			.query({code: this.props.match.params.code})
-			.then((res) => {
-				console.log(res)
-			})
+			.then((res) => console.log(res))
 			.catch((e) => console.log(e))
 
-			let data = {
-				name: 'Label', 
-				code: 'L', 
-				icon: 'label.png', 
-				unit: 'item', 
-				output_description: 'product'
-			}
+		// 	let data = {
+		// 		name: 'Label', 
+		// 		code: 'L', 
+		// 		icon: 'label.png', 
+		// 		unit: 'item', 
+		// 		output_description: 'product'
+		// 	}
 
-		this.props.dispatch(processActions.postCreateProcess(data), () => {})
+		// this.props.dispatch(processActions.postCreateProcess(data), () => {})
 	}
 }
 
