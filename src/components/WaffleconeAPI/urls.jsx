@@ -5,9 +5,7 @@ export function getBackend() {
 		case 'staging':
 			return 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
 		default:
-			return 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
-			// return 'http://127.0.0.1:8000'
-			//return 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
+			return 'http://127.0.0.1:8000'
 	}
 }
 
