@@ -41,14 +41,12 @@ export function fetchRecentMonths(processType, productTypes) {
 					const end = today().startOf('month')
 					const start = today().startOf('month').subtract(12, 'months')
 					let realData = addMissingPeriods(res.body, start, end, 'months')
-					let fakeData = realData.map(e => {
-						return { ...e, total_amount: e.total_amount * (Math.random() * 1.5 + 0.1)}
-					})
-					console.log(realData)
-					console.log(fakeData)
+					// let fakeData = realData.map(e => {
+					// 	return { ...e, total_amount: e.total_amount * (Math.random() * 1.5 + 0.1)}
+					// })
 					dispatch(requestRecentMonthsSuccess(
-						//addMissingPeriods(res.body, start, end, 'months')
-						fakeData
+						// fakeData
+						realData
 					))
 				}
 			})
