@@ -45,7 +45,6 @@ class ProductionTrends extends React.Component {
 
 	render() {
 		const unitLabel = this.state.processType ? pluralize(2, this.state.processType.unit) : ''
-
 		return (
 			<div className="production-trends">
 				<Loading isFetchingData={this.props.isFetchingData}>
@@ -148,7 +147,7 @@ const mapStateToProps = (state/*, props*/) => {
 		recentMonths: state.productionTrends[productionTrendsActions.RECENT_MONTHS].data,
 		monthToDate: state.productionTrends[productionTrendsActions.MONTH_TO_DATE].data,
 		weekToDate: state.productionTrends[productionTrendsActions.WEEK_TO_DATE].data,
-		isFetchingData: isFetchingData
+		isFetchingData: isFetchingData,
 	}
 }
 
