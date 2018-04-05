@@ -1,0 +1,15 @@
+@import 'styles/constants.scss';
+
+.task-page {
+    height: calc(100vh - 64px);
+    width: calc(100vw - 64px);
+    background-color: white;
+
+    .task-container {
+        display: flex;
+        min-height: calc(100% - #{$section-header-height});
+        max-width: 1200px;
+        padding-right: 40px;
+    }
+}
+

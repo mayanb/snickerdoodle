@@ -1,0 +1,39 @@
+@import 'styles/constants.scss';
+
+.task-header {
+    font-size: 20px;
+    height: $section-header-height;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 0 36px;
+    background-color: $primary;
+    -webkit-font-smoothing: antialiased;
+
+    &.flagged {
+        background-color: $red;
+
+        .header-button {
+            color: $red;
+        }
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+
+        i {
+            cursor: pointer;
+            margin-right: 8px;
+            opacity: 0.5;
+        }
+    }
+
+    .header-button {
+        background-color: white;
+        color: $primary;
+        font-size: 15px;
+    }
+
+}
