@@ -28,7 +28,7 @@ export function shouldRefresh(users) {
   return !last_fetched || ((moment() - moment(last_fetched)) / 1000 > TIME_TO_REFRESH)
 }
 
-let WALKTHROUGH_COMPLETED = -1
+//let WALKTHROUGH_COMPLETED = -1
 export function shouldCompleteWalkthrough(users) {
 	return false
 	// let {data, ui} = users	

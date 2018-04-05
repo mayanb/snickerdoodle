@@ -7,7 +7,7 @@ import * as memberActions from '../TeamSettings/MemberActions'
 import * as userActions from '../AccountMenu/UserActions'
 import * as walkthroughActions from './WalkthroughActions'
 import {Redirect} from 'react-router'
-import * as processActions from '../Processes/ProcessesActions'
+//import * as processActions from '../Processes/ProcessesActions'
 
 const FETCHING = 'f'
 const INVALID = 'i'
