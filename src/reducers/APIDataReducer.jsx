@@ -167,7 +167,6 @@ function requestDelete(state, action) {
 }
 
 function requestDeleteSuccess(state, action) {
-  console.log(action)
   return update(state, {
 	data: {
       $splice: [[action.index, 1, ]]
