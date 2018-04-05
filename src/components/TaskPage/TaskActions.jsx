@@ -27,10 +27,20 @@ export function getTask(task) {
           dispatch(requestTaskFailure(err))
         } else {
           let organized = organizeAttributes(res.body)
+	        organized.attributesWithValues = attributesWithValues(organized.process_type.attributes, organized.attribute_values)
           dispatch(requestTaskSuccess(organized))
         }
       })
   }
+}
+
+function attributesWithValues(attributes, attributeValues) {
+	const sortedAttributeValues = attributeValues.sort((a, b) => b.id - a.id) //Sort to find most recent
+	return attributes.map(attribute => {
+		const valueObject = sortedAttributeValues.find(val => val.attribute === attribute.id)
+		attribute.value = valueObject ? valueObject.value : ''
+		return attribute
+	})
 }
 
 function organizeAttributes(task) {
@@ -83,7 +93,7 @@ export function getTaskAncestors(task) {
   return function (dispatch) {
     // dispatch an action that we are requesting inventory
     dispatch(requestTaskAncestors())
-    return api.get('/ics/tasks')
+    return api.get('/ics/tasks/')
       .query({child: task})
       .end(function (err, res) {
         if (err || !res.ok) {
@@ -126,7 +136,7 @@ export function getTaskDescendents(task) {
   return function (dispatch) {
     // dispatch an action that we are requesting inventory
     dispatch(requestTaskDescendents())
-    return api.get('/ics/tasks')
+    return api.get('/ics/tasks/')
       .query({parent: task})
       .end(function (err, res) {
         if (err || !res.ok) {
@@ -289,8 +299,6 @@ export function toggleTask(task) {
 }
 
 export function deleteTask(task) {
-  console.log("delete")
-  console.log(task)
   return function (dispatch) {
     dispatch((requestEditTask()))
     return api.put(`/ics/tasks/edit/${task.id}/`)
@@ -303,14 +311,8 @@ export function deleteTask(task) {
         is_flagged: task.is_flagged, 
         experiment: null 
       })
-      .end(function (err, res) {
-        if (err || !res.ok) {
-          //dispatch(requestEditTaskFailure(err))
-        } else {
-          dispatch(requestEditTaskSuccess("is_trashed", true))
-          //dispatch(requestEditTaskSuccessExtension(index))
-        }
-      })
+      .then(() => dispatch(requestEditTaskSuccess("is_trashed", true)))
+      .catch(e => console.log("Error", e))
   }
 }
 

@@ -1,0 +1,68 @@
+@import 'styles/constants.scss';
+
+.task-main {
+    flex-grow: 1;
+    padding: $task-page-top-padding 40px 40px;
+
+    .task-main-container {
+        width: 400px;
+    }
+
+    .last-updated {
+        color: $elephant;
+        margin-bottom: 20px;
+    }
+
+    .task-name {
+        margin-bottom: 40px;
+        color: black;
+
+        .name-row {
+            display: flex;
+            align-items: center;
+        }
+
+        img {
+            height: 32px;
+            margin-right: 8px;
+        }
+
+        .name {
+            font-size: 20px;
+            margin-right: 12px;
+        }
+
+        i {
+            font-size: 16px;
+            color: $gray;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .default-output {
+            font-size: 16px;
+        }
+    }
+
+    .task-info {
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .group {
+            width: 130px;
+            margin-bottom: 40px;
+            flex-shrink: 0;
+        }
+
+        .label {
+            color: $elephant;
+            margin-bottom: 12px;
+        }
+
+        .value {
+            color: $gray-dark;
+        }
+
+    }
+}

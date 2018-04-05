@@ -45,8 +45,6 @@ export default class DuplicateProcessDialog extends React.Component {
 	}
 
 	renderErrors() {
-		console.log('state', this.state)
-		console.log('errors', this.formErrors())
 		if (this.state.submitted) {
 			return (
 				<FormErrors errors={this.formErrors()} />

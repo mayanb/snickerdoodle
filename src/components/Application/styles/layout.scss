@@ -17,6 +17,11 @@
 // $panel-width: 300px;
 
 @font-face {
+	font-family: "SF Pro Text";
+	src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscotext-regular-webfont.woff");
+}
+
+@font-face {
  font-family: "Apercu";
  src: url("https://s3-us-west-1.amazonaws.com/polymer-fonts/Apercu.woff") format("woff");
 }
