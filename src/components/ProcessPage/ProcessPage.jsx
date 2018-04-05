@@ -119,8 +119,6 @@ class ProcessPage extends React.Component {
 		this.props.dispatch(actions.postDuplicateProcess(json))
 			.then((res) => {
 				this.setState({isDuplicating: false, isDuplicateOpen: false})
-				// let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
-				// return this.handleSelectProcess(index)
 				this.props.history.push('/processes/' + res.item.id)
 			})
 	}

@@ -175,7 +175,6 @@ class Processes extends React.Component {
 	}
 
 	handleDuplicateProcess(newProcess) {
-		console.log("handleConfirmDuplicate")
 		if (this.state.isDuplicating) {
 			return 
 		}
