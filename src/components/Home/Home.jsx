@@ -5,7 +5,7 @@ import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import './styles/home.css'
-import Checklist from '../NewUserChecklist/NewUserChecklist'
+// import Checklist from '../NewUserChecklist/NewUserChecklist'
 
 
 class Home extends React.Component {
@@ -38,9 +38,9 @@ class Home extends React.Component {
 	}
 
 	render() {
-		if (this.props.team !== 'alabama' && this.props.team !== 'valencia') {
-			return <Checklist />
-		}
+		// if (this.props.team !== 'alabama' && this.props.team !== 'valencia') {
+		// 	return <Checklist />
+		// }
 
 		return (
 			<div>
