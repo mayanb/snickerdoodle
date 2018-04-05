@@ -6,15 +6,15 @@
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="product-zero-state">
-            <text id="You-have-no-products" font-family="SFProText-Bold, SF Pro Text" font-size="16" font-weight="bold" fill="#000000">
+            <text id="You-have-no-products" font-family="SFProText-Bold, SF Pro Text, Apercu" font-size="16" font-weight="bold" fill="#000000">
                 <tspan x="101.011719" y="15">You have no products yet!</tspan>
             </text>
-            <text id="Add-processes-to-you" font-family="SFProText-Regular, SF Pro Text" font-size="14" font-weight="normal" line-spacing="22" fill="#000000">
+            <text id="Add-processes-to-you" font-family="SFProText-Regular, SF Pro Text, Apercu" font-size="14" font-weight="normal" line-spacing="22" fill="#000000">
                 <tspan x="59.8466797" y="44">Add processes to your factory by clicking the </tspan>
-                <tspan x="74.0175781" y="66" font-family="SFProText-Bold, SF Pro Text" font-weight="bold">Create Products</tspan>
+                <tspan x="74.0175781" y="66" font-family="SFProText-Bold, SF Pro Text, Apercu" font-weight="bold">Create Products</tspan>
                 <tspan x="188.628906" y="66"> button in the top-right. </tspan>
             </text>
-            <text id="View-Help-Center" font-family="SFProText-Regular, SF Pro Text" font-size="14" font-weight="normal" line-spacing="19" fill="#0079F3">
+            <text id="View-Help-Center" font-family="SFProText-Regular, SF Pro Text, Apercu" font-size="14" font-weight="normal" line-spacing="19" fill="#0079F3">
                 <tspan x="163.214844" y="102">View Help Center</tspan>
             </text>
             <g id="ic_library_books_black_24px" transform="translate(133.000000, 87.000000)">
