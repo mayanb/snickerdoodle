@@ -4,6 +4,7 @@ import ProcessAttributeDatatype from './ProcessAttributeDatatype'
 import Select2 from '../Inputs/Select'
 import Input from '../Inputs/Input'
 import FormGroup from '../Inputs/FormGroup'
+import { ATTRIBUTE_TYPES } from '../../utilities/constants'
 
 export default function ProcessAttributeField(props) {
 	return (
@@ -69,7 +70,6 @@ class EditText extends React.Component {
 
 export function EditSelect(props) {
 
-	let selectOptions = [{value: "TEXT", name: "Text"}, {value: "NUMB", name: "Number"}, {value: "TIME", name: "Time"}, {value: "USER", name: "User"}]
 	return (
 		<div className='process-attribute-select'>
 		<FormGroup>
@@ -78,8 +78,8 @@ export function EditSelect(props) {
 			value={props.value}
 			searchable={false}
 			clearable={false}
-			options={selectOptions}
-			labelKey={'name'}
+			options={ATTRIBUTE_TYPES}
+			labelKey={'label'}
 			valueKey={'value'}
 			placeholder="Select a datatype"
 			onChange={props.onChange}

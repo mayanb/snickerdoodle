@@ -6,6 +6,7 @@ import InventoryDrawer from './InventoryDrawer'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import InventoryFilters from './InventoryFilters'
 import InventoryListRow from './InventoryListRow'
+import ObjectList from '../ObjectList/ObjectList'
 import Loading from '../Loading/Loading'
 import './styles/inventory.css'
 
@@ -47,13 +48,15 @@ export class Inventory extends React.Component {
 							onFilter={this.handleFilter}
 						/>
 						<Loading isFetchingData={ui.isFetchingData}>
-							<PaginatedTable
-								ui={this.props.ui}
-								data={this.props.data}
-								onClick={this.handleSelectRow}
-								onPagination={this.handlePagination}
-								Row={InventoryListRow}
-							/>
+							<ObjectList>
+								<PaginatedTable
+									ui={this.props.ui}
+									data={this.props.data}
+									onClick={this.handleSelectRow}
+									onPagination={this.handlePagination}
+									Row={InventoryListRow}
+								/>
+							</ObjectList>
 						</Loading>
 					</div>
 					<InventoryDrawer />

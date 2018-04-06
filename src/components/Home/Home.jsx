@@ -1,12 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Goals from '../Goals/Goals'
 import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import './styles/home.css'
+// import Checklist from '../NewUserChecklist/NewUserChecklist'
 
 
-export default class Home extends React.Component {
+class Home extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -36,6 +38,10 @@ export default class Home extends React.Component {
 	}
 
 	render() {
+		// if (this.props.team !== 'alabama' && this.props.team !== 'valencia') {
+		// 	return <Checklist />
+		// }
+
 		return (
 			<div>
 				<div className="dashboard">
@@ -77,3 +83,14 @@ function Tab({title, active, onTab}) {
 		</div>
 	)
 }
+
+const mapStateToProps = (state/*, props*/) => {
+	let { data, ui } = state.users
+	const team = data[ui.activeUser].user.team_name.toLowerCase()
+	return {
+		team: team,
+	}
+}
+
+export default connect(mapStateToProps)(Home)
+

@@ -41,7 +41,7 @@ class Processes extends React.Component {
   }
 
   render() {
-	var { users, ui, data } = this.props
+	var { users, ui } = this.props
 	let account_type = users.data[users.ui.activeUser].user.account_type
 	if (account_type !== 'a')
 		this.props.history.push('/')
@@ -49,7 +49,6 @@ class Processes extends React.Component {
 	return (
 		<div className="processes-container">
 			<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
-			{ !ui.isFetchingData && (!data || !data.length) ? this.renderZeroState() : 
 				<ObjectList className="processes" isFetchingData={ui.isFetchingData}>
 					<PaginatedTable
 						{...this.props}
@@ -63,7 +62,6 @@ class Processes extends React.Component {
 					{this.renderArchiveDialog()}
 					{this.renderDuplicateDialog()}
 				</ObjectList>
-			}
 		</div>
 	)
   }
