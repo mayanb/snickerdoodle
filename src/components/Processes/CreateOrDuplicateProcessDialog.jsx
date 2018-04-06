@@ -1,9 +1,9 @@
 import React from 'react'
 import FormDialog from '../FormDialog/FormDialog'
 import './styles/createprocessdialog.css'
-import DuplicateProcessInputForm from './DuplicateProcessInputForm'
+import CreateOrDuplicateProcessInputForm from './CreateOrDuplicateProcessInputForm'
 
-export default class DuplicateProcessDialog extends React.Component {
+export default class CreateOrDuplicateProcessDialog extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -18,28 +18,33 @@ export default class DuplicateProcessDialog extends React.Component {
 			formErrorsArray: [],
 		}
 
-		this.handleDuplicate = this.handleDuplicate.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleInputChange = this.handleInputChange.bind(this)
 	}
 
 	render() {
-		if (!this.props.isOpen) {
+		const { isOpen, onToggle, title, className, submitButtonText } = this.props
+		
+		if (!isOpen) {
 			return null
 		}
 
 		return (
 			<FormDialog
-				onToggle={this.props.onToggle}
-				onSave={this.handleDuplicate}
-				title="Duplicate a process"
-				className="create-process-dialog"
+				onToggle={onToggle}
+				onSave={this.handleSubmit}
+				title={title}
+				className={className}
+				submitButtonText={submitButtonText}
 			>
-				<DuplicateProcessInputForm {...this.state} onInputChange={this.handleInputChange}/>
+				<CreateOrDuplicateProcessInputForm {...this.state} onInputChange={this.handleInputChange}/>
 			</FormDialog>
 		)
 	}
 
-	handleDuplicate() {
+	handleSubmit() {
+		const { onSubmit, onToggle } = this.props
+		
 		this.setState({ submitted: true })
 		if (this.formErrors().length > 0) {
 			return
@@ -54,8 +59,8 @@ export default class DuplicateProcessDialog extends React.Component {
 			description: this.state.processDescription
 		}
 
-		this.props.onDuplicate(newProcess)
-		this.props.onToggle()
+		onSubmit(newProcess)
+		onToggle()
 
 	}
 

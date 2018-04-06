@@ -6,7 +6,7 @@ import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessesListItem from './ProcessesListItem'
 import CreateProcessDialog from './CreateProcessDialog'
-import DuplicateProcessDialog from './DuplicateProcessDialog'
+import CreateOrDuplicateProcessDialog from './CreateOrDuplicateProcessDialog'
 import './styles/processes.css'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
 import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
@@ -122,7 +122,7 @@ class Processes extends React.Component {
 		if (!this.state.isDuplicateOpen)
 			return null
 		return (
-			<DuplicateProcessDialog
+			<CreateOrDuplicateProcessDialog
 				isOpen={this.state.isDuplicateOpen}
 				onToggle={this.handleCancelDuplicate.bind(this)}
 				onDuplicate={this.handleDuplicateProcess}

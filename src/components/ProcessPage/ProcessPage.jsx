@@ -9,7 +9,7 @@ import ProcessAttributeList from '../ProcessAttribute/ProcessAttributeList'
 import { withRouter } from 'react-router-dom'
 import './styles/processpage.css'
 import Loading from '../Loading/Loading'
-import DuplicateProcessDialog from '../Processes/DuplicateProcessDialog'
+import CreateOrDuplicateProcessDialog from '../Processes/CreateOrDuplicateProcessDialog'
 
 
 class ProcessPage extends React.Component {
@@ -78,11 +78,13 @@ class ProcessPage extends React.Component {
 		if (!this.state.isDuplicateOpen)
 			return null
 		return (
-			<DuplicateProcessDialog
+			<CreateOrDuplicateProcessDialog
 				isOpen={this.state.isDuplicateOpen}
 				onToggle={this.handleCancelDuplicate.bind(this)}
-				onDuplicate={this.handleDuplicateProcess}
-				isDuplicating={this.state.isDuplicating}
+				onSubmit={this.handleDuplicateProcess}
+				title='Duplicate a process'
+				className='create-process-dialog'
+				submitButtonText='Create new process with these same Fields'
 			/>
 			
 		)
