@@ -9,7 +9,7 @@ export const ATTRIBUTE_TYPES = [
 	{ value: "TEXT", label: "Text" },
 	{ value: "NUMB", label: "Number" },
 	{ value: "TIME", label: "Time" },
-	{ value: 'BOOL', label: 'Boolean' },
+	{ value: 'BOOL', label: 'Toggle (Yes/No)' },
 	{ value: "USER", label: "User" },
 ]
 
