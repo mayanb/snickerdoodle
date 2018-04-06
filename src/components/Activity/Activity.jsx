@@ -12,6 +12,7 @@ import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
 import './styles/activity.css'
 import Spinner from 'react-spinkit'
+import fileDownload from 'js-file-download'
 
 export default class Activity extends React.Component {
 	constructor(props) {
@@ -214,19 +215,24 @@ export default class Activity extends React.Component {
 	}
 
 	createSpreadsheet(params) {
-		let c = this
-		return api.post('/gauth/create-spreadsheet/')
+		// let c = this
+		return api.post('/gauth/create-csv/')
 			.type('form')
 			.send(params)
+			.responseType('blob')
 			.then(res => {
-				console.log(res.body.spreadsheetId)
-				let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
-				let newWin = window.open(url, '_blank');
-				if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
-					//POPUP BLOCKED
-					c.toggleDialog('mustEnablePopupsDialog')
-				}
+				console.log(res)
+				fileDownload(res.body, 'blob.csv')
 			})
+			// .then(res => {
+			// 	//console.log(res)
+			// 	// let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
+			// 	// let newWin = window.open(url, '_blank');
+			// 	// if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+			// 	// 	//POPUP BLOCKED
+			// 	// 	c.toggleDialog('mustEnablePopupsDialog')
+			// 	// }
+			// })
 			.catch(err => {
 				alert("ugh something went wrong\n" + err)
 			})
