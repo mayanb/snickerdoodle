@@ -13,6 +13,7 @@ import MustConnectGoogleDialog from './MustConnectGoogleDialog'
 import './styles/activity.css'
 import Spinner from 'react-spinkit'
 import fileDownload from 'js-file-download'
+import { isDandelion } from '../../utilities/userutils'
 
 export default class Activity extends React.Component {
 	constructor(props) {
@@ -204,6 +205,11 @@ export default class Activity extends React.Component {
 	}
 
 	attemptSpreadsheet(params) {
+		let team = api.get_active_user().user.team_name
+		if (isDandelion(team)) {
+			return this.createCSV(params)
+		}
+
 		let is_connected = api.get_active_user().user.has_gauth_token
 		if (is_connected) {
 			return this.createSpreadsheet(params)
@@ -214,27 +220,33 @@ export default class Activity extends React.Component {
 		}
 	}
 
-	createSpreadsheet(params) {
-		// let c = this
+	createCSV(params) {
 		return api.post('/gauth/create-csv/')
 			.type('form')
 			.send(params)
 			.responseType('blob')
-			.then(res => {
-				console.log(res)
-				fileDownload(res.body, 'blob.csv')
-			})
-			// .then(res => {
-			// 	//console.log(res)
-			// 	// let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
-			// 	// let newWin = window.open(url, '_blank');
-			// 	// if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
-			// 	// 	//POPUP BLOCKED
-			// 	// 	c.toggleDialog('mustEnablePopupsDialog')
-			// 	// }
-			// })
+			.then(res => fileDownload(res.body, 'blob.csv'))
 			.catch(err => {
-				alert("ugh something went wrong\n" + err)
+				console.log("ugh something went wrong\n" + err)
+			})
+
+	}
+
+	createSpreadsheet(params) {
+		let c = this
+		return api.post('/gauth/create-spreadsheet/')
+			.type('form')
+			.send(params)
+			.then(res => {
+				let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
+				let newWin = window.open(url, '_blank');
+				if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+					//POPUP BLOCKED
+					c.toggleDialog('mustEnablePopupsDialog')
+				}
+			})
+			.catch(err => {
+				console.log("ugh something went wrong\n" + err)
 			})
 	}
 

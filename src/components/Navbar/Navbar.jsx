@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import NavigationGroup from './NavigationGroup'
 import Img from '../Img/Img'
 import './styles/navigation.css'
+import { isDandelion } from '../../utilities/userutils'
 
 let group2 = [ 
   {title: 'Zebra Printing', icon: 'printing-zebra@2x', link: 'labels'},
@@ -55,7 +56,7 @@ class Navbar extends React.Component {
   renderPrintingNavigation() {
     let {data, ui} = this.props.users
     let team = data[ui.activeUser].user.team_name
-    if (team === 'alabama' || team === 'valencia')
+    if(isDandelion(team))
       return ( <NavigationGroup group={group2} title={"Printing"} /> )
     return null
   }
