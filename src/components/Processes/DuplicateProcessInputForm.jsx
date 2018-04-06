@@ -4,13 +4,13 @@ import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
 import './styles/createprocessdialog.css'
 
-export default function DuplicateProcessInputForm({ name, code, number, unit, outputDescription, submitted, onInputChange, onUpdateErrors }) {
+export default function DuplicateProcessInputForm({ name, code, number, unit, outputDescription, submitted, onInputChange, formErrorsArray }) {
 	return (
 		<div>
 			<RenderNameAndAbbreviation onInputChange={onInputChange} name={name} code={code}/>
 			<RenderOutputQuantity onInputChange={onInputChange} number={number} unit={unit}/>
 			<RenderOutputDescription onInputChange={onInputChange} outputDescription={outputDescription} />
-			{submitted && <FormErrors errors={formErrors(name, code, number, unit, outputDescription, onUpdateErrors)}/>}
+			{submitted && <FormErrors errors={formErrorsArray}/>}
 		</div>
 )
 }
@@ -74,33 +74,4 @@ function RenderOutputDescription({ onInputChange, outputDescription }) {
 			/>
 		</FormGroup>
 	)
-}
-
-function formErrors(name, code, number, unit, outputDescription, onUpdateErrors) {
-	const errors = []
-
-	if (!name)
-		errors.push("Please make sure you've filled out a name.")
-
-	if (!code)
-		errors.push("Please make sure you've filled out an abbreviation.")
-
-	if (name && name.length > 20)
-		errors.push("Please enter a name with fewer than 20 characters.")
-
-	if (code && code.length > 10)
-		errors.push("Please enter an abbreviation with fewer than 10 characters.")
-
-	if (!number || Number.isNaN(number))
-		errors.push("Please enter a valid number for expected output quantity.")
-
-	if (!unit)
-		errors.push("Please add a unit for the expected output quantity.")
-
-	if(!outputDescription)
-		errors.push("Please make sure you've filled out an output description.")
-	
-	onUpdateErrors(errors.length)
-
-	return errors
 }

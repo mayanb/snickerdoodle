@@ -15,12 +15,11 @@ export default class DuplicateProcessDialog extends React.Component {
 			outputDescription: "",
 			processDescription: "",
 			submitted: false,
-			hasErrors: true,
+			formErrorsArray: [],
 		}
 
 		this.handleDuplicate = this.handleDuplicate.bind(this)
 		this.handleInputChange = this.handleInputChange.bind(this)
-		this.handleUpdateErrors = this.handleUpdateErrors.bind(this)
 	}
 
 	render() {
@@ -35,18 +34,14 @@ export default class DuplicateProcessDialog extends React.Component {
 				title="Duplicate a process"
 				className="create-process-dialog"
 			>
-				<DuplicateProcessInputForm
-					{...this.state}
-					onInputChange={this.handleInputChange}
-					onUpdateErrors={this.handleUpdateErrors}
-				/>
+				<DuplicateProcessInputForm {...this.state} onInputChange={this.handleInputChange}/>
 			</FormDialog>
 		)
 	}
 
 	handleDuplicate() {
 		this.setState({ submitted: true })
-		if (this.hasErrors) {
+		if (this.formErrors().length > 0) {
 			return
 		}
 
@@ -68,8 +63,31 @@ export default class DuplicateProcessDialog extends React.Component {
 		this.setState({ [key]: e.target.value })
 	}
 	
-	handleUpdateErrors(numErrors) {
-		console.log('hasErrors: ', numErrors > 0)
-		this.setState({ hasErrors: numErrors > 0 })
+	formErrors() {
+		const errors = []
+		let { name, code, number, unit, outputDescription } = this.state
+		
+		if (!name)
+			errors.push("Please make sure you've filled out a name.")
+		
+		if (!code)
+			errors.push("Please make sure you've filled out an abbreviation.")
+		
+		if (name && name.length > 20)
+			errors.push("Please enter a name with fewer than 20 characters.")
+		
+		if (code && code.length > 10)
+			errors.push("Please enter an abbreviation with fewer than 10 characters.")
+		
+		if (!number || Number.isNaN(number))
+			errors.push("Please enter a valid number for expected output quantity.")
+		
+		if (!unit)
+			errors.push("Please add a unit for the expected output quantity.")
+		
+		if(!outputDescription)
+			errors.push("Please make sure you've filled out an output description.")
+		this.setState({ formErrorsArray: errors })
+		return errors
 	}
 }
