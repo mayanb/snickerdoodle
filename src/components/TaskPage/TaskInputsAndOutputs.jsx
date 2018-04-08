@@ -3,6 +3,7 @@ import TaskInputTable from './TaskInputTable'
 import TaskOutputTable from './TaskOutputTable'
 import { connect } from 'react-redux'
 import './styles/taskinputsandoutputs.css'
+import { isDandelion } from '../../utilities/userutils'
 
 class TaskInputsAndOutputs extends React.Component {
 
@@ -19,9 +20,8 @@ class TaskInputsAndOutputs extends React.Component {
 	// TEMP: For optional printing transition, to allow Dandelion to continue using outputs
 	teamUsesOutputs() {
 		const { data, ui } = this.props.users
-		const teamID = parseInt(data[ui.activeUser].user.team, 10)
-		const teamIDsWhoUseOutputs = new Set([1 /* -> Alabama */, 2  /* -> Valencia */])
-		return teamIDsWhoUseOutputs.has(teamID)
+		const team = data[ui.activeUser].user.team_name
+		return isDandelion(team)
 	}
 }
 

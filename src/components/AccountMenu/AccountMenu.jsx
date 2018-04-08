@@ -30,6 +30,7 @@ class AccountMenu extends React.Component {
   handleTeamChange(id) {
     this.props.dispatch(actions.switchActiveUser(id))
 	  this.handleDropdownToggle()
+	  window.location.reload()
   }
 
   /* RENDERERS */

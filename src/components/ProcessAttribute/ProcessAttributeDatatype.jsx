@@ -1,17 +1,11 @@
 import React from 'react'
-
-const DATA_TYPE_LABELS = {
-	TEXT: 'Text',
-	NUMB: 'Number',
-	DATE: 'Date',
-	TIME: 'Time',
-	USER: 'User'
-}
+import { ATTRIBUTE_TYPES } from '../../utilities/constants'
 
 export default function ProcessAttributeDatatype({type}) {
+	const label = ATTRIBUTE_TYPES.find(a => a.value === type).label
 	return (
 		<div className="process-attribute-datatype">
-			<span>{DATA_TYPE_LABELS[type]}</span>
+			<span>{label}</span>
 		</div>
 	)
 }

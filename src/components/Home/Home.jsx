@@ -4,6 +4,8 @@ import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import './styles/home.css'
+// import { isDandelion } from '../../utilities/userutils'
+// import Checklist from '../NewUserChecklist/NewUserChecklist'
 
 
 export default class Home extends React.Component {
@@ -36,6 +38,10 @@ export default class Home extends React.Component {
 	}
 
 	render() {
+		// if (!isDandelion(this.props.team)) {
+		// 	return <Checklist />
+		// }
+
 		return (
 			<div>
 				<div className="dashboard">
