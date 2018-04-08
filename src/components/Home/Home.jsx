@@ -5,6 +5,7 @@ import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import './styles/home.css'
+// import { isDandelion } from '../../utilities/userutils'
 // import Checklist from '../NewUserChecklist/NewUserChecklist'
 
 
@@ -38,7 +39,7 @@ class Home extends React.Component {
 	}
 
 	render() {
-		// if (this.props.team !== 'alabama' && this.props.team !== 'valencia') {
+		// if (!isDandelion(this.props.team)) {
 		// 	return <Checklist />
 		// }
 
