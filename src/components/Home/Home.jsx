@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import Goals from '../Goals/Goals'
 import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
@@ -9,7 +8,7 @@ import './styles/home.css'
 // import Checklist from '../NewUserChecklist/NewUserChecklist'
 
 
-class Home extends React.Component {
+export default class Home extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -84,14 +83,3 @@ function Tab({title, active, onTab}) {
 		</div>
 	)
 }
-
-const mapStateToProps = (state/*, props*/) => {
-	let { data, ui } = state.users
-	const team = data[ui.activeUser].user.team_name.toLowerCase()
-	return {
-		team: team,
-	}
-}
-
-export default connect(mapStateToProps)(Home)
-
