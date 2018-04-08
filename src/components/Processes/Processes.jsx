@@ -41,7 +41,7 @@ class Processes extends React.Component {
   }
 
   render() {
-	var { users, ui } = this.props
+	var { users, ui, data } = this.props
 	let account_type = users.data[users.ui.activeUser].user.account_type
 	if (account_type !== 'a')
 		this.props.history.push('/')
@@ -49,19 +49,21 @@ class Processes extends React.Component {
 	return (
 		<div className="processes-container">
 			<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
-				<ObjectList className="processes" isFetchingData={ui.isFetchingData}>
-					<PaginatedTable
-						{...this.props}
-						onClick={this.handleSelectProcess}
-						onPagination={this.handlePagination}
-						Row={ProcessesListItem}
-						TitleRow={this.renderHeaderRow}
-						extra={{onArchive: this.handleArchive, onDuplicate: this.handleDuplicate}}
-					/>
-					{this.renderDialog()}
-					{this.renderArchiveDialog()}
-					{this.renderDuplicateDialog()}
-				</ObjectList>
+				{ !ui.isFetchingData && (!data || !data.length) ? this.renderZeroState() :
+					<ObjectList className="processes" isFetchingData={ui.isFetchingData}>
+						<PaginatedTable
+							{...this.props}
+							onClick={this.handleSelectProcess}
+							onPagination={this.handlePagination}
+							Row={ProcessesListItem}
+							TitleRow={this.renderHeaderRow}
+							extra={{onArchive: this.handleArchive, onDuplicate: this.handleDuplicate}}
+						/>
+					</ObjectList>
+				}
+				{this.renderDialog()}
+				{this.renderArchiveDialog()}
+				{this.renderDuplicateDialog()}
 		</div>
 	)
   }
@@ -69,7 +71,9 @@ class Processes extends React.Component {
   renderZeroState() {
   	return (
   		<div style={{width: "100%", height: "70%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-	  		<Img style={{cursor: "pointer"}} onClick={() => window.location = 'https://polymer.helpscoutdocs.com'} useExtension src="process-zero-state.svg" />
+  			<a href="https://polymer.helpscoutdocs.com" target="_blank" rel="noopener noreferrer">
+	  			<Img style={{cursor: "pointer"}} useExtension src="process-zero-state.svg" />
+	  		</a>
 	  	</div>
   	)
   }
