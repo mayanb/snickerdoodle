@@ -6,53 +6,46 @@ export const REQUEST_SAVE_ATTRIBUTE_FAILURE = 'REQUEST_SAVE_ATTRIBUTE_FAILURE'
 
 export function _taskAttribute(state, action) {
 	switch (action.type) {
-    case REQUEST_SAVE_ATTRIBUTE:
-      return requestSaveAttribute(state, action)
-    case REQUEST_SAVE_ATTRIBUTE_SUCCESS:
-      return requestSaveAttributeSuccess(state,action)
-    case REQUEST_SAVE_ATTRIBUTE_FAILURE:
-      return requestSaveAttributeFailure(state, action)
-    default:
-    	return state
-   }
+		case REQUEST_SAVE_ATTRIBUTE:
+			return requestSaveAttribute(state, action)
+		case REQUEST_SAVE_ATTRIBUTE_SUCCESS:
+			return requestSaveAttributeSuccess(state, action)
+		case REQUEST_SAVE_ATTRIBUTE_FAILURE:
+			return requestSaveAttributeFailure(state, action)
+		default:
+			return state
+	}
 }
 
-// acts as if everything has already been saved
 function requestSaveAttribute(state, action) {
-  return update(state, {
-    data: {
-      organized_attrs: {
-        [action.index]: {
-          $merge: {value: action.params.value}
-        }
-      }
-    },
-    ui: {
-      $merge: { isSavingAttribute: true }
-    }
-  })
+	return update(state, {
+		ui: {
+			$merge: { isSavingAttribute: true }
+		}
+	})
 }
 
 function requestSaveAttributeSuccess(state, action) {
-  return state
+	return update(state, {
+		data: {
+			attributesWithValues: {
+				[action.index]: {
+					$merge: { value: action.params.value }
+				}
+			}
+		},
+		ui: {
+			$merge: { isSavingAttribute: false }
+		}
+	})
 }
 
-// if it failed, revert back to the old value 
 function requestSaveAttributeFailure(state, action) {
-  // if the user has moved onto a different task, don't do anything
-  if (state.data.id !== action.params.task)
-    return state
-
-  return update(state, {
-    data: {
-      organized_attrs: {
-        [action.index]: {
-          $merge: {value: action.params.value}
-        }
-      }
-    }
-  })
-
+	return update(state, {
+		ui: {
+			$merge: { isSavingAttribute: false }
+		}
+	})
 }
 
 

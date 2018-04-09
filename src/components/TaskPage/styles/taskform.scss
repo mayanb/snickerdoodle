@@ -15,17 +15,15 @@
         position: relative;
     }
 
+    .loading {
+        height: 38px;
+    }
+
     .form-buttons {
         display: none;
         position: absolute;
         top: 6px;
         right: 0;
-
-        &.loading {
-            display: flex;
-            top: 8px;
-            right: 6px;
-        }
     }
 
     .form-button {
