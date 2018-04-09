@@ -18,6 +18,11 @@
         text-overflow: ellipsis;
     }
 
+    &>div {
+        overflow-x: hidden;
+        text-overflow: ellipsis; 
+    }
+
 
     .icon-img {
         width: 25px;

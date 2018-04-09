@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './ProductsActions.jsx'
-import Img from '../Img/Img'
 import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
+import ZeroState from '../ObjectList/ObjectListZeroState'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDialog from './CreateProductDialog'
@@ -47,7 +47,7 @@ class Products extends React.Component {
 			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
 			                                      title="Products" />
 
-					{ !ui.isFetchingData && (!data || !data.length) ? this.renderZeroState() :
+					{ !ui.isFetchingData && (!data || !data.length) ? <ZeroState type="product" /> :
 				  	<ObjectList className="products" isFetchingData={ui.isFetchingData}>
 						  <PaginatedTable
 							  {...this.props}
@@ -62,16 +62,6 @@ class Products extends React.Component {
 				  {this.renderArchiveDialog()}
 		  </div>
 	  )
-  }
-
-   renderZeroState() {
-  	return (
-  		<div style={{width: "100%", height: "70%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-  			<a href="https://polymer.helpscoutdocs.com" target="_blank" rel="noopener noreferrer">
-		  		<Img style={{cursor: "pointer"}} useExtension src="product-zero-state.svg" />
-		  	</a>
-	  	</div>
-  	)
   }
 
   renderDialog() {
