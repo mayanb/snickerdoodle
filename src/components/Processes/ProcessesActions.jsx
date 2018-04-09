@@ -114,7 +114,6 @@ export function selectProcess(id) {
 export function postCreateProcess(json, success) {
   return function (dispatch) {
     dispatch(requestCreateProcess())
-    console.log('create json:', json)
 	  return api.post('/ics/processes/')
 		  .send(json)
 		  .send({ icon: "default.png" })

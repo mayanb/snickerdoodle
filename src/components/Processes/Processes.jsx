@@ -131,7 +131,7 @@ class Processes extends React.Component {
 				isDuplicating={this.state.isDuplicating}
 				title='Duplicate a process'
 				className='create-process-dialog'
-				submitButtonText='Create new process with these same Fields'
+				submitButtonText='Create new process with these same fields'
 			/>
 			
 		)

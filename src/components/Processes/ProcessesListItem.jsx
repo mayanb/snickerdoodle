@@ -92,7 +92,7 @@ export default class ProcessesListItem extends React.Component {
 			            menu
 			            expanded={expanded} 
 			            onToggleDropdown={this.handleDropdownToggle}
-			            button={<i className="material-icons"  style={{fontSize: '22px'}}>more_horiz</i>}
+			            button={<i className="material-icons more_horiz">more_horiz</i>}
 	          		>
 		            <div className="account-menu">
 		              { this.renderProcessOptions() }

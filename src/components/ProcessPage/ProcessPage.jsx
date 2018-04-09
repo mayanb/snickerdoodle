@@ -84,7 +84,7 @@ class ProcessPage extends React.Component {
 				onSubmit={this.handleDuplicateProcess}
 				title='Duplicate a process'
 				className='create-process-dialog'
-				submitButtonText='Create new process with these same Fields'
+				submitButtonText='Create new process with these same fields'
 			/>
 			
 		)

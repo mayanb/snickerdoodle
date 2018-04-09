@@ -13,7 +13,6 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 			number: "",
 			unit: "",
 			outputDescription: "",
-			processDescription: "",
 			submitted: false,
 			formErrorsArray: [],
 		}

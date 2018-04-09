@@ -7,15 +7,15 @@ import './styles/createprocessdialog.css'
 export default function CreateOrDuplicateProcessInputForm({ name, code, number, unit, outputDescription, submitted, onInputChange, formErrorsArray }) {
 	return (
 		<div>
-			<RenderNameAndAbbreviation onInputChange={onInputChange} name={name} code={code}/>
-			<RenderOutputQuantity onInputChange={onInputChange} number={number} unit={unit}/>
-			<RenderOutputDescription onInputChange={onInputChange} outputDescription={outputDescription} />
+			<NameAndAbbreviation onInputChange={onInputChange} name={name} code={code}/>
+			<OutputQuantity onInputChange={onInputChange} number={number} unit={unit}/>
+			<OutputDescription onInputChange={onInputChange} outputDescription={outputDescription} />
 			{submitted && <FormErrors errors={formErrorsArray}/>}
 		</div>
 )
 }
 
-function RenderNameAndAbbreviation({ onInputChange, name, code }) {
+function NameAndAbbreviation({ onInputChange, name, code }) {
 	return (
 		<div className="name-abbreviation">
 			<FormGroup label="Name" className="name-group">
@@ -40,7 +40,7 @@ function RenderNameAndAbbreviation({ onInputChange, name, code }) {
 	)
 }
 
-function RenderOutputQuantity({ onInputChange, number, unit }) {
+function OutputQuantity({ onInputChange, number, unit }) {
 	return (
 		<FormGroup label="Expected output quantity">
 			<div className="output-quantity">
@@ -63,7 +63,7 @@ function RenderOutputQuantity({ onInputChange, number, unit }) {
 	)
 }
 
-function RenderOutputDescription({ onInputChange, outputDescription }) {
+function OutputDescription({ onInputChange, outputDescription }) {
 	return (
 		<FormGroup label="Output description">
 			<Input
