@@ -73,7 +73,6 @@ function requestTask() {
 }
 
 function requestTaskFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_FAILURE,
     name: TASK
@@ -113,7 +112,6 @@ function requestTaskAncestors() {
 }
 
 function requestTaskAncestorsFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_FAILURE,
     name: TASK_ANCESTORS
@@ -156,7 +154,6 @@ function requestTaskDescendents() {
 }
 
 function requestTaskDescendentsFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_FAILURE,
     name: TASK_DESCENDENTS

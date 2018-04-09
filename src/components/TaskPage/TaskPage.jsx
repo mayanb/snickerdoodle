@@ -18,9 +18,20 @@ class TaskPage extends React.Component {
 		this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
 	}
 
+	componentWillReceiveProps(np) {
+		if (np.match.params.id !== this.props.match.params.id) {
+			this.loadTask(np.match.params.id)
+		}
+	}
+
 	componentDidMount() {
-		let id = this.props.match.params.id
+		this.loadTask(this.props.match.params.id)
+	}
+
+	loadTask(id) {
 		this.props.dispatch(actions.getTask(id))
+		this.props.dispatch(actions.getTaskAncestors(id))
+		this.props.dispatch(actions.getTaskDescendents(id))
 	}
 
 	handleFlagTask() {
@@ -51,11 +62,11 @@ class TaskPage extends React.Component {
 			<div className="task-page">
 				<TaskHeader task={task} onToggleFlag={this.handleFlagTask} />
 				<div className="task-container">
-					<ProductHistory task={task}>
-					</ProductHistory>
-					<TaskMain task={task}
-					          attributes={task.attributesWithValues}
-					          onSaveAttribute={this.handleSaveAttribute}
+					<ProductHistory />
+					<TaskMain 
+						task={task}
+					  attributes={task.attributesWithValues}
+					  onSaveAttribute={this.handleSaveAttribute}
 					/>
 					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.display} />
 				</div>
@@ -69,6 +80,6 @@ const mapStateToProps = (state/*, props*/) => {
 		task: state.task.data,
 	}
 }
-const connectedTask = connect(mapStateToProps)(TaskPage)
-export default connectedTask
+
+export default connect(mapStateToProps)(TaskPage)
 
