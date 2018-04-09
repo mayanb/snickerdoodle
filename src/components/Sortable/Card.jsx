@@ -5,6 +5,10 @@ import { DragSource, DropTarget } from 'react-dnd'
 import ItemTypes from './ItemTypes'
 
 const cardSource = {
+	canDrag(props) {
+		return props.canDrag
+	},
+
 	beginDrag(props) {
 		return {
 			id: props.id,
@@ -57,10 +61,10 @@ class Card extends Component {
 			connectDragSource,
 			connectDropTarget,
 		} = this.props
+		const component = connectDropTarget(<div><this.props.renderer {...renderProps} /></div>)
 
-		return connectDragSource(
-			connectDropTarget(<div><this.props.renderer {...renderProps} /></div>),
-		)
+		//Hack for Firefox bug related to input elements - https://github.com/react-dnd/react-dnd/issues/260
+		return this.props.canDrag ? connectDragSource(component) : component
 	}
 }
 
