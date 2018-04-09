@@ -1,6 +1,7 @@
 import React from 'react'
 import './styles/taskform.css'
 import Input from '../Inputs/Input'
+import Switch from '../Switch/Switch'
 
 export default class TaskForm extends React.Component {
 	render() {
@@ -39,23 +40,52 @@ class AttributeField extends React.Component {
 				<div className="form-label">
 					{taskAttribute.name}
 				</div>
-				{this.renderInput()}
+				{this.renderValue()}
 			</div>
 		)
 	}
 
-	renderInput() {
+	renderValue() {
+		const { taskAttribute } = this.props
 		if (this.state.saving)
 			return (
 				<div className="loading">Loading...</div>
 			)
 
-		return (
-			<TextAttribute value={this.props.taskAttribute.value} onSave={this.handleSave} />
-		)
+		return taskAttribute.datatype === 'BOOL' ?
+			<BooleanAttribute value={taskAttribute.value} onSave={this.handleSave} /> :
+			<TextAttribute value={taskAttribute.value} onSave={this.handleSave} />
+	}
+}
+
+class BooleanAttribute extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.handleChange = this.handleChange.bind(this)
 	}
 
+	handleChange(val) {
+		//Set new value to opposite of existing value
+		const newValue = this.props.value ? '' : 'true'
+		this.props.onSave(newValue)
+	}
+
+	render() {
+		const boolValue = this.props.value === 'true'
+		const stringValue = boolValue ? 'Yes' : 'No'
+		return (
+			<div className="boolean-container">
+				{stringValue}
+				<Switch
+					value={boolValue}
+					onClick={this.handleChange}
+				/>
+			</div>
+		)
+	}
 }
+
 
 class TextAttribute extends React.Component {
 	constructor(props) {

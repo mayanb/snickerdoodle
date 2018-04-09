@@ -1,5 +1,4 @@
 import api from '../WaffleconeAPI/api.jsx'
-import moment from 'moment'
 import {
   REQUEST, 
   REQUEST_SUCCESS, 

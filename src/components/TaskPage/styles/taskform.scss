@@ -11,6 +11,17 @@
         margin-bottom: 20px;
     }
 
+    .boolean-container {
+        display: flex;
+        align-items: center;
+        height: 38px;
+
+        .switch {
+            height: 16px;
+            margin-left: 20px;
+        }
+    }
+
     .input-container {
         position: relative;
     }

@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 function display(task) {
 	return words(task).toUpperCase()
 }
