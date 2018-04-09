@@ -4,13 +4,13 @@ import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
 import './styles/createprocessdialog.css'
 
-export default function EditProcessInfoForm({ name, code, number, unit, outputDescription, submitted, onInputChange, formErrorsArray }) {
+export default function EditProcessInfoForm({ code, name, output_desc, default_amount, unit, onInputChange, isEditingBasicInfo}) {
 	return (
 		<div>
 			<RenderNameAndAbbreviation onInputChange={onInputChange} name={name} code={code}/>
-			<RenderOutputQuantity onInputChange={onInputChange} number={number} unit={unit}/>
-			<RenderOutputDescription onInputChange={onInputChange} outputDescription={outputDescription} />
-			{submitted && <FormErrors errors={formErrorsArray}/>}
+			<RenderOutputQuantity onInputChange={onInputChange} default_amount={default_amount} unit={unit}/>
+			<RenderOutputDescription onInputChange={onInputChange} output_desc={output_desc} />
+			{/*{isEditingBasicInfo && <FormErrors errors={formErrorsArray}/>}*/}
 		</div>
 )
 }
@@ -40,7 +40,7 @@ function RenderNameAndAbbreviation({ onInputChange, name, code }) {
 	)
 }
 
-function RenderOutputQuantity({ onInputChange, number, unit }) {
+function RenderOutputQuantity({ onInputChange, default_amount, unit }) {
 	return (
 		<FormGroup label="Expected output quantity">
 			<div className="output-quantity">
@@ -48,7 +48,7 @@ function RenderOutputQuantity({ onInputChange, number, unit }) {
 					type="number"
 					className="number"
 					placeholder="5"
-					value={number}
+					value={default_amount}
 					onChange={(e) => onInputChange(e, "number")}
 				/>
 				<Input
@@ -63,13 +63,13 @@ function RenderOutputQuantity({ onInputChange, number, unit }) {
 	)
 }
 
-function RenderOutputDescription({ onInputChange, outputDescription }) {
+function RenderOutputDescription({ onInputChange, output_desc }) {
 	return (
 		<FormGroup label="Output description">
 			<Input
 				type="text"
 				placeholder="Roasted Beans"
-				value={outputDescription}
+				value={output_desc}
 				onChange={(e) => onInputChange(e, "outputDescription")}
 			/>
 		</FormGroup>
