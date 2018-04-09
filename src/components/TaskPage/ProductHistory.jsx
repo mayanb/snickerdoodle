@@ -61,7 +61,8 @@ function TaskSummary({ task, selected, history }) {
 				{task.process_type.icon && <img src={icon(task.process_type.icon)} alt="process type" />}
 			</div>
 			<div className="task-text">
-				<div className="task-name">
+				<div className={"task-name " + (task.is_flagged && "task-flagged-name")}>
+					{task.is_flagged && <i className= "task-flagged material-icons">error</i>}
 					{task.display}
 				</div>
 				<div className="task-amount">
