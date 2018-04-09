@@ -56,7 +56,6 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 			default_amount: this.state.number,
 			unit: this.state.unit,
 			output_desc: this.state.outputDescription,
-			description: this.state.processDescription || 'DEFAULT DESCRIPTION'
 		}
 
 		onSubmit(newProcess)
