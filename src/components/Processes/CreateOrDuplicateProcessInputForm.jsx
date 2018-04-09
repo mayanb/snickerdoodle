@@ -4,7 +4,7 @@ import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
 import './styles/createprocessdialog.css'
 
-export default function DuplicateProcessInputForm({ name, code, number, unit, outputDescription, submitted, onInputChange, formErrorsArray }) {
+export default function CreateOrDuplicateProcessInputForm({ name, code, number, unit, outputDescription, submitted, onInputChange, formErrorsArray }) {
 	return (
 		<div>
 			<RenderNameAndAbbreviation onInputChange={onInputChange} name={name} code={code}/>
