@@ -12,6 +12,8 @@ import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
 import './styles/activity.css'
 import Spinner from 'react-spinkit'
+import fileDownload from 'js-file-download'
+import { isDandelion } from '../../utilities/userutils'
 
 export default class Activity extends React.Component {
 	constructor(props) {
@@ -203,6 +205,11 @@ export default class Activity extends React.Component {
 	}
 
 	attemptSpreadsheet(params) {
+		let team = api.get_active_user().user.team_name
+		if (isDandelion(team)) {
+			return this.createCSV(params)
+		}
+
 		let is_connected = api.get_active_user().user.has_gauth_token
 		if (is_connected) {
 			return this.createSpreadsheet(params)
@@ -213,13 +220,24 @@ export default class Activity extends React.Component {
 		}
 	}
 
+	createCSV(params) {
+		return api.post('/gauth/create-csv/')
+			.type('form')
+			.send(params)
+			.responseType('blob')
+			.then(res => fileDownload(res.body, 'blob.csv'))
+			.catch(err => {
+				console.log("ugh something went wrong\n" + err)
+			})
+
+	}
+
 	createSpreadsheet(params) {
 		let c = this
 		return api.post('/gauth/create-spreadsheet/')
 			.type('form')
 			.send(params)
 			.then(res => {
-				console.log(res.body.spreadsheetId)
 				let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
 				let newWin = window.open(url, '_blank');
 				if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
@@ -228,7 +246,7 @@ export default class Activity extends React.Component {
 				}
 			})
 			.catch(err => {
-				alert("ugh something went wrong\n" + err)
+				console.log("ugh something went wrong\n" + err)
 			})
 	}
 
