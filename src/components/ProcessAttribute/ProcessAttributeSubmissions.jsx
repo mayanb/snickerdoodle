@@ -9,7 +9,7 @@ export default function Submissions({name, recent}) {
 				<span className="submission-title">{name}</span>
 			</div>
 			<div className="recent-subs">
-				{ (recent || []).map((e, i) => <div><span key={i}>{e.value}</span></div>) }
+				{ (recent || []).map((e, i) => <div key={i}><span>{e.value}</span></div>) }
 			</div>
 		</div>
 	)

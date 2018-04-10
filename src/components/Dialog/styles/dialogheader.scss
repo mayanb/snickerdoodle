@@ -5,9 +5,10 @@
     min-height: 52px;
     border-bottom: 1px solid $gray-ultra-light;
 
-    img {
-        height: 12px;
+    i {
+        font-size: 16px;
         float: right;
         cursor: pointer;
+        color: $gray-light;
     }
 }

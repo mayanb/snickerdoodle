@@ -9,7 +9,7 @@ import CreateOrDuplicateProcessDialog from './CreateOrDuplicateProcessDialog'
 import './styles/processes.css'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
 import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
-import Img from '../Img/Img'
+import ZeroState from '../ObjectList/ObjectListZeroState'
 
 class Processes extends React.Component {
   constructor(props) {
@@ -40,40 +40,32 @@ class Processes extends React.Component {
   }
 
   render() {
-	var { users, ui } = this.props
-	let account_type = users.data[users.ui.activeUser].user.account_type
-	if (account_type !== 'a')
-		this.props.history.push('/')
+		var { users, ui, data } = this.props
+		let account_type = users.data[users.ui.activeUser].user.account_type
+		if (account_type !== 'a')
+			this.props.history.push('/')
 
-	return (
-		<div className="processes-container">
-			<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
-				<ObjectList className="processes" isFetchingData={ui.isFetchingData}>
-					<PaginatedTable
-						{...this.props}
-						onClick={this.handleSelectProcess}
-						onPagination={this.handlePagination}
-						Row={ProcessesListItem}
-						TitleRow={this.renderHeaderRow}
-						extra={{onArchive: this.handleArchive, onDuplicate: this.handleDuplicate}}
-					/>
+		return (
+			<div className="processes-container">
+				<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
+					{ !ui.isFetchingData && (!data || !data.length) ? <ZeroState type="process" /> :
+						<ObjectList className="processes" isFetchingData={ui.isFetchingData}>
+							<PaginatedTable
+								{...this.props}
+								onClick={this.handleSelectProcess}
+								onPagination={this.handlePagination}
+								Row={ProcessesListItem}
+								TitleRow={this.renderHeaderRow}
+								extra={{onArchive: this.handleArchive, onDuplicate: this.handleDuplicate}}
+							/>
+						</ObjectList>
+					}
 					{this.renderDialog()}
 					{this.renderArchiveDialog()}
 					{this.renderDuplicateDialog()}
-				</ObjectList>
-		</div>
-	)
+			</div>
+		)
   }
-
-  renderZeroState() {
-  	return (
-  		<div style={{width: "100%", height: "70%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-	  		<Img style={{cursor: "pointer"}} onClick={() => window.location = 'https://polymer.helpscoutdocs.com'} useExtension src="process-zero-state.svg" />
-	  	</div>
-  	)
-  }
-
-  // this.handleSelectProcess
 
 	renderDialog() {
 		return (
