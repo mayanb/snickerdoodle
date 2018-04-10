@@ -1,52 +1,52 @@
 import React from 'react'
-import './styles/producthistory.css'
 import { connect } from 'react-redux'
-import * as actions from './TaskActions'
+import './styles/producthistory.css'
 import { formatAmount, pluralize } from '../../utilities/stringutils'
 import { icon } from './TaskHelpers.jsx'
+import Loading from '../Loading/Loading'
 
 class ProductHistory extends React.Component {
-
-	componentDidMount() {
-		let id = this.props.task.id
-		this.props.dispatch(actions.getTaskAncestors(id))
-		this.props.dispatch(actions.getTaskDescendents(id))
-	}
-
 	render() {
-		const { task, ancestors, descendents } = this.props
+		const { task, ancestors, descendents, ancestorsUI, descendentsUI } = this.props
 		return (
 			<div className="product-history">
 				<div className="title">
 					Product History
 				</div>
-				<div>
-					{ancestors.map(t => <TaskSummary task={t} key={t.id} />)}
-				</div>
+				<Loading isFetchingData={ancestorsUI.isFetchingData}>
+					<div>
+						{ancestors.map(t => <TaskSummary task={t} key={t.id} />)}
+					</div>
+				</Loading>
 				<div className="focus-box">
 					{task.inputs.map(input => <TaskSummary task={input.input_task_n} key={input.id} />)}
 					<InputsLabel count={task.inputs.length} />
 					<TaskSummary task={task} selected={true} />
 				</div>
-				<div>
-					{descendents.map(t => <TaskSummary task={t} key={t.id} />)}
-				</div>
+				<Loading isFetchingData={descendentsUI.isFetchingData}>
+					<div>
+						{descendents.map(t => <TaskSummary task={t} key={t.id} />)}
+					</div>
+				</Loading>
 			</div>
 		)
 	}
 }
 
-const mapStateToProps = (state/*, props*/) => {
+const mapStateToProps = (state) => {
 	const ancestors = state.taskAncestors.data || []
 	const descendents = state.taskDescendents.data || []
 	return {
+		task: state.task.data,
 		ancestors: ancestors,
 		ancestorsUI: state.taskAncestors.ui,
 		descendents: descendents,
 		descendentsUI: state.taskDescendents.ui,
 	}
 }
+
 export default connect(mapStateToProps)(ProductHistory)
+
 
 function TaskSummary({ task, selected, history }) {
 	const amount = task.total_amount || (task.items && task.items.reduce((sum, item) => sum + Number(item.amount), 0))
