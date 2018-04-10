@@ -2,11 +2,11 @@ import React from 'react'
 import FormGroup from '../Inputs/FormGroup'
 import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
-import './styles/edit-process-info.scss'
+import './styles/edit-process-info.css'
 
 export default function EditProcessInfoForm({ code, name, output_desc, default_amount, unit, onInputChange, isEditingBasicInfo}) {
 	return (
-		<div>
+		<div className='edit-process-info'>
 			<CodeAndName onInputChange={onInputChange} name={name} code={code}/>
 			<OutputDescription onInputChange={onInputChange} output_desc={output_desc} />
 			<OutputQuantity onInputChange={onInputChange} default_amount={default_amount} unit={unit}/>
@@ -53,9 +53,9 @@ function OutputDescription({ onInputChange, output_desc }) {
 
 function OutputQuantity({ onInputChange, default_amount, unit }) {
 	return (
-		<div>
-			<div>Output</div>
-			<FormGroup label="Expected output quantity">
+		<div className='output-section-container'>
+			<div className='output-section-header'>Output</div>
+			<FormGroup label="Default Batch Size">
 				<div className="output-quantity">
 					<Input
 						type="number"

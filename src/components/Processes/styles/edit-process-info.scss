@@ -1,17 +1,24 @@
-@import 'styles/constants.scss';
-
-.create-process-dialog {
+.edit-process-info {
     .name-abbreviation {
-        display: flex
+        display: flex;
     }
 
     .name-group {
         flex: 2;
-        margin-right: 20px;
+        margin-left: 20px;
     }
 
     .abbreviation-group {
         flex: 1;
+    }
+    
+    .output-section-container {
+        margin-top: 44px;
+        margin-bottom: 80px;
+    }
+    
+    .output-section-header {
+        margin-bottom: 8px;
     }
 
     .output-quantity {
@@ -23,7 +30,7 @@
         }
 
         .unit {
-            flex: 4;
+            flex: 2;
         }
     }
 }
