@@ -1,4 +1,5 @@
 import React from 'react'
+import Spinner from 'react-spinkit'
 import './styles/taskform.css'
 import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
@@ -29,7 +30,7 @@ class AttributeField extends React.Component {
 	handleSave(value) {
 		this.setState({ saving: true })
 		this.props.onSave(this.props.taskAttribute.id, value)
-			.finally(() => this.setState({ saving: false }))
+			.finally(() => window.setTimeout(() => this.setState({ saving: false }), 2000))
 	}
 
 
@@ -47,21 +48,23 @@ class AttributeField extends React.Component {
 
 	renderValue() {
 		const { taskAttribute } = this.props
-		if (this.state.saving)
-			return (
-				<div className="loading">Loading...</div>
-			)
-
 		return taskAttribute.datatype === 'BOOL' ?
-			<BooleanAttribute value={taskAttribute.value} onSave={this.handleSave} /> :
-			<TextAttribute value={taskAttribute.value} onSave={this.handleSave} />
+			<BooleanAttribute 
+				value={taskAttribute.value} 
+				onSave={this.handleSave} 
+				isLoading={this.state.saving}
+			/> :
+			<TextAttribute 
+				value={taskAttribute.value} 
+				onSave={this.handleSave} 
+				isLoading={this.state.saving}
+			/>
 	}
 }
 
 class BooleanAttribute extends React.Component {
 	constructor(props) {
 		super(props)
-
 		this.handleChange = this.handleChange.bind(this)
 	}
 
@@ -72,7 +75,8 @@ class BooleanAttribute extends React.Component {
 	}
 
 	render() {
-		const boolValue = this.props.value === 'true'
+		let { value, isLoading } = this.props
+		const boolValue = value === 'true'
 		const stringValue = boolValue ? 'Yes' : 'No'
 		return (
 			<div className="boolean-container">
@@ -81,6 +85,7 @@ class BooleanAttribute extends React.Component {
 					value={boolValue}
 					onClick={this.handleChange}
 				/>
+				{ isLoading && <Loading /> }
 			</div>
 		)
 	}
@@ -124,9 +129,13 @@ class TextAttribute extends React.Component {
 	}
 
 	renderButtons() {
+		if (this.props.isLoading) {
+			return <Loading />
+		}
+
+	 // Rather than onClick, use onMouseDown since it is called before the blur event which hides the buttons
 		return (
 			<div className="form-buttons">
-				{/**Rather than onClick, use onMouseDown since it is called before the blur event which hides the buttons*/}
 				<div className="form-button reset" onMouseDown={this.handleReset}>
 					<i className="material-icons">clear</i>
 				</div>
@@ -136,4 +145,8 @@ class TextAttribute extends React.Component {
 			</div>
 		)
 	}
+}
+
+function Loading(props) {
+	return <div className="task-attr-loading"><Spinner fadeIn="quarter" name="circle" color="#7AD69B"/></div>
 }

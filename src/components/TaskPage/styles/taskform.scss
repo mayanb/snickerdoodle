@@ -26,8 +26,11 @@
         position: relative;
     }
 
-    .loading {
-        height: 38px;
+    .task-attr-loading {
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        display: flex;
     }
 
     .form-buttons {
