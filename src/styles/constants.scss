@@ -33,6 +33,8 @@ $orange: rgba(254, 198, 44, 1);
 $yellow: rgba(255, 215, 84, 1);
 $yellow-light: rgba(255, 243, 204, 1);
 
+$green: #7AD69B;
+
 $background-color: $elephant-ultra-light;
 $theme-color: $primary;
 
@@ -54,7 +56,7 @@ $z-index-edit-menu: 992;
 
 //--------
 
-$sans-stack: 'SF Pro Text', 'Apercu', 'Interface', 'Helvetica';
+$sans-stack: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Apercu', 'Interface', 'Helvetica', sans-serif;
 $baseline: 8px;
 $nav-width: 64px;
 $nav-height: 64px;

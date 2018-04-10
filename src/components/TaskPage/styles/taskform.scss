@@ -11,8 +11,26 @@
         margin-bottom: 20px;
     }
 
+    .boolean-container {
+        display: flex;
+        align-items: center;
+        height: 38px;
+
+        .switch {
+            height: 16px;
+            margin-left: 20px;
+        }
+    }
+
     .input-container {
         position: relative;
+    }
+
+    .task-attr-loading {
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        display: flex;
     }
 
     .form-buttons {
@@ -20,12 +38,6 @@
         position: absolute;
         top: 6px;
         right: 0;
-
-        &.loading {
-            display: flex;
-            top: 8px;
-            right: 6px;
-        }
     }
 
     .form-button {
