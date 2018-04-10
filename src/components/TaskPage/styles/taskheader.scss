@@ -1,7 +1,6 @@
 @import 'styles/constants.scss';
 
 .task-header {
-    font-size: 20px;
     height: $section-header-height;
     display: flex;
     justify-content: space-between;
@@ -22,11 +21,21 @@
     .title {
         display: flex;
         align-items: center;
+        font-size: 20px;
 
         i {
             cursor: pointer;
             margin-right: 8px;
             opacity: 0.5;
+        }
+    }
+
+    .task-ancestor-flag {
+        display: flex;
+        align-items: center;
+        i {
+            font-size: 20px;
+            margin-right: 8px;
         }
     }
 
