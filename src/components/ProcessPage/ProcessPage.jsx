@@ -9,7 +9,7 @@ import ProcessAttributeList from '../ProcessAttribute/ProcessAttributeList'
 import { withRouter } from 'react-router-dom'
 import './styles/processpage.css'
 import Loading from '../Loading/Loading'
-import DuplicateProcessDialog from '../Processes/DuplicateProcessDialog'
+import CreateOrDuplicateProcessDialog from '../Processes/CreateOrDuplicateProcessDialog'
 
 
 class ProcessPage extends React.Component {
@@ -18,10 +18,12 @@ class ProcessPage extends React.Component {
 		this.state ={
 			isArchiveOpen: false,
 			isArchiving: false,
+			isEditingBasicInfo: false,
 		}
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleDuplicate = this.handleDuplicate.bind(this)
 		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
+		this.handleEditBasicInfo = this.handleEditBasicInfo.bind(this)
 
 	}
 
@@ -42,7 +44,13 @@ class ProcessPage extends React.Component {
 				<ProcessPageHeader processName={data.name} onBack={() => history.push('/processes')}/>
 				<Loading isfetchingData={this.state.isArchiving}>
 					<div className="process-page-content">
-						<ProcessInformation {...data} onArchive={this.handleArchive} onDuplicate={this.handleDuplicate}/>
+						<ProcessInformation
+							{...data}
+							onArchive={this.handleArchive}
+							onDuplicate={this.handleDuplicate}
+							isEditingBasicInfo={this.state.isEditingBasicInfo}
+							onSubmitBasicInfo={this.handleEditBasicInfo}
+						/>
 						<ProcessAttributeList process={data} />
 					</div>
 					{this.renderArchiveDialog(data, dispatch, history)}
@@ -70,11 +78,13 @@ class ProcessPage extends React.Component {
 		if (!this.state.isDuplicateOpen)
 			return null
 		return (
-			<DuplicateProcessDialog
+			<CreateOrDuplicateProcessDialog
 				isOpen={this.state.isDuplicateOpen}
 				onToggle={this.handleCancelDuplicate.bind(this)}
-				onDuplicate={this.handleDuplicateProcess}
-				isDuplicating={this.state.isDuplicating}
+				onSubmit={this.handleDuplicateProcess}
+				title='Duplicate a process'
+				className='create-process-dialog'
+				submitButtonText='Create new process with these same fields'
 			/>
 			
 		)
@@ -123,6 +133,22 @@ class ProcessPage extends React.Component {
 				this.setState({isDuplicating: false, isDuplicateOpen: false})
 				this.props.history.push('/processes/' + res.item.id)
 			})
+	}
+	
+	handleEditBasicInfo(/*newProcess*/) {
+		this.setState({ isEditingBasicInfo: !this.state.isEditingBasicInfo}) // TO DO: this should happen in response
+		if (this.state.isEditingBasicInfo) {
+			return
+		}
+		// let p = this.props.data
+		// let json = newProcess
+		// json["duplicate_id"] = p.id
+		// this.setState({isDuplicating: true})
+		// this.props.dispatch(actions.postDuplicateProcess(json))
+		// 	.then((res) => {
+		// 		this.setState({isDuplicating: false, isDuplicateOpen: false})
+		// 		this.props.history.push('/processes/' + res.item.id)
+		// 	})
 	}
 }
 
