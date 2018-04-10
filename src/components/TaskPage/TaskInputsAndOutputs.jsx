@@ -11,8 +11,8 @@ class TaskInputsAndOutputs extends React.Component {
 		const { data } = this.props
 		return (
 			<div className="task-inputs-and-outputs">
-				<TaskInputTable data={data}/>
-				{this.teamUsesOutputs() && <TaskOutputTable outputs={data.items} />}
+				{!!data.inputs.length && <TaskInputTable data={data}/>}
+				{this.teamUsesOutputs() && !!data.items.length && <TaskOutputTable outputs={data.items} />}
 			</div>
 		)
 	}

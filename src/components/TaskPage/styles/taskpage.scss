@@ -2,13 +2,13 @@
 
 .task-page {
     height: calc(100vh - 64px);
-    width: calc(100vw - 64px);
-    background-color: white;
 
     .task-container {
         display: flex;
         min-height: calc(100% - #{$section-header-height});
+        min-width: calc(100vw - 64px);
         max-width: 1200px;
+        background-color: white;
         padding-right: 40px;
     }
 }

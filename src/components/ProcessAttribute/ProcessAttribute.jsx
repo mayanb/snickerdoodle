@@ -36,7 +36,7 @@ class ProcessAttribute extends React.Component {
 						<ProcessAttributeField focus edit name="Name" value={editingName} onChange={(e) => this.handleChange('editingName', e.target.value)} />
 						<ProcessAttributeField edit select name="Type" value={editingType} onChange={(e) => this.handleChange('editingType', e.value)} />
 					</div>
-					<Submissions name={editingName} recent={last_five_values}/>
+					<Submissions name={editingName} recent={last_five_values} datatype={datatype}/>
 					<Button wide onClick={() => onUpdate({name: editingName, datatype: editingType})}>Save</Button>
 				</Wrapper>
 			)
