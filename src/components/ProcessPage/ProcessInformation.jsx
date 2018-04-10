@@ -8,8 +8,20 @@ import EditProcessInfoForm from "../Processes/EditProcessInfoForm";
 export default function ProcessInformation({icon, code, name, output_desc, default_amount, unit, onArchive, onDuplicate, isEditingBasicInfo, onSubmitBasicInfo}) {
 	return (
 		<div className="process-information">
-			<ProcessInformationHeader icon={icon} code={code} name={name} isEditingBasicInfo={isEditingBasicInfo} onSubmitBasicInfo={onSubmitBasicInfo}/>
-			<ProcessBasicInformation output_desc={output_desc} default_amount={default_amount} unit={unit} isEditingBasicInfo={isEditingBasicInfo}/>
+			<ProcessInformationHeader
+				icon={icon}
+				code={code}
+				name={name}
+				isEditingBasicInfo={isEditingBasicInfo}
+				onSubmitBasicInfo={onSubmitBasicInfo}/>
+			<ProcessBasicInformation
+				code={code}
+				name={name}
+				output_desc={output_desc}
+				default_amount={default_amount}
+				unit={unit}
+				// onInputChange={onInputChange}
+				isEditingBasicInfo={isEditingBasicInfo}/>
 			<ProcessPageEditForm onArchive={onArchive} onDuplicate={onDuplicate}/>
 		</div>
 	)

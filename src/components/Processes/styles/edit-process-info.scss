@@ -1,0 +1,30 @@
+@import 'styles/constants.scss';
+
+.create-process-dialog {
+    .name-abbreviation {
+        display: flex
+    }
+
+    .name-group {
+        flex: 2;
+        margin-right: 20px;
+    }
+
+    .abbreviation-group {
+        flex: 1;
+    }
+
+    .output-quantity {
+        display: flex;
+
+        .number {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .unit {
+            flex: 4;
+        }
+    }
+}
+

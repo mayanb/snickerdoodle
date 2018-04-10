@@ -18,7 +18,7 @@ class ProcessPage extends React.Component {
 		this.state ={
 			isArchiveOpen: false,
 			isArchiving: false,
-			isEditingBasicInfo: false,
+			isEditingBasicInfo: true, // TEMP: FOR EASIER CODING (REMOVE)
 		}
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleDuplicate = this.handleDuplicate.bind(this)
