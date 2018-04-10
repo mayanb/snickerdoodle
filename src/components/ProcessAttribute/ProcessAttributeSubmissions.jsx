@@ -4,7 +4,7 @@ import './styles/processattributesubmissions.css'
 export default function Submissions({name, recent, datatype}) {
 	let recentValues = recent ? recent.map(e => e.value) : []
 	if(datatype === 'BOOL') {
-		recentValues = recentValues.map(val => val === 'yes' ? 'Yes' : 'No')
+		recentValues = recentValues.map(val => val === 'true' ? 'Yes' : 'No')
 	}
 	return (
 		<div className="submissions">
