@@ -4,7 +4,7 @@ import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
 import './styles/edit-process-info.css'
 
-export default function EditProcessInfoForm({ code, name, output_desc, default_amount, unit, onInputChange, isEditingBasicInfo}) {
+export default function EditProcessInfoForm({ code, name, output_desc, default_amount, unit, onInputChange, editingBasicInfoOpen}) {
 	return (
 		<div className='edit-process-info'>
 			<CodeAndName onInputChange={onInputChange} name={name} code={code}/>

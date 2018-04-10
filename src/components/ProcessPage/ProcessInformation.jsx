@@ -5,14 +5,14 @@ import Button from '../Button/Button'
 import ProcessPageEditForm from './ProcessPageEditForm'
 import EditProcessInfoForm from "../Processes/EditProcessInfoForm";
 
-export default function ProcessInformation({icon, code, name, output_desc, default_amount, unit, onArchive, onDuplicate, isEditingBasicInfo, onSubmitBasicInfo}) {
+export default function ProcessInformation({icon, code, name, output_desc, default_amount, unit, onArchive, onDuplicate, editingBasicInfoOpen, onSubmitBasicInfo}) {
 	return (
 		<div className="process-information">
 			<ProcessInformationHeader
 				icon={icon}
 				code={code}
 				name={name}
-				isEditingBasicInfo={isEditingBasicInfo}
+				editingBasicInfoOpen={editingBasicInfoOpen}
 				onSubmitBasicInfo={onSubmitBasicInfo}/>
 			<ProcessBasicInformation
 				code={code}
@@ -21,20 +21,20 @@ export default function ProcessInformation({icon, code, name, output_desc, defau
 				default_amount={default_amount}
 				unit={unit}
 				// onInputChange={onInputChange}
-				isEditingBasicInfo={isEditingBasicInfo}/>
+				editingBasicInfoOpen={editingBasicInfoOpen}/>
 			<ProcessPageEditForm onArchive={onArchive} onDuplicate={onDuplicate}/>
 		</div>
 	)
 }
 
-function ProcessInformationHeader({icon, code, name, isEditingBasicInfo, onSubmitBasicInfo}) {
+function ProcessInformationHeader({icon, code, name, editingBasicInfoOpen, onSubmitBasicInfo}) {
 	return (
 		<div className="process-information-header">
 			<div className="process-name">
 				<Img src={ic(icon)} height="30px" />
 				<span>{`(${code}) ${name}`}</span>
 			</div>
-			<Button type={isEditingBasicInfo ? 'blue' : 'gray'} onClick={onSubmitBasicInfo}>{isEditingBasicInfo ? 'Save' : 'Edit'}</Button>
+			<Button type={editingBasicInfoOpen ? 'blue' : 'gray'} onClick={onSubmitBasicInfo}>{editingBasicInfoOpen ? 'Save' : 'Edit'}</Button>
 		</div>
 	)
 }
@@ -43,9 +43,9 @@ function ic(icon) {
 	return icon.substring(0, icon.length - 4) + "@3x"
 }
 
-function ProcessBasicInformation({ code, name, output_desc, default_amount, unit, onInputChange, isEditingBasicInfo}) {
+function ProcessBasicInformation({ code, name, output_desc, default_amount, unit, onInputChange, editingBasicInfoOpen}) {
 	let defaultAmount = parseFloat(default_amount)
-	if (isEditingBasicInfo) {
+	if (editingBasicInfoOpen) {
 		return <EditProcessInfoForm
 			code={code}
 			name={name}
@@ -53,7 +53,7 @@ function ProcessBasicInformation({ code, name, output_desc, default_amount, unit
 			default_amount={defaultAmount}
 			unit={unit}
 			onInputChange={() => console.log('input changed')}
-			isEditingBasicInfo={isEditingBasicInfo}
+			editingBasicInfoOpen={editingBasicInfoOpen}
 		/>
 	}
 	return (

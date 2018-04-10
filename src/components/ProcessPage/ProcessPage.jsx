@@ -18,12 +18,13 @@ class ProcessPage extends React.Component {
 		this.state ={
 			isArchiveOpen: false,
 			isArchiving: false,
-			isEditingBasicInfo: true, // TEMP: FOR EASIER CODING (REMOVE)
+			editingBasicInfoOpen: true, // TEMPORARILY SET TO true: FOR EASIER CODING (REMOVE)
+			isSubmittingEdit: false,
 		}
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleDuplicate = this.handleDuplicate.bind(this)
 		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
-		this.handleEditBasicInfo = this.handleEditBasicInfo.bind(this)
+		this.handleEditBasicInfoSubmit = this.handleEditBasicInfoSubmit.bind(this)
 
 	}
 
@@ -48,8 +49,8 @@ class ProcessPage extends React.Component {
 							{...data}
 							onArchive={this.handleArchive}
 							onDuplicate={this.handleDuplicate}
-							isEditingBasicInfo={this.state.isEditingBasicInfo}
-							onSubmitBasicInfo={this.handleEditBasicInfo}
+							editingBasicInfoOpen={this.state.editingBasicInfoOpen}
+							onSubmitBasicInfo={this.handleEditBasicInfoSubmit}
 						/>
 						<ProcessAttributeList process={data} />
 					</div>
@@ -133,20 +134,25 @@ class ProcessPage extends React.Component {
 			})
 	}
 	
-	handleEditBasicInfo(/*newProcess*/) {
-		this.setState({ isEditingBasicInfo: !this.state.isEditingBasicInfo}) // TO DO: this should happen in response
-		if (this.state.isEditingBasicInfo) {
+	handleEditBasicInfoSubmit() {
+		if (this.state.isSubmittingEdit) {
 			return
 		}
-		// let p = this.props.data
-		// let json = newProcess
-		// json["duplicate_id"] = p.id
-		// this.setState({isDuplicating: true})
-		// this.props.dispatch(actions.postDuplicateProcess(json))
-		// 	.then((res) => {
-		// 		this.setState({isDuplicating: false, isDuplicateOpen: false})
-		// 		this.props.history.push('/processes/' + res.item.id)
-		// 	})
+		const { name, code, number, unit, output_desc } = this.props.data
+		const newProcess = {
+			name: name,
+			code: code,
+			default_amount: number,
+			unit: unit,
+			output_desc: output_desc,
+		}
+
+		this.setState({isSubmittingEdit: true})
+		this.props.dispatch(actions.patchDuplicateProcess(newProcess))
+			.then((res) => {
+				this.setState({ isSubmittingEdit: false, editingBasicInfoOpen: false })
+				this.props.history.push('/processes/' + res.item.id)
+			})
 	}
 }
 

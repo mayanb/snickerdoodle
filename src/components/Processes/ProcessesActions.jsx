@@ -6,6 +6,9 @@ import {
   REQUEST_CREATE,
   REQUEST_CREATE_SUCCESS,
   REQUEST_CREATE_FAILURE,
+	REQUEST_PATCH,
+	REQUEST_PATCH_SUCCESS,
+	REQUEST_PATCH_FAILURE,
   REQUEST_DELETE,
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
@@ -132,6 +135,24 @@ export function postDuplicateProcess(json, success) {
       .then((res) => dispatch(requestCreateProcessSuccess(res.body)))
       .catch((err) => dispatch(requestCreateProcessFailure(err)))
   }
+}
+
+export function patchDuplicateProcess(json, success) {
+	return function (dispatch) {
+		dispatch(requestPatchProcess())
+		return api.post('/ics/processes/duplicate/')
+			.send(json)
+			.send({ icon: "default.png" })
+			.then((res) => dispatch(requestCreateProcessSuccess(res.body)))
+			.catch((err) => dispatch(requestCreateProcessFailure(err)))
+	}
+}
+
+function requestPatchProcess() {
+	return {
+		type: REQUEST_PATCH,
+		name: PROCESSES
+	}
 }
 
 function requestCreateProcess() {
