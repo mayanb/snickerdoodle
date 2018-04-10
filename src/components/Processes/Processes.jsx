@@ -5,7 +5,8 @@ import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessesListItem from './ProcessesListItem'
-import CreateOrDuplicateProcessDialog from './CreateOrDuplicateProcessDialog'
+import CreateProcessDialog from './CreateProcessDialog'
+import DuplicateProcessDialog from './DuplicateProcessDialog'
 import './styles/processes.css'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
 import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
@@ -69,13 +70,10 @@ class Processes extends React.Component {
 
 	renderDialog() {
 		return (
-			<CreateOrDuplicateProcessDialog
+			<CreateProcessDialog
 				isOpen={this.state.isAddingProcess}
 				onToggle={this.handleToggleDialog}
-				onSubmit={this.handleCreateProcess}
-				title='Create process'
-				className='create-process-dialog'
-				submitButtonText='Create new process'
+				onCreate={this.handleCreateProcess}
 			/>
 		)
 	}
@@ -116,14 +114,11 @@ class Processes extends React.Component {
 		if (!this.state.isDuplicateOpen)
 			return null
 		return (
-			<CreateOrDuplicateProcessDialog
+			<DuplicateProcessDialog
 				isOpen={this.state.isDuplicateOpen}
 				onToggle={this.handleCancelDuplicate.bind(this)}
 				onDuplicate={this.handleDuplicateProcess}
 				isDuplicating={this.state.isDuplicating}
-				title='Duplicate a process'
-				className='create-process-dialog'
-				submitButtonText='Create new process with these same fields'
 			/>
 			
 		)
