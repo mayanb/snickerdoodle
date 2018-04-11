@@ -1,0 +1,70 @@
+@import 'styles/constants.scss';
+
+.process-attribute-field {
+	display: flex;
+	line-height: 20px;
+
+	&:first-child {
+		margin-right: 16px;
+	}
+	//max-width: 280px;
+
+	& > div {
+		max-width: 280px;
+	}
+
+	input {
+		margin-right: 16px;
+		max-width: 280px; 
+		flex: 1;
+	}
+
+	& > span,  & > div {
+		flex: 1;
+		display: block;
+		color: rgba(34,34,34,0.48);
+		white-space: nowrap;
+		min-width: 0;
+		text-overflow: ellipsis;
+		margin-right: 8px;
+
+		&:last-child {
+			flex: 2;
+			color: $black;
+			margin-right: 0px;
+		}
+	}
+
+	.edit {
+		padding: 5px 0;
+	}
+
+}
+
+.process-attribute-datatype {
+	display: flex;
+	vertical-align: top;
+	align-items: middle;
+	justify-content: middle;
+
+	img {
+		vertical-align: top;
+		opacity: 0.5;
+		margin-right: 4px;
+	}
+
+	span {
+		vertical-align: top;
+		line-height: 20px;
+	}
+}
+
+.process-attribute-input {
+	
+}
+
+.process-attribute-select {
+	z-index: 4;
+	//overflow: scroll;
+}
+
