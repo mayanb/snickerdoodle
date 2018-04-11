@@ -14,7 +14,7 @@ class NewUserChecklist extends React.Component {
 	}
 
 	render() { 
-		let{ teams, tasks, teamsUI, tasksUI, history } = this.props
+		let{ teams, tasks, teamsUI, tasksUI } = this.props
 		if(teamsUI.isFetchingData || tasksUI.isFetchingData || !teams || !tasks) {
 			//return loading
 			return null
@@ -29,7 +29,7 @@ class NewUserChecklist extends React.Component {
 				<span className="checklist-help">Have any questions? Visit our <a href=""><i className="material-icons">library_books</i>&nbsp;Help Center.</a></span>
 				<span className="checklist-title">Things to do</span>
 				{
-					checklist_items.map((e, i) => <ChecklistItem {...e} onClick={() => history.push(e.link)} key={i} />)
+					checklist_items.map((e, i) => <ChecklistItem {...e} key={i} />)
 				}
 				</div>
 			</div>
