@@ -34,6 +34,9 @@
 .process-information {
 	padding: 0 36px;
 	background-color: $background-color;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 60px;
 
 	.process-information-header {
 		padding: 24px 0;
@@ -51,6 +54,10 @@
 
 	.process-name {
 		display: flex;
+	}
+
+	.process-basic-information-container {
+		flex: 1;
 	}
 
 	.process-information-basic {
