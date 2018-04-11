@@ -1,10 +1,9 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import ProductRecipe from './ProductRecipe'
+import RecipeListItem from './RecipeListItem'
 import Sortable from '../Sortable/Container'
 import './styles/product-recipe-list.css'
 
-export default class ProductRecipeList extends React.Component {
+export default class RecipeList extends React.Component {
 	constructor(props) {
 		super(props)
 		const data = { // PLACEHOLDER DATA
@@ -106,7 +105,6 @@ export default class ProductRecipeList extends React.Component {
 				// 	yield_unit: 'Bag',
 				// },
 			]
-			
 		}
 		this.state = {
 			data: data,
@@ -126,15 +124,10 @@ export default class ProductRecipeList extends React.Component {
 				<Sortable
 					cards={recipes}
 					canEdit={false}
-					// finishMovingCard={this.moveAttribute.bind(this)}
-					renderer={ProductRecipe}
+					renderer={RecipeListItem}
 				/>
 			</div>
 		)
-	}
-	
-	onSubmit() {
-		console.log("clicked button!")
 	}
 	
 }

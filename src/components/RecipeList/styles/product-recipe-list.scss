@@ -6,6 +6,8 @@
 
 	.product-recipe-list-header {
 		display: flex;
+		padding-left: 16px;
+		padding-right: 16px;
 
 		& > span {
 			flex: 1;
@@ -20,14 +22,11 @@
 	.process-attr-list-header {
 		font-weight: 700;
 		display: flex;
-		margin-left: 48px; // leave gutter for handle
-		margin-right: 32px; // leave gutter for delete button
-		padding: 8px 16px;
+		//padding: 8px 16px;
 
 		& > span {
 			flex: 1;
 		}
-	}	
+	}
 }
 
-	

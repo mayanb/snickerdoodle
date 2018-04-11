@@ -34,7 +34,7 @@ import Modal from '../Modal/Modal'
 import NewFeatures from '../NewFeatures/NewFeatures'
 
 import Inventory2 from '../Inventory2/Inventory'
-import ProductRecipe from '../RecipeList/ProductRecipeList'
+import RecipeList from '../RecipeList/RecipeList'
 import NewUserChecklist from '../NewUserChecklist/NewUserChecklist'
 
 export default class ApplicationLayoutStable extends React.Component {
@@ -77,7 +77,7 @@ function App(props) {
         <Route exact path={"/processes"} component={Processes} />
         <Route exact path={"/products"} component={Products} />
 	      <Route path={"/processes/:id"} component={ProcessPage} />
-        <Route path={"/davidstest"} component={ProductRecipe} />
+        <Route path={"/recipelist"} component={RecipeList} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
         <Route path={"/goals"} component={Goals} />
         <Route path={"/account"} component={Account} />
