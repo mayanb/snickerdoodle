@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../Processes/ProcessesActions'
-import ProcessPageHeader from './ProcessPageHeader'
+import { ElementHeader, ElementContent } from '../Element/Element'
 import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import * as processActions from '../Processes/ProcessesActions'
 import ProcessInformation from './ProcessInformation'
@@ -31,7 +31,7 @@ class ProcessPage extends React.Component {
 	}
 
 	render() {
-		let { data, dispatch, history, ui } = this.props
+		let { data, history, ui } = this.props
 
 		if (!data) {
 			return <span>Loading... </span>
@@ -39,9 +39,9 @@ class ProcessPage extends React.Component {
 
 		return (
 			<div className="process-page">
-				<ProcessPageHeader processName={data.name} onBack={() => history.push('/processes')}/>
+				<ElementHeader title={'Processes'} name={data.name} onBack={() => history.push('/processes')}/>
 				<Loading isfetchingData={this.state.isArchiving}>
-					<div className="process-page-content">
+					<ElementContent>
 						<ProcessInformation
 							process={data}
 							onArchive={this.handleArchive}
@@ -50,15 +50,15 @@ class ProcessPage extends React.Component {
 							isSavingEdit={ui.isEditingItem}
 						/>
 						<ProcessAttributeList process={data} />
-					</div>
-					{this.renderArchiveDialog(data, dispatch, history)}
+					</ElementContent>
+					{this.renderArchiveDialog(data, history)}
 					{this.renderDuplicateDialog()}
 				</Loading>
 			</div>
 		)
 	}
 
-	renderArchiveDialog(process, dispatch, history) {
+	renderArchiveDialog(process, history) {
 		if (!this.state.isArchiveOpen)
 			return null
 

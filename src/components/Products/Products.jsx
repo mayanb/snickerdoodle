@@ -29,6 +29,7 @@ class Products extends React.Component {
     this.handlePagination = this.handlePagination.bind(this)
     this.handleCreateProduct = this.handleCreateProduct.bind(this)
 	  this.handleArchive = this.handleArchive.bind(this)
+	  this.handleSelect = this.handleSelect.bind(this)
   }
 
   // fetch products on load
@@ -51,6 +52,7 @@ class Products extends React.Component {
 				  	<ObjectList className="products" isFetchingData={ui.isFetchingData}>
 						  <PaginatedTable
 							  {...this.props}
+							  onClick={this.handleSelect}
 							  onPagination={this.handlePagination}
 							  Row={ProductsListItem}
 							  TitleRow={this.headerRow}
@@ -118,6 +120,10 @@ class Products extends React.Component {
 		    this.handleToggleDialog()
 	    })
   }
+
+  handleSelect(index) {
+  	this.props.history.push('/products/' + this.props.data[index].id)
+	}
 
 	handleArchive(index) {
 		this.setState({ isArchiveOpen: true, archivingObjectIndex: index })

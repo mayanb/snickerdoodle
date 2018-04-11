@@ -22,10 +22,7 @@ import Topbar from '../Topbar/Topbar'
 import TeamSettings from '../TeamSettings/TeamSettings'
 import Account from '../Account/Account'
 
-import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
-import BCWrapper from '../D3BarChart/BCWrapper'
-
-import Sortable from '../Sortable/Index'
+import ProductPage from '../ProductPage/ProductPage'
 import ProcessPage from '../ProcessPage/ProcessPage'
 
 import Registration from '../Registration/Registration'
@@ -77,13 +74,11 @@ function App(props) {
         <Route exact path={"/processes"} component={Processes} />
         <Route exact path={"/products"} component={Products} />
 	      <Route path={"/processes/:id"} component={ProcessPage} />
-        <Route path={"/attributetest"} component={TaskAttributeTest} />
+        <Route path={"/products/:id"} component={ProductPage} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
         <Route path={"/goals"} component={Goals} />
         <Route path={"/account"} component={Account} />
         <Route path={"/googleconnect/:ext?"} component={Account} />
-        <Route path={"/bc/"} component={BCWrapper} />
-        <Route path={"/barcharttest/"} component={Sortable} />
         <Route path={"/checklist/"} component={NewUserChecklist} />
       </div>
     </div>
