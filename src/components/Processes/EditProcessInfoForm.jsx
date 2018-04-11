@@ -45,7 +45,7 @@ function OutputDescription({ onInputChange, output_desc }) {
 					type="text"
 					placeholder="Roasted Beans"
 					value={output_desc}
-					onChange={(e) => onInputChange(e, "outputDescription")}
+					onChange={(e) => onInputChange(e, "output_desc")}
 				/>
 			</FormGroup>
 	)
@@ -62,7 +62,7 @@ function OutputQuantity({ onInputChange, default_amount, unit }) {
 						className="number"
 						placeholder="5"
 						value={default_amount}
-						onChange={(e) => onInputChange(e, "number")}
+						onChange={(e) => onInputChange(e, "default_amount")}
 					/>
 					<Input
 						type="text"

@@ -1,19 +1,19 @@
 import api from '../WaffleconeAPI/api.jsx'
 import {
-  REQUEST, 
-  REQUEST_SUCCESS, 
-  REQUEST_FAILURE,
-  REQUEST_CREATE,
-  REQUEST_CREATE_SUCCESS,
-  REQUEST_CREATE_FAILURE,
-	REQUEST_PATCH,
-	REQUEST_PATCH_SUCCESS,
-	REQUEST_PATCH_FAILURE,
-  REQUEST_DELETE,
-  REQUEST_DELETE_SUCCESS,
-  REQUEST_DELETE_FAILURE,
-  SELECT,
-  PAGE,
+	REQUEST,
+	REQUEST_SUCCESS,
+	REQUEST_FAILURE,
+	REQUEST_CREATE,
+	REQUEST_CREATE_SUCCESS,
+	REQUEST_CREATE_FAILURE,
+	REQUEST_EDIT_ITEM,
+	REQUEST_EDIT_ITEM_SUCCESS,
+	REQUEST_EDIT_ITEM_FAILURE,
+	REQUEST_DELETE,
+	REQUEST_DELETE_SUCCESS,
+	REQUEST_DELETE_FAILURE,
+	SELECT,
+	PAGE,
 } from '../../reducers/APIDataReducer'
 import {  PROCESSES, PROCESS_INVENTORY } from '../../reducers/ReducerTypes'
 import {alphabetize} from '../../utilities/arrayutils.jsx'
@@ -27,7 +27,9 @@ export function fetchProcesses(q) {
     // actually fetch 
     return api.get('/ics/processes/')
 	    .query(q)
-      .then(res => dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize)))))
+      .then(res =>{
+				dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize))))
+			})
       .catch(err => dispatch(requestProcessesFailure(err)))
   }
 }
@@ -47,7 +49,7 @@ function requestProcesses() {
 }
 
 function requestProcessesFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.log('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_FAILURE,
     name: PROCESSES
@@ -88,7 +90,7 @@ function requestProcessInventory() {
 }
 
 function requestProcessInventoryFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.log('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_FAILURE,
     name: PROCESS_INVENTORY
@@ -137,23 +139,48 @@ export function postDuplicateProcess(json, success) {
   }
 }
 
-export function patchDuplicateProcess(json, success) {
+export function editProcess(json, index, processID) {
 	return function (dispatch) {
-		dispatch(requestPatchProcess())
-		return api.post('/ics/processes/duplicate/')
+		dispatch(requestEditProcess(index))
+		return api.patch(`/ics/processes/${processID}/`)
 			.send(json)
 			.send({ icon: "default.png" })
-			.then((res) => dispatch(requestCreateProcessSuccess(res.body)))
-			.catch((err) => dispatch(requestCreateProcessFailure(err)))
+			.then((res) => console.log(res))//dispatch(requestEditProcessSuccess(res.body)))
+			//.catch((err) => dispatch(requestEditProcessFailure(err)))
 	}
 }
 
-function requestPatchProcess() {
+// Edit helpers
+
+function requestEditProcess(index) {
 	return {
-		type: REQUEST_PATCH,
-		name: PROCESSES
+		type: REQUEST_EDIT_ITEM,
+		name: PROCESSES,
+    index: index
 	}
 }
+
+function requestEditProcessSuccess(json, index) {
+	return {
+		type: REQUEST_EDIT_ITEM_SUCCESS,
+		item: json,
+		sort: alphabetize,
+		name: PROCESSES,
+		index: index,
+	}
+}
+
+function requestEditProcessFailure(err, index) {
+	console.log(err)
+	return {
+		type: REQUEST_EDIT_ITEM_FAILURE,
+		name: PROCESSES,
+		error: err,
+		index: index,
+	}
+}
+
+// Create helpers
 
 function requestCreateProcess() {
   return {
@@ -163,7 +190,7 @@ function requestCreateProcess() {
 }
 
 function requestCreateProcessFailure(err) {
-  alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
+  console.log(err)
   return {
     type: REQUEST_CREATE_FAILURE,
     name: PROCESSES,
@@ -221,19 +248,6 @@ function requestDeleteProcessSuccess(index) {
     index: index,
   }
 }
-
-
-// function formatProcessResponse(json) {
-//   let processes = {}
-  
-//   if (!json)
-//     return {}
-
-//   for (var p of json) {
-//     processes[p.id] = p
-//   }
-//   return processes
-// }
 
 export function pageProcesses(direction) {
   return {

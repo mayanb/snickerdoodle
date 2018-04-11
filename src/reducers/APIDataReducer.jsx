@@ -206,7 +206,9 @@ function requestEditItem(state, action) {
 
 
 function requestEditItemSuccess(state, action) {
-  let obj = {[action.field]: action.value}
+  // console.log('action: ', action)
+  // console.log('state: ', state)
+  // let obj = {[action.field]: action.value}
   return update(state, {
     ui: {
       isEditingItem: {
@@ -215,7 +217,7 @@ function requestEditItemSuccess(state, action) {
     },
     data: {
       [action.index]: {
-        $merge: obj
+        $merge: action.updatedObject
       }
     },
   })
