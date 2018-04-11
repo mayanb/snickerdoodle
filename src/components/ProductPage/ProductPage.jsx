@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { ElementHeader, ElementContent } from '../Element/Element'
 import * as productActions from '../Products/ProductsActions'
 import { withRouter } from 'react-router-dom'
-import Loading from '../Loading/Loading'
 import ProductInformation from '../ProductPage/ProductInformation'
 import './styles/productpage.css'
 
