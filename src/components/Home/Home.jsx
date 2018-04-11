@@ -1,14 +1,15 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Goals from '../Goals/Goals'
 import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import './styles/home.css'
-// import { isDandelion } from '../../utilities/userutils'
-// import Checklist from '../NewUserChecklist/NewUserChecklist'
+import { isDandelion } from '../../utilities/userutils'
+import Checklist from '../NewUserChecklist/NewUserChecklist'
 
 
-export default class Home extends React.Component {
+class Home extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -38,9 +39,9 @@ export default class Home extends React.Component {
 	}
 
 	render() {
-		// if (!isDandelion(this.props.team)) {
-		// 	return <Checklist />
-		// }
+		if (!isDandelion(this.props.team) && this.props.team.toLowerCase() !== 'endorfin') {
+			return <Checklist />
+		}
 
 		return (
 			<div>
@@ -55,6 +56,15 @@ export default class Home extends React.Component {
 		)
 	}
 }
+
+const mapStateToProps = (state/*, props*/) => {
+	let { data, ui } = state.users
+	let team = data[ui.activeUser].user.team_name
+  return {
+    team: team,
+  }
+}
+export default connect(mapStateToProps)(Home)
 
 function BigHeader(props) {
 	return (

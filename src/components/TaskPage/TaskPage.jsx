@@ -8,7 +8,6 @@ import TaskMain from './TaskMain'
 import TaskQR from './TaskQR'
 import './styles/taskpage.css'
 
-
 class TaskPage extends React.Component {
 	constructor(props) {
 		super(props)
