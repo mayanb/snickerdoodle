@@ -18,7 +18,6 @@
         text-overflow: ellipsis;
     }
 
-
     .icon-img {
         width: 25px;
 
@@ -39,6 +38,10 @@
             i {
                 color: $elephant;
                 font-size: 20px;
+                
+                &.material-icons.more_horiz {
+                    font-size: 22px;
+                }
             }
         }
 

@@ -46,7 +46,8 @@ class ProcessAttributeList extends React.Component {
 		let attrs = this.constructAttributeList()
 		if (!attrs.length && !ui.isAddingAttribute) {
 			return <ZeroState />
-		} 
+		}
+
 		return (
 			<div>
 				<div className="process-attr-list-header">
@@ -63,7 +64,7 @@ class ProcessAttributeList extends React.Component {
 				</Slide>
 				<Sortable 
 					cards={attrs}
-					canEdit={true} 
+					canEdit={!ui.selectedAttribute}
 					finishMovingCard={this.moveAttribute.bind(this)} 
 					renderer={ProcessAttribute} 
 				/>

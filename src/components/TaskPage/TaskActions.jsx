@@ -1,5 +1,4 @@
 import api from '../WaffleconeAPI/api.jsx'
-import moment from 'moment'
 import {
   REQUEST, 
   REQUEST_SUCCESS, 
@@ -26,9 +25,9 @@ export function getTask(task) {
         if (err || !res.ok) {
           dispatch(requestTaskFailure(err))
         } else {
-          let organized = organizeAttributes(res.body)
-	        organized.attributesWithValues = attributesWithValues(organized.process_type.attributes, organized.attribute_values)
-          dispatch(requestTaskSuccess(organized))
+          let task = res.body
+	        task.attributesWithValues = attributesWithValues(task.process_type.attributes, task.attribute_values)
+          dispatch(requestTaskSuccess(task))
         }
       })
   }
@@ -43,28 +42,6 @@ function attributesWithValues(attributes, attributeValues) {
 	})
 }
 
-function organizeAttributes(task) {
-  let attributes = task.process_type.attributes
-  let values = task.attribute_values
-
-  let organized_attrs = [
-    {attribute: -1, value: task.process_type.name, name: "Process", isEditable: false},
-    {attribute: -1, value: task.product_type.name, name: "Product", isEitable: false},
-    {attribute: -1, value: task.process_type.team_created_by_name, name: "Production Team", isEditable: false},
-    {attribute: -1, value: moment(task.created_at).format('MM/DD/YY h:mm a'), name: "Created at", isEditable: false},
-    {attribute: -1, value: moment(task.updated_at).format('MM/DD/YY h:mm a'), name: "Updated at", isEditable: false},
-  ]
-
-  attributes.forEach(function (attr, i) {
-    let val = values.find(function (e) {
-      return (e.attribute === attr.id)
-    })
-    organized_attrs.push({attribute: attr.id, value: val?val.value:"", name: attr.name, isEditable: true, isEditing: false})
-  })
-  task.organized_attrs = organized_attrs
-  return task
-}
-
 function requestTask() {
   return {
     type: REQUEST,
@@ -73,7 +50,6 @@ function requestTask() {
 }
 
 function requestTaskFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_FAILURE,
     name: TASK
@@ -113,7 +89,6 @@ function requestTaskAncestors() {
 }
 
 function requestTaskAncestorsFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_FAILURE,
     name: TASK_ANCESTORS
@@ -156,7 +131,6 @@ function requestTaskDescendents() {
 }
 
 function requestTaskDescendentsFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_FAILURE,
     name: TASK_DESCENDENTS

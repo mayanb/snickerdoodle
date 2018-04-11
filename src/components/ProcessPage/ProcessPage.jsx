@@ -82,7 +82,7 @@ class ProcessPage extends React.Component {
 				onSubmit={this.handleDuplicateProcess}
 				title='Duplicate a process'
 				className='create-process-dialog'
-				submitButtonText='Create new process with these same Fields'
+				submitButtonText='Create new process with these same fields'
 			/>
 			
 		)
@@ -100,12 +100,14 @@ class ProcessPage extends React.Component {
 		if (this.state.isArchiving) {
 			return 
 		}
+
 		this.setState({isArchiving: true})
 		this.props.dispatch(actions.postDeleteProcess(this.props.data, this.props.index))
 			.then(() => {
 				this.setState({ isArchiving: false, isArchiveOpen: false })
 				this.props.history.push('/processes')
 			})
+			.catch(e => console.log(e))
 	}
 
 	handleDuplicate(index) {

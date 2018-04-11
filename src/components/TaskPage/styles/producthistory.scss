@@ -47,6 +47,19 @@
         cursor: pointer;
         position: relative;
 
+        .task-flagged {
+            font-size: 14px;
+            line-height: 20px;
+            vertical-align: middle;
+            color: $red;
+            margin-right: 4px;
+        }
+
+        .task-flagged-name {
+            color: $red;
+        }
+
+
         &:last-child {
             margin-bottom: 0;
         }

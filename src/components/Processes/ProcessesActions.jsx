@@ -119,7 +119,6 @@ export function selectProcess(id) {
 export function postCreateProcess(json, success) {
   return function (dispatch) {
     dispatch(requestCreateProcess())
-    console.log('create json:', json)
 	  return api.post('/ics/processes/')
 		  .send(json)
 		  .send({ icon: "default.png" })
@@ -210,7 +209,7 @@ export function postDeleteProcess(p, index) {
   return function (dispatch) {
     dispatch(requestDeleteProcess(index))
 
-    return api.put(`/ics/processes/${p.id}/`)
+    return api.patch(`/ics/processes/${p.id}/`)
       .send({ 
         name: p.name,
         code: p.code,
