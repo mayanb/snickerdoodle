@@ -4,6 +4,7 @@ import './styles/producthistory.css'
 import { formatAmount, pluralize } from '../../utilities/stringutils'
 import { icon } from './TaskHelpers.jsx'
 import Loading from '../Loading/Loading'
+import Img from '../Img/Img'
 
 class ProductHistory extends React.Component {
 	render() {
@@ -58,7 +59,7 @@ function TaskSummary({ task, selected, history }) {
 			target="_blank"
 		>
 			<div className="task-icon">
-				{task.process_type.icon && <img src={icon(task.process_type.icon)} alt="process type" />}
+				{task.process_type.icon && <Img src={icon(task.process_type.icon)}/>}
 			</div>
 			<div className="task-text">
 				<div className={"task-name " + (task.is_flagged && "task-flagged-name")}>
