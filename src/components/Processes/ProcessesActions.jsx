@@ -143,7 +143,6 @@ export function editProcess(json, index, processID) {
 		dispatch(requestEditProcess(index))
 		return api.patch(`/ics/processes/${processID}/`)
 			.send(json)
-			.send({ icon: "default.png" })
 			.then((res) => dispatch(requestEditProcessSuccess(res.body, index)))
 			.catch((err) => dispatch(requestEditProcessFailure(err)))
 	}
