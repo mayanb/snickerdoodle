@@ -6,6 +6,7 @@ import { icon, description } from '../TaskPage/TaskHelpers.jsx'
 import {Link} from 'react-router-dom'
 import { HIDE_MODAL_TYPE } from '../../reducers/ModalReducer'
 import { MODAL } from '../../reducers/ReducerTypes'
+import Img from '../Img/Img'
 
 class TaskDialog extends React.Component {
 	constructor(props) {
@@ -52,7 +53,7 @@ class TaskDialog extends React.Component {
 function ProcessTypeIcon({task}) {
 	const filename = task.process_type ? task.process_type.icon : ''
 		return (
-		<img className="task-icon" src={icon(filename)} alt="Process Type"/>
+		<Img className="task-icon" src={icon(filename)}/>
 		)
 }
 
