@@ -206,9 +206,6 @@ function requestEditItem(state, action) {
 
 
 function requestEditItemSuccess(state, action) {
-  // console.log('action: ', action)
-  // console.log('state: ', state)
-  // let obj = {[action.field]: action.value}
   return update(state, {
     ui: {
       isEditingItem: {

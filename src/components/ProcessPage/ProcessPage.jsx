@@ -18,16 +18,11 @@ class ProcessPage extends React.Component {
 		this.state ={
 			isArchiveOpen: false,
 			isArchiving: false,
-			editingBasicInfoOpen: false, // TEMPORARILY SET TO true FOR EASIER CODING (REMOVE)
-			isSubmittingEdit: false,
-			// formErrorsArray: [],
 		}
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleDuplicate = this.handleDuplicate.bind(this)
 		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
-		this.handleInputChange = this.handleInputChange.bind(this)
-		this.handleEditBasicInfoSubmit = this.handleEditBasicInfoSubmit.bind(this)
-
+		this.handleChange = this.handleChange.bind(this)
 	}
 
 	componentDidMount() {
@@ -36,41 +31,23 @@ class ProcessPage extends React.Component {
 	}
 
 	render() {
-		let { data, dispatch, history } = this.props
+		let { data, dispatch, history, ui } = this.props
 
 		if (!data) {
 			return <span>Loading... </span>
 		}
-		
-		// I'm just trying to set the local state once the Process has loaded
-		if (this.state.name === undefined) {
-			this.setState = {
-				name: data.name,
-				code: data.code,
-				number: data.number,
-				unit: data.unit,
-				output_desc: data.output_desc,
-			}
-		}
-		
-		const { name, code, number, unit, output_desc, editingBasicInfoOpen } = this.state
 
 		return (
 			<div className="process-page">
-				<ProcessPageHeader processName={name} onBack={() => history.push('/processes')}/>
+				<ProcessPageHeader processName={data.name} onBack={() => history.push('/processes')}/>
 				<Loading isfetchingData={this.state.isArchiving}>
 					<div className="process-page-content">
 						<ProcessInformation
-							name={name}
-							code={code}
-							number={number}
-							unit={unit}
-							output_desc={output_desc}
+							process={data}
 							onArchive={this.handleArchive}
 							onDuplicate={this.handleDuplicate}
-							editingBasicInfoOpen={editingBasicInfoOpen}
-							onSubmitBasicInfo={this.handleEditBasicInfoSubmit}
-							onInputChange={this.handleInputChange}
+							onChange={this.handleChange}
+							isSavingEdit={ui.isEditingItem}
 						/>
 						<ProcessAttributeList process={data} />
 					</div>
@@ -153,36 +130,9 @@ class ProcessPage extends React.Component {
 				this.props.history.push('/processes/' + res.item.id)
 			})
 	}
-
-	handleInputChange(e, key) {
-		console.log('state', this.state)
-		console.log('input change:', e.target.value, key)
-		this.setState({ [key]: e.target.value })
-	}
 	
-	handleEditBasicInfoSubmit() {
-		if (!this.state.editingBasicInfoOpen) {
-			// this.setState({ editingBasicInfoOpen: true })
-			return
-		} else if (this.state.isSubmittingEdit) {
-			return
-		}
-		const { name, code, default_amount, unit, output_desc } = this.props.data
-		const editedProcess = {
-			name: name,
-			code: code,
-			default_amount: default_amount,
-			unit: unit,
-			output_desc: output_desc,
-		}
-
-		this.setState({isSubmittingEdit: true})
-		console.log(editedProcess)
-		this.props.dispatch(actions.editProcess(editedProcess, this.props.index, this.props.data.id))
-			.then((res) => {
-				console.log(res)
-				this.setState({ isSubmittingEdit: false, editingBasicInfoOpen: false })
-			})
+	handleChange(newData) {
+		return this.props.dispatch(actions.editProcess(newData, this.props.index, this.props.data.id))
 	}
 }
 
@@ -190,7 +140,7 @@ const mapStateToProps = (state, props) => {
 	const processId = props.match.params.id
 	const index = state.processes.data.findIndex(process => String(process.id) === processId)
 	return {
-		ui: state.formulas.ui,
+		ui: state.processes.ui,
 		data: state.processes.data[index],
 		index: index,
 		dispatch: state.dispatch

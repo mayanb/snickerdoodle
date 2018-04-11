@@ -145,8 +145,8 @@ export function editProcess(json, index, processID) {
 		return api.patch(`/ics/processes/${processID}/`)
 			.send(json)
 			.send({ icon: "default.png" })
-			.then((res) => console.log(res))//dispatch(requestEditProcessSuccess(res.body)))
-			//.catch((err) => dispatch(requestEditProcessFailure(err)))
+			.then((res) => dispatch(requestEditProcessSuccess(res.body, index)))
+			.catch((err) => dispatch(requestEditProcessFailure(err)))
 	}
 }
 
@@ -163,10 +163,9 @@ function requestEditProcess(index) {
 function requestEditProcessSuccess(json, index) {
 	return {
 		type: REQUEST_EDIT_ITEM_SUCCESS,
-		item: json,
-		sort: alphabetize,
 		name: PROCESSES,
 		index: index,
+    updatedObject: json,
 	}
 }
 
