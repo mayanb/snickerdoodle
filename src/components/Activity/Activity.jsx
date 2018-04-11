@@ -221,11 +221,13 @@ export default class Activity extends React.Component {
 	}
 
 	createCSV(params) {
+		let { start, end } = this.state.dates
+		const title = `${params.process_name} - ${start}-${end}`
 		return api.post('/gauth/create-csv/')
 			.type('form')
 			.send(params)
 			.responseType('blob')
-			.then(res => fileDownload(res.body, 'blob.csv'))
+			.then(res => fileDownload(res.body, `${title}.csv`))
 			.catch(err => {
 				console.log("ugh something went wrong\n" + err)
 			})
@@ -318,7 +320,8 @@ class Process extends React.Component {
 			"user_id": user_id,
 			"process": this.props.process_id,
 			"start": dateToUTCString(this.props.dates.start),
-			"end": dateToUTCString(this.props.dates.end, true)
+			"end": dateToUTCString(this.props.dates.end, true),
+			"process_name": this.props.process_name,
 		}).finally(() => this.setState({ loadingSpreadsheet: false }))
 	}
 }
