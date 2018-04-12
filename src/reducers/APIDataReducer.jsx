@@ -7,6 +7,9 @@ export const REQUEST_FAILURE = 'REQUEST_FAILURE'
 export const REQUEST_CREATE = 'REQUEST_CREATE'
 export const REQUEST_CREATE_SUCCESS = 'REQUEST_CREATE_SUCCESS'
 export const REQUEST_CREATE_FAILURE = 'REQUEST_CREATE_FAILURE'
+export const REQUEST_PATCH = 'REQUEST_PATCH'
+export const REQUEST_PATCH_SUCCESS = 'REQUEST_PATCH_SUCCESS'
+export const REQUEST_PATCH_FAILURE = 'REQUEST_PATCH_FAILURE'
 export const REQUEST_DELETE = 'REQUEST_DELETE'
 export const REQUEST_DELETE_SUCCESS = 'REQUEST_DELETE_SUCCESS'
 export const REQUEST_DELETE_FAILURE = 'REQUEST_DELETE_FAILURE'
@@ -203,7 +206,6 @@ function requestEditItem(state, action) {
 
 
 function requestEditItemSuccess(state, action) {
-  let obj = {[action.field]: action.value}
   return update(state, {
     ui: {
       isEditingItem: {
@@ -212,7 +214,7 @@ function requestEditItemSuccess(state, action) {
     },
     data: {
       [action.index]: {
-        $merge: obj
+        $merge: action.updatedObject
       }
     },
   })

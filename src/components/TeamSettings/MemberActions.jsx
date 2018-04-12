@@ -145,7 +145,6 @@ function requestEditMemberSuccess(index, field, value) {
     type: REQUEST_EDIT_ITEM_SUCCESS,
     name: MEMBERS,
     index: index,
-    field: field,
-    value: value
+    updatedObject: {[field] : value},
   }
 }

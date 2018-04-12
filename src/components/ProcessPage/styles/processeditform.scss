@@ -1,0 +1,42 @@
+.edit-process-info {
+    .name-abbreviation {
+        display: flex;
+    }
+
+    .name-group {
+        flex: 2;
+        margin-left: 20px;
+    }
+
+    .abbreviation-group {
+        flex: 1;
+    }
+    
+    .output-section-container {
+        margin-top: 44px;
+        margin-bottom: 80px;
+    }
+    
+    .output-section-header {
+        margin-bottom: 8px;
+    }
+
+    .output-quantity {
+        display: flex;
+
+        .number {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .unit {
+            flex: 2;
+        }
+    }
+
+    .button-wide {
+        flex: 1;
+        width: 100%;
+    }
+}
+
