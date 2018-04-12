@@ -21,8 +21,6 @@ import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
 import TeamSettings from '../TeamSettings/TeamSettings'
 import Account from '../Account/Account'
-
-import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
 import BCWrapper from '../D3BarChart/BCWrapper'
 
 import Sortable from '../Sortable/Index'
