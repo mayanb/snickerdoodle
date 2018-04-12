@@ -129,5 +129,4 @@ export default class RecipeList extends React.Component {
 			</div>
 		)
 	}
-	
 }

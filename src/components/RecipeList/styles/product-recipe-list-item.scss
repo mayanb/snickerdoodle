@@ -3,26 +3,24 @@
 .process-attr-wrapper {
 	display: flex;
 	align-items: center;
-	.process-attr-handle, .process-attr-delete {
-		flex: 0;
-	}
-	.process-attribute {
-		flex: 1;
-	}
+	
+
 }
 
 .process-attribute {
 	margin-left: 0px;
-	//cursor: pointer;
 	box-shadow: rgba($gray-ultra-light, 0.1) 0 0 10px 0;
-	//margin: 8px 0;
-	//padding: 16px;
-	//display: flex;
 	
 	.recipe-item-field {
 		color: $gray-dark;
 		display: flex;
 		flex: 1;
+		text-align: left;
+	}
+	
+	img, i {
+		height: 16px;
+		margin-right: 4px;
 	}
 }
 
