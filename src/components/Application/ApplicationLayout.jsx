@@ -21,7 +21,6 @@ import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
 import TeamSettings from '../TeamSettings/TeamSettings'
 import Account from '../Account/Account'
-
 import ProductPage from '../ProductPage/ProductPage'
 import ProcessPage from '../ProcessPage/ProcessPage'
 
@@ -31,7 +30,7 @@ import Modal from '../Modal/Modal'
 import NewFeatures from '../NewFeatures/NewFeatures'
 
 import Inventory2 from '../Inventory2/Inventory'
-
+import RecipeList from '../RecipeList/RecipeList'
 import NewUserChecklist from '../NewUserChecklist/NewUserChecklist'
 
 export default class ApplicationLayoutStable extends React.Component {
@@ -74,6 +73,7 @@ function App(props) {
         <Route exact path={"/processes"} component={Processes} />
         <Route exact path={"/products"} component={Products} />
 	      <Route path={"/processes/:id"} component={ProcessPage} />
+        <Route path={"/recipelist"} component={RecipeList} />
         <Route path={"/products/:id"} component={ProductPage} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
         <Route path={"/goals"} component={Goals} />
