@@ -1,17 +1,10 @@
 @import 'styles/constants.scss';
 
-.process-page {
+.product-page {
 	width: 100%;
-
-	.process-information {
-		flex: 3;
-	}
-	.process-attributes {
-		flex: 5;
-	}
 }
 
-.process-information {
+.product-information {
 	padding: 0 36px;
 	background-color: $background-color;
 	display: flex;
