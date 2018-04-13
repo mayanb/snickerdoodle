@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Select, Input } from 'antd'
 import ElementCard from '../Element/ElementCard'
+import AntDesignFormGroup from '../Inputs/AntDesignFormGroup'
+import './styles/recipecreate.css'
 
 const { TextArea } = Input
 
@@ -9,10 +11,16 @@ const Option = Select.Option
 class RecipeCreate extends React.Component {
   render() {
     return (
-      <ElementCard className="recipe create-recipe">
-        <SelectProcess processes={this.props.processes} />
-        <TextArea rows={4} />
-      </ElementCard>
+      <div className='recipe-create'>
+        <ElementCard className="recipe create-recipe">
+          <AntDesignFormGroup className='process' label='Process recipe belongs to'>
+						<SelectProcess processes={this.props.processes} />
+          </AntDesignFormGroup>
+          <AntDesignFormGroup className='description' label='Recipe description'>
+            <TextArea rows={4} />
+          </AntDesignFormGroup>
+        </ElementCard>
+      </div>
     )
   }
 }

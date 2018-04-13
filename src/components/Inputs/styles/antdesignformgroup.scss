@@ -1,0 +1,17 @@
+@import '../../../styles/constants.scss';
+
+.form-group {
+    label {
+        font-size: 14px;
+        color: $elephant;
+        margin-bottom: 8px;
+        -webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+    }
+
+    .form-field {
+        display:flex;
+        margin: 8px 0 24px;
+    }
+}
+
