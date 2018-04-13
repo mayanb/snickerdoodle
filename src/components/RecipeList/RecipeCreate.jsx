@@ -13,12 +13,14 @@ class RecipeCreate extends React.Component {
     super(props)
     this.state = {
       isAddingRecipe: true, // TEMPORARY, FOR DEV EASE
-      selectedProcess: null,
+      selectedProcessID: null,
       descriptionText: '',
     }
     
     this.onAddRecipe = this.onAddRecipe.bind(this)
     this.onCancel = this.onCancel.bind(this)
+		this.handleProcessChange = this.handleProcessChange.bind(this)
+		this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
   
   render() {
@@ -29,10 +31,10 @@ class RecipeCreate extends React.Component {
         
         {isAddingRecipe && <ElementCard className="recipe create-recipe">
           <AntDesignFormGroup className='process' label='Process recipe belongs to'>
-						<SelectProcess processes={this.props.processes} />
+						<SelectProcess processes={this.props.processes} onChange={this.handleProcessChange}/>
           </AntDesignFormGroup>
           <AntDesignFormGroup className='description' label='Recipe description'>
-            <TextArea rows={4} />
+            <TextArea rows={4} onChange={this.handleDescriptionChange}/>
           </AntDesignFormGroup>
         </ElementCard>}
       </div>
@@ -47,6 +49,16 @@ class RecipeCreate extends React.Component {
 	onCancel() {
 		console.log('cancel recipe')
     this.setState({ isAddingRecipe: false })
+	}
+	
+	handleProcessChange(processID) {
+		console.log(`process:`, processID)
+		this.setState({ selectedProcessID: processID })
+	}
+	
+	handleDescriptionChange(e) {
+		console.log(`e.target.value:`, e.target.value)
+		this.setState({ descriptionText: e.target.value})
 	}
 }
 
@@ -67,7 +79,7 @@ function filterOption(input, option) {
   return option.props.data.name.toLowerCase().indexOf(input.toLowerCase()) >= 0
 }
 
-function SelectProcess({ processes }) {
+function SelectProcess({ processes, onChange }) {
   return (
     <Select
       showSearch
@@ -75,7 +87,7 @@ function SelectProcess({ processes }) {
       style={{ flex: 1 }}
       placeholder="Select a process"
       optionFilterProp="data"
-      // onChange={this.handleChange}
+      onChange={onChange}
       // onFocus={this.handleFocus}
       // onBlur={this.handleBlur}
       filterOption={filterOption}
