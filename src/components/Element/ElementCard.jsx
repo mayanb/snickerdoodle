@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles/elementcard.css'
 
-export default function Wrapper({className, selected, index, handle, onDelete, onClick, children}) {
+export default function ElementCard({className, selected, index, handle, onDelete, onClick, children}) {
 	let delete_component = onDelete && (
 		<div className="process-attr-delete">
 			<i className="material-icons" onClick={onDelete}>delete</i>
