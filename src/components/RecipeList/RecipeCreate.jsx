@@ -1,28 +1,66 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Select, Input } from 'antd'
+import { Select, Input, Button } from 'antd'
 import ElementCard from '../Element/ElementCard'
 import AntDesignFormGroup from '../Inputs/AntDesignFormGroup'
 import './styles/recipecreate.css'
 
 const { TextArea } = Input
-
 const Option = Select.Option
+
 class RecipeCreate extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isAddingRecipe: true, // TEMPORARY, FOR DEV EASE
+      selectedProcess: null,
+      descriptionText: '',
+    }
+    
+    this.onAddRecipe = this.onAddRecipe.bind(this)
+    this.onCancel = this.onCancel.bind(this)
+  }
+  
   render() {
+    const { isAddingRecipe } = this.state
     return (
       <div className='recipe-create'>
-        <ElementCard className="recipe create-recipe">
+				<ProcessAttributesHeader onAdd={this.onAddRecipe} onCancel={this.onCancel} isAddingRecipe={isAddingRecipe} />
+        
+        {isAddingRecipe && <ElementCard className="recipe create-recipe">
           <AntDesignFormGroup className='process' label='Process recipe belongs to'>
 						<SelectProcess processes={this.props.processes} />
           </AntDesignFormGroup>
           <AntDesignFormGroup className='description' label='Recipe description'>
             <TextArea rows={4} />
           </AntDesignFormGroup>
-        </ElementCard>
+        </ElementCard>}
       </div>
     )
   }
+  
+  onAddRecipe() {
+    console.log('add recipe')
+		this.setState({ isAddingRecipe: true })
+  }
+	
+	onCancel() {
+		console.log('cancel recipe')
+    this.setState({ isAddingRecipe: false })
+	}
+}
+
+function ProcessAttributesHeader({onAdd, onCancel, isAddingRecipe}) {
+	let button = isAddingRecipe
+		? <Button onClick={onCancel}>Cancel</Button>
+		: <Button type="primary" onClick={onAdd}>Add a recipe for this product</Button>
+	
+	return (
+		<div className="process-attributes-header">
+			<span>Log fields</span>
+			{button}
+		</div>
+	)
 }
 
 function filterOption(input, option) {
