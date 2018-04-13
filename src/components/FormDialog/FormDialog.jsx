@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../Card/Button'
+import Button from '../Button/Button'
 import './styles/formdialog.css'
 import Loading from '../Loading/Loading'
 import DialogHeader from '../Dialog/DialogHeader'

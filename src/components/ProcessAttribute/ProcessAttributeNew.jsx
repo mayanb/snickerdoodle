@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../Button/Button'
 import ProcessAttributeField from './ProcessAttributeField'
-import Wrapper from './ProcessAttributeWrapper'
+import ElementCard from '../Element/ElementCard'
 
 export default class ProcessAttributeNew extends React.Component {
 	constructor(props) {
@@ -17,7 +17,7 @@ export default class ProcessAttributeNew extends React.Component {
 		let { name, type } = this.state
 		let { isLoading } = this.props
 		return (
-			<Wrapper className="process-attribute-new" index={0}>
+			<ElementCard selected className="process-attribute-new" index={0} handle>
 				<div className="process-attr-inputs">
 					<ProcessAttributeField edit
 						name="Name" 
@@ -38,7 +38,7 @@ export default class ProcessAttributeNew extends React.Component {
 				>
 					Save
 				</Button>
-			</Wrapper>
+			</ElementCard>
 		)
 	}
 

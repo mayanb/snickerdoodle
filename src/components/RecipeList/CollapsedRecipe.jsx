@@ -1,26 +1,24 @@
 import React from 'react'
-import { formatAmount } from '../../utilities/stringutils';
-import './styles/product-recipe-list-item.css'
-import ReactImageFallback from "react-image-fallback"
+import { formatAmount } from '../../utilities/stringutils'
+import ReactImageFallback from 'react-image-fallback'
+import ElementCard from '../Element/ElementCard'
+import './styles/recipe.css'
 
-export default function RecipeList(props) {
-	console.log(props)
+export default function CollapsedRecipe(props) {
 	const stage = props.product_type.name
 	const ingredients = props.ingredients.length
 	const { process_type } = props
 	const recipeYield = formatAmount(process_type.default_amount, process_type.unit)
 	const icon = process_type.icon
 	return (
-		<div className="process-attr-wrapper ">
-			<div className='process-attribute'>
-				<RecipeField className="list-item-stage">
-					<RenderIconOrImage img={icon}/>
-					<span>{stage}</span>
-				</RecipeField>
-				<RecipeField className="list-item-ingredients">{ingredients}</RecipeField>
-				<RecipeField className="list-item-recipe-yield"> {recipeYield}</RecipeField>
-			</div>
-		</div>
+		<ElementCard className="recipe">
+			<RecipeField className="list-item-stage">
+				<RenderIconOrImage img={icon}/>
+				<span>{stage}</span>
+			</RecipeField>
+			<RecipeField className="list-item-ingredients">{ingredients}</RecipeField>
+			<RecipeField className="list-item-recipe-yield"> {recipeYield}</RecipeField>
+		</ElementCard>
 	)
 }
 

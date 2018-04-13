@@ -4,6 +4,7 @@ import { ElementHeader, ElementContent } from '../Element/Element'
 import * as productActions from '../Products/ProductsActions'
 import { withRouter } from 'react-router-dom'
 import ProductInformation from '../ProductPage/ProductInformation'
+import RecipeList from '../RecipeList/RecipeList'
 import './styles/productpage.css'
 
 class ProductPage extends React.Component {
@@ -32,6 +33,9 @@ class ProductPage extends React.Component {
 				<ElementHeader title={'Products'} name={data && data.name} onBack={() => history.push('/products')} />
 				<ElementContent>
 					<ProductInformation product={data} />
+					<div className="product-page-recipe-list">
+						<RecipeList />
+					</div>
 				</ElementContent>
 			</div>
 		)
