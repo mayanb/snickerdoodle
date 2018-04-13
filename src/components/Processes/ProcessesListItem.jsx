@@ -5,6 +5,7 @@ import {icon} from '../TaskPage/TaskHelpers.jsx'
 import {pluralize} from '../../utilities/stringutils'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import ButtonStopClickPropagate from '../Card/ButtonStopClickPropagate'
+import Img from '../Img/Img'
 
 export default class ProcessesListItem extends React.Component {
 
@@ -56,7 +57,7 @@ export default class ProcessesListItem extends React.Component {
 		return (
 			<ObjectListItem className={this.getClassNames()} onClick={onClick}>
 				<div className="icon">
-					<img className="icon-img" src={icon(item.icon)} alt=""/>
+					<Img className="icon-img" src={icon(item.icon)} />
 				</div>
 
 				<div className="code">
