@@ -2,6 +2,14 @@
 
 .product-page {
 	width: 100%;
+
+	.product-page-recipe-list {
+		flex: 5;
+	}
+
+	.product-information {
+		flex: 3;
+	}
 }
 
 .product-information {

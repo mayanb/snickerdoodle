@@ -119,7 +119,7 @@ class Processes extends React.Component {
 			<CreateOrDuplicateProcessDialog
 				isOpen={this.state.isDuplicateOpen}
 				onToggle={this.handleCancelDuplicate.bind(this)}
-				onDuplicate={this.handleDuplicateProcess}
+				onSubmit={this.handleDuplicateProcess}
 				isDuplicating={this.state.isDuplicating}
 				title='Duplicate a process'
 				className='create-process-dialog'

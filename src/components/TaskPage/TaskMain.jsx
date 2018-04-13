@@ -4,6 +4,7 @@ import TaskForm from './TaskForm'
 import { icon } from './TaskHelpers.jsx'
 import { formatAmount } from '../../utilities/stringutils'
 import moment from 'moment'
+import Img from '../Img/Img'
 
 export default class TaskMain extends React.Component {
 	render() {
@@ -30,7 +31,7 @@ function TaskName({ task }) {
 				Last Updated {moment(task.updated_at).format('dddd, MMMM Do YYYY, h:mm a')}
 			</div>
 			<div className="name-row">
-				<img src={icon(task.process_type.icon)} alt="process type" />
+				<Img src={icon(task.process_type.icon)} />
 				<div>
 					<span className="name">{task.display}</span>
 					<i className="material-icons">arrow_forward</i>

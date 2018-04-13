@@ -1,132 +1,60 @@
 import React from 'react'
-import RecipeListItem from './RecipeListItem'
+import { connect } from 'react-redux'
+import { Button } from 'antd'
+import CollapsedRecipe from './CollapsedRecipe'
 import Sortable from '../Sortable/Container'
+import * as actions from '../Processes/ProcessesActions'
+import RecipeCreate from './RecipeCreate'
+
+import { data } from './mockdata'
 import './styles/product-recipe-list.css'
 
-export default class RecipeList extends React.Component {
+class RecipeList extends React.Component {
 	constructor(props) {
 		super(props)
-		const data = { // PLACEHOLDER DATA
-			recipes: [
-				{
-					"id": 1,
-					"instructions": "asdf",
-					"product_type": {
-						"id": 23,
-						"name": "Camino Verde 85%",
-						"code": "CV-85%",
-						"created_by": 1,
-						"is_trashed": false,
-						"team_created_by": 1,
-						"username": "pirates",
-						"created_at": "2017-10-19T04:06:02.659679Z",
-						"description": ""
-					},
-					"process_type": {
-						"id": 15,
-						"username": "pirates",
-						"name": "Package",
-						"code": "PG",
-						"icon": "package.png",
-						"attributes": [
-							{
-								"id": 53,
-								"process_type": 15,
-								"process_name": "Package",
-								"name": "# of units",
-								"rank": 0,
-								"datatype": "NUMB"
-							}
-						],
-						"unit": "bar",
-						"x": "83.158",
-						"y": "52.072",
-						"created_by": 1,
-						"output_desc": "finished bars",
-						"created_by_name": "pirates_alabama",
-						"default_amount": 10,
-						"team_created_by": 1,
-						"team_created_by_name": "alabama",
-						"is_trashed": false,
-						"created_at": "2017-10-19T04:06:02.595496Z",
-						"last_used": "2018-04-11T19:16:35.167398Z"
-					},
-					"ingredients": [1,1,1,1] // DUMMY DATA
-				},
-				{
-					"id": 2,
-					"instructions": "asdf",
-					"product_type": {
-						"id": 23,
-						"name": "David Mountain",
-						"code": "CV-85%",
-						"created_by": 1,
-						"is_trashed": false,
-						"team_created_by": 1,
-						"username": "pirates",
-						"created_at": "2017-10-19T04:06:02.659679Z",
-						"description": ""
-					},
-					"process_type": {
-						"id": 15,
-						"username": "pirates",
-						"name": "Winnow",
-						"code": "PG",
-						"icon": "package.png",
-						"attributes": [
-							{
-								"id": 53,
-								"process_type": 15,
-								"process_name": "Package",
-								"name": "# of units",
-								"rank": 0,
-								"datatype": "NUMB"
-							}
-						],
-						"unit": "bar",
-						"x": "83.158",
-						"y": "52.072",
-						"created_by": 1,
-						"output_desc": "finished bars",
-						"created_by_name": "pirates_alabama",
-						"default_amount": 10,
-						"team_created_by": 1,
-						"team_created_by_name": "alabama",
-						"is_trashed": false,
-						"created_at": "2017-10-19T04:06:02.595496Z",
-						"last_used": "2018-04-11T19:16:35.167398Z"
-					},
-					"ingredients": [2,2,2,2,2]
-				},
-				// {
-				// 	state: 'W-Winnow',
-				// 	ingredients: 5,
-				// 	recipe_yield: 20,
-				// 	yield_unit: 'Bag',
-				// },
-			]
-		}
 		this.state = {
 			data: data,
 		}
 	}
+
+	componentDidMount() {
+    this.props.dispatch(actions.fetchProcesses())
+  }
 	
 	render() {
 		const { recipes } = this.state.data
 		
 		return (
 			<div className="product-recipe-list">
-				<div className="product-recipe-list-header">
-					<span>Stage</span>
-					<span>Ingredients</span>
-					<span>Recipe Yield</span>
-				</div>
+				<ProcessAttributesHeader />
+				<RecipeCreate />
 				<Sortable
 					cards={recipes}
 					canEdit={false}
-					renderer={RecipeListItem}
+					renderer={CollapsedRecipe}
 				/>
 			</div>
 		)
 	}
 }
+
+function ProcessAttributesHeader({onAdd, onCancel, isAdding}) {
+	let button = isAdding 
+		? <Button onClick={onCancel}>Cancel</Button>
+		: <Button type="primary" onClick={onAdd}>Add a field</Button>
+
+	return (
+		<div className="process-attributes-header">
+			<span>Log fields</span>
+			{button}
+		</div>
+	)
+}
+
+const mapStateToProps = (state /*, props */) => {
+  return {
+    processes: state.processes.data
+  }
+}
+
+export default connect(mapStateToProps)(RecipeList)
