@@ -1,29 +1,19 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import './styles/taskdialog.css'
 import DialogHeader from '../Dialog/DialogHeader'
 import { icon, description } from '../TaskPage/TaskHelpers.jsx'
 import {Link} from 'react-router-dom'
-import { HIDE_MODAL_TYPE } from '../../reducers/ModalReducer'
-import { MODAL } from '../../reducers/ReducerTypes'
 import Img from '../Img/Img'
 
-class TaskDialog extends React.Component {
-	constructor(props) {
-		super(props)
-
-		this.renderTask = this.renderTask.bind(this)
-		this.hideTaskDialog = this.hideTaskDialog.bind(this)
-	}
-
+export default class TaskDialogSimple extends React.Component {
 	render() {
 		return (
 			<div className="dialog-container">
-				<div className="dialog-shim" onClick={this.hideTaskDialog} />
+				<div className="dialog-shim" onClick={this.props.onToggle} />
 				<div className={"dialog-card task-dialog"}>
-					<DialogHeader onToggle={this.hideTaskDialog}>{this.props.header || 'Tasks'}</DialogHeader>
+					<DialogHeader onToggle={this.props.onToggle}>{this.props.header || 'Tasks'}</DialogHeader>
 					<div className="body">
-						{this.props.tasks.map(this.renderTask)}
+						{this.props.tasks.map(this.renderTask.bind(this))}
 					</div>
 				</div>
 			</div>
@@ -32,7 +22,7 @@ class TaskDialog extends React.Component {
 
 	renderTask(task) {
 		return (
-			<Link key={task.id} className="task" to={`/task/${task.id}`} onClick={this.hideTaskDialog}>
+			<Link key={task.id} target="_blank" className="task" to={`/task/${task.id}`} onClick={this.props.onToggle}>
 				<ProcessTypeIcon task={task}/>
 				<div className="info">
 					<div className="code">{task.display}</div>
@@ -40,13 +30,6 @@ class TaskDialog extends React.Component {
 				</div>
 			</Link>
 		)
-	}
-
-	hideTaskDialog() {
-		this.props.dispatch({
-			name: MODAL,
-			type: HIDE_MODAL_TYPE,
-		})
 	}
 }
 
@@ -56,5 +39,3 @@ function ProcessTypeIcon({task}) {
 		<Img className="task-icon" src={icon(filename)}/>
 		)
 }
-
-export default connect(() => {})(TaskDialog)
