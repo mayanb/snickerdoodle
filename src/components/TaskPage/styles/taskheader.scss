@@ -18,6 +18,10 @@
         }
     }
 
+    &.ancestor_is_flagged {
+        background-color: $orange;
+    }
+
     .title {
         display: flex;
         align-items: center;
@@ -43,6 +47,11 @@
         background-color: white;
         color: $primary;
         font-size: 15px;
+    }
+
+    .flagged-ancestors-review {
+        border-bottom: 1px dashed white;
+        cursor: pointer;
     }
 
 }
