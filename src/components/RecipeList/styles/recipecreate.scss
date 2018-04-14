@@ -1,12 +1,13 @@
 @import '../../../styles/constants';
 
 .recipe-create {
+	background-color: red;
 	.process-attributes-header {
 		display: flex;
-		justify-content: space-between;
+		
 		& > span {
 			flex: 1;
-			background-color: red;
+			//background-color: red;
 		}
 		
 		& > button {

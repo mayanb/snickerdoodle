@@ -4,7 +4,6 @@ import CollapsedRecipe from './CollapsedRecipe'
 import Sortable from '../Sortable/Container'
 import * as actions from '../Processes/ProcessesActions'
 import RecipeCreate from './RecipeCreate'
-
 import { data } from './mockdata'
 import './styles/recipelist.css'
 
@@ -36,7 +35,7 @@ class RecipeList extends React.Component {
 	}
 }
 
-const mapStateToProps = (state /*, props */) => {
+const mapStateToProps = (state) => {
   return {
     processes: state.processes.data
   }

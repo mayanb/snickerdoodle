@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Select, Input } from 'antd'
+import { Input } from 'antd'
 import Button from '../Card/Button'
 import ElementCard from '../Element/ElementCard'
 import AntDesignFormGroup from '../Inputs/AntDesignFormGroup'
@@ -8,8 +8,6 @@ import { postCreateRecipe } from './RecipeActions'
 import RecipeCreateHeader from './RecipeCreateHeader'
 import ProcessDropdown from './ProcessDropdown'
 import './styles/recipecreate.css'
-
-const { TextArea } = Input
 
 class RecipeCreate extends React.Component {
   constructor(props) {
@@ -30,7 +28,9 @@ class RecipeCreate extends React.Component {
   
   render() {
     const { isAddingRecipe } = this.state
-    return (
+		const { TextArea } = Input
+	
+		return (
       <div className='recipe-create'>
 				<RecipeCreateHeader onSubmit={this.handleSubmit} onOpenAddRecipeForm={this.handleOpenAddRecipeForm} onCancel={this.handleCancel} isAddingRecipe={isAddingRecipe} />
         
@@ -90,7 +90,7 @@ function enteredDataIsInvalid(processID, instructions) {
 	return !(processID && instructions)
 }
 
-const mapStateToProps = (state /*, props */) => {
+const mapStateToProps = (state) => {
   return {
     processes: state.processes.data
   }
