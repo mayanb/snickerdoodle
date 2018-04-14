@@ -6,11 +6,13 @@
 		justify-content: space-between;
 		& > span {
 			flex: 1;
+			background-color: red;
 		}
 		
 		& > button {
-			flex: 0;
+			flex: 10;
 			white-space: nowrap;
+			
 		}
 	}
 }

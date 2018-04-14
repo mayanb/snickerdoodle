@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Select, Input, Button } from 'antd'
+import { Select, Input } from 'antd'
+import Button from '../Card/Button'
 import ElementCard from '../Element/ElementCard'
 import AntDesignFormGroup from '../Inputs/AntDesignFormGroup'
+import { postCreateRecipe } from './RecipeActions'
 import './styles/recipecreate.css'
 
 const { TextArea } = Input
@@ -12,13 +14,15 @@ class RecipeCreate extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isAddingRecipe: true, // TEMPORARY, FOR DEV EASE
+      isAddingRecipe: false,
+      isSubmitting: false,
       selectedProcessID: null,
       descriptionText: '',
     }
     
-    this.onAddRecipe = this.onAddRecipe.bind(this)
-    this.onCancel = this.onCancel.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleOpenAddRecipeForm = this.handleOpenAddRecipeForm.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
 		this.handleProcessChange = this.handleProcessChange.bind(this)
 		this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
   }
@@ -27,28 +31,47 @@ class RecipeCreate extends React.Component {
     const { isAddingRecipe } = this.state
     return (
       <div className='recipe-create'>
-				<ProcessAttributesHeader onAdd={this.onAddRecipe} onCancel={this.onCancel} isAddingRecipe={isAddingRecipe} />
+				<ProcessAttributesHeader onSubmit={this.handleSubmit} onOpenAddRecipeForm={this.handleOpenAddRecipeForm} onCancel={this.handleCancel} isAddingRecipe={isAddingRecipe} />
         
-        {isAddingRecipe && <ElementCard className="recipe create-recipe">
+        {isAddingRecipe && <ElementCard className='recipe create-recipe'>
           <AntDesignFormGroup className='process' label='Process recipe belongs to'>
 						<SelectProcess processes={this.props.processes} onChange={this.handleProcessChange}/>
           </AntDesignFormGroup>
           <AntDesignFormGroup className='description' label='Recipe description'>
             <TextArea rows={4} onChange={this.handleDescriptionChange}/>
           </AntDesignFormGroup>
+					<Button wide onClick={this.handleSubmit}>Save</Button>
         </ElementCard>}
       </div>
     )
   }
   
-  onAddRecipe() {
+  handleSubmit() {
+		this.setState({ isSubmitting: true })
+    const newRecipe = {
+		  instructions: this.state.instructions,
+			product_type: this.props.product.id,
+			process_type: this.state.selectedProcessID,
+    }
+    this.props.dispatch(postCreateRecipe(newRecipe))
+			.then(res => {
+				console.log('postRecipe res: ', res)
+				this.setState({ isAddingRecipe: false, isSubmitting: false })
+			})
     console.log('add recipe')
-		this.setState({ isAddingRecipe: true })
   }
+  
+  handleOpenAddRecipeForm() {
+  	this.setState({ isAddingRecipe: true })
+	}
 	
-	onCancel() {
-		console.log('cancel recipe')
-    this.setState({ isAddingRecipe: false })
+	handleCancel() {
+    this.setState({
+			isAddingRecipe: false,
+			isSubmitting: false,
+			selectedProcessID: null,
+			descriptionText: '',
+    })
 	}
 	
 	handleProcessChange(processID) {
@@ -62,13 +85,13 @@ class RecipeCreate extends React.Component {
 	}
 }
 
-function ProcessAttributesHeader({onAdd, onCancel, isAddingRecipe}) {
+function ProcessAttributesHeader({onOpenAddRecipeForm, onCancel, isAddingRecipe}) {
 	let button = isAddingRecipe
 		? <Button onClick={onCancel}>Cancel</Button>
-		: <Button type="primary" onClick={onAdd}>Add a recipe for this product</Button>
+		: <Button type='primary' onClick={onOpenAddRecipeForm}>Add recipe</Button>
 	
 	return (
-		<div className="process-attributes-header">
+		<div className='process-attributes-header'>
 			<span>Log fields</span>
 			{button}
 		</div>
@@ -83,17 +106,17 @@ function SelectProcess({ processes, onChange }) {
   return (
     <Select
       showSearch
-      size="large"
+      size='large'
       style={{ flex: 1 }}
-      placeholder="Select a process"
-      optionFilterProp="data"
+      placeholder='Select a process'
+      optionFilterProp='data'
       onChange={onChange}
       // onFocus={this.handleFocus}
       // onBlur={this.handleBlur}
       filterOption={filterOption}
     >
     {processes.map(e => {
-      return <Option value={e.id} data={e}>{e.code} - {e.name}</Option>
+      return <Option key={e.id} value={e.id} data={e}>{e.code} - {e.name}</Option>
     })}
     </Select>
   )

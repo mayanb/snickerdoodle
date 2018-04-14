@@ -25,7 +25,7 @@ class RecipeList extends React.Component {
 		
 		return (
 			<div className="product-recipe-list">
-				<RecipeCreate />
+				<RecipeCreate product={this.props.product}/>
 				<Sortable
 					cards={recipes}
 					canEdit={false}
