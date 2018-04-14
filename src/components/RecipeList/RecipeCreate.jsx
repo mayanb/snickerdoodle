@@ -17,7 +17,7 @@ class RecipeCreate extends React.Component {
       isAddingRecipe: false,
       isSubmitting: false,
       selectedProcessID: null,
-      descriptionText: '',
+      instructions: '',
     }
     
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -31,7 +31,7 @@ class RecipeCreate extends React.Component {
     const { isAddingRecipe } = this.state
     return (
       <div className='recipe-create'>
-				<ProcessAttributesHeader onSubmit={this.handleSubmit} onOpenAddRecipeForm={this.handleOpenAddRecipeForm} onCancel={this.handleCancel} isAddingRecipe={isAddingRecipe} />
+				<RecipeListHeader onSubmit={this.handleSubmit} onOpenAddRecipeForm={this.handleOpenAddRecipeForm} onCancel={this.handleCancel} isAddingRecipe={isAddingRecipe} />
         
         {isAddingRecipe && <ElementCard className='recipe create-recipe'>
           <AntDesignFormGroup className='process' label='Process recipe belongs to'>
@@ -47,10 +47,14 @@ class RecipeCreate extends React.Component {
   }
   
   handleSubmit() {
+  	const { selectedProcessID, instructions } = this.state
+  	if (this.state.isSubmitting || enteredDataIsInvalid(selectedProcessID, instructions)) {
+  		return
+		}
 		this.setState({ isSubmitting: true })
     const newRecipe = {
 		  instructions: this.state.instructions,
-			product_type: this.props.product.id,
+			product_type: this.props.product,
 			process_type: this.state.selectedProcessID,
     }
     this.props.dispatch(postCreateRecipe(newRecipe))
@@ -58,7 +62,6 @@ class RecipeCreate extends React.Component {
 				console.log('postRecipe res: ', res)
 				this.setState({ isAddingRecipe: false, isSubmitting: false })
 			})
-    console.log('add recipe')
   }
   
   handleOpenAddRecipeForm() {
@@ -70,7 +73,7 @@ class RecipeCreate extends React.Component {
 			isAddingRecipe: false,
 			isSubmitting: false,
 			selectedProcessID: null,
-			descriptionText: '',
+			instructions: '',
     })
 	}
 	
@@ -81,11 +84,15 @@ class RecipeCreate extends React.Component {
 	
 	handleDescriptionChange(e) {
 		console.log(`e.target.value:`, e.target.value)
-		this.setState({ descriptionText: e.target.value})
+		this.setState({ instructions: e.target.value})
 	}
 }
 
-function ProcessAttributesHeader({onOpenAddRecipeForm, onCancel, isAddingRecipe}) {
+function enteredDataIsInvalid(processID, instructions) {
+	return !(processID && instructions)
+}
+
+function RecipeListHeader({onOpenAddRecipeForm, onCancel, isAddingRecipe}) {
 	let button = isAddingRecipe
 		? <Button onClick={onCancel}>Cancel</Button>
 		: <Button type='primary' onClick={onOpenAddRecipeForm}>Add recipe</Button>
@@ -111,8 +118,6 @@ function SelectProcess({ processes, onChange }) {
       placeholder='Select a process'
       optionFilterProp='data'
       onChange={onChange}
-      // onFocus={this.handleFocus}
-      // onBlur={this.handleBlur}
       filterOption={filterOption}
     >
     {processes.map(e => {
