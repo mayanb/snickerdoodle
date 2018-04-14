@@ -13,8 +13,6 @@ import {
 } from '../../reducers/APIDataReducer'
 import { RECIPES } from '../../reducers/ReducerTypes'
 import {alphabetize} from '../../utilities/arrayutils.jsx'
-import {data} from './mockdata'
-const mockRecipe = data
 
 
 export function fetchRecipes(q) {
@@ -23,7 +21,7 @@ export function fetchRecipes(q) {
     dispatch(requestRecipes())
 
     // actually fetch 
-    return api.get('/ics/products/')
+    return api.get('/ics/recipes/')
       .query(q)
       .then(res => dispatch(requestRecipesSuccess(res.body.sort(alphabetize))))
       .catch(err => dispatch(requestRecipesFailure(err)))
@@ -103,25 +101,11 @@ function requestCreateRecipeSuccess(json) {
   }
 }
 
-/**
-function formatProductResponse(json) {
-  let products = {}
-  
-  if (!json)
-    return {}
-
-  for (var p of json) {
-    products[p.id] = p
-  }
-  return products
-}
- */
-
 export function postDeleteRecipe(p, index, callback) {
   return function (dispatch) {
     dispatch(requestDeleteRecipe(index))
 
-    return api.put(`/ics/products/${p.id}/`)
+    return api.put(`/ics/recipes/${p.id}/`)
       .send({ 
           name: p.name,
           code: p.code,
