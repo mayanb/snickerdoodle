@@ -7,7 +7,7 @@ import './styles/navigation.css'
 import { isDandelion } from '../../utilities/userutils'
 
 let group2 = [ 
-  // {title: 'Zebra Printing', icon: 'printing-zebra@2x', link: 'labels'},
+  {title: 'Zebra Printing', icon: 'printing-zebra@2x', link: 'labels'},
   {title: 'Dymo Printing', icon: 'printing-dymo@2x', link: 'dymo'},
 ]
 
