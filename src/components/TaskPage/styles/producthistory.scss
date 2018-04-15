@@ -47,7 +47,7 @@
         cursor: pointer;
         position: relative;
 
-        .task-flagged {
+        .task-flagged , .task-ancestor-flagged {
             font-size: 14px;
             line-height: 20px;
             vertical-align: middle;
@@ -55,8 +55,16 @@
             margin-right: 4px;
         }
 
+        .task-ancestor-flagged {
+            color: $orange;
+        }
+
         .task-flagged-name {
             color: $red;
+        }
+
+        .task-ancestor-flagged-name {
+            color: $orange;
         }
 
 
