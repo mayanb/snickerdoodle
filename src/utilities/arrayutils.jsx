@@ -52,8 +52,8 @@ export function alphabetizeRecipesByStage(a, b) {
 	if (a === b || a===null || b===null)
 		return 0
 	
-	let aName = a.product_type.name.toUpperCase()
-	let bName = b.product_type.name.toUpperCase()
+	let aName = a.process_type.name.toUpperCase()
+	let bName = b.process_type.name.toUpperCase()
 	
 	if (aName < bName)
 		return -1
