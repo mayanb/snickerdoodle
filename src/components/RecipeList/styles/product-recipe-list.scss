@@ -1,0 +1,25 @@
+@import 'styles/constants.scss';
+
+.product-recipe-list {
+	padding: 24px 36px;
+	width: 100%;
+	
+	.product-recipe-list-header {
+		display: flex;
+		padding-left: 16px;
+		padding-right: 16px;
+		
+		& > span {
+			flex: 1;
+		}
+	}
+	
+	.process-attr-list-header {
+		font-weight: 700;
+		display: flex;
+		
+		& > span {
+			flex: 1;
+		}
+	}
+}
