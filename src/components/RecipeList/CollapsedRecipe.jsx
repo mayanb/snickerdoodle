@@ -5,7 +5,7 @@ import ElementCard from '../Element/ElementCard'
 import './styles/recipe.css'
 
 export default function CollapsedRecipe(props) {
-	const stage = props.product_type.name
+	const stage = props.process_type.name
 	const ingredients = props.ingredients.length
 	const { process_type } = props
 	const recipeYield = formatAmount(process_type.default_amount, process_type.unit)

@@ -8,10 +8,6 @@ import RecipeCreate from './RecipeCreate'
 import './styles/recipelist.css'
 
 class RecipeList extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-
 	componentDidMount() {
     this.props.dispatch(processActions.fetchProcesses())
 		this.props.dispatch(recipeActions.fetchRecipes({ product_type: this.props.product.id }))

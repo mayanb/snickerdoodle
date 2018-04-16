@@ -23,7 +23,7 @@ export function fetchRecipes(q) {
     // actually fetch 
     return api.get('/ics/recipes/')
       .query(q)
-      .then(res => {console.log(res.body); dispatch(requestRecipesSuccess(res.body.sort(alphabetizeRecipesByStage)))})
+      .then(res => dispatch(requestRecipesSuccess(res.body.sort(alphabetizeRecipesByStage))))
       .catch(err => dispatch(requestRecipesFailure(err)))
   }
 }
@@ -64,8 +64,6 @@ export function pageRecipes(direction) {
 export function postCreateRecipe(json) {
   return function (dispatch) {
     dispatch(requestCreateRecipe())
-    console.log('sending postCreateRecipe with:', json)
-		// return dispatch(requestCreateRecipeSuccess(mockRecipe))
     return api.post('/ics/recipes/')
       .send(json)
       .then((res) => {

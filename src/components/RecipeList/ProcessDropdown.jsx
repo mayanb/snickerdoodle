@@ -9,7 +9,6 @@ export default function ProcessDropdown({ processes, onChange }) {
       showSearch
       size='large'
       style={{ flex: 1 }}
-      placeholder='Select a process'
       optionFilterProp='data'
       onChange={onChange}
       filterOption={filterOption}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Input } from 'antd'
-import Button from '../Card/Button'
+import Button from '../Button/Button'
 import ElementCard from '../Element/ElementCard'
 import AntDesignFormGroup from '../Inputs/AntDesignFormGroup'
 import { postCreateRecipe } from './RecipeActions'
@@ -22,7 +22,7 @@ class RecipeCreate extends React.Component {
     this.handleOpenAddRecipeForm = this.handleOpenAddRecipeForm.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
 		this.handleProcessChange = this.handleProcessChange.bind(this)
-		this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
+		this.handleInstructionsChange = this.handleInstructionsChange.bind(this)
   }
   
   render() {
@@ -34,13 +34,13 @@ class RecipeCreate extends React.Component {
 				<RecipeCreateHeader onSubmit={this.handleSubmit} onOpenAddRecipeForm={this.handleOpenAddRecipeForm} onCancel={this.handleCancel} isAddingRecipe={isAddingRecipe} />
         
         {isAddingRecipe && <ElementCard className='recipe create-recipe'>
-          <AntDesignFormGroup className='process' label='Process recipe belongs to'>
+          <AntDesignFormGroup className='process' label='Select a stage'>
 						<ProcessDropdown processes={this.props.processes} onChange={this.handleProcessChange}/>
           </AntDesignFormGroup>
-          <AntDesignFormGroup className='description' label='Recipe description'>
-            <TextArea rows={4} onChange={this.handleDescriptionChange}/>
+          <AntDesignFormGroup className='instructions' label='Recipe instructions'>
+            <TextArea rows={4} onChange={this.handleInstructionsChange}/>
           </AntDesignFormGroup>
-					<Button onClick={this.handleSubmit}>Save</Button>
+					<Button onClick={this.handleSubmit}>Save this recipe</Button>
         </ElementCard>}
       </div>
     )
@@ -59,7 +59,6 @@ class RecipeCreate extends React.Component {
     }
     this.props.dispatch(postCreateRecipe(newRecipe))
 			.then(res => {
-				console.log('recipe create res:', res)
 				this.setState({ isAddingRecipe: false })
 			})
   }
@@ -80,7 +79,7 @@ class RecipeCreate extends React.Component {
 		this.setState({ selectedProcessID: processID })
 	}
 	
-	handleDescriptionChange(e) {
+	handleInstructionsChange(e) {
 		this.setState({ instructions: e.target.value})
 	}
 }
