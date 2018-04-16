@@ -6,20 +6,11 @@
 	
 	.product-recipe-list-header {
 		display: flex;
-		padding-left: 16px;
-		padding-right: 16px;
+		padding: 16px 16px 4px;
 		
 		& > span {
 			flex: 1;
-		}
-	}
-	
-	.process-attr-list-header {
-		font-weight: 700;
-		display: flex;
-		
-		& > span {
-			flex: 1;
+			font-weight: 700;
 		}
 	}
 }

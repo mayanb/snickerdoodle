@@ -7,8 +7,8 @@ export default function RecipeCreateHeader({onOpenAddRecipeForm, onCancel, isAdd
 		: <Button type='primary' onClick={onOpenAddRecipeForm}>Add recipe</Button>
 	
 	return (
-		<div className='process-attributes-header'>
-			<span>Log fields</span>
+		<div className='header'>
+			<span>Recipes</span>
 			{button}
 		</div>
 	)
