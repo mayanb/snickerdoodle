@@ -2,29 +2,27 @@ import React from 'react'
 import { connect } from 'react-redux'
 import CollapsedRecipe from './CollapsedRecipe'
 import Sortable from '../Sortable/Container'
-import * as actions from '../Processes/ProcessesActions'
+import * as processActions from '../Processes/ProcessesActions'
+import * as recipeActions from './RecipeActions'
 import RecipeCreate from './RecipeCreate'
-import { data } from './mockdata'
 import './styles/recipelist.css'
 
 class RecipeList extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			data: data,
-		}
 	}
 
 	componentDidMount() {
-    this.props.dispatch(actions.fetchProcesses())
+    this.props.dispatch(processActions.fetchProcesses())
+		this.props.dispatch(recipeActions.fetchRecipes({ product_type: this.props.product.id }))
   }
 	
 	render() {
-		const { recipes } = this.state.data
+		const { recipes, product } = this.props
 		
 		return (
 			<div className="product-recipe-list">
-				<RecipeCreate product={this.props.product}/>
+				<RecipeCreate product={product}/>
 				<div className="product-recipe-list-header">
 					<span>Stage</span>
 					<span>Ingredients</span>
@@ -42,7 +40,8 @@ class RecipeList extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    processes: state.processes.data
+    processes: state.processes.data,
+		recipes: state.recipes.data,
   }
 }
 

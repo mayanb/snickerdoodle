@@ -14,7 +14,6 @@ class RecipeCreate extends React.Component {
     super(props)
     this.state = {
       isAddingRecipe: false,
-      isSubmitting: false,
       selectedProcessID: null,
       instructions: '',
     }
@@ -49,18 +48,19 @@ class RecipeCreate extends React.Component {
   
   handleSubmit() {
   	const { selectedProcessID, instructions } = this.state
-  	if (this.state.isSubmitting || enteredDataIsInvalid(selectedProcessID, instructions)) {
+		const { isCreatingItem } = this.props.ui
+  	if (isCreatingItem || enteredDataIsInvalid(selectedProcessID, instructions)) {
   		return
 		}
-		this.setState({ isSubmitting: true })
     const newRecipe = {
 		  instructions: this.state.instructions,
-			product_type: this.props.product.id,
-			process_type: this.state.selectedProcessID,
+			product_type_id: this.props.product.id,
+			process_type_id: this.state.selectedProcessID,
     }
     this.props.dispatch(postCreateRecipe(newRecipe))
 			.then(res => {
-				this.setState({ isAddingRecipe: false, isSubmitting: false })
+				console.log('recipe create res:', res)
+				this.setState({ isAddingRecipe: false })
 			})
   }
   
@@ -71,7 +71,6 @@ class RecipeCreate extends React.Component {
 	handleCancel() {
     this.setState({
 			isAddingRecipe: false,
-			isSubmitting: false,
 			selectedProcessID: null,
 			instructions: '',
     })
@@ -92,8 +91,9 @@ function enteredDataIsInvalid(processID, instructions) {
 
 const mapStateToProps = (state) => {
   return {
-    processes: state.processes.data
-  }
+    processes: state.processes.data,
+		ui: state.recipes.ui,
+	}
 }
 
 export default connect(mapStateToProps)(RecipeCreate)

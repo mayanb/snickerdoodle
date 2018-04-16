@@ -12,7 +12,7 @@ import {
   PAGE,
 } from '../../reducers/APIDataReducer'
 import { RECIPES } from '../../reducers/ReducerTypes'
-import {alphabetize} from '../../utilities/arrayutils.jsx'
+import {alphabetizeRecipesByStage} from '../../utilities/arrayutils.jsx'
 
 
 export function fetchRecipes(q) {
@@ -23,7 +23,7 @@ export function fetchRecipes(q) {
     // actually fetch 
     return api.get('/ics/recipes/')
       .query(q)
-      .then(res => dispatch(requestRecipesSuccess(res.body.sort(alphabetize))))
+      .then(res => {console.log(res.body); dispatch(requestRecipesSuccess(res.body.sort(alphabetizeRecipesByStage)))})
       .catch(err => dispatch(requestRecipesFailure(err)))
   }
 }
@@ -36,7 +36,7 @@ function requestRecipes() {
 }
 
 function requestRecipesFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.error('Oh no! Something went wrong\n', err)
   return {
     name: RECIPES,
     type: REQUEST_FAILURE, 
@@ -84,7 +84,7 @@ function requestCreateRecipe() {
 }
 
 function requestCreateRecipeFailure(err) {
-  alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
+  console.error('Oh no! Something went wrong!\n' + JSON.stringify(err))
   return {
     type: REQUEST_CREATE_FAILURE,
     name: RECIPES,
@@ -96,7 +96,7 @@ function requestCreateRecipeSuccess(json) {
   return {
     type: REQUEST_CREATE_SUCCESS,
     item: json,
-    sort: alphabetize,
+    sort: alphabetizeRecipesByStage,
     name: RECIPES,
   }
 }
