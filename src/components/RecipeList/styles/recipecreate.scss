@@ -1,17 +1,15 @@
-@import '../../../styles/constants';
+@import '../../../styles/constants.css';
 
 .recipe-create {
-	background-color: red;
 	.process-attributes-header {
 		display: flex;
 		
 		& > span {
 			flex: 1;
-			//background-color: red;
 		}
 		
 		& > button {
-			flex: 10;
+			flex: 1;
 			white-space: nowrap;
 			
 		}
