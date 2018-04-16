@@ -52,6 +52,7 @@ export default connect(mapStateToProps)(ProductHistory)
 function TaskSummary({ task, selected, history }) {
 	const amount = task.total_amount || (task.items && task.items.reduce((sum, item) => sum + Number(item.amount), 0))
 	const formattedAmount = amount ? formatAmount(amount, task.process_type.unit) : '(Unknown Amount)'
+	const is_ancestor_flagged = !task.is_flagged && task.num_flagged_ancestors > 0
 	return (
 		<a
 			className={'task-summary ' + (selected ? 'selected' : '')}
@@ -62,8 +63,9 @@ function TaskSummary({ task, selected, history }) {
 				{task.process_type.icon && <Img src={icon(task.process_type.icon)}/>}
 			</div>
 			<div className="task-text">
-				<div className={"task-name " + (task.is_flagged && "task-flagged-name")}>
+				<div className={"task-name " + (task.is_flagged && "task-flagged-name ") + (is_ancestor_flagged && " task-ancestor-flagged-name")}>
 					{task.is_flagged && <i className= "task-flagged material-icons">error</i>}
+					{is_ancestor_flagged && <i className= "task-ancestor-flagged material-icons">error</i>}
 					{task.display}
 				</div>
 				<div className="task-amount">
