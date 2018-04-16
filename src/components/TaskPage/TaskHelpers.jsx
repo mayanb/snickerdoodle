@@ -29,7 +29,7 @@ export function words(task) {
 
 export function icon(k) {
   var i = k.substr(0, k.length-4)
-  return process.env.PUBLIC_URL + "/img/" + i + "@3x.png"
+  return i + "@3x"
 }
 
 export function pl(count, unit) {
