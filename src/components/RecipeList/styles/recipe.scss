@@ -17,4 +17,8 @@
 
 .recipe.create-recipe {
 	flex-direction: column;
+
+	.recipe-stage-select {
+		display: flex;
+	}
 }
