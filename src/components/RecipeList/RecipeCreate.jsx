@@ -1,18 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Input } from 'antd'
-
 import Button from '../Button/Button'
 import ElementCard from '../Element/ElementCard'
 import AntDesignFormGroup from '../Inputs/AntDesignFormGroup'
 import { postCreateRecipe } from './RecipeActions'
 import RecipeCreateHeader from './RecipeCreateHeader'
-import ProcessDropdown from './ProcessDropdown'
 import './styles/recipecreate.css'
-
-
-import ElementCard from '../Element/ElementCard'
-import FormGroup from '../Inputs/FormGroup'
 import { RecipeSelect } from './RecipeSelect'
 import RecipeIngredient from './RecipeIngredient'
 
@@ -34,21 +28,10 @@ class RecipeCreate extends React.Component {
 		this.handleInstructionsChange = this.handleInstructionsChange.bind(this)
   }
   
-  // const { processes } = this.props
-// return (
-// 	<ElementCard className="recipe create-recipe">
-// 		<FormGroup label="Select a stage">
-// 			<div className="recipe-stage-select">
-// 				<RecipeSelect style={{ flex: 1 }} data={processes} />
-// 			</div>
-// 		</FormGroup>
-// 		<TextArea rows={4} />
-// 		<RecipeIngredient processes={processes}  products={processes} />
-// 	</ElementCard>
-  
   render() {
     const { isAddingRecipe } = this.state
 		const { TextArea } = Input
+		const { processes } = this.props
 	
 		return (
       <div className='recipe-create'>
@@ -56,11 +39,14 @@ class RecipeCreate extends React.Component {
         
         {isAddingRecipe && <ElementCard className='recipe create-recipe'>
           <AntDesignFormGroup className='process' label='Select a stage'>
-						<ProcessDropdown processes={this.props.processes} onChange={this.handleProcessChange}/>
+						<RecipeSelect style={{ flex: 1 }} data={processes} onChange={this.handleProcessChange}/>
           </AntDesignFormGroup>
           <AntDesignFormGroup className='instructions' label='Recipe instructions'>
             <TextArea rows={4} onChange={this.handleInstructionsChange}/>
           </AntDesignFormGroup>
+	
+					<RecipeIngredient processes={processes}  products={processes} />
+					
 					<Button onClick={this.handleSubmit}>Save this recipe</Button>
         </ElementCard>}
       </div>
