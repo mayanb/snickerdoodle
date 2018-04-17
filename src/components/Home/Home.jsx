@@ -39,7 +39,7 @@ class Home extends React.Component {
 	}
 
 	render() {
-		if (!isDandelion(this.props.team) && this.props.team.toLowerCase() !== 'endorfin') {
+		if (this.showChecklist(this.props.team)) {
 			return <Checklist />
 		}
 
@@ -54,6 +54,11 @@ class Home extends React.Component {
 				</div>		
 			</div>
 		)
+	}
+
+	showChecklist(team) {
+		team = team.toLowerCase()
+		return !isDandelion(team) && team !== 'endorfin' && team !== 'indichocolate' && team !== 'teammindo'
 	}
 }
 
