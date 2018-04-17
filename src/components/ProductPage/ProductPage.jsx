@@ -34,7 +34,7 @@ class ProductPage extends React.Component {
 				<ElementContent>
 					<ProductInformation product={data} />
 					<div className="product-page-recipe-list">
-						<RecipeList />
+						<RecipeList product={data} />
 					</div>
 				</ElementContent>
 			</div>

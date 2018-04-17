@@ -9,6 +9,19 @@
 		text-align: left;
 	}
 	
+	.process-attributes-header {
+		display: flex;
+		
+		& > span {
+			flex: 1;
+		}
+		
+		& > button {
+			flex: 0;
+			white-space: nowrap;
+		}
+	}
+	
 	img, i {
 		height: 16px;
 		margin-right: 4px;

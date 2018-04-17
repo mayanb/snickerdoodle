@@ -1,0 +1,17 @@
+@import '../../../styles/constants.css';
+
+.recipe-create {
+	.header {
+		display: flex;
+		
+		& > span {
+			flex: 1;
+		}
+		
+		& > button {
+			flex: 1;
+			white-space: nowrap;
+			
+		}
+	}
+}

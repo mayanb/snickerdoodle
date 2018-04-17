@@ -1,33 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button } from 'antd'
 import CollapsedRecipe from './CollapsedRecipe'
 import Sortable from '../Sortable/Container'
-import * as actions from '../Processes/ProcessesActions'
+import * as processActions from '../Processes/ProcessesActions'
+import * as recipeActions from './RecipeActions'
 import RecipeCreate from './RecipeCreate'
-
-import { data } from './mockdata'
-import './styles/product-recipe-list.css'
+import './styles/recipelist.css'
 
 class RecipeList extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			data: data,
-		}
-	}
-
 	componentDidMount() {
-    this.props.dispatch(actions.fetchProcesses())
+    this.props.dispatch(processActions.fetchProcesses())
+		this.props.dispatch(recipeActions.fetchRecipes({ product_type: this.props.product.id }))
   }
 	
 	render() {
-		const { recipes } = this.state.data
+		const { recipes, product } = this.props
 		
 		return (
 			<div className="product-recipe-list">
-				<ProcessAttributesHeader />
-				<RecipeCreate />
+				<RecipeCreate product={product}/>
+				<div className="product-recipe-list-header">
+					<span>Stage</span>
+					<span>Ingredients</span>
+					<span>Recipe Yield</span>
+				</div>
 				<Sortable
 					cards={recipes}
 					canEdit={false}
@@ -38,22 +34,10 @@ class RecipeList extends React.Component {
 	}
 }
 
-function ProcessAttributesHeader({onAdd, onCancel, isAdding}) {
-	let button = isAdding 
-		? <Button onClick={onCancel}>Cancel</Button>
-		: <Button type="primary" onClick={onAdd}>Add a field</Button>
-
-	return (
-		<div className="process-attributes-header">
-			<span>Log fields</span>
-			{button}
-		</div>
-	)
-}
-
-const mapStateToProps = (state /*, props */) => {
+const mapStateToProps = (state) => {
   return {
-    processes: state.processes.data
+    processes: state.processes.data,
+		recipes: state.recipes.data,
   }
 }
 
