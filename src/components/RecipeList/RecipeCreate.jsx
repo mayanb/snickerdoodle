@@ -95,11 +95,9 @@ class RecipeCreate extends React.Component {
 			$splice: [[index, 1]]
 		})
 		this.setState({ ingredients: ns })
-		console.log(ns)
 	}
 
 	handleChangeIngredient(index, key, value) {
-		console.log(value)
 		const ns = update(this.state.ingredients, {
 			[index]: {
 				$merge: { [key]: value }
