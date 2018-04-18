@@ -138,7 +138,7 @@ class RecipeCreate extends React.Component {
 }
 
 function validateData(data) {
-	if (!data.selectedProcessID || !data.instructions) {
+	if (!data.selectedProcessID) {
 		return false
 	}
 

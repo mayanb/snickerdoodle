@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import CollapsedRecipe from './CollapsedRecipe'
+import Recipe from './Recipe'
 import * as processActions from '../Processes/ProcessesActions'
 import * as productActions from '../Products/ProductsActions'
 import * as recipeActions from './RecipeActions'
@@ -11,6 +11,7 @@ import {Slide} from '../Animations/Animations'
 import RecipeCreateHeader from './RecipeCreateHeader'
 
 const COMPONENT_PREFIX = 'product-recipe-list_'
+const DESELECT = -1
 const { confirm } = Modal
 
 class RecipeList extends React.Component {
@@ -28,6 +29,7 @@ class RecipeList extends React.Component {
 		this.props.dispatch(processActions.fetchProcesses())
 		this.props.dispatch(productActions.fetchProducts())
 		this.props.dispatch(recipeActions.fetchRecipes({ product_type: this.props.product.id }))
+		this.props.dispatch(recipeActions.selectRecipe(DESELECT))
 	}
 	
 	render() {
@@ -43,7 +45,7 @@ class RecipeList extends React.Component {
 				{
 					recipes.map((e, i) => {
 						return (
-							<CollapsedRecipe 
+							<Recipe 
 								recipe={e} 
 								key={COMPONENT_PREFIX + i} 
 								index={i}
@@ -65,10 +67,13 @@ class RecipeList extends React.Component {
 		this.setState({ 
 			isAddingRecipe: !this.state.isAddingRecipe, 
 		})
+		this.props.dispatch(recipeActions.selectRecipe(DESELECT))
 	}
 
 	handleSelectRecipe(recipe) {
-		this.props.dispatch(recipeActions.selectRecipe(recipe.id))
+		let { dispatch, ui } = this.props
+		let toSelect = ui.selectedItem === recipe.id ? DESELECT : recipe.id
+		dispatch(recipeActions.selectRecipe(toSelect))
 	}
 
 	handleDeleteRecipe(recipe, index) {
