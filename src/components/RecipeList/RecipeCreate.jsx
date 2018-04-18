@@ -79,6 +79,7 @@ class RecipeCreate extends React.Component {
 		}
 		if (!validateData(this.state)) {
 			this.setState({ hasError: true })
+			console.log("validation failed")
 			return
 		}
 		// otherwise, submit and close the box

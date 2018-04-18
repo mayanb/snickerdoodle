@@ -5,7 +5,7 @@ import './styles/recipeingredient.css'
 
 export default function Ingredient(props) {
 	let { index, ingredient, processes, products, onRemove, onChange, shouldHighlightEmpty } = props
-	let process_obj = processes.find(e => e.id === ingredient.process)
+	let process_obj = processes.find(e => e.id === ingredient.process_type)
 	let unit = process_obj ? process_obj.unit : "unit"
 	return (
 			<div className="recipe-ingredient">
@@ -13,14 +13,14 @@ export default function Ingredient(props) {
 					<RecipeSelect 
 						value={ingredient.process_type}
 						onSelect={(v) => onChange(index, 'process_type', v)}
-						style={{width: '50%', border: (shouldHighlightEmpty && !ingredient.process) && '1px solid red'}}
+						style={{width: '50%', border: (shouldHighlightEmpty && !ingredient.process_type) && '1px solid red'}}
 						data={processes || []}
 					/>
 					<RecipeSelect 
 						placeholder="select a product"
 						value={ingredient.product_type}
 						onSelect={(v) => onChange(index, 'product_type', v)}
-						style={{width: '50%', border: (shouldHighlightEmpty && !ingredient.product) && '1px solid red'}}
+						style={{width: '50%', border: (shouldHighlightEmpty && !ingredient.product_type) && '1px solid red'}}
 						data={products || []}
 					/>
 				</Input.Group>
