@@ -10,6 +10,7 @@ import './styles/recipecreate.css'
 import { RecipeSelect } from './RecipeSelect'
 import IngredientList from './IngredientList'
 
+const COMPONENT_PREFIX = 'recipe-create-'
 const { TextArea } = Input
 
 class RecipeCreate extends React.Component {
@@ -38,7 +39,7 @@ class RecipeCreate extends React.Component {
         <FormGroup className='process' label='Select a stage'>
 					<RecipeSelect 
 						style={{ width: "100%", flex: 1 }} 
-						disabled={this.getDisabledProcesses()} 
+						disabledOptions={this.getDisabledProcesses()} 
 						data={processes} 
 						onChange={this.handleProcessChange}
 					/>
@@ -46,18 +47,26 @@ class RecipeCreate extends React.Component {
         <FormGroup className='instructions' label='Recipe instructions'>
           <TextArea rows={2} placeholder="(optional)" onChange={this.handleInstructionsChange}/>
         </FormGroup>
-        { selectedProcessID !== undefined && <IngredientList 
+        { selectedProcessID !== undefined && [<IngredientList 
 						products={products} 
 						processes={processes} 
 						ingredients={this.state.ingredients}
-						onAdd={this.handleAddIngredient}
 						onChange={this.handleChangeIngredient}
 						onRemove={this.handleRemoveIngredient}
 						shouldHighlightEmpty={this.state.hasError}
 						selectedProcess={processes.find(e => e.id === selectedProcessID)}
 						selectedProduct={product}
-					/>
-				}
+						key={COMPONENT_PREFIX + '1'}
+					/>,
+					<div className="add-ingredient-button-container" key={COMPONENT_PREFIX + '2'}>
+						<Button type="dashed" onClick={this.handleAddIngredient}>
+							<div className="add-ingredient-button">
+								<i className="material-icons">add</i>
+								<span>Add an ingredient</span>
+							</div>
+						</Button>
+					</div>
+				]}
 				<Button isLoading={ui.isCreatingItem} onClick={this.handleSubmit}>Save this recipe</Button>
     	</ElementCard>
     )

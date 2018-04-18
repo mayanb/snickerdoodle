@@ -4,7 +4,7 @@ import { Select } from 'antd'
 
 const Option = Select.Option
 
-export function RecipeSelect({ data, disabled = {}, ...rest }) {
+export function RecipeSelect({ data, disabledOptions = {}, ...rest }) {
   return (
     <Select
       showSearch
@@ -14,7 +14,7 @@ export function RecipeSelect({ data, disabled = {}, ...rest }) {
       {...rest}
     >
     {data.map(e => {
-      return <Option disabled={disabled[e.id]} key={e.id} value={e.id} data={e}>{e.code} - {e.name}</Option>
+      return <Option disabled={disabledOptions[e.id]} key={e.id} value={e.id} data={e}>{e.code} - {e.name}</Option>
     })}
     </Select>
   )

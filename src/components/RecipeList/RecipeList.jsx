@@ -50,6 +50,8 @@ class RecipeList extends React.Component {
 								isSelected={ ui.selectedItem === e.id }
 								onDelete={this.showConfirmDelete}
 								onSelect={this.handleSelectRecipe}
+								processes={this.props.processes}
+								products={this.props.products}
 							/>
 						)
 					})
@@ -88,6 +90,7 @@ class RecipeList extends React.Component {
 const mapStateToProps = (state) => {
   return {
     processes: state.processes.data,
+    products: state.products.data,
 		recipes: state.recipes.data,
 		ui: state.recipes.ui,
   }

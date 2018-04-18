@@ -8,6 +8,16 @@
 		flex: 1;
 		text-align: left;
 	}
+
+	.list-item-recipe-yield {
+		color: $gray-light;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-height: 20px;
+		flex: 2;
+		width:284px;
+		white-space:nowrap;
+	}
 	
 	.process-attributes-header {
 		display: flex;

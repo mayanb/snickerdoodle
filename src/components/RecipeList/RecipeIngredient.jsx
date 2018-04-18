@@ -15,6 +15,7 @@ export default function Ingredient(props) {
 						onSelect={(v) => onChange(index, 'process_type', v)}
 						style={{width: '50%', border: (shouldHighlightEmpty && !ingredient.process_type) && '1px solid red'}}
 						data={processes || []}
+						disabled={props.disabled}
 					/>
 					<RecipeSelect 
 						placeholder="select a product"
@@ -22,6 +23,7 @@ export default function Ingredient(props) {
 						onSelect={(v) => onChange(index, 'product_type', v)}
 						style={{width: '50%', border: (shouldHighlightEmpty && !ingredient.product_type) && '1px solid red'}}
 						data={products || []}
+						disabled={props.disabled}
 					/>
 				</Input.Group>
 				<Input 
@@ -30,8 +32,9 @@ export default function Ingredient(props) {
 					defaultValue="0"
 					value={ingredient.amount}
 					onChange={e => onChange(index, 'amount', e.target.value)}
+					disabled={props.disabled}
 				/>
-				<i className="material-icons" onClick={() => onRemove(index)}>close</i>
+				{ !props.disabled && <i className="material-icons" onClick={() => onRemove(index)}>close</i> }
 			</div>
 	)
 }

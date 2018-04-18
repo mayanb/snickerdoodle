@@ -1,15 +1,13 @@
 import React from 'react'
 import Ingredient from './RecipeIngredient'
-import Button from '../Button/Button'
 
 const COMPONENT_PREFIX = 'ril-'
 
 export default function IngredientList(props) {
-	const { products, processes, selectedProcess, ingredients, onChange, onRemove, onAdd, shouldHighlightEmpty } = props
-	let { unit, default_amount: amount, code: processCode } = selectedProcess
+	const { products, processes, selectedProcess, selectedProduct, ingredients, onChange, onRemove, shouldHighlightEmpty } = props
 	return (
 		<div className="ingredient-list">
-			<span style={{marginBottom: '8px', display: 'block'}}>What goes into a <span style={{fontWeight: 700}}>{amount} {unit} batch of {processCode}?</span></span>
+		{(selectedProcess && selectedProduct) && <Title selectedProduct={selectedProduct} selectedProcess={selectedProcess} />}
 			{
 				ingredients.map((e, i) => {
 					return <Ingredient 
@@ -21,15 +19,20 @@ export default function IngredientList(props) {
 						onChange={onChange}
 						onRemove={onRemove}
 						shouldHighlightEmpty={shouldHighlightEmpty}
+						disabled={props.disabled}
 					/>
 				})
 			}
-			<Button type="dashed" onClick={onAdd}>
-				<div className="add-ingredient-button">
-					<i className="material-icons">add</i>
-					<span>Add an ingredient</span>
-				</div>
-			</Button>
 		</div>
+	)
+}
+
+function Title({ selectedProcess, selectedProduct }) {
+	let { unit, default_amount: amount, code: processCode } = selectedProcess
+	return (
+		<span style={{marginBottom: '8px', display: 'block'}}>
+			What goes into a&nbsp;
+			<span style={{fontWeight: 700}}>{amount} {unit} batch of {processCode}?</span>
+		</span>
 	)
 }
