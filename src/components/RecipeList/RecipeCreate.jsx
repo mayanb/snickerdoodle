@@ -32,11 +32,15 @@ class RecipeCreate extends React.Component {
   
   render() {
 		const { processes, products, ui, onToggle } = this.props
-		const processes_disabled = this.createCopyOfProcessesWithDisabled()
 		return (
     	<ElementCard selected className='recipe create-recipe' onDelete={onToggle}>
         <FormGroup className='process' label='Select a stage'>
-					<RecipeSelect style={{ width: "100%", flex: 1 }} data={processes_disabled} onChange={this.handleProcessChange}/>
+					<RecipeSelect 
+						style={{ width: "100%", flex: 1 }} 
+						disabled={this.getDisabledProcesses()} 
+						data={processes} 
+						onChange={this.handleProcessChange}
+					/>
         </FormGroup>
         <FormGroup className='instructions' label='Recipe instructions'>
           <TextArea rows={2} placeholder="(optional)" onChange={this.handleInstructionsChange}/>
@@ -55,16 +59,16 @@ class RecipeCreate extends React.Component {
     )
   }
 
-  createCopyOfProcessesWithDisabled() {
+  getDisabledProcesses() {
   	const { processes, recipes } = this.props
-  	let processes_disabled = []
+  	let disabledProcesses = {}
 		processes.forEach(e => {
-			let j = {...e}
-			processes_disabled.push(j)
 			let recipe = recipes.find(r => r.process_type.id === e.id)
-			if (recipe) j.disabled = true
+			if (recipe) {
+				disabledProcesses[e.id] = true
+			}
 		})
-		return processes_disabled
+		return disabledProcesses
   }
   
   handleSubmit() {
@@ -123,7 +127,7 @@ function validateData(data) {
 	if (!data.selectedProcessID || !data.instructions) {
 		return false
 	}
-	
+
 	let isValid = true
 	data.ingredients.forEach((ingredient, i) => {
 		if (!ingredient.process_type || !ingredient.product_type) {
