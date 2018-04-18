@@ -123,9 +123,13 @@ function validateData(data) {
 	if (!data.selectedProcessID || !data.instructions) {
 		return false
 	}
+	
 	let isValid = true
 	data.ingredients.forEach((ingredient, i) => {
 		if (!ingredient.process_type || !ingredient.product_type) {
+			isValid = false
+		}
+		if(!parseFloat(ingredient.amount)) {
 			isValid = false
 		}
 	})
