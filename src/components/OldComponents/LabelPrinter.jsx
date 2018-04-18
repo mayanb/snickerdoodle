@@ -1,5 +1,4 @@
 import React from 'react'
-import $ from 'jquery'
 import Select from 'react-select'
 import {mountQR, printQRs_dymo} from './qr.jsx'
 import {Label} from './Label.jsx'
@@ -97,6 +96,11 @@ export default class LabelPrinter extends React.Component {
       return
     }
 
+    if(!this.state.task.data.items || this.state.task.data.items.length < 1) {
+      alert("Cannot print labels for this task because it has no associated qr code.")
+      return
+    }
+
     if (this.state.expanded && 
       (this.state.selectedItem === "" || this.state.selectedItem.data === undefined || this.state.selectedItem.data.id === undefined)) {
         alert("Please choose a valid specific item to reprint.")
@@ -112,16 +116,11 @@ export default class LabelPrinter extends React.Component {
     }
 
     let thisObj = this
-    $.ajax({
-      url: api.host + "/qr/codes/",
-      data: {count : numLabels},
-    })
-    .done(function (data) {
-      printQRs_dymo(data.split(/\s+/), thisObj.state.qrcode)
-    })
-    .always(function () {
-      thisObj.setState({disabled: false})
-    })
+    let data = Array(numLabels).fill(this.state.task.data.items[0].item_qr)
+    printQRs_dymo(data, thisObj.state.qrcode)
+    thisObj.setState({disabled: false})
+    return
+
   }
 
   handleChange(which, payload) {
