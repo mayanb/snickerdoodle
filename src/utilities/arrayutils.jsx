@@ -48,6 +48,21 @@ export function alphabetize(a, b) {
   return 0
 }
 
+export function alphabetizeRecipesByStage(a, b) {
+	if (a === b || a===null || b===null)
+		return 0
+	
+	let aName = a.process_type.name.toUpperCase()
+	let bName = b.process_type.name.toUpperCase()
+	
+	if (aName < bName)
+		return -1
+	if (aName > bName)
+		return 1
+	
+	return 0
+}
+
 export function sortByAccountType(a, b) {
 	if (a === b || !a || !b) {
 		return 0

@@ -1,5 +1,6 @@
 export const MOVEMENTS = 'MOVEMENTS'
 export const PRODUCTS = 'PRODUCTS'
+export const RECIPES = 'RECIPES'
 export const PROCESSES = 'PROCESSES'
 export const INVENTORIES = 'INVENTORIES'
 export const PROCESS_INVENTORY = 'PROCESS_INVENTORY'

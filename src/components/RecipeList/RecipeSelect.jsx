@@ -10,14 +10,11 @@ export function RecipeSelect({ data, ...rest }) {
       showSearch
       placeholder="Select a process"
       optionFilterProp="data"
-      // onChange={this.handleChange}
-      // onFocus={this.handleFocus}
-      // onBlur={this.handleBlur}
       filterOption={filterOption}
       {...rest}
     >
     {data.map(e => {
-      return <Option value={e.id} data={e}>{e.code} - {e.name}</Option>
+      return <Option disabled={e.disabled} key={e.id} value={e.id} data={e}>{e.code} - {e.name}</Option>
     })}
     </Select>
   )
