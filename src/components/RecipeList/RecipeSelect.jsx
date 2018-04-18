@@ -21,5 +21,7 @@ export function RecipeSelect({ data, disabledOptions = {}, ...rest }) {
 }
 
 function filterOption(input, option) {
-  return option.props.data.name.toLowerCase().indexOf(input.toLowerCase()) >= 0
+  let searchStr = option.props.data.search + " " + option.props.data.name + " " + option.props.data.code
+  searchStr = searchStr.toLowerCase()
+  return searchStr.indexOf(input.toLowerCase()) >= 0
 }
