@@ -31,14 +31,8 @@ class RecipeCreate extends React.Component {
   }
   
   render() {
-		const { processes, products, recipes, ui, onToggle } = this.props
-
-		let processes_disabled = update(processes, {})
-		processes_disabled.forEach(e => {
-			let recipe = recipes.find(r => r.process_type.id === e.id)
-			if (recipe) e.disabled = true
-		})
-	
+		const { processes, products, ui, onToggle } = this.props
+		const processes_disabled = this.createCopyOfProcessesWithDisabled()
 		return (
     	<ElementCard selected className='recipe create-recipe' onDelete={onToggle}>
         <FormGroup className='process' label='Select a stage'>
@@ -59,6 +53,18 @@ class RecipeCreate extends React.Component {
 				<Button isLoading={ui.isCreatingItem} onClick={this.handleSubmit}>Save this recipe</Button>
     	</ElementCard>
     )
+  }
+
+  createCopyOfProcessesWithDisabled() {
+  	const { processes, recipes } = this.props
+  	let processes_disabled = []
+		processes.forEach(e => {
+			let j = {...e}
+			processes_disabled.push(j)
+			let recipe = recipes.find(r => r.process_type.id === e.id)
+			if (recipe) j.disabled = true
+		})
+		return processes_disabled
   }
   
   handleSubmit() {
