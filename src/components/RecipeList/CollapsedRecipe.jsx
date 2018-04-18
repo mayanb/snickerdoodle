@@ -1,6 +1,6 @@
 import React from 'react'
 import pluralize from 'pluralize'
-import { Alert } from 'antd'
+import { Alert, Input } from 'antd'
 import ElementCard from '../Element/ElementCard'
 import './styles/recipe.css'
 import {icon} from '../TaskPage/TaskHelpers.jsx'
@@ -8,6 +8,8 @@ import Img from '../Img/Img'
 import IngredientList from './IngredientList'
 import { Slide } from '../Animations/Animations'
 import FormGroup from '../Inputs/FormGroup'
+
+const { TextArea } = Input
 
 const COMPONENT_PREFIX = 'recipe-list-item-'
 
@@ -37,13 +39,13 @@ function RecipeField({children, className}) {
 
 function ExpandedRecipeContent({recipe, processes = [], products = []}) {
 	let ingredientsMap = recipe.ingredients.map(e => {
-		return { process_type: e.process_type.id, product_type: e.product_type.id, amount: e.amount }
+		return { process_type: e.process_type.id, product_type: e.product_type.id, amount: parseFloat(e.amount) }
 	})
 
 	return (
 		<div>
 			<FormGroup className='instructions' label='Recipe instructions'>
-        <span>{recipe.instructions}</span>
+        <TextArea rows={2} disabled>{recipe.instructions}</TextArea>
       </FormGroup>
 			<IngredientList
 				products={products} 
