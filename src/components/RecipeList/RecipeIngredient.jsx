@@ -20,7 +20,7 @@ export default function Ingredient(props) {
 						placeholder="select a product"
 						value={ingredient.product}
 						onSelect={(v) => onChange(index, 'product', v)}
-						style={{width: "50%"}}
+						style={{width: '50%', border: (shouldHighlightEmpty && !ingredient.product) && '1px solid red'}}
 						data={products || []}
 					/>
 				</Input.Group>
