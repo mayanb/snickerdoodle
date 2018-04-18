@@ -10,6 +10,8 @@ import './styles/processattributelist.css'
 import ProcessAttributeDeleteDialog from './ProcessAttributeDeleteDialog'
 import {Slide} from '../Animations/Animations'
 
+const COMPONENT_PREFIX = 'process_attribute_list_'
+
 class ProcessAttributeList extends React.Component {
 	constructor(props) {
 		super(props)
@@ -59,6 +61,7 @@ class ProcessAttributeList extends React.Component {
 					ui.isAddingAttribute && <ProcessAttributeNew 
 						onSubmit={this.saveAttribute}
 						isLoading={ui.isSavingAttribute}
+						key={COMPONENT_PREFIX + 'create'}
 					/> 
 				}
 				</Slide>

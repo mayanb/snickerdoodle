@@ -6,7 +6,6 @@ import Button from '../Button/Button'
 import ElementCard from '../Element/ElementCard'
 import FormGroup from '../Inputs/FormGroup'
 import { postCreateRecipe } from './RecipeActions'
-import RecipeCreateHeader from './RecipeCreateHeader'
 import './styles/recipecreate.css'
 import { RecipeSelect } from './RecipeSelect'
 import IngredientList from './IngredientList'
@@ -27,39 +26,31 @@ class RecipeCreate extends React.Component {
 		this.handleChangeIngredient = this.handleChangeIngredient.bind(this)
 		this.handleRemoveIngredient = this.handleRemoveIngredient.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleToggle = this.handleToggle.bind(this)
 		this.handleProcessChange = this.handleProcessChange.bind(this)
 		this.handleInstructionsChange = this.handleInstructionsChange.bind(this)
   }
   
   render() {
-    const { isAddingRecipe } = this.state
-		const { processes, products } = this.props
+		const { processes, products, onToggle } = this.props
 	
 		return (
-      <div className='recipe-create'>
-				<RecipeCreateHeader onSubmit={this.handleSubmit} onToggle={this.handleToggle} isAddingRecipe={isAddingRecipe} />
-        
-        {isAddingRecipe && (
-        	<ElementCard selected className='recipe create-recipe' onDelete={this.handleToggle}>
-	          <FormGroup className='process' label='Select a stage'>
-							<RecipeSelect style={{ width: "100%", flex: 1 }} data={processes} onChange={this.handleProcessChange}/>
-	          </FormGroup>
-	          <FormGroup className='instructions' label='Recipe instructions'>
-	            <TextArea rows={2} placeholder="(optional)" onChange={this.handleInstructionsChange}/>
-	          </FormGroup>
-						<IngredientList 
-							products={products} 
-							processes={processes} 
-							ingredients={this.state.ingredients}
-							onAdd={this.handleAddIngredient}
-							onChange={this.handleChangeIngredient}
-							onRemove={this.handleRemoveIngredient}
-						/>
-						<Button onClick={this.handleSubmit}>Save this recipe</Button>
-        	</ElementCard>
-        )}
-      </div>
+    	<ElementCard selected className='recipe create-recipe' onDelete={onToggle}>
+        <FormGroup className='process' label='Select a stage'>
+					<RecipeSelect style={{ width: "100%", flex: 1 }} data={processes} onChange={this.handleProcessChange}/>
+        </FormGroup>
+        <FormGroup className='instructions' label='Recipe instructions'>
+          <TextArea rows={2} placeholder="(optional)" onChange={this.handleInstructionsChange}/>
+        </FormGroup>
+				<IngredientList 
+					products={products} 
+					processes={processes} 
+					ingredients={this.state.ingredients}
+					onAdd={this.handleAddIngredient}
+					onChange={this.handleChangeIngredient}
+					onRemove={this.handleRemoveIngredient}
+				/>
+				<Button onClick={this.handleSubmit}>Save this recipe</Button>
+    	</ElementCard>
     )
   }
   
@@ -76,17 +67,8 @@ class RecipeCreate extends React.Component {
     }
     this.props.dispatch(postCreateRecipe(newRecipe))
 			.then(res => {
-				this.setState({ isAddingRecipe: false })
+				this.props.onToggle()
 			})
-  }
-
-  handleToggle() {
-  	this.setState({ 
-  		isAddingRecipe: !this.state.isAddingRecipe, 
-  		selectedProcessID: null, 
-  		instructions: '',
-  		ingredients: [],
-  	})
   }
 	
 	handleProcessChange(processID) {

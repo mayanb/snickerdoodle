@@ -7,13 +7,20 @@ import * as recipeActions from './RecipeActions'
 import RecipeCreate from './RecipeCreate'
 import './styles/recipelist.css'
 import { Modal } from 'antd'
+import {Slide} from '../Animations/Animations'
+import RecipeCreateHeader from './RecipeCreateHeader'
 
+const COMPONENT_PREFIX = 'product-recipe-list_'
 const { confirm } = Modal
 
 class RecipeList extends React.Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			isAddingRecipe: false,
+		}
 		this.showConfirmDelete = this.showConfirmDelete.bind(this)
+		this.handleToggleCreate = this.handleToggleCreate.bind(this)
 	}
 
 	componentDidMount() {
@@ -27,15 +34,24 @@ class RecipeList extends React.Component {
 		
 		return (
 			<div className="product-recipe-list">
-				<RecipeCreate product={product}/>
+			<RecipeCreateHeader onToggle={this.handleToggleCreate} isAddingRecipe={this.state.isAddingRecipe} />
+			<Slide>
+				{this.state.isAddingRecipe && <RecipeCreate key={COMPONENT_PREFIX + "create"} product={product} onToggle={this.handleToggleCreate}/>}
 				{
 					recipes.map((e, i) => {
-						return <CollapsedRecipe recipe={e} key={i} index={i} onDelete={this.showConfirmDelete}/>
+						return <CollapsedRecipe recipe={e} key={COMPONENT_PREFIX + i} index={i} onDelete={this.showConfirmDelete}/>
 					})
 				}
+				</Slide>
 			</div>
 		)
 	}
+
+	handleToggleCreate() {
+  	this.setState({ 
+  		isAddingRecipe: !this.state.isAddingRecipe, 
+  	})
+  }
 
 	handleDeleteRecipe(recipe, index) {
 		this.props.dispatch(recipeActions.postDeleteRecipe(recipe, index))

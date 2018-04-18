@@ -1,20 +1,21 @@
-@import '../../../styles/constants.css';
+@import '../../../styles/constants.css'
+
+.recipe-create-header {
+	display: flex;
+	
+	& > span {
+		flex: 1;
+	}
+	
+	& > button {
+		flex: 0;
+		white-space: nowrap;
+		margin-right: 32px;
+		
+	}
+}
 
 .recipe-create {
-	.recipe-create-header {
-		display: flex;
-		
-		& > span {
-			flex: 1;
-		}
-		
-		& > button {
-			flex: 0;
-			white-space: nowrap;
-			margin-right: 32px;
-			
-		}
-	}
 
 	.ingredient-list {
 		margin-bottom: 16px;
