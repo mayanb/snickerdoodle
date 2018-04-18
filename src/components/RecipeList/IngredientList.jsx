@@ -1,15 +1,15 @@
 import React from 'react'
-import FormLabel from '../Inputs/FormLabel'
 import Ingredient from './RecipeIngredient'
 import Button from '../Button/Button'
 
 const COMPONENT_PREFIX = 'ril-'
 
 export default function IngredientList(props) {
-	const { products, processes, ingredients, onChange, onRemove, onAdd, shouldHighlightEmpty } = props
+	const { products, processes, selectedProcess, ingredients, onChange, onRemove, onAdd, shouldHighlightEmpty } = props
+	let { unit, default_amount: amount, code: processCode } = selectedProcess
 	return (
 		<div className="ingredient-list">
-			<FormLabel>Ingredients</FormLabel>
+			<span style={{marginBottom: '8px', display: 'block'}}>What goes into a <span style={{fontWeight: 700}}>{amount} {unit} batch of {processCode}?</span></span>
 			{
 				ingredients.map((e, i) => {
 					return <Ingredient 

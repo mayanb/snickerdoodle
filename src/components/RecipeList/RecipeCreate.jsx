@@ -17,7 +17,7 @@ class RecipeCreate extends React.Component {
     super(props)
     this.state = {
       isAddingRecipe: false,
-      selectedProcessID: null,
+      selectedProcessID: undefined,
       instructions: '',
 			ingredients: [],
 		}
@@ -31,7 +31,8 @@ class RecipeCreate extends React.Component {
   }
   
   render() {
-		const { processes, products, ui, onToggle } = this.props
+		const { processes, products, ui, onToggle, product } = this.props
+		const { selectedProcessID } = this.state
 		return (
     	<ElementCard selected className='recipe create-recipe' onDelete={onToggle}>
         <FormGroup className='process' label='Select a stage'>
@@ -45,15 +46,18 @@ class RecipeCreate extends React.Component {
         <FormGroup className='instructions' label='Recipe instructions'>
           <TextArea rows={2} placeholder="(optional)" onChange={this.handleInstructionsChange}/>
         </FormGroup>
-				<IngredientList 
-					products={products} 
-					processes={processes} 
-					ingredients={this.state.ingredients}
-					onAdd={this.handleAddIngredient}
-					onChange={this.handleChangeIngredient}
-					onRemove={this.handleRemoveIngredient}
-					shouldHighlightEmpty={this.state.hasError}
-				/>
+        { selectedProcessID !== undefined && <IngredientList 
+						products={products} 
+						processes={processes} 
+						ingredients={this.state.ingredients}
+						onAdd={this.handleAddIngredient}
+						onChange={this.handleChangeIngredient}
+						onRemove={this.handleRemoveIngredient}
+						shouldHighlightEmpty={this.state.hasError}
+						selectedProcess={processes.find(e => e.id === selectedProcessID)}
+						selectedProduct={product}
+					/>
+				}
 				<Button isLoading={ui.isCreatingItem} onClick={this.handleSubmit}>Save this recipe</Button>
     	</ElementCard>
     )

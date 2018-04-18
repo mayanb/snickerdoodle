@@ -35,7 +35,7 @@ class RecipeList extends React.Component {
 		
 		return (
 			<div className="product-recipe-list">
-			<RecipeCreateHeader onToggle={this.handleToggleCreate} isAddingRecipe={this.state.isAddingRecipe} />
+			<RecipeCreateHeader onToggle={this.handleToggleCreate} isAddingRecipe={this.state.isAddingRecipe || ui.isCreatingItem} />
 			<Slide>
 				{(this.state.isAddingRecipe || ui.isCreatingItem) && 
 					<RecipeCreate key={COMPONENT_PREFIX + "create"} product={product} onToggle={this.handleToggleCreate}/>
