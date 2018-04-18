@@ -54,6 +54,7 @@ class RecipeCreate extends React.Component {
 					onAdd={this.handleAddIngredient}
 					onChange={this.handleChangeIngredient}
 					onRemove={this.handleRemoveIngredient}
+					shouldHighlightEmpty={this.state.hasError}
 				/>
 				<Button isLoading={ui.isCreatingItem} onClick={this.handleSubmit}>Save this recipe</Button>
     	</ElementCard>
@@ -62,39 +63,43 @@ class RecipeCreate extends React.Component {
   
   handleSubmit() {
   	const { selectedProcessID, instructions, ingredients } = this.state
-		const { isCreatingItem } = this.props.ui
-  	if (isCreatingItem || enteredDataIsInvalid(selectedProcessID, instructions)) {
+		const { ui, product } = this.props
+  	if (ui.isCreatingItem) {
   		return
 		}
-		this.props.onToggle()
+		if (!validateData(this.state)) {
+			this.setState({ hasError: true })
+		}
+		// otherwise, submit and close the box
     const newRecipe = {
-		  instructions: this.state.instructions,
-			product_type_id: this.props.product.id,
-			process_type_id: this.state.selectedProcessID,
+		  instructions: instructions,
+			product_type_id: product.id,
+			process_type_id: selectedProcessID,
     }
     this.props.dispatch(postCreateRecipe(newRecipe, ingredients))
+    this.props.onToggle()
   }
 	
 	handleProcessChange(processID) {
-		this.setState({ selectedProcessID: processID })
+		this.setState({ selectedProcessID: processID, hasError: false })
 	}
 	
 	handleInstructionsChange(e) {
-		this.setState({ instructions: e.target.value})
+		this.setState({ instructions: e.target.value, hasError: false })
 	}
 
 	handleAddIngredient() {
 		const ns = update(this.state.ingredients, {
-			$push: [{product_type: null, process_type: null, amount: 0}]
+			$push: [{product_type: undefined, process_type: undefined, amount: 0}]
 		})
-		this.setState({ ingredients: ns })
+		this.setState({ ingredients: ns, hasError: false })
 	}
 
 	handleRemoveIngredient(index) {
 		const ns = update(this.state.ingredients, {
 			$splice: [[index, 1]]
 		})
-		this.setState({ ingredients: ns })
+		this.setState({ ingredients: ns, hasError: false })
 	}
 
 	handleChangeIngredient(index, key, value) {
@@ -103,26 +108,21 @@ class RecipeCreate extends React.Component {
 				$merge: { [key]: value }
 			}
 		})
-		this.setState({ ingredients: ns })
+		this.setState({ ingredients: ns, hasError: false })
 	}
 }
 
-// function validateData(data) {
-// 	let errors = {}
-// 	errors.ingredients = []
-// 	if (!processID) {
-// 		errors.process_error = true
-// 	}
-
-// 	data.ingredients.forEach((e, i) => {
-// 		if (!e.process) {
-// 			errors.ingredients
-// 		}
-// 	})
-// }
-
-function enteredDataIsInvalid(processID, instructions) {
-	return !(processID && instructions)
+function validateData(data) {
+	if (!data.selectedProcessID || !data.instructions) {
+		return false
+	}
+	let isValid = true
+	data.ingredients.forEach((ingredient, i) => {
+		if (!ingredient.process_type || !ingredient.product_type) {
+			isValid = false
+		}
+	})
+	return isValid
 }
 
 const mapStateToProps = (state) => {

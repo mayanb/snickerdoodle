@@ -6,7 +6,7 @@ import Button from '../Button/Button'
 const COMPONENT_PREFIX = 'ril-'
 
 export default function IngredientList(props) {
-	const { products, processes, ingredients, onChange, onRemove, onAdd } = props
+	const { products, processes, ingredients, onChange, onRemove, onAdd, shouldHighlightEmpty } = props
 	return (
 		<div className="ingredient-list">
 			<FormLabel>Ingredients</FormLabel>
@@ -20,6 +20,7 @@ export default function IngredientList(props) {
 						ingredient={e}
 						onChange={onChange}
 						onRemove={onRemove}
+						shouldHighlightEmpty={shouldHighlightEmpty}
 					/>
 				})
 			}
