@@ -47,12 +47,12 @@
 		box-shadow: rgba($gray-ultra-light, 0.2) 0 0 10px 0;
 	}
 
-	div.process-attr-handle i, span {
+	div.process-attr-handle i, div.process-attr-handle span {
 		visibility: visible;
 		color: $gray-light;
 	}
 
-	div.process-attr-delete i, span {
+	div.process-attr-delete i, div.process-attr-delete span {
 		visibility: visible;
 	}
 }

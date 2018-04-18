@@ -102,7 +102,7 @@ class RecipeCreate extends React.Component {
 
 	handleAddIngredient() {
 		const ns = update(this.state.ingredients, {
-			$push: [{product_type: undefined, process_type: undefined, amount: 0}]
+			$push: [{product_type: undefined, process_type: undefined, amount: '0'}]
 		})
 		this.setState({ ingredients: ns, hasError: false })
 	}

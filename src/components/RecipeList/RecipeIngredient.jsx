@@ -25,7 +25,7 @@ export default function Ingredient(props) {
 					/>
 				</Input.Group>
 				<Input 
-					style={{flex: 1, marginLeft: "8px", visibility: process_obj?'visible':'hidden'}} 
+					style={{flex: 1, marginLeft: "8px", visibility: (process_obj?'visible':'hidden')}} 
 					addonAfter={unit} 
 					defaultValue="0"
 					value={ingredient.amount}
