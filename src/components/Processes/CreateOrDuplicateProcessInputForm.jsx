@@ -21,7 +21,7 @@ function NameAndAbbreviation({ onInputChange, name, code }) {
 			<FormGroup label="Name" className="name-group">
 				<Input
 					type="text"
-					placeholder="Roasting"
+					placeholder="Roast"
 					className="name"
 					value={name}
 					onChange={(e) => onInputChange(e, "name")}
@@ -30,7 +30,7 @@ function NameAndAbbreviation({ onInputChange, name, code }) {
 			<FormGroup label="Abbreviation" className="abbreviation-group">
 				<Input
 					type="text"
-					placeholder="ROAST"
+					placeholder="R"
 					className="abbreviation"
 					value={code}
 					onChange={(e) => onInputChange(e, "code")}
@@ -42,7 +42,7 @@ function NameAndAbbreviation({ onInputChange, name, code }) {
 
 function OutputQuantity({ onInputChange, number, unit }) {
 	return (
-		<FormGroup label="Expected output quantity">
+		<FormGroup label="Approximate batch size">
 			<div className="output-quantity">
 				<Input
 					type="number"
@@ -65,7 +65,7 @@ function OutputQuantity({ onInputChange, number, unit }) {
 
 function OutputDescription({ onInputChange, outputDescription }) {
 	return (
-		<FormGroup label="Output description">
+		<FormGroup label="Description">
 			<Input
 				type="text"
 				placeholder="Roasted Beans"
