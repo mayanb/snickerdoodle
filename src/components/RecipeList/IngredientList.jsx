@@ -28,11 +28,13 @@ export default function IngredientList(props) {
 }
 
 function Title({ selectedProcess, selectedProduct }) {
-	let { unit, default_amount: amount, code: processCode } = selectedProcess
+	let prod_name = selectedProduct.name
+	let { unit, default_amount: amount, name } = selectedProcess
+	// name should be in past tense (roast -> roasted, melanging -> melanged)
 	return (
 		<span style={{marginBottom: '8px', display: 'block'}}>
 			What goes into a&nbsp;
-			<span style={{fontWeight: 700}}>{amount} {unit} batch of {processCode}?</span>
+			<span style={{fontWeight: 700}}>{amount} {unit} batch of {name} {prod_name}?</span>
 		</span>
 	)
 }

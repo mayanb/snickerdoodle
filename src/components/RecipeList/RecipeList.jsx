@@ -25,10 +25,10 @@ class RecipeList extends React.Component {
 	}
 
 	componentDidMount() {
-    this.props.dispatch(processActions.fetchProcesses())
-    this.props.dispatch(productActions.fetchProducts())
+		this.props.dispatch(processActions.fetchProcesses())
+		this.props.dispatch(productActions.fetchProducts())
 		this.props.dispatch(recipeActions.fetchRecipes({ product_type: this.props.product.id }))
-  }
+	}
 	
 	render() {
 		const { recipes, product, ui } = this.props
@@ -62,14 +62,14 @@ class RecipeList extends React.Component {
 	}
 
 	handleToggleCreate() {
-  	this.setState({ 
-  		isAddingRecipe: !this.state.isAddingRecipe, 
-  	})
-  }
+		this.setState({ 
+			isAddingRecipe: !this.state.isAddingRecipe, 
+		})
+	}
 
-  handleSelectRecipe(recipe) {
-  	this.props.dispatch(recipeActions.selectRecipe(recipe.id))
-  }
+	handleSelectRecipe(recipe) {
+		this.props.dispatch(recipeActions.selectRecipe(recipe.id))
+	}
 
 	handleDeleteRecipe(recipe, index) {
 		this.props.dispatch(recipeActions.postDeleteRecipe(recipe, index))
@@ -77,13 +77,13 @@ class RecipeList extends React.Component {
 
 	showConfirmDelete(recipe, index) {
 		confirm({
-	    title: `Are you sure you want to delete the recipe for ${recipe.process_type.name} ${recipe.product_type.name} (${recipe.process_type.code}-${recipe.product_type.code})?`,
-	    content: '',
-	    okText: 'Yes, I\'m sure',
-	    okType: 'danger',
-	    onOk: () => this.handleDeleteRecipe(recipe, index),
-	    onCancel: () => {}
-  	})
+			title: `Are you sure you want to delete the recipe for ${recipe.process_type.name} ${recipe.product_type.name} (${recipe.process_type.code}-${recipe.product_type.code})?`,
+			content: '',
+			okText: 'Yes, I\'m sure',
+			okType: 'danger',
+			onOk: () => this.handleDeleteRecipe(recipe, index),
+			onCancel: () => {}
+		})
 	}
 }
 
