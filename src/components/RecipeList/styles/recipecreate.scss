@@ -1,7 +1,7 @@
 @import '../../../styles/constants.css';
 
 .recipe-create {
-	.header {
+	.recipe-create-header {
 		display: flex;
 		
 		& > span {
@@ -9,9 +9,23 @@
 		}
 		
 		& > button {
-			flex: 1;
+			flex: 0;
 			white-space: nowrap;
+			margin-right: 32px;
 			
+		}
+	}
+
+	.ingredient-list {
+		margin-bottom: 16px;
+	}
+
+	.add-ingredient-button {
+		display: flex;
+		i, span {
+			font-size: 14px;
+			line-height: 20px;
+			vertical-align: middle;
 		}
 	}
 }

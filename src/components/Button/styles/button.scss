@@ -29,6 +29,19 @@
 	color: white;
 }
 
+.button.button-dashed {
+	background-color: rgba(0,0,0,0);
+	color: $gray;
+	border: 1px dashed $gray-light;
+	span { color: $gray }
+	&:hover {
+		color: $primary;
+		border-color: $primary;
+		box-shadow: none;
+		span { color: $primary; }
+	}
+}
+
 .button.button-blue-outline {
 	background-color: white;
 	border: 1px solid $primary;

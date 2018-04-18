@@ -2,12 +2,13 @@
 
 .element-card-wrapper {
 	display: flex;
-	align-items: center;
+	//align-items: center;
 
 	.process-attr-handle, .process-attr-delete {
 		flex: 0;
 		display: flex;
-		align-items: center;
+		margin-top: 26px;
+		//align-items: center;
 		i {
 			vertical-align:middle;
 			font-size: 16px;
@@ -37,6 +38,7 @@
 
 	.process-attr-delete {
 		margin-left: 16px;
+		cursor: pointer;
 	}
 }
 
@@ -48,6 +50,10 @@
 	div.process-attr-handle i, span {
 		visibility: visible;
 		color: $gray-light;
+	}
+
+	div.process-attr-delete i, span {
+		visibility: visible;
 	}
 }
 

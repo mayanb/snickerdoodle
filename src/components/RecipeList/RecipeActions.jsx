@@ -57,7 +57,6 @@ export function pageRecipes(direction) {
     type: PAGE,
     direction: direction,
     name: RECIPES,
-
   }
 }
 
@@ -67,10 +66,15 @@ export function postCreateRecipe(json) {
     return api.post('/ics/recipes/')
       .send(json)
       .then((res) => {
-	      return dispatch(requestCreateRecipeSuccess(res.body))
+	      dispatch(requestCreateRecipeSuccess(res.body))
+        dispatch()
       })
       .catch((err) => dispatch(requestCreateRecipeFailure(err)))
   }
+}
+
+export function postAddIngredient(json) {
+
 }
 
 
@@ -99,20 +103,19 @@ function requestCreateRecipeSuccess(json) {
   }
 }
 
-export function postDeleteRecipe(p, index, callback) {
+export function postDeleteRecipe(recipe, index) {
   return function (dispatch) {
     dispatch(requestDeleteRecipe(index))
 
-    return api.put(`/ics/recipes/${p.id}/`)
+    return api.patch(`/ics/recipes/${recipe.id}/`)
       .send({ 
-          name: p.name,
-          code: p.code,
-          created_by: p.created_by,
-          team_created_by: p.team_created_by,
           is_trashed: true,
         })
 	    .then(() => dispatch(requestDeleteRecipeSuccess(index)))
-	    .catch(err => dispatch(requestDeleteRecipeFailure(index, err)))
+	    .catch(err => {
+        dispatch(requestDeleteRecipeFailure(index, err))
+        console.log(err)
+      })
   }
 }
 
