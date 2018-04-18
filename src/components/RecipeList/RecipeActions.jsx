@@ -62,7 +62,7 @@ export function pageRecipes(direction) {
 }
 
 export function postCreateRecipe(recipe, ingredients = []) {
-  return function (dispatch) {
+  return dispatch => {
     dispatch(requestCreateRecipe())
     return api.post('/ics/recipes/')
       .send(recipe)
@@ -70,8 +70,11 @@ export function postCreateRecipe(recipe, ingredients = []) {
         let id = res.body.id
         api.post('/ics/ingredients/bulk-create/')
           .type('form-data')
-          .send({ recipe: id, ingredients: JSON.stringify([{process_type: 8, product_type: 44, amount: 1}]) })
-          .then(res => dispatch(requestCreateRecipeSuccess(res.body)))
+          .send({ recipe: id, ingredients: JSON.stringify(ingredients) })
+          .then(res_ing => {
+            res.body.ingredients = res_ing.body
+            dispatch(requestCreateRecipeSuccess(res.body))
+          })
       })
       .catch((err) => dispatch(requestCreateRecipeFailure(err)))
   }

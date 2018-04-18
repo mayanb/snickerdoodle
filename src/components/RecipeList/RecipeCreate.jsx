@@ -31,14 +31,8 @@ class RecipeCreate extends React.Component {
   }
   
   render() {
-		const { processes, products, recipes, ui, onToggle } = this.props
-
-		let processes_disabled = update(processes, {})
-		processes_disabled.forEach(e => {
-			let recipe = recipes.find(r => r.process_type.id === e.id)
-			if (recipe) e.disabled = true
-		})
-	
+		const { processes, products, ui, onToggle } = this.props
+		const processes_disabled = this.createCopyOfProcessesWithDisabled()
 		return (
     	<ElementCard selected className='recipe create-recipe' onDelete={onToggle}>
         <FormGroup className='process' label='Select a stage'>
@@ -59,6 +53,18 @@ class RecipeCreate extends React.Component {
     	</ElementCard>
     )
   }
+
+  createCopyOfProcessesWithDisabled() {
+  	const { processes, recipes } = this.props
+  	let processes_disabled = []
+		processes.forEach(e => {
+			let j = {...e}
+			processes_disabled.push(j)
+			let recipe = recipes.find(r => r.process_type.id === e.id)
+			if (recipe) j.disabled = true
+		})
+		return processes_disabled
+  }
   
   handleSubmit() {
   	const { selectedProcessID, instructions, ingredients } = this.state
@@ -66,6 +72,7 @@ class RecipeCreate extends React.Component {
   	if (isCreatingItem || enteredDataIsInvalid(selectedProcessID, instructions)) {
   		return
 		}
+
 		this.props.onToggle()
     const newRecipe = {
 		  instructions: this.state.instructions,
@@ -85,7 +92,7 @@ class RecipeCreate extends React.Component {
 
 	handleAddIngredient() {
 		const ns = update(this.state.ingredients, {
-			$push: [{product_type: null, process_type: null, amount: 0}]
+			$push: [{product_type: undefined, process_type: undefined, amount: 0}]
 		})
 		this.setState({ ingredients: ns })
 	}
