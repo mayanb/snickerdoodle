@@ -10,6 +10,7 @@ import {
   REQUEST_DELETE_SUCCESS,
   REQUEST_DELETE_FAILURE,
   PAGE,
+  SELECT,
 } from '../../reducers/APIDataReducer'
 import { RECIPES } from '../../reducers/ReducerTypes'
 import {alphabetizeRecipesByStage} from '../../utilities/arrayutils.jsx'
@@ -60,21 +61,20 @@ export function pageRecipes(direction) {
   }
 }
 
-export function postCreateRecipe(json) {
+export function postCreateRecipe(recipe, ingredients = []) {
   return function (dispatch) {
     dispatch(requestCreateRecipe())
     return api.post('/ics/recipes/')
-      .send(json)
-      .then((res) => {
-	      dispatch(requestCreateRecipeSuccess(res.body))
-        dispatch()
+      .send(recipe)
+      .then(res => {
+        let id = res.body.id
+        api.post('/ics/ingredients/bulk-create/')
+          .type('form-data')
+          .send({ recipe: id, ingredients: JSON.stringify([{process_type: 8, product_type: 44, amount: 1}]) })
+          .then(res => dispatch(requestCreateRecipeSuccess(res.body)))
       })
       .catch((err) => dispatch(requestCreateRecipeFailure(err)))
   }
-}
-
-export function postAddIngredient(json) {
-
 }
 
 
@@ -142,5 +142,13 @@ function requestDeleteRecipeSuccess(field, value, index) {
     type: REQUEST_DELETE_SUCCESS,
     name: RECIPES,
     index: index,
+  }
+}
+
+export function selectRecipe(id) {
+  return {
+    type: SELECT,
+    index: id,
+    name: RECIPES,
   }
 }

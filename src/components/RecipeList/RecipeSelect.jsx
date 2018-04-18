@@ -14,7 +14,7 @@ export function RecipeSelect({ data, ...rest }) {
       {...rest}
     >
     {data.map(e => {
-      return <Option key={e.id} value={e.id} data={e}>{e.code} - {e.name}</Option>
+      return <Option disabled={e.disabled} key={e.id} value={e.id} data={e}>{e.code} - {e.name}</Option>
     })}
     </Select>
   )

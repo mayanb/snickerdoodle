@@ -31,12 +31,18 @@ class RecipeCreate extends React.Component {
   }
   
   render() {
-		const { processes, products, onToggle } = this.props
+		const { processes, products, recipes, ui, onToggle } = this.props
+
+		let processes_disabled = update(processes, {})
+		processes_disabled.forEach(e => {
+			let recipe = recipes.find(r => r.process_type.id === e.id)
+			if (recipe) e.disabled = true
+		})
 	
 		return (
     	<ElementCard selected className='recipe create-recipe' onDelete={onToggle}>
         <FormGroup className='process' label='Select a stage'>
-					<RecipeSelect style={{ width: "100%", flex: 1 }} data={processes} onChange={this.handleProcessChange}/>
+					<RecipeSelect style={{ width: "100%", flex: 1 }} data={processes_disabled} onChange={this.handleProcessChange}/>
         </FormGroup>
         <FormGroup className='instructions' label='Recipe instructions'>
           <TextArea rows={2} placeholder="(optional)" onChange={this.handleInstructionsChange}/>
@@ -49,26 +55,24 @@ class RecipeCreate extends React.Component {
 					onChange={this.handleChangeIngredient}
 					onRemove={this.handleRemoveIngredient}
 				/>
-				<Button onClick={this.handleSubmit}>Save this recipe</Button>
+				<Button isLoading={ui.isCreatingItem} onClick={this.handleSubmit}>Save this recipe</Button>
     	</ElementCard>
     )
   }
   
   handleSubmit() {
-  	const { selectedProcessID, instructions } = this.state
+  	const { selectedProcessID, instructions, ingredients } = this.state
 		const { isCreatingItem } = this.props.ui
   	if (isCreatingItem || enteredDataIsInvalid(selectedProcessID, instructions)) {
   		return
 		}
+		this.props.onToggle()
     const newRecipe = {
 		  instructions: this.state.instructions,
 			product_type_id: this.props.product.id,
 			process_type_id: this.state.selectedProcessID,
     }
-    this.props.dispatch(postCreateRecipe(newRecipe))
-			.then(res => {
-				this.props.onToggle()
-			})
+    this.props.dispatch(postCreateRecipe(newRecipe, ingredients))
   }
 	
 	handleProcessChange(processID) {
@@ -128,6 +132,7 @@ const mapStateToProps = (state) => {
     processes: state.processes.data,
 		ui: state.recipes.ui,
 		products: state.products.data,
+		recipes: state.recipes.data,
 	}
 }
 

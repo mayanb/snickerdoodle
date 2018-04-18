@@ -21,6 +21,7 @@ class RecipeList extends React.Component {
 		}
 		this.showConfirmDelete = this.showConfirmDelete.bind(this)
 		this.handleToggleCreate = this.handleToggleCreate.bind(this)
+		this.handleSelectRecipe = this.handleSelectRecipe.bind(this)
 	}
 
 	componentDidMount() {
@@ -30,16 +31,27 @@ class RecipeList extends React.Component {
   }
 	
 	render() {
-		const { recipes, product } = this.props
+		const { recipes, product, ui } = this.props
 		
 		return (
 			<div className="product-recipe-list">
 			<RecipeCreateHeader onToggle={this.handleToggleCreate} isAddingRecipe={this.state.isAddingRecipe} />
 			<Slide>
-				{this.state.isAddingRecipe && <RecipeCreate key={COMPONENT_PREFIX + "create"} product={product} onToggle={this.handleToggleCreate}/>}
+				{(this.state.isAddingRecipe || ui.isCreatingItem) && 
+					<RecipeCreate key={COMPONENT_PREFIX + "create"} product={product} onToggle={this.handleToggleCreate}/>
+				}
 				{
 					recipes.map((e, i) => {
-						return <CollapsedRecipe recipe={e} key={COMPONENT_PREFIX + i} index={i} onDelete={this.showConfirmDelete}/>
+						return (
+							<CollapsedRecipe 
+								recipe={e} 
+								key={COMPONENT_PREFIX + i} 
+								index={i}
+								isSelected={ ui.selectedItem === e.id }
+								onDelete={this.showConfirmDelete}
+								onSelect={this.handleSelectRecipe}
+							/>
+						)
 					})
 				}
 				</Slide>
@@ -51,6 +63,10 @@ class RecipeList extends React.Component {
   	this.setState({ 
   		isAddingRecipe: !this.state.isAddingRecipe, 
   	})
+  }
+
+  handleSelectRecipe(recipe) {
+  	this.props.dispatch(recipeActions.selectRecipe(recipe.id))
   }
 
 	handleDeleteRecipe(recipe, index) {
@@ -73,6 +89,7 @@ const mapStateToProps = (state) => {
   return {
     processes: state.processes.data,
 		recipes: state.recipes.data,
+		ui: state.recipes.ui,
   }
 }
 

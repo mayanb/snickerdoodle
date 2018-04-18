@@ -1,4 +1,4 @@
-@import '../../../styles/constants.css'
+@import '../../../styles/constants.css';
 
 .recipe-create-header {
 	display: flex;
@@ -15,11 +15,9 @@
 	}
 }
 
-.recipe-create {
 
-	.ingredient-list {
-		margin-bottom: 16px;
-	}
+.ingredient-list {
+	margin-bottom: 16px;
 
 	.add-ingredient-button {
 		display: flex;
