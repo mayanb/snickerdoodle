@@ -6,7 +6,7 @@ import * as productActions from '../Products/ProductsActions'
 import * as recipeActions from './RecipeActions'
 import RecipeCreate from './RecipeCreate'
 import './styles/recipelist.css'
-import { Modal } from 'antd'
+import { Modal, Spin } from 'antd'
 import {Slide} from '../Animations/Animations'
 import RecipeCreateHeader from './RecipeCreateHeader'
 
@@ -34,6 +34,14 @@ class RecipeList extends React.Component {
 	
 	render() {
 		const { recipes, product, ui } = this.props
+
+		if (ui.isFetchingData) {
+			return (
+				<div className="element-spinner">
+					<Spin size="large" />
+				</div>
+			)
+		}
 		
 		return (
 			<div className="product-recipe-list">
