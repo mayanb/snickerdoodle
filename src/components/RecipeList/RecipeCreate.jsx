@@ -97,10 +97,11 @@ class RecipeCreate extends React.Component {
 		}
 		// otherwise, submit and close the box
     const newRecipe = {
-		  instructions: instructions,
+		  	instructions: instructions.length > 0 ? instructions : null,
 			product_type_id: product.id,
 			process_type_id: selectedProcessID,
     }
+    console.log(newRecipe)
     this.props.dispatch(postCreateRecipe(newRecipe, ingredients))
     this.props.onToggle()
   }
