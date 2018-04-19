@@ -96,9 +96,10 @@ function request(state, action) {
 }
 
 function requestSuccess(state, action) {
+  let sortedData = action.sort ? action.data.sort(action.sort) : action.data
   let updateData = action.append ? 
-    { $push: action.data } :
-    { $set: action.data }
+    { $push: sortedData } :
+    { $set: sortedData }
 
   return update(state, {
     ui: {
