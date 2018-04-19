@@ -50,7 +50,6 @@ class Products extends React.Component {
 			  	buttonText="Create product"
 					title="Products" 
 				/>
-				<button onClick={() => this.props.dispatch(actions.postEditProduct({id: 24}, {name: 'EDIT TEST 5'}, 2))}>test edit</button>
 					{ !ui.isFetchingData && (!data || !data.length) ? <ZeroState type="product" /> :
 				  	<ObjectList className="products" isFetchingData={ui.isFetchingData}>
 						  <PaginatedTable
