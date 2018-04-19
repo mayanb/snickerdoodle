@@ -12,6 +12,7 @@ import IngredientList from './IngredientList'
 
 const COMPONENT_PREFIX = 'recipe-create-'
 const { TextArea } = Input
+const ERROR_BORDER = '1px solid #FFABAB'
 
 class RecipeCreate extends React.Component {
   constructor(props) {
@@ -33,12 +34,12 @@ class RecipeCreate extends React.Component {
   
   render() {
 		const { processes, products, ui, onToggle, product } = this.props
-		const { selectedProcessID } = this.state
+		const { selectedProcessID, hasError } = this.state
 		return (
     	<ElementCard selected className='recipe create-recipe' onDelete={onToggle}>
         <FormGroup className='process' label='Select a stage'>
 					<RecipeSelect 
-						style={{ width: "100%", flex: 1 }} 
+						style={{ width: "100%", flex: 1, border: hasError && !selectedProcessID && ERROR_BORDER }} 
 						disabledOptions={this.getDisabledProcesses()} 
 						data={processes} 
 						onChange={this.handleProcessChange}
