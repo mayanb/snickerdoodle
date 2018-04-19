@@ -149,7 +149,7 @@ function requestDeleteProductFailure(index, err) {
   }
 }
 
-function requestDeleteProductSuccess(field, value, index) {
+function requestDeleteProductSuccess(index) {
   return {
     type: REQUEST_DELETE_SUCCESS,
     name: PRODUCTS,
