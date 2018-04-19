@@ -126,7 +126,7 @@ export function postDeleteRecipe(recipe, index) {
 function requestDeleteRecipe(index) {
   return {
     type: REQUEST_DELETE,
-    // index: index,
+    index: index,
     name: RECIPES
   }
 }
@@ -140,7 +140,7 @@ function requestDeleteRecipeFailure(index, err) {
   }
 }
 
-function requestDeleteRecipeSuccess(field, value, index) {
+function requestDeleteRecipeSuccess(index) {
   return {
     type: REQUEST_DELETE_SUCCESS,
     name: RECIPES,
