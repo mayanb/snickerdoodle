@@ -4,7 +4,7 @@ import { Select } from 'antd'
 
 const Option = Select.Option
 
-export function RecipeSelect({ data, ...rest }) {
+export function RecipeSelect({ data, disabledOptions = {}, ...rest }) {
   return (
     <Select
       showSearch
@@ -14,12 +14,14 @@ export function RecipeSelect({ data, ...rest }) {
       {...rest}
     >
     {data.map(e => {
-      return <Option disabled={e.disabled} key={e.id} value={e.id} data={e}>{e.code} - {e.name}</Option>
+      return <Option disabled={disabledOptions[e.id]} key={e.id} value={e.id} data={e}>{e.code} - {e.name}</Option>
     })}
     </Select>
   )
 }
 
 function filterOption(input, option) {
-  return option.props.data.name.toLowerCase().indexOf(input.toLowerCase()) >= 0
+  let searchStr = option.props.data.search + " " + option.props.data.name + " " + option.props.data.code
+  searchStr = searchStr.toLowerCase()
+  return searchStr.indexOf(input.toLowerCase()) >= 0
 }

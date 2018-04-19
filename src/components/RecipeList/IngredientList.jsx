@@ -1,15 +1,13 @@
 import React from 'react'
-import FormLabel from '../Inputs/FormLabel'
 import Ingredient from './RecipeIngredient'
-import Button from '../Button/Button'
 
 const COMPONENT_PREFIX = 'ril-'
 
 export default function IngredientList(props) {
-	const { products, processes, ingredients, onChange, onRemove, onAdd } = props
+	const { products, processes, selectedProcess, selectedProduct, ingredients, onChange, onRemove, shouldHighlightEmpty } = props
 	return (
 		<div className="ingredient-list">
-			<FormLabel>Ingredients</FormLabel>
+		{(selectedProcess && selectedProduct) && <Title selectedProduct={selectedProduct} selectedProcess={selectedProcess} />}
 			{
 				ingredients.map((e, i) => {
 					return <Ingredient 
@@ -20,15 +18,23 @@ export default function IngredientList(props) {
 						ingredient={e}
 						onChange={onChange}
 						onRemove={onRemove}
+						shouldHighlightEmpty={shouldHighlightEmpty}
+						disabled={props.disabled}
 					/>
 				})
 			}
-			<Button type="dashed" onClick={onAdd}>
-				<div className="add-ingredient-button">
-					<i className="material-icons">add</i>
-					<span>Add an ingredient</span>
-				</div>
-			</Button>
 		</div>
+	)
+}
+
+function Title({ selectedProcess, selectedProduct }) {
+	let prod_name = selectedProduct.name
+	let { unit, default_amount: amount, name } = selectedProcess
+	// name should be in past tense (roast -> roasted, melanging -> melanged)
+	return (
+		<span style={{marginBottom: '8px', display: 'block'}}>
+			What goes into a&nbsp;
+			<span style={{fontWeight: 700}}>{amount} {unit} batch of {name} {prod_name}?</span>
+		</span>
 	)
 }

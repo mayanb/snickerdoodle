@@ -62,7 +62,7 @@ export function pageRecipes(direction) {
 }
 
 export function postCreateRecipe(recipe, ingredients = []) {
-  return function (dispatch) {
+  return dispatch => {
     dispatch(requestCreateRecipe())
     return api.post('/ics/recipes/')
       .send(recipe)
@@ -70,8 +70,11 @@ export function postCreateRecipe(recipe, ingredients = []) {
         let id = res.body.id
         api.post('/ics/ingredients/bulk-create/')
           .type('form-data')
-          .send({ recipe: id, ingredients: JSON.stringify([{process_type: 8, product_type: 44, amount: 1}]) })
-          .then(res => dispatch(requestCreateRecipeSuccess(res.body)))
+          .send({ recipe: id, ingredients: JSON.stringify(ingredients) })
+          .then(res_ing => {
+            res.body.ingredients = res_ing.body
+            dispatch(requestCreateRecipeSuccess(res.body))
+          })
       })
       .catch((err) => dispatch(requestCreateRecipeFailure(err)))
   }
@@ -123,7 +126,7 @@ export function postDeleteRecipe(recipe, index) {
 function requestDeleteRecipe(index) {
   return {
     type: REQUEST_DELETE,
-    // index: index,
+    index: index,
     name: RECIPES
   }
 }
@@ -137,7 +140,7 @@ function requestDeleteRecipeFailure(index, err) {
   }
 }
 
-function requestDeleteRecipeSuccess(field, value, index) {
+function requestDeleteRecipeSuccess(index) {
   return {
     type: REQUEST_DELETE_SUCCESS,
     name: RECIPES,

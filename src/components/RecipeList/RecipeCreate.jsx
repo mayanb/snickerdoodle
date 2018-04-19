@@ -10,14 +10,16 @@ import './styles/recipecreate.css'
 import { RecipeSelect } from './RecipeSelect'
 import IngredientList from './IngredientList'
 
+const COMPONENT_PREFIX = 'recipe-create-'
 const { TextArea } = Input
+const ERROR_BORDER = '1px solid #FFABAB'
 
 class RecipeCreate extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       isAddingRecipe: false,
-      selectedProcessID: null,
+      selectedProcessID: undefined,
       instructions: '',
 			ingredients: [],
 		}
@@ -31,70 +33,100 @@ class RecipeCreate extends React.Component {
   }
   
   render() {
-		const { processes, products, recipes, ui, onToggle } = this.props
-
-		let processes_disabled = update(processes, {})
-		processes_disabled.forEach(e => {
-			let recipe = recipes.find(r => r.process_type.id === e.id)
-			if (recipe) e.disabled = true
-		})
-	
+		const { processes, products, ui, onToggle, product } = this.props
+		const { selectedProcessID, hasError } = this.state
 		return (
     	<ElementCard selected className='recipe create-recipe' onDelete={onToggle}>
         <FormGroup className='process' label='Select a stage'>
-					<RecipeSelect style={{ width: "100%", flex: 1 }} data={processes_disabled} onChange={this.handleProcessChange}/>
+					<RecipeSelect 
+						style={{ width: "100%", flex: 1, border: hasError && !selectedProcessID && ERROR_BORDER }} 
+						disabledOptions={this.getDisabledProcesses()} 
+						data={processes} 
+						onChange={this.handleProcessChange}
+					/>
         </FormGroup>
         <FormGroup className='instructions' label='Recipe instructions'>
           <TextArea rows={2} placeholder="(optional)" onChange={this.handleInstructionsChange}/>
         </FormGroup>
-				<IngredientList 
-					products={products} 
-					processes={processes} 
-					ingredients={this.state.ingredients}
-					onAdd={this.handleAddIngredient}
-					onChange={this.handleChangeIngredient}
-					onRemove={this.handleRemoveIngredient}
-				/>
+        { selectedProcessID !== undefined && [<IngredientList 
+						products={products} 
+						processes={processes} 
+						ingredients={this.state.ingredients}
+						onChange={this.handleChangeIngredient}
+						onRemove={this.handleRemoveIngredient}
+						shouldHighlightEmpty={this.state.hasError}
+						selectedProcess={processes.find(e => e.id === selectedProcessID)}
+						selectedProduct={product}
+						key={COMPONENT_PREFIX + '1'}
+					/>,
+					<div className="add-ingredient-button-container" key={COMPONENT_PREFIX + '2'}>
+						<Button type="dashed" onClick={this.handleAddIngredient}>
+							<div className="add-ingredient-button">
+								<i className="material-icons">add</i>
+								<span>Add an ingredient</span>
+							</div>
+						</Button>
+					</div>
+				]}
 				<Button isLoading={ui.isCreatingItem} onClick={this.handleSubmit}>Save this recipe</Button>
     	</ElementCard>
     )
   }
+
+  getDisabledProcesses() {
+  	const { processes, recipes } = this.props
+  	let disabledProcesses = {}
+		processes.forEach(e => {
+			let recipe = recipes.find(r => r.process_type.id === e.id)
+			if (recipe) {
+				disabledProcesses[e.id] = true
+			}
+		})
+		return disabledProcesses
+  }
   
   handleSubmit() {
   	const { selectedProcessID, instructions, ingredients } = this.state
-		const { isCreatingItem } = this.props.ui
-  	if (isCreatingItem || enteredDataIsInvalid(selectedProcessID, instructions)) {
+		const { ui, product } = this.props
+  	if (ui.isCreatingItem) {
   		return
 		}
-		this.props.onToggle()
+		if (!validateData(this.state)) {
+			this.setState({ hasError: true })
+			console.log("validation failed")
+			return
+		}
+		// otherwise, submit and close the box
     const newRecipe = {
-		  instructions: this.state.instructions,
-			product_type_id: this.props.product.id,
-			process_type_id: this.state.selectedProcessID,
+		  	instructions: instructions.length > 0 ? instructions : null,
+			product_type_id: product.id,
+			process_type_id: selectedProcessID,
     }
+    console.log(newRecipe)
     this.props.dispatch(postCreateRecipe(newRecipe, ingredients))
+    this.props.onToggle()
   }
 	
 	handleProcessChange(processID) {
-		this.setState({ selectedProcessID: processID })
+		this.setState({ selectedProcessID: processID, hasError: false })
 	}
 	
 	handleInstructionsChange(e) {
-		this.setState({ instructions: e.target.value})
+		this.setState({ instructions: e.target.value, hasError: false })
 	}
 
 	handleAddIngredient() {
 		const ns = update(this.state.ingredients, {
-			$push: [{product_type: null, process_type: null, amount: 0}]
+			$push: [{product_type: undefined, process_type: undefined, amount: '0'}]
 		})
-		this.setState({ ingredients: ns })
+		this.setState({ ingredients: ns, hasError: false })
 	}
 
 	handleRemoveIngredient(index) {
 		const ns = update(this.state.ingredients, {
 			$splice: [[index, 1]]
 		})
-		this.setState({ ingredients: ns })
+		this.setState({ ingredients: ns, hasError: false })
 	}
 
 	handleChangeIngredient(index, key, value) {
@@ -103,26 +135,25 @@ class RecipeCreate extends React.Component {
 				$merge: { [key]: value }
 			}
 		})
-		this.setState({ ingredients: ns })
+		this.setState({ ingredients: ns, hasError: false })
 	}
 }
 
-// function validateData(data) {
-// 	let errors = {}
-// 	errors.ingredients = []
-// 	if (!processID) {
-// 		errors.process_error = true
-// 	}
+function validateData(data) {
+	if (!data.selectedProcessID) {
+		return false
+	}
 
-// 	data.ingredients.forEach((e, i) => {
-// 		if (!e.process) {
-// 			errors.ingredients
-// 		}
-// 	})
-// }
-
-function enteredDataIsInvalid(processID, instructions) {
-	return !(processID && instructions)
+	let isValid = true
+	data.ingredients.forEach((ingredient, i) => {
+		if (!ingredient.process_type || !ingredient.product_type) {
+			isValid = false
+		}
+		if(!parseFloat(ingredient.amount)) {
+			isValid = false
+		}
+	})
+	return isValid
 }
 
 const mapStateToProps = (state) => {

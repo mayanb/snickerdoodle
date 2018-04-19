@@ -15,16 +15,15 @@
 	}
 }
 
-
-.ingredient-list {
-	margin-bottom: 16px;
-
-	.add-ingredient-button {
-		display: flex;
-		i, span {
-			font-size: 14px;
-			line-height: 20px;
-			vertical-align: middle;
-		}
+.add-ingredient-button {
+	display: flex;
+	i, span {
+		font-size: 14px;
+		line-height: 20px;
+		vertical-align: middle;
 	}
+}
+
+.add-ingredient-button-container {
+	margin-bottom: 16px;
 }
