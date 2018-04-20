@@ -15,7 +15,7 @@ class ProductPage extends React.Component {
 			isArchiveOpen: false,
 			isArchiving: false,
 		}
-		
+    
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleSubmitEdit = this.handleSubmitEdit.bind(this)
 	}
@@ -42,6 +42,7 @@ class ProductPage extends React.Component {
 						onSubmitEdit={this.handleSubmitEdit}
 						isSavingEdit={ui.isEditingItem}
 					/>
+        
 					<div className="product-page-recipe-list">
 						<RecipeList product={data} />
 					</div>
@@ -91,7 +92,6 @@ class ProductPage extends React.Component {
 	handleSubmitEdit(newData) {
 		return this.props.dispatch(productActions.postEditProduct(this.props.data, newData, this.props.index))
 	}
-	
 }
 
 const mapStateToProps = (state, props) => {

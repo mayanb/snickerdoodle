@@ -7,16 +7,23 @@
 		display: flex;
 		flex: 1;
 		text-align: left;
+		overflow: hidden;
+		max-height: 20px;
+		white-space:nowrap;
+
+		& > span {
+			padding-right: 8px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 	}
 
 	.list-item-recipe-yield {
-		color: $gray-light;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		color: $elephant;
+		-webkit-font-smoothing: antialiased;		
 		max-height: 20px;
-		flex: 2;
 		width:284px;
-		white-space:nowrap;
+		& > span { padding: 0; }
 	}
 	
 	.process-attributes-header {
@@ -38,6 +45,11 @@
 	}
 }
 
+
+.recipe-expanded {
+	margin-top: 16px;
+}
+
 .recipe.create-recipe {
 	flex-direction: column;
 
@@ -52,4 +64,15 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.process-type-link {
+	vertical-align: middle;
+	cursor: pointer;
+	i {
+		font-size: 14px;
+		vertical-align: middle;
+		margin-left: 4px;
+		color: rgba(255,255,255,0.5);
+	}
 }
