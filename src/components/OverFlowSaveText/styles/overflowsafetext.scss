@@ -1,20 +1,12 @@
-@import '../../../styles/constants.scss';
-
-
-
-.recipe-item-field {
-	//color: $gray-dark;
-	//display: flex;
-	//flex: 1;
-	//text-align: left;
-	//overflow: hidden;
-	max-height: 20px;
+.overflow-safe-text {
+	overflow: hidden;
 	white-space:nowrap;
 	
-	& > span {
-		padding-right: 8px;
+	span.text-content {
 		overflow: hidden;
 		text-overflow: ellipsis;
+		//background-color: lightseagreen;
+		opacity: 0.8;
 	}
 }
 
