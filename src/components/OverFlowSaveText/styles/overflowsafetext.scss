@@ -2,11 +2,8 @@
 	overflow: hidden;
 	white-space:nowrap;
 	
-	span.text-content {
+	& > span.text-content {
 		overflow: hidden;
 		text-overflow: ellipsis;
-		//background-color: lightseagreen;
-		opacity: 0.8;
 	}
 }
-
