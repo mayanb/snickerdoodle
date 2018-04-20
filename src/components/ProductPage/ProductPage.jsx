@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { ElementHeader, ElementContent } from '../Element/Element'
 import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import * as productActions from '../Products/ProductsActions'
-import ProductInformation from '../ProductPage/ProductInformation'
+import ProductInfo from './ProductInfo'
 import RecipeList from '../RecipeList/RecipeList'
 import './styles/productpage.css'
 
@@ -36,7 +36,7 @@ class ProductPage extends React.Component {
 			<div className="product-page">
 				<ElementHeader title={'Products'} name={data && data.name} onBack={() => history.push('/products')} />
 				<ElementContent>
-					<ProductInformation
+					<ProductInfo
 						product={data}
 						onArchive={this.handleArchive}
 						onSubmitEdit={this.handleSubmitEdit}

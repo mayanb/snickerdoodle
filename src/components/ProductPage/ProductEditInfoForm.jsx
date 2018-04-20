@@ -4,7 +4,7 @@ import Button from '../Button/Button'
 import Input from '../Inputs/Input'
 import './styles/producteditform.css'
 
-export default function EditProductInfoForm({ code, name, description, isLoading, onChange, onSubmit}) {
+export default function ProductEditInfoForm({ code, name, description, isLoading, onChange, onSubmit}) {
 	return (
 		<div className='product-edit-form'>
 			<CodeAndName onChange={onChange} name={name} code={code}/>

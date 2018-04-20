@@ -1,9 +1,9 @@
 import React from 'react'
 import DeleteProduct from './DeleteProduct'
-import ProductEditForm from './ProductEditForm'
+import ProductEditInfoForm from './ProductEditInfoForm'
 import { ElementTitle } from '../Element/Element'
 
-export default class ProductInformation extends React.Component {
+export default class ProductInfo extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -30,8 +30,8 @@ export default class ProductInformation extends React.Component {
 				/>
 				<div className='product-basic-information-container'>
 					{ isEditing ?
-						<ProductEditForm onChange={this.handleChange} onSubmit={this.handleSubmit} {...this.state} isLoading={isSavingEdit} /> :
-						<ProductBasicInformation { ...product } />
+						<ProductEditInfoForm onChange={this.handleChange} onSubmit={this.handleSubmit} {...this.state} isLoading={isSavingEdit} /> :
+						<ProductBasicInfo { ...product } />
 					}
 				</div>
 				<DeleteProduct onArchive={onArchive} />
@@ -75,7 +75,7 @@ export default class ProductInformation extends React.Component {
 	}
 }
 
-function ProductBasicInformation({ code, name, description, }) {
+function ProductBasicInfo({ code, name, description, }) {
 	return (
 		<div className='product-information-basic'>
 			<div className='piece-of-info'>
