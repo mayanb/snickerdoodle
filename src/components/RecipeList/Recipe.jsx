@@ -1,6 +1,6 @@
 import React from 'react'
 import pluralize from 'pluralize'
-import { Alert, Input } from 'antd'
+import { Alert, Input, Tooltip } from 'antd'
 import ElementCard from '../Element/ElementCard'
 import './styles/recipe.css'
 import {icon} from '../TaskPage/TaskHelpers.jsx'
@@ -20,8 +20,10 @@ export default function Recipe({recipe, index, isSelected, onDelete, onSelect, p
 		<ElementCard onDelete={() => onDelete(recipe, index)} onClick={() => onSelect(recipe)} selected={isSelected}>
 			<div className="recipe">
 				<RecipeField className="list-item-stage">
-					<Img className="icon-img" src={icon(processIcon)} />
-					<span>({process_type.code}) {process_type.name}</span>
+					<ProcessTypeLink process_type={process_type}>
+						<Img className="icon-img" src={icon(processIcon)} />
+						<span>({process_type.code}) {process_type.name}</span>
+					</ProcessTypeLink>
 				</RecipeField>
 				<RecipeField className="list-item-ingredients">{ingredients.length} { pluralize('ingredients', ingredients.length) }</RecipeField>
 				<RecipeField className="list-item-recipe-yield">{instructions}</RecipeField>
@@ -33,8 +35,18 @@ export default function Recipe({recipe, index, isSelected, onDelete, onSelect, p
 	)
 }
 
+function ProcessTypeLink({ process_type, children }) {
+	let title = (
+		<a className="process-type-link" href={`/processes/${process_type.id}/`} target="_blank" rel="noopener noreferrer">
+			({process_type.code}) {process_type.name}
+			<i className="material-icons">arrow_forward</i>
+		</a>
+	)
+	return <Tooltip title={title}>{children}</Tooltip>
+}
+
 function RecipeField({children, className}) {
-	return <div className={`recipe-item-field ${className}`}>{children}</div>
+	return <div className={`recipe-item-field ${className}`}><span>{children}</span></div>
 }
 
 function ExpandedRecipeContent({recipe, processes = [], products = []}) {
@@ -43,7 +55,7 @@ function ExpandedRecipeContent({recipe, processes = [], products = []}) {
 	})
 
 	return (
-		<div>
+		<div className="recipe-expanded">
 			<FormGroup className='instructions' label='Recipe instructions'>
         <TextArea rows={2} disabled>{recipe.instructions}</TextArea>
       </FormGroup>
@@ -55,7 +67,7 @@ function ExpandedRecipeContent({recipe, processes = [], products = []}) {
 				selectedProduct={recipe.product_type}
 				disabled={true}
 			/>
-			<Alert message="Editing a recipe is coming soon! Unil then, you can delete the recipe and create a new one with all the updates you need." type="info" />
+			<Alert style={{ marginTop: "24px" }} message="Editing a recipe is coming soon! Unil then, you can delete the recipe and create a new one with all the updates you need." type="info" />
 		</div>
 	)
 }
