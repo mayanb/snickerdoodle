@@ -7,7 +7,6 @@ import * as productActions from '../Products/ProductsActions'
 import ProductInformation from '../ProductPage/ProductInformation'
 import RecipeList from '../RecipeList/RecipeList'
 import './styles/productpage.css'
-import * as actions from "../Processes/ProcessesActions";
 
 class ProductPage extends React.Component {
 	constructor(props) {
@@ -81,16 +80,16 @@ class ProductPage extends React.Component {
 		}
 		
 		this.setState({isArchiving: true})
-		this.props.dispatch(actions.postDeleteProcess(this.props.data, this.props.index))
+		this.props.dispatch(productActions.postDeleteProduct(this.props.data, this.props.index))
 			.then(() => {
 				this.setState({ isArchiving: false, isArchiveOpen: false })
-				this.props.history.push('/processes')
+				this.props.history.push('/products')
 			})
 			.catch(e => console.log(e))
 	}
 	
 	handleChange(newData) {
-		return this.props.dispatch(actions.editProcess(newData, this.props.index, this.props.data.id))
+		return this.props.dispatch(productActions.postEditProduct(newData, this.props.index, this.props.data.id))
 	}
 	
 }
