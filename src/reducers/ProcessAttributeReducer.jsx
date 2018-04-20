@@ -140,7 +140,7 @@ function requestSaveAttributeSuccess(state, action) {
 }
 
 function requestSaveAttributeFailure(state, action) {
-	alert("failed to save the attribute")
+	console.error("failed to save the attribute")
 	if (state.ui.selectedItem !== action.process)
 		return state
 

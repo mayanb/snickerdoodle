@@ -162,7 +162,7 @@ export function postUpdateAttribute(p, id, updated) {
     return api.patch(`/ics/attributes/${id}/`)
       .send(updated)
       .then(res => console.log(res))
-      .catch(e => alert('ugh'))
+      .catch(e => console.error('ugh'))
   }
 
   function requestUpdateAttributeSuccess(p, id, updated) {

@@ -145,7 +145,7 @@ class InventoryDetail extends React.Component {
 				component.props.dispatch(actions.fetchInventory())
 				component.fetchInventoryDetail(component.props.processId)
 			}).fail(function (req, err) {
-			alert(`Couldn't deliver the items. :( \n ${err}`)
+			console.error(`Couldn't deliver the items. :( \n ${err}`)
 		})
 	}
 }

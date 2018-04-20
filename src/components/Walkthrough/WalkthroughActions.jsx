@@ -40,7 +40,7 @@ function requestIncrementWalkthrough(walkthrough) {
 }
 
 function requestIncrementWalkthroughError(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.error('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_UPDATE_SETTING_FAILURE
   }
@@ -78,7 +78,7 @@ function requestCreateTeam() {
 }
 
 function requestCreateTeamFailure(err) {
-	alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
+	console.error('Oh no! Something went wrong!\n' + JSON.stringify(err))
 	return {
 		type: REQUEST_CREATE_FAILURE,
 		name: TEAMS,

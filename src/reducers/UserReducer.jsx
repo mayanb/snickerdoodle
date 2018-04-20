@@ -178,7 +178,7 @@ function requestLogoutSuccess(state, action) {
 }
 
 function requestLogoutFailure(state, action) {
-	alert("something went wrong!")
+	console.error("something went wrong!")
 	return update(state, {
 		ui: {
 			isLoggingOut: {

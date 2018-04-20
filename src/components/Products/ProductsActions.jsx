@@ -36,7 +36,7 @@ function requestProducts() {
 }
 
 function requestProductsFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.error('Oh no! Something went wrong\n' + err)
   return {
     name: PRODUCTS,
     type: REQUEST_FAILURE, 
@@ -83,7 +83,7 @@ function requestCreateProduct() {
 }
 
 function requestCreateProductFailure(err) {
-  alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
+  console.error('Oh no! Something went wrong!\n' + JSON.stringify(err))
   return {
     type: REQUEST_CREATE_FAILURE,
     name: PRODUCTS,

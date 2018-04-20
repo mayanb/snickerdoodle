@@ -26,7 +26,7 @@ function requestTeams() {
 }
 
 function requestTeamsFailure(err) {
-	alert('Oh no! Something went wrong\n' + err)
+	console.error('Oh no! Something went wrong\n' + err)
 	return {
 		type: REQUEST_FAILURE,
 		name: TEAMS
@@ -63,7 +63,7 @@ function requestTasks() {
 }
 
 function requestTasksFailure(err) {
-	alert('Oh no! Something went wrong\n' + err)
+	console.error('Oh no! Something went wrong\n' + err)
 	return {
 		type: REQUEST_FAILURE,
 		name: TASKS

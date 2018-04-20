@@ -169,7 +169,7 @@ export default class Activity extends React.Component {
 					return
 
 				if (err || !res.ok)
-					alert("ugh something went wrong\n" + err)
+					console.error("ugh something went wrong\n" + err)
 
 				component.lastTaskRequestID = -1
 				component.setState({
