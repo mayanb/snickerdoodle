@@ -20,10 +20,10 @@ export default function Recipe({recipe, index, isSelected, onDelete, onSelect, p
 		<ElementCard onDelete={() => onDelete(recipe, index)} onClick={() => onSelect(recipe)} selected={isSelected}>
 			<div className="recipe">
 				<RecipeField className="list-item-stage">
-					<ProcessTypeLink process_type={process_type}>
+					<Tooltip title={`(${process_type.code}) ${process_type.name}`}>
 						<Img className="icon-img" src={icon(processIcon)} />
 						<span>({process_type.code}) {process_type.name}</span>
-					</ProcessTypeLink>
+					</Tooltip>
 				</RecipeField>
 				<RecipeField className="list-item-ingredients">{ingredients.length} { pluralize('ingredients', ingredients.length) }</RecipeField>
 				<RecipeField className="list-item-recipe-yield">{instructions}</RecipeField>
@@ -33,10 +33,6 @@ export default function Recipe({recipe, index, isSelected, onDelete, onSelect, p
 			</Slide>
 		</ElementCard>
 	)
-}
-
-function ProcessTypeLink({ process_type, children }) {
-	return <Tooltip title={`(${process_type.code}) ${process_type.name}`}>{children}</Tooltip>
 }
 
 function RecipeField({children, className}) {
