@@ -2,5 +2,5 @@
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	min-width: 0;
+	min-width: 0; // https://css-tricks.com/flexbox-truncated-text/
 }
