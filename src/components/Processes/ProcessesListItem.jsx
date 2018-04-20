@@ -3,6 +3,7 @@ import ObjectListItem from '../ObjectList/ObjectListItem'
 import moment from 'moment'
 import {icon} from '../TaskPage/TaskHelpers.jsx'
 import {pluralize} from '../../utilities/stringutils'
+import OverflowSafeText from '../OverFlowSaveText/OverflowSafeText'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import ButtonStopClickPropagate from '../Card/ButtonStopClickPropagate'
 import Img from '../Img/Img'
@@ -60,33 +61,33 @@ export default class ProcessesListItem extends React.Component {
 					<Img className="icon-img" src={icon(item.icon)} />
 				</div>
 
-				<div className="code">
+				<OverflowSafeText className="code">
 					{item.code}
-				</div>
+				</OverflowSafeText>
 
-				<div className="name">
+				<OverflowSafeText className="name">
 					{item.name}
-				</div>
+				</OverflowSafeText>
 
-				<div className="description">
+				<OverflowSafeText className="description">
 					{item.output_desc}
-				</div>
+				</OverflowSafeText>
 
-				<div className="default-amount">
+				<OverflowSafeText className="default-amount">
 					{`${parseInt(item.default_amount, 10)} ${pluralize(item.default_amount, item.unit)}`}
-				</div>
+				</OverflowSafeText>
 
-				<div className="last-used">
+				<OverflowSafeText className="last-used">
 					{ item.last_used? moment(item.last_used).fromNow() : "Never" }
-				</div>
+				</OverflowSafeText>
 
-				<div className="owner">
+				<OverflowSafeText className="owner">
 					{item.created_by_name.substr(0, item.created_by_name.indexOf('_'))}
-				</div>
+				</OverflowSafeText>
 
-				<div className={"date"}>
+				<OverflowSafeText className={"date"}>
 					{moment(item.created_at).format("MMMM DD, YYYY")}
-				</div>
+				</OverflowSafeText>
 
 				<div className="more-options-button">
 					<ButtonDropdown 
@@ -103,9 +104,5 @@ export default class ProcessesListItem extends React.Component {
 			</ObjectListItem>
 		)
 	}
-
 }
-
-// { item.last_used? moment(item.last_used).format("MMMM DD, YYYY") : "Never" }
-
 
