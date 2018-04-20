@@ -1,15 +1,15 @@
 .product-edit-form {
-    .name-abbreviation {
+    .code-and-name {
         display: flex;
+    
+        .code-group {
+            flex: 1;
+        }
     }
 
     .name-group {
         flex: 2;
         margin-left: 20px;
-    }
-
-    .abbreviation-group {
-        flex: 1;
     }
 
     .button-wide {

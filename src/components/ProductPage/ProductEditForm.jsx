@@ -4,7 +4,7 @@ import Button from '../Button/Button'
 import Input from '../Inputs/Input'
 import './styles/producteditform.css'
 
-export default function EditProductInfoForm({ code, name, description, default_amount, unit, isLoading, onChange, onSubmit}) {
+export default function EditProductInfoForm({ code, name, description, isLoading, onChange, onSubmit}) {
 	return (
 		<div className='product-edit-form'>
 			<CodeAndName onChange={onChange} name={name} code={code}/>
@@ -13,16 +13,16 @@ export default function EditProductInfoForm({ code, name, description, default_a
 				<Button wide onClick={onSubmit} isLoading={isLoading}>Save changes</Button>
 			</FormGroup>
 		</div>
-)
+	)
 }
 
 function CodeAndName({ onChange, name, code }) {
 	return (
-		<div className='name-abbreviation'>
-			<FormGroup label='Code' className='abbreviation-group'>
+		<div className='code-and-name'>
+			<FormGroup label='Code' className='code-group'>
 				<Input
 					type='text'
-					className='abbreviation'
+					className='code'
 					value={code}
 					onChange={(e) => onChange(e, 'code')}
 				/>
