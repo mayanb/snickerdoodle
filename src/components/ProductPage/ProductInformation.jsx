@@ -41,6 +41,20 @@ export default class ProductInformation extends React.Component {
 	
 	handleToggleEditing() {
 		this.setState({ isEditing: !this.state.isEditing })
+		if (this.state.isEditing) {
+			this.setState({
+				name: '',
+				code: '',
+				description: '',
+			})
+		} else {
+			const { name , code, description } = this.props.product
+			this.setState({
+				name: name,
+				code: code,
+				description: description,
+			})
+		}
 	}
 	
 	handleChange(e, type) {
