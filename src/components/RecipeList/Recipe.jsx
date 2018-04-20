@@ -36,13 +36,7 @@ export default function Recipe({recipe, index, isSelected, onDelete, onSelect, p
 }
 
 function ProcessTypeLink({ process_type, children }) {
-	let title = (
-		<a className="process-type-link" href={`/processes/${process_type.id}/`} target="_blank" rel="noopener noreferrer">
-			({process_type.code}) {process_type.name}
-			<i className="material-icons">arrow_forward</i>
-		</a>
-	)
-	return <Tooltip title={title}>{children}</Tooltip>
+	return <Tooltip title={`(${process_type.code}) ${process_type.name}`}>{children}</Tooltip>
 }
 
 function RecipeField({children, className}) {
