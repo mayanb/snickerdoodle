@@ -17,7 +17,7 @@ class ProductPage extends React.Component {
 		}
 		
 		this.handleArchive = this.handleArchive.bind(this)
-		this.handleChange = this.handleChange.bind(this)
+		this.handleSubmitEdit = this.handleSubmitEdit.bind(this)
 	}
 
 	componentDidMount() {
@@ -39,7 +39,7 @@ class ProductPage extends React.Component {
 					<ProductInformation
 						product={data}
 						onArchive={this.handleArchive}
-						onChange={this.handleChange}
+						onSubmitEdit={this.handleSubmitEdit}
 						isSavingEdit={ui.isEditingItem}
 					/>
 					<div className="product-page-recipe-list">
@@ -71,7 +71,7 @@ class ProductPage extends React.Component {
 	}
 	
 	handleCancelArchive() {
-		this.setState({isArchiveOpen: false})
+		this.setState({ isArchiveOpen: false })
 	}
 	
 	handleConfirmArchive() {
@@ -88,8 +88,8 @@ class ProductPage extends React.Component {
 			.catch(e => console.log(e))
 	}
 	
-	handleChange(newData) {
-		return this.props.dispatch(productActions.postEditProduct(newData, this.props.index, this.props.data.id))
+	handleSubmitEdit(newData) {
+		return this.props.dispatch(productActions.postEditProduct(this.props.data, newData, this.props.index))
 	}
 	
 }

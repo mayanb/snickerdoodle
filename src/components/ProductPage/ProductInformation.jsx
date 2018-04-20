@@ -49,11 +49,11 @@ export default class ProductInformation extends React.Component {
 	}
 	
 	handleSubmit() {
-		if (this.state.isSavingEdit) {
+		if (this.props.isSavingEdit) {
 			return
 		}
 		let { name, code, description } = this.state
-		this.props.onChange({
+		this.props.onSubmitEdit({
 			name: name,
 			code: code,
 			description: description,

@@ -4,11 +4,11 @@ import Button from '../Button/Button'
 import Input from '../Inputs/Input'
 import './styles/producteditform.css'
 
-export default function EditProductInfoForm({ code, name, output_desc, default_amount, unit, isLoading, onChange, onSubmit}) {
+export default function EditProductInfoForm({ code, name, description, default_amount, unit, isLoading, onChange, onSubmit}) {
 	return (
 		<div className='product-edit-form'>
 			<CodeAndName onChange={onChange} name={name} code={code}/>
-			<OutputDescription onChange={onChange} output_desc={output_desc} />
+			<Description onChange={onChange} description={description} />
 			<FormGroup>
 				<Button wide onClick={onSubmit} isLoading={isLoading}>Save changes</Button>
 			</FormGroup>
@@ -39,14 +39,14 @@ function CodeAndName({ onChange, name, code }) {
 	)
 }
 
-function OutputDescription({ onChange, output_desc }) {
+function Description({ onChange, description }) {
 	return (
 			<FormGroup label='Description'>
 				<Input
 					type='text'
-					placeholder='Roasted Beans'
-					value={output_desc}
-					onChange={(e) => onChange(e, 'output_desc')}
+					placeholder='Description of product'
+					value={description}
+					onChange={(e) => onChange(e, 'description')}
 				/>
 			</FormGroup>
 	)
