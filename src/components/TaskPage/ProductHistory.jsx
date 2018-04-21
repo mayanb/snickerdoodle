@@ -5,6 +5,7 @@ import { formatAmount, pluralize } from '../../utilities/stringutils'
 import { icon } from './TaskHelpers.jsx'
 import Loading from '../Loading/Loading'
 import Img from '../Img/Img'
+import { consolidateInputsFromSameTask } from '../../utilities/arrayutils'
 
 class ProductHistory extends React.Component {
 	render() {
@@ -16,7 +17,7 @@ class ProductHistory extends React.Component {
 				</div>
 				<Loading isFetchingData={ancestorsUI.isFetchingData}>
 					<div>
-						{ancestors.map(t => <TaskSummary task={t} key={t.id} />)}
+						{consolidateInputsFromSameTask(ancestors).map(t => <TaskSummary task={t} key={t.id} />)}
 					</div>
 				</Loading>
 				<div className="focus-box">
@@ -26,7 +27,7 @@ class ProductHistory extends React.Component {
 				</div>
 				<Loading isFetchingData={descendentsUI.isFetchingData}>
 					<div>
-						{descendents.map(t => <TaskSummary task={t} key={t.id} />)}
+						{consolidateInputsFromSameTask(descendents).map(t => <TaskSummary task={t} key={t.id} />)}
 					</div>
 				</Loading>
 			</div>
