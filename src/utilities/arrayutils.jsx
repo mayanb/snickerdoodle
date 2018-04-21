@@ -71,24 +71,8 @@ export function sortByRank(a, b) {
 }
 
 export function consolidateInputsFromSameTask(tasks) {
-	console.log('tasks pre-filter:', tasks)
 	const taskIDDict = {}
-	tasks.forEach(task => {
-		const amount = task.total_amount || (task.items && task.items.reduce((sum, item) => sum + Number(item.amount), 0))
-		const existingTask = taskIDDict[task.id]
-		if (amount) { // add or increment
-			if (existingTask) {
-				alert('DUPLICATE! task, existingTask: ', task, existingTask)
-				console.log('DUPLICATE! task, existingTask: ', task, existingTask)
-				existingTask.product_history_consolidated_amount += parseFloat(amount)
-			} else {
-				task.product_history_consolidated_amount = parseFloat(amount)
-				taskIDDict[task.id] = task
-			}
-		} else { // amount undefined, so no need to track or increment
-			taskIDDict[task.id] = task
-		}
-	})
-	console.log('tasks  POST-FILTER:', Object.values(taskIDDict))
+	tasks.forEach(task => taskIDDict[task.id] = task)
+	console.log('Number of duplicate Tasks filtered out:', tasks.length - Object.values(taskIDDict).length)
 	return Object.values(taskIDDict)
 }
