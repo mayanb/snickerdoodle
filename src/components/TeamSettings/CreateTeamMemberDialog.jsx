@@ -38,7 +38,12 @@ export default class CreateTeamMemberDialog extends React.Component {
 		if (this.formErrors().length > 0)
 			return
 
-		let json = {...this.state, username: uuid(), password: 'InitialPassword1', invited: true}
+		let json = {
+			...this.state,
+			username: uuid(),
+			password: 'InitialPassword1',
+			invited: true,
+		}
 		console.log(json)
 		this.props.onSubmit(json, () =>
 			this.props.onCancel()
