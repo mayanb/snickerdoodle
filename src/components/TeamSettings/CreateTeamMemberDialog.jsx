@@ -49,12 +49,14 @@ export default class CreateTeamMemberDialog extends React.Component {
 		if (!this.props.isOpen)
 			return null;
 
+		const { onCancel, isLoadingNewTeamMember } = this.props
 		return (
 			<FormDialog
-				onToggle={this.props.onCancel}
+				onToggle={onCancel}
 				title="Add a team member"
 				onSave={this.handleSubmit}
 				className="create-team-member"
+				isLoading={isLoadingNewTeamMember}
 			>
 				{this.renderForm()}
 				{this.renderErrors()}

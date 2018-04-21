@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../Card/Button'
+import Button from '../Button/Button'
 import './styles/formdialog.css'
 import Loading from '../Loading/Loading'
 import DialogHeader from '../Dialog/DialogHeader'
@@ -14,7 +14,7 @@ export default function FormDialog(props) {
 				<div className="body">
 					<Loading isFetchingData={props.isFetchingData}>
 						{props.children}
-						<Button onClick={props.onSave}>
+						<Button onClick={props.onSave} isLoading={props.isLoading}>
 							{props.submitButtonText ? props.submitButtonText : 'Save'}
 						</Button>
 					</Loading>
