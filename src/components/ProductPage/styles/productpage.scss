@@ -22,11 +22,11 @@
 	padding-bottom: 60px;
 	flex: 1;
 
-	.process-basic-information-container {
+	.product-basic-information-container {
 		flex: 1;
 	}
 
-	.process-information-basic {
+	.product-information-basic {
 		.piece-of-info {
 			display: flex;
 			flex-direction: column;
@@ -46,8 +46,3 @@
 		}
 	}
 }
-
-.process-attributes {
-	background-color: white;
-}
-

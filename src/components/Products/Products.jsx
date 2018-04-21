@@ -45,9 +45,11 @@ class Products extends React.Component {
 
 	  return (
 	  	<div className="products">
-			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
-			                                      title="Products" />
-
+			  <ApplicationSectionHeaderWithButton 
+			  	onToggleDialog={this.handleToggleDialog} 
+			  	buttonText="Create product"
+					title="Products" 
+				/>
 					{ !ui.isFetchingData && (!data || !data.length) ? <ZeroState type="product" /> :
 				  	<ObjectList className="products" isFetchingData={ui.isFetchingData}>
 						  <PaginatedTable
