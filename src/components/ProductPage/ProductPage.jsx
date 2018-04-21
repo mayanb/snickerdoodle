@@ -2,20 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { ElementHeader, ElementContent } from '../Element/Element'
-import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import * as productActions from '../Products/ProductsActions'
 import ProductInfo from './ProductInfo'
 import RecipeList from '../RecipeList/RecipeList'
 import './styles/productpage.css'
+import { Modal } from 'antd'
+
+const { confirm } = Modal
 
 class ProductPage extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state ={
-			isArchiveOpen: false,
-			isArchiving: false,
-		}
-    
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleSubmitEdit = this.handleSubmitEdit.bind(this)
 	}
@@ -47,45 +44,24 @@ class ProductPage extends React.Component {
 						<RecipeList product={data} />
 					</div>
 				</ElementContent>
-				{this.renderArchiveDialog()}
 			</div>
 		)
 	}
-	
-	renderArchiveDialog() {
-		if (!this.state.isArchiveOpen) {
-			return null
-		}
-		
-		return (
-			<ArchiveDialog
-				{...this.props.data}
-				isArchiving={this.state.isArchiving}
-				onCancel={this.handleCancelArchive.bind(this)}
-				onSubmit={() => this.handleConfirmArchive()}
-			/>
-		)
+
+	handleArchive(recipe, index) {
+		confirm({
+			title: `Are you sure you want to delete ${this.props.data.name} (${this.props.data.code})?`,
+			content: "Your old tasks will be unaffected, but you won't be able to make new tasks with this product type.",
+			okText: 'Yes, I\'m sure',
+			okType: 'danger',
+			onOk: () => this.handleConfirmArchive(),
+			onCancel: () => {}
+		})
 	}
 	
-	handleArchive() {
-		this.setState({ isArchiveOpen: true })
-	}
-	
-	handleCancelArchive() {
-		this.setState({ isArchiveOpen: false })
-	}
-	
-	handleConfirmArchive() {
-		if (this.state.isArchiving) {
-			return
-		}
-		
-		this.setState({isArchiving: true})
-		this.props.dispatch(productActions.postDeleteProduct(this.props.data, this.props.index))
-			.then(() => {
-				this.setState({ isArchiving: false, isArchiveOpen: false })
-				this.props.history.push('/products')
-			})
+	handleConfirmArchive() {		
+		return this.props.dispatch(productActions.postDeleteProduct(this.props.data, this.props.index))
+			.then(() => this.props.history.push('/products'))
 			.catch(e => console.log(e))
 	}
 	
