@@ -34,7 +34,7 @@ export default class ProductsListItem extends React.Component {
 				<div style={{minWidth: "100px"}}>
 					<ButtonStopClickPropagate secondary onClick={() => this.handleDropdownOption(onArchive)}>
 						<i className="material-icons">delete_forever</i>
-						<span>Archive</span>
+						<span>Delete</span>
 					</ButtonStopClickPropagate>
 				</div>
 			</div>
