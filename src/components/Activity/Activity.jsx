@@ -300,10 +300,9 @@ class Process extends React.Component {
 					     first={props.process_code}
 					     second={props.process_name}
 					     third={pl(props.runs, "run")}
-					     fourth={pl(parseInt(props.outputs, 10), props.process_unit)}
-					     fifth={"0 flagged"}
-					     sixth={"0 exp"}
-					     seventh={button}
+					     fourth={"0 flagged"}
+					     fifth={"0 exp"}
+					     sixth={button}
 
 					/>
 				</div>
@@ -341,8 +340,7 @@ function Origin(props) {
 					first={props.product_code}
 					second={pl(props.runs, "run")}
 					third={pl(parseInt(props.outputs, 10), props.process_unit)}
-					fourth={!props.flagged?"--":props.flagged + " flagged"}
-					fifth={!props.experimental?"--":props.experimental + " experimental"}
+					fourth={!props.experimental?"--":props.experimental + " experimental"}
 				/>
 			</div>
 			{ taskList }
@@ -373,17 +371,14 @@ function Row(props) {
 			<div className="process-runs tiny">
 				<span>{props.third}</span>
 			</div>
-			<div className="process-outputs">
+			<div className="process-flagged tiny">
 				<span>{props.fourth}</span>
 			</div>
-			<div className="process-flagged tiny">
+			<div className="process-experimental tiny">  
 				<span>{props.fifth}</span>
 			</div>
-			<div className="process-experimental tiny">  
-				<span>{props.sixth}</span>
-			</div>
 			<div className="process-button no">
-				<span>{props.seventh}</span>
+				<span>{props.sixth}</span>
 			</div>
 		</div>
 	)
@@ -397,7 +392,6 @@ function TaskList(props) {
 			second={<a href={window.location.origin + "/task/" + props.id} target="_blank">{display(props)}</a>}
 			third={pl(parseInt(props.outputs, 10), props.process_unit)}
 			fourth={"--"}
-			fifth={"--"}
 		/>
 		</div>
 	)
