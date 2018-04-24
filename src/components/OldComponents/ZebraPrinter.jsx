@@ -78,18 +78,18 @@ export default class ZebraPrinter extends React.Component {
     let numLabels = parseInt(this.state.numberLabels, 10) || -1
 
     if (!this.state.expanded && !(numLabels > 0 && numLabels < 101)) {
-      console.error("Please enter a valid number between 0 and 100!")
+      alert("Please enter a valid number between 0 and 100!")
       return
     }
 
     if (this.state.task === "" || this.state.task.data === undefined || this.state.task.data.id === undefined) {
-      console.error("Please print labels for a valid task.")
+      alert("Please print labels for a valid task.")
       return
     }
 
     if (this.state.expanded && 
       (this.state.selectedItem === "" || this.state.selectedItem.data === undefined || this.state.selectedItem.data.id === undefined)) {
-        console.error("Please choose a valid specific item to reprint.")
+        alert("Please choose a valid specific item to reprint.")
         return 
     }
 
