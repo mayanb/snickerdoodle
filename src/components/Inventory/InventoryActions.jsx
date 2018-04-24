@@ -27,7 +27,7 @@ function requestInventory() {
 }
 
 function requestInventoryFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.error('Oh no! Something went wrong\n' + err)
   console.log(err)
   return {
     type: REQUEST_INVENTORY_FAILURE,
@@ -61,7 +61,7 @@ function requestInventoryItems() {
 }
 
 function requestInventoryItemsFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.error('Oh no! Something went wrong\n' + err)
   console.log(err)
   return {
     type: REQUEST_ITEMS_FAILURE,

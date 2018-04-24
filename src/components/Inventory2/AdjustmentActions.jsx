@@ -45,7 +45,7 @@ function createAdjustmentSuccess(json) {
 }
 
 function createAdjustmentFailure(err) {
-	alert('Oh no! Something went wrong while saving the adjustment\n' + err)
+	console.error('Oh no! Something went wrong while saving the adjustment\n' + err)
 	return {
 		type: ADJUSTMENT_FAILURE,
 		name: INVENTORY_2,

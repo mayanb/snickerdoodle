@@ -38,7 +38,12 @@ export default class CreateTeamMemberDialog extends React.Component {
 		if (this.formErrors().length > 0)
 			return
 
-		let json = {...this.state, username: uuid(), password: 'InitialPassword1', invited: true}
+		let json = {
+			...this.state,
+			username: uuid(),
+			password: 'InitialPassword1',
+			invited: true,
+		}
 		console.log(json)
 		this.props.onSubmit(json, () =>
 			this.props.onCancel()
@@ -49,12 +54,14 @@ export default class CreateTeamMemberDialog extends React.Component {
 		if (!this.props.isOpen)
 			return null;
 
+		const { onCancel, isLoadingNewTeamMember } = this.props
 		return (
 			<FormDialog
-				onToggle={this.props.onCancel}
+				onToggle={onCancel}
 				title="Add a team member"
 				onSave={this.handleSubmit}
 				className="create-team-member"
+				isLoading={isLoadingNewTeamMember}
 			>
 				{this.renderForm()}
 				{this.renderErrors()}

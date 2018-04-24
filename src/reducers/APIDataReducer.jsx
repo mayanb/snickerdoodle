@@ -148,7 +148,7 @@ function requestCreateSuccess(state, action) {
 }
 
 function requestCreateFailure(state, action) {
-  alert('Oh no! Something went wrong!\n' + JSON.stringify(action.error))
+  console.error('Oh no! Something went wrong!\n' + JSON.stringify(action.error))
   return update(state, {
     ui: {
       $merge: {

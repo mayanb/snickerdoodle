@@ -55,7 +55,7 @@ function requestGoals() {
 }
 
 function requestGoalsFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.error('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_FAILURE,
     name: GOALS
@@ -107,7 +107,7 @@ function requestCreateGoal(json) {
 }
 
 function requestCreateGoalFailure(err, json) {
-  alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
+  console.error('Oh no! Something went wrong!\n' + JSON.stringify(err))
   return {
     type: REQUEST_CREATE_FAILURE,
     name: GOALS,
