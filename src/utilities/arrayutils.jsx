@@ -69,3 +69,10 @@ export function sortByRank(a, b) {
 
 	return parseInt(a.rank, 10) - parseInt(b.rank, 10)
 }
+
+export function consolidateInputsFromSameTask(tasks) {
+	const taskIDDict = {}
+	tasks.forEach(task => taskIDDict[task.id] = task)
+	console.log('Number of duplicate Tasks filtered out:', tasks.length - Object.values(taskIDDict).length)
+	return Object.values(taskIDDict)
+}
