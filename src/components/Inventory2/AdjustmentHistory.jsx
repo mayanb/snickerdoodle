@@ -23,7 +23,7 @@ function HistoryItem({ item, unit }) {
 }
 
 function Adjustment({ data, unit }) {
-	const { startAmount, endAmount, endDate } = data
+	const { startAmount, endAmount, endDate, explanation } = data
 	const difference = endAmount - startAmount
 	const text1 = 'You '
 	const text2 = `adjusted inventory by ${formatAmount(difference, unit)}, `
@@ -34,6 +34,7 @@ function Adjustment({ data, unit }) {
 			<div className="description">
 				{text1}<span className="bold">{text2}</span>{text3}
 			</div>
+			{explanation && <div className="explanation">{explanation}</div>}
 			<div>
 				<div className="adjustment-pill">Adjustment</div>
 				<FormattedDate date={endDate} />

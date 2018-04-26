@@ -2,7 +2,7 @@
 
 .inventory2-container {
 	width: calc(100vw - #{$nav-width});
-
+	height: fit-content;
 }
 
 .inventory2-content {

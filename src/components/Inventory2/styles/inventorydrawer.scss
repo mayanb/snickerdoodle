@@ -1,8 +1,6 @@
 @import 'styles/constants.scss';
 
 .inventory-drawer {
-	min-height: 100%;
-	height: fit-content;
 	width: 368px;
 	background-color: white;
 	border-left: 1px solid $gray-ultra-light;
@@ -51,9 +49,15 @@
 
 	.inv-adjuster {
 		display: flex;
-		justify-content: space-between;
+		flex-direction: column;
 		padding: 16px;
 		border-bottom: 1px solid $gray-ultra-light;
+
+		.form-group {
+			display: flex;
+			justify-content: space-between;
+            margin-bottom: 24px;
+		}
 
 		.question {
 			width: 168px;
@@ -74,7 +78,19 @@
 			padding: 0 8px;
 			height: 28px;
 			line-height: 28px;
-            border-color: $gray-ultra-light;
+		}
+
+		.input, .textarea {
+			border-color: $gray-ultra-light;
+		}
+
+		.explanation-title {
+			margin-bottom: 4px;
+			font-weight: bold;
+		}
+
+		.textarea {
+			height: 124px;
 		}
 
 		//Hide the number input arrows which obscure the unit label
@@ -98,8 +114,10 @@
 		}
 
 		button {
+            margin-top: 16px;
 			padding: 0 16px;
 			height: 24px;
+			align-self: flex-end
 		}
 	}
 }
@@ -114,6 +132,11 @@
 
 	.adjustment {
 
+	}
+
+	.explanation {
+		margin: 8px 0;
+		font-style: italic;
 	}
 
 	.adjustment-pill {
