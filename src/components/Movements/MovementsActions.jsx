@@ -34,7 +34,7 @@ function requestMovements() {
 }
 
 function requestMovementsFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.error('Oh no! Something went wrong\n' + err)
   return {
     name: MOVEMENTS,
     type: REQUEST_FAILURE, 

@@ -6,14 +6,15 @@ import {
 } from '../../reducers/Inventory2ReducerExtension'
 import {  INVENTORY_2 } from '../../reducers/ReducerTypes'
 
-export function requestCreateAdjustment(userProfileId, processId, productId, amount) {
+export function requestCreateAdjustment(userProfileId, processId, productId, amount, explanation) {
 	return dispatch => {
 		dispatch(startCreatingAdjustment())
 		const data = {
 				userprofile: userProfileId,
 				process_type: processId,
 				product_type: productId,
-				amount: amount
+				amount: amount,
+				explanation: explanation
 			}
 			console.log('data', data)
 		return api.post('/ics/adjustments/')
@@ -45,7 +46,7 @@ function createAdjustmentSuccess(json) {
 }
 
 function createAdjustmentFailure(err) {
-	alert('Oh no! Something went wrong while saving the adjustment\n' + err)
+	console.error('Oh no! Something went wrong while saving the adjustment\n' + err)
 	return {
 		type: ADJUSTMENT_FAILURE,
 		name: INVENTORY_2,

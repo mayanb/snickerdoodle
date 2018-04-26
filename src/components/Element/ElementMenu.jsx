@@ -28,7 +28,7 @@ export default class ElementMenu extends React.Component {
 				<div style={{minWidth: "100px"}}>
 					<Button secondary onClick={this.handleArchive}>
 						<i className="material-icons">delete_forever</i>
-						<span>Archive</span>
+						<span>Delete</span>
 					</Button>
 				</div>
 			</ButtonDropdown>

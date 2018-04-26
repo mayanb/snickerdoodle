@@ -106,6 +106,7 @@ function requestSuccess(state, action) {
       $merge: {
         isFetchingData: false,
         more: action.more, 
+        currentPage: 0,
       }
     },
     data: updateData,

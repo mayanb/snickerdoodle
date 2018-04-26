@@ -195,7 +195,7 @@ function requestCreateMovement() {
 }
 
 function requestCreateMovementFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.error('Oh no! Something went wrong\n' + err)
   return {
     type: REQUEST_CREATE_FAILURE,
     name: MOVEMENTS

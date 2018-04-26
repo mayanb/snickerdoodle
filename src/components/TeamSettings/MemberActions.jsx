@@ -41,7 +41,7 @@ function requestMembers() {
 }
 
 function requestMembersFailure(err) {
-  alert('Oh no! Something went wrong\n' + err)
+  console.error('Oh no! Something went wrong\n' + err)
   return {
     name: MEMBERS,
     type: REQUEST_FAILURE, 
@@ -100,7 +100,7 @@ function requestCreateMember() {
 }
 
 function requestCreateMemberFailure(err) {
-  alert('Oh no! Something went wrong!\n' + JSON.stringify(err))
+  console.error('Oh no! Something went wrong!\n' + JSON.stringify(err))
   return {
     type: REQUEST_CREATE_FAILURE,
     name: MEMBERS,
@@ -124,7 +124,7 @@ export function postRequestEditAccountType(index, data, success) {
       .send({account_type: data.new_account_type})
       .end(function (err, res) {
         if (err || !res.ok) 
-          alert('ugh')
+          console.error('ugh')
         else {
           dispatch(requestEditMemberSuccess(index, 'account_type', data.new_account_type))
           success()

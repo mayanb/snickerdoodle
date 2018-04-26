@@ -2,54 +2,59 @@
 
 .processes-container {
   width: calc(100vw);
-  
-  div.processes {
-    .object-list-item {
-      cursor: pointer;
-    }
-    
-    .code {
-      flex: 2;
-    }
-    
-    .name {
-      flex: 4;
-    }
-    
-    .owner {
-      flex: 3;
-    }
-    
-    .date {
-      flex: 4;
-    }
-    
-    .icon {
-      flex: 1;
-      background-color: transparent;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .description {
-      flex: 4;
-    }
-    
-    .default-amount {
-      flex: 4;
-    }
-    
-    .last-used {
-      flex: 3;
-    }
-    
-    .more-options-button {
-      flex: 1;
-    }
+}
+
+div.process-filter {
+  margin-left: 36px;
+  max-width: 400px;
+}
+
+div.processes {
+  .object-list-item {
+    cursor: pointer;
   }
 
+  .code {
+    flex: 2;
+  }
+
+  .name {
+    flex: 4;
+  }
+
+  .owner {
+    flex: 3;
+  }
+
+  .date {
+    flex: 4;
+  }
+
+  .icon {
+    flex: 1;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .description {
+    flex: 4;
+  }
+
+  .default-amount {
+    flex: 4;
+  }
+
+  .last-used {
+    flex: 3;
+  }
+
+  .more-options-button {
+    flex: 1;
+  }
 }
+
 
 
 

@@ -42,7 +42,7 @@ function print(numLabels, text, success, always) {
  */
 
 var errorCallback = function(errorMessage) {
-  alert("Error: " + errorMessage);  
+  alert("Error: " + errorMessage);
 }
 
 function getCode(str) {

@@ -14,7 +14,7 @@ export default function FormDialog(props) {
 				<div className="body">
 					<Loading isFetchingData={props.isFetchingData}>
 						{props.children}
-						<Button onClick={props.onSave}>
+						<Button onClick={props.onSave} isLoading={props.isLoading}>
 							{props.submitButtonText ? props.submitButtonText : 'Save'}
 						</Button>
 					</Loading>

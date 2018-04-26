@@ -40,6 +40,7 @@ class TeamSettings extends React.Component {
 					isOpen={this.state.isCreatingMember} 
 					onSubmit={this.handleCreateMemberSubmit}
 					onCancel={this.handleToggleDialog}
+					isLoadingNewTeamMember={ui.isCreatingItem}
 				/>
 			</div>
 		)
