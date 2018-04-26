@@ -112,7 +112,7 @@ class Processes extends React.Component {
 	handleArchive(index) {
 		let p = this.props.data[index]
 		confirm({
-			title: `Are you sure delete (${p.code}) ${p.name}?`,
+			title: `Are you sure you want to delete (${p.code}) ${p.name}?`,
     	content: `This will not affect old tasks, but your team will not be able to create new tasks with this process type.`,
     	okText: `Yes, I'm sure`,
     	okType: 'danger',
