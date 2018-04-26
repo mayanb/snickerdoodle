@@ -1,3 +1,5 @@
+import { getTaskAmount } from './taskutils'
+
 export function toArray(obj) {
 	if (!obj) 
 		return []
@@ -71,8 +73,16 @@ export function sortByRank(a, b) {
 }
 
 export function consolidateInputsFromSameTask(tasks) {
+	const isANumber = (num) => !isNaN(Number(num))
 	const taskIDDict = {}
-	tasks.forEach(task => taskIDDict[task.input_task] = task)
+	tasks.forEach(task => {
+		const existingTask = taskIDDict[task.input_task]
+		let existingAmount = existingTask ? getTaskAmount(existingTask) : 0
+		const taskAmount = getTaskAmount(task)
+		if (existingTask) console.log('add to existing: ', taskAmount)
+		task.cumulativeAmount = (isANumber(existingAmount) && isANumber(taskAmount)) ? (existingAmount + taskAmount) : undefined
+		taskIDDict[task.input_task] = task
+	})
 	console.log('Number of duplicate Tasks filtered out:', tasks.length - Object.values(taskIDDict).length)
 	return Object.values(taskIDDict)
 }

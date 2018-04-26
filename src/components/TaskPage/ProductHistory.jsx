@@ -6,10 +6,12 @@ import { icon } from './TaskHelpers.jsx'
 import Loading from '../Loading/Loading'
 import Img from '../Img/Img'
 import { consolidateInputsFromSameTask } from '../../utilities/arrayutils'
+import { getTaskAmount } from '../../utilities/taskutils'
 
 class ProductHistory extends React.Component {
 	render() {
 		const { task, ancestors, descendents, ancestorsUI, descendentsUI } = this.props
+		const taskInputs = consolidateInputsFromSameTask(task.inputs)
 		return (
 			<div className="product-history">
 				<div className="title">
@@ -21,8 +23,8 @@ class ProductHistory extends React.Component {
 					</div>
 				</Loading>
 				<div className="focus-box">
-					{consolidateInputsFromSameTask(task.inputs).map(input => <TaskSummary task={input.input_task_n} key={input.id} />)}
-					<InputsLabel count={task.inputs.length} />
+					{taskInputs.map(input => <TaskSummary task={input.input_task_n} key={input.id} />)}
+					<InputsLabel count={taskInputs.length} />
 					<TaskSummary task={task} selected={true} />
 				</div>
 				<Loading isFetchingData={descendentsUI.isFetchingData}>
@@ -51,7 +53,7 @@ export default connect(mapStateToProps)(ProductHistory)
 
 
 function TaskSummary({ task, selected, history }) {
-	const amount = task.total_amount || (task.items && task.items.reduce((sum, item) => sum + Number(item.amount), 0))
+	const amount = getTaskAmount(task) // set on the front end to consolidate inputs from the same process
 	const formattedAmount = amount ? formatAmount(amount, task.process_type.unit) : '(Unknown Amount)'
 	const is_ancestor_flagged = !task.is_flagged && task.num_flagged_ancestors > 0
 	return (
