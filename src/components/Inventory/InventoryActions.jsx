@@ -11,9 +11,9 @@ import {
 	REQUEST_HISTORY,
 	REQUEST_HISTORY_SUCCESS,
 	REQUEST_HISTORY_FAILURE,
-} from '../../reducers/Inventory2ReducerExtension'
+} from '../../reducers/InventoryReducerExtension'
 
-import {  INVENTORY_2 } from '../../reducers/ReducerTypes'
+import {  INVENTORY } from '../../reducers/ReducerTypes'
 
 export function fetchInitialInventory(processIds, productIds) {
   return dispatch => {
@@ -55,7 +55,7 @@ export function selectInventory(index) {
   return {
     type: SELECT,
     index: index,
-    name: INVENTORY_2,
+    name: INVENTORY,
   }
 }
 
@@ -63,7 +63,7 @@ export function pageInventory(direction) {
   return {
     type: PAGE,
     direction: direction,
-    name: INVENTORY_2
+    name: INVENTORY
   }
 }
 
@@ -71,28 +71,28 @@ export function resetPageInventory(direction) {
 	return {
 		type: RESET_PAGE,
 		direction: direction,
-		name: INVENTORY_2
+		name: INVENTORY
 	}
 }
 
 function requestInventory() {
   return {
     type: REQUEST,
-    name: INVENTORY_2
+    name: INVENTORY
   }
 }
 
 function requestInventoryFailure(err) {
   return {
     type: REQUEST_FAILURE,
-    name: INVENTORY_2
+    name: INVENTORY
   }
 }
 
 function requestInventorySuccess(json, more, append=false) {
   return {
     type: REQUEST_SUCCESS,
-    name: INVENTORY_2,
+    name: INVENTORY,
     data: json,
     more: more,
     append: append,
@@ -111,7 +111,7 @@ export function fetchInventoryHistory(teamId, processId, productId) {
 
 function requestInventoryHistory() {
 	return {
-		name: INVENTORY_2,
+		name: INVENTORY,
 		type: REQUEST_HISTORY
 	}
 }
@@ -120,7 +120,7 @@ function requestInventoryHistoryFailure(err) {
 	console.error('Oh no! Something went wrong\n' + err)
 	return {
 		type: REQUEST_HISTORY_FAILURE,
-		name: INVENTORY_2,
+		name: INVENTORY,
 	}
 }
 
@@ -128,7 +128,7 @@ function requestInventoryHistorySuccess(json, processId, productId) {
 	return {
 		type: REQUEST_HISTORY_SUCCESS,
 		data: json,
-		name: INVENTORY_2,
+		name: INVENTORY,
 		processId: processId,
 		productId: productId,
 	}

@@ -20,7 +20,7 @@ export const WALKTHROUGH = 'WALKTHROUGH'
 export const TEAMS = 'TEAMS'
 export const PRODUCTION_TRENDS = 'PRODUCTION_TRENDS'
 export const MODAL = 'MODAL'
-export const INVENTORY_2 = 'INVENTORY_2'
+export const INVENTORY = 'INVENTORY'
 export const CSV = 'CSV'
 export const GOOGLE_SHEET = 'GOOGLE_SHEET'
 

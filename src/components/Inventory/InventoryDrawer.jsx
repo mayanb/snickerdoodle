@@ -78,13 +78,13 @@ class InventoryDrawer extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
-	let data = state.inventory2.data
-	let ui = state.inventory2.ui
+	let data = state.inventory.data
+	let ui = state.inventory.ui
 	let teamId = ui.activeUser && state.users.data[ui.activeUser] && state.users.data[ui.activeUser].user.team
 	let selectedInventory = data[ui.selectedItem] || {}
 	return {
 		userProfileId: state.users.data[state.users.ui.activeUser].user.id,
-		ui: state.inventory2.ui,
+		ui: state.inventory.ui,
 		teamId: teamId,
 		selectedInventory: selectedInventory,
 	}

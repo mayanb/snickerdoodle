@@ -1,11 +1,11 @@
 @import 'styles/constants.scss';
 
-.inventory2-container {
+.inventory-container {
 	width: calc(100vw - #{$nav-width});
 	height: fit-content;
 }
 
-.inventory2-content {
+.inventory-content {
 	display: flex;
 	height: calc(100% - #{$section-header-height});
 

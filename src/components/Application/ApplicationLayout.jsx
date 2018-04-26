@@ -23,7 +23,7 @@ import ProcessPage from '../ProcessPage/ProcessPage'
 import Registration from '../Registration/Registration'
 import Modal from '../Modal/Modal'
 import NewFeatures from '../NewFeatures/NewFeatures'
-import Inventory2 from '../Inventory2/Inventory'
+import Inventory from '../Inventory/Inventory'
 import RecipeList from '../RecipeList/RecipeList'
 import NewUserChecklist from '../NewUserChecklist/NewUserChecklist'
 
@@ -58,7 +58,7 @@ function App(props) {
       <div className="application-content">
         <Route exact path={"/"} component={Home} />
 	      <Route exact path={"/activity-log"} component={Activity} />
-	      <Route path="/inventory" component={Inventory2} />
+	      <Route path="/inventory" component={Inventory} />
         <Route exact path={"/labels/"} component={ZebraPrinter} />
         <Route path={"/zebra/"} component={ZebraPrinter} />
         <Route path={"/dymo/"} component={LabelPrinter} />

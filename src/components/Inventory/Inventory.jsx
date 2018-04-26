@@ -39,10 +39,10 @@ export class Inventory extends React.Component {
 	render() {
 		let { ui } = this.props
 		return (
-			<div className="inventory2-container">
+			<div className="inventory-container">
 				<ApplicationSectionHeader>Inventory</ApplicationSectionHeader>
 
-				<div className="inventory2-content">
+				<div className="inventory-content">
 					<div className="inventory-list-container">
 						<InventoryFilters
 							onFilter={this.handleFilter}
@@ -88,8 +88,8 @@ export class Inventory extends React.Component {
 
 const mapStateToProps = (state/*, props*/) => {
 	return {
-		data: state.inventory2.data,
-		ui: state.inventory2.ui,
+		data: state.inventory.data,
+		ui: state.inventory.ui,
 	}
 }
 
