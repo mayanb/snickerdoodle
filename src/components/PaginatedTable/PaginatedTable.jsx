@@ -5,7 +5,6 @@ import './styles/paginatedtable.css'
 /*
 
 takes in { data, ui, Row, TitleRow, onClick, onPagination }
-
 ui = {
   page_size: INT,
   currentPage: INT,
@@ -17,7 +16,7 @@ ui = {
 
 export default class PaginatedTable extends React.Component {
 	render() {
-		let {data, ui, TitleRow} = this.props
+		let {data, ui, TitleRow, filter} = this.props
 
     // TODO: change this to be if there are no items in current page && IS FETCHING 
 		if (!data) {
@@ -28,18 +27,16 @@ export default class PaginatedTable extends React.Component {
 
 
     if (!keys || keys.length === 0) {
-      return <div className="no-items"> No items </div>
+      return <div className="no-items"> No results. Try searching for something else. </div>
     }
 
     let firstIndex = ui.currentPage * ui.page_size
     let lastIndex = Math.min(keys.length, firstIndex + ui.page_size)
     let totalLen = keys.length
-   //keys = keys.slice(firstIndex, lastIndex)
-   
 
     return (
       <div className={(this.border?"":"border-none ") + "paginated-table"}>
-        { this.renderPagination(firstIndex, lastIndex, totalLen, this.handlePagination.bind(this)) }
+        { this.renderPagination(filter, firstIndex, lastIndex, totalLen, this.handlePagination.bind(this)) }
         <ul>
         {TitleRow && (
           <li className="header">
@@ -72,12 +69,7 @@ export default class PaginatedTable extends React.Component {
    return rows
   }
 
-  /*
-                      onArchive={this.props.onArchive}
-                    onDuplicate={this.props.onDuplicate}
-                  */
-
-	renderPagination(firstIndex, lastIndex, len, onPagination) {
+	renderPagination(filter, firstIndex, lastIndex, len, onPagination) {
 		let detail = `Showing ${firstIndex+1}-${lastIndex} of ${this.props.ui.more ? 'over ' : ''}${len} results`
 
     let disabledBack = this.canPage(firstIndex,lastIndex, len, -1)?"":" disabled"
@@ -85,7 +77,7 @@ export default class PaginatedTable extends React.Component {
 
     return (
       <div className="pagination">
-        <div className="pagination-info">{detail}</div>
+        <div className="pagination-count">{detail}</div>
 	      <div className="pagination-links">
 		      <span className={"pagination-link" + disabledBack} onClick={() => onPagination(-1)}>Prev</span>
 		      <span className={"pagination-pipe" + disabledBack + disabledFwd}>|</span>

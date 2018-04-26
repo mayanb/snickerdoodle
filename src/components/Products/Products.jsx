@@ -9,6 +9,7 @@ import ProductsListItem from './ProductsListItem'
 import CreateProductDialog from './CreateProductDialog'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
 import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
+import ElementFilter from '../Element/ElementFilter'
 import './styles/products.css'
 
 
@@ -18,13 +19,13 @@ class Products extends React.Component {
 
 	  this.state = {
 		  isAddingProduct: false,
-		  isAddingProcess: false,
 		  isArchiveOpen: false,
 		  isArchiving: false,
 		  archivingObjectIndex: null,
-		  isDuplicateOpen: false,
+		  isFiltering: false,
 	  }
 
+	  this.handleFilter = this.handleFilter.bind(this)
 	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
     this.handleCreateProduct = this.handleCreateProduct.bind(this)
@@ -39,29 +40,39 @@ class Products extends React.Component {
   render() {
     let { users, ui, data } = this.props
     let account_type = users.data[users.ui.activeUser].user.account_type
-    if (account_type !== 'a')
+    if (account_type !== 'a') {
     	this.props.history.push('/')
+    }
+
+    let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
 
 	  return (
 	  	<div className="products">
 			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
 			                                      title="Products" />
 
-					{ !ui.isFetchingData && (!data || !data.length) ? <ZeroState type="product" /> :
-				  	<ObjectList className="products" isFetchingData={ui.isFetchingData}>
-						  <PaginatedTable
-							  {...this.props}
-							  onPagination={this.handlePagination}
-							  Row={ProductsListItem}
-							  TitleRow={this.headerRow}
-							  extra={{onArchive: this.handleArchive}}
-						  />
-					  </ObjectList>
-					}
+					{ hasNone ? <ZeroState type="product" /> : this.renderTable() }
 			 		{this.renderDialog()}
 				  {this.renderArchiveDialog()}
 		  </div>
 	  )
+  }
+
+  renderTable() {
+  	return (
+  		<div>
+  			<ElementFilter onChange={this.handleFilter} className="product-filter" />
+	  		<ObjectList className="products" isFetchingData={this.props.ui.isFetchingData}>
+				  <PaginatedTable
+					  {...this.props}
+					  onPagination={this.handlePagination}
+					  Row={ProductsListItem}
+					  TitleRow={this.headerRow}
+					  extra={{onArchive: this.handleArchive}}
+				  />
+			  </ObjectList>
+		  </div>
+		)
   }
 
   renderDialog() {
@@ -103,6 +114,11 @@ class Products extends React.Component {
 	}
 
   /* EVENT HANDLERS */
+  handleFilter(filterText) {
+  	this.setState({ isFiltering: filterText && filterText.length })
+  	this.props.dispatch(actions.fetchProducts({ filter: filterText }))
+  }
+
   handlePagination(direction) {
     this.props.dispatch(actions.pageProducts(direction))
   }
