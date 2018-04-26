@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import pluralize from 'pluralize'
 import * as actions from './ProcessesActions.jsx'
 import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
@@ -148,6 +149,7 @@ class Processes extends React.Component {
   }
 
 	handleCreateProcess(newProcess) {
+		newProcess.unit = pluralize.singular(newProcess.unit)
   	this.props.dispatch(actions.postCreateProcess(newProcess))
 	  	.then((res) => {
 		  	let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
