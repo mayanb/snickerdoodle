@@ -17,17 +17,17 @@ class ProductHistory extends React.Component {
 				</div>
 				<Loading isFetchingData={ancestorsUI.isFetchingData}>
 					<div>
-						{consolidateInputsFromSameTask(ancestors).map(t => <TaskSummary task={t} key={t.id} />)}
+						{ancestors.map(t => <TaskSummary task={t} key={t.id} />)}
 					</div>
 				</Loading>
 				<div className="focus-box">
-					{task.inputs.map(input => <TaskSummary task={input.input_task_n} key={input.id} />)}
+					{consolidateInputsFromSameTask(task.inputs).map(input => <TaskSummary task={input.input_task_n} key={input.id} />)}
 					<InputsLabel count={task.inputs.length} />
 					<TaskSummary task={task} selected={true} />
 				</div>
 				<Loading isFetchingData={descendentsUI.isFetchingData}>
 					<div>
-						{consolidateInputsFromSameTask(descendents).map(t => <TaskSummary task={t} key={t.id} />)}
+						{descendents.map(t => <TaskSummary task={t} key={t.id} />)}
 					</div>
 				</Loading>
 			</div>
