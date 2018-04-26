@@ -1,40 +1,30 @@
 import React from 'react'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import './styles/layout.css'
+
 import Walkthrough from '../Walkthrough/Walkthrough'
 import CreateTeam from '../Walkthrough/CreateTeam'
 import Home from '../Home/Home'
 import Activity from '../Activity/Activity'
-
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
-
-import ZebraPrinter from '../OldComponents/ZebraPrinter.jsx'
+import ZebraPrinter from '../OldComponents/ZebraPrinter'
 import Navbar from '../Navbar/Navbar.jsx'
-import LabelPrinter from '../OldComponents/LabelPrinter.jsx'
+import LabelPrinter from '../OldComponents/LabelPrinter'
 import Inventory from '../Inventory/Inventory.jsx'
 import Task from '../TaskPage/TaskPage.jsx'
 import Goals from '../Goals/Goals'
-
 import PrivateRoute from '../Router/PrivateRoute'
 import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
 import TeamSettings from '../TeamSettings/TeamSettings'
 import Account from '../Account/Account'
-
 import TaskAttributeTest from '../TaskAttribute/TaskAttributeTest'
-import BCWrapper from '../D3BarChart/BCWrapper'
-
-import Sortable from '../Sortable/Index'
 import ProcessPage from '../ProcessPage/ProcessPage'
-
 import Registration from '../Registration/Registration'
-
 import Modal from '../Modal/Modal'
 import NewFeatures from '../NewFeatures/NewFeatures'
-
 import Inventory2 from '../Inventory2/Inventory'
-
 import NewUserChecklist from '../NewUserChecklist/NewUserChecklist'
 
 export default class ApplicationLayoutStable extends React.Component {
@@ -82,27 +72,8 @@ function App(props) {
         <Route path={"/goals"} component={Goals} />
         <Route path={"/account"} component={Account} />
         <Route path={"/googleconnect/:ext?"} component={Account} />
-        <Route path={"/bc/"} component={BCWrapper} />
-        <Route path={"/barcharttest/"} component={Sortable} />
         <Route path={"/checklist/"} component={NewUserChecklist} />
       </div>
     </div>
   )
 }
-
-
-
-
-
-/*
-
-12px - 15px
-
-8px - 10px;
-10px - 12.5px
-12px - 15px;
-14px - 17.5px;
-16px - 20px;
-18px - 
-
-*/

@@ -8,8 +8,11 @@ import ProcessesListItem from './ProcessesListItem'
 import CreateOrDuplicateProcessDialog from './CreateOrDuplicateProcessDialog'
 import './styles/processes.css'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
-import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import ZeroState from '../ObjectList/ObjectListZeroState'
+import { Modal } from 'antd'
+import ElementFilter from '../Element/ElementFilter'
+
+const { confirm } = Modal
 
 class Processes extends React.Component {
   constructor(props) {
@@ -17,14 +20,13 @@ class Processes extends React.Component {
 
 	this.state = {
 		isAddingProcess: false,
-		isArchiveOpen: false,
-		isArchiving: false,
-		archivingObjectIndex: null,
 		isDuplicateOpen: false,
 		isDuplicating: false,
 		duplicatingObjectIndex: null,
+		isFiltering: false,
 	}
 
+	this.handleFilter = this.handleFilter.bind(this)
 	this.handleSelectProcess = this.handleSelectProcess.bind(this)
 	this.handlePagination = this.handlePagination.bind(this)
 	this.handleToggleDialog = this.handleToggleDialog.bind(this)
@@ -42,29 +44,39 @@ class Processes extends React.Component {
   render() {
 		var { users, ui, data } = this.props
 		let account_type = users.data[users.ui.activeUser].user.account_type
-		if (account_type !== 'a')
+		if (account_type !== 'a') {
 			this.props.history.push('/')
+		}
+
+		let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
 
 		return (
 			<div className="processes-container">
 				<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
-					{ !ui.isFetchingData && (!data || !data.length) ? <ZeroState type="process" /> :
-						<ObjectList className="processes" isFetchingData={ui.isFetchingData}>
-							<PaginatedTable
-								{...this.props}
-								onClick={this.handleSelectProcess}
-								onPagination={this.handlePagination}
-								Row={ProcessesListItem}
-								TitleRow={this.renderHeaderRow}
-								extra={{onArchive: this.handleArchive, onDuplicate: this.handleDuplicate}}
-							/>
-						</ObjectList>
-					}
+					{ hasNone ? <ZeroState type="process" /> : this.renderTable() }
 					{this.renderDialog()}
-					{this.renderArchiveDialog()}
 					{this.renderDuplicateDialog()}
 			</div>
 		)
+  }
+
+  renderTable() {
+  	let { ui } = this.props
+  	return (
+  		<div>
+  		<ElementFilter className="process-filter" onChange={this.handleFilter}/>
+  		<ObjectList className="processes" isFetchingData={ui.isFetchingData}>
+				<PaginatedTable
+					{...this.props}
+					onClick={this.handleSelectProcess}
+					onPagination={this.handlePagination}
+					Row={ProcessesListItem}
+					TitleRow={this.renderHeaderRow}
+					extra={{onArchive: this.handleArchive, onDuplicate: this.handleDuplicate}}
+				/>
+			</ObjectList>
+			</div>
+  	)
   }
 
 	renderDialog() {
@@ -96,25 +108,23 @@ class Processes extends React.Component {
 		)
 	}
 
-	renderArchiveDialog() {
-		if (!this.state.isArchiveOpen) {
-			return null
-		}
-		let p = this.props.data[this.state.archivingObjectIndex]
-		return (
-			<ArchiveDialog
-				{...p}
-				type="process"
-				isArchiving={this.state.isArchiving}
-				onCancel={this.handleCancelArchive.bind(this)}
-				onSubmit={() => this.handleConfirmArchive()}
-			/>
-		)
+	handleArchive(index) {
+		let p = this.props.data[index]
+		confirm({
+			title: `Are you sure delete (${p.code}) ${p.name}?`,
+    	content: `This will not affect old tasks, but your team will not be able to create new tasks with this process type.`,
+    	okText: `Yes, I'm sure`,
+    	okType: 'danger',
+    	cancelText: 'Cancel',
+    	onOk: () => this.handleConfirmArchive(index),
+		})
 	}
 
 	renderDuplicateDialog() {
-		if (!this.state.isDuplicateOpen)
+		if (!this.state.isDuplicateOpen) {
 			return null
+		}
+
 		return (
 			<CreateOrDuplicateProcessDialog
 				isOpen={this.state.isDuplicateOpen}
@@ -131,6 +141,11 @@ class Processes extends React.Component {
 
 
   /* EVENT HANDLERS */
+
+  handleFilter(filterText) {
+  	this.setState({ isFiltering: filterText && filterText.length > 0})
+  	this.props.dispatch(actions.fetchProcesses({ filter: filterText }))	
+  }
 
 	handleCreateProcess(newProcess) {
   	this.props.dispatch(actions.postCreateProcess(newProcess))
@@ -152,10 +167,6 @@ class Processes extends React.Component {
 		this.setState({isAddingProcess: !this.state.isAddingProcess})
 	}
 
-	handleArchive(index) {
-		this.setState({ isArchiveOpen: true, archivingObjectIndex: index })
-	}
-
 	handleDuplicate(index) {
 		console.log("handleDuplicate")
 		this.setState({ isDuplicateOpen: true, duplicatingObjectIndex: index})
@@ -169,15 +180,9 @@ class Processes extends React.Component {
 		this.setState({isDuplicateOpen: false})
 	}
 
-	handleConfirmArchive() {
-		if (this.state.isArchiving) {
-			return 
-		}
-
-		let p = this.props.data[this.state.archivingObjectIndex]
-		this.setState({isArchiving: true})
-		this.props.dispatch(actions.postDeleteProcess(p, this.state.archivingObjectIndex))
-			.then(() => this.setState({isArchiving: false, isArchiveOpen: false}))
+	handleConfirmArchive(index) {
+		let p = this.props.data[index]
+		return this.props.dispatch(actions.postDeleteProcess(p, index))
 	}
 
 	handleDuplicateProcess(newProcess) {
