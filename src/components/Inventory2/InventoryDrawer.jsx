@@ -59,13 +59,14 @@ class InventoryDrawer extends React.Component {
 		this.setState({ isAddingAdjustment: !this.state.isAddingAdjustment })
 	}
 
-	handleSaveAdjustment(amount) {
+	handleSaveAdjustment(amount, explanation) {
 		this.handleToggleAddAdjustment()
 		this.props.dispatch(adjustmentActions.requestCreateAdjustment(
 			this.props.userProfileId,
 			this.props.selectedInventory.process_id,
 			this.props.selectedInventory.product_id,
-			amount
+			amount,
+			explanation
 		))
 			.then(() => {
 				this.fetchHistory(this.props.teamId, this.props.selectedInventory.process_id, this.props.selectedInventory.product_id)
