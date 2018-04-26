@@ -11,7 +11,6 @@ import Products from '../Products/Products'
 import ZebraPrinter from '../OldComponents/ZebraPrinter'
 import Navbar from '../Navbar/Navbar.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter'
-import Inventory from '../Inventory/Inventory.jsx'
 import Task from '../TaskPage/TaskPage.jsx'
 import Goals from '../Goals/Goals'
 import PrivateRoute from '../Router/PrivateRoute'
@@ -60,7 +59,6 @@ function App(props) {
         <Route exact path={"/"} component={Home} />
 	      <Route exact path={"/activity-log"} component={Activity} />
 	      <Route path="/inventory" component={Inventory2} />
-	      <Route exact path={"/old-inventory/:id?"} component={Inventory} />
         <Route exact path={"/labels/"} component={ZebraPrinter} />
         <Route path={"/zebra/"} component={ZebraPrinter} />
         <Route path={"/dymo/"} component={LabelPrinter} />
