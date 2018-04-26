@@ -3,14 +3,12 @@ import {emojify} from 'react-emojione'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Know when an ancestor of your task is flagged",
-	content: "When you visit a task's page on the dashboard or the app that has a flagged ancestor, we'll display this information prominently. You can review the flagged ancestors directly from the task page.",
+	title: "Better inventory adjustments.",
+	content: "Now, you can add an explanation to your inventory adjustments, eg. 'mistake' or 'delivery'.",
+	type: "improvement",
 }, {
-	title: "Flags everywhere on the mobile app!",
-	content: "You'll see flags on the homepage of the Polymer app now, along with an orange indication if the task has a flagged ancestor. You may need to force quit the app to see this update."
-}, {
-	title: "Task QR codes on the dashboard",
-	content: "We made it easier for you to go between the dashboard and the app. Scan the QR code on a task's dashboard page with the Polymer app to open it in the app."
+	title: "Search through processes and products.",
+	content: "We know those process and products lists can get long, so we added a search bar to help you find what you're looking for on the list pages."
 }]
 
 let HEADER = {fontSmoothing: 'antialiased', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}
@@ -68,5 +66,16 @@ function Feature({title, type, content}) {
 // 		</div>
 // 	),
 // 	type: 'improvement',
+// }]
+
+// const nfs = [{
+// 	title: "Know when an ancestor of your task is flagged",
+// 	content: "When you visit a task's page on the dashboard or the app that has a flagged ancestor, we'll display this information prominently. You can review the flagged ancestors directly from the task page.",
+// }, {
+// 	title: "Flags everywhere on the mobile app!",
+// 	content: "You'll see flags on the homepage of the Polymer app now, along with an orange indication if the task has a flagged ancestor. You may need to force quit the app to see this update."
+// }, {
+// 	title: "Task QR codes on the dashboard",
+// 	content: "We made it easier for you to go between the dashboard and the app. Scan the QR code on a task's dashboard page with the Polymer app to open it in the app."
 // }]
 
