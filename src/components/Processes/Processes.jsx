@@ -170,7 +170,6 @@ class Processes extends React.Component {
 	}
 
 	handleDuplicate(index) {
-		console.log("handleDuplicate")
 		this.setState({ isDuplicateOpen: true, duplicatingObjectIndex: index})
 	}
 
@@ -193,6 +192,7 @@ class Processes extends React.Component {
 		}
 		let p = this.props.data[this.state.duplicatingObjectIndex]
 		let json = newProcess
+		json.unit = pluralize.singular(json.unit)
 		json["duplicate_id"] = p.id
 		this.setState({isDuplicating: true})
 		this.props.dispatch(actions.postDuplicateProcess(json))
