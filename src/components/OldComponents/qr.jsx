@@ -20,7 +20,7 @@ function mountQR() {
 function init() {
   let check = dymo.label.framework.checkEnvironment()
   if (check.errorDetails.length > 0) {
-    console.error(
+    alert(
       `The dymo label software refused to connect. Please make sure the dymo app in your toolbar is running and refresh the page.` 
     )
   }
@@ -42,7 +42,7 @@ function print(numLabels, text, success, always) {
  */
 
 var errorCallback = function(errorMessage) {
-  console.error("Error: " + errorMessage);
+  alert("Error: " + errorMessage);
 }
 
 function getCode(str) {
@@ -94,7 +94,7 @@ function printQRs_zebra(uuids, task, notes) {
       device.send(zpl, undefined, errorCallback);
     })
   } catch (e) {
-    console.error(e.message || e)
+    alert(e.message || e)
   }
 }
 
@@ -141,7 +141,7 @@ function printQRs_dymo(uuids, qrcode) {
 
     img.src = url;
   }  catch(e) {
-    console.error(e.message || e)
+    alert(e.message || e)
   }
 }
 

@@ -5,7 +5,11 @@
     width: 100%;
     padding: 0 $object-list-right-padding 0 $object-list-left-padding;
     margin-bottom: 6px;
-    color: $elephant;
+    color: $gray-light;
+    -webkit-font-smoothing: antialiased;
     font-size: 12px;
+    border: 1px solid $gray-ultra-light;
+    border-left: none;
+    border-right: none;
 }
 

@@ -58,7 +58,7 @@ class Home extends React.Component {
 
 	showChecklist(team) {
 		team = team.toLowerCase()
-		return !isDandelion(team) && team !== 'endorfin' && team !== 'indichocolate' && team !== 'teammindo'
+		return !isDandelion(team) && team !== 'endorfin' && team !== 'indichocolate' && team !== 'teammindo' && team !== 'soma'
 	}
 }
 
