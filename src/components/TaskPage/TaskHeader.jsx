@@ -14,12 +14,12 @@ class TaskHeader extends React.Component {
 		const onBack = () => history.push('/activity-log')
 
 		return (
-			<div className={'task-header ' + (is_flagged ? 'flagged ' : ' ') + (num_flagged_ancestors !== 0 ? 'ancestor_is_flagged' : '')}>
+			<div className={'task-header ' + (is_flagged ? 'flagged ' : ' ') + (num_flagged_ancestors > 0 ? 'ancestor_is_flagged' : '')}>
 				<div className="title">
 					<i className="material-icons" onClick={onBack}>arrow_back</i>
 					{title}
 				</div>
-				{ num_flagged_ancestors !== 0 && <TaskAncestorFlagged tasks={flagged_ancestors}/> }
+				{ num_flagged_ancestors > 0 && <TaskAncestorFlagged tasks={flagged_ancestors}/> }
 				<button className="header-button" onClick={onToggleFlag}>
 					{ is_flagged ? 'Remove flag' : 'Flag this task'}
 				</button>

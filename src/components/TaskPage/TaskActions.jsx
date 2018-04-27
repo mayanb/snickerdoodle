@@ -13,24 +13,33 @@ import {
     MARK_OUTPUT_USED,
 } from '../../reducers/TaskReducerExtension'
 import {  TASK, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
+import * as actions from '../../reducers/APIDataActions'
 
 export function getTask(task) {
-
-  return function (dispatch) {
-    // dispatch an action that we are requesting a process
-    dispatch(requestTask())
-    // actually fetch 
-    return api.get(`/ics/tasks/${task}/`)
-      .end( function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestTaskFailure(err))
-        } else {
-          let task = res.body
-	        task.attributesWithValues = attributesWithValues(task.process_type.attributes, task.attribute_values)
-          dispatch(requestTaskSuccess(task))
-        }
-      })
+  let request = { 
+    url: `/ics/tasks/${task}`, 
+    query: {}
   }
+  return actions.fetch(TASK, request, null, res => {
+    let task = res.body
+    task.attributesWithValues = attributesWithValues(task.process_type.attributes, task.attribute_values)
+    task.taskIngredients = addInputsToTaskIngredients(task.task_ingredients, task.inputs)
+    return task
+  })
+}
+
+function addInputsToTaskIngredients(taskIngredients, inputs) {
+  return taskIngredients.map(ta => {
+    const { ingredient } = ta
+    // add all the inputs for this task ingredient
+    ta.inputs = inputs.filter(input => {
+      return ingredient.process_type.id === input.input_task_n.process_type &&
+        ingredient.product_type.id === input.input_task_n.product_type
+    })
+    // set the process_type to be the full object
+    ta.inputs.forEach(i => i.input_task_n.process_type = ingredient.process_type)
+    return ta
+  })
 }
 
 function attributesWithValues(attributes, attributeValues) {
@@ -40,29 +49,6 @@ function attributesWithValues(attributes, attributeValues) {
 		attribute.value = valueObject ? valueObject.value : ''
 		return attribute
 	})
-}
-
-function requestTask() {
-  return {
-    type: REQUEST,
-    name: TASK
-  }
-}
-
-function requestTaskFailure(err) {
-  return {
-    type: REQUEST_FAILURE,
-    name: TASK
-
-  }
-}
-
-function requestTaskSuccess(json) {
-  return {
-    type: REQUEST_SUCCESS,
-    name: TASK,
-    data: json, 
-  }
 }
 
 export function getTaskAncestors(task) {
