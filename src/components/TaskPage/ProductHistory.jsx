@@ -27,7 +27,7 @@ class ProductHistory extends React.Component {
 					</div>
 				</Loading>
 				<div className="focus-box">
-					{task.taskIngredients.map(e => this.renderTaskIngredient(e))}
+					{task.task_ingredients.map(e => this.renderTaskIngredient(e))}
 					<InputsLabel count={task.inputs.length} />
 					<TaskSummary task={task} selected={true} />
 				</div>

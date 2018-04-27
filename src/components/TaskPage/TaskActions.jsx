@@ -23,7 +23,7 @@ export function getTask(task) {
   return actions.fetch(TASK, request, null, res => {
     let task = res.body
     task.attributesWithValues = attributesWithValues(task.process_type.attributes, task.attribute_values)
-    task.taskIngredients = addInputsToTaskIngredients(task.task_ingredients, task.inputs)
+    task.task_ingredients = addInputsToTaskIngredients(task.task_ingredients, task.inputs)
     return task
   })
 }
