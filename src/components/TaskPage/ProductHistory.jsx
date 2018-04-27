@@ -55,7 +55,6 @@ class ProductHistory extends React.Component {
 	renderTaskIngredient(taskIngredient) {
 		let formattedTI = { 
 			...taskIngredient,
-			isTaskIngredient: true,
 			process_type: taskIngredient.ingredient.process_type, 
 			product_type: taskIngredient.ingredient.product_type,
 			total_amount: taskIngredient.actual_amount,
