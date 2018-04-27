@@ -1,7 +1,7 @@
 import React from 'react'
 import ApplicationSectionHeader from './ApplicationSectionHeader'
 import './styles/applicationsectionheaderwithbutton.css'
-import { Button } from 'antd'
+import Button from '../Button/Button'
 
 export default class ApplicationSectionHeaderWithButton extends React.Component {
 	render() {

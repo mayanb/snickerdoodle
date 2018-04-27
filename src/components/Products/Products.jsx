@@ -20,9 +20,6 @@ class Products extends React.Component {
 
 	  this.state = {
 		  isAddingProduct: false,
-		  isArchiveOpen: false,
-		  isArchiving: false,
-		  archivingObjectIndex: null,
 		  isFiltering: false,
 	  }
 
