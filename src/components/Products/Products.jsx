@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Modal } from 'antd'
 import * as actions from './ProductsActions.jsx'
 import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
@@ -8,10 +9,10 @@ import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDialog from './CreateProductDialog'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
-import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
 import ElementFilter from '../Element/ElementFilter'
 import './styles/products.css'
 
+const { confirm } = Modal
 
 class Products extends React.Component {
   constructor(props) {
@@ -51,10 +52,8 @@ class Products extends React.Component {
 	  	<div className="products">
 			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
 			                                      title="Products" />
-
 					{ hasNone ? <ZeroState type="product" /> : this.renderTable() }
 			 		{this.renderDialog()}
-				  {this.renderArchiveDialog()}
 		  </div>
 	  )
   }
@@ -86,22 +85,6 @@ class Products extends React.Component {
 		  />
 	  )
   }
-
-	renderArchiveDialog() {
-		if (!this.state.isArchiveOpen) {
-			return null
-		}
-		let p = this.props.data[this.state.archivingObjectIndex]
-		return (
-			<ArchiveDialog
-				{...p}
-				type="product"
-				isArchiving={this.state.isArchiving}
-				onCancel={this.handleCancelArchive.bind(this)}
-				onSubmit={() => this.handleConfirmArchive()}
-			/>
-		)
-	}
 
 	headerRow() {
 		return (
@@ -142,22 +125,19 @@ class Products extends React.Component {
 	}
 
 	handleArchive(index) {
-		this.setState({ isArchiveOpen: true, archivingObjectIndex: index })
+		let p = this.props.data[index]
+		confirm({
+			title: `Are you sure you want to delete ${p.name} (${p.code})?`,
+			content: "Your old tasks will be unaffected, but you won't be able to make new tasks with this product type.",
+			okText: 'Yes, I\'m sure',
+			okType: 'danger',
+			onOk: () => this.handleConfirmArchive(index),
+			onCancel: () => {}
+		})
 	}
 
-	handleCancelArchive() {
-		this.setState({isArchiveOpen: false})
-	}
-
-	handleConfirmArchive() {
-		if (this.state.isArchiving) {
-			return
-		}
-
-		let p = this.props.data[this.state.archivingObjectIndex]
-		this.setState({isArchiving: true})
-		this.props.dispatch(actions.postDeleteProduct(p, this.state.archivingObjectIndex))
-			.then(() => this.setState({isArchiving: false, isArchiveOpen: false}))
+	handleConfirmArchive(index) {
+		return this.props.dispatch(actions.postDeleteProduct(this.props.data[index], index))
 	}
 
 }

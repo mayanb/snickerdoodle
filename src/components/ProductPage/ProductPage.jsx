@@ -48,7 +48,7 @@ class ProductPage extends React.Component {
 		)
 	}
 
-	handleArchive(recipe, index) {
+	handleArchive() {
 		confirm({
 			title: `Are you sure you want to delete ${this.props.data.name} (${this.props.data.code})?`,
 			content: "Your old tasks will be unaffected, but you won't be able to make new tasks with this product type.",
