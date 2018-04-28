@@ -1,0 +1,78 @@
+@import '../../../styles/constants.scss';
+
+.recipe {
+	display: flex;
+	.recipe-item-field {
+		color: $gray-dark;
+		display: flex;
+		flex: 1;
+		text-align: left;
+		overflow: hidden;
+		max-height: 20px;
+		white-space:nowrap;
+
+		& > span {
+			padding-right: 8px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+
+	.list-item-recipe-yield {
+		color: $elephant;
+		-webkit-font-smoothing: antialiased;		
+		max-height: 20px;
+		width:284px;
+		& > span { padding: 0; }
+	}
+	
+	.process-attributes-header {
+		display: flex;
+		
+		& > span {
+			flex: 1;
+		}
+		
+		& > button {
+			flex: 0;
+			white-space: nowrap;
+		}
+	}
+	
+	img, i {
+		height: 16px;
+		margin-right: 4px;
+	}
+}
+
+
+.recipe-expanded {
+	margin-top: 16px;
+}
+
+.recipe.create-recipe {
+	flex-direction: column;
+
+	.recipe-stage-select {
+		display: flex;
+	}
+}
+
+.element-spinner {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.process-type-link {
+	vertical-align: middle;
+	cursor: pointer;
+	i {
+		font-size: 14px;
+		vertical-align: middle;
+		margin-left: 4px;
+		color: rgba(255,255,255,0.5);
+	}
+}

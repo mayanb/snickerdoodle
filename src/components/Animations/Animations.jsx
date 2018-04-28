@@ -6,10 +6,10 @@ export function Slide({children}) {
 	return (
 		<CSSTransitionGroup 
 			transitionName="slide" 
-			transitionEnterTimeout={400} 
+			transitionEnterTimeout={300} 
 			transitionLeaveTimeout={200}
 		>
-			 { children && React.cloneElement(children, {key: 1}) }
+			 {children}
 		</CSSTransitionGroup>
 	)
 }

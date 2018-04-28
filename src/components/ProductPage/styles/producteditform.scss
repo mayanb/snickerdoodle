@@ -1,0 +1,20 @@
+.product-edit-form {
+    .code-and-name {
+        display: flex;
+    
+        .code-group {
+            flex: 1;
+        }
+    }
+
+    .name-group {
+        flex: 2;
+        margin-left: 20px;
+    }
+
+    .button-wide {
+        flex: 1;
+        width: 100%;
+    }
+}
+

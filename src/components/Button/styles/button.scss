@@ -3,6 +3,7 @@
 .button {
 	border-radius: 2px;
 	font-size: 14px;
+	color: white;
 
 	&:hover {
 		box-shadow: rgba(0,0,0,0.3) 0 2px 6px;
@@ -26,6 +27,19 @@
 .button.button-dark-gray {
 	background-color: $gray;
 	color: white;
+}
+
+.button.button-dashed {
+	background-color: rgba(0,0,0,0);
+	color: $gray;
+	border: 1px dashed $gray-light;
+	span { color: $gray }
+	&:hover {
+		color: $primary;
+		border-color: $primary;
+		box-shadow: none;
+		span { color: $primary; }
+	}
 }
 
 .button.button-blue-outline {

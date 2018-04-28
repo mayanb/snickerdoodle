@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import * as actions from './ProcessAttributeActions'
-import Wrapper from './ProcessAttributeWrapper'
+import ElementCard from '../Element/ElementCard'
 import Submissions from './ProcessAttributeSubmissions'
 import ProcessAttributeDatatype from './ProcessAttributeDatatype'
 import ProcessAttributeField from './ProcessAttributeField'
@@ -31,21 +31,21 @@ class ProcessAttribute extends React.Component {
 		let { editingName, editingType } = this.state
 		if (isSelected) {
 			return (
-				<Wrapper className="selected" index={rank} onDelete={onDelete}>
+				<ElementCard selected className="process-attr-selected" handle index={rank} onDelete={onDelete}>
 					<div className="process-attr-inputs">
 						<ProcessAttributeField focus edit name="Name" value={editingName} onChange={(e) => this.handleChange('editingName', e.target.value)} />
 						<ProcessAttributeField edit select name="Type" value={editingType} onChange={(e) => this.handleChange('editingType', e.value)} />
 					</div>
 					<Submissions name={editingName} recent={last_five_values} datatype={datatype}/>
 					<Button wide onClick={() => onUpdate({name: editingName, datatype: editingType})}>Save</Button>
-				</Wrapper>
+				</ElementCard>
 			)
 		}
 		return (
-			<Wrapper index={rank} onDelete={onDelete} onClick={onSelect}>
+			<ElementCard className="process-attribute" index={rank} handle onDelete={onDelete} onClick={onSelect}>
 				<span className="process-attr-name">{name}</span>
 				<ProcessAttributeDatatype type={datatype}/>
-			</Wrapper>
+			</ElementCard>
 		)
 	}
 
