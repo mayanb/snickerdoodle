@@ -9,6 +9,8 @@ import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDialog from './CreateProductDialog'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
+import Dialog from '../Card/Dialog'
+import Button from '../Card/Button'
 import ElementFilter from '../Element/ElementFilter'
 import './styles/products.css'
 
@@ -21,6 +23,7 @@ class Products extends React.Component {
 	  this.state = {
 		  isAddingProduct: false,
 		  isFiltering: false,
+		  shouldDisplayRecipeModal: !window.localStorage.getItem("CREATE_RECIPE_INFO"),
 	  }
 
 	  this.handleFilter = this.handleFilter.bind(this)
@@ -29,27 +32,32 @@ class Products extends React.Component {
     this.handleCreateProduct = this.handleCreateProduct.bind(this)
 	  this.handleArchive = this.handleArchive.bind(this)
 	  this.handleSelect = this.handleSelect.bind(this)
+	  this.handleCloseCreateRecipeModal = this.handleCloseCreateRecipeModal.bind(this)
   }
 
   // fetch products on load
   componentDidMount() {
     this.props.dispatch(actions.fetchProducts())
+    this.props.dispatch(actions.fetchRecipes())
   }
 
   render() {
-    let { users, ui, data } = this.props
+    let { users, ui, data, recipeUI, recipeData } = this.props
+    let { shouldDisplayRecipeModal } = this.state
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type !== 'a') {
     	this.props.history.push('/')
     }
 
     let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
+    let hasRecipes = !recipeUI.isFetchingData && (recipeData && recipeData.length > 0)
 
 	  return (
 	  	<div className="products">
 			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
 			                                      title="Products" />
 					{ hasNone ? <ZeroState type="product" /> : this.renderTable() }
+					{ (!hasNone && hasRecipes) || !shouldDisplayRecipeModal ? null : this.renderCreateRecipeModal()}
 			 		{this.renderDialog()}
 		  </div>
 	  )
@@ -83,6 +91,17 @@ class Products extends React.Component {
 	  )
   }
 
+  renderCreateRecipeModal() {
+  	return(
+			<Dialog onToggle={this.handleCloseCreateRecipeModal} className='new-features-card'>
+				<div>hi</div>
+				<div style={{display: 'flex', alignItems: 'flex-end', 'justifyContent': 'center', marginTop: '24px'}}>
+					<Button link onClick={this.handleCloseCreateRecipeModal}>Close</Button>
+				</div>
+			</Dialog>
+  	)
+  }
+
 	headerRow() {
 		return (
 			<ObjectListHeader>
@@ -96,6 +115,11 @@ class Products extends React.Component {
 	}
 
   /* EVENT HANDLERS */
+  handleCloseCreateRecipeModal() {
+  	this.setState({shouldDisplayRecipeModal: false})
+  	window.localStorage.setItem("CREATE_RECIPE_INFO", true)
+  }
+
   handleFilter(filterText) {
   	this.setState({ isFiltering: filterText && filterText.length })
   	this.props.dispatch(actions.fetchProducts({ filter: filterText }))
@@ -145,7 +169,9 @@ const mapStateToProps = (state/*, props*/) => {
   return {
     data: state.products.data,
     ui: state.products.ui,
-    users: state.users
+    users: state.users,
+    recipeData: state.recipes.data,
+    recipeUI: state.recipes.ui
   }
 }
 
