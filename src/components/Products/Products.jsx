@@ -92,9 +92,20 @@ class Products extends React.Component {
   }
 
   renderCreateRecipeModal() {
+  	let HEADER = {fontSmoothing: 'antialiased', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}
+	let H1 = {color: "#0073F9", padding: "0 8px"}
+
   	return(
 			<Dialog onToggle={this.handleCloseCreateRecipeModal} className='new-features-card'>
-				<div>hi</div>
+				<div style={{margin: "-16px"}}>
+					<div style={HEADER} className="new-feature-header">
+						<h1 style={H1}>Create a Recipe</h1>
+					</div>
+
+					<div className="features">
+						<span className="nf-content">Create your first Recipe by clicking on one of your products. You can then define recipes on its product page by adding instructions and ingredients to your recipe.</span>
+					</div>
+				</div>
 				<div style={{display: 'flex', alignItems: 'flex-end', 'justifyContent': 'center', marginTop: '24px'}}>
 					<Button link onClick={this.handleCloseCreateRecipeModal}>Close</Button>
 				</div>
