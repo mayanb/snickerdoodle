@@ -13,7 +13,7 @@ import MustConnectGoogleDialog from './MustConnectGoogleDialog'
 import './styles/activity.css'
 import ActivityListItem from './ActivityListItem'
 import ObjectList from '../ObjectList/ObjectList'
-import ObjectListHeader from '../ObjectList/ObjectListHeader'
+import ActivityListHeader from './ActivityListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import * as actions from "../Processes/ProcessesActions";
 import './styles/activitylist.css'
@@ -39,6 +39,8 @@ class Activity extends React.Component {
 			mustConnectGoogleDialog: false,
 			mustEnablePopupsDialog: false,
 		}
+		
+		this.handlePagination = this.handlePagination.bind(this)
 	}
 	
 	toggleDialog(dialog) {
@@ -96,7 +98,7 @@ class Activity extends React.Component {
 							data={this.state.processes}
 							ui={this.props.ui}
 							Row={ActivityListItem}
-							TitleRow={ActivityTableHeader}
+							TitleRow={ActivityListHeader}
 							onClick={this.handleSelect}
 							onPagination={this.handlePagination}
 						/>
@@ -191,20 +193,6 @@ class Activity extends React.Component {
 				})
 			})
 	}
-}
-
-function ActivityTableHeader() {
-	return (
-		<ObjectListHeader>
-			<div className="activity-list-item activity-list-header">
-				<div className="process-code"/>
-				<div className="process-name">Process Type</div>
-				<div className="product-code">Product Type</div>
-				<div className="runs">Runs</div>
-				<div className="outputs">Amount</div>
-			</div>
-		</ObjectListHeader>
-	)
 }
 
 function LittleHeader(props) {

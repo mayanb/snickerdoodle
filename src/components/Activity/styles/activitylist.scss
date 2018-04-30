@@ -1,17 +1,16 @@
+@import 'styles/constants.scss';
+
 .activity-list-item {
 	width: 100%;
 	display: flex;
-
-	.paginated-table.border-none li.header {
-		border-bottom: none; //override PaginatedTable header border
-	}
+	cursor: pointer;
 
 	.process-code {
 		flex: 2;
 	}
 
 	.process-name {
-		flex: 3;
+		flex: 4;
 	}
 
 	.product-code {
@@ -24,5 +23,27 @@
 	
 	.outputs {
 		flex: 3;
+	}
+	
+	.view-all-tasks {
+		flex: 3;
+		color: $primary-light;
+		visibility: hidden;
+		text-align: center;
+	}
+	
+	&:hover .view-all-tasks {
+		visibility: visible;
+	}
+}
+
+.object-list-header {
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+	font-size: 14px;
+	
+	&>div {
+		margin-top: 12px;
+		margin-bottom: 12px;
 	}
 }

@@ -25,6 +25,7 @@ export default function ActivityListItem({ item, onClick }) {
 			<OverflowSafeText className="outputs">
 				{formatAmount(Number(outputs), process_unit)}
 			</OverflowSafeText>
+			<div className="view-all-tasks">View all tasks</div>
 		</ObjectListItem>
 	)
 }
