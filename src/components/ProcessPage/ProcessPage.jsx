@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Modal } from 'antd'
 import * as actions from '../Processes/ProcessesActions'
-import ProcessPageHeader from './ProcessPageHeader'
-import ArchiveDialog from '../ArchiveDialog/ArchiveDialog'
+import { ElementHeader, ElementContent } from '../Element/Element'
 import * as processActions from '../Processes/ProcessesActions'
 import ProcessInformation from './ProcessInformation'
 import ProcessAttributeList from '../ProcessAttribute/ProcessAttributeList'
@@ -11,13 +11,14 @@ import './styles/processpage.css'
 import Loading from '../Loading/Loading'
 import CreateOrDuplicateProcessDialog from '../Processes/CreateOrDuplicateProcessDialog'
 
+const { confirm } = Modal
 
 class ProcessPage extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state ={
-			isArchiveOpen: false,
-			isArchiving: false,
+		this.state = {
+			isDuplicateOpen: false,
+			isDuplicating: false,
 		}
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleDuplicate = this.handleDuplicate.bind(this)
@@ -31,7 +32,7 @@ class ProcessPage extends React.Component {
 	}
 
 	render() {
-		let { data, dispatch, history, ui } = this.props
+		let { data, history, ui } = this.props
 
 		if (!data) {
 			return <span>Loading... </span>
@@ -39,9 +40,9 @@ class ProcessPage extends React.Component {
 
 		return (
 			<div className="process-page">
-				<ProcessPageHeader processName={data.name} onBack={() => history.push('/processes')}/>
-				<Loading isfetchingData={this.state.isArchiving}>
-					<div className="process-page-content">
+				<ElementHeader title={'Processes'} name={data.name} onBack={() => history.push('/processes')}/>
+				<Loading isFetchingData={ui.isFetchingData}>
+					<ElementContent>
 						<ProcessInformation
 							process={data}
 							onArchive={this.handleArchive}
@@ -50,25 +51,10 @@ class ProcessPage extends React.Component {
 							isSavingEdit={ui.isEditingItem}
 						/>
 						<ProcessAttributeList process={data} />
-					</div>
-					{this.renderArchiveDialog(data, dispatch, history)}
+					</ElementContent>
 					{this.renderDuplicateDialog()}
 				</Loading>
 			</div>
-		)
-	}
-
-	renderArchiveDialog(process, dispatch, history) {
-		if (!this.state.isArchiveOpen)
-			return null
-
-		return (
-			<ArchiveDialog
-				{...this.props.data}
-				isArchiving={this.state.isArchiving}
-				onCancel={this.handleCancelArchive.bind(this)}
-				onSubmit={() => this.handleConfirmArchive()}
-			/>
 		)
 	}
 
@@ -88,25 +74,20 @@ class ProcessPage extends React.Component {
 		)
 	}
 
-	handleArchive() {
-		this.setState({ isArchiveOpen: true })
-	}
-
-	handleCancelArchive() {
-		this.setState({isArchiveOpen: false})
+	handleArchive(index) {
+		confirm({
+			title: `Are you sure you want to delete ${this.props.data.name} (${this.props.data.code})?`,
+			content: "Your old tasks will be unaffected, but you won't be able to make new tasks with this process type.",
+			okText: 'Yes, I\'m sure',
+			okType: 'danger',
+			onOk: () => this.handleConfirmArchive(),
+			onCancel: () => {}
+		})
 	}
 
 	handleConfirmArchive() {
-		if (this.state.isArchiving) {
-			return 
-		}
-
-		this.setState({isArchiving: true})
 		this.props.dispatch(actions.postDeleteProcess(this.props.data, this.props.index))
-			.then(() => {
-				this.setState({ isArchiving: false, isArchiveOpen: false })
-				this.props.history.push('/processes')
-			})
+			.then(() => this.props.history.push('/processes'))
 			.catch(e => console.log(e))
 	}
 

@@ -1,24 +1,40 @@
 import React from 'react'
-import Icon from '../Card/Icon'
+import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
+import Img from '../Img/Img'
+import Button from '../Button/Button'
+import './styles/element.css'
 
-export function ElementHeader(props) {
-
-
+export function ElementHeader({title, name, onBack}) {
 	return (
-		<div className="products-card-section products-card-header">
-			<div className="products-card-icon" style={{height: "40px"}}>
-					<Icon src={props.icon?ic(props.icon):false} size="40px" content={" "}/>
-				</div>
-				<h1 className="products-card-code">
-					{`${props.name} (${props.code})`}
-				</h1>
-				<div>
-					{props.actions}
-				</div>
+		<ApplicationSectionHeader>
+			<div className="element-header">
+				<i className="material-icons" onClick={onBack}>arrow_back</i>
+				<span>{`${title} / ${name}`}</span>
 			</div>
+		</ApplicationSectionHeader>
 	)
 }
 
-function ic(str = "abcd") {
-	return `${str.substring(0, str.length-4)}@3x`
+export function ElementContent({children}) {
+	return (
+		<div className="element-content">
+			{children}
+		</div>
+	)
+}
+
+export function ElementTitle({icon, text, buttonTitle, onClick, isLoading}) {
+	return (
+		<div className="element-title">
+			<div className="element-title-name">
+				<Img src={ic(icon || 'default.png')} height="30px" />
+				<span>{text}</span>
+			</div>
+			{ buttonTitle && <Button type='gray' isLoading={isLoading} onClick={onClick}>{buttonTitle}</Button> }
+		</div>
+	)
+}
+
+function ic(icon) {
+	return icon.substring(0, icon.length - 4) + "@3x"
 }

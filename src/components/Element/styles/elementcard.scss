@@ -1,0 +1,73 @@
+@import 'styles/constants.scss';
+
+.element-card-wrapper {
+	display: flex;
+	//align-items: center;
+
+	.process-attr-handle, .process-attr-delete {
+		flex: 0;
+		display: flex;
+		margin-top: 26px;
+		//align-items: center;
+		i {
+			vertical-align:middle;
+			font-size: 16px;
+			color: $primary;
+			visibility: hidden;
+		}
+		span {
+			vertical-align: middle;
+			width: 32px;
+			max-width: 32px;
+			overflow-x: hidden;
+			color: $gray-light;
+		}
+	}
+
+	.element-card {
+		flex: 1;
+		cursor: pointer;
+		box-shadow: rgba($gray-ultra-light, 0.1) 0 0 10px 0;
+		margin: 8px 0;
+		padding: 16px;
+	}
+
+	.process-attr-handle > span {
+		flex: 1;
+	}
+
+	.process-attr-delete {
+		margin-left: 16px;
+		cursor: pointer;
+	}
+}
+
+.element-card-wrapper.selected {
+	.element-card {
+		box-shadow: rgba($gray-ultra-light, 0.2) 0 0 10px 0;
+	}
+
+	div.process-attr-handle i, div.process-attr-handle span {
+		visibility: visible;
+		color: $gray-light;
+	}
+
+	div.process-attr-delete i, div.process-attr-delete span {
+		visibility: visible;
+	}
+}
+
+/* HOVER STUFF */
+.element-card-wrapper {
+	&:hover {
+		.process-attr-handle i {
+			visibility: visible;
+		}
+		.process-attr-delete i {
+			visibility: visible;
+		}
+		.element-card {
+			box-shadow: rgba($gray-ultra-light, 0.2) 0 0 10px 0;
+		}
+	}
+}

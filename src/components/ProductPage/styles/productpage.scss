@@ -1,0 +1,48 @@
+@import '../../../styles/constants.scss';
+
+.product-page {
+	width: 100%;
+	background-color: white;
+
+	.product-page-recipe-list {
+		flex: 5;
+		background-color: white;
+	}
+
+	.product-information {
+		flex: 3;
+	}
+}
+
+.product-information {
+	padding: 0 36px;
+	background-color: $background-color;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 60px;
+	flex: 1;
+
+	.product-basic-information-container {
+		flex: 1;
+	}
+
+	.product-information-basic {
+		.piece-of-info {
+			display: flex;
+			flex-direction: column;
+			padding: 12px 0;
+
+			&>span:last-child {
+				margin-top: 8px;
+			}
+
+			.no-description {
+				color: $gray-light;
+			}
+
+			.emphasis {
+				font-weight: 700;
+			}
+		}
+	}
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import ApplicationSectionHeader from './ApplicationSectionHeader'
 import './styles/applicationsectionheaderwithbutton.css'
+import Button from '../Button/Button'
 
 export default class ApplicationSectionHeaderWithButton extends React.Component {
 	render() {
@@ -8,7 +9,7 @@ export default class ApplicationSectionHeaderWithButton extends React.Component 
 		return (
 			<ApplicationSectionHeader>
 				{title}
-				<button className="header-button" onClick={onToggleDialog}>{buttonText}</button>
+				<Button ghost className="header-button" onClick={onToggleDialog}>{buttonText}</Button>
 			</ApplicationSectionHeader>
 		)
 	}

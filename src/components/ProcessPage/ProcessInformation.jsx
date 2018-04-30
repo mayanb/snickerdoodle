@@ -1,9 +1,8 @@
 import React from 'react'
 import {pluralize} from '../../utilities/stringutils'
-import Img from '../Img/Img'
-import Button from '../Button/Button'
 import ProcessPageEditForm from './ProcessPageEditForm'
-import ProcessEditForm from "./ProcessEditForm";
+import ProcessEditForm from "./ProcessEditForm"
+import { ElementTitle } from '../Element/Element'
 
 export default class ProcessInformation extends React.Component {
 	constructor(props) {
@@ -23,7 +22,7 @@ export default class ProcessInformation extends React.Component {
 		const { icon, code, name } = process
 		return (
 			<div className="process-information">
-				<ProcessInformationHeader
+				<ElementTitle
 					icon={icon}
 					text={`(${code}) ${name}`}
 					buttonTitle={this.state.isEditing ? 'Cancel' : 'Edit'}
@@ -63,22 +62,6 @@ export default class ProcessInformation extends React.Component {
 			unit: unit
 		}).then(() => this.setState({ isEditing: false }))
 	}
-}
-
-function ProcessInformationHeader({icon, text, buttonTitle, onClick, isLoading}) {
-	return (
-		<div className="process-information-header">
-			<div className="process-name">
-				<Img src={ic(icon)} height="30px" />
-				<span>{text}</span>
-			</div>
-			<Button type='gray' isLoading={isLoading} onClick={onClick}>{buttonTitle}</Button>
-		</div>
-	)
-}
-
-function ic(icon) {
-	return icon.substring(0, icon.length - 4) + "@3x"
 }
 
 function ProcessBasicInformation({ code, name, output_desc, default_amount, unit}) {

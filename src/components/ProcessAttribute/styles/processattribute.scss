@@ -1,25 +1,10 @@
 @import 'styles/constants.scss';
 @import './processattributefield.scss';
 
-.process-attr-wrapper {
-	display: flex;
-	align-items: center;
-	.process-attr-handle, .process-attr-delete {
-		flex: 0;
-	}
-	.process-attribute {
-		flex: 1;
-	}
-}
-
 .process-attribute {
-	cursor: pointer;
-	box-shadow: rgba($gray-ultra-light, 0.1) 0 0 10px 0;
-	margin: 8px 0;
-	padding: 16px;
 	display: flex;
 
-	div, .process-attr-name, .process-attr-handle > span {
+	div, .process-attr-name {
 		flex: 1;
 	}
 
@@ -28,33 +13,10 @@
 	}
 }
 
-.process-attr-delete, .process-attr-handle {
-	display: flex;
-	align-items: center;
-	i {
-		vertical-align:middle;
-		font-size: 16px;
-		color: $primary;
-		visibility: hidden;
-	}
-	span {
-		vertical-align: middle;
-		width: 32px;
-		max-width: 32px;
-		overflow-x: hidden;
-		color: $gray-light;
-	}
-}
-
-.process-attr-delete {
-	margin-left: 16px;
-}
-
-.process-attr-wrapper.selected, .process-attribute-new  {
-	.process-attribute {
+.process-attr-selected, .process-attribute-new  {
 		display: flex;
 		flex-direction: column;
-		box-shadow: rgba($gray-ultra-light, 0.2) 0 0 10px 0;
+		margin-right: 32px;
 
 		& > div.process-attr-inputs {
 			display: flex;
@@ -65,32 +27,3 @@
 			}
 		}
 	}
-
-}
-
-.process-attribute-new {
-	div.process-attr-handle i, span {
-		visibility: visible;
-		color: $gray-light;
-	}
-
-	.process-attribute {
-		margin-right: 32px;
-	}
-}
-
-
-/* HOVER STUFF */
-.process-attr-wrapper {
-	&:hover {
-		.process-attr-handle i {
-			visibility: visible;
-		}
-		.process-attr-delete i {
-			visibility: visible;
-		}
-		.process-attribute {
-			box-shadow: rgba($gray-ultra-light, 0.2) 0 0 10px 0;
-		}
-	}
-}

@@ -1,0 +1,29 @@
+@import '../../../styles/constants.css';
+
+.recipe-create-header {
+	display: flex;
+	
+	& > span {
+		flex: 1;
+	}
+	
+	& > button {
+		flex: 0;
+		white-space: nowrap;
+		margin-right: 32px;
+		
+	}
+}
+
+.add-ingredient-button {
+	display: flex;
+	i, span {
+		font-size: 14px;
+		line-height: 20px;
+		vertical-align: middle;
+	}
+}
+
+.add-ingredient-button-container {
+	margin-bottom: 16px;
+}
