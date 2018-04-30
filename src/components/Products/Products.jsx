@@ -12,6 +12,7 @@ import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectio
 import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
 import ElementFilter from '../Element/ElementFilter'
+import Img from '../Img/Img'
 import './styles/products.css'
 
 const { confirm } = Modal
@@ -33,6 +34,7 @@ class Products extends React.Component {
 	  this.handleArchive = this.handleArchive.bind(this)
 	  this.handleSelect = this.handleSelect.bind(this)
 	  this.handleCloseCreateRecipeModal = this.handleCloseCreateRecipeModal.bind(this)
+	  this.handleCloseCreateAndLearnRecipeModal = this.handleCloseCreateAndLearnRecipeModal.bind(this)
   }
 
   // fetch products on load
@@ -51,7 +53,6 @@ class Products extends React.Component {
 
     let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
     let hasNoRecipes = !recipeUI.isFetchingData && (!recipeData || !recipeData.length)
-    console.log(hasNoRecipes)
 	  return (
 	  	<div className="products">
 			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
@@ -92,22 +93,23 @@ class Products extends React.Component {
   }
 
   renderCreateRecipeModal() {
-  	let HEADER = {fontSmoothing: 'antialiased', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}
-	let H1 = {color: "#0073F9", padding: "0 8px"}
+	let recipeContent = "Polymer's powerful Recipes help you stay even more organized. Set ingredients and instructions to guide your team and automatically update inventory."
 
   	return(
 			<Dialog onToggle={this.handleCloseCreateRecipeModal} className='new-features-card'>
 				<div style={{margin: "-16px"}}>
-					<div style={HEADER} className="new-feature-header">
-						<h1 style={H1}>Create a Recipe</h1>
+					<div className="recipe-content">
+						<div className="recipe-content-header">Introducing Recipes</div>
+						<div style={{display: 'flex', alignItems: 'flex-end', 'justifyContent': 'center'}}><Img src={'lady extended'} height="350px" /></div>
+						<div className="recipe-content-text">{recipeContent}</div>
+						<div>
+							<Button link onClick={this.handleCloseCreateAndLearnRecipeModal}>
+								<span className="learn-how">
+									Learn how to create your first recipe now!
+								</span>
+							</Button>
+						</div>
 					</div>
-
-					<div className="features">
-						<span className="nf-content">Create your first Recipe by clicking on one of your products. You can then define recipes on its product page by adding instructions and ingredients to your recipe.</span>
-					</div>
-				</div>
-				<div style={{display: 'flex', alignItems: 'flex-end', 'justifyContent': 'center', marginTop: '24px'}}>
-					<Button link onClick={this.handleCloseCreateRecipeModal}>Close</Button>
 				</div>
 			</Dialog>
   	)
@@ -129,6 +131,9 @@ class Products extends React.Component {
   handleCloseCreateRecipeModal() {
   	this.setState({shouldDisplayRecipeModal: false})
   	window.localStorage.setItem("CREATE_RECIPE_INFO", true)
+  }
+  handleCloseCreateAndLearnRecipeModal() {
+  	window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')
   }
 
   handleFilter(filterText) {
