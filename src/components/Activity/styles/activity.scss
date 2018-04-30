@@ -197,3 +197,23 @@ $z-index-edit-menu: 992;
   }
 }
 
+.activity-page-recipe-help {
+  margin-top: 40px;
+  background-color: $primary;
+  float: right;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  width: 400px;
+  cursor: pointer;
+}
+
+.activity-page-recipe-help-header {
+  font-weight: bold;
+  padding-bottom: 12px;
+}
+.activity-page-recipe-help-link {
+  font-weight: bold;
+}
+
+
