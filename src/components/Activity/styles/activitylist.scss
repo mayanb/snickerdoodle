@@ -37,13 +37,14 @@
 	}
 }
 
-.object-list-header {
+// override PaginatedTable header border and text size
+.paginated-table.border-none li.header .object-list-header {
 	border-top-width: 0px;
 	border-bottom-width: 1px;
-	font-size: 14px;
 	
-	&>div {
+	& .activity-list-header>div {
 		margin-top: 12px;
 		margin-bottom: 12px;
+		font-size: 14px;
 	}
 }
