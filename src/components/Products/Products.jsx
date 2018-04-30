@@ -50,14 +50,14 @@ class Products extends React.Component {
     }
 
     let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
-    let hasRecipes = !recipeUI.isFetchingData && (recipeData && recipeData.length > 0)
-
+    let hasNoRecipes = !recipeUI.isFetchingData && (!recipeData || !recipeData.length)
+    console.log(hasNoRecipes)
 	  return (
 	  	<div className="products">
 			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
 			                                      title="Products" />
 					{ hasNone ? <ZeroState type="product" /> : this.renderTable() }
-					{ (!hasNone && hasRecipes) || !shouldDisplayRecipeModal ? null : this.renderCreateRecipeModal()}
+					{ (!hasNone && hasNoRecipes && shouldDisplayRecipeModal) ? this.renderCreateRecipeModal() : null}
 			 		{this.renderDialog()}
 		  </div>
 	  )
