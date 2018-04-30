@@ -53,7 +53,7 @@ export default connect(mapStateToProps)(ProductHistory)
 
 
 function TaskSummary({ task, selected, history }) {
-	const amount = getTaskAmount(task) // set on the front end to consolidate inputs from the same process
+	const amount = getTaskAmount(task)
 	const formattedAmount = amount ? formatAmount(amount, task.process_type.unit) : '(Unknown Amount)'
 	const is_ancestor_flagged = !task.is_flagged && task.num_flagged_ancestors > 0
 	return (

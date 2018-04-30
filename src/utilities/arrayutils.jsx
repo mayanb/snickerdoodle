@@ -72,14 +72,22 @@ export function sortByRank(a, b) {
 	return parseInt(a.rank, 10) - parseInt(b.rank, 10)
 }
 
+function getItemAmount(item) {
+	if (!isNaN(parseFloat(item.cumulativeAmount))) {
+		console.log('item, cumulative amount', item, item.cumulativeAmount)
+		return item.cumulativeAmount
+	}
+	return Number(item.amount) || Number(item.input_item_amount)
+}
+
 export function consolidateInputsFromSameTask(tasks) {
 	const isANumber = (num) => !isNaN(Number(num))
 	const taskIDDict = {}
 	tasks.forEach(task => {
 		const existingTask = taskIDDict[task.input_task]
-		let existingAmount = existingTask ? getTaskAmount(existingTask) : 0
-		const taskAmount = getTaskAmount(task)
-		if (existingTask) console.log('add to existing: ', taskAmount)
+		const existingAmount = existingTask ? getItemAmount(existingTask) : 0
+		const taskAmount = getItemAmount(task)
+		if (existingTask) console.log('task to add to existing: ', task)
 		task.cumulativeAmount = (isANumber(existingAmount) && isANumber(taskAmount)) ? (existingAmount + taskAmount) : undefined
 		taskIDDict[task.input_task] = task
 	})
