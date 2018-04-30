@@ -1,0 +1,28 @@
+.activity-list-item {
+	width: 100%;
+	display: flex;
+
+	.paginated-table.border-none li.header {
+		border-bottom: none; //override PaginatedTable header border
+	}
+
+	.process-code {
+		flex: 2;
+	}
+
+	.process-name {
+		flex: 3;
+	}
+
+	.product-code {
+		flex: 4;
+	}
+
+	.runs {
+		flex: 3;
+	}
+	
+	.outputs {
+		flex: 3;
+	}
+}
