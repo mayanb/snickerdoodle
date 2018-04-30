@@ -100,7 +100,7 @@ class Products extends React.Component {
 				<div style={{margin: "-16px"}}>
 					<div className="recipe-content">
 						<div className="recipe-content-header">Introducing Recipes</div>
-						<div style={{display: 'flex', alignItems: 'flex-end', 'justifyContent': 'center'}}><Img src={'lady extended'} height="350px" /></div>
+						<div style={{display: 'flex', alignItems: 'flex-end', 'justifyContent': 'center'}}><Img src={'dairyfactory'} height="350px" /></div>
 						<div className="recipe-content-text">{recipeContent}</div>
 						<div>
 							<Button link onClick={this.handleCloseCreateAndLearnRecipeModal}>

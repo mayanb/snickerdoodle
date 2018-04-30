@@ -108,8 +108,9 @@ export default class Activity extends React.Component {
 				<div>
 					<span>Guide your team with instructions and ingredients and keep your inventory accurate. </span>
 					<span className="activity-page-recipe-help-link">
-						Learn how to supercharge your team now.
+						Learn how to supercharge your team now.  
 					</span>
+					<span className="activity-page-forward">  <i className="material-icons activity-page-forward-i">arrow_forward</i></span>
 				</div>
 			</div>
 		)
