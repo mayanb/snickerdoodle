@@ -3,8 +3,8 @@ import {emojify} from 'react-emojione'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Create recipes with ingredients.",
-	content: "Guide your workers through a task by specifying a recipe. Include instructions as well as a list of ingredients and amounts. Go to the Products page and select a product to get started.",
+	title: "Stay organized with recipes.",
+	content: "Guide your team every step of the way with instructions and ingredient information. With recipes, your team is guided directly in the app on what to do, what to use, and how much. Visit the Products page to get started.",
 }, {
 	title: "Edit product information.",
 	content: "Want to fix a typo in a product name? You can now edit the name, code or description fields for existing products.",
