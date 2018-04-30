@@ -88,6 +88,7 @@ export default class Activity extends React.Component {
 						{contentArea}
 					</div>
 				</div>
+				{this.renderRecipeHelp()}
 			</div>
 		)
 	}
@@ -98,6 +99,20 @@ export default class Activity extends React.Component {
 		} else if (this.state.mustConnectGoogleDialog) {
 			return <MustConnectGoogleDialog onToggle={() => this.toggleDialog('mustConnectGoogleDialog')} />
 		} else return null
+	}
+
+	renderRecipeHelp() {
+		return (
+			<div className="activity-page-recipe-help" onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
+				<div className="activity-page-recipe-help-header">Create recipes for your products</div>
+				<div>
+					<span>Guide your team with instructions and ingredients and keep your inventory accurate. </span>
+					<span className="activity-page-recipe-help-link">
+						Learn how to supercharge your team now.
+					</span>
+				</div>
+			</div>
+		)
 	}
 
 
