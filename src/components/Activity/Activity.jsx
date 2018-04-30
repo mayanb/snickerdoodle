@@ -15,7 +15,7 @@ import ActivityListItem from './ActivityListItem'
 import ObjectList from '../ObjectList/ObjectList'
 import ActivityListHeader from './ActivityListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
-import * as actions from "../Processes/ProcessesActions";
+import * as actions from "../ActivitySummary/ActivityActions"
 import './styles/activitylist.css'
 
 
@@ -61,7 +61,7 @@ class Activity extends React.Component {
 	}
 	
 	handlePagination(direction) {
-		this.props.dispatch(actions.pageProcesses(direction))
+		this.props.dispatch(actions.pageActivity(direction))
 	}
 	
 	render() {
@@ -205,8 +205,8 @@ function LittleHeader(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		data: state.products.data,
-		ui: state.products.ui,
+		data: state.activity.data,
+		ui: state.activity.ui,
 	}
 }
 

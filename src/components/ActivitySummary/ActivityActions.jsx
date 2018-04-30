@@ -1,11 +1,11 @@
 import moment from 'moment'
 import api from '../WaffleconeAPI/api.jsx'
 import {
-  REQUEST, 
-  REQUEST_SUCCESS, 
-  REQUEST_FAILURE,
+	REQUEST,
+	REQUEST_SUCCESS,
+	REQUEST_FAILURE, PAGE,
 } from '../../reducers/APIDataReducer'
-import { ACTIVITY } from '../../reducers/ReducerTypes'
+import {ACTIVITY, PROCESSES} from '../../reducers/ReducerTypes'
 
 export function fetchActivity() {
   return function (dispatch) {
@@ -57,4 +57,13 @@ function getTodayDateRange() {
     start: start.utc().format(format),
     end: end.utc().format(format)
   }
+}
+
+export function pageActivity(direction) {
+	return {
+		type: PAGE,
+		direction: direction,
+		name: ACTIVITY
+		
+	}
 }
