@@ -1,7 +1,6 @@
 import React from 'react'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
 
-
 export default function ActivityTableHeader() {
 	return (
 		<ObjectListHeader>

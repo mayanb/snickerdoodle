@@ -3,7 +3,8 @@ import api from '../WaffleconeAPI/api.jsx'
 import {
 	REQUEST,
 	REQUEST_SUCCESS,
-	REQUEST_FAILURE, PAGE,
+	REQUEST_FAILURE,
+  PAGE,
 } from '../../reducers/APIDataReducer'
 import { ACTIVITY } from '../../reducers/ReducerTypes'
 
