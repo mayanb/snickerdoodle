@@ -14,6 +14,7 @@ import ObjectList from '../ObjectList/ObjectList'
 import ActivityListHeader from './ActivityListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
+import TaskDialogSimple from '../TaskDialog/TaskDialogSimple'
 import * as actions from "../ActivitySummary/ActivityActions"
 import './styles/activitylist.css'
 
@@ -39,13 +40,17 @@ class Activity extends React.Component {
 			loading: true,
 			taskLoading: false,
 			mini: true,
-			
+
+			selectedRow: null,
+			selectedRowTasks: [],
+
 			mustConnectGoogleDialog: false,
 			mustEnablePopupsDialog: false,
 		}
 		
 		this.handlePagination = this.handlePagination.bind(this)
 		this.handleFilterChange = this.handleFilterChange.bind(this)
+		this.handleSelect = this.handleSelect.bind(this)
 	}
 	
 	toggleDialog(dialog) {
@@ -60,9 +65,23 @@ class Activity extends React.Component {
 		this.setState({filters: filters})
 		this.getActivity(filters)
 	}
-	
-	handleSelect(item) {
-		console.log('Clicked item: ', item)
+
+	handleSelect(index) {
+		this.setState({ selectedRow: index })
+		const row = this.state.processes[index]
+		const { filters } = this.state
+		let params = {
+			start: dateToUTCString(filters.dates.start),
+			end: dateToUTCString(filters.dates.end, true),
+			processes: row.process_type.id,
+			products: row.product_types.map(pt => pt.id).join(',')
+		}
+
+		api.get('/ics/tasks/')
+			.query(params)
+			.then(res => {
+				this.setState({selectedRowTasks: res.body})
+			})
 	}
 	
 	handlePagination(direction) {
@@ -77,6 +96,7 @@ class Activity extends React.Component {
 				<div className="page mini">
 					<div className="content">
 						{this.renderDialog()}
+						{this.renderTaskDialog()}
 						{this.renderTable()}
 					</div>
 				</div>
@@ -107,7 +127,18 @@ class Activity extends React.Component {
 			)
 		}
 	}
-	
+
+	renderTaskDialog() {
+		const { selectedRow } = this.state
+		return selectedRow !== null && (
+			<TaskDialogSimple
+				header="Tasks"
+				onToggle={() => this.setState({ selectedRow: null, selectedRowTasks: [] })}
+				tasks={this.state.selectedRowTasks}
+			/>
+		)
+	}
+
 	renderDialog() {
 		if (this.state.mustEnablePopupsDialog) {
 			return <MustEnablePopupsDialog onToggle={() => this.toggleDialog('mustEnablePopupsDialog')}/>
@@ -155,7 +186,6 @@ class Activity extends React.Component {
 		if (filters.aggregateProducts) {
 			params.aggregate_products = 'true'
 		}
-		console.log({filters, params})
 		let component = this
 		
 		let rID = requestID()
