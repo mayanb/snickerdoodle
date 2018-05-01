@@ -1,4 +1,3 @@
-import moment from 'moment'
 import api from '../WaffleconeAPI/api.jsx'
 import {
 	REQUEST,
@@ -8,20 +7,13 @@ import {
 } from '../../reducers/APIDataReducer'
 import { ACTIVITY } from '../../reducers/ReducerTypes'
 
-export function fetchActivity() {
+export function fetchActivity(params) {
   return function (dispatch) {
-    // dispatch an action that we are requesting a goal
     dispatch(requestActivity())
-
-    // actually fetch 
     return api.get('/ics/activity/')
-      .query(getTodayDateRange())
-      .end( function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestActivityFailure(err))
-        }
-        dispatch(requestActivitySuccess(res.body))
-      })
+      .query(params)
+	    .then(res => dispatch(requestActivitySuccess(res.body)))
+	    .catch(err => dispatch(requestActivityFailure(err)))
   }
 }
 
@@ -40,23 +32,11 @@ function requestActivityFailure(err) {
   }
 }
 
-function requestActivitySuccess(json, timerange) {
+function requestActivitySuccess(activityRows) {
   return {
     type: REQUEST_SUCCESS,
     name: ACTIVITY,
-    data: json, 
-    timerange: timerange
-  }
-}
-
-function getTodayDateRange() {
-  let end = moment()
-  let start = moment(end).startOf('date');
-  let format = 'YYYY-MM-DD-HH-mm-ss-SSSSSS'
-
-   return {
-    start: start.utc().format(format),
-    end: end.utc().format(format)
+    data: activityRows,
   }
 }
 
