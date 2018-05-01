@@ -136,7 +136,26 @@ class Activity extends React.Component {
 	getActivity(filters) {
 		const range = filters.dates
 		this.setState({loading: true})
-		let params = {start: dateToUTCString(range.start), end: dateToUTCString(range.end, true)}
+		let params = {
+			start: dateToUTCString(range.start),
+			end: dateToUTCString(range.end, true),
+		}
+		if (filters.processTypes.length) {
+			params.process_types = filters.processTypes.map(p => p.id).join(',')
+		}
+		if (filters.productTypes.length) {
+			params.product_types = filters.productTypes.map(p => p.id).join(',')
+		}
+		if (filters.keywords) {
+			params.label = filters.keywords
+		}
+		if (filters.flaggedOnly) {
+			params.flagged = 'true'
+		}
+		if (filters.aggregateProducts) {
+			params.aggregate_products = 'true'
+		}
+		console.log({filters, params})
 		let component = this
 		
 		let rID = requestID()

@@ -13,5 +13,18 @@
     div.button-dropdown .button-dropdown-content {
         right: inherit;
     }
+
+    .input {
+        width: 172px;
+        margin-right: 24px;
+    }
+
+    .checkbox-container {
+        margin-right: 24px;
+
+        input {
+            margin-right: 12px;
+        }
+    }
 }
 
