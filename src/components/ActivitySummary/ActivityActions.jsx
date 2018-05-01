@@ -5,7 +5,7 @@ import {
 	REQUEST_SUCCESS,
 	REQUEST_FAILURE, PAGE,
 } from '../../reducers/APIDataReducer'
-import {ACTIVITY, PROCESSES} from '../../reducers/ReducerTypes'
+import { ACTIVITY } from '../../reducers/ReducerTypes'
 
 export function fetchActivity() {
   return function (dispatch) {

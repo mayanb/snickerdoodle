@@ -3,11 +3,9 @@ import {connect} from "react-redux"
 import {requestID, ZeroState} from '../OldComponents/APIManager.jsx'
 import api from '../WaffleconeAPI/api'
 import Loading from '../OldComponents/Loading.jsx'
-import update from 'immutability-helper'
 import moment from 'moment'
 import { dateToUTCString } from '../../utilities/dateutils'
 import Datepicker from '../Datepicker/Datepicker.jsx'
-import ReactImageFallback from "react-image-fallback"
 import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
 import './styles/activity.css'
@@ -17,8 +15,6 @@ import ActivityListHeader from './ActivityListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import * as actions from "../ActivitySummary/ActivityActions"
 import './styles/activitylist.css'
-
-
 
 class Activity extends React.Component {
 	constructor(props) {
@@ -133,40 +129,6 @@ class Activity extends React.Component {
 		)
 	}
 	
-	getTasks(process, origin) {
-		let range = this.state.dates
-		this.setState({taskLoading: true})
-		let processID = process.process_id
-		let productID = origin.product_id
-		
-		let params = {
-			process_type: processID,
-			product_type: productID,
-			start: dateToUTCString(range.start),
-			end: dateToUTCString(range.end, true)
-		}
-		
-		let url = "/ics/activity/detail/"
-		let component = this
-		
-		let rID = requestID()
-		this.lastTaskRequestID = rID
-		
-		api.get(url)
-			.query(`start=${params.start}&end=${params.end}&process_type=${processID}&product_type=${productID}`)
-			.end(function (err, res) {
-				console.log(res)
-				if (err || !res.ok) {
-					console.log(err)
-					component.setState({taskLoading: false})
-					return
-				}
-				if (component.lastTaskRequestID !== rID)
-					return
-				component.setState({expandedTasks: res.body, taskLoading: false})
-			})
-	}
-	
 	getActivity(range) {
 		this.setState({loading: true})
 		let params = {start: dateToUTCString(range.start), end: dateToUTCString(range.end, true)}
@@ -213,5 +175,3 @@ const mapStateToProps = (state) => {
 const connectedActivity = connect(mapStateToProps)(Activity)
 
 export default connectedActivity
-
-
