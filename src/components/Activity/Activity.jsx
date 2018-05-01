@@ -5,14 +5,15 @@ import api from '../WaffleconeAPI/api'
 import Loading from '../OldComponents/Loading.jsx'
 import moment from 'moment'
 import { dateToUTCString } from '../../utilities/dateutils'
-import Datepicker from '../Datepicker/Datepicker.jsx'
 import MustEnablePopupsDialog from './MustEnablePopupsDialog'
 import MustConnectGoogleDialog from './MustConnectGoogleDialog'
 import './styles/activity.css'
 import ActivityListItem from './ActivityListItem'
+import ActivityFilters from './ActivityFilters'
 import ObjectList from '../ObjectList/ObjectList'
 import ActivityListHeader from './ActivityListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
+import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import * as actions from "../ActivitySummary/ActivityActions"
 import './styles/activitylist.css'
 
@@ -22,7 +23,14 @@ class Activity extends React.Component {
 		this.lastRequestID = -1
 		this.lastTaskRequestID = -1
 		this.state = {
-			dates: {start: moment(new Date()).format("YYYY-MM-DD"), end: moment(new Date()).format("YYYY-MM-DD")},
+			filters: {
+				dates: {start: moment(new Date()).format("YYYY-MM-DD"), end: moment(new Date()).format("YYYY-MM-DD")},
+				processTypes: [],
+				productTypes: [],
+				keywords: '',
+				flaggedOnly: false,
+				aggregateProducts: false,
+			},
 			processes: {},
 			
 			expanded: {process: 0, origin: 0},
@@ -37,6 +45,7 @@ class Activity extends React.Component {
 		}
 		
 		this.handlePagination = this.handlePagination.bind(this)
+		this.handleFilterChange = this.handleFilterChange.bind(this)
 	}
 	
 	toggleDialog(dialog) {
@@ -44,12 +53,12 @@ class Activity extends React.Component {
 	}
 	
 	componentDidMount() {
-		this.getActivity(this.state.dates)
+		this.getActivity(this.state.filters)
 	}
 	
-	handleDateRangeChange(obj) {
-		this.setState({dates: obj})
-		this.getActivity(obj)
+	handleFilterChange(filters) {
+		this.setState({filters: filters})
+		this.getActivity(filters)
 	}
 	
 	handleSelect(item) {
@@ -63,16 +72,11 @@ class Activity extends React.Component {
 	render() {
 		return (
 			<div className="activity">
-				<LittleHeader>Activity</LittleHeader>
+				<ApplicationSectionHeader>Activity Log</ApplicationSectionHeader>
+				<ActivityFilters filters={this.state.filters} onFilterChange={this.handleFilterChange}/>
 				<div className="page mini">
 					<div className="content">
 						{this.renderDialog()}
-						
-						<div className="activity-header page-header">
-							<h2>Logs</h2>
-							<div style={{zIndex: 0}}><Datepicker initialDates={this.state.dates}
-																									 onChange={this.handleDateRangeChange.bind(this)}/></div>
-						</div>
 						{this.renderTable()}
 					</div>
 				</div>
@@ -128,8 +132,9 @@ class Activity extends React.Component {
 			</div>
 		)
 	}
-	
-	getActivity(range) {
+
+	getActivity(filters) {
+		const range = filters.dates
 		this.setState({loading: true})
 		let params = {start: dateToUTCString(range.start), end: dateToUTCString(range.end, true)}
 		let component = this
@@ -155,14 +160,6 @@ class Activity extends React.Component {
 				})
 			})
 	}
-}
-
-function LittleHeader(props) {
-	return (
-		<span className="little-header" style={{fontSize: "14px", lineHeight: "16px", color: '#445562', padding: "16px 0px", display: 'block'}}>
-			{props.children}
-		</span>
-	)
 }
 
 const mapStateToProps = (state) => {

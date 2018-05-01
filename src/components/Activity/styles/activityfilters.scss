@@ -1,0 +1,17 @@
+@import 'styles/constants.scss';
+
+.activity-filters {
+    padding: 32px;
+    display: flex;
+
+    .select {
+        width: 172px;
+        margin-right: 24px;
+
+    }
+
+    div.button-dropdown .button-dropdown-content {
+        right: inherit;
+    }
+}
+
