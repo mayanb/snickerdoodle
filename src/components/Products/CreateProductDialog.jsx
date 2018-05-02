@@ -108,8 +108,8 @@ export default class CreateProductDialog extends React.Component {
 		if (!name || !abbreviation)
 			errors.push("Please make sure you've filled out a name and abbreviation.")
 
-		if (name.length > 30 || abbreviation.length > 10)
-			errors.push("The product name must be under 30 characters and the abbreviation under 10.")
+		if (name.length > 50 || abbreviation.length > 10)
+			errors.push("The product name must be under 50 characters and the abbreviation under 10.")
 
 		if (description.length > 50)
 			errors.push("The product description must be under 50 characters.")
