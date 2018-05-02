@@ -25,7 +25,7 @@ class Products extends React.Component {
 			shouldDisplayRecipeModal: true,
 	  }
 
-	  this.handleCloseCreateRecipeModal = this.handleCloseCreateRecipeModal.bind(this)
+	  this.handleCloseRecipeAnnouncementModal = this.handleCloseRecipeAnnouncementModal.bind(this)
 	  this.handleFilter = this.handleFilter.bind(this)
 	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
@@ -91,7 +91,7 @@ class Products extends React.Component {
 	
 	renderCreateRecipeModal() {
   	return (<PageSpecificNewFeatureIntro
-			onClose={this.handleCloseCreateRecipeModal}
+			onClose={this.handleCloseRecipeAnnouncementModal}
 			recipeContent="Polymer's powerful Recipes help you stay even more organized. Set ingredients and instructions to guide your team and automatically update inventory."
 			featureName="Recipes"
 			finalCallToAction="Learn how to create your first recipe now!"
@@ -114,7 +114,7 @@ class Products extends React.Component {
 	}
 
   /* EVENT HANDLERS */
-	handleCloseCreateRecipeModal() {
+	handleCloseRecipeAnnouncementModal() {
 		this.setState({shouldDisplayRecipeModal: false})
 	}
 

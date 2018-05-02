@@ -7,6 +7,7 @@ import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessesListItem from './ProcessesListItem'
 import CreateOrDuplicateProcessDialog from './CreateOrDuplicateProcessDialog'
+import PageSpecificNewFeatureIntro from '../NewFeatures/PageSpecificNewFeatureIntro'
 import './styles/processes.css'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
 import ZeroState from '../ObjectList/ObjectListZeroState'
@@ -22,19 +23,21 @@ class Processes extends React.Component {
 	this.state = {
 		isAddingProcess: false,
 		isDuplicateOpen: false,
+		isAnnouncementOpen: true, // but will return null if already seen
 		isDuplicating: false,
 		duplicatingObjectIndex: null,
 		isFiltering: false,
 	}
-
-	this.handleFilter = this.handleFilter.bind(this)
-	this.handleSelectProcess = this.handleSelectProcess.bind(this)
-	this.handlePagination = this.handlePagination.bind(this)
-	this.handleToggleDialog = this.handleToggleDialog.bind(this)
-	this.handleCreateProcess = this.handleCreateProcess.bind(this)
-	this.handleArchive = this.handleArchive.bind(this)
-	this.handleDuplicate = this.handleDuplicate.bind(this)
-	this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
+	
+		this.handleFilter = this.handleFilter.bind(this)
+		this.handleSelectProcess = this.handleSelectProcess.bind(this)
+		this.handlePagination = this.handlePagination.bind(this)
+		this.handleToggleDialog = this.handleToggleDialog.bind(this)
+		this.handleCreateProcess = this.handleCreateProcess.bind(this)
+		this.handleArchive = this.handleArchive.bind(this)
+		this.handleDuplicate = this.handleDuplicate.bind(this)
+		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
+		this.handleCloseAnnouncementModal = this.handleCloseAnnouncementModal.bind(this)
   }
 
   // fetch products on load
@@ -44,6 +47,7 @@ class Processes extends React.Component {
 
   render() {
 		var { users, ui, data } = this.props
+		const { isDuplicateOpen, isAddingProcess, isAnnouncementOpen } = this.state
 		let account_type = users.data[users.ui.activeUser].user.account_type
 		if (account_type !== 'a') {
 			this.props.history.push('/')
@@ -57,9 +61,22 @@ class Processes extends React.Component {
 					{ hasNone ? <ZeroState type="process" /> : this.renderTable() }
 					{this.renderDialog()}
 					{this.renderDuplicateDialog()}
+					{!(isDuplicateOpen || isAddingProcess) && isAnnouncementOpen && this.renderUserAttributeAnnouncementDialog()}
 			</div>
 		)
   }
+	
+	renderUserAttributeAnnouncementDialog() {
+		return (<PageSpecificNewFeatureIntro
+			onClose={this.handleCloseAnnouncementModal}
+			recipeContent="You can now specify user fields for tasks (no more typing names by hand!) Add a user field to a process by selecting User as your field datatype when you add a field to a process. Teammates on the mobile app can then select usernames from a menu."
+			featureName="User Fields"
+			finalCallToAction="Learn more about using user fields"
+			imgSrc="dairyfactory"
+			link="https://polymer.helpscoutdocs.com/article/11-user-fields"
+			localStorageVarName="USER_ATTRIBUTE_INFO"
+		/>)
+	}
 
   renderTable() {
   	let { ui } = this.props
@@ -201,6 +218,10 @@ class Processes extends React.Component {
 				let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
 				return this.handleSelectProcess(index)
 			})
+	}
+	
+	handleCloseAnnouncementModal() {
+		this.setState({ isAnnouncementOpen: false })
 	}
 }
 

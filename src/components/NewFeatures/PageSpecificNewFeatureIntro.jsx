@@ -8,7 +8,6 @@ import './styles/pagespecificnewfeatureinfo.css'
 export default function PageSpecificNewFeatureIntro({ onClose, recipeContent, featureName, finalCallToAction, imgSrc, link, localStorageVarName }) {
 	const modalPreviouslySeen = window.localStorage.getItem(localStorageVarName)
 	if (modalPreviouslySeen) {
-		console.log('seen!')
 		return null
 	}
 	
@@ -22,13 +21,13 @@ export default function PageSpecificNewFeatureIntro({ onClose, recipeContent, fe
 			<div >
 				<div className="new-feature">
 					<div className="new-feature-header">Introducing {featureName}</div>
-					<div style={{display: "flex", alignItems: "flex-end", "justifyContent": "center"}}><Img src={imgSrc}
-																																																	height="350px"/>
+					<div style={{display: "flex", alignItems: "flex-end", "justifyContent": "center"}}>
+						<Img src={imgSrc} height="350px"/>
 					</div>
 					<div className="new-feature-text">{recipeContent}</div>
 					<div>
 						<Button link onClick={() => window.open(link, "_blank")}>
-								<span className="learn-how">{finalCallToAction}</span>
+							<span className="learn-how">{finalCallToAction}</span>
 						</Button>
 					</div>
 				</div>
