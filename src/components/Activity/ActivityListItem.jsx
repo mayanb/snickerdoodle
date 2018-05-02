@@ -17,7 +17,7 @@ export default function ActivityListItem({ item, onClick }) {
 				{process_type.name}
 			</OverflowSafeText>
 			<OverflowSafeText className="product-code">
-				{product_types[0].code}
+				{formatProductCodes(product_types)}
 			</OverflowSafeText>
 			<OverflowSafeText className="runs">
 				{formatAmount(Number(runs), 'run')}
@@ -28,4 +28,14 @@ export default function ActivityListItem({ item, onClick }) {
 			<div className="view-all-tasks">View all tasks</div>
 		</ObjectListItem>
 	)
+}
+
+function formatProductCodes(productTypes) {
+	console.log('productTypes', productTypes)
+	if (productTypes.length < 4) {
+		return productTypes.map(p => p.code).join(', ')
+	} else {
+		const moreCount = productTypes.length - 2
+		return `${productTypes.slice(0, 2).map(p => p.code).join(', ')} + ${moreCount} more`
+	}
 }
