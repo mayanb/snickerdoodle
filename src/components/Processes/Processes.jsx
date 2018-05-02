@@ -13,6 +13,7 @@ import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectio
 import ZeroState from '../ObjectList/ObjectListZeroState'
 import { Modal } from 'antd'
 import ElementFilter from '../Element/ElementFilter'
+import { processesHaveNoUserAttributes } from '../../utilities/processutils'
 
 const { confirm } = Modal
 
@@ -47,7 +48,6 @@ class Processes extends React.Component {
 
   render() {
 		var { users, ui, data } = this.props
-		const { isDuplicateOpen, isAddingProcess, isAnnouncementOpen } = this.state
 		let account_type = users.data[users.ui.activeUser].user.account_type
 		if (account_type !== 'a') {
 			this.props.history.push('/')
@@ -61,13 +61,16 @@ class Processes extends React.Component {
 					{ hasNone ? <ZeroState type="process" /> : this.renderTable() }
 					{this.renderDialog()}
 					{this.renderDuplicateDialog()}
-					{!(isDuplicateOpen || isAddingProcess) && isAnnouncementOpen && this.renderUserAttributeAnnouncementDialog()}
+					{this.renderUserAttributeAnnouncementDialog()}
 			</div>
 		)
   }
 	
 	renderUserAttributeAnnouncementDialog() {
-		return (<PageSpecificNewFeatureIntro
+		const { isDuplicateOpen, isAddingProcess, isAnnouncementOpen } = this.state
+		const { data } = this.props
+		const shouldShowAnnouncement = !(isDuplicateOpen || isAddingProcess) && isAnnouncementOpen && processesHaveNoUserAttributes(data)
+		return shouldShowAnnouncement ? (<PageSpecificNewFeatureIntro
 			onClose={this.handleCloseAnnouncementModal}
 			recipeContent="You can now specify user fields for tasks (no more typing names by hand!) Add a user field to a process by selecting User as your field datatype when you add a field to a process. Teammates on the mobile app can then select usernames from a menu."
 			featureName="User Fields"
@@ -75,7 +78,7 @@ class Processes extends React.Component {
 			imgSrc="dairyfactory"
 			link="https://polymer.helpscoutdocs.com/article/11-user-fields"
 			localStorageVarName="USER_ATTRIBUTE_INFO"
-		/>)
+		/>) : null
 	}
 
   renderTable() {
