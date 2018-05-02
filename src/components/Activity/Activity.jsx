@@ -65,6 +65,13 @@ class Activity extends React.Component {
 			processes: row.process_type.id,
 			products: row.product_types.map(pt => pt.id).join(',')
 		}
+		if (filters.keywords) {
+			params.label = filters.keywords
+			params.dashboard = 'true'
+		}
+		if (filters.flaggedOnly) {
+			params.flagged = 'true'
+		}
 
 		this.props.dispatch(taskActions.getTasks(params))
 	}
