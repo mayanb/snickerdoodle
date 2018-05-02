@@ -1,8 +1,9 @@
 import React from 'react'
-import {connect} from "react-redux"
+import { connect } from "react-redux"
 import Datepicker from '../Datepicker/Datepicker.jsx'
 import Select from '../Inputs/Select'
 import Input from '../Inputs/Input'
+import Checkbox from '../Inputs/Checkbox'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
 import './styles/activityfilters.css'
@@ -53,40 +54,54 @@ class ActivityFilters extends React.Component {
 		const { filters } = this.props
 		return (
 			<div className="activity-filters">
-				<Datepicker initialDates={filters.dates} onChange={this.handleDatesChange} />
-				<Select
-					openOnFocus
-					multi={true}
-					value={filters.processTypes}
-					options={this.props.processes}
-					labelKey={'name'}
-					valueKey={'id'}
-					placeholder="Select a process type"
-					onChange={this.handleProcessTypesChange}
-				/>
-				<Select
-					openOnFocus
-					multi={true}
-					value={filters.productTypes}
-					options={this.props.products}
-					labelKey={'name'}
-					valueKey={'id'}
-					placeholder="All product types"
-					onChange={this.handleProductTypesChange}
-				/>
-				<Input
-					placeholder="Keywords"
-					prefix={<i className="material-icons element-filter-icon">search</i>}
-					value={filters.keywords}
-					onChange={this.handleKeywordsChange}
-				/>
-				<div className="checkbox-container">
-					<input type="checkbox" checked={filters.flaggedOnly} onClick={this.handleFlaggedOnlyChange}/>
-					Flagged Only
+				<div className="row">
+					<Datepicker initialDates={filters.dates} onChange={this.handleDatesChange} />
+					<div className="select-container">
+						<i className="material-icons">search</i>
+						<Select
+							openOnFocus
+							multi={true}
+							value={filters.processTypes}
+							options={this.props.processes}
+							labelKey={'name'}
+							valueKey={'id'}
+							placeholder="Filter processes"
+							onChange={this.handleProcessTypesChange}
+						/>
+					</div>
+					<div className="select-container">
+						<i className="material-icons">search</i>
+						<Select
+							openOnFocus
+							multi={true}
+							value={filters.productTypes}
+							options={this.props.products}
+							labelKey={'name'}
+							valueKey={'id'}
+							placeholder="Filter products"
+							onChange={this.handleProductTypesChange}
+						/>
+					</div>
 				</div>
-				<div className="checkbox-container" onClick={this.handleAggregateProductsChange}>
-					<input type="checkbox" checked={filters.aggregateProducts}/>
-					Aggregate across product types
+				<div className="row">
+					<div className="input-container">
+						<i className="material-icons">search</i>
+						<Input
+							placeholder="Keywords"
+							value={filters.keywords}
+							onChange={this.handleKeywordsChange}
+						/>
+					</div>
+					<Checkbox
+						label="Flagged Only"
+						checked={filters.flaggedOnly}
+						onChange={this.handleFlaggedOnlyChange}
+					/>
+					<Checkbox
+						label="Aggregate across product types"
+						checked={filters.aggregateProducts}
+						onChange={this.handleAggregateProductsChange}
+					/>
 				</div>
 			</div>
 		)

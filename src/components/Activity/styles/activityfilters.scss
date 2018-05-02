@@ -2,29 +2,66 @@
 
 .activity-filters {
     padding: 32px;
-    display: flex;
+    color: $gray;
 
-    .select {
-        width: 172px;
-        margin-right: 24px;
+    .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+    }
 
+    .datepicker {
+        width: 164px;
+        margin-right: 20px;
     }
 
     div.button-dropdown .button-dropdown-content {
         right: inherit;
     }
 
-    .input {
+    .select-container {
         width: 172px;
-        margin-right: 24px;
-    }
+        margin-right: 20px;
+        position: relative;
 
-    .checkbox-container {
-        margin-right: 24px;
+        & > i {
+            font-size: 20px;
+            position: absolute;
+            top: 9px;
+            left: 8px;
+        }
 
-        input {
-            margin-right: 12px;
+        .Select-control {
+            background-color: transparent;
+            padding-left: 36px;
+        }
+
+        .Select-placeholder {
+            padding-left: 36px;
         }
     }
+
+    .input-container {
+        width: 356px;
+        margin-right: 20px;
+        position: relative;
+
+        i {
+            font-size: 20px;
+            position: absolute;
+            top: 9px;
+            left: 8px;
+        }
+    }
+
+    .input {
+        padding-left: 36px;
+        border-color: $gray-light;
+
+        &::placeholder {
+            color: $gray;
+        }
+    }
+
 }
 

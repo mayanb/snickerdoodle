@@ -56,13 +56,13 @@ export default class Datepicker extends React.Component {
     let {expanded, predefined} = this.state
     return (
       <div className="dates" style={{ borderColor: expanded?"$primary":"" }}>
+	      <i className="material-icons">date_range</i>
         <span>
         { 
           (predefined['startDate'] && predefined['startDate'].format(format).toString()) + " - " + 
           (predefined['endDate'] && predefined['endDate'].format(format).toString()) 
         }
         </span>
-        <i className="material-icons">date_range</i>
       </div>
     )
   }
@@ -71,63 +71,28 @@ export default class Datepicker extends React.Component {
     const { expanded } = this.state;
 
     return (
-      <ButtonDropdown 
-        secondary
-        expanded={expanded} 
-        onToggleDropdown={this.handleDropdownToggle}
-        button={this.renderDatesButton()} 
-      >
-        <div className="menuContentWrapper" style={{display: "inline-block"}} onClick={ this.stopPropagation } >
-          <DateRange
-            linkedCalendars={ true }
-            ranges={ defaultRanges }
-            onInit={ this.handleInit}
-            onChange={ this.handleChange }
-            theme={{
-              Calendar : { width: 200 },
-              PredefinedRanges : { marginLeft: 10, marginTop: 10 }
-            }}
-          />
-        </div>
-      </ButtonDropdown>
+	    <div className="datepicker">
+		    <ButtonDropdown
+			    secondary
+			    expanded={expanded}
+			    onToggleDropdown={this.handleDropdownToggle}
+			    button={this.renderDatesButton()}
+		    >
+			    <div className="menuContentWrapper" style={{ display: "inline-block" }} onClick={this.stopPropagation}>
+				    <DateRange
+					    linkedCalendars={true}
+					    ranges={defaultRanges}
+					    onInit={this.handleInit}
+					    onChange={this.handleChange}
+					    theme={{
+						    Calendar: { width: 200 },
+						    PredefinedRanges: { marginLeft: 10, marginTop: 10 }
+					    }}
+				    />
+			    </div>
+		    </ButtonDropdown>
+	    </div>
     )
   }
 
 }
-
-/*
-
-      <div onClick={this.handleMenuOpen} >
-
-
-
-        <div className="dates" style={{ borderColor: this.state.active?"$primary":"" }}>
-          <span>
-          { 
-            (predefined['startDate'] && predefined['startDate'].format(format).toString()) + " - " + 
-            (predefined['endDate'] && predefined['endDate'].format(format).toString()) 
-          }
-          </span>
-          <i className="material-icons">date_range</i>
-        </div>
-
-        <div style={{position: 'absolute', top: this.state.y, left: this.state.x }} className="datepicker">
-          <Menu position="auto" active={this.state.active} onHide={this.handleMenuHide}>
-            <div className="menuContentWrapper" style={{display: "inline-block"}} onClick={ this.stopPropagation } >
-              <DateRange
-                linkedCalendars={ true }
-                ranges={ defaultRanges }
-                onInit={ this.handleInit}
-                onChange={ this.handleChange }
-                theme={{
-                  Calendar : { width: 200 },
-                  PredefinedRanges : { marginLeft: 10, marginTop: 10 }
-                }}
-              />
-            </div>
-          </Menu>
-        </div>
-
-
-      </div>
-*/
