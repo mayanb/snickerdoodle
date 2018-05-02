@@ -1,6 +1,7 @@
-@import 'styles/constants.scss';
-
-.new-features-card {
+.specific-page-new-features-card {
+	min-width: 500px;
+	max-width: 800px;
+	
 	.new-feature {
 		padding: 24px;
 	}
