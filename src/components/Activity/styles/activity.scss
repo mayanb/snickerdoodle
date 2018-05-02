@@ -194,6 +194,22 @@ $z-index-edit-menu: 992;
     border-radius: 4px;
     border: 1px solid rgba(0,0,0,0.1);
   }
+  
+  // override PaginatedTable header border and text size
+  .paginated-table.border-none li.header .object-list-header {
+    border-top-width: 0px;
+    border-bottom-width: 1px;
+    
+    .activity-list-header {
+      cursor: default;
+      
+      &>div {
+        margin-top: 12px;
+        margin-bottom: 12px;
+        font-size: 14px;
+      }
+    }
+  }
 }
 
 .activity-page-recipe-help {
