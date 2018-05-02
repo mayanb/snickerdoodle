@@ -31,7 +31,6 @@ export default function ActivityListItem({ item, onClick }) {
 }
 
 function formatProductCodes(productTypes) {
-	console.log('productTypes', productTypes)
 	if (productTypes.length < 4) {
 		return productTypes.map(p => p.code).join(', ')
 	} else {

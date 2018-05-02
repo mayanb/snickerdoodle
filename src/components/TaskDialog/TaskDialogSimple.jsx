@@ -22,7 +22,7 @@ export default class TaskDialogSimple extends React.Component {
 
 	renderTask(task) {
 		return (
-			<Link key={task.id} target="_blank" className="task" to={`/task/${task.id}`} onClick={this.props.onToggle}>
+			<Link key={task.id} target="_blank" className="task" to={`/task/${task.id}`}>
 				<ProcessTypeIcon task={task}/>
 				<div className="info">
 					<div className="code">{task.display}</div>
