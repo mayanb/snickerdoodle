@@ -6,10 +6,6 @@ const nfs = [{
 	title: "Stay organized with recipes.",
 	content: "Guide your team every step of the way with instructions and ingredient information. With recipes, your team is guided directly in the app on what to do, what to use, and how much. Visit the Products page to get started.",
 }, {
-	title: "Edit product information.",
-	content: "Want to fix a typo in a product name? You can now edit the name, code or description fields for existing products.",
-	type: 'improvement'
-}, {
 	title: "Add user fields.",
 	content: "You can now specify user fields for tasks and select from a menu of user names (no more typing names by hand!). Checkout a process to see more.",
 }]
