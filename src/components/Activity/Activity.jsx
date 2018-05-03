@@ -16,6 +16,10 @@ import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import TaskDialogSimple from '../TaskDialog/TaskDialogSimple'
 import * as actions from "./ActivityActions"
 import * as taskActions from "../TaskPage/TaskActions"
+import { isDandelion } from '../../utilities/userutils'
+import api from '../WaffleconeAPI/api'
+import fileDownload from 'js-file-download'
+
 import './styles/activitylist.css'
 
 class Activity extends React.Component {
@@ -23,7 +27,7 @@ class Activity extends React.Component {
 		super(props)
 		this.state = {
 			filters: {
-				dates: { start: moment(new Date()).format("YYYY-MM-DD"), end: moment(new Date()).format("YYYY-MM-DD") },
+				dates: { start: moment(new Date(2018,1,1)).format("YYYY-MM-DD"), end: moment(new Date()).format("YYYY-MM-DD") },
 				processTypes: [],
 				productTypes: [],
 				keywords: '',
@@ -40,6 +44,8 @@ class Activity extends React.Component {
 		this.handlePagination = this.handlePagination.bind(this)
 		this.handleFilterChange = this.handleFilterChange.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
+		this.handleDownloadRow = this.handleDownloadRow.bind(this)
+		this.handleDownloadAll = this.handleDownloadAll.bind(this)
 	}
 
 	toggleDialog(dialog) {
@@ -74,6 +80,86 @@ class Activity extends React.Component {
 		}
 
 		this.props.dispatch(taskActions.getTasks(params))
+	}
+
+	handleDownloadAll() {
+		const processTypes = this.state.filters.processTypes.length ?
+			this.state.filters.processTypes :
+			[...new Set(this.props.data.map(row => row.process_type.id))]
+		const productTypes = this.state.filters.productTypes.length ?
+			this.state.filters.productTypes :
+			[...new Set([].concat(...this.props.data.map(row => row.product_types.map(p => p.id))))]
+		this.handleDownload(processTypes, productTypes)
+	}
+
+	handleDownloadRow(index) {
+		const row = this.props.data[index]
+		return this.handleDownload([row.process_type.id], row.product_types.map(p => p.id))
+	}
+
+	handleDownload(processTypeIDs, productTypeIDs) {
+		const { filters } = this.state
+		let user_id = api.get_active_user().user.user_id
+		let params = {
+			start: dateToUTCString(filters.dates.start),
+			end: dateToUTCString(filters.dates.end, true),
+			processes: processTypeIDs.join(','),
+			products: productTypeIDs.join(','),
+			user_id: user_id,
+		}
+		if (filters.keywords) {
+			params.label = filters.keywords
+			params.dashboard = 'true'
+		}
+		if (filters.flaggedOnly) {
+			params.flagged = 'true'
+		}
+
+		let team = api.get_active_user().user.team_name
+		if (isDandelion(team)) {
+			return this.createCSV(params)
+		}
+
+		let is_connected = api.get_active_user().user.has_gauth_token
+		if (is_connected) {
+			return this.createSpreadsheet(params)
+		}
+		else {
+			this.toggleDialog('mustConnectGoogleDialog')
+			return new Promise(resolve => resolve())
+		}
+	}
+
+	createCSV(params) {
+		let { start, end } = this.state.filters.dates
+		const title = `Runs - ${start}-${end}`
+		return api.post('/gauth/create-csv/')
+			.type('form')
+			.send(params)
+			.responseType('blob')
+			.then(res => fileDownload(res.body, `${title}.csv`))
+			.catch(err => {
+				console.log("ugh something went wrong\n" + err)
+			})
+
+	}
+
+	createSpreadsheet(params) {
+		let c = this
+		return api.post('/gauth/create-spreadsheet/')
+			.type('form')
+			.send(params)
+			.then(res => {
+				let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
+				let newWin = window.open(url, '_blank');
+				if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
+					//POPUP BLOCKED
+					c.toggleDialog('mustEnablePopupsDialog')
+				}
+			})
+			.catch(err => {
+				console.log("ugh something went wrong\n" + err)
+			})
 	}
 
 	handlePagination(direction) {
