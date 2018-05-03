@@ -11,7 +11,7 @@
     }
 
     .datepicker {
-        width: 164px;
+        width: 200px;
         margin-right: 20px;
     }
 
@@ -20,7 +20,7 @@
     }
 
     .select-container {
-        width: 172px;
+        width: 300px;
         margin-right: 20px;
         position: relative;
 
@@ -33,16 +33,20 @@
 
         .Select-control {
             background-color: transparent;
-            padding-left: 36px;
+            padding-left: 23px;
+        }
+
+        .Select--multi .Select-input {
+            margin-left: 5px;
         }
 
         .Select-placeholder {
-            padding-left: 36px;
+            padding-left: 28px;
         }
     }
 
     .input-container {
-        width: 356px;
+        width: 200px;
         margin-right: 20px;
         position: relative;
 
