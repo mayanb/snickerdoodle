@@ -27,7 +27,7 @@ class Activity extends React.Component {
 		super(props)
 		this.state = {
 			filters: {
-				dates: { start: moment(new Date(2018,1,1)).format("YYYY-MM-DD"), end: moment(new Date()).format("YYYY-MM-DD") },
+				dates: { start: moment(new Date()).format("YYYY-MM-DD"), end: moment(new Date()).format("YYYY-MM-DD") },
 				processTypes: [],
 				productTypes: [],
 				keywords: '',
