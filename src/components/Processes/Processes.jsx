@@ -75,8 +75,8 @@ class Processes extends React.Component {
 			content="You can now specify user fields for tasks (no more typing names by hand!) Add a user field to a process by selecting User as your field datatype when you add a field to a process. Teammates on the mobile app can then select usernames from a menu."
 			title="Introducing User Log Fields"
 			finalCallToAction="Learn more about using user fields"
-			imgSrc="dairyfactory"
-			imgHeightWithUnits="350px"
+			imgSrc="girlwithclipboard"
+			imgHeightWithUnits="270px"
 			link="https://polymer.helpscoutdocs.com/article/11-user-fields"
 			localStorageVarName="USER_ATTRIBUTE_INFO"
 		/>) : null
