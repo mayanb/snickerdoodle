@@ -85,13 +85,11 @@ class Activity extends React.Component {
 			<div className="activity">
 				<ApplicationSectionHeader>Activity Log</ApplicationSectionHeader>
 				<ActivityFilters filters={this.state.filters} onFilterChange={this.handleFilterChange} />
-				<div className="page mini">
 					<div className="content">
 						{this.renderDialog()}
 						{this.renderTaskDialog()}
 						{this.renderTable()}
 					</div>
-				</div>
 				{this.renderRecipeHelp()}
 			</div>
 		)
