@@ -4,11 +4,12 @@ import './styles/newfeatures.css'
 
 const nfs = [{
 	title: "Get production insights fast.",
-	content: "We've revamped the Activity Log, so you can now ask complex questions about your production line with a few keystrokes. Get an overview of all your activity and quickly drill down to get the nuanced insights you need. Visit the Activity Log to try it out.",
+	content: "We've revamped the Activity Log — you can now ask complex questions about your production line with a few keystrokes, quickly drilling down to get the nuanced insights you need.",
+	type: 'improvement',
 }, {
 	title: "Add user fields.",
 	content: "You can now specify user fields for tasks and select from a menu of user names (no more typing names by hand!). Checkout a process to see more.",
-	type: 'improvement'
+	type: 'improvement',
 }, {
 	title: "Stay organized with recipes.",
 	content: "Guide your team every step of the way with instructions and ingredient information. With recipes, your team is guided directly in the app on what to do, what to use, and how much. Visit the Products page to get started.",
