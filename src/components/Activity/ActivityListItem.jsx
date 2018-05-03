@@ -2,15 +2,18 @@ import React from 'react'
 import ObjectListItem from '../ObjectList/ObjectListItem'
 import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
 import {formatAmount} from "../../utilities/stringutils"
-import Icon from '../Card/Icon'
+import Img from '../Img/Img'
+import {icon} from "../TaskPage/TaskHelpers"
+
 
 export default function ActivityListItem({ item, index, onViewTasks, onDownload }) {
 	const { process_type, product_types, runs, amount } = item
-
 	return (
 		<ObjectListItem className="activity-list-item">
+			<div className="icon">
+				<Img className="icon-img" src={icon(process_type.icon)} />
+			</div>
 			<OverflowSafeText className="process-code">
-				<Icon src="" size="20px" content={process_type.code}/>
 				{process_type.code}
 			</OverflowSafeText>
 			<OverflowSafeText className="process-name">

@@ -3,11 +3,17 @@
 div.activity-list-item {
 	width: 100%;
 	display: flex;
-	padding-right: 36px;
-    align-items: center;
-
-	&:hover .download{
-        visibility: visible;
+	align-items: center;
+	
+	.icon {
+		flex: 1;
+		background-color: transparent;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		img {
+			max-width: 100%;
+		}
 	}
 
 	.process-code {
@@ -15,11 +21,11 @@ div.activity-list-item {
 	}
 
 	.process-name {
-		flex: 4;
+		flex: 3;
 	}
 
 	.product-code {
-		flex: 4;
+		flex: 3;
 	}
 
 	.runs {
@@ -37,7 +43,12 @@ div.activity-list-item {
 	}
 
 	.download {
+		flex: 1;
 		cursor: pointer;
         visibility: hidden;
+	}
+	
+	&:hover .download{
+		visibility: visible;
 	}
 }
