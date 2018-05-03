@@ -4,6 +4,7 @@ import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
 import Select from '../Inputs/Select'
 import { pluralize } from "../../utilities/stringutils"
+import { processProductFilter } from '../../utilities/filters'
 
 class InventoryFilters extends React.Component {
 	constructor(props) {
@@ -37,6 +38,7 @@ class InventoryFilters extends React.Component {
 						valueRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
 						valueKey={'id'}
 						placeholder="All process types"
+						filterOption={processProductFilter}
 						onChange={(newVal) => this.handleProcessTypeChange(newVal)}
 					/>
 					<Select
@@ -47,6 +49,7 @@ class InventoryFilters extends React.Component {
 						labelKey={'name'}
 						valueKey={'id'}
 						placeholder="All product types"
+						filterOption={processProductFilter}
 						onChange={(newVal) => this.handleProductTypeChange(newVal)}
 					/>
 			</div>

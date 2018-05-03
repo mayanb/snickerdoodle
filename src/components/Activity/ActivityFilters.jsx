@@ -5,6 +5,7 @@ import Input from '../Inputs/Input'
 import Checkbox from '../Inputs/Checkbox'
 import Button from '../Button/Button'
 import './styles/activityfilters.css'
+import { processProductFilter } from '../../utilities/filters'
 
 export default class ActivityFilters extends React.Component {
 	constructor(props) {
@@ -70,6 +71,7 @@ export default class ActivityFilters extends React.Component {
 							labelKey={'name'}
 							valueKey={'id'}
 							placeholder="Filter processes"
+							filterOption={processProductFilter}
 							onChange={this.handleProcessTypesChange}
 						/>
 					</div>
@@ -82,6 +84,7 @@ export default class ActivityFilters extends React.Component {
 							options={products}
 							labelKey={'name'}
 							valueKey={'id'}
+							filterOption={processProductFilter}
 							placeholder="Filter products"
 							onChange={this.handleProductTypesChange}
 						/>
@@ -120,3 +123,4 @@ export default class ActivityFilters extends React.Component {
 		)
 	}
 }
+
