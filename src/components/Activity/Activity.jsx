@@ -194,8 +194,7 @@ class Activity extends React.Component {
 						{this.renderTaskDialog()}
 						{this.renderTable()}
 					</div>
-				{this.renderRecipeHelp()}
-				{this.renderActivityLogHelp()}
+				{this.renderHelp()}
 			</div>
 		)
 	}
@@ -244,35 +243,32 @@ class Activity extends React.Component {
 		} else return null
 	}
 
-	renderActivityLogHelp() {
+	renderHelp() {
 		return (
-			<div className="activity-page-help activity-log"
-			     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
-				<div className="activity-page-help-header">Check out our new activity log</div>
-				<div>
-					<span>Quickly find activities for a particular process or product. Download information for all runs at once. </span>
-					<span className="activity-page-help-link">
+			<div className="activity-page-help-container">
+				<div className="activity-page-help"
+				     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
+					<div className="activity-page-help-header">Check out our new activity log</div>
+					<div>
+						<span>Quickly find activities for a particular process or product. Download information for all runs at once. </span>
+						<span className="activity-page-help-link">
 						Learn more about the new activity log.
 					</span>
-					<span className="activity-page-forward">  <i
-						className="material-icons activity-page-forward-i">arrow_forward</i></span>
+						<span className="activity-page-forward">  <i
+							className="material-icons activity-page-forward-i">arrow_forward</i></span>
+					</div>
 				</div>
-			</div>
-		)
-	}
-
-	renderRecipeHelp() {
-		return (
-			<div className="activity-page-help recipes"
-			     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
-				<div className="activity-page-help-header">Create recipes for your products</div>
-				<div>
-					<span>Guide your team with instructions and ingredients and keep your inventory accurate. </span>
-					<span className="activity-page-help-link">
+				<div className="activity-page-help"
+				     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
+					<div className="activity-page-help-header">Create recipes for your products</div>
+					<div>
+						<span>Guide your team with instructions and ingredients and keep your inventory accurate. </span>
+						<span className="activity-page-help-link">
 						Learn how to supercharge your team now.  
 					</span>
-					<span className="activity-page-forward">  <i
-						className="material-icons activity-page-forward-i">arrow_forward</i></span>
+						<span className="activity-page-forward">  <i
+							className="material-icons activity-page-forward-i">arrow_forward</i></span>
+					</div>
 				</div>
 			</div>
 		)

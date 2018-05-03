@@ -204,43 +204,46 @@ $z-index-edit-menu: 992;
     }
 
   .object-list.activity-log {
-    padding-bottom: 400px;
+    padding-bottom: 0;
+  }
+
+  .content {
+    margin-bottom: 24px;
+  }
+
+  .activity-page-help-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 24px;
+    margin-bottom: 76px;
+  }
+
+  .activity-page-help {
+    background-color: $primary;
+    margin-bottom: 24px;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    width: 400px;
+    cursor: pointer;
+ }
+
+  .activity-page-help-header {
+    font-weight: bold;
+    padding-bottom: 12px;
+  }
+  .activity-page-help-link {
+    font-weight: bold;
+  }
+
+  .activity-page-forward {
+    vertical-align: middle
+  }
+
+  .activity-page-forward-i {
+    vertical-align: middle;
   }
 }
 
-.activity-page-help {
-  position: fixed;
-  right: 24px;
-  background-color: $primary;
-  color: white;
-  padding: 12px;
-  border-radius: 8px;
-  width: 400px;
-  cursor: pointer;
-
-
-  &.activity-log {
-    bottom: 242px;
-  }
-
-  &.recipes {
-    bottom: 100px;
-  }
-}
-
-.activity-page-help-header {
-  font-weight: bold;
-  padding-bottom: 12px;
-}
-.activity-page-help-link {
-  font-weight: bold;
-}
-
-.activity-page-forward {
-  vertical-align: middle
-}
-
-.activity-page-forward-i {
-  vertical-align: middle;
-}
 
