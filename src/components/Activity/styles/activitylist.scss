@@ -17,7 +17,7 @@ div.activity-list-item {
 	}
 
 	.process-code {
-		flex: 2;
+		flex: 1;
 	}
 
 	.process-name {
@@ -33,12 +33,12 @@ div.activity-list-item {
 	}
 	
 	.outputs {
-		flex: 3;
+		flex: 4;
 	}
 	
 	.view-all-tasks {
 		cursor: pointer;
-		flex: 3;
+		flex: 2;
 		color: $primary-light;
 	}
 
