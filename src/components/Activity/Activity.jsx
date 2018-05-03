@@ -16,6 +16,8 @@ import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import TaskDialogSimple from '../TaskDialog/TaskDialogSimple'
 import * as actions from "./ActivityActions"
 import * as taskActions from "../TaskPage/TaskActions"
+import * as processesActions from '../Processes/ProcessesActions.jsx'
+import * as productsActions from '../Products/ProductsActions.jsx'
 import { isDandelion } from '../../utilities/userutils'
 import api from '../WaffleconeAPI/api'
 import fileDownload from 'js-file-download'
@@ -54,6 +56,8 @@ class Activity extends React.Component {
 
 	componentDidMount() {
 		this.getActivity(this.state.filters)
+		this.props.dispatch(processesActions.fetchProcesses())
+		this.props.dispatch(productsActions.fetchProducts())
 	}
 
 	handleFilterChange(filters) {
@@ -132,7 +136,13 @@ class Activity extends React.Component {
 
 	createCSV(params) {
 		let { start, end } = this.state.filters.dates
-		const title = `Runs - ${start}-${end}`
+		let name
+		if(params.processes.length === 1) {
+			name = this.props.processes.find(p => String(p.id) === params.processes[0]).name
+		} else {
+			name = 'Runs'
+		}
+		const title = `${name} - ${start}-${end}`
 		return api.post('/gauth/create-csv/')
 			.type('form')
 			.send(params)
@@ -167,6 +177,7 @@ class Activity extends React.Component {
 	}
 
 	render() {
+		const { data, processes, products } = this.props
 		return (
 			<div className="activity">
 				<ApplicationSectionHeader>Activity Log</ApplicationSectionHeader>
@@ -174,7 +185,9 @@ class Activity extends React.Component {
 					filters={this.state.filters}
 					onFilterChange={this.handleFilterChange}
 					onDownload={this.handleDownloadAll}
-					downloadDisabled={!this.props.data.length}
+					downloadDisabled={!data.length}
+					processes={processes}
+					products={products}
 				/>
 					<div className="content">
 						{this.renderDialog()}
@@ -296,6 +309,8 @@ const mapStateToProps = (state) => {
 		ui: state.activity.ui,
 		tasks: state.tasks.data,
 		tasksUI: state.tasks.ui,
+		processes: state.processes.data,
+		products: state.products.data,
 	}
 }
 

@@ -1,15 +1,12 @@
 import React from 'react'
-import { connect } from "react-redux"
 import Datepicker from '../Datepicker/Datepicker.jsx'
 import Select from '../Inputs/Select'
 import Input from '../Inputs/Input'
 import Checkbox from '../Inputs/Checkbox'
 import Button from '../Button/Button'
-import * as processesActions from '../Processes/ProcessesActions.jsx'
-import * as productsActions from '../Products/ProductsActions.jsx'
 import './styles/activityfilters.css'
 
-class ActivityFilters extends React.Component {
+export default class ActivityFilters extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -24,11 +21,6 @@ class ActivityFilters extends React.Component {
 		this.handleFlaggedOnlyChange = this.handleFlaggedOnlyChange.bind(this)
 		this.handleAggregateProductsChange = this.handleAggregateProductsChange.bind(this)
 		this.handleDownload = this.handleDownload.bind(this)
-	}
-
-	componentDidMount() {
-		this.props.dispatch(processesActions.fetchProcesses())
-		this.props.dispatch(productsActions.fetchProducts())
 	}
 
 	handleDatesChange(dates) {
@@ -128,15 +120,3 @@ class ActivityFilters extends React.Component {
 		)
 	}
 }
-
-const mapStateToProps = (state/*, props*/) => {
-	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
-	return {
-		processes: state.processes.data,
-		products: state.products.data,
-		isFetchingData: isFetchingData
-	}
-}
-
-
-export default connect(mapStateToProps)(ActivityFilters)
