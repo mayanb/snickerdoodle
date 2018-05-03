@@ -7,7 +7,7 @@ const nfs = [{
 	content: "Guide your team every step of the way with instructions and ingredient information. With recipes, your team is guided directly in the app on what to do, what to use, and how much. Visit the Products page to get started.",
 }, {
 	title: "Add user fields.",
-	content: "You can now specify user fields for tasks and select from a menu of user names (no more typing names by hand!). Checkout a process to see more.",
+	content: "Improve your record keeping by logging operators. You can now easily log who’s working on each task by selecting from a list of usernames. Visit the Process page to learn more.",
 }]
 
 let HEADER = {fontSmoothing: 'antialiased', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}

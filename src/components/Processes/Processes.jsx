@@ -72,9 +72,9 @@ class Processes extends React.Component {
 		const shouldShowAnnouncement = !(isDuplicateOpen || isAddingProcess) && isAnnouncementOpen && processesHaveNoUserAttributes(data)
 		return shouldShowAnnouncement ? (<PageSpecificNewFeatureIntro
 			onClose={this.handleCloseAnnouncementModal}
-			content="You can now specify user fields for tasks (no more typing names by hand!) Add a user field to a process by selecting User as your field datatype when you add a field to a process. Teammates on the mobile app can then select usernames from a menu."
+			content="You can now easily log which users are working on a task. Add a user log field to one of your processes by selecting User as the datatype. Then when you create a new task on the app, you’ll be able to easily search, select, and record the username of who’s working on that task."
 			title="Introducing User Log Fields"
-			finalCallToAction="Learn more about using user fields"
+			finalCallToAction="Learn more about user log fields"
 			imgSrc="girlwithclipboard"
 			imgHeightWithUnits="270px"
 			link="https://polymer.helpscoutdocs.com/article/11-user-fields"
