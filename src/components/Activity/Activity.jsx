@@ -217,6 +217,7 @@ class Activity extends React.Component {
 				header="Tasks"
 				onToggle={() => this.setState({ selectedRow: null })}
 				tasks={tasks}
+				isFetchingData={this.props.tasksUI.isFetchingData}
 			/>
 		)
 	}

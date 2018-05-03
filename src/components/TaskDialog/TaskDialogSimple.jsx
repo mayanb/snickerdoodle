@@ -4,6 +4,7 @@ import DialogHeader from '../Dialog/DialogHeader'
 import { icon, description } from '../TaskPage/TaskHelpers.jsx'
 import {Link} from 'react-router-dom'
 import Img from '../Img/Img'
+import Loading from '../Loading/Loading'
 
 export default class TaskDialogSimple extends React.Component {
 	render() {
@@ -13,6 +14,7 @@ export default class TaskDialogSimple extends React.Component {
 				<div className={"dialog-card task-dialog"}>
 					<DialogHeader onToggle={this.props.onToggle}>{this.props.header || 'Tasks'}</DialogHeader>
 					<div className="body">
+						<Loading isFetchingData={this.props.isFetchingData} />
 						{this.props.tasks.map(this.renderTask.bind(this))}
 					</div>
 				</div>
