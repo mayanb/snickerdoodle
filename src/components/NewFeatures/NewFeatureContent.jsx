@@ -3,11 +3,11 @@ import {emojify} from 'react-emojione'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Redesigned activity log.",
-	content: "Quickly find activities for a particular process or product. Filter for flagged tasks. Download information for all runs at once. ",
+	title: "Get production insights fast.",
+	content: "We've revamped the Activity Log, so you can now ask complex questions about your production line with a few keystrokes. Get an overview of all your activity and quickly drill down to get the nuanced insights you need. Visit the Activity Log to try it out.",
 }, {
-	title: "New attribute type - pick a user from a list.",
-	content: "Want to fix a typo in a product name? You can now edit the name, code or description fields for existing products.",
+	title: "Add user fields.",
+	content: "You can now specify user fields for tasks and select from a menu of user names (no more typing names by hand!). Checkout a process to see more.",
 	type: 'improvement'
 }, {
 	title: "Stay organized with recipes.",
