@@ -1,9 +1,10 @@
 @import 'styles/constants.scss';
 
-.activity-list-item {
+div.activity-list-item {
 	width: 100%;
 	display: flex;
 	cursor: pointer;
+	padding-right: 36px;
 
 	.process-code {
 		flex: 2;
@@ -28,11 +29,5 @@
 	.view-all-tasks {
 		flex: 3;
 		color: $primary-light;
-		visibility: hidden;
-		text-align: center;
-	}
-	
-	&:hover .view-all-tasks {
-		visibility: visible;
 	}
 }
