@@ -78,7 +78,7 @@ export default class Datepicker extends React.Component {
           <i className="material-icons">date_range</i>
         </div>
 
-        <div style={{position: 'absolute', top: this.state.y, left: this.state.x }} className="datepicker">
+        <div style={{position: 'absolute', top: this.state.y, right: this.state.x }} className="datepicker">
           <Menu position="auto" active={this.state.active} onHide={this.handleMenuHide}>
             <div className="menuContentWrapper" style={{display: "inline-block"}} onClick={ this.stopPropagation } >
               <DateRange

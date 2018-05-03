@@ -3,12 +3,15 @@ import {emojify} from 'react-emojione'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Stay organized with recipes.",
-	content: "Guide your team every step of the way with instructions and ingredient information. With recipes, your team is guided directly in the app on what to do, what to use, and how much. Visit the Products page to get started.",
+	title: "Redesigned activity log.",
+	content: "Quickly find activities for a particular process or product. Filter for flagged tasks. Download information for all runs at once. ",
 }, {
-	title: "Edit product information.",
+	title: "New attribute type - pick a user from a list.",
 	content: "Want to fix a typo in a product name? You can now edit the name, code or description fields for existing products.",
 	type: 'improvement'
+}, {
+	title: "Stay organized with recipes.",
+	content: "Guide your team every step of the way with instructions and ingredient information. With recipes, your team is guided directly in the app on what to do, what to use, and how much. Visit the Products page to get started.",
 }]
 
 let HEADER = {fontSmoothing: 'antialiased', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}

@@ -17,12 +17,8 @@ $z-index-edit-menu: 992;
 
 .activity {
   min-width: 700px;
-  max-width: 900px;
-  margin-left: 32px;
-
-  .page.mini {
-    flex-direction: column;
-  }
+  width: 100%;
+    background-color: white;
 
   .activity-process {
     width: 100%;
@@ -191,28 +187,52 @@ $z-index-edit-menu: 992;
     }
   }
 
-  .dates {
-    border-radius: 4px;
-    border: 1px solid rgba(0,0,0,0.1);
+    // override PaginatedTable header border and text size
+    .paginated-table.border-none li.header .object-list-header {
+        border-top-width: 0px;
+        border-bottom-width: 1px;
+
+        .activity-list-header {
+            cursor: default;
+
+            & > div {
+                margin-top: 12px;
+                margin-bottom: 12px;
+                font-size: 14px;
+            }
+        }
+    }
+
+  .object-list.activity-log {
+    padding-bottom: 400px;
   }
 }
 
-.activity-page-recipe-help {
-  margin-top: 40px;
+.activity-page-help {
+  position: fixed;
+  right: 24px;
   background-color: $primary;
-  float: right;
   color: white;
   padding: 12px;
   border-radius: 8px;
   width: 400px;
   cursor: pointer;
+
+
+  &.activity-log {
+    bottom: 242px;
+  }
+
+  &.recipes {
+    bottom: 100px;
+  }
 }
 
-.activity-page-recipe-help-header {
+.activity-page-help-header {
   font-weight: bold;
   padding-bottom: 12px;
 }
-.activity-page-recipe-help-link {
+.activity-page-help-link {
   font-weight: bold;
 }
 
