@@ -247,7 +247,7 @@ class Activity extends React.Component {
 		return (
 			<div className="activity-page-help-container">
 				<div className="activity-page-help"
-				     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
+				     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/12-using-the-new-activity-log", '_blank')}>
 					<div className="activity-page-help-header">Check out our new activity log</div>
 					<div>
 						<span>Quickly find activities for a particular process or product. Download information for all runs at once. </span>
