@@ -5,7 +5,7 @@ import Img from '../Img/Img'
 import './styles/pagespecificnewfeatureinfo.css'
 
 
-export default function PageSpecificNewFeatureIntro({ onClose, recipeContent, featureName, finalCallToAction, imgSrc, link, localStorageVarName }) {
+export default function PageSpecificNewFeatureIntro({ onClose, content, title, finalCallToAction, imgSrc, imgHeightWithUnits, link, localStorageVarName }) {
 	const modalPreviouslySeen = window.localStorage.getItem(localStorageVarName)
 	if (modalPreviouslySeen) {
 		return null
@@ -20,11 +20,11 @@ export default function PageSpecificNewFeatureIntro({ onClose, recipeContent, fe
 		<Dialog onToggle={handleClose} className="specific-page-new-features-card">
 			<div style={{margin: "-16px"}}>
 				<div className="new-feature">
-					<div className="new-feature-header">Introducing {featureName}</div>
+					<div className="new-feature-header">{title}</div>
 					<div style={{display: "flex", alignItems: "flex-end", "justifyContent": "center"}}>
-						<Img src={imgSrc} height="350px"/>
+						<Img src={imgSrc} height={imgHeightWithUnits}/>
 					</div>
-					<div className="new-feature-text">{recipeContent}</div>
+					<div className="new-feature-text">{content}</div>
 					<div>
 						<Button link onClick={() => window.open(link, "_blank")}>
 							<span className="learn-how">{finalCallToAction}</span>

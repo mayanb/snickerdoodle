@@ -92,10 +92,11 @@ class Products extends React.Component {
 	renderCreateRecipeModal() {
   	return (<PageSpecificNewFeatureIntro
 			onClose={this.handleCloseRecipeAnnouncementModal}
-			recipeContent="Polymer's powerful Recipes help you stay even more organized. Set ingredients and instructions to guide your team and automatically update inventory."
-			featureName="Recipes"
+			content="Polymer's powerful Recipes help you stay even more organized. Set ingredients and instructions to guide your team and automatically update inventory."
+			title="Introducing Recipes"
 			finalCallToAction="Learn how to create your first recipe now!"
 			imgSrc="dairyfactory"
+			imgHeightWithUnits="350px"
 			link="https://polymer.helpscoutdocs.com/article/10-understanding-recipes"
 			localStorageVarName="CREATE_RECIPE_INFO"
 		/>)
