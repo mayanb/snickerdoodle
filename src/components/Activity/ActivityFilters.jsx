@@ -63,7 +63,7 @@ class ActivityFilters extends React.Component {
 	}
 
 	render() {
-		const { filters } = this.props
+		const { filters, downloadDisabled, processes, products } = this.props
 		return (
 			<div className="activity-filters">
 				<div className="row">
@@ -74,7 +74,7 @@ class ActivityFilters extends React.Component {
 							openOnFocus
 							multi={true}
 							value={filters.processTypes}
-							options={this.props.processes}
+							options={processes}
 							labelKey={'name'}
 							valueKey={'id'}
 							placeholder="Filter processes"
@@ -87,7 +87,7 @@ class ActivityFilters extends React.Component {
 							openOnFocus
 							multi={true}
 							value={filters.productTypes}
-							options={this.props.products}
+							options={products}
 							labelKey={'name'}
 							valueKey={'id'}
 							placeholder="Filter products"
@@ -116,7 +116,11 @@ class ActivityFilters extends React.Component {
 							onChange={this.handleAggregateProductsChange}
 						/>
 					</div>
-					<Button className="download" onClick={this.handleDownload} isLoading={this.state.isDownloading}>
+					<Button className="download"
+					        onClick={this.handleDownload}
+					        isLoading={this.state.isDownloading}
+					        disabled={downloadDisabled}
+					>
 						Download All
 					</Button>
 				</div>

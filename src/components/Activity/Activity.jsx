@@ -174,6 +174,7 @@ class Activity extends React.Component {
 					filters={this.state.filters}
 					onFilterChange={this.handleFilterChange}
 					onDownload={this.handleDownloadAll}
+					downloadDisabled={!this.props.data.length}
 				/>
 					<div className="content">
 						{this.renderDialog()}
