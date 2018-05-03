@@ -18,7 +18,7 @@ export default function PageSpecificNewFeatureIntro({ onClose, recipeContent, fe
 	
 	return (
 		<Dialog onToggle={handleClose} className="specific-page-new-features-card">
-			<div >
+			<div style={{margin: "-16px"}}>
 				<div className="new-feature">
 					<div className="new-feature-header">Introducing {featureName}</div>
 					<div style={{display: "flex", alignItems: "flex-end", "justifyContent": "center"}}>
