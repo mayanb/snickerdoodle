@@ -89,7 +89,7 @@ class Activity extends React.Component {
 		const productTypes = this.state.filters.productTypes.length ?
 			this.state.filters.productTypes :
 			[...new Set([].concat(...this.props.data.map(row => row.product_types.map(p => p.id))))]
-		this.handleDownload(processTypes, productTypes)
+		return this.handleDownload(processTypes, productTypes)
 	}
 
 	handleDownloadRow(index) {
@@ -170,7 +170,11 @@ class Activity extends React.Component {
 		return (
 			<div className="activity">
 				<ApplicationSectionHeader>Activity Log</ApplicationSectionHeader>
-				<ActivityFilters filters={this.state.filters} onFilterChange={this.handleFilterChange} />
+				<ActivityFilters
+					filters={this.state.filters}
+					onFilterChange={this.handleFilterChange}
+					onDownload={this.handleDownloadAll}
+				/>
 					<div className="content">
 						{this.renderDialog()}
 						{this.renderTaskDialog()}
@@ -196,8 +200,8 @@ class Activity extends React.Component {
 							ui={this.props.ui}
 							Row={ActivityListItem}
 							TitleRow={ActivityListHeader}
-							onClick={this.handleSelect}
 							onPagination={this.handlePagination}
+							extra={{onViewTasks: this.handleSelect, onDownload: this.handleDownloadRow}}
 						/>
 					</ObjectList>
 				</div>

@@ -3,8 +3,12 @@
 div.activity-list-item {
 	width: 100%;
 	display: flex;
-	cursor: pointer;
 	padding-right: 36px;
+    align-items: center;
+
+	&:hover .download{
+        visibility: visible;
+	}
 
 	.process-code {
 		flex: 2;
@@ -27,7 +31,13 @@ div.activity-list-item {
 	}
 	
 	.view-all-tasks {
+		cursor: pointer;
 		flex: 3;
 		color: $primary-light;
+	}
+
+	.download {
+		cursor: pointer;
+        visibility: hidden;
 	}
 }

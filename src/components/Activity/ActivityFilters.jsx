@@ -4,6 +4,7 @@ import Datepicker from '../Datepicker/Datepicker.jsx'
 import Select from '../Inputs/Select'
 import Input from '../Inputs/Input'
 import Checkbox from '../Inputs/Checkbox'
+import Button from '../Button/Button'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
 import './styles/activityfilters.css'
@@ -11,12 +12,18 @@ import './styles/activityfilters.css'
 class ActivityFilters extends React.Component {
 	constructor(props) {
 		super(props)
+
+		this.state = {
+			isDownloading: false
+		}
+
 		this.handleDatesChange = this.handleDatesChange.bind(this)
 		this.handleKeywordsChange = this.handleKeywordsChange.bind(this)
 		this.handleProcessTypesChange = this.handleProcessTypesChange.bind(this)
 		this.handleProductTypesChange = this.handleProductTypesChange.bind(this)
 		this.handleFlaggedOnlyChange = this.handleFlaggedOnlyChange.bind(this)
 		this.handleAggregateProductsChange = this.handleAggregateProductsChange.bind(this)
+		this.handleDownload = this.handleDownload.bind(this)
 	}
 
 	componentDidMount() {
@@ -48,6 +55,11 @@ class ActivityFilters extends React.Component {
 	handleAggregateProductsChange(event) {
 		const isChecked = event.target.checked
 		this.props.onFilterChange({ ...this.props.filters, aggregateProducts: isChecked })
+	}
+
+	handleDownload() {
+		this.setState({ isDownloading: true })
+		this.props.onDownload().finally(() => this.setState({ isDownloading: false }))
 	}
 
 	render() {
@@ -92,16 +104,21 @@ class ActivityFilters extends React.Component {
 							onChange={this.handleKeywordsChange}
 						/>
 					</div>
-					<Checkbox
-						label="Flagged Only"
-						checked={filters.flaggedOnly}
-						onChange={this.handleFlaggedOnlyChange}
-					/>
-					<Checkbox
-						label="Aggregate across product types"
-						checked={filters.aggregateProducts}
-						onChange={this.handleAggregateProductsChange}
-					/>
+					<div className="checkboxes">
+						<Checkbox
+							label="Flagged Only"
+							checked={filters.flaggedOnly}
+							onChange={this.handleFlaggedOnlyChange}
+						/>
+						<Checkbox
+							label="Aggregate across product types"
+							checked={filters.aggregateProducts}
+							onChange={this.handleAggregateProductsChange}
+						/>
+					</div>
+					<Button className="download" onClick={this.handleDownload} isLoading={this.state.isDownloading}>
+						Download All
+					</Button>
 				</div>
 			</div>
 		)

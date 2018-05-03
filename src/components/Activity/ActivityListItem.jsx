@@ -4,11 +4,11 @@ import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
 import {formatAmount} from "../../utilities/stringutils"
 import Icon from '../Card/Icon'
 
-export default function ActivityListItem({ item, onClick }) {
+export default function ActivityListItem({ item, index, onViewTasks, onDownload }) {
 	const { process_type, product_types, runs, amount } = item
-	
+
 	return (
-		<ObjectListItem className="activity-list-item" onClick={onClick}>
+		<ObjectListItem className="activity-list-item">
 			<OverflowSafeText className="process-code">
 				<Icon src="" size="20px" content={process_type.code}/>
 				{process_type.code}
@@ -25,7 +25,8 @@ export default function ActivityListItem({ item, onClick }) {
 			<OverflowSafeText className="outputs">
 				{formatAmount(Number(amount), process_type.unit)}
 			</OverflowSafeText>
-			<div className="view-all-tasks">View all tasks</div>
+			<div className="view-all-tasks" onClick={() => onViewTasks(index)}>View all tasks</div>
+			<i className="material-icons download" onClick={() => onDownload(index)}>file_download</i>
 		</ObjectListItem>
 	)
 }
