@@ -20,7 +20,6 @@ import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
 import { isDandelion } from '../../utilities/userutils'
 import api from '../WaffleconeAPI/api'
-import fileDownload from 'js-file-download'
 
 import './styles/activitylist.css'
 
@@ -143,22 +142,12 @@ class Activity extends React.Component {
 			name = 'Runs'
 		}
 		const title = `${name} - ${start}-${end}`
-		return api.post('/gauth/create-csv/')
-			.type('form')
-			.send(params)
-			.responseType('blob')
-			.then(res => fileDownload(res.body, `${title}.csv`))
-			.catch(err => {
-				console.log("ugh something went wrong\n" + err)
-			})
-
+		return this.props.dispatch(actions.fetchCsv(params, title))
 	}
 
 	createSpreadsheet(params) {
 		let c = this
-		return api.post('/gauth/create-spreadsheet/')
-			.type('form')
-			.send(params)
+		return this.props.dispatch(actions.fetchGoogleSheet(params))
 			.then(res => {
 				let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
 				let newWin = window.open(url, '_blank');
@@ -166,9 +155,6 @@ class Activity extends React.Component {
 					//POPUP BLOCKED
 					c.toggleDialog('mustEnablePopupsDialog')
 				}
-			})
-			.catch(err => {
-				console.log("ugh something went wrong\n" + err)
 			})
 	}
 
