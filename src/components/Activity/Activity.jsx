@@ -181,6 +181,7 @@ class Activity extends React.Component {
 						{this.renderTable()}
 					</div>
 				{this.renderRecipeHelp()}
+				{this.renderActivityLogHelp()}
 			</div>
 		)
 	}
@@ -194,7 +195,7 @@ class Activity extends React.Component {
 		} else {
 			return (
 				<div>
-					<ObjectList className="products" isFetchingData={isFetchingData}>
+					<ObjectList className="activity-log" isFetchingData={isFetchingData}>
 						<PaginatedTable
 							data={this.props.data}
 							ui={this.props.ui}
@@ -229,14 +230,31 @@ class Activity extends React.Component {
 		} else return null
 	}
 
+	renderActivityLogHelp() {
+		return (
+			<div className="activity-page-help activity-log"
+			     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
+				<div className="activity-page-help-header">Check out our new activity log</div>
+				<div>
+					<span>Quickly find activities for a particular process or product. Download information for all runs at once. </span>
+					<span className="activity-page-help-link">
+						Learn more about the new activity log.
+					</span>
+					<span className="activity-page-forward">  <i
+						className="material-icons activity-page-forward-i">arrow_forward</i></span>
+				</div>
+			</div>
+		)
+	}
+
 	renderRecipeHelp() {
 		return (
-			<div className="activity-page-recipe-help"
+			<div className="activity-page-help recipes"
 			     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
-				<div className="activity-page-recipe-help-header">Create recipes for your products</div>
+				<div className="activity-page-help-header">Create recipes for your products</div>
 				<div>
 					<span>Guide your team with instructions and ingredients and keep your inventory accurate. </span>
-					<span className="activity-page-recipe-help-link">
+					<span className="activity-page-help-link">
 						Learn how to supercharge your team now.  
 					</span>
 					<span className="activity-page-forward">  <i

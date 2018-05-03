@@ -202,24 +202,37 @@ $z-index-edit-menu: 992;
             }
         }
     }
+
+  .object-list.activity-log {
+    padding-bottom: 400px;
+  }
 }
 
-.activity-page-recipe-help {
-  margin-top: 40px;
+.activity-page-help {
+  position: fixed;
+  right: 24px;
   background-color: $primary;
-  float: right;
   color: white;
   padding: 12px;
   border-radius: 8px;
   width: 400px;
   cursor: pointer;
+
+
+  &.activity-log {
+    bottom: 242px;
+  }
+
+  &.recipes {
+    bottom: 100px;
+  }
 }
 
-.activity-page-recipe-help-header {
+.activity-page-help-header {
   font-weight: bold;
   padding-bottom: 12px;
 }
-.activity-page-recipe-help-link {
+.activity-page-help-link {
   font-weight: bold;
 }
 
