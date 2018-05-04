@@ -87,10 +87,10 @@ class Activity extends React.Component {
 
 	handleDownloadAll() {
 		const processTypes = this.state.filters.processTypes.length ?
-			this.state.filters.processTypes :
+			this.state.filters.processTypes.map(p => p.id) :
 			[...new Set(this.props.data.map(row => row.process_type.id))]
 		const productTypes = this.state.filters.productTypes.length ?
-			this.state.filters.productTypes :
+			this.state.filters.productTypes.map(p => p.id) :
 			[...new Set([].concat(...this.props.data.map(row => row.product_types.map(p => p.id))))]
 		return this.handleDownload(processTypes, productTypes)
 	}
