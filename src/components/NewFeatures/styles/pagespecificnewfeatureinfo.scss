@@ -1,0 +1,25 @@
+.specific-page-new-features-card {
+	min-width: 500px;
+	max-width: 800px;
+	
+	.new-feature {
+		padding: 24px;
+	}
+	
+	.new-feature-text {
+		padding-top: 12px;
+		padding-bottom: 24px;
+	}
+	
+	.new-feature-header {
+		font-weight: bold;
+		padding-bottom: 24px;
+		font-size: 16px;
+	}
+	
+	.learn-how {
+		text-decoration: underline;
+		font-size: 14px;
+		font-weight: bold;
+	}
+}

@@ -8,7 +8,7 @@ const nfs = [{
 	type: 'improvement',
 }, {
 	title: "Add user fields.",
-	content: "You can now specify user fields for tasks and select from a menu of user names (no more typing names by hand!). Checkout a process to see more.",
+	content: "Improve your record keeping by logging operators. You can now easily log who’s working on each task by selecting from a list of usernames. Visit the Process page to learn more.",
 	type: 'improvement',
 }, {
 	title: "Stay organized with recipes.",
