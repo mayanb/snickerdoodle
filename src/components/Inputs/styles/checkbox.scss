@@ -1,0 +1,15 @@
+@import 'styles/constants.scss';
+
+.checkbox {
+    margin-right: 24px;
+
+    label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    input {
+        margin-right: 12px;
+    }
+}

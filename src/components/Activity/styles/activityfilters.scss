@@ -1,0 +1,75 @@
+@import 'styles/constants.scss';
+
+.activity-filters {
+    padding: 32px;
+    color: $gray;
+
+    .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .datepicker {
+        width: 200px;
+        margin-right: 20px;
+    }
+
+    div.button-dropdown .button-dropdown-content {
+        right: inherit;
+    }
+
+    .select-container {
+        width: 300px;
+        margin-right: 20px;
+        position: relative;
+
+        & > i {
+            font-size: 20px;
+            position: absolute;
+            top: 9px;
+            left: 8px;
+        }
+
+        .Select-control {
+            background-color: transparent;
+            padding-left: 23px;
+        }
+
+        .Select--multi .Select-input {
+            margin-left: 5px;
+        }
+
+        .Select-placeholder {
+            padding-left: 28px;
+        }
+    }
+
+    .input-container {
+        width: 200px;
+        margin-right: 20px;
+        position: relative;
+
+        i {
+            font-size: 20px;
+            position: absolute;
+            top: 9px;
+            left: 8px;
+        }
+    }
+
+    .input {
+        padding-left: 36px;
+        border-color: $gray-light;
+
+        &::placeholder {
+            color: $gray;
+        }
+    }
+
+    .checkboxes {
+        display: flex;
+        flex-grow: 1;
+    }
+}
+
