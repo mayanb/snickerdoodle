@@ -7,11 +7,13 @@ import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessesListItem from './ProcessesListItem'
 import CreateOrDuplicateProcessDialog from './CreateOrDuplicateProcessDialog'
+import PageSpecificNewFeatureIntro from '../NewFeatures/PageSpecificNewFeatureIntro'
 import './styles/processes.css'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
 import ZeroState from '../ObjectList/ObjectListZeroState'
 import { Modal } from 'antd'
 import ElementFilter from '../Element/ElementFilter'
+import { processesHaveNoUserAttributes } from '../../utilities/processutils'
 
 const { confirm } = Modal
 
@@ -22,19 +24,21 @@ class Processes extends React.Component {
 	this.state = {
 		isAddingProcess: false,
 		isDuplicateOpen: false,
+		isAnnouncementOpen: true, // but will return null if already seen
 		isDuplicating: false,
 		duplicatingObjectIndex: null,
 		isFiltering: false,
 	}
-
-	this.handleFilter = this.handleFilter.bind(this)
-	this.handleSelectProcess = this.handleSelectProcess.bind(this)
-	this.handlePagination = this.handlePagination.bind(this)
-	this.handleToggleDialog = this.handleToggleDialog.bind(this)
-	this.handleCreateProcess = this.handleCreateProcess.bind(this)
-	this.handleArchive = this.handleArchive.bind(this)
-	this.handleDuplicate = this.handleDuplicate.bind(this)
-	this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
+	
+		this.handleFilter = this.handleFilter.bind(this)
+		this.handleSelectProcess = this.handleSelectProcess.bind(this)
+		this.handlePagination = this.handlePagination.bind(this)
+		this.handleToggleDialog = this.handleToggleDialog.bind(this)
+		this.handleCreateProcess = this.handleCreateProcess.bind(this)
+		this.handleArchive = this.handleArchive.bind(this)
+		this.handleDuplicate = this.handleDuplicate.bind(this)
+		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
+		this.handleCloseAnnouncementModal = this.handleCloseAnnouncementModal.bind(this)
   }
 
   // fetch products on load
@@ -57,9 +61,26 @@ class Processes extends React.Component {
 					{ hasNone ? <ZeroState type="process" /> : this.renderTable() }
 					{this.renderDialog()}
 					{this.renderDuplicateDialog()}
+					{this.renderUserAttributeAnnouncementDialog()}
 			</div>
 		)
   }
+	
+	renderUserAttributeAnnouncementDialog() {
+		const { isDuplicateOpen, isAddingProcess, isAnnouncementOpen } = this.state
+		const { data } = this.props
+		const shouldShowAnnouncement = !(isDuplicateOpen || isAddingProcess) && isAnnouncementOpen && processesHaveNoUserAttributes(data)
+		return shouldShowAnnouncement ? (<PageSpecificNewFeatureIntro
+			onClose={this.handleCloseAnnouncementModal}
+			content="You can now easily log which users are working on a task. Add a user log field to one of your processes by selecting User as the datatype. Then when you create a new task on the app, you’ll be able to easily search, select, and record the username of who’s working on that task."
+			title="Introducing User Log Fields"
+			finalCallToAction="Learn more about user log fields"
+			imgSrc="girlwithclipboard"
+			imgHeightWithUnits="270px"
+			link="https://polymer.helpscoutdocs.com/article/11-user-fields"
+			localStorageVarName="USER_ATTRIBUTE_INFO"
+		/>) : null
+	}
 
   renderTable() {
   	let { ui } = this.props
@@ -201,6 +222,10 @@ class Processes extends React.Component {
 				let index = this.props.data.findIndex((e, i, a) => e.id === res.item.id)
 				return this.handleSelectProcess(index)
 			})
+	}
+	
+	handleCloseAnnouncementModal() {
+		this.setState({ isAnnouncementOpen: false })
 	}
 }
 

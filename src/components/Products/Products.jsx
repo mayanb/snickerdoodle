@@ -9,11 +9,9 @@ import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDialog from './CreateProductDialog'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
-import Dialog from '../Card/Dialog'
-import Button from '../Card/Button'
 import ElementFilter from '../Element/ElementFilter'
-import Img from '../Img/Img'
 import './styles/products.css'
+import PageSpecificNewFeatureIntro from '../NewFeatures/PageSpecificNewFeatureIntro'
 
 const { confirm } = Modal
 
@@ -24,17 +22,16 @@ class Products extends React.Component {
 	  this.state = {
 		  isAddingProduct: false,
 		  isFiltering: false,
-		  shouldDisplayRecipeModal: !window.localStorage.getItem("CREATE_RECIPE_INFO"),
+			shouldDisplayRecipeModal: true,
 	  }
 
+	  this.handleCloseRecipeAnnouncementModal = this.handleCloseRecipeAnnouncementModal.bind(this)
 	  this.handleFilter = this.handleFilter.bind(this)
 	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
     this.handleCreateProduct = this.handleCreateProduct.bind(this)
 	  this.handleArchive = this.handleArchive.bind(this)
 	  this.handleSelect = this.handleSelect.bind(this)
-	  this.handleCloseCreateRecipeModal = this.handleCloseCreateRecipeModal.bind(this)
-	  this.handleCloseCreateAndLearnRecipeModal = this.handleCloseCreateAndLearnRecipeModal.bind(this)
   }
 
   // fetch products on load
@@ -45,7 +42,7 @@ class Products extends React.Component {
 
   render() {
     let { users, ui, data, recipeUI, recipeData } = this.props
-    let { shouldDisplayRecipeModal } = this.state
+		const { shouldDisplayRecipeModal } = this.state
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type !== 'a') {
     	this.props.history.push('/')
@@ -91,29 +88,19 @@ class Products extends React.Component {
 		  />
 	  )
   }
-
-  renderCreateRecipeModal() {
-	let recipeContent = "Polymer's powerful Recipes help you stay even more organized. Set ingredients and instructions to guide your team and automatically update inventory."
-
-  	return(
-			<Dialog onToggle={this.handleCloseCreateRecipeModal} className='new-features-card'>
-				<div style={{margin: "-16px"}}>
-					<div className="recipe-content">
-						<div className="recipe-content-header">Introducing Recipes</div>
-						<div style={{display: 'flex', alignItems: 'flex-end', 'justifyContent': 'center'}}><Img src={'dairyfactory'} height="350px" /></div>
-						<div className="recipe-content-text">{recipeContent}</div>
-						<div>
-							<Button link onClick={this.handleCloseCreateAndLearnRecipeModal}>
-								<span className="learn-how">
-									Learn how to create your first recipe now!
-								</span>
-							</Button>
-						</div>
-					</div>
-				</div>
-			</Dialog>
-  	)
-  }
+	
+	renderCreateRecipeModal() {
+  	return (<PageSpecificNewFeatureIntro
+			onClose={this.handleCloseRecipeAnnouncementModal}
+			content="Polymer's powerful Recipes help you stay even more organized. Set ingredients and instructions to guide your team and automatically update inventory."
+			title="Introducing Recipes"
+			finalCallToAction="Learn how to create your first recipe now!"
+			imgSrc="dairyfactory"
+			imgHeightWithUnits="350px"
+			link="https://polymer.helpscoutdocs.com/article/10-understanding-recipes"
+			localStorageVarName="CREATE_RECIPE_INFO"
+		/>)
+	}
 
 	headerRow() {
 		return (
@@ -128,13 +115,9 @@ class Products extends React.Component {
 	}
 
   /* EVENT HANDLERS */
-  handleCloseCreateRecipeModal() {
-  	this.setState({shouldDisplayRecipeModal: false})
-  	window.localStorage.setItem("CREATE_RECIPE_INFO", true)
-  }
-  handleCloseCreateAndLearnRecipeModal() {
-  	window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')
-  }
+	handleCloseRecipeAnnouncementModal() {
+		this.setState({shouldDisplayRecipeModal: false})
+	}
 
   handleFilter(filterText) {
   	this.setState({ isFiltering: filterText && filterText.length })

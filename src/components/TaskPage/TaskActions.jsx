@@ -12,7 +12,7 @@ import {
     REQUEST_EDIT_TASK_SUCCESS,
     MARK_OUTPUT_USED,
 } from '../../reducers/TaskReducerExtension'
-import {  TASK, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
+import {  TASK, TASKS, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
 import * as actions from '../../reducers/APIDataActions'
 
 export function getTask(task) {
@@ -49,6 +49,41 @@ function attributesWithValues(attributes, attributeValues) {
 		attribute.value = valueObject ? valueObject.value : ''
 		return attribute
 	})
+}
+
+export function getTasks(params) {
+	return function (dispatch) {
+		dispatch(requestTasks())
+		return api.get('/ics/tasks/')
+			.query(params)
+			.then(res => dispatch(requestTasksSuccess(res.body)))
+			.catch(err => dispatch(requestTasksFailure(err)))
+	}
+}
+
+function requestTasks() {
+	return {
+		type: REQUEST,
+		name: TASKS
+	}
+}
+
+function requestTasksFailure(err) {
+  console.error('Error requesting tasks', err)
+	return {
+		type: REQUEST_FAILURE,
+		name: TASKS
+
+	}
+}
+
+function requestTasksSuccess(json) {
+	return {
+		type: REQUEST_SUCCESS,
+		name: TASKS,
+		data: json,
+
+	}
 }
 
 export function getTaskAncestors(task) {

@@ -1,3 +1,35 @@
-.menuContentWrapper {
-	min-width: 550px;
+@import 'styles/constants.scss';
+
+.datepicker {
+    .menuContentWrapper {
+        min-width: 550px;
+    }
+
+    .secondary {
+        padding: 0;
+        width: 100%;
+    }
+
+    .dates {
+        border-radius: 4px;
+        color: $gray;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        border: 1px solid $gray-light;
+        font-size: 12px;
+
+        span, i {
+            line-height: 34px;
+            margin-left: 8px;
+        }
+
+        i {
+            flex: 0;
+            font-size: 20px;
+        }
+
+        vertical-align: middle;
+    }
 }
