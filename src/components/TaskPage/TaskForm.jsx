@@ -4,6 +4,10 @@ import './styles/taskform.css'
 import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
 
+const TIME_TO_STAY_UNSAVED = 500
+const TIME_TO_LOAD = 1000
+const TIME_TO_SHOW_SAVED = 1500
+
 export default class TaskForm extends React.Component {
 	render() {
 		const { taskAttributes, onSave } = this.props
@@ -29,8 +33,8 @@ class AttributeField extends React.Component {
 
 	handleSave(value) {
 		this.setState({ saving: true })
-		this.props.onSave(this.props.taskAttribute.id, value)
-			.finally(() => window.setTimeout(() => this.setState({ saving: false }), 2000))
+		return this.props.onSave(this.props.taskAttribute.id, value)
+			.then(() => window.setTimeout(() => this.setState({ saving: false }), TIME_TO_LOAD))
 	}
 
 
@@ -104,15 +108,34 @@ class TextAttribute extends React.Component {
 	}
 
 	handleInputChange(e) {
-		this.setState({ draftValue: e.target.value })
+		let word = e.target.value
+		this.setState({ draftValue: word})
+		window.setTimeout(() => {
+			if(word === this.state.draftValue &&
+				word !== this.props.value) {
+				this.handleSaveWrapper(word)
+			}
+		}, TIME_TO_STAY_UNSAVED)
 	}
 
 	handleReset() {
 		this.setState({ draftValue: this.props.value })
 	}
 
-	handleSave(e) {
-		this.props.onSave(this.state.draftValue)
+	handleSave() {
+		if (this.state.draftValue === this.props.value) {
+			return 
+		}
+		this.handleSaveWrapper(this.state.draftValue)
+	}
+
+	handleSaveWrapper(value) {
+		this.props.onSave(value)
+			.then(() => {
+				this.setState({ justSaved: true }, () => {
+					window.setTimeout(() => this.setState({ justSaved: false }), TIME_TO_LOAD + TIME_TO_SHOW_SAVED)
+				})
+			})
 	}
 
 	render() {
@@ -123,7 +146,9 @@ class TextAttribute extends React.Component {
 					value={draftValue}
 					onChange={this.handleInputChange}
 				/>
+				<div className="input-peripherals">
 				{this.renderButtons()}
+				</div>
 			</div>
 		)
 	}
@@ -131,19 +156,9 @@ class TextAttribute extends React.Component {
 	renderButtons() {
 		if (this.props.isLoading) {
 			return <Loading />
-		}
-
-	 // Rather than onClick, use onMouseDown since it is called before the blur event which hides the buttons
-		return (
-			<div className="form-buttons">
-				<div className="form-button reset" onMouseDown={this.handleReset}>
-					<i className="material-icons">clear</i>
-				</div>
-				<div className="form-button save" onMouseDown={this.handleSave}>
-					<i className="material-icons">done</i>
-				</div>
-			</div>
-		)
+		} else if(this.state.justSaved) {
+			return <div>Saved!</div>
+		}else return false
 	}
 }
 
