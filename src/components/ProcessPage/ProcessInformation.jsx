@@ -3,6 +3,9 @@ import {pluralize} from '../../utilities/stringutils'
 import ProcessPageEditForm from './ProcessPageEditForm'
 import ProcessEditForm from "./ProcessEditForm"
 import { ElementTitle } from '../Element/Element'
+import { Modal } from 'antd'
+
+const { confirm } = Modal
 
 export default class ProcessInformation extends React.Component {
 	constructor(props) {
@@ -48,20 +51,31 @@ export default class ProcessInformation extends React.Component {
 		let key = type
 		this.setState({ [key] : e.target.value })
 	}
-
+	
+	handleConfirmSubmit(newData) {
+		confirm({
+			title: `Are you sure you want to change the information for ${this.props.process.name} (${this.props.process.code})?`,
+			content: 'All existing tasks of this process type will be changed as well, as well as all new tasks of this process type.',
+			okText: 'Yes, I\'m sure',
+			okType: 'danger',
+			onOk: () =>  this.props.onSubmitChange(newData).then(() => this.setState({ isEditing: false})),
+			onCancel: () => {}
+		})
+	}
+	
+	
 	handleSubmit() {
 		if (this.state.isSavingEdit) {
 			return 
 		}
 		let { name, code, output_desc, default_amount, unit } = this.state
-		this.props.onChange({
+		this.handleConfirmSubmit({
 			name: name, 
 			code: code, 
 			output_desc: output_desc, 
 			default_amount: default_amount, 
 			unit: unit
 		})
-		this.setState({ isEditing: false }) // optimistic, doesn't wait for API to complete
 	}
 }
 

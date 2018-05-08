@@ -23,7 +23,7 @@ class ProcessPage extends React.Component {
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleDuplicate = this.handleDuplicate.bind(this)
 		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
-		this.handleChange = this.handleChange.bind(this)
+		this.handleSubmitChange = this.handleSubmitChange.bind(this)
 	}
 
 	componentDidMount() {
@@ -47,7 +47,7 @@ class ProcessPage extends React.Component {
 							process={data}
 							onArchive={this.handleArchive}
 							onDuplicate={this.handleDuplicate}
-							onChange={this.handleChange}
+							onSubmitChange={this.handleSubmitChange}
 							isSavingEdit={ui.isEditingItem}
 						/>
 						<ProcessAttributeList process={data} />
@@ -114,19 +114,8 @@ class ProcessPage extends React.Component {
 			})
 	}
 	
-	handleConfirmChange(newData) {
-		this.props.dispatch(actions.editProcess(newData, this.props.index, this.props.data.id))
-	}
-	
-	handleChange(newData) {
-		confirm({
-			title: `Are you sure you want to change the information for ${this.props.data.name} (${this.props.data.code})?`,
-			content: 'All existing tasks of this process type will be changed as well, as well as all new tasks of this process type.',
-			okText: 'Yes, I\'m sure',
-			okType: 'danger',
-			onOk: () => this.handleConfirmChange(newData),
-			onCancel: () => {}
-		})
+	handleSubmitChange(newData) {
+		return this.props.dispatch(actions.editProcess(newData, this.props.index, this.props.data.id))
 	}
 }
 
