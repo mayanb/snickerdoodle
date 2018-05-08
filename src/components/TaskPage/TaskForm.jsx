@@ -5,7 +5,7 @@ import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
 
 const TIME_TO_STAY_UNSAVED = 500
-const TIME_TO_LOAD = 1000
+const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
 const TIME_TO_SHOW_SAVED = 1500
 
 export default class TaskForm extends React.Component {
