@@ -9,9 +9,7 @@ export default class TaskForm extends React.Component {
 		const { taskAttributes, onSave } = this.props
 		return (
 			<div className="task-form">
-				{taskAttributes
-					.sort((a, b) => a.rank - b.rank)
-					.map(a =>
+				{taskAttributes.map(a =>
 					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} />
 				)}
 			</div>
