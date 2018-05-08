@@ -7,6 +7,9 @@ import ProductHistory from './ProductHistory'
 import TaskMain from './TaskMain'
 import TaskQR from './TaskQR'
 import './styles/taskpage.css'
+import { Modal } from 'antd'
+
+const { confirm } = Modal
 
 class TaskPage extends React.Component {
 	constructor(props) {
@@ -36,9 +39,19 @@ class TaskPage extends React.Component {
 	handleFlagTask() {
 		this.props.dispatch(actions.toggleTask(this.props.task))
 	}
-
+	
 	handleDelete() {
-		this.props.dispatch(actions.deleteTask(this.props.task))
+		confirm({
+			title: `Are you sure you want to delete ${this.props.task.display}?`,
+			okText: 'Yes, I\'m sure',
+			okType: 'danger',
+			onOk: () => this.handleConfirmDelete(),
+			onCancel: () => {}
+		})
+	}
+
+	handleConfirmDelete() {
+		return this.props.dispatch(actions.deleteTask(this.props.task))
 			.then(() => this.props.history.push('/activity-log'))
 	}
 
