@@ -6,7 +6,7 @@ import * as productActions from '../Products/ProductsActions'
 import ProductInfo from './ProductInfo'
 import RecipeList from '../RecipeList/RecipeList'
 import './styles/productpage.css'
-import { Modal } from 'antd'
+import { Modal, message } from 'antd'
 
 const { confirm } = Modal
 
@@ -62,7 +62,9 @@ class ProductPage extends React.Component {
 	handleConfirmArchive() {		
 		return this.props.dispatch(productActions.postDeleteProduct(this.props.data, this.props.index))
 			.then(() => this.props.history.push('/products'))
-			.catch(e => console.log(e))
+			.catch(e => {
+				message.error("Oops! We couldn't delete this product. Try again later.")
+			})
 	}
 	
 	handleSubmitEdit(newData) {
