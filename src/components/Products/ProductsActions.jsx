@@ -65,7 +65,7 @@ export function postCreateProduct(json) {
 
 export function postDeleteProduct(product, index) {
   let request = { 
-    url: `/ics/productsx/${product.id}/`, 
+    url: `/ics/products/${product.id}/`, 
     data: { is_trashed: true } 
   }
   return actions.postDelete(PRODUCTS, request, index)
