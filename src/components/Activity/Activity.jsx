@@ -201,6 +201,7 @@ class Activity extends React.Component {
 							Row={ActivityListItem}
 							TitleRow={ActivityListHeader}
 							onPagination={this.handlePagination}
+							onClick={this.handleSelect}
 							extra={{onViewTasks: this.handleSelect, onDownload: this.handleDownloadRow}}
 						/>
 					</ObjectList>
