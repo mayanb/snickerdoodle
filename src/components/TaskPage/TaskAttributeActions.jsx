@@ -37,21 +37,18 @@ export function requestSaveAttributeFailure(index, params) {
 }
 
 // params should have attribute, task, value
-export function saveEditingAttribute(index, params, success, failure) {
+export function saveEditingAttribute(index, params) {
 	return function (dispatch) {
 		dispatch(requestSaveAttribute(index, params))
 
 		return api.post('/ics/taskAttributes/create/')
 			.send(params)
 			.then(res => {
-				if(success)
-					success()
-				return dispatch(requestSaveAttributeSuccess(index, params))
+				dispatch(requestSaveAttributeSuccess(index, params))
 			})
 			.catch(e => {
-				if(failure)
-					failure()
-				return dispatch(requestSaveAttributeFailure(index, params))
+				dispatch(requestSaveAttributeFailure(index, params))
+				throw e
 			})
 	}
 

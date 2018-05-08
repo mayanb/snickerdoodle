@@ -4,10 +4,6 @@
     flex-grow: 1;
     padding: $task-page-top-padding 40px 40px;
 
-    .task-main-container {
-        width: 400px;
-    }
-
     .last-updated {
         color: $elephant;
         margin-bottom: 20px;
@@ -45,6 +41,7 @@
     }
 
     .task-info {
+        width: 400px;
         margin-bottom: 20px;
         display: flex;
         flex-wrap: wrap;

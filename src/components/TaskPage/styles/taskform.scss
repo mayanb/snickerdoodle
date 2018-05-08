@@ -23,17 +23,44 @@
     }
 
     .input-container {
+        width: 600px;
         position: relative;
         display: flex;
     }
 
+    .input-container input {
+        flex: 2;
+
+        &.attr-error {
+            border-color: $red;
+        }
+    }
+
     .input-peripherals {
         display: flex;
+        flex: 1;
         align-items: center;
         margin-left: 8px;
         min-width: 40px;
         width: 40px;
         color: $green;
+    }
+
+    .input-peripherals-error {
+        color: $red;
+        font-size: 12px;
+        line-height: 17px;
+        cursor: pointer;
+        span {
+            border-bottom: 1px dashed $red;
+            vertical-align: middle;
+        }
+        i {
+            font-size: 17px;
+            line-height: 17px;
+            vertical-align: middle;
+            border-bottom: none;
+        }
     }
 
 

@@ -25,16 +25,23 @@ class AttributeField extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			saving: false,
+			isLoading: false,
+			justSaved: false,
 		}
 
 		this.handleSave = this.handleSave.bind(this)
 	}
 
 	handleSave(value) {
-		this.setState({ saving: true })
+		this.setState({ isLoading: true, hasError: false })
 		return this.props.onSave(this.props.taskAttribute.id, value)
-			.then(() => window.setTimeout(() => this.setState({ saving: false }), TIME_TO_LOAD))
+			.then(() => {
+				window.setTimeout(() => this.setState({ isLoading: false, justSaved: true }), TIME_TO_LOAD)
+				window.setTimeout(() => this.setState({ justSaved: false }), TIME_TO_LOAD + TIME_TO_SHOW_SAVED)
+			})
+			.catch(e => {
+				this.setState({ isLoading: false, hasError: true })
+			})
 	}
 
 
@@ -55,13 +62,13 @@ class AttributeField extends React.Component {
 		return taskAttribute.datatype === 'BOOL' ?
 			<BooleanAttribute 
 				value={taskAttribute.value} 
-				onSave={this.handleSave} 
-				isLoading={this.state.saving}
+				onSave={this.handleSave}
+				{...this.state}
 			/> :
 			<TextAttribute 
 				value={taskAttribute.value} 
 				onSave={this.handleSave} 
-				isLoading={this.state.saving}
+				{...this.state}
 			/>
 	}
 }
@@ -79,7 +86,7 @@ class BooleanAttribute extends React.Component {
 	}
 
 	render() {
-		let { value, isLoading } = this.props
+		let { value } = this.props
 		const boolValue = value === 'true'
 		const stringValue = boolValue ? 'Yes' : 'No'
 		return (
@@ -89,7 +96,7 @@ class BooleanAttribute extends React.Component {
 					value={boolValue}
 					onClick={this.handleChange}
 				/>
-				{ isLoading && <Loading /> }
+				<Peripherals {...this.props} onRetry={this.handleSave} />
 			</div>
 		)
 	}
@@ -129,13 +136,8 @@ class TextAttribute extends React.Component {
 		this.handleSaveWrapper(this.state.draftValue)
 	}
 
-	handleSaveWrapper(value) {
-		this.props.onSave(value)
-			.then(() => {
-				this.setState({ justSaved: true }, () => {
-					window.setTimeout(() => this.setState({ justSaved: false }), TIME_TO_LOAD + TIME_TO_SHOW_SAVED)
-				})
-			})
+	handleSaveWrapper(v) {
+		this.props.onSave(v)
 	}
 
 	render() {
@@ -143,23 +145,36 @@ class TextAttribute extends React.Component {
 		return (
 			<div className="input-container">
 				<Input
+					className={this.props.hasError && "attr-error"}
 					value={draftValue}
 					onChange={this.handleInputChange}
 				/>
-				<div className="input-peripherals">
-				{this.renderButtons()}
-				</div>
+				<Peripherals {...this.props} onRetry={this.handleSave} />
 			</div>
 		)
 	}
+}
 
-	renderButtons() {
-		if (this.props.isLoading) {
-			return <Loading />
-		} else if(this.state.justSaved) {
-			return <div>Saved!</div>
-		}else return false
+function Peripherals({ isLoading, justSaved, hasError, onRetry }) {
+	let peripheral = false
+	if (isLoading) {
+		peripheral = <Loading />
+	} else if(justSaved) {
+		peripheral = <div>Saved!</div>
+	} else if(hasError) {
+		peripheral = <Error onRetry={onRetry}/>
 	}
+	return <div className="input-peripherals">{peripheral}</div>
+}
+
+function Error({ onRetry }) {
+	return (
+		<div className="input-peripherals-error" onClick={onRetry}>
+			Oops! Something went wrong.<br/>
+			<i className="material-icons">refresh</i>
+			<span>Try again</span>
+		</div>
+	)
 }
 
 function Loading(props) {
