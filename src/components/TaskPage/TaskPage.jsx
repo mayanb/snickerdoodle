@@ -7,13 +7,16 @@ import ProductHistory from './ProductHistory'
 import TaskMain from './TaskMain'
 import TaskQR from './TaskQR'
 import './styles/taskpage.css'
+import { Modal } from 'antd'
+
+const { confirm } = Modal
 
 class TaskPage extends React.Component {
 	constructor(props) {
 		super(props)
 
 		this.handleFlagTask = this.handleFlagTask.bind(this)
-		this.handleDelete = this.handleDelete.bind(this)
+		this.handleArchive = this.handleArchive.bind(this)
 		this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
 	}
 
@@ -36,8 +39,18 @@ class TaskPage extends React.Component {
 	handleFlagTask() {
 		this.props.dispatch(actions.toggleTask(this.props.task))
 	}
+	
+	handleArchive() {
+		confirm({
+			title: `Are you sure you want to delete ${this.props.task.display}?`,
+			okText: 'Yes, I\'m sure',
+			okType: 'danger',
+			onOk: () => this.handleConfirmArchive(),
+			onCancel: () => {}
+		})
+	}
 
-	handleDelete() {
+	handleConfirmArchive() {
 		this.props.dispatch(actions.deleteTask(this.props.task))
 			.then(() => this.props.history.push('/activity-log'))
 	}
@@ -67,7 +80,7 @@ class TaskPage extends React.Component {
 					  attributes={task.attributesWithValues}
 					  onSaveAttribute={this.handleSaveAttribute}
 					/>
-					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.display} />
+					<TaskQR qrCode={qrCode} onDelete={this.handleArchive} name={task.display} />
 				</div>
 			</div>
 		)
