@@ -14,7 +14,7 @@ export default class TaskQR extends React.Component {
 	}
 
 	render() {
-		const { name, onArchive } = this.props
+		const { name, onDelete } = this.props
 		return (
 			<div className="task-qr">
 				<div className="title">
@@ -25,7 +25,7 @@ export default class TaskQR extends React.Component {
 					<div id="task-qr-code" ref={ref => this.taskQRCode = ref}></div>
 				</div>
 				<div className="delete-task">
-					<Button wide type="red" onClick={onArchive}>Delete {name}</Button>
+					<Button wide type="red" onClick={onDelete}>Delete {name}</Button>
 				</div>
 				<TaskInputsAndOutputs />
 			</div>

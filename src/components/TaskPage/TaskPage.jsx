@@ -16,7 +16,7 @@ class TaskPage extends React.Component {
 		super(props)
 
 		this.handleFlagTask = this.handleFlagTask.bind(this)
-		this.handleArchive = this.handleArchive.bind(this)
+		this.handleDelete = this.handleDelete.bind(this)
 		this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
 	}
 
@@ -40,18 +40,18 @@ class TaskPage extends React.Component {
 		this.props.dispatch(actions.toggleTask(this.props.task))
 	}
 	
-	handleArchive() {
+	handleDelete() {
 		confirm({
 			title: `Are you sure you want to delete ${this.props.task.display}?`,
 			okText: 'Yes, I\'m sure',
 			okType: 'danger',
-			onOk: () => this.handleConfirmArchive(),
+			onOk: () => this.handleConfirmDelete(),
 			onCancel: () => {}
 		})
 	}
 
-	handleConfirmArchive() {
-		this.props.dispatch(actions.deleteTask(this.props.task))
+	handleConfirmDelete() {
+		return this.props.dispatch(actions.deleteTask(this.props.task))
 			.then(() => this.props.history.push('/activity-log'))
 	}
 
@@ -80,7 +80,7 @@ class TaskPage extends React.Component {
 					  attributes={task.attributesWithValues}
 					  onSaveAttribute={this.handleSaveAttribute}
 					/>
-					<TaskQR qrCode={qrCode} onArchive={this.handleArchive} name={task.display} />
+					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.display} />
 				</div>
 			</div>
 		)
