@@ -60,7 +60,8 @@ export default class ProcessInformation extends React.Component {
 			output_desc: output_desc, 
 			default_amount: default_amount, 
 			unit: unit
-		}).then(() => this.setState({ isEditing: false }))
+		})
+		this.setState({ isEditing: false }) // optimistic, doesn't wait for API to complete
 	}
 }
 

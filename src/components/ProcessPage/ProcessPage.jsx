@@ -114,8 +114,19 @@ class ProcessPage extends React.Component {
 			})
 	}
 	
+	handleConfirmChange(newData) {
+		this.props.dispatch(actions.editProcess(newData, this.props.index, this.props.data.id))
+	}
+	
 	handleChange(newData) {
-		return this.props.dispatch(actions.editProcess(newData, this.props.index, this.props.data.id))
+		confirm({
+			title: `Are you sure you want to change the information for ${this.props.data.name} (${this.props.data.code})?`,
+			content: 'All existing tasks of this process type will be changed as well, as well as all new tasks of this process type.',
+			okText: 'Yes, I\'m sure',
+			okType: 'danger',
+			onOk: () => this.handleConfirmChange(newData),
+			onCancel: () => {}
+		})
 	}
 }
 
