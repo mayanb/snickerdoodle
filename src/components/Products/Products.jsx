@@ -134,9 +134,9 @@ class Products extends React.Component {
 
   handleCreateProduct(json) {
     this.props.dispatch(actions.postCreateProduct(json))
-	    .then((res) => {
-	    	this.props.dispatch(actions.fetchProducts())
-		    this.handleToggleDialog()
+	    .then(res => {
+		    const index = this.props.data.findIndex(e => e.id === res.item.id)
+		    return this.handleSelect(index)
 	    })
   }
 

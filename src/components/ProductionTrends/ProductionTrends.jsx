@@ -90,6 +90,7 @@ class ProductionTrends extends React.Component {
 					options={this.props.processes}
 					optionRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
 					valueRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
+					labelKey={'name'}
 					valueKey={'id'}
 					placeholder="Select a process type"
 					onChange={(newVal) => this.handleProcessTypeChange(newVal)}
