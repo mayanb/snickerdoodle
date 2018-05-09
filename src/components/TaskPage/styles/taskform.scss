@@ -23,54 +23,52 @@
     }
 
     .input-container {
+        width: 600px;
         position: relative;
-    }
-
-    .task-attr-loading {
-        position: absolute;
-        top: 6px;
-        right: 8px;
         display: flex;
     }
+
+    .input-container input {
+        flex: 2;
+
+        &.attr-error {
+            border-color: $red;
+        }
+    }
+
+    .input-peripherals {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        margin-left: 8px;
+        min-width: 40px;
+        width: 40px;
+        color: $green;
+    }
+
+    .input-peripherals-error {
+        color: $red;
+        font-size: 12px;
+        line-height: 17px;
+        cursor: pointer;
+        span {
+            border-bottom: 1px dashed $red;
+            vertical-align: middle;
+        }
+        i {
+            font-size: 17px;
+            line-height: 17px;
+            vertical-align: middle;
+            border-bottom: none;
+        }
+    }
+
+
 
     .form-buttons {
         display: none;
         position: absolute;
         top: 6px;
         right: 0;
-    }
-
-    .form-button {
-        margin-right: 6px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 26px;
-        width: 26px;
-        border-radius: 4px;
-        border-width: 1px;
-        border-style: solid;
-        cursor: pointer;
-
-        i {
-            font-size: 20px;
-        }
-    }
-
-    input:focus ~ .form-buttons {
-        display: flex;
-    }
-
-    .save {
-        right: 6px;
-        background-color: $primary;
-        border-color: $primary;
-        color: white;
-    }
-
-    .reset {
-        right: 40px;
-        color: $elephant;
-        border-color: $elephant;
     }
 }
