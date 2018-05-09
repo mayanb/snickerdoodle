@@ -38,7 +38,7 @@ class ProductionTrends extends React.Component {
 				//Set default process type
 				if (this.props.processes.length && !this.state.processType) {
 					const foil = this.props.processes.find(p => p.name === 'Foil')
-					const defaultProcessType = foil ? foil : this.props.processes[0]
+					const defaultProcessType = foil ? foil.id : this.props.processes[0].id
 
 					this.setState({ processType: defaultProcessType }, this.handleSearch)
 				}
@@ -90,10 +90,12 @@ class ProductionTrends extends React.Component {
 			return null
 		}
 		const formatProcessOption = p => `${formatOption(p)} (${pluralize(2, p.unit)})`
+		const defaultProcessType = this.props.processes.find(p => String(p.id) === String(this.state.processType))
 		return (
 			<div className="options">
 				<Select
-					defaultValue={formatProcessOption(this.state.processType)}
+					showSearch
+					value={formatProcessOption(defaultProcessType)}
 					filterOption={processProductFilter}
 					onChange={this.handleProcessTypeChange}
 				>
@@ -129,9 +131,7 @@ class ProductionTrends extends React.Component {
 	}
 
 	handleProductTypeChange(productTypeIDs) {
-		const productTypes = productTypeIDs.map(id => this.props.products.find(p => String(p.id) === id))
-		console.log({ productTypes })
-		this.setState({ productTypes: productTypes }, this.handleSearch)
+		this.setState({ productTypes: productTypeIDs }, this.handleSearch)
 	}
 }
 
