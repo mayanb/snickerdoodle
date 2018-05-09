@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from 'antd'
+import { Modal, message } from 'antd'
 import * as actions from './ProductsActions.jsx'
 import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
@@ -157,7 +157,11 @@ class Products extends React.Component {
 	}
 
 	handleConfirmArchive(index) {
-		return this.props.dispatch(actions.postDeleteProduct(this.props.data[index], index))
+		let p = this.props.data[index]
+		return this.props.dispatch(actions.postDeleteProduct(p, index))
+			.catch(e => {
+				message.error(`Oops! We couldn't delete ${p.name} (${p.code}). Try again later.`)
+			})
 	}
 
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Modal } from 'antd'
+import { Modal, message } from 'antd'
 import * as actions from '../Processes/ProcessesActions'
 import { ElementHeader, ElementContent } from '../Element/Element'
 import * as processActions from '../Processes/ProcessesActions'
@@ -86,9 +86,12 @@ class ProcessPage extends React.Component {
 	}
 
 	handleConfirmArchive() {
-		this.props.dispatch(actions.postDeleteProcess(this.props.data, this.props.index))
-			.then(() => this.props.history.push('/processes'))
-			.catch(e => console.log(e))
+		let { dispatch, history, data, index } = this.props
+		dispatch(actions.postDeleteProcess(data, index))
+			.then(() => history.push('/processes'))
+			.catch(e => {
+				message.error(`Oops! We couldn't delete ${data.name} (${data.code}). Try again later.`)
+			})
 	}
 
 	handleDuplicate(index) {

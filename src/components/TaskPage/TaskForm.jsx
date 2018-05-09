@@ -4,6 +4,10 @@ import './styles/taskform.css'
 import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
 
+const TIME_TO_STAY_UNSAVED = 500
+const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
+const TIME_TO_SHOW_SAVED = 1500
+
 export default class TaskForm extends React.Component {
 	render() {
 		const { taskAttributes, onSave } = this.props
@@ -21,16 +25,23 @@ class AttributeField extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			saving: false,
+			isLoading: false,
+			justSaved: false,
 		}
 
 		this.handleSave = this.handleSave.bind(this)
 	}
 
 	handleSave(value) {
-		this.setState({ saving: true })
-		this.props.onSave(this.props.taskAttribute.id, value)
-			.finally(() => window.setTimeout(() => this.setState({ saving: false }), 2000))
+		this.setState({ isLoading: true, hasError: false })
+		return this.props.onSave(this.props.taskAttribute.id, value)
+			.then(() => {
+				window.setTimeout(() => this.setState({ isLoading: false, justSaved: true }), TIME_TO_LOAD)
+				window.setTimeout(() => this.setState({ justSaved: false }), TIME_TO_LOAD + TIME_TO_SHOW_SAVED)
+			})
+			.catch(e => {
+				this.setState({ isLoading: false, hasError: true })
+			})
 	}
 
 
@@ -51,13 +62,13 @@ class AttributeField extends React.Component {
 		return taskAttribute.datatype === 'BOOL' ?
 			<BooleanAttribute 
 				value={taskAttribute.value} 
-				onSave={this.handleSave} 
-				isLoading={this.state.saving}
+				onSave={this.handleSave}
+				{...this.state}
 			/> :
 			<TextAttribute 
 				value={taskAttribute.value} 
 				onSave={this.handleSave} 
-				isLoading={this.state.saving}
+				{...this.state}
 			/>
 	}
 }
@@ -75,7 +86,7 @@ class BooleanAttribute extends React.Component {
 	}
 
 	render() {
-		let { value, isLoading } = this.props
+		let { value } = this.props
 		const boolValue = value === 'true'
 		const stringValue = boolValue ? 'Yes' : 'No'
 		return (
@@ -85,7 +96,7 @@ class BooleanAttribute extends React.Component {
 					value={boolValue}
 					onClick={this.handleChange}
 				/>
-				{ isLoading && <Loading /> }
+				<Peripherals {...this.props} onRetry={this.handleSave} />
 			</div>
 		)
 	}
@@ -104,15 +115,29 @@ class TextAttribute extends React.Component {
 	}
 
 	handleInputChange(e) {
-		this.setState({ draftValue: e.target.value })
+		let word = e.target.value
+		this.setState({ draftValue: word})
+		window.setTimeout(() => {
+			if(word === this.state.draftValue &&
+				word !== this.props.value) {
+				this.handleSaveWrapper(word)
+			}
+		}, TIME_TO_STAY_UNSAVED)
 	}
 
 	handleReset() {
 		this.setState({ draftValue: this.props.value })
 	}
 
-	handleSave(e) {
-		this.props.onSave(this.state.draftValue)
+	handleSave() {
+		if (this.state.draftValue === this.props.value) {
+			return 
+		}
+		this.handleSaveWrapper(this.state.draftValue)
+	}
+
+	handleSaveWrapper(v) {
+		this.props.onSave(v)
 	}
 
 	render() {
@@ -120,31 +145,36 @@ class TextAttribute extends React.Component {
 		return (
 			<div className="input-container">
 				<Input
+					className={this.props.hasError && "attr-error"}
 					value={draftValue}
 					onChange={this.handleInputChange}
 				/>
-				{this.renderButtons()}
+				<Peripherals {...this.props} onRetry={this.handleSave} />
 			</div>
 		)
 	}
+}
 
-	renderButtons() {
-		if (this.props.isLoading) {
-			return <Loading />
-		}
-
-	 // Rather than onClick, use onMouseDown since it is called before the blur event which hides the buttons
-		return (
-			<div className="form-buttons">
-				<div className="form-button reset" onMouseDown={this.handleReset}>
-					<i className="material-icons">clear</i>
-				</div>
-				<div className="form-button save" onMouseDown={this.handleSave}>
-					<i className="material-icons">done</i>
-				</div>
-			</div>
-		)
+function Peripherals({ isLoading, justSaved, hasError, onRetry }) {
+	let peripheral = false
+	if (isLoading) {
+		peripheral = <Loading />
+	} else if(justSaved) {
+		peripheral = <div>Saved!</div>
+	} else if(hasError) {
+		peripheral = <Error onRetry={onRetry}/>
 	}
+	return <div className="input-peripherals">{peripheral}</div>
+}
+
+function Error({ onRetry }) {
+	return (
+		<div className="input-peripherals-error" onClick={onRetry}>
+			Oops! Something went wrong.<br/>
+			<i className="material-icons">refresh</i>
+			<span>Try again</span>
+		</div>
+	)
 }
 
 function Loading(props) {
