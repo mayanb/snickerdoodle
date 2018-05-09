@@ -6,9 +6,6 @@ import {
   REQUEST, 
   REQUEST_SUCCESS, 
   REQUEST_FAILURE,
-	REQUEST_CREATE,
-	REQUEST_CREATE_SUCCESS,
-	REQUEST_CREATE_FAILURE,
 } from '../../reducers/APIDataReducer'
 
 export function fetchProducts(q) {
@@ -59,38 +56,11 @@ export function pageProducts(direction) {
 }
 
 export function postCreateProduct(json) {
-	return function (dispatch) {
-		dispatch(requestCreateProduct())
-		return api.post('/ics/products/')
-			.send(json)
-			.then((res) => dispatch(requestCreateProductSuccess(res.body)))
-			.catch((err) => dispatch(requestCreateProductFailure(err)))
+	let request = {
+		url: '/ics/products/',
+		data: json
 	}
-}
-
-function requestCreateProduct() {
-	return {
-		type: REQUEST_CREATE,
-		name: PRODUCTS
-	}
-}
-
-function requestCreateProductFailure(err) {
-	console.error('Error creating prdouct', err)
-	return {
-		type: REQUEST_CREATE_FAILURE,
-		name: PRODUCTS,
-		error: err,
-	}
-}
-
-function requestCreateProductSuccess(json) {
-	return {
-		type: REQUEST_CREATE_SUCCESS,
-		item: json,
-		sort: alphabetize,
-		name: PRODUCTS
-	}
+	return actions.postCreate(PRODUCTS, request, alphabetize, res => res.body)
 }
 
 export function postDeleteProduct(product, index) {
