@@ -11,7 +11,7 @@ import PageSpecificNewFeatureIntro from '../NewFeatures/PageSpecificNewFeatureIn
 import './styles/processes.css'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
 import ZeroState from '../ObjectList/ObjectListZeroState'
-import { Modal } from 'antd'
+import { Modal, message } from 'antd'
 import ElementFilter from '../Element/ElementFilter'
 import { processesHaveNoUserAttributes } from '../../utilities/processutils'
 
@@ -205,6 +205,9 @@ class Processes extends React.Component {
 	handleConfirmArchive(index) {
 		let p = this.props.data[index]
 		return this.props.dispatch(actions.postDeleteProcess(p, index))
+			.catch(e => {
+				message.error(`Oops! We couldn't delete ${p.name} (${p.code}). Try again later.`)
+			})
 	}
 
 	handleDuplicateProcess(newProcess) {

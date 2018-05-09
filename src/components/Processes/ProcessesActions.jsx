@@ -207,7 +207,6 @@ function requestCreateProcessSuccess(json) {
 export function postDeleteProcess(p, index) {
   return function (dispatch) {
     dispatch(requestDeleteProcess(index))
-
     return api.patch(`/ics/processes/${p.id}/`)
       .send({ 
         name: p.name,
@@ -217,7 +216,10 @@ export function postDeleteProcess(p, index) {
         is_trashed: true,
       })
       .then(() => dispatch(requestDeleteProcessSuccess(index)))
-      .catch(err => dispatch(requestDeleteProcessFailure(index, err)))
+      .catch(err => {
+        dispatch(requestDeleteProcessFailure(index, err))
+        throw err
+      })
   }
 }
 

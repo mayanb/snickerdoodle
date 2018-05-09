@@ -5,7 +5,7 @@ import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import './styles/home.css'
-import { isDandelion } from '../../utilities/userutils'
+import { shouldShowChecklist } from '../../utilities/userutils'
 import Checklist from '../NewUserChecklist/NewUserChecklist'
 
 
@@ -39,7 +39,7 @@ class Home extends React.Component {
 	}
 
 	render() {
-		if (this.showChecklist(this.props.team)) {
+		if (shouldShowChecklist(this.props.team.toLowerCase())) {
 			return <Checklist />
 		}
 
@@ -54,11 +54,6 @@ class Home extends React.Component {
 				</div>		
 			</div>
 		)
-	}
-
-	showChecklist(team) {
-		team = team.toLowerCase()
-		return !isDandelion(team) && team !== 'endorfin' && team !== 'indichocolate' && team !== 'teammindo' && team !== 'soma'
 	}
 }
 
