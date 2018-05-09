@@ -54,8 +54,8 @@ export default class ProcessInformation extends React.Component {
 	
 	handleConfirmSubmit(newData) {
 		confirm({
-			title: `Are you sure you want to change the information for ${this.props.process.name} (${this.props.process.code})?`,
-			content: 'All existing tasks of this process type will be changed as well, as well as all new tasks of this process type.',
+			title: `Are you sure you want to update ${this.props.process.name} (${this.props.process.code})?`,
+			content: "Existing tasks of this process type will also be affected. This may create inconsistencies.\nIf you're not sure, try deleting this process and making a new one with the updates.",
 			okText: 'Yes, I\'m sure',
 			okType: 'danger',
 			onOk: () =>  this.props.onSubmitChange(newData).then(() => this.setState({ isEditing: false})),
