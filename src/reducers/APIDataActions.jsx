@@ -61,7 +61,10 @@ export function postDelete(name, request, index) {
     return api.patch(request.url)
       .send(request.data)
       .then(() => dispatch(requestDeleteSuccess(name, index)))
-      .catch(err => dispatch(requestDeleteFailure(name, index, err)))
+      .catch(err => {
+        dispatch(requestDeleteFailure(name, index, err))
+        throw err
+      })
   }
 }
 
