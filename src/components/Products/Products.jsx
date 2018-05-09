@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Modal, message } from 'antd'
-import * as actions from './ProductsActions.jsx'
+import * as actions from './ProductsActions'
+import * as recipeActions from '../RecipeList/RecipeActions'
 import ObjectList from '../ObjectList/ObjectList'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import ZeroState from '../ObjectList/ObjectListZeroState'
-import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
+import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProductsListItem from './ProductsListItem'
 import CreateProductDialog from './CreateProductDialog'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
@@ -37,7 +38,7 @@ class Products extends React.Component {
   // fetch products on load
   componentDidMount() {
     this.props.dispatch(actions.fetchProducts())
-    this.props.dispatch(actions.fetchRecipes())
+    this.props.dispatch(recipeActions.fetchRecipes())
   }
 
   render() {
