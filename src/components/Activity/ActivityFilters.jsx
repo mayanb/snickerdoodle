@@ -1,11 +1,10 @@
 import React from 'react'
 import Datepicker from '../Datepicker/Datepicker.jsx'
-import Select from '../Inputs/Select'
-import Input from '../Inputs/Input'
+import { Select, Input, Icon } from 'antd'
 import Checkbox from '../Inputs/Checkbox'
 import Button from '../Button/Button'
 import './styles/activityfilters.css'
-import { processProductFilter } from '../../utilities/filters'
+import { processProductFilter, formatOption } from '../../utilities/filters'
 
 export default class ActivityFilters extends React.Component {
 	constructor(props) {
@@ -62,39 +61,39 @@ export default class ActivityFilters extends React.Component {
 				<div className="row">
 					<Datepicker initialDates={filters.dates} onChange={this.handleDatesChange} />
 					<div className="select-container">
-						<i className="material-icons">search</i>
 						<Select
-							openOnFocus
-							multi={true}
-							value={filters.processTypes}
-							options={processes}
-							labelKey={'name'}
-							valueKey={'id'}
+							mode="multiple"
+							allowClear
 							placeholder="Filter processes"
 							filterOption={processProductFilter}
 							onChange={this.handleProcessTypesChange}
-						/>
+						>
+							{processes.map(p => <Select.Option key={p.id} data={p}>
+									{formatOption(p)}
+								</Select.Option>
+							)}
+						</Select>
 					</div>
 					<div className="select-container">
-						<i className="material-icons">search</i>
 						<Select
-							openOnFocus
-							multi={true}
-							value={filters.productTypes}
-							options={products}
-							labelKey={'name'}
-							valueKey={'id'}
-							filterOption={processProductFilter}
+							mode="multiple"
+							allowClear
 							placeholder="Filter products"
+							filterOption={processProductFilter}
 							onChange={this.handleProductTypesChange}
-						/>
+						>
+							{products.map(p => <Select.Option key={p.id} data={p}>
+									{formatOption(p)}
+								</Select.Option>
+							)}
+						</Select>
 					</div>
 				</div>
 				<div className="row">
 					<div className="input-container">
-						<i className="material-icons">search</i>
 						<Input
 							placeholder="Keywords"
+							prefix={<Icon type="search" />}
 							value={filters.keywords}
 							onChange={this.handleKeywordsChange}
 						/>

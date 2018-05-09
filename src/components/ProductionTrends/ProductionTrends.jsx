@@ -5,11 +5,12 @@ import * as productsActions from '../Products/ProductsActions.jsx'
 import * as productionTrendsActions from '../ProductionTrends/ProductionTrendsActions.jsx'
 import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
-import Select from '../Inputs/Select'
+import { Select } from 'antd'
 import './styles/productiontrends.css'
 import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
 import Img from '../Img/Img'
 import { pluralize } from "../../utilities/stringutils"
+import { processProductFilter, formatOption } from '../../utilities/filters'
 
 const CHART_HEIGHT = 200
 const CHART_WIDTH = 900
@@ -24,7 +25,8 @@ class ProductionTrends extends React.Component {
 		}
 
 		this.handleSearch = this.handleSearch.bind(this)
-
+		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
+		this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
 	}
 
 	componentDidMount() {
@@ -57,21 +59,24 @@ class ProductionTrends extends React.Component {
 							</Subtitle>
 							{this.renderOptions()}
 						</div>
-						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={this.props.recentMonths} unitLabel={unitLabel} />
+						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={this.props.recentMonths}
+						                 unitLabel={unitLabel} />
 						<div className="cumulatives">
 							<div>
 								<Subtitle>
 									What did you make <b>&nbsp;this week?</b>
 									<Help>Displays this week's cumulative total production for each day</Help>
 								</Subtitle>
-								<CumulativeAreaChart width={CHART_WIDTH/2} height={CHART_HEIGHT} data={this.props.weekToDate} unitLabel={unitLabel} labelDays={true} />
+								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={this.props.weekToDate}
+								                     unitLabel={unitLabel} labelDays={true} />
 							</div>
 							<div>
 								<Subtitle>
 									What did you make <b>&nbsp;this month?</b>
 									<Help>Displays this month's cumulative total production for each day</Help>
 								</Subtitle>
-								<CumulativeAreaChart width={CHART_WIDTH/2} height={CHART_HEIGHT} data={this.props.monthToDate} unitLabel={unitLabel} />
+								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={this.props.monthToDate}
+								                     unitLabel={unitLabel} />
 							</div>
 						</div>
 					</div>
@@ -81,30 +86,34 @@ class ProductionTrends extends React.Component {
 	}
 
 	renderOptions() {
+		if (!this.state.processType) {
+			return null
+		}
+		const formatProcessOption = p => `${formatOption(p)} (${pluralize(2, p.unit)})`
 		return (
 			<div className="options">
 				<Select
-					openOnFocus
-					clearable={false}
-					value={this.state.processType}
-					options={this.props.processes}
-					optionRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
-					valueRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
-					labelKey={'name'}
-					valueKey={'id'}
-					placeholder="Select a process type"
-					onChange={(newVal) => this.handleProcessTypeChange(newVal)}
-				/>
+					defaultValue={formatProcessOption(this.state.processType)}
+					filterOption={processProductFilter}
+					onChange={this.handleProcessTypeChange}
+				>
+					{this.props.processes.map(p => <Select.Option key={p.id} data={p}>
+							{formatProcessOption(p)}
+						</Select.Option>
+					)}
+				</Select>
 				<Select
-					openOnFocus
-					multi={true}
-					value={this.state.productTypes}
-					options={this.props.products}
-					labelKey={'name'}
-					valueKey={'id'}
-					placeholder="All product types"
-					onChange={(newVal) => this.handleProductTypeChange(newVal)}
-				/>
+					mode="multiple"
+					allowClear
+					placeholder="Showing all products"
+					filterOption={processProductFilter}
+					onChange={this.handleProductTypeChange}
+				>
+					{this.props.products.map(p => <Select.Option key={p.id} data={p}>
+							{formatOption(p)}
+						</Select.Option>
+					)}
+				</Select>
 			</div>
 		)
 	}
@@ -119,8 +128,10 @@ class ProductionTrends extends React.Component {
 		this.setState({ processType: newVal }, this.handleSearch)
 	}
 
-	handleProductTypeChange(newVal) {
-		this.setState({ productTypes: newVal }, this.handleSearch)
+	handleProductTypeChange(productTypeIDs) {
+		const productTypes = productTypeIDs.map(id => this.props.products.find(p => String(p.id) === id))
+		console.log({ productTypes })
+		this.setState({ productTypes: productTypes }, this.handleSearch)
 	}
 }
 
@@ -130,10 +141,10 @@ function Subtitle(props) {
 	)
 }
 
-function Help({children}) {
+function Help({ children }) {
 	return (
 		<div className="help">
-			<Img src="help@2x"/>
+			<Img src="help@2x" />
 			<div className="help-tooltip">
 				{children}
 			</div>

@@ -31,6 +31,10 @@
             left: 8px;
         }
 
+        .ant-select {
+            width: 100%;
+        }
+
         .Select-control {
             background-color: transparent;
             padding-left: 23px;
@@ -51,10 +55,6 @@
         position: relative;
 
         i {
-            font-size: 20px;
-            position: absolute;
-            top: 9px;
-            left: 8px;
         }
     }
 
