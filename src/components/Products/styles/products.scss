@@ -8,6 +8,10 @@ div.product-filter {
 .products {
 	width: 100%;
 
+	.object-list-item {
+		cursor: pointer;
+	}
+
 
 	.paginated-table.border-none li.header {
 		border-bottom: none; //override PaginatedTable header border

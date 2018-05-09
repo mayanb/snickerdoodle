@@ -23,7 +23,7 @@ export function fetch(name, request, sort, processorFn) {
       .query(request.query)
       .then(async (res) => {
         let processed = await processorFn(res)
-        dispatch(requestSuccess(name, processed, sort))
+        return dispatch(requestSuccess(name, processed, sort))
       })
       .catch(err => dispatch(requestFailure(name, err)))
   }
@@ -36,7 +36,7 @@ export function postCreate(name, request, sort, processorFn) {
       .send(request.data)
       .then(async (res) => {
         let processed = await processorFn(res)
-        dispatch(requestCreateSuccess(name, processed, sort))
+        return dispatch(requestCreateSuccess(name, processed, sort))
       })
       .catch(err => dispatch(requestCreateFailure(name, err)))
   }
@@ -49,7 +49,7 @@ export function postEdit(name, request, index, processorFn) {
       .send(request.data)
       .then(async (res) => {
         let processed = await processorFn(res)
-        dispatch(requestEditSuccess(name, processed, index))
+        return dispatch(requestEditSuccess(name, processed, index))
       })
       .catch((err) => dispatch(requestEditFailure(name, err, index)))
   }

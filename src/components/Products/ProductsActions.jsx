@@ -15,11 +15,11 @@ export function pageProducts(direction) {
 }
 
 export function postCreateProduct(json) {
-  let request = { 
-    url: '/ics/products/', 
-    data: json 
-  }
-  return actions.postCreate(PRODUCTS, request, alphabetize, res => res.body)
+	let request = {
+		url: '/ics/products/',
+		data: json
+	}
+	return actions.postCreate(PRODUCTS, request, alphabetize, res => res.body)
 }
 
 export function postDeleteProduct(product, index) {

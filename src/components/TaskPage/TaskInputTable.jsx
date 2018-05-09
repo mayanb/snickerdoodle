@@ -13,6 +13,7 @@ export default function TaskInputTable(props) {
     }
   })
 
+
   // For each unique task, only  group[0] is displayed (!?)
   return (
     <Table title={'Inputs'}>
@@ -38,7 +39,7 @@ export default function TaskInputTable(props) {
 
 function getInputAmountDisplayText(group) {
 	const amount = isNewDataModel(group) ? group.amount : group[0].input_item_amount
-	return formatAmount(amount, group[0].unit)
+	return formatAmount(amount, group[0].input_task_n.process_type.unit)
 }
 
 function isNewDataModel(group) {
