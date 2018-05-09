@@ -206,7 +206,7 @@ class Processes extends React.Component {
 		let p = this.props.data[index]
 		return this.props.dispatch(actions.postDeleteProcess(p, index))
 			.catch(e => {
-				message.error("Oops! We couldn't delete this process. Try again later.")
+				message.error(`Oops! We couldn't delete ${p.name} (${p.code}). Try again later.`)
 			})
 	}
 

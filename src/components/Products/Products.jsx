@@ -157,9 +157,10 @@ class Products extends React.Component {
 	}
 
 	handleConfirmArchive(index) {
-		return this.props.dispatch(actions.postDeleteProduct(this.props.data[index], index))
+		let p = this.props.data[index]
+		return this.props.dispatch(actions.postDeleteProduct(p, index))
 			.catch(e => {
-				message.error("Oops! We couldn't delete this product. Try again later.")
+				message.error(`Oops! We couldn't delete ${p.name} (${p.code}). Try again later.`)
 			})
 	}
 
