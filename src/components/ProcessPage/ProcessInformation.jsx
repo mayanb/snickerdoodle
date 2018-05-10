@@ -47,9 +47,8 @@ export default class ProcessInformation extends React.Component {
 		this.setState({ isEditing: !this.state.isEditing })
 	}
 
-	handleChange(e, type) {
-		let key = type
-		this.setState({ [key] : e.target.value })
+	handleChange(value, type) {
+		this.setState({ [type] : value })
 	}
 	
 	handleConfirmSubmit(newData) {
