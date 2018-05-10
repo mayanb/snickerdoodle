@@ -2,11 +2,15 @@ import React from 'react'
 import FormGroup from '../Inputs/FormGroup'
 import Button from '../Button/Button'
 import Input from '../Inputs/Input'
+import Img, { ic } from '../Img/Img'
+import 'emoji-mart/css/emoji-mart.css'
+import { Picker } from 'emoji-mart'
 import './styles/processeditform.css'
 
-export default function EditProcessInfoForm({ code, name, output_desc, default_amount, unit, isLoading, onChange, onSubmit}) {
+export default function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, isLoading, onChange, onSubmit}) {
 	return (
 		<div className='edit-process-info'>
+			<IconPicker onChange={onChange} icon={icon} />
 			<CodeAndName onChange={onChange} name={name} code={code}/>
 			<OutputDescription onChange={onChange} output_desc={output_desc} />
 			<OutputQuantity onChange={onChange} default_amount={default_amount} unit={unit}/>
@@ -14,7 +18,31 @@ export default function EditProcessInfoForm({ code, name, output_desc, default_a
 				<Button wide onClick={onSubmit} isLoading={isLoading}>Save changes</Button>
 			</FormGroup>
 		</div>
-)
+	)
+}
+
+class IconPicker extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = { isSelectingIcon: false }
+		this.togglePicker = this.togglePicker.bind(this)
+	}
+	
+	render() {
+		const { onChange, icon } = this.props
+		const { isSelectingIcon } = this.state
+		return (
+				<FormGroup label="icon-picker" className="icon-picker-group">
+					<Img src={ic(icon || 'default.png')} height="30px" />
+					<Button isLoading={false} onClick={this.togglePicker}>Select a process icon</Button>
+					{isSelectingIcon && <Picker set='emojione' />}
+				</FormGroup>
+		)
+	}
+	
+	togglePicker() {
+		this.setState({ isSelectingIcon: !this.state.isSelectingIcon })
+	}
 }
 
 function CodeAndName({ onChange, name, code }) {
@@ -25,7 +53,7 @@ function CodeAndName({ onChange, name, code }) {
 					type="text"
 					className="abbreviation"
 					value={code}
-					onChange={(e) => onChange(e, "code")}
+					onChange={(e) => onChange(e.target.value, "code")}
 				/>
 			</FormGroup>
 			<FormGroup label="Name" className="name-group">
@@ -33,7 +61,7 @@ function CodeAndName({ onChange, name, code }) {
 					type="text"
 					className="name"
 					value={name}
-					onChange={(e) => onChange(e, "name")}
+					onChange={(e) => onChange(e.target.value, "name")}
 				/>
 			</FormGroup>
 		</div>
@@ -47,7 +75,7 @@ function OutputDescription({ onChange, output_desc }) {
 					type="text"
 					placeholder="Roasted Beans"
 					value={output_desc}
-					onChange={(e) => onChange(e, "output_desc")}
+					onChange={(e) => onChange(e.target.value, "output_desc")}
 				/>
 			</FormGroup>
 	)
@@ -62,14 +90,14 @@ function OutputQuantity({ onChange, default_amount, unit }) {
 					className="number"
 					placeholder="5"
 					value={default_amount}
-					onChange={(e) => onChange(e, "default_amount")}
+					onChange={(e) => onChange(e.target.value, "default_amount")}
 				/>
 				<Input
 					type="text"
 					className="unit"
 					placeholder="kilograms"
 					value={unit}
-					onChange={(e) => onChange(e, "unit")}
+					onChange={(e) => onChange(e.target.value, "unit")}
 				/>
 			</div>
 		</FormGroup>
