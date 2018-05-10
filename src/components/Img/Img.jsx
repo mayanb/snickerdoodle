@@ -9,3 +9,7 @@ export default function Img({src, useExtension, ...rest}) {
 		<ReactImageFallback src={srcImg} fallbackImage={errorImg} {...rest}/>
 	)
 }
+
+export function ic(icon) {
+	return icon.substring(0, icon.length - 4) + "@3x"
+}
