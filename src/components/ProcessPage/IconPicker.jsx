@@ -22,6 +22,7 @@ export default class IconPicker extends React.Component {
 					<Button isLoading={false} onClick={this.togglePicker}>Select a process icon</Button>
 					{isSelectingIcon && (
 						<Picker
+							title="Select a process icon"
 							custom={this.getIconData()}
 							include={['custom']}
 							onSelect={this.handleSelectIcon}
@@ -59,7 +60,6 @@ export default class IconPicker extends React.Component {
 			search: 'Search',
 			notfound: 'No Icon Found',
 			categories: {
-				search: 'Search Results',
 				custom: 'Custom',
 			}
 		}
