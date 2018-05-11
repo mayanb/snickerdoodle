@@ -11,5 +11,9 @@
     border: 1px solid $gray-ultra-light;
     border-left: none;
     border-right: none;
+
+    .can-sort {
+        cursor: pointer;
+    }
 }
 
