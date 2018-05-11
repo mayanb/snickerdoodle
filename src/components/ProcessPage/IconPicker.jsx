@@ -4,6 +4,7 @@ import Button from '../Button/Button'
 import Img, { ic, getSrcImg } from '../Img/Img'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
+import './styles/iconpicker.css'
 
 export default class IconPicker extends React.Component {
 	constructor(props) {
@@ -17,18 +18,30 @@ export default class IconPicker extends React.Component {
 		const { icon } = this.props
 		const { isSelectingIcon } = this.state
 		return (
-				<FormGroup label="icon-picker" className="icon-picker-group">
-					<Img src={ic(icon || 'default.png')} height="30px" />
-					<Button isLoading={false} onClick={this.togglePicker}>Select a process icon</Button>
-					{isSelectingIcon && (
+			<div className="process-icon-picker">
+				<FormGroup label="Icon" className="process-icon-picker-group">
+					<Img src={ic(icon || 'default.png')} height="30px" className="icon"/>
+				</FormGroup>
+				<FormGroup>
+					<Button isLoading={false} onClick={this.togglePicker} wide={true}>
+						{isSelectingIcon ? 'Cancel' : 'Change icon'}
+					</Button>
+				</FormGroup>
+				
+				{isSelectingIcon && (
+					<div className="picker-wrapper">
 						<Picker
 							title="Select a process icon"
+							autoFocus={true}
+							native={false}
+							perLine={6}
 							custom={this.getIconData()}
 							include={['custom']}
-							onSelect={this.handleSelectIcon}
+							onClick={this.handleSelectIcon}
 							i18n={this.getI18N()}
-						/>)}
-				</FormGroup>
+						/>
+					</div>)}
+			</div>
 		)
 	}
 	
@@ -48,7 +61,7 @@ export default class IconPicker extends React.Component {
 				'text': '',
 				'emoticons': [],
 				'keywords': [display_name],
-				'imageUrl': getSrcImg(icon_file_name)
+				'imageUrl': getSrcImg(icon_file_name),
 			}
 			iconData.push(icon)
 		})
@@ -67,6 +80,6 @@ export default class IconPicker extends React.Component {
 	
 	handleSelectIcon(icon) {
 		this.togglePicker()
-		this.props.onChange(icon.imageUrl.split('img/')[1].replace('@3x', ''), 'icon')
+		this.props.onChange(`${icon.id}.png`, 'icon')
 	}
 }

@@ -1,0 +1,29 @@
+.process-icon-picker {
+	display: flex;
+	justify-content: flex-start;
+	
+	.icon {
+		flex: 1;
+		height: 30px;
+		width: 30px;
+	}
+	
+	.button-wide {
+		flex: 3;
+		min-width: 94px;
+		margin-top: 22px;
+		margin-left: 12px;
+		//width: 100%;
+		//max-height: 22px;
+	}
+	
+	.emoji-mart > div.emoji-mart-bar {
+		display: none;
+	}
+	
+	.picker-wrapper {
+		flex: 5;
+		margin-top: 22px;
+		margin-left: 22px;
+	}
+}

@@ -68,14 +68,15 @@ export default class ProcessInformation extends React.Component {
 			return 
 		}
 		let { icon, name, code, output_desc, default_amount, unit } = this.state
-		this.handleConfirmSubmit({
+		const updatedProcessInfo = {
 			icon: icon,
-			name: name, 
-			code: code, 
-			output_desc: output_desc, 
-			default_amount: default_amount, 
+			name: name,
+			code: code,
+			output_desc: output_desc,
+			default_amount: default_amount,
 			unit: unit
-		})
+		}
+		this.handleConfirmSubmit(updatedProcessInfo)
 	}
 }
 
