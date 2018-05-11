@@ -26,12 +26,13 @@ class IconPicker extends React.Component {
 		super(props)
 		this.state = { isSelectingIcon: false }
 		this.togglePicker = this.togglePicker.bind(this)
+		this.handleSelectIcon = this.handleSelectIcon.bind(this)
 	}
 	
 	render() {
-		const { onChange, icon } = this.props
+		const { icon } = this.props
 		const { isSelectingIcon } = this.state
-		
+		console.log('icon in render()', icon)
 		return (
 				<FormGroup label="icon-picker" className="icon-picker-group">
 					<Img src={ic(icon || 'default.png')} height="30px" />
@@ -40,6 +41,7 @@ class IconPicker extends React.Component {
 						<Picker
 							custom={this.getIconData()}
 							include={['custom']}
+							onSelect={this.handleSelectIcon}
 						/>)}
 				</FormGroup>
 		)
@@ -54,20 +56,23 @@ class IconPicker extends React.Component {
 		const iconData = []
 		iconNames.forEach(name => {
 			const display_name = name.split('@3x.png')[0]
-			const icon_path = name.split('.png')[0]
-			console.log(display_name)
+			const icon_file_name = name.split('.png')[0]
 			const icon = {
 				'name': display_name,
 				'short_names': [display_name],
 				'text': '',
 				'emoticons': [],
 				'keywords': [display_name],
-				'imageUrl': getSrcImg(icon_path)
+				'imageUrl': getSrcImg(icon_file_name)
 			}
 			iconData.push(icon)
 		})
-		console.log(iconData)
 		return iconData
+	}
+	
+	handleSelectIcon(icon) {
+		this.togglePicker()
+		this.props.onChange(icon.imageUrl.split('img/')[1].replace('@3x', ''), 'icon')
 	}
 }
 

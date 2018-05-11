@@ -67,8 +67,9 @@ export default class ProcessInformation extends React.Component {
 		if (this.state.isSavingEdit) {
 			return 
 		}
-		let { name, code, output_desc, default_amount, unit } = this.state
+		let { icon, name, code, output_desc, default_amount, unit } = this.state
 		this.handleConfirmSubmit({
+			icon: icon,
 			name: name, 
 			code: code, 
 			output_desc: output_desc, 
