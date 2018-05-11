@@ -39,7 +39,7 @@ class IconPicker extends React.Component {
 					{isSelectingIcon && (
 						<Picker
 							custom={this.getIconData()}
-							// backgroundImageFn={(set, sheetSize) => `/img/ballmill@3x.png`}
+							include={['custom']}
 						/>)}
 				</FormGroup>
 		)
