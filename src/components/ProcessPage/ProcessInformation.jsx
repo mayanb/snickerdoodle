@@ -62,7 +62,6 @@ export default class ProcessInformation extends React.Component {
 		})
 	}
 	
-	
 	handleSubmit() {
 		if (this.state.isSavingEdit) {
 			return 

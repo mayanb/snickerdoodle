@@ -1,6 +1,5 @@
 .process-icon-picker {
 	display: flex;
-	justify-content: flex-start;
 	
 	.icon {
 		flex: 1;
@@ -10,13 +9,13 @@
 	
 	.button-wide {
 		flex: 3;
-		min-width: 94px;
+		min-width: 94px; // keeps button the same size between text change
 		margin-top: 22px;
 		margin-left: 12px;
-		//width: 100%;
-		//max-height: 22px;
 	}
 	
+	// Hides the emoji-type navbar and focus footer which
+	// displayed the name and icon of what you were hovering.
 	.emoji-mart > div.emoji-mart-bar {
 		display: none;
 	}
