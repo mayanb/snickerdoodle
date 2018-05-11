@@ -18,8 +18,8 @@ export default class ButtonDropdown extends React.Component {
 
 
 	render() {
-		let {expanded, secondary, menu} = this.props
-		let className = "button-dropdown" + (expanded?" expanded":"") + (menu?" menu":"")
+		let {expanded, secondary, menu, leftAlign} = this.props
+		let className = "button-dropdown" + (expanded?" expanded":"") + (menu?" menu":"" + (leftAlign?" left-align":""))
 
 		return (
 			<div className={className}>
