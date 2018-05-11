@@ -32,23 +32,13 @@ class IconPicker extends React.Component {
 		const { onChange, icon } = this.props
 		const { isSelectingIcon } = this.state
 		
-		const customEmojis = [
-			{
-				name: 'Temper',
-				short_names: ['temper'],
-				text: '',
-				emoticons: [],
-				keywords: ['tempter'],
-				imageUrl: getSrcImg('ballmill@3x') //'/img/ballmill@3x.png'
-			},
-		]
 		return (
 				<FormGroup label="icon-picker" className="icon-picker-group">
 					<Img src={ic(icon || 'default.png')} height="30px" />
 					<Button isLoading={false} onClick={this.togglePicker}>Select a process icon</Button>
 					{isSelectingIcon && (
 						<Picker
-							custom={customEmojis}
+							custom={this.getIconData()}
 							// backgroundImageFn={(set, sheetSize) => `/img/ballmill@3x.png`}
 						/>)}
 				</FormGroup>
@@ -57,6 +47,27 @@ class IconPicker extends React.Component {
 	
 	togglePicker() {
 		this.setState({ isSelectingIcon: !this.state.isSelectingIcon })
+	}
+	
+	getIconData() {
+		const iconNames = ['DS@3x.png', 'UBS@3x.png', 'prep@3x.png', 'breakandwinnow@3x.png', 'ingredient@3x.png', 'winnow@3x.png', 'nibspack@3x.png', 'prerefine@3x.png', 'label@3x.png', 'group@3x.png', 'cook@3x.png', 'pack@3x.png', 'rotaryconche@3x.png', 'pasteurize@3x.png', 'package@3x.png', 'ballmill@3x.png', 'gami@3x.png', 'default@3x.png', 'roast@3x.png', 'sample@3x.png', 'lid@3x.png', 'hold@3x.png', 'unfoiledbarsample@3x.png', 'rotaryconchepull@3x.png', 'box@3x.png', 'conche@3x.png', 'grind@3x.png', 'nibstore@3x.png', 'samplebarfoil@3x.png', 'temper@3x.png', 'melangerpull@3x.png', 'melange@3x.png', 'ship@3x.png', 'foil@3x.png', 'jar@3x.png']
+		const iconData = []
+		iconNames.forEach(name => {
+			const display_name = name.split('@3x.png')[0]
+			const icon_path = name.split('.png')[0]
+			console.log(display_name)
+			const icon = {
+				'name': display_name,
+				'short_names': [display_name],
+				'text': '',
+				'emoticons': [],
+				'keywords': [display_name],
+				'imageUrl': getSrcImg(icon_path)
+			}
+			iconData.push(icon)
+		})
+		console.log(iconData)
+		return iconData
 	}
 }
 
