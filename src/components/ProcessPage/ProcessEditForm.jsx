@@ -2,7 +2,7 @@ import React from 'react'
 import FormGroup from '../Inputs/FormGroup'
 import Button from '../Button/Button'
 import Input from '../Inputs/Input'
-import Img, { ic } from '../Img/Img'
+import Img, { ic, getSrcImg } from '../Img/Img'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 import './styles/processeditform.css'
@@ -31,11 +31,26 @@ class IconPicker extends React.Component {
 	render() {
 		const { onChange, icon } = this.props
 		const { isSelectingIcon } = this.state
+		
+		const customEmojis = [
+			{
+				name: 'Temper',
+				short_names: ['temper'],
+				text: '',
+				emoticons: [],
+				keywords: ['tempter'],
+				imageUrl: getSrcImg('ballmill@3x') //'/img/ballmill@3x.png'
+			},
+		]
 		return (
 				<FormGroup label="icon-picker" className="icon-picker-group">
 					<Img src={ic(icon || 'default.png')} height="30px" />
 					<Button isLoading={false} onClick={this.togglePicker}>Select a process icon</Button>
-					{isSelectingIcon && <Picker set='emojione' />}
+					{isSelectingIcon && (
+						<Picker
+							custom={customEmojis}
+							// backgroundImageFn={(set, sheetSize) => `/img/ballmill@3x.png`}
+						/>)}
 				</FormGroup>
 		)
 	}
