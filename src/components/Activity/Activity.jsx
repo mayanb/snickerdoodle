@@ -10,7 +10,7 @@ import './styles/activity.css'
 import ActivityListItem from './ActivityListItem'
 import ActivityFilters from './ActivityFilters'
 import ObjectList from '../ObjectList/ObjectList'
-import ActivityListHeader from './ActivityListHeader'
+import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable.jsx'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import TaskDialogSimple from '../TaskDialog/TaskDialogSimple'
@@ -28,7 +28,7 @@ class Activity extends React.Component {
 		super(props)
 		this.state = {
 			filters: {
-				dates: { start: moment(new Date()).format("YYYY-MM-DD"), end: moment(new Date()).format("YYYY-MM-DD") },
+				dates: { start: moment(new Date(2018,4,1)).format("YYYY-MM-DD"), end: moment(new Date()).format("YYYY-MM-DD") },
 				processTypes: [],
 				productTypes: [],
 				keywords: '',
@@ -36,17 +36,21 @@ class Activity extends React.Component {
 				aggregateProducts: false,
 			},
 
+			ordering: 'process_type__name',
 			selectedRow: null,
 
 			mustConnectGoogleDialog: false,
 			mustEnablePopupsDialog: false,
 		}
 
+		this.renderTableHeader = this.renderTableHeader.bind(this)
+
 		this.handlePagination = this.handlePagination.bind(this)
 		this.handleFilterChange = this.handleFilterChange.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
 		this.handleDownloadRow = this.handleDownloadRow.bind(this)
 		this.handleDownloadAll = this.handleDownloadAll.bind(this)
+		this.handleReorder = this.handleReorder.bind(this)
 	}
 
 	toggleDialog(dialog) {
@@ -162,6 +166,10 @@ class Activity extends React.Component {
 		this.props.dispatch(actions.pageActivity(direction))
 	}
 
+	handleReorder(ordering) {
+		this.setState({ordering: ordering},() => this.getActivity(this.state.filters))
+	}
+
 	render() {
 		const { data, processes, products } = this.props
 		return (
@@ -185,6 +193,22 @@ class Activity extends React.Component {
 		)
 	}
 
+	renderTableHeader() {
+		const columns = [
+			{ title: null, className: 'icon', field: null },
+			{ title: null, className: 'process-code', field: 'process_type__code' },
+			{ title: 'Process Type', className: 'process-name', field: 'process_type__name' },
+			{ title: 'Product Type', className: 'product-code', field: 'product_types' },
+			{ title: 'Runs', className: 'runs', field: '' },
+			{ title: 'Amount', className: 'outputs', field: 'runs' },
+			{ title: null, className: 'view-all-tasks', field: 'amount' },
+			{ title: null, className: 'download', field: null },
+		]
+		return (
+			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering}/>
+		)
+	}
+
 	renderTable() {
 		const { isFetchingData } = this.props.ui
 		if (isFetchingData) {
@@ -199,7 +223,7 @@ class Activity extends React.Component {
 							data={this.props.data}
 							ui={this.props.ui}
 							Row={ActivityListItem}
-							TitleRow={ActivityListHeader}
+							TitleRow={this.renderTableHeader}
 							onPagination={this.handlePagination}
 							onClick={this.handleSelect}
 							extra={{onViewTasks: this.handleSelect, onDownload: this.handleDownloadRow}}
@@ -267,6 +291,7 @@ class Activity extends React.Component {
 		let params = {
 			start: dateToUTCString(range.start),
 			end: dateToUTCString(range.end, true),
+			ordering: this.state.ordering,
 		}
 		if (filters.processTypes.length) {
 			params.process_types = filters.processTypes.join(',')

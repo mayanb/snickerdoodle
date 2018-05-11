@@ -192,14 +192,11 @@ $z-index-edit-menu: 992;
         border-top-width: 1px;
         border-bottom-width: 1px;
 
-        .activity-list-header {
-            cursor: default;
 
-            & > div {
-                margin-top: 12px;
-                margin-bottom: 12px;
-                font-size: 14px;
-            }
+        & > div {
+          margin-top: 12px;
+          margin-bottom: 12px;
+          font-size: 14px;
         }
     }
 
