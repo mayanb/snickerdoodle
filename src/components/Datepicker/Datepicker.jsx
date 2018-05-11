@@ -75,6 +75,7 @@ export default class Datepicker extends React.Component {
 		    <ButtonDropdown
 			    secondary
 			    expanded={expanded}
+			    leftAlign
 			    onToggleDropdown={this.handleDropdownToggle}
 			    button={this.renderDatesButton()}
 		    >
