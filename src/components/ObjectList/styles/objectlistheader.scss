@@ -12,8 +12,27 @@
     border-left: none;
     border-right: none;
 
+    .item {
+        display: flex;
+        align-items: center;
+    }
+
     .can-sort {
         cursor: pointer;
+    }
+
+    .active {
+        font-weight: bold;
+    }
+
+    img {
+       height: 16px;
+       margin-left: 4px;
+        transform: rotate(180deg);
+    }
+
+    .reverse img {
+        transform: none;
     }
 }
 
