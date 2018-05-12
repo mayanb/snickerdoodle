@@ -15,10 +15,12 @@ import {
 
 import {  INVENTORY } from '../../reducers/ReducerTypes'
 
-export function fetchInitialInventory(processIds, productIds) {
+export function fetchInitialInventory(processIds, productIds, ordering) {
   return dispatch => {
     dispatch(requestInventory())
-	  const query = {}
+	  const query = {
+    	ordering: ordering
+	  }
 	  if(processIds.length)
 	  	query.process_types = processIds.join(',')
 	  if(productIds.length)

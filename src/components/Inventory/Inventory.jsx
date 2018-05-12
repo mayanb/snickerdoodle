@@ -7,6 +7,7 @@ import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import InventoryFilters from './InventoryFilters'
 import InventoryListRow from './InventoryListRow'
 import ObjectList from '../ObjectList/ObjectList'
+import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import Loading from '../Loading/Loading'
 import './styles/inventory.css'
 
@@ -16,9 +17,13 @@ export class Inventory extends React.Component {
 
 		this.state = {
 			processTypes: [],
-			productTypes: []
+			productTypes: [],
+			ordering: 'creating_task__process_type'
 		}
 
+		this.renderTableHeader = this.renderTableHeader.bind(this)
+
+		this.handleReorder = this.handleReorder.bind(this)
 		this.handleSelectRow = this.handleSelectRow.bind(this)
 		this.handlePagination = this.handlePagination.bind(this)
 		this.handleFilter = this.handleFilter.bind(this)
@@ -30,13 +35,15 @@ export class Inventory extends React.Component {
 	}
 
 	fetchInventory() {
-		this.props.dispatch(actions.fetchInitialInventory(this.state.processTypes, this.state.productTypes))
+		const { processTypes, productTypes, ordering } = this.state
+		this.props.dispatch(actions.fetchInitialInventory(processTypes, productTypes, ordering))
 		this.props.dispatch(actions.resetPageInventory())
 	}
 
 
 
 	render() {
+		console.log('props', this.props)
 		let { ui } = this.props
 		return (
 			<div className="inventory-container">
@@ -52,6 +59,7 @@ export class Inventory extends React.Component {
 								<PaginatedTable
 									ui={this.props.ui}
 									data={this.props.data}
+									TitleRow={this.renderTableHeader}
 									onClick={this.handleSelectRow}
 									onPagination={this.handlePagination}
 									Row={InventoryListRow}
@@ -64,6 +72,22 @@ export class Inventory extends React.Component {
 
 			</div>
 		)
+	}
+
+	renderTableHeader() {
+		const columns = [
+			{ title: null, className: 'inv-icon', field: null },
+			{ title: 'Inventory Unit', className: 'inv-title', field: null },
+			{ title: 'Code', className: 'inv-code', field: null },
+			{ title: 'Amount', className: 'inv-amount', field: null },
+		]
+		return (
+			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering} />
+		)
+	}
+
+	handleReorder(ordering) {
+		this.setState({ordering: ordering}, this.fetchInventory)
 	}
 
 	handleSelectRow(i) {
