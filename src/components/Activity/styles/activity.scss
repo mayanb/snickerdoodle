@@ -189,7 +189,7 @@ $z-index-edit-menu: 992;
 
     // override PaginatedTable header border and text size
     .paginated-table.border-none li.header .object-list-header {
-        border-top-width: 0px;
+        border-top-width: 1px;
         border-bottom-width: 1px;
 
         .activity-list-header {
