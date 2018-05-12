@@ -194,14 +194,15 @@ class Activity extends React.Component {
 	}
 
 	renderTableHeader() {
+		const product_type_field = this.state.filters.aggregateProducts ? null : 'product_type_names'
 		const columns = [
 			{ title: null, className: 'icon', field: null },
-			{ title: null, className: 'process-code', field: 'process_type__code' },
+			{ title: null, className: 'process-code', field: null },
 			{ title: 'Process Type', className: 'process-name', field: 'process_type__name' },
-			{ title: 'Product Type', className: 'product-code', field: 'product_types' },
-			{ title: 'Runs', className: 'runs', field: '' },
-			{ title: 'Amount', className: 'outputs', field: 'runs' },
-			{ title: null, className: 'view-all-tasks', field: 'amount' },
+			{ title: 'Product Type', className: 'product-code', field: product_type_field },
+			{ title: 'Runs', className: 'runs', field: 'runs' },
+			{ title: 'Amount', className: 'outputs', field: 'amount' },
+			{ title: null, className: 'view-all-tasks', field: null },
 			{ title: null, className: 'download', field: null },
 		]
 		return (
