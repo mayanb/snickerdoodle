@@ -2,9 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
-import Select from '../Inputs/Select'
-import { pluralize } from "../../utilities/stringutils"
-import { processProductFilter } from '../../utilities/filters'
+import { Select } from 'antd'
+import { processProductFilter, formatOption } from '../../utilities/filters'
 
 class InventoryFilters extends React.Component {
 	constructor(props) {
@@ -16,6 +15,8 @@ class InventoryFilters extends React.Component {
 		}
 
 		this.handleFilter = this.handleFilter.bind(this)
+		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
+		this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
 	}
 
 	componentDidMount() {
@@ -24,45 +25,46 @@ class InventoryFilters extends React.Component {
 	}
 
 	render() {
-		if(this.props.isFetchingData)
+		if (this.props.isFetchingData)
 			return null
 
 		return (
 			<div className='inventory-filters'>
-					<Select
-						openOnFocus
-						value={this.state.processTypes}
-						options={this.props.processes}
-						multi={true}
-						optionRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
-						valueRenderer={(opt) => `${opt.name} (${pluralize(2, opt.unit)})`}
-						valueKey={'id'}
-						placeholder="All process types"
-						filterOption={processProductFilter}
-						onChange={(newVal) => this.handleProcessTypeChange(newVal)}
-					/>
-					<Select
-						openOnFocus
-						value={this.state.productTypes}
-						options={this.props.products}
-						multi={true}
-						labelKey={'name'}
-						valueKey={'id'}
-						placeholder="All product types"
-						filterOption={processProductFilter}
-						onChange={(newVal) => this.handleProductTypeChange(newVal)}
-					/>
+				<Select
+					mode="multiple"
+					allowClear
+					placeholder="Filter processes"
+					filterOption={processProductFilter}
+					onChange={this.handleProcessTypeChange}
+				>
+					{this.props.processes.map(p => <Select.Option key={p.id} data={p}>
+							{formatOption(p)}
+						</Select.Option>
+					)}
+				</Select>
+				<Select
+					mode="multiple"
+					allowClear
+					placeholder="Filter products"
+					filterOption={processProductFilter}
+					onChange={this.handleProductTypeChange}
+				>
+					{this.props.products.map(p => <Select.Option key={p.id} data={p}>
+							{formatOption(p)}
+						</Select.Option>
+					)}
+				</Select>
 			</div>
 		)
 
 	}
 
 	handleProcessTypeChange(newVal) {
-		this.setState({ processTypes: newVal.map(o => o.id) }, this.handleFilter)
+		this.setState({ processTypes: newVal }, this.handleFilter)
 	}
 
 	handleProductTypeChange(newVal) {
-		this.setState({ productTypes: newVal.map(o => o.id) }, this.handleFilter)
+		this.setState({ productTypes: newVal }, this.handleFilter)
 	}
 
 	handleFilter() {

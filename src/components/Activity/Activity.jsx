@@ -87,10 +87,10 @@ class Activity extends React.Component {
 
 	handleDownloadAll() {
 		const processTypes = this.state.filters.processTypes.length ?
-			this.state.filters.processTypes.map(p => p.id) :
+			this.state.filters.processTypes :
 			[...new Set(this.props.data.map(row => row.process_type.id))]
 		const productTypes = this.state.filters.productTypes.length ?
-			this.state.filters.productTypes.map(p => p.id) :
+			this.state.filters.productTypes :
 			[...new Set([].concat(...this.props.data.map(row => row.product_types.map(p => p.id))))]
 		return this.handleDownload(processTypes, productTypes)
 	}
@@ -269,10 +269,10 @@ class Activity extends React.Component {
 			end: dateToUTCString(range.end, true),
 		}
 		if (filters.processTypes.length) {
-			params.process_types = filters.processTypes.map(p => p.id).join(',')
+			params.process_types = filters.processTypes.join(',')
 		}
 		if (filters.productTypes.length) {
-			params.product_types = filters.productTypes.map(p => p.id).join(',')
+			params.product_types = filters.productTypes.join(',')
 		}
 		if (filters.keywords) {
 			params.label = filters.keywords

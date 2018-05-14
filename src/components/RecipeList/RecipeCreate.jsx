@@ -102,7 +102,6 @@ class RecipeCreate extends React.Component {
 			product_type_id: product.id,
 			process_type_id: selectedProcessID,
     }
-    console.log(newRecipe)
     this.props.dispatch(postCreateRecipe(newRecipe, ingredients))
     this.props.onToggle()
   }

@@ -4,14 +4,9 @@
     margin-bottom: 80px;
     z-index: 0;
 
-    .options {
-        display: flex;
-        justify-content: flex-end;
-
-        .select {
-            margin-left: 24px;
-            width: 200px;
-        }
+    .ant-select {
+        width: 200px;
+        margin-left: 24px;
     }
 
     .every-month-header {
