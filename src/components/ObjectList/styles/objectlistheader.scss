@@ -25,13 +25,13 @@
         font-weight: bold;
     }
 
-    img {
-       height: 16px;
-       margin-left: 4px;
-        transform: rotate(180deg);
+    i {
+        font-size: 14px;
+        margin-left: 4px;
+        transform: scale(1, -1);
     }
 
-    .reverse img {
+    .reverse i {
         transform: none;
     }
 }

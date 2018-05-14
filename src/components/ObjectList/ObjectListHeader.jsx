@@ -1,6 +1,5 @@
 import React from 'react'
 import './styles/objectlistheader.css'
-import Img from '../Img/Img'
 
 export default class ObjectListHeader extends React.Component {
 	constructor(props) {
@@ -58,7 +57,7 @@ function HeaderCell({ column, onReorder, active, reverse }) {
 		     onClick={() => onReorder(column.field)}
 		>
 			{column.title}
-			{active && <Img src="drag@3x" />}
+			{active && <i className="material-icons">sort</i>}
 		</div>
 	)
 
