@@ -19,14 +19,8 @@ export default class IconPicker extends React.Component {
 		const { isSelectingIcon } = this.state
 		return (
 			<div className="process-icon-picker">
-				<FormGroup label="Icon" className="process-icon-picker-group">
-					<Img src={ic(icon || 'default.png')} height="30px" className="icon"/>
-				</FormGroup>
-				<FormGroup>
-					<Button isLoading={false} onClick={this.togglePicker} wide={true}>
-						{isSelectingIcon ? 'Cancel' : 'Change icon'}
-					</Button>
-				</FormGroup>
+				<Img src={ic(icon || 'default.png')} height="30px" className="icon"/>
+				<i className="material-icons change-icon-icon">loop</i>
 				
 				{isSelectingIcon && (
 					<div className="picker-wrapper">

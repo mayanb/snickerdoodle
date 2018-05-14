@@ -8,8 +8,7 @@ import IconPicker from './IconPicker'
 export default function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, isLoading, onChange, onSubmit}) {
 	return (
 		<div className='edit-process-info'>
-			<IconPicker onChange={onChange} icon={icon} />
-			<CodeAndName onChange={onChange} name={name} code={code}/>
+			<CodeAndName onChange={onChange} icon={icon} code={code} name={name} />
 			<OutputDescription onChange={onChange} output_desc={output_desc} />
 			<OutputQuantity onChange={onChange} default_amount={default_amount} unit={unit}/>
 			<FormGroup>
@@ -19,9 +18,12 @@ export default function EditProcessInfoForm({ icon, code, name, output_desc, def
 	)
 }
 
-function CodeAndName({ onChange, name, code }) {
+function CodeAndName({ onChange, icon, code, name }) {
 	return (
-		<div className="name-abbreviation">
+		<div className="icon-name-abbreviation">
+			<FormGroup label="Icon" className="icon-group">
+				<IconPicker onChange={onChange} icon={icon} />
+			</FormGroup>
 			<FormGroup label="Code" className="abbreviation-group">
 				<Input
 					type="text"

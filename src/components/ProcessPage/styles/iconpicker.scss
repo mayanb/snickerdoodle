@@ -1,6 +1,16 @@
 .process-icon-picker {
 	display: flex;
-	
+	.change-icon-icon {
+		background-color: blue;
+		color: white;
+		border-radius: 50%;
+		border: 2px;
+		min-width: 16px;
+		max-width: 16px;
+		min-height: 16px;
+		max-height: 16px;
+		font-size: 16px;
+	}
 	.icon {
 		flex: 1;
 		height: 30px;

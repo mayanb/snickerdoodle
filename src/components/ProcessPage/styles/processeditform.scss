@@ -1,16 +1,20 @@
 .edit-process-info {
     
-    .name-abbreviation {
+    .icon-name-abbreviation {
         display: flex;
-    }
-
-    .name-group {
-        flex: 2;
-        margin-left: 20px;
-    }
-
-    .abbreviation-group {
-        flex: 1;
+        
+        .icon-group {
+            flex: 1
+        }
+    
+        .abbreviation-group {
+            flex: 2;
+        }
+    
+        .name-group {
+            flex: 4;
+            margin-left: 20px;
+        }
     }
     
     .output-section-container {
