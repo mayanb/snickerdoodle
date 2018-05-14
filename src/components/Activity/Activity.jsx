@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from "react-redux"
-import { ZeroState } from '../OldComponents/APIManager.jsx'
+import ZeroState from '../ZeroState/ZeroState'
 import Loading from '../OldComponents/Loading.jsx'
 import moment from 'moment'
 import { dateToUTCString } from '../../utilities/dateutils'
