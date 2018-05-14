@@ -197,7 +197,7 @@ class Activity extends React.Component {
 		const product_type_field = this.state.filters.aggregateProducts ? null : 'product_type_names'
 		const columns = [
 			{ title: null, className: 'icon', field: null },
-			{ title: null, className: 'process-code', field: null },
+			{ title: 'Code', className: 'process-code', field: 'process_type__code' },
 			{ title: 'Process Type', className: 'process-name', field: 'process_type__name' },
 			{ title: 'Product Type', className: 'product-code', field: product_type_field },
 			{ title: 'Runs', className: 'runs', field: 'runs' },
