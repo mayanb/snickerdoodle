@@ -137,7 +137,7 @@ class Processes extends React.Component {
 		  { title: 'Name', className: 'name', field: 'name' },
 		  { title: 'Description', className: 'description', field: 'output_desc' },
 		  { title: 'Default amount', className: 'default-amount', field: 'default_amount' },
-		  { title: 'Last used', className: 'last-used', field: null },
+		  { title: 'Last used', className: 'last-used', field: 'last_used' },
 		  { title: 'Created by', className: 'owner', field: null },
 		  { title: 'Date created', className: 'date', field: 'created_at' },
 		  { title: null, className: 'more-options-button', field: null },
