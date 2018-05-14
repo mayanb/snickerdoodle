@@ -27,7 +27,7 @@ class Processes extends React.Component {
 		isAnnouncementOpen: true, // but will return null if already seen
 		isDuplicating: false,
 		duplicatingObjectIndex: null,
-		isFiltering: false,
+		filter: null,
 		ordering: 'name',
 	}
 
@@ -51,7 +51,15 @@ class Processes extends React.Component {
   }
 
   fetchProcesses() {
-	  this.props.dispatch(actions.fetchProcesses({ordering: this.state.ordering}))
+	  const { ordering, filter } = this.state
+	  const params = {}
+	  if (ordering) {
+		  params['ordering'] = ordering
+	  }
+	  if (filter) {
+		  params['filter'] = filter
+	  }
+	  this.props.dispatch(actions.fetchProcesses(params))
   }
 
   render() {
@@ -61,7 +69,7 @@ class Processes extends React.Component {
 			this.props.history.push('/')
 		}
 
-		let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
+		let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.filter
 
 		return (
 			<div className="processes-container">
@@ -184,8 +192,7 @@ class Processes extends React.Component {
   /* EVENT HANDLERS */
 
   handleFilter(filterText) {
-  	this.setState({ isFiltering: filterText && filterText.length > 0})
-  	this.props.dispatch(actions.fetchProcesses({ filter: filterText }))	
+  	this.setState({ filter: filterText }, this.fetchProcesses)
   }
 
 	handleCreateProcess(newProcess) {

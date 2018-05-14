@@ -22,8 +22,8 @@ class Products extends React.Component {
 
 	  this.state = {
 		  isAddingProduct: false,
-		  isFiltering: false,
 			shouldDisplayRecipeModal: true,
+		  filter: null,
 		  ordering: 'name',
 	  }
 
@@ -46,7 +46,15 @@ class Products extends React.Component {
   }
 
 	fetchProducts() {
-		this.props.dispatch(actions.fetchProducts({ordering: this.state.ordering}))
+		const { ordering, filter } = this.state
+		const params = {}
+		if (ordering) {
+  		params['ordering'] = ordering
+		}
+		if (filter) {
+			params['filter'] = filter
+		}
+		this.props.dispatch(actions.fetchProducts(params))
 	}
 
   render() {
@@ -57,7 +65,7 @@ class Products extends React.Component {
     	this.props.history.push('/')
     }
 
-    let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
+    let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.filter
     let hasNoRecipes = !recipeUI.isFetchingData && (!recipeData || !recipeData.length)
 	  return (
 	  	<div className="products">
@@ -97,7 +105,7 @@ class Products extends React.Component {
 		  />
 	  )
   }
-	
+
 	renderCreateRecipeModal() {
   	return (<PageSpecificNewFeatureIntro
 			onClose={this.handleCloseRecipeAnnouncementModal}
@@ -138,8 +146,7 @@ class Products extends React.Component {
 	}
 
   handleFilter(filterText) {
-  	this.setState({ isFiltering: filterText && filterText.length })
-  	this.props.dispatch(actions.fetchProducts({ filter: filterText }))
+	  this.setState({ filter: filterText }, this.fetchProducts)
   }
 
   handlePagination(direction) {
