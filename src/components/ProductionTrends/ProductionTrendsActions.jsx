@@ -18,11 +18,11 @@ function convertParams(start, processType, productTypes, bucket) {
 	const q = {
 		start: toUTCString(start),
 		end: toUTCString(today().add(1, 'days')),
-		process_type: processType.id,
+		process_type: processType,
 		bucket: bucket
 	}
 	if (productTypes.length)
-		q.product_types = productTypes.map(p => p.id).join(',')
+		q.product_types = productTypes.join(',')
 
 	return q
 }
