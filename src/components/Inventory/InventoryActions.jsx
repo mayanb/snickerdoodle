@@ -19,7 +19,7 @@ export function fetchInitialInventory(processIds, productIds, ordering) {
   return dispatch => {
     dispatch(requestInventory())
 	  const query = {
-    	ordering: ordering
+		  ordering: ordering
 	  }
 	  if(processIds.length)
 	  	query.process_types = processIds.join(',')
@@ -32,8 +32,8 @@ export function fetchInitialInventory(processIds, productIds, ordering) {
 		  })
       .catch(e => {
         dispatch(requestInventoryFailure(e))
-        console.log(e)
-        throw e
+	      console.log(e)
+	      throw e
       })
   }
 }
@@ -69,10 +69,9 @@ export function pageInventory(direction) {
   }
 }
 
-export function resetPageInventory(direction) {
+export function resetPageInventory() {
 	return {
 		type: RESET_PAGE,
-		direction: direction,
 		name: INVENTORY
 	}
 }

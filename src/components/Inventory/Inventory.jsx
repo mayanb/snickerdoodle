@@ -37,13 +37,11 @@ export class Inventory extends React.Component {
 	fetchInventory() {
 		const { processTypes, productTypes, ordering } = this.state
 		this.props.dispatch(actions.fetchInitialInventory(processTypes, productTypes, ordering))
-		this.props.dispatch(actions.resetPageInventory())
 	}
 
 
 
 	render() {
-		console.log('props', this.props)
 		let { ui } = this.props
 		return (
 			<div className="inventory-container">
@@ -107,6 +105,7 @@ export class Inventory extends React.Component {
 			processTypes: processTypes,
 			productTypes: productTypes
 		}, this.fetchInventory)
+		this.props.dispatch(actions.resetPageInventory())
 	}
 }
 
