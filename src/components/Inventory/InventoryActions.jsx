@@ -1,79 +1,137 @@
 import api from '../WaffleconeAPI/api.jsx'
 import {
-	REQUEST_INVENTORY,
-	REQUEST_INVENTORY_SUCCESS,
-	REQUEST_INVENTORY_FAILURE,
-  REQUEST_ITEMS,
-  REQUEST_ITEMS_SUCCESS,
-  REQUEST_ITEMS_FAILURE
-} from '../../reducers/InventoryReducer'
-import { INVENTORIES } from '../../reducers/ReducerTypes'
+  REQUEST,
+  REQUEST_SUCCESS,
+  REQUEST_FAILURE,
+  SELECT,
+  PAGE,
+	RESET_PAGE,
+} from '../../reducers/APIDataReducer'
+import {
+	REQUEST_HISTORY,
+	REQUEST_HISTORY_SUCCESS,
+	REQUEST_HISTORY_FAILURE,
+} from '../../reducers/InventoryReducerExtension'
 
+import {  INVENTORY } from '../../reducers/ReducerTypes'
 
-export function fetchInventory() {
-  return function (dispatch) {
+export function fetchInitialInventory(processIds, productIds) {
+  return dispatch => {
     dispatch(requestInventory())
-	  return api.get('/ics/inventory/')
-		  .then(res => dispatch(requestInventorySuccess(res.body)))
-		  .catch(err => dispatch(requestInventoryFailure(err)))
+	  const query = {}
+	  if(processIds.length)
+	  	query.process_types = processIds.join(',')
+	  if(productIds.length)
+		  query.product_types = productIds.join(',')
+	  return api.get('/ics/inventories/')
+		  .query(query)
+		  .then(({ body }) => {
+			  dispatch(requestInventorySuccess(body.results, body.next))
+		  })
+      .catch(e => {
+        dispatch(requestInventoryFailure(e))
+        console.log(e)
+        throw e
+      })
   }
+}
+
+export function fetchMoreInventory(page) {
+  return dispatch => {
+    dispatch(requestInventory())
+    return api.get(page)
+      .then(({body}) => {
+        dispatch(requestInventorySuccess(body.results, body.next, true))
+      })
+      .catch(e => {
+        dispatch(requestInventoryFailure(e))
+        console.log(e)
+        throw e
+      })
+  }
+}
+
+export function selectInventory(index) {
+  return {
+    type: SELECT,
+    index: index,
+    name: INVENTORY,
+  }
+}
+
+export function pageInventory(direction) {
+  return {
+    type: PAGE,
+    direction: direction,
+    name: INVENTORY
+  }
+}
+
+export function resetPageInventory(direction) {
+	return {
+		type: RESET_PAGE,
+		direction: direction,
+		name: INVENTORY
+	}
 }
 
 function requestInventory() {
   return {
-    name: INVENTORIES,
-    type: REQUEST_INVENTORY
+    type: REQUEST,
+    name: INVENTORY
   }
 }
 
 function requestInventoryFailure(err) {
-  console.error('Oh no! Something went wrong\n' + err)
-  console.log(err)
   return {
-    type: REQUEST_INVENTORY_FAILURE,
-    name: INVENTORIES,
+    type: REQUEST_FAILURE,
+    name: INVENTORY
   }
 }
 
-function requestInventorySuccess(json) {
+function requestInventorySuccess(json, more, append=false) {
   return {
-    type: REQUEST_INVENTORY_SUCCESS,
+    type: REQUEST_SUCCESS,
+    name: INVENTORY,
     data: json,
-    name: INVENTORIES,
+    more: more,
+    append: append,
   }
 }
 
-export function fetchInventoryItems(processId) {
-  return function (dispatch) {
-    dispatch(requestInventoryItems())
-    return api.get('/ics/inventory/detail-test/')
-      .query({ process: processId })
-	    .then(res => dispatch(requestInventoryItemsSuccess(res.body, processId)))
-	    .catch(err => dispatch(requestInventoryItemsFailure(err)))
-  }
+export function fetchInventoryHistory(teamId, processId, productId) {
+	return function (dispatch) {
+		dispatch(requestInventoryHistory())
+		return api.get('/ics/adjustment-history/')
+			.query({ process_type: processId, product_type: productId, team: teamId })
+			.then(res => dispatch(requestInventoryHistorySuccess(res.body, processId, productId)))
+			.catch(err => dispatch(requestInventoryHistoryFailure(err)))
+	}
 }
 
-function requestInventoryItems() {
-  return {
-    name: INVENTORIES,
-    type: REQUEST_ITEMS
-  }
+function requestInventoryHistory() {
+	return {
+		name: INVENTORY,
+		type: REQUEST_HISTORY
+	}
 }
 
-function requestInventoryItemsFailure(err) {
-  console.error('Oh no! Something went wrong\n' + err)
-  console.log(err)
-  return {
-    type: REQUEST_ITEMS_FAILURE,
-    name: INVENTORIES,
-  }
+function requestInventoryHistoryFailure(err) {
+	console.error('Oh no! Something went wrong\n' + err)
+	return {
+		type: REQUEST_HISTORY_FAILURE,
+		name: INVENTORY,
+	}
 }
 
-function requestInventoryItemsSuccess(json, processId) {
-  return {
-    type: REQUEST_ITEMS_SUCCESS,
-    data: json,
-    name: INVENTORIES,
-    processId: processId
-  }
+function requestInventoryHistorySuccess(json, processId, productId) {
+	return {
+		type: REQUEST_HISTORY_SUCCESS,
+		data: json,
+		name: INVENTORY,
+		processId: processId,
+		productId: productId,
+	}
 }
+
+

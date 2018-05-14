@@ -238,7 +238,6 @@ const mapStateToProps = (state/*, props*/) => {
   return {
 	data: state.processes.data,
 	ui: state.processes.ui,
-	inventoryData: state.inventories.data,
 	users: state.users
   }
 }
