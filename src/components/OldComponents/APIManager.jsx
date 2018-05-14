@@ -1,4 +1,3 @@
-import React from 'react'
 import $ from 'jquery'
 import update from 'immutability-helper'
 import Teams from '../Teams/Teams'
