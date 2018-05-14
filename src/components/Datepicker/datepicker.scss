@@ -12,16 +12,16 @@
 
     .dates {
         border-radius: 4px;
-        color: $gray;
+        color: rgba(0, 0, 0, 0.65);
         width: 100%;
         display: flex;
         flex-direction: row;
         background-color: white;
-        border: 1px solid $gray-light;
+        border: 1px solid #d9d9d9;
         font-size: 12px;
 
         span, i {
-            line-height: 34px;
+            line-height: 30px;
             margin-left: 8px;
         }
 

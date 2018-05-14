@@ -15,10 +15,6 @@
         margin-right: 20px;
     }
 
-    div.button-dropdown .button-dropdown-content {
-        right: inherit;
-    }
-
     .select-container {
         width: 300px;
         margin-right: 20px;
@@ -29,6 +25,10 @@
             position: absolute;
             top: 9px;
             left: 8px;
+        }
+
+        .ant-select {
+            width: 100%;
         }
 
         .Select-control {
@@ -51,10 +51,6 @@
         position: relative;
 
         i {
-            font-size: 20px;
-            position: absolute;
-            top: 9px;
-            left: 8px;
         }
     }
 

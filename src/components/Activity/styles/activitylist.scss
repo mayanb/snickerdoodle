@@ -4,7 +4,7 @@ div.activity-list-item {
 	width: 100%;
 	display: flex;
 	align-items: center;
-	
+
 	.icon {
 		flex: 1;
 		background-color: transparent;
@@ -37,14 +37,12 @@ div.activity-list-item {
 	}
 	
 	.view-all-tasks {
-		cursor: pointer;
 		flex: 2;
 		color: $primary-light;
 	}
 
 	.download {
 		flex: 1;
-		cursor: pointer;
         visibility: hidden;
 	}
 	
