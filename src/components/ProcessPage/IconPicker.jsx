@@ -30,6 +30,7 @@ export default class IconPicker extends React.Component {
 							perLine={6}
 							custom={this.getIconData()}
 							include={['custom']}
+							exclude={this.excludeAllEmojis()}
 							onClick={this.handleSelectIcon}
 							i18n={this.getI18N()}
 						/>
@@ -69,6 +70,21 @@ export default class IconPicker extends React.Component {
 				custom: 'Custom',
 			}
 		}
+	}
+	
+	excludeAllEmojis() {
+		return [
+			'search',
+			'recent',
+			'people',
+			'nature',
+			'foods',
+			'activity',
+			'places',
+			'objects',
+			'symbols',
+			'flags',
+		]
 	}
 	
 	handleSelectIcon(icon) {
