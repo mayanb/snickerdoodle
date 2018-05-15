@@ -19,7 +19,7 @@ export default class IconPicker extends React.Component {
 		const { icon } = this.props
 		return (
 			<div className="process-icon-picker-wrapper">
-				<Dropdown overlay={this.renderPickerInMenu()} trigger="click">
+				<Dropdown overlay={this.renderPickerInMenu()} trigger={['click']}>
 					<div className="process-icon-picker" onClick={this.togglePicker}>
 						<Img src={ic(icon || 'default.png')} height="30px" className="icon"/>
 						<i className='material-icons change-icon-icon'>loop</i>

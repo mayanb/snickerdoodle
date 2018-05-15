@@ -1,29 +1,32 @@
 @import 'styles/constants.scss';
 
 .picker-inner {
-		.emoji-mart > div.emoji-mart-bar, div.emoji-mart-category-label {
+	// Hides 1) the emoji-type navbar and focus footer which
+	// displayed the name and icon of what you were hovering.
+	// 2) The "Custom" category title,
+	// 3) Emojis matching icon names
+	.emoji-mart > div.emoji-mart-bar, div.emoji-mart-category-label {
 		display: none;
 	}
-
+	
 	.emoji-mart {
 		border: none;
+	}
+	
+	.emoji-mart-scroll {
+		max-height: 140px;
+	}
+	
+	// Since we're hiding emojis who have the same name as an icon
+	// we need to explicitly show icons ("custom" emojis)
+	span.emoji-mart-emoji-custom {
+		display: inline-block;
 	}
 	
 }
 
 .process-icon-picker-wrapper {
 	position: relative;
-	
-	// Hides 1) the emoji-type navbar and focus footer which
-	// displayed the name and icon of what you were hovering.
-	// 2) The "Custom" category title,
-	// 3) Emojis matching icon names
-
-	// Since we're hiding emojis who have the same name as an icon
-	// we need to explicitly show icons ("custom" emojis)
-	span.emoji-mart-emoji-custom {
-		display: inline-block;
-	}
 	
 	
 	.picker-wrapper {
