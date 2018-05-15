@@ -1,3 +1,5 @@
+@import 'styles/constants.scss';
+
 .process-icon-picker-wrapper {
 	position: relative;
 	
@@ -41,7 +43,6 @@
 			top: -5px;
 			right: -5px;
 			
-			background-color: blue;
 			color: white;
 			
 			border-radius: 50%;
@@ -52,7 +53,16 @@
 			min-height: 16px;
 			max-height: 16px;
 			font-size: 16px;
+			
+			&.loop {
+				background-color: $primary;
+			}
+			
+			&.close {
+				background-color: $red;
+			}
 		}
+		
 		.icon {
 			flex: 1;
 		}
