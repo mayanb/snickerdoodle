@@ -22,7 +22,7 @@ function CodeAndName({ onChange, icon, code, name }) {
 	return (
 		<div className="icon-name-abbreviation">
 			<FormGroup label="Icon" className="icon-group">
-				<IconPicker onChange={onChange} icon={icon} />
+					<IconPicker onChange={onChange} icon={icon} />
 			</FormGroup>
 			<FormGroup label="Code" className="abbreviation-group">
 				<Input

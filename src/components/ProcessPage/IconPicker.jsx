@@ -18,10 +18,11 @@ export default class IconPicker extends React.Component {
 		const { icon } = this.props
 		const { isSelectingIcon } = this.state
 		return (
-			<div className="process-icon-picker">
-				<Img src={ic(icon || 'default.png')} height="30px" className="icon"/>
-				<i className="material-icons change-icon-icon">loop</i>
-				
+			<div className="process-icon-picker-wrapper">
+				<div className="process-icon-picker" onClick={this.togglePicker}>
+					<Img src={ic(icon || 'default.png')} height="30px" className="icon"/>
+					<i className="material-icons change-icon-icon">loop</i>
+				</div>
 				{isSelectingIcon && (
 					<div className="picker-wrapper">
 						<Picker

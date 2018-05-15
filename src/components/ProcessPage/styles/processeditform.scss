@@ -4,16 +4,17 @@
         display: flex;
         
         .icon-group {
-            flex: 1
+            flex: 1;
         }
-    
+        
         .abbreviation-group {
             flex: 2;
+            margin-left: 16px;
         }
-    
+        
         .name-group {
             flex: 4;
-            margin-left: 20px;
+            margin-left: 16px;
         }
     }
     
@@ -25,20 +26,20 @@
     .output-section-header {
         margin-bottom: 8px;
     }
-
+    
     .output-quantity {
         display: flex;
-
+        
         .number {
             flex: 1;
             margin-right: 20px;
         }
-
+        
         .unit {
             flex: 2;
         }
     }
-
+    
     .button-wide {
         flex: 1;
         width: 100%;

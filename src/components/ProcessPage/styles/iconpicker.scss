@@ -1,38 +1,52 @@
-.process-icon-picker {
-	display: flex;
-	.change-icon-icon {
-		background-color: blue;
-		color: white;
-		border-radius: 50%;
-		border: 2px;
-		min-width: 16px;
-		max-width: 16px;
-		min-height: 16px;
-		max-height: 16px;
-		font-size: 16px;
-	}
-	.icon {
-		flex: 1;
-		height: 30px;
-		width: 30px;
-	}
+.process-icon-picker-wrapper {
+	position: relative;
 	
-	.button-wide {
-		flex: 3;
-		min-width: 94px; // keeps button the same size between text change
-		margin-top: 22px;
-		margin-left: 12px;
-	}
-	
-	// Hides the emoji-type navbar and focus footer which
+	// Hides 1) the emoji-type navbar and focus footer which
 	// displayed the name and icon of what you were hovering.
-	.emoji-mart > div.emoji-mart-bar {
+	// 2) The "Custom" category title
+	.emoji-mart > div.emoji-mart-bar, div.emoji-mart-category-label {
 		display: none;
 	}
 	
 	.picker-wrapper {
-		flex: 5;
-		margin-top: 22px;
-		margin-left: 22px;
+		position: absolute;
+		left: 0px;
+		top: 34px;
+	}
+	
+	.process-icon-picker {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		
+		height: 38px;
+		width: 38px;
+		
+		border: 1px solid #cad0d5;
+		border-radius: 4px;
+		background-color: white;
+		
+		padding: 4px;
+		
+		.change-icon-icon {
+			position: absolute;
+			top: -5px;
+			right: -5px;
+			
+			background-color: blue;
+			color: white;
+			
+			border-radius: 50%;
+			border: 2px;
+			
+			min-width: 16px;
+			max-width: 16px;
+			min-height: 16px;
+			max-height: 16px;
+			font-size: 16px;
+		}
+		.icon {
+			flex: 1;
+		}
 	}
 }
