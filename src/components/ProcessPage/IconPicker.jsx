@@ -1,8 +1,12 @@
 import React from 'react'
-import Img, { ic, getSrcImg } from '../Img/Img'
+import Img, { ic, getProcessIconSrcImg } from '../Img/Img'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 import './styles/iconpicker.css'
+
+// NOTE: icons with names like 'ship' that match emojis get replaced with the emoji,
+// so '&' is just noise that prevents that. #hacky
+const ANTI_EMOJI_TAG = '&'
 
 export default class IconPicker extends React.Component {
 	constructor(props) {
@@ -46,18 +50,17 @@ export default class IconPicker extends React.Component {
 	}
 	
 	getIconData() {
-		const iconNames = ['prep@3x.png', 'breakandwinnow@3x.png', 'ingredient@3x.png', 'prerefine@3x.png', 'label@3x.png', 'pack@3x.png', 'pasteurize@3x.png', 'package@3x.png', 'ballmill@3x.png', 'default@3x.png', 'roast@3x.png', 'lid@3x.png', 'hold@3x.png', 'rotaryconchepull@3x.png', 'box@3x.png', 'conche@3x.png', 'grind@3x.png', 'temper@3x.png', 'melangerpull@3x.png', 'melange@3x.png', 'ship@3x.png', 'foil@3x.png', 'jar@3x.png']
+		const iconNames = ['prep-process-icon@3x.png', 'breakandwinnow-process-icon@3x.png', 'ingredient-process-icon@3x.png', 'prerefine-process-icon@3x.png', 'label-process-icon@3x.png', 'pack-process-icon@3x.png', 'pasteurize-process-icon@3x.png', 'package-process-icon@3x.png', 'ballmill-process-icon@3x.png', 'default-process-icon@3x.png', 'roast-process-icon@3x.png', 'lid-process-icon@3x.png', 'hold-process-icon@3x.png', 'rotaryconchepull-process-icon@3x.png', 'box-process-icon@3x.png', 'conche-process-icon@3x.png', 'grind-process-icon@3x.png', 'temper-process-icon@3x.png', 'melangerpull-process-icon@3x.png', 'melange-process-icon@3x.png', 'ship-process-icon@3x.png', 'foil-process-icon@3x.png', 'jar-process-icon@3x.png']
 		const iconData = []
 		iconNames.forEach(name => {
-			const display_name = name.split('@3x.png')[0]
-			const icon_file_name = name.split('.png')[0]
+			const display_name = name.split('-process-icon@3x.png')[0] + ANTI_EMOJI_TAG
 			const icon = {
 				'name': display_name,
 				'short_names': [display_name],
 				'text': '',
 				'emoticons': [],
 				'keywords': [display_name],
-				'imageUrl': getSrcImg(icon_file_name),
+				'imageUrl': getProcessIconSrcImg(name),
 			}
 			iconData.push(icon)
 		})
@@ -91,6 +94,6 @@ export default class IconPicker extends React.Component {
 	
 	handleSelectIcon(icon) {
 		this.togglePicker()
-		this.props.onChange(`${icon.id}.png`, 'icon')
+		this.props.onChange(`${icon.id.replace(ANTI_EMOJI_TAG, '')}.png`, 'icon')
 	}
 }

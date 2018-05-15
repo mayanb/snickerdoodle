@@ -17,3 +17,7 @@ export function ic(icon) {
 export function getSrcImg(src, ext='.png') {
 	return `${process.env.PUBLIC_URL}/img/${src}${ext}`
 }
+
+export function getProcessIconSrcImg(src) {
+	return `${process.env.PUBLIC_URL}/img/process-icons/${src}`
+}
