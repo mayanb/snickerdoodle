@@ -5,7 +5,7 @@ export function getBackend() {
 		case 'staging':
 			return 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
 		default:
-			return 'http://127.0.0.1:8000'
+			return 'http://localhost:8000'
 	}
 }
 

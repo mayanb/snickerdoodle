@@ -8,6 +8,7 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 		super(props)
 
 		this.state = {
+			icon: "default.png",
 			name: "",
 			code: "",
 			number: "",
@@ -50,6 +51,7 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 		}
 
 		let newProcess = {
+			icon: this.state.icon,
 			name: this.state.name,
 			code: this.state.code,
 			default_amount: this.state.number,
@@ -62,8 +64,8 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 
 	}
 
-	handleInputChange(e, key) {
-		this.setState({ [key]: e.target.value })
+	handleInputChange(val, key) {
+		this.setState({ [key]: val })
 	}
 	
 	formErrors() {
