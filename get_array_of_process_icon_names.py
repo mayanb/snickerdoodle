@@ -15,3 +15,9 @@ for name in files:
 		icons_array.append(name)
 print (icons_array)
 
+# DUPLICATE/REDUNDANT PROCESSS ICONS (used by some, current soln is to not show them in Icon Picker):
+# PURPLE BOX: DS, UBS, nibspack, group, gami, sample, unfoiledbarsample, nibstore, samplebarfoil,
+# OTHERS:
+# winnow
+# rotaryconche
+# cook
