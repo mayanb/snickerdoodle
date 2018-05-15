@@ -1,5 +1,16 @@
 @import 'styles/constants.scss';
 
+.picker-inner {
+		.emoji-mart > div.emoji-mart-bar, div.emoji-mart-category-label {
+		display: none;
+	}
+
+	.emoji-mart {
+		border: none;
+	}
+	
+}
+
 .process-icon-picker-wrapper {
 	position: relative;
 	
@@ -7,10 +18,7 @@
 	// displayed the name and icon of what you were hovering.
 	// 2) The "Custom" category title,
 	// 3) Emojis matching icon names
-	.emoji-mart > div.emoji-mart-bar, div.emoji-mart-category-label {
-		display: none;
-	}
-	
+
 	// Since we're hiding emojis who have the same name as an icon
 	// we need to explicitly show icons ("custom" emojis)
 	span.emoji-mart-emoji-custom {
@@ -53,14 +61,7 @@
 			min-height: 16px;
 			max-height: 16px;
 			font-size: 16px;
-			
-			&.loop {
-				background-color: $primary;
-			}
-			
-			&.close {
-				background-color: $red;
-			}
+			background-color: $primary;
 		}
 		
 		.icon {

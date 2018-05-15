@@ -3,6 +3,7 @@ import Img, { ic, getProcessIconSrcImg } from '../Img/Img'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 import './styles/iconpicker.css'
+import { Dropdown, Menu } from 'antd'
 
 // NOTE: icons with names like 'ship' that match emojis get replaced with the emoji,
 // so '&' is just noise that prevents that. #hacky
@@ -11,42 +12,41 @@ const ANTI_EMOJI_TAG = '&'
 export default class IconPicker extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { isSelectingIcon: false }
-		this.togglePicker = this.togglePicker.bind(this)
 		this.handleSelectIcon = this.handleSelectIcon.bind(this)
 	}
 	
 	render() {
 		const { icon } = this.props
-		const { isSelectingIcon } = this.state
 		return (
 			<div className="process-icon-picker-wrapper">
-				<div className="process-icon-picker" onClick={this.togglePicker}>
-					<Img src={ic(icon || 'default.png')} height="30px" className="icon"/>
-					<i className={`material-icons change-icon-icon ${isSelectingIcon ? 'close' : 'loop'}`}>
-						{isSelectingIcon ? 'close' : 'loop'}
-					</i>
-				</div>
-				{isSelectingIcon && (
-					<div className="picker-wrapper">
-						<Picker
-							title="Select a process icon"
-							autoFocus={true}
-							native={false}
-							perLine={6}
-							custom={this.getIconData()}
-							include={['custom']}
-							exclude={this.excludeAllEmojis()}
-							onClick={this.handleSelectIcon}
-							i18n={this.getI18N()}
-						/>
-					</div>)}
+				<Dropdown overlay={this.renderPickerInMenu()} trigger="click">
+					<div className="process-icon-picker" onClick={this.togglePicker}>
+						<Img src={ic(icon || 'default.png')} height="30px" className="icon"/>
+						<i className='material-icons change-icon-icon'>loop</i>
+					</div>
+	    	</Dropdown>
 			</div>
 		)
 	}
-	
-	togglePicker() {
-		this.setState({ isSelectingIcon: !this.state.isSelectingIcon })
+
+	renderPickerInMenu() {
+		return (
+			<Menu>
+				<div className="picker-inner">
+					<Picker
+						title="Select a process icon"
+						autoFocus={true}
+						native={false}
+						perLine={6}
+						custom={this.getIconData()}
+						include={['custom']}
+						exclude={this.excludeAllEmojis()}
+						onClick={this.handleSelectIcon}
+						i18n={this.getI18N()}
+					/>
+				</div>
+			</Menu>
+		)
 	}
 	
 	getIconData() {
@@ -93,7 +93,6 @@ export default class IconPicker extends React.Component {
 	}
 	
 	handleSelectIcon(icon) {
-		this.togglePicker()
 		this.props.onChange(`${icon.id.replace(ANTI_EMOJI_TAG, '')}.png`, 'icon')
 	}
 }
