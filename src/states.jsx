@@ -47,10 +47,3 @@ export const modalStateDefault = {
 	modalProps: {}
 }
 
-export const inventoriesStateDefault = {
-	data: {},
-	ui: {
-		isFetchingData: false,
-		isFetchingItemsData: false
-	}
-}

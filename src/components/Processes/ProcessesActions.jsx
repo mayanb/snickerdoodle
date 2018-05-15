@@ -28,7 +28,7 @@ export function fetchProcesses(q) {
     return api.get('/ics/processes/')
 	    .query(q)
       .then(res =>{
-				dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize))))
+				dispatch(requestProcessesSuccess(organize_attributes(res.body)))
 			})
       .catch(err => dispatch(requestProcessesFailure(err)))
   }

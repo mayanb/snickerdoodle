@@ -100,13 +100,14 @@ function requestSuccess(state, action) {
   let updateData = action.append ? 
     { $push: sortedData } :
     { $set: sortedData }
+  const currentPage = action.append ? state.ui.currentPage : 0
 
   return update(state, {
     ui: {
       $merge: {
         isFetchingData: false,
         more: action.more, 
-        currentPage: 0,
+        currentPage: currentPage,
       }
     },
     data: updateData,
