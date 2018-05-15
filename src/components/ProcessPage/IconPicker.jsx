@@ -30,15 +30,17 @@ export default class IconPicker extends React.Component {
 	}
 
 	renderPickerInMenu() {
+		let icons = this.getIconData()
+		let height = Math.ceil(icons.length/6) * 36 + 16
 		return (
 			<Menu>
-				<div className="picker-inner">
+				<div className="picker-inner" style={{maxHeight: height+'px', overflow:'hidden'}}>
 					<Picker
 						title="Select a process icon"
 						autoFocus={true}
 						native={false}
 						perLine={6}
-						custom={this.getIconData()}
+						custom={icons}
 						include={['custom']}
 						exclude={this.excludeAllEmojis()}
 						onClick={this.handleSelectIcon}
