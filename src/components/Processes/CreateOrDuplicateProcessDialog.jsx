@@ -51,6 +51,7 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 		}
 
 		let newProcess = {
+			icon: this.state.icon,
 			name: this.state.name,
 			code: this.state.code,
 			default_amount: this.state.number,
