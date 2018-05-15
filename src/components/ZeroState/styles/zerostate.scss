@@ -1,0 +1,11 @@
+.zero-state {
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 4px;
+    padding: 16px;
+    text-align: center;
+    color: rgba(0,0,0,0.3);
+
+    &.zero-state-clean {
+        background-color: white;
+    }
+}

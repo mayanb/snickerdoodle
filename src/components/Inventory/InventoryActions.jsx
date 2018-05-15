@@ -15,10 +15,12 @@ import {
 
 import {  INVENTORY } from '../../reducers/ReducerTypes'
 
-export function fetchInitialInventory(processIds, productIds) {
+export function fetchInitialInventory(processIds, productIds, ordering) {
   return dispatch => {
     dispatch(requestInventory())
-	  const query = {}
+	  const query = {
+		  ordering: ordering
+	  }
 	  if(processIds.length)
 	  	query.process_types = processIds.join(',')
 	  if(productIds.length)
@@ -30,8 +32,8 @@ export function fetchInitialInventory(processIds, productIds) {
 		  })
       .catch(e => {
         dispatch(requestInventoryFailure(e))
-        console.log(e)
-        throw e
+	      console.log(e)
+	      throw e
       })
   }
 }
@@ -67,10 +69,9 @@ export function pageInventory(direction) {
   }
 }
 
-export function resetPageInventory(direction) {
+export function resetPageInventory() {
 	return {
 		type: RESET_PAGE,
-		direction: direction,
 		name: INVENTORY
 	}
 }

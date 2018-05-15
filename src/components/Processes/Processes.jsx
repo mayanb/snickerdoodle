@@ -27,9 +27,12 @@ class Processes extends React.Component {
 		isAnnouncementOpen: true, // but will return null if already seen
 		isDuplicating: false,
 		duplicatingObjectIndex: null,
-		isFiltering: false,
+		filter: null,
+		ordering: 'name',
 	}
-	
+
+		this.renderHeaderRow = this.renderHeaderRow.bind(this)
+
 		this.handleFilter = this.handleFilter.bind(this)
 		this.handleSelectProcess = this.handleSelectProcess.bind(this)
 		this.handlePagination = this.handlePagination.bind(this)
@@ -39,11 +42,24 @@ class Processes extends React.Component {
 		this.handleDuplicate = this.handleDuplicate.bind(this)
 		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
 		this.handleCloseAnnouncementModal = this.handleCloseAnnouncementModal.bind(this)
+	  this.handleReorder = this.handleReorder.bind(this)
   }
 
   // fetch products on load
   componentDidMount() {
-	this.props.dispatch(actions.fetchProcesses())
+  	this.fetchProcesses()
+  }
+
+  fetchProcesses() {
+	  const { ordering, filter } = this.state
+	  const params = {}
+	  if (ordering) {
+		  params['ordering'] = ordering
+	  }
+	  if (filter) {
+		  params['filter'] = filter
+	  }
+	  this.props.dispatch(actions.fetchProcesses(params))
   }
 
   render() {
@@ -53,7 +69,7 @@ class Processes extends React.Component {
 			this.props.history.push('/')
 		}
 
-		let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
+		let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.filter
 
 		return (
 			<div className="processes-container">
@@ -115,20 +131,31 @@ class Processes extends React.Component {
 	}
 
 	renderHeaderRow() {
+  	const columns = [
+		  { title: null, className: 'icon', field: null },
+		  { title: 'Code', className: 'code', field: 'code' },
+		  { title: 'Name', className: 'name', field: 'name' },
+		  { title: 'Description', className: 'description', field: 'output_desc' },
+		  { title: 'Default amount', className: 'default-amount', field: 'default_amount' },
+		  { title: 'Last used', className: 'last-used', field: 'last_used' },
+		  { title: 'Created by', className: 'owner', field: null },
+		  { title: 'Date created', className: 'date', field: 'created_at' },
+		  { title: null, className: 'more-options-button', field: null },
+	  ]
+
 		return (
-			<ObjectListHeader>
-				<div className="icon"></div>
-				<div className="code">Code</div>
-				<div className="name">Name</div>
-				<div className="description">Description</div>
-				<div className="default-amount">Default Amount</div>
-				<div className="last-used">Last Used</div>
-				<div className="owner">Created by</div>
-				<div className="date">Date Created</div>
-				<div className="more-options-button"></div>
-			</ObjectListHeader>
+			<ObjectListHeader
+				columns={columns}
+				onReorder={this.handleReorder}
+				ordering={this.state.ordering}
+			/>
 		)
 	}
+
+	handleReorder(ordering) {
+  	this.setState({ordering: ordering}, this.fetchProcesses)
+	}
+
 
 	handleArchive(index) {
 		let p = this.props.data[index]
@@ -165,8 +192,7 @@ class Processes extends React.Component {
   /* EVENT HANDLERS */
 
   handleFilter(filterText) {
-  	this.setState({ isFiltering: filterText && filterText.length > 0})
-  	this.props.dispatch(actions.fetchProcesses({ filter: filterText }))	
+  	this.setState({ filter: filterText }, this.fetchProcesses)
   }
 
 	handleCreateProcess(newProcess) {
@@ -231,6 +257,7 @@ class Processes extends React.Component {
 		this.setState({ isAnnouncementOpen: false })
 	}
 }
+
 
 // This is our select function that will extract from the state the data slice we want to expose
 // through props to our component.
