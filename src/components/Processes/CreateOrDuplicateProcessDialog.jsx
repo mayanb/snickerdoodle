@@ -8,7 +8,7 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 		super(props)
 
 		this.state = {
-			icon: "",
+			icon: "default.png",
 			name: "",
 			code: "",
 			number: "",
