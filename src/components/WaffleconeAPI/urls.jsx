@@ -1,5 +1,5 @@
 export function getBackend() {
-	switch(process.env.REACT_APP_BACKEND) {
+	switch('staging'/*process.env.REACT_APP_BACKEND*/) {
 		case 'production':
 			return 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
 		case 'staging':
