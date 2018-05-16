@@ -7,7 +7,7 @@ export default function IngredientList(props) {
 	const { products, processes, selectedProcess, selectedProduct, ingredients, onChange, onRemove, shouldHighlightEmpty } = props
 	return (
 		<div className="ingredient-list">
-		{(selectedProcess && selectedProduct) && <Title selectedProduct={selectedProduct} selectedProcess={selectedProcess} />}
+		{<Title selectedProduct={selectedProduct} selectedProcess={selectedProcess} />}
 			{
 				ingredients.map((e, i) => {
 					return <Ingredient 
