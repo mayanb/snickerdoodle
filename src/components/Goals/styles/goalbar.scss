@@ -1,0 +1,43 @@
+@import 'styles/constants.scss';
+
+.goal-bar-wrapper {
+	display: flex;
+	
+	.goal-interval {
+		flex: 3;
+		color: $elephant;
+	}
+	
+	.goal-whole-bar {
+		flex: 12;
+		
+		display: flex;
+		height: 8px;
+		margin-top: 8px;
+		margin-bottom: 4px;
+		background-color: rgba(0,0,0,0.1);
+		border-radius: 4px;
+		text-align: right;
+		
+		span {
+			padding-right: 8px;
+		}
+	}
+	
+	.goal-filled-bar {
+		background-color: $theme-color;
+		background: linear-gradient(to left, #2087F1 , #0E4FDF);
+		color: rgba(255,255,255,0.5);
+		border-radius: 4px 0 0 4px;
+	}
+	
+	&:hover {
+		.goal-details-right {
+			visibility: visible;
+		}
+		
+		.goal-filled-bar {
+			background-color: $primary-dark;
+		}
+	}
+}

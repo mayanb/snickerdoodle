@@ -29,6 +29,7 @@ class GoalsSideBar extends React.Component {
 					<Goal
 						key={i}
 						goal={goal}
+						goalInterval="week"
 						onDelete={goal.onDelete}
 					/>
 				)}
