@@ -48,14 +48,15 @@ class RecipeCreate extends React.Component {
         <FormGroup className='instructions' label='Recipe instructions'>
           <TextArea rows={2} placeholder="(optional)" onChange={this.handleInstructionsChange}/>
         </FormGroup>
-        { selectedProcessID !== undefined && [<IngredientList 
+        { selectedProcessID !== undefined && [
+        	<IngredientList 
 						products={products} 
 						processes={processes} 
 						ingredients={this.state.ingredients}
 						onChange={this.handleChangeIngredient}
 						onRemove={this.handleRemoveIngredient}
 						shouldHighlightEmpty={this.state.hasError}
-						selectedProcess={processes.find(e => e.id === selectedProcessID)}
+						selectedProcess={processes.find(e => String(e.id) === selectedProcessID)}
 						selectedProduct={product}
 						key={COMPONENT_PREFIX + '1'}
 					/>,
