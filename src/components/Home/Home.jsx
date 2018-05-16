@@ -4,6 +4,7 @@ import Goals from '../Goals/Goals'
 import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
+import GoalsSideBar from '../Goals/GoalsSideBar'
 import './styles/home.css'
 import { shouldShowChecklist } from '../../utilities/userutils'
 import Checklist from '../NewUserChecklist/NewUserChecklist'
@@ -42,16 +43,11 @@ class Home extends React.Component {
 		if (shouldShowChecklist(this.props.team.toLowerCase())) {
 			return <Checklist />
 		}
-
+		
 		return (
-			<div>
-				<div className="dashboard">
-					<ApplicationSectionHeader>Dashboard</ApplicationSectionHeader>
-					<Tabs {...this.state} onTab={this.handleTab}/>
-					{
-						this.state.activeTab===0 ? <ProductionTrends /> : this.renderGoals()
-					}
-				</div>		
+			<div className="dashboard">
+				<ProductionTrends />
+				<GoalsSideBar/>
 			</div>
 		)
 	}

@@ -2,8 +2,8 @@
 
 .dashboard {
 	width: calc(100vw - #{$nav-width});
-	//padding-right: $panel-width;
-
+	display: flex;
+	
 	.dash-content {
 		display: flex;
 
