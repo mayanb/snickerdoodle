@@ -25,8 +25,8 @@ function getHoverText(goal) {
           <span className="blue">
             {ifNaNSetToZero(goal.actual)}
           </span>
-			<span>
-            {`/${formatAmount(Math.round(goal.goal), goal.process_unit)}`}
+			<span className="goal-amount">
+            {` / ${formatAmount(Math.round(goal.goal), goal.process_unit).toLowerCase()}`}
           </span>
 		</div>
 	)
