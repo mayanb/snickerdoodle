@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { findBestBucketSize, getTicks } from '../../utilities/graphutils'
+import { shortNumber } from '../../utilities/stringutils'
 import LineChartTooltip from '../ProductionTrends/LineChartTooltip'
 import './styles/cumulativeareachart.css'
 
@@ -20,6 +21,7 @@ import {
 	timeDay,
 	curveStepAfter,
 } from 'd3'
+
 
 const TOOLTIP_WIDTH = 188
 const TOOLTIP_HEIGHT = 84
@@ -123,7 +125,11 @@ export default class CumulativeAreaChart extends React.Component {
 		// add the Y axis
 		svg.append("g")
 			.attr("class", "y axis")
-			.call(axisLeft(y).tickValues(ticks))
+			.call(axisLeft(y)
+				.tickValues(ticks)
+				.tickFormat(shortNumber)
+
+			)
 			.append("text")
 			.attr("transform", "rotate(-90)")
 			.attr("y", 6)

@@ -1,5 +1,6 @@
 import React from 'react'
 import { findBestBucketSize, getTicks } from '../../utilities/graphutils'
+import { shortNumber } from '../../utilities/stringutils'
 import LineChartTooltip from './LineChartTooltip'
 import moment from 'moment'
 import './styles/trendslinechart.css'
@@ -111,7 +112,10 @@ export default class TrendsLineChart extends React.Component {
 		// add the Y axis
 		svg.append("g")
 			.attr("class", "y axis")
-			.call(axisLeft(y).tickValues(ticks))
+			.call(axisLeft(y)
+				.tickValues(ticks)
+				.tickFormat(shortNumber)
+			)
 			.append("text")
 			.attr("transform", "translate(" + 800 + ",0)")
 			.attr("y", 6)
