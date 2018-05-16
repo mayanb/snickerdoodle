@@ -3,6 +3,7 @@ import GoalBar from './GoalBar'
 import Img from '../Img/Img'
 import {formatAmount} from '../../utilities/stringutils'
 import {connect} from "react-redux"
+import './styles/goal.css'
 
 function Goal(props) {
     return (
