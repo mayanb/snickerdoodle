@@ -7,7 +7,7 @@ const ERROR_BORDER = '1px solid #FFABAB'
 
 export default function Ingredient(props) {
 	let { index, ingredient, processes, products, onRemove, onChange, shouldHighlightEmpty } = props
-	let process_obj = processes.find(e => e.id === ingredient.process_type)
+	let process_obj = processes.find(e => String(e.id) === ingredient.process_type)
 	let unit = process_obj ? process_obj.unit : "unit"
 	return (
 			<div className="recipe-ingredient">

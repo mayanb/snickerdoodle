@@ -68,7 +68,13 @@ class RecipeCreate extends React.Component {
 						</Button>
 					</div>
 				]}
-				<Button isLoading={ui.isCreatingItem} onClick={this.handleSubmit}>Save this recipe</Button>
+				<Button
+					isLoading={ui.isCreatingItem}
+					onClick={this.handleSubmit}
+					disabled={!validateData(this.state)}
+				>
+					Save this recipe
+				</Button>
     	</ElementCard>
     )
   }
