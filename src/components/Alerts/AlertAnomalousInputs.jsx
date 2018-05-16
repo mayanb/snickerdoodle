@@ -10,15 +10,17 @@ export default class AlertAnomalousInputs extends React.Component {
 			return null
 		}
 
+
 		// filter for unique tasks
 		const task_ids = {}
 		tasks = tasks.filter(function (t) {
-			if (task_ids[t.task]) {
+			if (task_ids[t.id]) {
 				return false
 			} 
-			task_ids[t.task] = t
+			task_ids[t.id] = t
 			return true
 		})
+
 
 		let title = `There are ${tasks.length} ${pluralize(tasks.length, 'task')} that have unlikely inputs. Check in to make sure everything's okay.`
 		return (
