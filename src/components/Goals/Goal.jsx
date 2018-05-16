@@ -1,7 +1,6 @@
 import React from 'react'
 import GoalBar from './GoalBar'
 import Img from '../Img/Img'
-import {formatAmount} from '../../utilities/stringutils'
 import {connect} from "react-redux"
 import './styles/goal.css'
 
@@ -21,23 +20,11 @@ function Goal(props) {
             {getMoreDisplay(props.goal.product_code, props.goal.all_product_types)}
           </span>
 					</div>
-					<div className="goal-details-right goal-buttons">
-          <span className="blue">
-            {ifNaNSetToZero(props.goal.actual)}
-          </span>
-						<span>
-            {`/${formatAmount(Math.round(props.goal.goal.goal), props.goal.process_unit)}`}
-          </span>
-					</div>
 				</div>
 				<GoalBar {...props} />
 			</div>
 		</div>
 	)
-}
-
-function ifNaNSetToZero(num) {
-	return (num && !isNaN(num)) ? parseInt(num, 10) : "0"
 }
 
 function getProductDisplay(product_code, all) {

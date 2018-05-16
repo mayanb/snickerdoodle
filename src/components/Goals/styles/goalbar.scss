@@ -2,6 +2,7 @@
 
 .goal-bar-wrapper {
 	display: flex;
+	position: relative;
 	
 	.goal-interval {
 		flex: 3;
@@ -40,4 +41,63 @@
 			background-color: $primary-dark;
 		}
 	}
+	
+	// TOOLTIP
+	$tooltip-background-color: rgba(31,36,41,1);
+	
+	.goal-bar-tooltip {
+		display: none;
+		
+		z-index: 902;
+		position: absolute;
+		right: 100px;
+		top: -30px;
+		
+		background-color: $tooltip-background-color;
+		color: $elephant-ultra-light;
+		border-radius: 2px;
+		padding-top: 4px;
+		padding-bottom: 4px;
+		padding-left: 14px;
+		padding-right: 14px;
+		box-shadow: rgba(0,0,0,0.3) 0 2px 12px;
+		-webkit-font-smoothing: antialiased;
+		
+		.title {
+			font-weight: bold;
+		}
+		
+		&::after {
+			content: "";
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			margin-left: -8px;
+			border-width: 8px;
+			border-style: solid;
+			border-color: $tooltip-background-color transparent transparent transparent;
+		}
+		
+		
+		.goal-details-right {
+			font-size:14px;
+			line-height: 16px;
+			letter-spacing: 5%;
+			text-transform: uppercase;
+			padding-top: 5px;
+			padding-bottom: 2px;
+			color: #828282;
+			vertical-align: middle;
+			
+			.blue {
+				color: $theme-color;
+			}
+		}
+	}
+	
+	&:hover .goal-bar-tooltip {
+		display: inline-block;
+	}
 }
+
+

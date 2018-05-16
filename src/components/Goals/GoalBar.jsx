@@ -1,20 +1,39 @@
 import React from 'react'
 import './styles/goalbar.css'
+import {formatAmount} from '../../utilities/stringutils'
 
 export default function GoalBar(props) {
-	let {achieved, proportion} = getDisplayProportions(props.goal.goal)
+	let { achieved, proportion } = getDisplayProportions(props.goal)
 	
 	return (
 		<div className="goal-bar-wrapper">
-      <div className="goal-interval">{props.goalInterval}</div>
+			<div className="goal-interval">{props.goalInterval}</div>
 			<div className={"goal-whole-bar " + (achieved?"goal-achieved":"")}>
 				<div className="goal-filled-bar" style={{flex: !achieved?(proportion + '%'):"100%",  borderRadius: achieved?"4px":"4px 0 0 4px"}}>
 				</div>
 				<div style={{flex: achieved?"0%":((100 - proportion) + '%')}}>
 				</div>
 			</div>
+			<div className="goal-bar-tooltip">{getHoverText(props.goal)}</div>
 		</div>
 	)
+}
+
+function getHoverText(goal) {
+	return (
+		<div className="goal-details-right goal-buttons">
+          <span className="blue">
+            {ifNaNSetToZero(goal.actual)}
+          </span>
+			<span>
+            {`/${formatAmount(Math.round(goal.goal), goal.process_unit)}`}
+          </span>
+		</div>
+	)
+}
+
+function ifNaNSetToZero(num) {
+	return (num && !isNaN(num)) ? parseInt(num, 10) : 0
 }
 
 /* getDisplayProportions
@@ -28,7 +47,7 @@ export default function GoalBar(props) {
  */
 
 function getDisplayProportions(g) {
-	let actual = parseFloat(g.actual || 0)
+	let actual = ifNaNSetToZero(g.actual)
 	let goal = parseFloat(g.goal)
 	
 	if (actual < goal) {

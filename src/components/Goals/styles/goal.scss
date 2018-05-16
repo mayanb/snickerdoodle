@@ -3,10 +3,7 @@
 .goal {
 	display: flex;
 	padding: 16px;
-	
-	border-top: 1px solid rgba(0,0,0,0.05);
-	//margin-left: -16px;
-	//margin-right: -16px;
+	padding-left: 0px;
 	
 	span.more {
 		font-size: 10px;
@@ -15,11 +12,10 @@
 	
 	.goal-icon {
 		flex: 1;
-		justify-content: center;
 		
 		.inventory-icon {
 			height: 24px;
-			//padding-right: 6px;
+			padding-left: 12px;
 		}
 	}
 
@@ -52,22 +48,6 @@
 					font-size: 17px;
 					line-height: 16px;
 					margin-top: 3px;
-				}
-			}
-			
-			
-			.goal-details-right {
-				font-size:14px;
-				line-height: 16px;
-				letter-spacing: 5%;
-				text-transform: uppercase;
-				padding-top: 5px;
-				padding-bottom: 2px;
-				color: #828282;
-				vertical-align: middle;
-				
-				.blue {
-					color: $theme-color;
 				}
 			}
 			
