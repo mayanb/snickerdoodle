@@ -17,7 +17,8 @@ import {
 	sum,
 	mouse,
 	bisector,
-	timeDay
+	timeDay,
+	curveStepAfter,
 } from 'd3'
 
 const TOOLTIP_WIDTH = 188
@@ -71,6 +72,7 @@ export default class CumulativeAreaChart extends React.Component {
 
 
 		const _area = area()
+			.curve(curveStepAfter)
 			.x(d => x(d.date))
 			.y0(height)
 			.y1(d => y(d.value))
