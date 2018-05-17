@@ -21,38 +21,40 @@ class Home extends React.Component {
 		}
 
 		this.handleTab = this.handleTab.bind(this)
-		this.handleSelectionChange = this.handleSelectionChange.bind(this)
+		this.handleFilterChange = this.handleFilterChange.bind(this)
+		this.setDefaultFilters = this.setDefaultFilters.bind(this)
 	}
 
 	componentDidMount() {
 		Promise.all([
 			this.props.dispatch(processesActions.fetchProcesses()),
 			this.props.dispatch(productsActions.fetchProducts())
-		])
-			.then(() => {
-				const foil = this.props.processes.find(p => p.name === 'Foil')
-				const defaultProcessType = foil ? foil.id : this.props.processes[0].id
-				const { selectedProcess, selectedProducts } = this.qsState()
-				this.handleSelectionChange(
-					selectedProcess ? selectedProcess : defaultProcessType,
-					selectedProducts
-				)
-			})
+		]).then(this.setDefaultFilters)
 	}
 
-	qsState() {
+	setDefaultFilters() {
+		const foil = this.props.processes.find(p => p.name === 'Foil')
+		const defaultProcessType = foil ? foil.id : this.props.processes[0].id
+		const { selectedProcess, selectedProducts } = this.getFilters()
+		this.handleFilterChange(
+			selectedProcess ? selectedProcess : defaultProcessType,
+			selectedProducts
+		)
+	}
+
+	handleFilterChange(selectedProcess, selectedProducts) {
+		const qs = new URLSearchParams(this.props.location.search)
+		qs.set('selectedProcess', selectedProcess)
+		qs.set('selectedProducts', selectedProducts.join(',') )
+		this.props.history.push({search: qs.toString() })
+	}
+
+	getFilters() {
 		const qs = new URLSearchParams(this.props.location.search)
 		return {
 			selectedProcess: qs.get('selectedProcess'),
 			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : []
 		}
-	}
-
-	handleSelectionChange(selectedProcess, selectedProducts) {
-		const qs = new URLSearchParams(this.props.location.search)
-		qs.set('selectedProcess', selectedProcess)
-		qs.set('selectedProducts', selectedProducts.join(',') )
-		this.props.history.push({search: qs.toString() })
 	}
 
 	handleTab(i) {
@@ -73,7 +75,7 @@ class Home extends React.Component {
 	}
 
 	render() {
-		const { selectedProcess, selectedProducts } = this.qsState()
+		const { selectedProcess, selectedProducts } = this.getFilters()
 		console.log({selectedProcess, selectedProducts})
 		const { processes, products } = this.props
 
@@ -93,7 +95,7 @@ class Home extends React.Component {
 								products={products}
 								selectedProcess={selectedProcess}
 								selectedProducts={selectedProducts}
-								onSelectionChange={this.handleSelectionChange}
+								onFilterChanage={this.handleFilterChange}
 							/> :
 							this.renderGoals()
 					}

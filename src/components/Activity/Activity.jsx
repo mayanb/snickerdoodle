@@ -54,11 +54,6 @@ class Activity extends React.Component {
 		this.props.dispatch(productsActions.fetchProducts())
 	}
 
-	handleFilterChange(filters) {
-		this.getActivity(filters)
-		this.setFilters(filters)
-	}
-
 	setDefaultFilters() {
 		const today = moment(new Date()).format("YYYY-MM-DD")
 		const qsFilters = this.getFilters()
@@ -67,17 +62,17 @@ class Activity extends React.Component {
 				start: qsFilters.start || today,
 				end: qsFilters.end || today
 			},
-			selectedProcesses: qsFilters.selectedProducts,
-			selectedProducts: qsFilters.selectedProcesses,
+			selectedProcesses: qsFilters.selectedProcesses,
+			selectedProducts: qsFilters.selectedProducts,
 			keywords: qsFilters.keyword || '',
 			flaggedOnly: qsFilters === 'true' || false,
 			aggregateProducts: qsFilters === 'true' || false,
 		}
-		this.getActivity(filters)
-		this.setFilters(filters)
+		this.handleFilterChange(filters)
 	}
 
-	setFilters(filters) {
+	handleFilterChange(filters) {
+		this.getActivity(filters)
 		const qs = new URLSearchParams(this.props.location.search)
 		qs.set('start', filters.dates.start)
 		qs.set('end', filters.dates.end)

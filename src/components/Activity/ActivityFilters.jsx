@@ -65,8 +65,9 @@ export default class ActivityFilters extends React.Component {
 				<div className="row">
 					<Datepicker initialDates={filters.dates} onChange={this.handleDatesChange} />
 					<div className="select-container">
-						<Select
+						{processes.length > 0 && <Select
 							mode="multiple"
+							value={filters.selectedProcesses}
 							allowClear
 							placeholder="Filter processes"
 							filterOption={processProductFilter}
@@ -76,11 +77,12 @@ export default class ActivityFilters extends React.Component {
 									{formatOption(p)}
 								</Select.Option>
 							)}
-						</Select>
+						</Select>}
 					</div>
 					<div className="select-container">
-						<Select
+						{products.length > 0 && <Select
 							mode="multiple"
+							value={filters.selectedProducts}
 							allowClear
 							placeholder="Filter products"
 							filterOption={processProductFilter}
@@ -90,7 +92,7 @@ export default class ActivityFilters extends React.Component {
 									{formatOption(p)}
 								</Select.Option>
 							)}
-						</Select>
+						</Select>}
 					</div>
 				</div>
 				<div className="row">
