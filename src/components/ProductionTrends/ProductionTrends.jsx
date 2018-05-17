@@ -1,7 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as processesActions from '../Processes/ProcessesActions.jsx'
-import * as productsActions from '../Products/ProductsActions.jsx'
 import * as productionTrendsActions from '../ProductionTrends/ProductionTrendsActions.jsx'
 import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
@@ -11,6 +9,7 @@ import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
 import Img from '../Img/Img'
 import { pluralize } from "../../utilities/stringutils"
 import { processProductFilter, formatOption } from '../../utilities/filters'
+import { checkEqual } from '../../utilities/arrayutils'
 
 const CHART_HEIGHT = 200
 const CHART_WIDTH = 900
@@ -19,37 +18,36 @@ class ProductionTrends extends React.Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
-			processType: null,
-			productTypes: []
-		}
-
 		this.handleSearch = this.handleSearch.bind(this)
 		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
 		this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
 	}
 
-	componentDidMount() {
-		Promise.all([
-			this.props.dispatch(processesActions.fetchProcesses()),
-			this.props.dispatch(productsActions.fetchProducts())
-		])
-			.then(() => {
-				//Set default process type
-				if (this.props.processes.length && !this.state.processType) {
-					const foil = this.props.processes.find(p => p.name === 'Foil')
-					const defaultProcessType = foil ? foil.id : this.props.processes[0].id
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.selectedProcess !== this.props.selectedProcess ||
+			!checkEqual(nextProps.selectedProducts, this.props.selectedProducts)) {
+			this.handleSearch(nextProps.selectedProcess, nextProps.selectedProducts)
+		}
+	}
 
-					this.setState({ processType: defaultProcessType }, this.handleSearch)
-				}
-			})
+	componentDidMount() {
+		if (this.props.selectedProcess) {
+			this.handleSearch(this.props.selectedProcess, this.props.selectedProducts)
+		}
 	}
 
 	render() {
-		const unitLabel = this.state.processType ? pluralize(2, this.state.processType.unit) : ''
+		const { selectedProcess, processes } = this.props
+
+		if (!selectedProcess || !processes || !processes.length) {
+			return null
+		}
+
+		const unitLabel = selectedProcess ? pluralize(2, processes.find(p => String(p.id) === String(selectedProcess)).unit) : ''
 
 		return (
 			<div className="production-trends">
+				{this.renderOptions()}
 				<Loading isFetchingData={this.props.isFetchingData}>
 					<div className="trends-content">
 						<div className="every-month-header">
@@ -57,7 +55,6 @@ class ProductionTrends extends React.Component {
 								<b>How much do you make&nbsp;</b> every month?
 								<Help>Displays total production for each month</Help>
 							</Subtitle>
-							{this.renderOptions()}
 						</div>
 						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={this.props.recentMonths}
 						                 unitLabel={unitLabel} />
@@ -86,11 +83,12 @@ class ProductionTrends extends React.Component {
 	}
 
 	renderOptions() {
-		if (!this.state.processType) {
+		const { processes, products, selectedProcess, selectedProducts } = this.props
+		if (!selectedProcess || !processes.length) {
 			return null
 		}
 		const formatProcessOption = p => `${formatOption(p)} (${pluralize(2, p.unit)})`
-		const defaultProcessType = this.props.processes.find(p => String(p.id) === String(this.state.processType))
+		const defaultProcessType = processes.find(p => String(p.id) === String(selectedProcess))
 		return (
 			<div className="options">
 				<Select
@@ -99,19 +97,20 @@ class ProductionTrends extends React.Component {
 					filterOption={processProductFilter}
 					onChange={this.handleProcessTypeChange}
 				>
-					{this.props.processes.map(p => <Select.Option key={p.id} data={p}>
+					{processes.map(p => <Select.Option key={p.id} data={p}>
 							{formatProcessOption(p)}
 						</Select.Option>
 					)}
 				</Select>
 				<Select
 					mode="multiple"
+					value={selectedProducts}
 					allowClear
 					placeholder="Showing all products"
 					filterOption={processProductFilter}
 					onChange={this.handleProductTypeChange}
 				>
-					{this.props.products.map(p => <Select.Option key={p.id} data={p}>
+					{products.map(p => <Select.Option key={p.id} data={p}>
 							{formatOption(p)}
 						</Select.Option>
 					)}
@@ -120,18 +119,18 @@ class ProductionTrends extends React.Component {
 		)
 	}
 
-	handleSearch() {
-		this.props.dispatch(productionTrendsActions.fetchRecentMonths(this.state.processType, this.state.productTypes))
-		this.props.dispatch(productionTrendsActions.fetchMonthToDate(this.state.processType, this.state.productTypes))
-		this.props.dispatch(productionTrendsActions.fetchWeekToDate(this.state.processType, this.state.productTypes))
+	handleSearch(selectedProcess, selectedProducts) {
+		this.props.dispatch(productionTrendsActions.fetchRecentMonths(selectedProcess, selectedProducts))
+		this.props.dispatch(productionTrendsActions.fetchMonthToDate(selectedProcess, selectedProducts))
+		this.props.dispatch(productionTrendsActions.fetchWeekToDate(selectedProcess, selectedProducts))
 	}
 
-	handleProcessTypeChange(newVal) {
-		this.setState({ processType: newVal }, this.handleSearch)
+	handleProcessTypeChange(selectedProcess) {
+		this.props.onSelectionChange(selectedProcess, this.props.selectedProducts)
 	}
 
-	handleProductTypeChange(productTypeIDs) {
-		this.setState({ productTypes: productTypeIDs }, this.handleSearch)
+	handleProductTypeChange(selectedProducts) {
+		this.props.onSelectionChange(this.props.selectedProcess, selectedProducts)
 	}
 }
 
@@ -153,10 +152,10 @@ function Help({ children }) {
 }
 
 const mapStateToProps = (state/*, props*/) => {
-	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
+	const isFetchingData = state.productionTrends[productionTrendsActions.RECENT_MONTHS].ui.isFetchingData ||
+		state.productionTrends[productionTrendsActions.MONTH_TO_DATE].ui.isFetchingData ||
+		state.productionTrends[productionTrendsActions.WEEK_TO_DATE].ui.isFetchingData
 	return {
-		processes: state.processes.data,
-		products: state.products.data,
 		recentMonths: state.productionTrends[productionTrendsActions.RECENT_MONTHS].data,
 		monthToDate: state.productionTrends[productionTrendsActions.MONTH_TO_DATE].data,
 		weekToDate: state.productionTrends[productionTrendsActions.WEEK_TO_DATE].data,

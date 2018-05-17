@@ -4,6 +4,8 @@ import Goals from '../Goals/Goals'
 import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
+import * as processesActions from '../Processes/ProcessesActions.jsx'
+import * as productsActions from '../Products/ProductsActions.jsx'
 import './styles/home.css'
 import { shouldShowChecklist } from '../../utilities/userutils'
 import Checklist from '../NewUserChecklist/NewUserChecklist'
@@ -19,6 +21,38 @@ class Home extends React.Component {
 		}
 
 		this.handleTab = this.handleTab.bind(this)
+		this.handleSelectionChange = this.handleSelectionChange.bind(this)
+	}
+
+	componentDidMount() {
+		Promise.all([
+			this.props.dispatch(processesActions.fetchProcesses()),
+			this.props.dispatch(productsActions.fetchProducts())
+		])
+			.then(() => {
+				const foil = this.props.processes.find(p => p.name === 'Foil')
+				const defaultProcessType = foil ? foil.id : this.props.processes[0].id
+				const { selectedProcess, selectedProducts } = this.qsState()
+				this.handleSelectionChange(
+					selectedProcess ? selectedProcess : defaultProcessType,
+					selectedProducts
+				)
+			})
+	}
+
+	qsState() {
+		const qs = new URLSearchParams(this.props.location.search)
+		return {
+			selectedProcess: qs.get('selectedProcess'),
+			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : []
+		}
+	}
+
+	handleSelectionChange(selectedProcess, selectedProducts) {
+		const qs = new URLSearchParams(this.props.location.search)
+		qs.set('selectedProcess', selectedProcess)
+		qs.set('selectedProducts', selectedProducts.join(',') )
+		this.props.history.push({search: qs.toString() })
 	}
 
 	handleTab(i) {
@@ -39,6 +73,10 @@ class Home extends React.Component {
 	}
 
 	render() {
+		const { selectedProcess, selectedProducts } = this.qsState()
+		console.log({selectedProcess, selectedProducts})
+		const { processes, products } = this.props
+
 		if (shouldShowChecklist(this.props.team.toLowerCase())) {
 			return <Checklist />
 		}
@@ -49,7 +87,15 @@ class Home extends React.Component {
 					<ApplicationSectionHeader>Dashboard</ApplicationSectionHeader>
 					<Tabs {...this.state} onTab={this.handleTab}/>
 					{
-						this.state.activeTab===0 ? <ProductionTrends /> : this.renderGoals()
+						this.state.activeTab===0 ?
+							<ProductionTrends
+								processes={processes}
+								products={products}
+								selectedProcess={selectedProcess}
+								selectedProducts={selectedProducts}
+								onSelectionChange={this.handleSelectionChange}
+							/> :
+							this.renderGoals()
 					}
 				</div>		
 			</div>
@@ -60,8 +106,12 @@ class Home extends React.Component {
 const mapStateToProps = (state/*, props*/) => {
 	let { data, ui } = state.users
 	let team = data[ui.activeUser].user.team_name
+	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
   return {
     team: team,
+	  processes: state.processes.data,
+	  products: state.products.data,
+	  isFetchingData: isFetchingData
   }
 }
 export default connect(mapStateToProps)(Home)

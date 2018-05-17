@@ -1,8 +1,13 @@
 @import 'styles/constants.scss';
 
 .production-trends {
+    padding-top: 28px;
     margin-bottom: 80px;
     z-index: 0;
+
+    .options {
+
+    }
 
     .ant-select {
         width: 200px;

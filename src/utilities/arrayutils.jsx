@@ -84,3 +84,8 @@ export function sortByRank(a, b) {
 
 	return parseInt(a.rank, 10) - parseInt(b.rank, 10)
 }
+
+export function checkEqual(a, b) {
+	const [aSorted, bSorted] = [a.sort(), b.sort()]
+	return aSorted.length === bSorted.length && aSorted.every((v, i) => v === bSorted[i])
+}
