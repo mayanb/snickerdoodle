@@ -1,7 +1,6 @@
 @import 'styles/constants.scss';
 
 .dashboard {
-	width: calc(100vw - #{$nav-width});
 	display: flex;
 	
 	.dash-content {
