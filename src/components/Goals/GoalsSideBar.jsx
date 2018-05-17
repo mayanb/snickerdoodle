@@ -26,12 +26,11 @@ class GoalsSideBar extends React.Component {
 		console.log(groupedGoals)
 		return (
 			<div className='goals-side-bar'>
-				{weeklyGoals.data && weeklyGoals.data.map((goal, i) =>
+				{groupedGoals.map((goalGroup, i) =>
 					<Goal
 						key={i}
-						goal={goal}
-						goalInterval="week"
-						onDelete={goal.onDelete}
+						goalGroup={goalGroup}
+						// onDelete={goal.onDelete}
 					/>
 				)}
 			</div>

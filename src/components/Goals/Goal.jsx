@@ -5,6 +5,9 @@ import {connect} from "react-redux"
 import './styles/goal.css'
 
 function Goal(props) {
+	const weeklyGoal =  props.goalGroup.weeklyGoal
+	const monthlyGoal =  props.goalGroup.monthlyGoal
+	const goal = weeklyGoal ? weeklyGoal : monthlyGoal
 	return (
 		<div className="goal">
 			<div className="goal-icon">
@@ -13,15 +16,15 @@ function Goal(props) {
 			<div className="goal-info">
 				<div className="goal-details">
 					<div className="goal-details-left">
-          <span className="product">
-            {props.goal.process_name + " " + getProductDisplay(props.goal.product_code, props.goal.all_product_types)}
-          </span>
-						<span className="more">
-            {getMoreDisplay(props.goal.product_code, props.goal.all_product_types)}
-          </span>
+						<span className="product">
+							{goal.process_name + " " + getProductDisplay(goal.product_code, goal.all_product_types)}
+						</span>
 					</div>
 				</div>
-				<GoalBar {...props} />
+				<div className="goal-bars-wrapper">
+					<GoalBar goal={weeklyGoal} />
+					<GoalBar goal={monthlyGoal} />
+				</div>
 			</div>
 		</div>
 	)
@@ -36,17 +39,6 @@ function getProductDisplay(product_code, all) {
 		return product_code.map(e => e.code).join(', ')
 	} else {
 		return product_code[0].code + ", " + product_code[1].code
-	}
-}
-
-function getMoreDisplay(product_code, all) {
-	if (all)
-		return ''
-	
-	if (product_code.length < 3) {
-		return ""
-	} else {
-		return `and ${product_code.length - 2} more`
 	}
 }
 

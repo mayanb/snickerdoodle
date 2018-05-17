@@ -23,20 +23,6 @@
 		flex: 6;
 		
 		.goal-details {
-
-			display: flex;
-			
-			button {
-				padding: 0;
-				display:inline-block;
-				i {
-					font-size: 14px;
-					line-height: 14px;
-					vertical-align: top;
-					padding-top: 0px;
-				}
-				visibility: hidden;
-			}
 			
 			.goal-details-left {
 				flex: 1;
@@ -50,6 +36,11 @@
 					margin-top: 3px;
 				}
 			}
+		}
+		
+		.goal-bars-wrapper {
+			display: flex;
+			flex-direction: column;
 		}
 	}
 	

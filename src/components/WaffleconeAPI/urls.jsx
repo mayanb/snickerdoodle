@@ -1,11 +1,11 @@
 export function getBackend() {
-	switch('staging'/*process.env.REACT_APP_BACKEND*/) {
+	switch(process.env.REACT_APP_BACKEND) {
 		case 'production':
 			return 'https://41aty886e1.execute-api.us-west-1.amazonaws.com/production'
 		case 'staging':
 			return 'https://eszlr18ifi.execute-api.us-west-1.amazonaws.com/staging'
 		default:
-			return 'http://127.0.0.1:8000'
+			return 'http://localhost:8000'
 	}
 }
 
