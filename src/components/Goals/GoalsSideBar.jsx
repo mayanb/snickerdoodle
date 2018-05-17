@@ -50,13 +50,13 @@ const groupWeeklyAndMonthlyGoals = (weeklyGoals, monthlyGoals) => {
 	// Add in monthly goals, combining when equal
 	monthlyGoals.forEach(monthlyGoal => {
 		const productIds = getProductIds(monthlyGoal)
-		const weeklyGoal = groupedGoals[productIds]
-		if (weeklyGoal && weeklyGoal.process_type === monthlyGoal.process_type) {
-			weeklyGoal.monthlyGoal = monthlyGoal
+		const weeklyGoalGroup = groupedGoals[productIds]
+		if (weeklyGoalGroup && weeklyGoalGroup.process_type === monthlyGoal.process_type) {
+			weeklyGoalGroup.monthlyGoal = monthlyGoal
 		} else {
-			groupedGoals[productIds] = {
+			groupedGoals[productIds] = { // Also consolidates any duplicate goals
 				monthlyGoal: monthlyGoal,
-				// No need to store other info (no more checking needed)
+				// No need to store other info (not needed to verify matches)
 			}
 		}
 	})
@@ -64,12 +64,16 @@ const groupWeeklyAndMonthlyGoals = (weeklyGoals, monthlyGoals) => {
 	return Object.values(groupedGoals)
 }
 
+// Returns a unique process/product(s) identifier used as the key of the hashmap to group weekly/monthly goals
 const getProductIds = (goal) => {
 	if (goal.all_product_types) {
 		// Otherwise, goals will fail to match if new product type are created: [idA, idB] !== [idA, idB, newId]
-		return 'all_product_type'
+		return 'all_product_type' + String(goal.process_type)
 	}
-	goal.product_code.map(product => product.id).sort()
+	// Returns something unique like [25, 37, "Rotary Conche Pull12"]
+	const productIds = goal.product_code.map(product => product.id).sort()
+	productIds.push(`${goal.process_name}${String(goal.process_type)}`)
+	return productIds
 }
 
 const mapStateToProps = (state, props) => {
