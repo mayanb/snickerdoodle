@@ -27,15 +27,6 @@ class Activity extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			filters: {
-				dates: { start: moment(new Date()).format("YYYY-MM-DD"), end: moment(new Date()).format("YYYY-MM-DD") },
-				processTypes: [],
-				productTypes: [],
-				keywords: '',
-				flaggedOnly: false,
-				aggregateProducts: false,
-			},
-
 			ordering: 'process_type__name',
 			selectedRow: null,
 
@@ -58,20 +49,65 @@ class Activity extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getActivity(this.state.filters)
+		this.setDefaultFilters()
 		this.props.dispatch(processesActions.fetchProcesses())
 		this.props.dispatch(productsActions.fetchProducts())
 	}
 
 	handleFilterChange(filters) {
-		this.setState({ filters: filters })
 		this.getActivity(filters)
+		this.setFilters(filters)
+	}
+
+	setDefaultFilters() {
+		const today = moment(new Date()).format("YYYY-MM-DD")
+		const qsFilters = this.getFilters()
+		const filters = {
+			dates: {
+				start: qsFilters.start || today,
+				end: qsFilters.end || today
+			},
+			selectedProcesses: qsFilters.selectedProducts,
+			selectedProducts: qsFilters.selectedProcesses,
+			keywords: qsFilters.keyword || '',
+			flaggedOnly: qsFilters === 'true' || false,
+			aggregateProducts: qsFilters === 'true' || false,
+		}
+		this.getActivity(filters)
+		this.setFilters(filters)
+	}
+
+	setFilters(filters) {
+		const qs = new URLSearchParams(this.props.location.search)
+		qs.set('start', filters.dates.start)
+		qs.set('end', filters.dates.end)
+		qs.set('selectedProcesses', filters.selectedProcesses.join(','))
+		qs.set('selectedProducts', filters.selectedProducts.join(','))
+		qs.set('keywords', filters.keywords)
+		qs.set('flaggedOnly', String(filters.flaggedOnly))
+		qs.set('aggregateProducts', String(filters.aggregateProducts))
+		this.props.history.push({search: qs.toString() })
+	}
+
+	getFilters() {
+		const qs = new URLSearchParams(this.props.location.search)
+		return {
+			dates: {
+				start: qs.get('start'),
+				end: qs.get('end')
+			},
+			selectedProcesses: qs.get('selectedProcesses') ? qs.get('selectedProcesses').split(',') : [],
+			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : [],
+			keywords: qs.get('keywords'),
+			flaggedOnly: qs.get('flaggedOnly') === 'true',
+			aggregateProducts: qs.get('aggregateProducts') === 'true',
+		}
 	}
 
 	handleSelect(index) {
 		this.setState({ selectedRow: index })
 		const row = this.props.data[index]
-		const { filters } = this.state
+		const filters = this.getFilters()
 		let params = {
 			start: dateToUTCString(filters.dates.start),
 			end: dateToUTCString(filters.dates.end, true),
@@ -90,13 +126,13 @@ class Activity extends React.Component {
 	}
 
 	handleDownloadAll() {
-		const processTypes = this.state.filters.processTypes.length ?
-			this.state.filters.processTypes :
-			[...new Set(this.props.data.map(row => row.process_type.id))]
-		const productTypes = this.state.filters.productTypes.length ?
-			this.state.filters.productTypes :
-			[...new Set([].concat(...this.props.data.map(row => row.product_types.map(p => p.id))))]
-		return this.handleDownload(processTypes, productTypes)
+		const { selectedProcesses, selectedProducts } = this.getFilters()
+		const { data } = this.props
+		const processes = selectedProcesses.length ? selectedProcesses : [...new Set(data.map(row => row.process_type.id))]
+		const products = selectedProducts.length ?
+			selectedProducts :
+			[...new Set([].concat(...data.map(row => row.product_types.map(p => p.id))))]
+		return this.handleDownload(processes, products)
 	}
 
 	handleDownloadRow(index) {
@@ -105,7 +141,7 @@ class Activity extends React.Component {
 	}
 
 	handleDownload(processTypeIDs, productTypeIDs) {
-		const { filters } = this.state
+		const filters = this.getFilters()
 		let user_id = api.get_active_user().user.user_id
 		let params = {
 			start: dateToUTCString(filters.dates.start),
@@ -138,7 +174,7 @@ class Activity extends React.Component {
 	}
 
 	createCSV(params) {
-		let { start, end } = this.state.filters.dates
+		let { start, end } = this.getFilters().dates
 		let name
 		if(params.processes.length === 1) {
 			name = this.props.processes.find(p => String(p.id) === params.processes[0]).name
@@ -167,7 +203,7 @@ class Activity extends React.Component {
 	}
 
 	handleReorder(ordering) {
-		this.setState({ordering: ordering},() => this.getActivity(this.state.filters))
+		this.setState({ordering: ordering},() => this.getActivity(this.getFilters()))
 	}
 
 	render() {
@@ -176,7 +212,7 @@ class Activity extends React.Component {
 			<div className="activity">
 				<ApplicationSectionHeader>Activity Log</ApplicationSectionHeader>
 				<ActivityFilters
-					filters={this.state.filters}
+					filters={this.getFilters()}
 					onFilterChange={this.handleFilterChange}
 					onDownload={this.handleDownloadAll}
 					downloadDisabled={!data.length}
@@ -194,7 +230,7 @@ class Activity extends React.Component {
 	}
 
 	renderTableHeader() {
-		const product_type_field = this.state.filters.aggregateProducts ? null : 'product_type_names'
+		const product_type_field = this.getFilters().aggregateProducts ? null : 'product_type_names'
 		const columns = [
 			{ title: null, className: 'icon', field: null },
 			{ title: 'Code', className: 'process-code', field: 'process_type__code' },
@@ -294,11 +330,11 @@ class Activity extends React.Component {
 			end: dateToUTCString(range.end, true),
 			ordering: this.state.ordering,
 		}
-		if (filters.processTypes.length) {
-			params.process_types = filters.processTypes.join(',')
+		if (filters.selectedProcesses.length) {
+			params.process_types = filters.selectedProcesses.join(',')
 		}
-		if (filters.productTypes.length) {
-			params.product_types = filters.productTypes.join(',')
+		if (filters.selectedProducts.length) {
+			params.product_types = filters.selectedProducts.join(',')
 		}
 		if (filters.keywords) {
 			params.label = filters.keywords

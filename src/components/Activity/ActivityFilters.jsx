@@ -31,12 +31,12 @@ export default class ActivityFilters extends React.Component {
 		this.props.onFilterChange({ ...this.props.filters, keywords: event.target.value })
 	}
 
-	handleProcessTypesChange(processTypes) {
-		this.props.onFilterChange({ ...this.props.filters, processTypes: processTypes })
+	handleProcessTypesChange(selectedProcesses) {
+		this.props.onFilterChange({ ...this.props.filters, selectedProcesses: selectedProcesses })
 	}
 
-	handleProductTypesChange(productTypes) {
-		this.props.onFilterChange({ ...this.props.filters, productTypes: productTypes })
+	handleProductTypesChange(selectedProducts) {
+		this.props.onFilterChange({ ...this.props.filters, selectedProducts: selectedProducts })
 	}
 
 	handleFlaggedOnlyChange(event) {
@@ -56,6 +56,10 @@ export default class ActivityFilters extends React.Component {
 
 	render() {
 		const { filters, downloadDisabled, processes, products } = this.props
+		if (!filters.dates.start || !filters.dates.end) {
+			return null
+		}
+
 		return (
 			<div className="activity-filters">
 				<div className="row">
@@ -110,8 +114,7 @@ export default class ActivityFilters extends React.Component {
 							onChange={this.handleAggregateProductsChange}
 						/>
 					</div>
-					<Button className="download"
-					        onClick={this.handleDownload}
+					<Button onClick={this.handleDownload}
 					        isLoading={this.state.isDownloading}
 					        disabled={downloadDisabled}
 					>
