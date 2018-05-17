@@ -6,9 +6,6 @@ import './styles/goalssidebar.css'
 import * as actions from "./GoalsActions";
 
 class GoalsSideBar extends React.Component {
-	constructor(props) {
-		super(props)
-	}
 	
 	componentDidMount() {
 		let {users} = this.props
@@ -18,19 +15,18 @@ class GoalsSideBar extends React.Component {
 	
 	render() {
 		const { weeklyGoals, monthlyGoals } = this.props
-		if (!weeklyGoals)
+		if (!weeklyGoals || !monthlyGoals || weeklyGoals.ui.isFetchingData) {
 			return <Loading/>
-		if (weeklyGoals.ui.isFetchingData)
-			return <Loading/>
+		}
+		
 		const groupedGoals = groupWeeklyAndMonthlyGoals(weeklyGoals.data, monthlyGoals.data)
-		console.log(groupedGoals)
+		
 		return (
 			<div className='goals-side-bar'>
 				{groupedGoals.map((goalGroup, i) =>
 					<Goal
 						key={i}
 						goalGroup={goalGroup}
-						// onDelete={goal.onDelete}
 					/>
 				)}
 			</div>
@@ -41,7 +37,7 @@ class GoalsSideBar extends React.Component {
 const groupWeeklyAndMonthlyGoals = (weeklyGoals, monthlyGoals) => {
 	const groupedGoals = {}
 	
-	// process weekly goals
+	// Process weekly goals
 	weeklyGoals.forEach(weeklyGoal => {
 		const productIds = getProductIds(weeklyGoal)
 		groupedGoals[productIds] = {
@@ -51,7 +47,7 @@ const groupWeeklyAndMonthlyGoals = (weeklyGoals, monthlyGoals) => {
 		}
 	})
 	
-	// add in monthly goals, combining when equal
+	// Add in monthly goals, combining when equal
 	monthlyGoals.forEach(monthlyGoal => {
 		const productIds = getProductIds(monthlyGoal)
 		const weeklyGoal = groupedGoals[productIds]
@@ -60,7 +56,7 @@ const groupWeeklyAndMonthlyGoals = (weeklyGoals, monthlyGoals) => {
 		} else {
 			groupedGoals[productIds] = {
 				monthlyGoal: monthlyGoal,
-				// no need to store other info (no more checking needed)
+				// No need to store other info (no more checking needed)
 			}
 		}
 	})
@@ -70,7 +66,7 @@ const groupWeeklyAndMonthlyGoals = (weeklyGoals, monthlyGoals) => {
 
 const getProductIds = (goal) => {
 	if (goal.all_product_types) {
-		// Keeps otherwise, goals will fail to match if new product type are created
+		// Otherwise, goals will fail to match if new product type are created: [idA, idB] !== [idA, idB, newId]
 		return 'all_product_type'
 	}
 	goal.product_code.map(product => product.id).sort()
