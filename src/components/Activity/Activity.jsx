@@ -18,7 +18,6 @@ import * as actions from "./ActivityActions"
 import * as taskActions from "../TaskPage/TaskActions"
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
-import { isDandelion } from '../../utilities/userutils'
 import api from '../WaffleconeAPI/api'
 
 import './styles/activitylist.css'
@@ -42,6 +41,7 @@ class Activity extends React.Component {
 		this.handleDownloadRow = this.handleDownloadRow.bind(this)
 		this.handleDownloadAll = this.handleDownloadAll.bind(this)
 		this.handleReorder = this.handleReorder.bind(this)
+		this.toggleDialog = this.toggleDialog.bind(this)
 	}
 
 	toggleDialog(dialog) {
@@ -126,70 +126,23 @@ class Activity extends React.Component {
 		const products = selectedProducts.length ?
 			selectedProducts :
 			[...new Set([].concat(...data.map(row => row.product_types.map(p => p.id))))]
-		return this.handleDownload(processes, products)
+		const filters = this.getFilters()
+		filters.selectedProcesses = processes
+		filters.selectedProducts = products
+		return this.handleDownload(filters)
 	}
 
 	handleDownloadRow(index) {
 		const row = this.props.data[index]
-		return this.handleDownload([row.process_type.id], row.product_types.map(p => p.id))
-	}
-
-	handleDownload(processTypeIDs, productTypeIDs) {
 		const filters = this.getFilters()
-		let user_id = api.get_active_user().user.user_id
-		let params = {
-			start: dateToUTCString(filters.dates.start),
-			end: dateToUTCString(filters.dates.end, true),
-			processes: processTypeIDs.join(','),
-			products: productTypeIDs.join(','),
-			user_id: user_id,
-		}
-		if (filters.keywords) {
-			params.label = filters.keywords
-			params.dashboard = 'true'
-		}
-		if (filters.flaggedOnly) {
-			params.flagged = 'true'
-		}
-
-		let team = api.get_active_user().user.team_name
-		if (isDandelion(team)) {
-			return this.createCSV(params)
-		}
-
-		let is_connected = api.get_active_user().user.has_gauth_token
-		if (is_connected) {
-			return this.createSpreadsheet(params)
-		}
-		else {
-			this.toggleDialog('mustConnectGoogleDialog')
-			return new Promise(resolve => resolve())
-		}
+		filters.selectedProcesses = [row.process_type.id]
+		filters.selectedProducts = row.product_types.map(p => p.id)
+		return this.handleDownload(filters)
 	}
 
-	createCSV(params) {
-		let { start, end } = this.getFilters().dates
-		let name
-		if(params.processes.length === 1) {
-			name = this.props.processes.find(p => String(p.id) === params.processes[0]).name
-		} else {
-			name = 'Runs'
-		}
-		const title = `${name} - ${start}-${end}`
-		return this.props.dispatch(actions.fetchCsv(params, title))
-	}
-
-	createSpreadsheet(params) {
-		let c = this
-		return this.props.dispatch(actions.fetchGoogleSheet(params))
-			.then(res => {
-				let url = 'https://docs.google.com/spreadsheets/d/' + res.body.spreadsheetId + '/'
-				let newWin = window.open(url, '_blank');
-				if (!newWin || newWin.closed || typeof newWin.closed === 'undefined') {
-					//POPUP BLOCKED
-					c.toggleDialog('mustEnablePopupsDialog')
-				}
-			})
+	handleDownload(filters) {
+		const user = api.get_active_user().user
+		return this.props.dispatch(actions.fetchDownload(filters, user, this.props.processes, this.toggleDialog))
 	}
 
 	handlePagination(direction) {
