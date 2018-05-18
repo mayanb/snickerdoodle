@@ -92,7 +92,7 @@ class Activity extends React.Component {
 			},
 			selectedProcesses: qs.get('selectedProcesses') ? qs.get('selectedProcesses').split(',') : [],
 			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : [],
-			keywords: qs.get('keywords'),
+			keywords: qs.get('keywords') || '',
 			flaggedOnly: qs.get('flaggedOnly') === 'true',
 			aggregateProducts: qs.get('aggregateProducts') === 'true',
 		}

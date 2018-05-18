@@ -4,14 +4,31 @@
     padding-top: 28px;
     margin-bottom: 80px;
     z-index: 0;
+    max-width: 916px;
 
     .options {
-
+        display: flex;
+        justify-content: space-between;
     }
 
     .ant-select {
         width: 200px;
         margin-left: 24px;
+    }
+
+    .buttons {
+        display: inline-flex;
+
+        button {
+            display: flex;
+            padding: 0 8px;
+            margin-left: 12px;
+        }
+    }
+
+    .download {
+        background-color: $gray-ultra-light;
+        color: $gray-dark;
     }
 
     .every-month-header {
@@ -27,6 +44,22 @@
         margin-top: 32px;
     }
 
+    .step-chart-subtitle {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .activity-link {
+        display: flex;
+        color: $primary;
+
+        i {
+            font-size: 18px;
+            margin-left: 8px;
+        }
+    }
+
     .trends-subtitle {
         font-size: 14px;
         margin-top: 4px;
@@ -36,39 +69,8 @@
         -webkit-font-smoothing: antialiased;
     }
 
-    .help {
-        display: flex;
-        align-items: center;
-        margin-left: 8px;
-        position: relative;
-
-        img {
-            height: 20px;
-        }
-
-        &:hover .help-tooltip {
-            display: block;
-        }
-
-        .help-tooltip {
-            background-color: white;
-            border: 1px solid $gray;
-            border-radius: 4px;
-            padding: 12px;
-            line-height: 20px;
-            display: none;
-            font-size: 12px;
-            width: 200px;
-            position: absolute;
-            bottom: 28px;
-            right: -95px;
-            z-index: 1000;
-        }
-    }
-
     .trends-content {
         margin-left: 36px;
-        max-width: 900px;
         margin-top: 32px;
     }
 }

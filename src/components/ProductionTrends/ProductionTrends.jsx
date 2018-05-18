@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import * as productionTrendsActions from '../ProductionTrends/ProductionTrendsActions.jsx'
 import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
 import { Select } from 'antd'
 import './styles/productiontrends.css'
 import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
-import Img from '../Img/Img'
 import { pluralize } from "../../utilities/stringutils"
 import { processProductFilter, formatOption } from '../../utilities/filters'
 import { checkEqual } from '../../utilities/arrayutils'
@@ -37,13 +37,14 @@ class ProductionTrends extends React.Component {
 	}
 
 	render() {
-		const { selectedProcess, processes } = this.props
+		const { selectedProcess, selectedProducts, processes, recentMonths, weekToDate, monthToDate } = this.props
 
 		if (!selectedProcess || !processes || !processes.length) {
 			return null
 		}
 
 		const unitLabel = selectedProcess ? pluralize(2, processes.find(p => String(p.id) === String(selectedProcess)).unit) : ''
+		console.log('props', this.props)
 
 		return (
 			<div className="production-trends">
@@ -51,28 +52,21 @@ class ProductionTrends extends React.Component {
 				<Loading isFetchingData={this.props.isFetchingData}>
 					<div className="trends-content">
 						<div className="every-month-header">
-							<Subtitle>
-								<b>How much do you make&nbsp;</b> every month?
-								<Help>Displays total production for each month</Help>
-							</Subtitle>
+							<LineChartSubtitle unitLabel={unitLabel} />
 						</div>
-						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={this.props.recentMonths}
+						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={recentMonths}
 						                 unitLabel={unitLabel} />
 						<div className="cumulatives">
 							<div>
-								<Subtitle>
-									What did you make <b>&nbsp;this week?</b>
-									<Help>Displays this week's cumulative total production for each day</Help>
-								</Subtitle>
-								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={this.props.weekToDate}
+								<StepChartSubtitle data={weekToDate} unitLabel={unitLabel} rangeLabel="week"
+								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
+								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={weekToDate}
 								                     unitLabel={unitLabel} labelDays={true} />
 							</div>
 							<div>
-								<Subtitle>
-									What did you make <b>&nbsp;this month?</b>
-									<Help>Displays this month's cumulative total production for each day</Help>
-								</Subtitle>
-								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={this.props.monthToDate}
+								<StepChartSubtitle data={monthToDate} unitLabel={unitLabel} rangeLabel="month"
+								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
+								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={monthToDate}
 								                     unitLabel={unitLabel} />
 							</div>
 						</div>
@@ -91,30 +85,40 @@ class ProductionTrends extends React.Component {
 		const defaultProcessType = processes.find(p => String(p.id) === String(selectedProcess))
 		return (
 			<div className="options">
-				<Select
-					showSearch
-					value={formatProcessOption(defaultProcessType)}
-					filterOption={processProductFilter}
-					onChange={this.handleProcessTypeChange}
-				>
-					{processes.map(p => <Select.Option key={p.id} data={p}>
-							{formatProcessOption(p)}
-						</Select.Option>
-					)}
-				</Select>
-				<Select
-					mode="multiple"
-					value={selectedProducts}
-					allowClear
-					placeholder="Showing all products"
-					filterOption={processProductFilter}
-					onChange={this.handleProductTypeChange}
-				>
-					{products.map(p => <Select.Option key={p.id} data={p}>
-							{formatOption(p)}
-						</Select.Option>
-					)}
-				</Select>
+				<div>
+					<Select
+						showSearch
+						value={formatProcessOption(defaultProcessType)}
+						filterOption={processProductFilter}
+						onChange={this.handleProcessTypeChange}
+					>
+						{processes.map(p => <Select.Option key={p.id} data={p}>
+								{formatProcessOption(p)}
+							</Select.Option>
+						)}
+					</Select>
+					<Select
+						mode="multiple"
+						value={selectedProducts}
+						allowClear
+						placeholder="Showing all products"
+						filterOption={processProductFilter}
+						onChange={this.handleProductTypeChange}
+					>
+						{products.map(p => <Select.Option key={p.id} data={p}>
+								{formatOption(p)}
+							</Select.Option>
+						)}
+					</Select>
+				</div>
+				<div className="buttons">
+					<button className="download">
+						<i className="material-icons" onClick={(e) => this.handleDownload(e)}>file_download</i>
+					</button>
+					<button className="pin">
+						Pin These Graphs
+					</button>
+				</div>
 			</div>
 		)
 	}
@@ -140,16 +144,40 @@ function Subtitle(props) {
 	)
 }
 
-function Help({ children }) {
+function LineChartSubtitle({ unitLabel }) {
+	const capitalizedUnitLabel = unitLabel.charAt(0).toUpperCase() + unitLabel.slice(1);
 	return (
-		<div className="help">
-			<Img src="help@2x" />
-			<div className="help-tooltip">
-				{children}
-			</div>
+		<Subtitle>
+			<b>{`${capitalizedUnitLabel} Produced Each Month`}</b>
+		</Subtitle>
+	)
+}
+
+function StepChartSubtitle({ data, unitLabel, rangeLabel, selectedProcess, selectedProducts }) {
+	if (!data.length) {
+		return null
+	}
+
+	const qs = new URLSearchParams()
+	qs.set('start', data[0].bucket)
+	qs.set('end', data.slice(-1)[0].bucket)
+	qs.set('selectedProcesses', selectedProcess)
+	qs.set('selectedProducts', selectedProducts)
+	const path = `/activity-log?${qs.toString()}`
+	const total = data.reduce((sum, datum) => sum + datum.total_amount, 0).toLocaleString()
+	return (
+		<div className="step-chart-subtitle">
+			<Subtitle>
+				<b>{`${total} ${unitLabel}`}&nbsp;</b>{`this ${rangeLabel}`}
+			</Subtitle>
+			<Link className="activity-link" to={path}>
+				Activity
+				<i className="material-icons">assignment</i>
+			</Link>
 		</div>
 	)
 }
+
 
 const mapStateToProps = (state/*, props*/) => {
 	const isFetchingData = state.productionTrends[productionTrendsActions.RECENT_MONTHS].ui.isFetchingData ||

@@ -70,11 +70,11 @@ export function shortNumber(amount) {
 	if (numDigits < 4) {
 		return precise(n) / 1
 	} else if (numDigits < 7) {
-		return precise(n) / 1000 + ' K'
+		return precise(n) / 1000 + 'k'
 	} else if (numDigits < 10) {
-		return precise(n) / 1000000 + ' M'
+		return precise(n) / 1000000 + 'm'
 	} else if (numDigits < 13) {
-		return precise(n) / 1000000000 + ' B'
+		return precise(n) / 1000000000 + 'b'
 	}
 
 }
