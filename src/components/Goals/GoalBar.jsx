@@ -25,14 +25,14 @@ export default function GoalBar(props) {
 
 function getHoverText(goal) {
 	return (
-		<div className="goal-hover-text">
+		<span className="goal-hover-text">
 			<span className="blue">
 				{ifNaNSetToZero(goal.actual)}
 			</span>
 			<span className="goal-amount">
 				{` / ${formatAmount(Math.round(goal.goal), goal.process_unit).toLowerCase()}`}
 			</span>
-		</div>
+		</span>
 	)
 }
 

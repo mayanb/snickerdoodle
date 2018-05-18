@@ -8,10 +8,11 @@ function Goal(props) {
 	const weeklyGoal =  props.goalGroup.weeklyGoal
 	const monthlyGoal =  props.goalGroup.monthlyGoal
 	const goal = weeklyGoal ? weeklyGoal : monthlyGoal
+	console.log(goal)
 	return (
 		<div className="goal">
 			<div className="goal-icon">
-				<Img className="inventory-icon" src="foil@3x" />
+				<Img className="inventory-icon" src={`${goal.process_icon.split('.png')[0]}@3x`} />
 			</div>
 			<div className="goal-info">
 				<div className="goal-details">

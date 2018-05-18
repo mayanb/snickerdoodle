@@ -12,6 +12,8 @@
 	
 	.goal-icon {
 		flex: 1;
+		min-width: 50px;
+		max-width: 50px;
 		
 		.inventory-icon {
 			height: 24px;
@@ -29,9 +31,9 @@
 				padding-top: 3px;
 				padding-bottom: 2px;
 				
-				span {
+				span.product {
 					display:inline-block;
-					font-size: 17px;
+					font-size: 14px;
 					line-height: 16px;
 					margin-top: 3px;
 				}
