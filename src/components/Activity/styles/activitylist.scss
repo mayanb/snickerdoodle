@@ -6,7 +6,7 @@
         display: flex;
         align-items: center;
 
-        &:hover .download {
+        &:hover .download, &:hover .chart {
             visibility: visible;
         }
     }
@@ -50,6 +50,12 @@
     .download {
         flex: 1;
         visibility: hidden;
+    }
+
+    .chart {
+        flex: 1;
+        visibility: hidden;
+        height: 26px;
     }
 
 }

@@ -190,6 +190,7 @@ class Activity extends React.Component {
 			{ title: 'Amount', className: 'outputs', field: 'amount' },
 			{ title: null, className: 'view-all-tasks', field: null },
 			{ title: null, className: 'download', field: null },
+			{ title: null, className: 'chart', field: null },
 		]
 		return (
 			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering}/>

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as productionTrendsActions from '../ProductionTrends/ProductionTrendsActions.jsx'
+import * as activityActions from '../Activity/ActivityActions'
 import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
 import { Select } from 'antd'
@@ -135,6 +136,10 @@ class ProductionTrends extends React.Component {
 
 	handleProductTypeChange(selectedProducts) {
 		this.props.onFilterChanage(this.props.selectedProcess, selectedProducts)
+	}
+
+	handleDownload() {
+
 	}
 }
 
