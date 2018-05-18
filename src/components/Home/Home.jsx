@@ -26,10 +26,8 @@ class Home extends React.Component {
 	}
 
 	componentDidMount() {
-		Promise.all([
-			this.props.dispatch(processesActions.fetchProcesses()),
-			this.props.dispatch(productsActions.fetchProducts())
-		]).then(this.setDefaultFilters)
+		this.props.dispatch(processesActions.fetchProcesses())
+		this.props.dispatch(productsActions.fetchProducts())
 	}
 
 	setDefaultFilters() {
@@ -75,13 +73,20 @@ class Home extends React.Component {
 	}
 
 	render() {
-		const { selectedProcess, selectedProducts } = this.getFilters()
-		console.log({selectedProcess, selectedProducts})
-		const { processes, products } = this.props
-
 		if (shouldShowChecklist(this.props.team.toLowerCase())) {
 			return <Checklist />
 		}
+
+		const { processes, products } = this.props
+		if (!processes.length) {
+			return null
+		}
+
+		if (!this.getFilters().selectedProcess) {
+			this.setDefaultFilters()
+		}
+
+		const { selectedProcess, selectedProducts } = this.getFilters()
 
 		return (
 			<div>

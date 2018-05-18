@@ -49,7 +49,6 @@ class Activity extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setDefaultFilters()
 		this.props.dispatch(processesActions.fetchProcesses())
 		this.props.dispatch(productsActions.fetchProducts())
 	}
@@ -203,6 +202,9 @@ class Activity extends React.Component {
 
 	render() {
 		const { data, processes, products } = this.props
+		if (!this.getFilters().dates.start) {
+			this.setDefaultFilters()
+		}
 		return (
 			<div className="activity">
 				<ApplicationSectionHeader>Activity Log</ApplicationSectionHeader>
