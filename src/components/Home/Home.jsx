@@ -33,6 +33,7 @@ class Home extends React.Component {
 		this.props.dispatch(processesActions.fetchProcesses())
 		this.props.dispatch(productsActions.fetchProducts())
 		this.props.dispatch(goalActions.fetchGoals())
+		this.props.dispatch(goalActions.fetchPins())
 	}
 
 	setDefaultFilters() {
@@ -63,7 +64,6 @@ class Home extends React.Component {
 	handleDeleteGoal(goal) {
 		return this.props.dispatch(goalActions.postDeleteGoal(goal, this.getGoalIndex(goal)))
 	}
-
 
 	getFilters() {
 		const qs = new URLSearchParams(this.props.location.search)
@@ -160,6 +160,7 @@ const mapStateToProps = (state/*, props*/) => {
 	  processes: state.processes.data,
 	  products: state.products.data,
 	  goals: state.goals.data,
+	  pins: state.pins.data,
 	  isFetchingData: isFetchingData
   }
 }

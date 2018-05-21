@@ -1,9 +1,8 @@
-import api from '../WaffleconeAPI/api.jsx'
 import {
 	TOGGLE_EDITING
 } from '../../reducers/APIDataReducer'
 import { SWITCH_ACTIVE_GOAL_TYPE } from '../../reducers/GoalsReducer'
-import { GOALS } from '../../reducers/ReducerTypes'
+import { GOALS, PINS } from '../../reducers/ReducerTypes'
 import { WEEKLY } from './GoalTypes'
 import * as actions from '../../reducers/APIDataActions'
 
@@ -61,7 +60,29 @@ export function switchActiveGoalType(timerange) {
 	}
 }
 
+export function fetchPins() {
+	const request = {
+		url: '/ics/pins/',
+		query: {}
+	}
+	return actions.fetch(PINS, request, null, res => res.body)
+}
 
+export function postCreatePin(data) {
+	const request = {
+		url: '/ics/pins/create/',
+		data: data
+	}
+	return actions.postCreate(PINS, request, null, res => res.body)
+}
 
-
+export function postDeletePin(pin, index) {
+	const request = {
+		url: `/ics/pins/edit/${pin.id}/`,
+		data: {
+			is_trashed: true
+		}
+	}
+	return actions.postDelete(PINS, request, index)
+}
 

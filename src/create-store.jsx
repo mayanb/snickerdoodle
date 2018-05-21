@@ -34,6 +34,7 @@ export default function(data) {
     users: _users,
     activity: createFilteredReducer(apiDataReducer, action => action.name === types.ACTIVITY, stateDefault),
 	  goals:  createFilteredReducer(apiDataReducer, action => action.name === types.GOALS, stateDefault),
+	  pins:  createFilteredReducer(apiDataReducer, action => action.name === types.PINS, stateDefault),
     members:  createFilteredReducer(apiDataReducer, action => action.name === types.MEMBERS, stateDefault),
     teams: createFilteredReducer(apiDataReducer, action => action.name === types.TEAMS, stateDefault), 
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault),

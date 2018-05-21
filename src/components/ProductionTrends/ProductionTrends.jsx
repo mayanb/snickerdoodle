@@ -2,12 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as productionTrendsActions from '../ProductionTrends/ProductionTrendsActions.jsx'
+import * as goalActions from '../Goals/GoalsActions'
 import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
 import GoalCard from './GoalCard'
 import { Select } from 'antd'
 import './styles/productiontrends.css'
 import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
+import api from '../WaffleconeAPI/api.jsx'
 import { pluralize } from "../../utilities/stringutils"
 import { processProductFilter, formatOption } from '../../utilities/filters'
 import { checkEqual } from '../../utilities/arrayutils'
@@ -23,6 +25,7 @@ class ProductionTrends extends React.Component {
 		this.handleSearch = this.handleSearch.bind(this)
 		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
 		this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
+		this.handleCreatePin = this.handleCreatePin.bind(this)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -94,7 +97,7 @@ class ProductionTrends extends React.Component {
 		return (
 			<div className="options">
 				<div className="production-trends-filters">
-					<Img src="processes@2x" width="24px" className="logo"/>
+					<Img src="processes@2x" />
 					<Select
 						showSearch
 						value={formatProcessOption(defaultProcessType)}
@@ -106,7 +109,7 @@ class ProductionTrends extends React.Component {
 							</Select.Option>
 						)}
 					</Select>
-					<Img src="products@2x" width="24px" className="logo"/>
+					<Img src="products@2x"/>
 					<Select
 						mode="multiple"
 						value={selectedProducts}
@@ -125,7 +128,7 @@ class ProductionTrends extends React.Component {
 					<button className="download">
 						<i className="material-icons" onClick={(e) => this.handleDownload(e)}>file_download</i>
 					</button>
-					<button className="pin">
+					<button className="pin" onClick={this.handleCreatePin}>
 						Pin These Graphs
 					</button>
 				</div>
@@ -145,6 +148,16 @@ class ProductionTrends extends React.Component {
 
 	handleProductTypeChange(selectedProducts) {
 		this.props.onFilterChanage(this.props.selectedProcess, selectedProducts)
+	}
+
+	handleCreatePin() {
+		const { selectedProcess, selectedProducts } = this.props
+		const user = api.get_active_user().user
+		return this.props.dispatch(goalActions.postCreatePin({
+			userprofile: user.profile_id,
+			process_type: selectedProcess,
+			input_products: selectedProducts.length ? selectedProducts.join(',') : 'ALL',
+		}))
 	}
 
 	handleDownload() {
