@@ -14,7 +14,7 @@ function Goal(props) {
 	return (
 		<div className="goal">
 			<div className="goal-icon">
-				<Img className="inventory-icon" src={`${goal.process_icon.split('.png')[0]}@3x`} />
+				<Img className="inventory-icon" src={`${goal.process_icon && goal.process_icon.split('.png')[0]}@3x`} />
 			</div>
 			<div className="goal-info">
 				<div className="goal-name">
