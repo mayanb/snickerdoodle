@@ -2,14 +2,13 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import Raven from "raven-js"
 import createRavenMiddleware from "raven-for-redux"
-import { stateDefault, productionTrendsStateDefault, modalStateDefault, inventoriesStateDefault } from './states'
+import { stateDefault, productionTrendsStateDefault, modalStateDefault } from './states'
 
 import {apiDataReducer} from './reducers/APIDataReducer'
 import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
 import {_formula} from './reducers/FormulaReducerExtension'
-import { _inventory } from './reducers/InventoryReducer'
-import { _inventory2 } from './reducers/Inventory2ReducerExtension'
+import { _inventory } from './reducers/InventoryReducerExtension'
 import _users from './reducers/UserReducer'
 import { _modal } from './reducers/ModalReducer'
 import productionTrendsReducer from './reducers/ProductionTrendsReducer'
@@ -43,8 +42,7 @@ export default function(data) {
 		recipes:  createFilteredReducer(apiDataReducer, action => action.name === types.RECIPES, stateDefault),
 		processes: createFilteredReducer(_process, action => action.name === types.PROCESSES, stateDefault),
   	movements: createFilteredReducer(apiDataReducer, action => action.name === types.MOVEMENTS, stateDefault), 
-  	inventories: createFilteredReducer(_inventory, action => action.name === types.INVENTORIES, inventoriesStateDefault),
-  	task: createFilteredReducer(_task, action => action.name === types.TASK, stateDefault), 
+  	task: createFilteredReducer(_task, action => action.name === types.TASK, stateDefault),
     tasks: createFilteredReducer(apiDataReducer, action => action.name === types.TASKS, stateDefault), 
   	taskDescendents: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_DESCENDENTS, stateDefault), 
   	taskAncestors: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_ANCESTORS, stateDefault), 
@@ -52,12 +50,11 @@ export default function(data) {
   	processInventories: createFilteredReducer(apiDataReducer, action => action.name === types.PROCESS_INVENTORY, stateDefault),
     graphs: createFilteredReducer(apiDataReducer, action => action.name === types.GRAPHS, stateDefault),
     contacts: createFilteredReducer(apiDataReducer, action => action.name === types.CONTACTS, stateDefault),
-    inventoryUnits: createFilteredReducer(apiDataReducer, action => action.name === types.INVENTORY_UNITS, stateDefault),
     alerts: createFilteredReducer(apiDataReducer, action => action.name === types.ALERTS, stateDefault),
     formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault),
 	  productionTrends: createFilteredReducer(productionTrendsReducer, action => action.name === types.PRODUCTION_TRENDS, productionTrendsStateDefault),
 	  modal: createFilteredReducer(_modal, action => action.name === types.MODAL, modalStateDefault),
-    inventory2: createFilteredReducer(_inventory2, action => action.name === types.INVENTORY_2, stateDefault),
+    inventory: createFilteredReducer(_inventory, action => action.name === types.INVENTORY, stateDefault),
   })
 	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 	const store = createStore(reducer, /* preloadedState, */ composeEnhancers(

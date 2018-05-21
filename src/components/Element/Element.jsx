@@ -1,6 +1,6 @@
 import React from 'react'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
-import Img from '../Img/Img'
+import Img, { ic } from '../Img/Img'
 import Button from '../Button/Button'
 import './styles/element.css'
 
@@ -35,6 +35,3 @@ export function ElementTitle({icon, text, buttonTitle, onClick, isLoading}) {
 	)
 }
 
-function ic(icon) {
-	return icon.substring(0, icon.length - 4) + "@3x"
-}

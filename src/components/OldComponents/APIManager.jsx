@@ -1,4 +1,3 @@
-import React from 'react'
 import $ from 'jquery'
 import update from 'immutability-helper'
 import Teams from '../Teams/Teams'
@@ -46,21 +45,5 @@ function del(url) {
   })
 }
 
-function requestID() {
-  return Math.floor(Math.random() * 1000)
-}
 
-function ZeroState(props) {
-  var sentence = "Looks like there's nothing here!"
-  if (props.filtered) {
-    sentence = "Looks like there's nothing here. Try expanding your search."
-  }
-  return (
-    <div className="zero-state">
-      <span>{sentence}</span>
-    </div>
-  )
-}
-
-
-export { fetch, requestID, ZeroState, post, put, del }
+export { fetch, post, put, del }

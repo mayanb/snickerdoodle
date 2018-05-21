@@ -1,17 +1,23 @@
 @import 'styles/constants.scss';
 
 .create-process-dialog {
-    .name-abbreviation {
-        display: flex
-    }
-
-    .name-group {
-        flex: 2;
-        margin-right: 20px;
-    }
-
-    .abbreviation-group {
-        flex: 1;
+    
+    .icon-name-abbreviation {
+        display: flex;
+        
+        .icon-group {
+            flex: 1;
+        }
+        
+        .abbreviation-group {
+            flex: 2;
+            margin-left: 16px;
+        }
+        
+        .name-group {
+            flex: 4;
+            margin-left: 16px;
+        }
     }
 
     .output-quantity {

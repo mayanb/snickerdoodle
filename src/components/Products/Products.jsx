@@ -22,9 +22,12 @@ class Products extends React.Component {
 
 	  this.state = {
 		  isAddingProduct: false,
-		  isFiltering: false,
 			shouldDisplayRecipeModal: true,
+		  filter: null,
+		  ordering: 'name',
 	  }
+
+	  this.renderHeaderRow = this.renderHeaderRow.bind(this)
 
 	  this.handleCloseRecipeAnnouncementModal = this.handleCloseRecipeAnnouncementModal.bind(this)
 	  this.handleFilter = this.handleFilter.bind(this)
@@ -33,13 +36,26 @@ class Products extends React.Component {
     this.handleCreateProduct = this.handleCreateProduct.bind(this)
 	  this.handleArchive = this.handleArchive.bind(this)
 	  this.handleSelect = this.handleSelect.bind(this)
+	  this.handleReorder = this.handleReorder.bind(this)
   }
 
   // fetch products on load
   componentDidMount() {
-    this.props.dispatch(actions.fetchProducts())
+  	this.fetchProducts()
     this.props.dispatch(recipeActions.fetchRecipes())
   }
+
+	fetchProducts() {
+		const { ordering, filter } = this.state
+		const params = {}
+		if (ordering) {
+  		params['ordering'] = ordering
+		}
+		if (filter) {
+			params['filter'] = filter
+		}
+		this.props.dispatch(actions.fetchProducts(params))
+	}
 
   render() {
     let { users, ui, data, recipeUI, recipeData } = this.props
@@ -49,7 +65,7 @@ class Products extends React.Component {
     	this.props.history.push('/')
     }
 
-    let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
+    let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.filter
     let hasNoRecipes = !recipeUI.isFetchingData && (!recipeData || !recipeData.length)
 	  return (
 	  	<div className="products">
@@ -72,7 +88,7 @@ class Products extends React.Component {
 					  onClick={this.handleSelect}
 					  onPagination={this.handlePagination}
 					  Row={ProductsListItem}
-					  TitleRow={this.headerRow}
+					  TitleRow={this.renderHeaderRow}
 					  extra={{onArchive: this.handleArchive}}
 				  />
 			  </ObjectList>
@@ -89,7 +105,7 @@ class Products extends React.Component {
 		  />
 	  )
   }
-	
+
 	renderCreateRecipeModal() {
   	return (<PageSpecificNewFeatureIntro
 			onClose={this.handleCloseRecipeAnnouncementModal}
@@ -103,16 +119,25 @@ class Products extends React.Component {
 		/>)
 	}
 
-	headerRow() {
+	renderHeaderRow() {
+  	const columns = [
+		  { title: 'Code', className: 'code', field: 'code' },
+		  { title: 'Name', className: 'name', field: 'name' },
+		  { title: 'Owner', className: 'owner', field: null },
+		  { title: 'Date Created', className: 'date', field: 'created_at' },
+		  { title: null, className: 'more-options-button', field: null },
+	  ]
 		return (
-			<ObjectListHeader>
-				<div className="code">Code</div>
-				<div className="name">Name</div>
-				<div className="owner">Owner</div>
-				<div className="date">Date Created</div>
-				<div className="more-options-button"></div>
-			</ObjectListHeader>
+			<ObjectListHeader
+				columns={columns}
+				onReorder={this.handleReorder}
+				ordering={this.state.ordering}
+			/>
 		)
+	}
+
+	handleReorder(ordering) {
+		this.setState({ordering: ordering}, this.fetchProducts)
 	}
 
   /* EVENT HANDLERS */
@@ -121,8 +146,7 @@ class Products extends React.Component {
 	}
 
   handleFilter(filterText) {
-  	this.setState({ isFiltering: filterText && filterText.length })
-  	this.props.dispatch(actions.fetchProducts({ filter: filterText }))
+	  this.setState({ filter: filterText }, this.fetchProducts)
   }
 
   handlePagination(direction) {

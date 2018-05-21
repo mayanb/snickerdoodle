@@ -7,7 +7,7 @@ export function fetchProducts(q) {
     url: '/ics/products/', 
     query: q,
   }
-  return actions.fetch(PRODUCTS, request, alphabetize, res => res.body)
+  return actions.fetch(PRODUCTS, request, null, res => res.body)
 }
 
 export function pageProducts(direction) {

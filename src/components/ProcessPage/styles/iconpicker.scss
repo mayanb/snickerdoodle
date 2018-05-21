@@ -1,0 +1,72 @@
+@import 'styles/constants.scss';
+
+.picker-inner {
+	cursor: pointer;
+	
+	// Hides 1) the emoji-type navbar and focus footer which
+	// displayed the name and icon of what you were hovering.
+	// 2) The "Custom" category title,
+	// 3) Emojis matching icon names
+	.emoji-mart > div.emoji-mart-bar, div.emoji-mart-category-label, div.emoji-mart-search {
+		display: none;
+	}
+	
+	.emoji-mart {
+		border: none;
+	}
+	
+	
+	.emoji-mart-category {
+		margin-top: 8px;
+	}
+	
+	// Since we're hiding emojis who have the same name as an icon
+	// we need to explicitly show icons ("custom" emojis)
+	span.emoji-mart-emoji-custom {
+		display: inline-block;
+	}
+	
+}
+
+.process-icon-picker-wrapper {
+	position: relative;
+	cursor: pointer;
+	
+	.process-icon-picker {
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		
+		height: 38px;
+		width: 38px;
+		
+		border: 1px solid #cad0d5;
+		border-radius: 4px;
+		background-color: white;
+		
+		padding: 4px;
+		
+		.change-icon-icon {
+			position: absolute;
+			top: -5px;
+			right: -5px;
+			
+			color: white;
+			
+			border-radius: 50%;
+			border: 2px;
+			
+			min-width: 16px;
+			max-width: 16px;
+			min-height: 16px;
+			max-height: 16px;
+			font-size: 16px;
+			background-color: $primary;
+		}
+		
+		.icon {
+			flex: 1;
+		}
+	}
+}
