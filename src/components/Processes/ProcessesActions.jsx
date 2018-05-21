@@ -28,7 +28,7 @@ export function fetchProcesses(q) {
     return api.get('/ics/processes/')
 	    .query(q)
       .then(res =>{
-				dispatch(requestProcessesSuccess(organize_attributes(res.body.sort(alphabetize))))
+				dispatch(requestProcessesSuccess(organize_attributes(res.body)))
 			})
       .catch(err => dispatch(requestProcessesFailure(err)))
   }
@@ -121,7 +121,6 @@ export function postCreateProcess(json, success) {
     dispatch(requestCreateProcess())
 	  return api.post('/ics/processes/')
 		  .send(json)
-		  .send({ icon: "default.png" })
 		  .then((res) => dispatch(requestCreateProcessSuccess(res.body)))
 		  .catch((err) => dispatch(requestCreateProcessFailure(err)))
   }
@@ -132,7 +131,6 @@ export function postDuplicateProcess(json, success) {
     dispatch(requestCreateProcess())
     return api.post('/ics/processes/duplicate/')
       .send(json)
-      .send({ icon: "default.png" })
       .then((res) => dispatch(requestCreateProcessSuccess(res.body)))
       .catch((err) => dispatch(requestCreateProcessFailure(err)))
   }

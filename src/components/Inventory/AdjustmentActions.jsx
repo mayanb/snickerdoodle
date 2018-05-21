@@ -3,8 +3,8 @@ import {
   START_ADJUSTMENT,
   ADJUSTMENT_SUCCESS,
   ADJUSTMENT_FAILURE,
-} from '../../reducers/Inventory2ReducerExtension'
-import {  INVENTORY_2 } from '../../reducers/ReducerTypes'
+} from '../../reducers/InventoryReducerExtension'
+import {  INVENTORY } from '../../reducers/ReducerTypes'
 
 export function requestCreateAdjustment(userProfileId, processId, productId, amount, explanation) {
 	return dispatch => {
@@ -33,14 +33,14 @@ export function requestCreateAdjustment(userProfileId, processId, productId, amo
 function startCreatingAdjustment() {
 	return {
 		type: START_ADJUSTMENT,
-		name: INVENTORY_2,
+		name: INVENTORY,
 	}
 }
 
 function createAdjustmentSuccess(json) {
 	return {
 		type: ADJUSTMENT_SUCCESS,
-		name: INVENTORY_2,
+		name: INVENTORY,
 		...json
 	}
 }
@@ -49,7 +49,7 @@ function createAdjustmentFailure(err) {
 	console.error('Oh no! Something went wrong while saving the adjustment\n' + err)
 	return {
 		type: ADJUSTMENT_FAILURE,
-		name: INVENTORY_2,
+		name: INVENTORY,
 	}
 }
 

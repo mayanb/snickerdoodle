@@ -8,7 +8,7 @@ export const REQUEST_HISTORY = 'REQUEST_HISTORY'
 export const REQUEST_HISTORY_SUCCESS = 'HISTORY_SUCCESS'
 export const REQUEST_HISTORY_FAILURE = 'HISTORY_FAILURE'
 
-export function _inventory2(state, action) {
+export function _inventory(state, action) {
 	let ns = apiDataReducer(state, action)
 	switch (action.type) {
 		case START_ADJUSTMENT:
