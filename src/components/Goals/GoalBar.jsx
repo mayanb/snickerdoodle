@@ -8,10 +8,12 @@ export default function GoalBar(props) {
 	if (!goal) {
 		return null
 	}
+	const overlayStyle = {
 	
+	}
 	const { achieved, proportion } = getDisplayProportions(goal)
 	return (
-		<Tooltip title={getHoverText(goal)} placement="left">
+		<Tooltip title={getHoverTextComponent(goal)} placement="left" overlayStyle={overlayStyle}>
 			<div className="goal-bar-wrapper">
 				<div className="goal-interval">{goal.timerange === 'w' ? 'week' : 'month'}</div>
 				<div className={"goal-whole-bar " + (achieved?"goal-achieved":"")}>
@@ -25,7 +27,7 @@ export default function GoalBar(props) {
 	)
 }
 
-function getHoverText(goal) {
+function getHoverTextComponent(goal) {
 	return (
 		<span className="goal-hover-text">
 			<span className="current-progress">

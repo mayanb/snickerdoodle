@@ -1,9 +1,5 @@
 @import 'styles/constants.scss';
 
-div.ant-tooltip {
-	top: 0px;
-}
-
 .goal-bar-wrapper {
 	display: flex;
 	position: relative;
@@ -30,10 +26,6 @@ div.ant-tooltip {
 		background-color: rgba(0,0,0,0.1);
 		border-radius: 4px;
 		text-align: right;
-		
-		span {
-			padding-right: 8px;
-		}
 	}
 	
 	.goal-filled-bar {
@@ -42,16 +34,14 @@ div.ant-tooltip {
 		color: rgba(255,255,255,0.5);
 		border-radius: 4px 0 0 4px;
 	}
-	
-	&:hover {
-		.goal-details-right {
-			visibility: visible;
-		}
-		
-		.goal-filled-bar {
-			background-color: $primary-dark;
-		}
-	}
 }
 
-
+// Style antd tooltip
+.ant-tooltip-inner .goal-hover-text {
+	font-size:14px;
+	color: $elephant-light;
+	
+	.current-progress {
+		color: $primary-light;
+	}
+}
