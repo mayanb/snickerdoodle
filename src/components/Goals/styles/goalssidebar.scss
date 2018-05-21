@@ -5,10 +5,6 @@
 	max-width: 260px;
 	background-color: white;
 	
-	& > div {
-	
-	}
-	
 	.goal-side-bar-tabs {
 		padding-top: 38px;
 		padding-left: 20px;
@@ -19,6 +15,12 @@
 		flex: 1;
 		padding-right: 24px;
 		padding-left: 10px;
+		
+		// Scroll-related css
+		height: 700px;
+		padding-bottom: 200px; // So nothing's not covered by help icon
+		overflow: hidden;
+		overflow-y: scroll;
 	}
 	
 	.goals-zero-state {
