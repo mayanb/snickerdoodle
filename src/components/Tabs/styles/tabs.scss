@@ -2,15 +2,11 @@
 
 .tabs-wrapper {
 	display: flex;
-	//min-height: 3px;
-
-	& > div {
-		margin-right: 12px;
-		cursor: pointer;
-	}
 	
 	.tab-wrapper {
 		display: flex;
+		margin-right: 12px;
+		cursor: pointer;
 		color: $elephant;
 		padding-bottom: 0px;
 		border-bottom: 4px solid white; // Invisible -- avoids active-tab border from jostling content
