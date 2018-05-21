@@ -1,0 +1,29 @@
+@import 'styles/constants.scss';
+
+.input-peripherals {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    min-width: 40px;
+    color: $green;
+}
+
+.input-peripherals-error {
+    color: $red;
+    font-size: 12px;
+    line-height: 17px;
+    cursor: pointer;
+    span {
+        border-bottom: 1px dashed $red;
+        vertical-align: middle;
+    }
+    i {
+        font-size: 17px;
+        line-height: 17px;
+        vertical-align: middle;
+        border-bottom: none;
+    }
+}
+
+
+

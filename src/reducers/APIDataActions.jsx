@@ -51,7 +51,10 @@ export function postEdit(name, request, index, processorFn) {
         let processed = await processorFn(res)
         return dispatch(requestEditSuccess(name, processed, index))
       })
-      .catch((err) => dispatch(requestEditFailure(name, err, index)))
+      .catch((err) => {
+        dispatch(requestEditFailure(name, err, index))
+        throw err
+      })
   }
 }
 
@@ -144,14 +147,14 @@ export function requestCreateSuccess(name, json, sort) {
   }
 }
 
-function requestDelete(name, index) {
+export function requestDelete(name, index) {
   return {
     type: REQUEST_DELETE,
     name: name
   }
 }
 
-function requestDeleteFailure(name, index, err) {
+export function requestDeleteFailure(name, index, err) {
   return {
     type: REQUEST_DELETE_FAILURE,
     index: index,
@@ -160,7 +163,7 @@ function requestDeleteFailure(name, index, err) {
   }
 }
 
-function requestDeleteSuccess(name, index) {
+export function requestDeleteSuccess(name, index) {
   return {
     type: REQUEST_DELETE_SUCCESS,
     name: name,

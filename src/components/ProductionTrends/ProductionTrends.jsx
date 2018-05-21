@@ -2,15 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as productionTrendsActions from '../ProductionTrends/ProductionTrendsActions.jsx'
-import * as activityActions from '../Activity/ActivityActions'
 import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
+import GoalCard from './GoalCard'
 import { Select } from 'antd'
 import './styles/productiontrends.css'
 import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
 import { pluralize } from "../../utilities/stringutils"
 import { processProductFilter, formatOption } from '../../utilities/filters'
 import { checkEqual } from '../../utilities/arrayutils'
+import Img from '../Img/Img'
 
 const CHART_HEIGHT = 200
 const CHART_WIDTH = 900
@@ -38,14 +39,16 @@ class ProductionTrends extends React.Component {
 	}
 
 	render() {
-		const { selectedProcess, selectedProducts, processes, recentMonths, weekToDate, monthToDate } = this.props
+		const {
+			selectedProcess, selectedProducts, processes, recentMonths, weekToDate, monthToDate, weeklyGoal,
+			monthlyGoal, onEditGoal, onDeleteGoal
+		} = this.props
 
 		if (!selectedProcess || !processes || !processes.length) {
 			return null
 		}
 
 		const unitLabel = selectedProcess ? pluralize(2, processes.find(p => String(p.id) === String(selectedProcess)).unit) : ''
-		console.log('props', this.props)
 
 		return (
 			<div className="production-trends">
@@ -63,12 +66,16 @@ class ProductionTrends extends React.Component {
 								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={weekToDate}
 								                     unitLabel={unitLabel} labelDays={true} />
+								<GoalCard goal={weeklyGoal} timerange="w" onEdit={onEditGoal} onDelete={onDeleteGoal}
+								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 							</div>
 							<div>
 								<StepChartSubtitle data={monthToDate} unitLabel={unitLabel} rangeLabel="month"
 								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={monthToDate}
 								                     unitLabel={unitLabel} />
+								<GoalCard goal={monthlyGoal} timerange="m" onEdit={onEditGoal} onDelete={onDeleteGoal}
+								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 							</div>
 						</div>
 					</div>
@@ -86,7 +93,8 @@ class ProductionTrends extends React.Component {
 		const defaultProcessType = processes.find(p => String(p.id) === String(selectedProcess))
 		return (
 			<div className="options">
-				<div>
+				<div className="production-trends-filters">
+					<Img src="processes@2x" width="24px" className="logo"/>
 					<Select
 						showSearch
 						value={formatProcessOption(defaultProcessType)}
@@ -98,6 +106,7 @@ class ProductionTrends extends React.Component {
 							</Select.Option>
 						)}
 					</Select>
+					<Img src="products@2x" width="24px" className="logo"/>
 					<Select
 						mode="multiple"
 						value={selectedProducts}

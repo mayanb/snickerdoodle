@@ -1,10 +1,8 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import * as actions from './GoalsActions'
 import Dialog from '../Card/Dialog'
 import Button from '../Card/Button'
 
-class DeleteGoalDialog extends React.Component {
+export default class DeleteGoalDialog extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -40,16 +38,7 @@ class DeleteGoalDialog extends React.Component {
 
 	handleRemove() {
 		this.props.onToggle()
-		this.props.dispatch(actions.postDeleteGoal(this.props.goal, this.props.index, this.props.goal.timerange))
+		this.props.onConfirm()
 	}
 }
 
-const mapStateToProps = (state/*, props*/) => {
-  return {
-  	goals: state.goals
-  }
-}
-
-const connectedDeleteGoalDialog = connect(mapStateToProps)(DeleteGoalDialog)
-
-export default connectedDeleteGoalDialog
