@@ -73,7 +73,7 @@ class GoalsSideBar extends React.Component {
 		
 		// Process weekly goals
 		weeklyGoals.forEach(weeklyGoal => {
-			if (!pinnedTabActive || weeklyGoal.isPinned) {
+			if (!pinnedTabActive || weeklyGoal.isPinned) { // CHANGE ME: PLACEHOLDER UNTIL WE CAN PROPERLY DISPLAY PINS***
 				const productIds = getProductIds(weeklyGoal)
 				groupedGoals[productIds] = {
 					process_type: weeklyGoal.process_type,
@@ -85,7 +85,7 @@ class GoalsSideBar extends React.Component {
 		
 		// Add in monthly goals, combining when equal
 		monthlyGoals.forEach(monthlyGoal => {
-			if (!pinnedTabActive || monthlyGoal.isPinned) {
+			if (!pinnedTabActive || monthlyGoal.isPinned) { // CHANGE ME: PLACEHOLDER UNTIL WE CAN PROPERLY DISPLAY PINS***
 				const productIds = getProductIds(monthlyGoal)
 				const weeklyGoalGroup = groupedGoals[productIds]
 				if (weeklyGoalGroup && weeklyGoalGroup.process_type === monthlyGoal.process_type) {
