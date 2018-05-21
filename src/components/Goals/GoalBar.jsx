@@ -1,4 +1,5 @@
 import React from 'react'
+import { Tooltip } from 'antd';
 import './styles/goalbar.css'
 import {formatAmount} from '../../utilities/stringutils'
 
@@ -12,13 +13,14 @@ export default function GoalBar(props) {
 	return (
 		<div className="goal-bar-wrapper">
 			<div className="goal-interval">{goal.timerange === 'w' ? 'week' : 'month'}</div>
-			<div className={"goal-whole-bar " + (achieved?"goal-achieved":"")}>
-				<div className="goal-filled-bar" style={{flex: !achieved?(proportion + '%'):"100%",  borderRadius: achieved?"4px":"4px 0 0 4px"}}>
+			<Tooltip title={getHoverText(goal)}>
+				<div className={"goal-whole-bar " + (achieved?"goal-achieved":"")}>
+					<div className="goal-filled-bar" style={{flex: !achieved?(proportion + '%'):"100%",  borderRadius: achieved?"4px":"4px 0 0 4px"}}>
+					</div>
+					<div style={{flex: achieved?"0%":((100 - proportion) + '%')}}>
+					</div>
 				</div>
-				<div style={{flex: achieved?"0%":((100 - proportion) + '%')}}>
-				</div>
-			</div>
-			<div className="goal-bar-tooltip">{getHoverText(goal)}</div>
+			</Tooltip>
 		</div>
 	)
 }
@@ -42,10 +44,10 @@ function ifNaNSetToZero(num) {
 
 /* getDisplayProportions
  * ---------------------
- * Takes a @goal object and extracts display requirements. 
+ * Takes a @goal object and extracts display requirements.
  * Returns an object with the following fields:
  * @achieved: whether the goal has been met or not
- * @proportion: a ratio between actual and goal, order depends 
+ * @proportion: a ratio between actual and goal, order depends
  *              on which is smaller, since we have to mark out
  *              the smaller one on a scale of the larger one
  */
