@@ -8,5 +8,13 @@ export function isDandelion(team) {
 
 
 export function shouldShowChecklist(team) {
-	return !isDandelion(team) && team !== 'endorfin' && team !== 'indichocolate' && team !== 'teammindo' && team !== 'soma' && team !== 'fruition'
+	return (
+		!isDandelion(team) && 
+		team !== 'endorfin' && 
+		team !== 'indichocolate' && 
+		team !== 'teammindo' && 
+		team !== 'soma' && 
+		team !== 'fruition' &&
+		team !== 'mkec'
+	)
 }
