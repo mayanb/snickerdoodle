@@ -57,7 +57,7 @@ class GoalsSideBar extends React.Component {
 	
 	displayGoals(groupedGoals) {
 		if (groupedGoals.length === 0) {
-			return <div className="goals-zero-state">{`No goals ${this.state.pinnedTabActive ? PINNNED_TITLE : '' }`}</div>
+			return <div className="goals-zero-state">{`No goals ${this.state.pinnedTabActive ? PINNNED_TITLE.toLowerCase() : '' }`}</div>
 		} else {
 			return (
 				groupedGoals.map((goalGroup, i) => <Goal key={i} goalGroup={goalGroup}/>

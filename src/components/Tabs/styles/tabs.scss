@@ -13,11 +13,12 @@
 		display: flex;
 		color: $elephant;
 		padding-bottom: 0px;
-		border-bottom: 4px solid white; // To avoid active-active border from jostling content
+		border-bottom: 4px solid white; // Invisible -- avoids active-tab border from jostling content
 		
 		.icon-wrapper {
 			flex: 1;
 			margin-left: -6px;
+			margin-top: -2px;
 			height: 24px;
 		}
 		
