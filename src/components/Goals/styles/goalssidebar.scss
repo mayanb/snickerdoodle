@@ -1,8 +1,24 @@
+@import 'styles/constants.scss';
+
 .goals-side-bar {
-	flex: 1;
 	min-width: 260px;
 	max-width: 260px;
 	background-color: white;
 	
-	padding-right: 24px;
+	.goal-side-bar-tabs {
+		padding-top: 38px;
+		padding-left: 8px;
+		border-bottom: 1px solid $elephant;
+	}
+	
+	.goals-list-wrapper {
+		flex: 1;
+		padding-right: 24px;
+	}
+	
+	.goals-zero-state {
+		padding: 22px;
+		color: $elephant;
+		text-align: center;
+	}
 }
