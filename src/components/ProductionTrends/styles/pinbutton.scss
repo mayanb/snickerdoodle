@@ -1,0 +1,10 @@
+@import 'styles/constants.scss';
+
+.pin-button {
+    display: inline-block;
+
+    .unpin {
+        background-color: $gray-ultra-light;
+        color: $gray-dark;
+    }
+}

@@ -5,7 +5,7 @@ import api from '../WaffleconeAPI/api.jsx'
 import Input from '../Inputs/Input'
 import DeleteGoalDialog from '../Goals/DeleteGoalDialog'
 import moment from 'moment'
-import { pluralize, formatNumber } from '../../utilities/stringutils'
+import { pluralize } from '../../utilities/stringutils'
 import { Peripherals } from '../TaskPage/TaskForm'
 import './styles/goalcard.css'
 
@@ -53,7 +53,7 @@ class GoalCard extends React.Component {
 	}
 
 	renderGoalCard() {
-		const { goal, timerange } = this.props
+		const { goal } = this.props
 		const name = goal.userprofile_name.split('_')[0]
 		const date = moment(goal.created_at).format('MMMM D, YYYY')
 
