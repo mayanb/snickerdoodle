@@ -1,7 +1,7 @@
 import React from 'react'
 import { Tooltip } from 'antd';
 import './styles/goalbar.css'
-import {formatAmount} from '../../utilities/stringutils'
+import { formatAmount } from '../../utilities/stringutils'
 
 export default function GoalBar(props) {
 	const { goal } = props
