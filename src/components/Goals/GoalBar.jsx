@@ -11,17 +11,17 @@ export default function GoalBar(props) {
 	
 	const { achieved, proportion } = getDisplayProportions(goal)
 	return (
-		<div className="goal-bar-wrapper">
-			<div className="goal-interval">{goal.timerange === 'w' ? 'week' : 'month'}</div>
-			<Tooltip title={getHoverText(goal)}>
+		<Tooltip title={getHoverText(goal)} placement="left">
+			<div className="goal-bar-wrapper">
+				<div className="goal-interval">{goal.timerange === 'w' ? 'week' : 'month'}</div>
 				<div className={"goal-whole-bar " + (achieved?"goal-achieved":"")}>
 					<div className="goal-filled-bar" style={{flex: !achieved?(proportion + '%'):"100%",  borderRadius: achieved?"4px":"4px 0 0 4px"}}>
 					</div>
 					<div style={{flex: achieved?"0%":((100 - proportion) + '%')}}>
 					</div>
 				</div>
-			</Tooltip>
-		</div>
+			</div>
+		</Tooltip>
 	)
 }
 

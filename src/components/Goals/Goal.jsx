@@ -17,8 +17,8 @@ function Goal(props) {
 				<Img className="inventory-icon" src={`${goal.process_icon.split('.png')[0]}@3x`} />
 			</div>
 			<div className="goal-info">
-				<div className="goal-details">
-					{getGoalDetails(goal)}
+				<div className="goal-name">
+					{getGoalName(goal)}
 				</div>
 				<div className="goal-bars-wrapper">
 					<GoalBar goal={weeklyGoal} />
@@ -29,7 +29,7 @@ function Goal(props) {
 	)
 }
 
-function getGoalDetails(goal) {
+function getGoalName(goal) {
 	const text = goal.process_name + " " + getProductDisplay(goal.product_code, goal.all_product_types)
 	
 	if (goal.all_product_types || goal.product_code.length <= MAX_PRODUCTS_COUNT) {

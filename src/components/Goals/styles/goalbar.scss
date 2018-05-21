@@ -15,8 +15,9 @@ div.ant-tooltip {
 		color: $elephant;
 	}
 	
-	&:hover .goal-interval {
+	&:hover, &:hover .goal-interval {
 		color: $primary;
+		cursor: pointer;
 	}
 	
 	.goal-whole-bar {
