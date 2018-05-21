@@ -26,7 +26,7 @@ export default function GoalBar(props) {
 function getHoverText(goal) {
 	return (
 		<span className="goal-hover-text">
-			<span className="blue">
+			<span className="current-progress">
 				{ifNaNSetToZero(goal.actual)}
 			</span>
 			<span className="goal-amount">

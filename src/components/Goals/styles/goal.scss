@@ -20,45 +20,26 @@
 			padding-left: 12px;
 		}
 	}
-
+	
 	.goal-info {
 		flex: 6;
 		
 		.goal-details {
+			flex: 1;
+			padding-top: 3px;
+			padding-bottom: 2px;
 			
-			.goal-details-left {
-				flex: 1;
-				padding-top: 3px;
-				padding-bottom: 2px;
-				
-				span.product {
-					display:inline-block;
-					font-size: 14px;
-					line-height: 16px;
-					margin-top: 3px;
-				}
+			span.product {
+				display:inline-block;
+				font-size: 14px;
+				line-height: 16px;
+				margin-top: 3px;
 			}
 		}
 		
 		.goal-bars-wrapper {
 			display: flex;
 			flex-direction: column;
-		}
-	}
-	
-	&:hover {
-		button {
-			visibility: visible;
-		}
-	}
-	
-	&:hover {
-		.goal-details-right {
-			visibility: visible;
-		}
-		
-		.goal-filled-bar {
-			background-color: $primary-dark;
 		}
 	}
 }

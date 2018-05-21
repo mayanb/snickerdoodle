@@ -33,7 +33,7 @@
 	
 	.goal-filled-bar {
 		background-color: $theme-color;
-		background: linear-gradient(to left, #2087F1 , #0E4FDF);
+		background: linear-gradient(to left, $primary-light, #0E4FDF);
 		color: rgba(255,255,255,0.5);
 		border-radius: 4px 0 0 4px;
 	}
@@ -100,7 +100,7 @@
 			box-shadow: rgba(0,0,0,0.3) 0 2px 12px;
 			-webkit-font-smoothing: antialiased;
 			
-			.blue {
+			.current-progress {
 				color: $primary-light;
 			}
 		}

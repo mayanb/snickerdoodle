@@ -12,16 +12,15 @@ function Goal(props) {
 	return (
 		<div className="goal">
 			<div className="goal-icon">
-				<Img className="inventory-icon" src={`${goal.process_icon.split('.png')[0]}@3x`} />
+				{/*<Img className="inventory-icon" src={`${goal.process_icon.split('.png')[0]}@3x`} />*/}
 			</div>
 			<div className="goal-info">
-				<div className="goal-details">
-					<div className="goal-details-left">
+					<div className="goal-details">
 						<span className="product">
 							{goal.process_name + " " + getProductDisplay(goal.product_code, goal.all_product_types)}
+							{/*{(goal.product_code.length >= 4) && }*/}
 						</span>
 					</div>
-				</div>
 				<div className="goal-bars-wrapper">
 					<GoalBar goal={weeklyGoal} />
 					<GoalBar goal={monthlyGoal} />
@@ -31,15 +30,14 @@ function Goal(props) {
 	)
 }
 
-function getProductDisplay(product_code, all) {
-	if (all) {
+function getProductDisplay(productTypes, allProducts) {
+	if (allProducts) {
 		return 'All Products'
-	}
-	
-	if (product_code.length < 3) {
-		return product_code.map(e => e.code).join(', ')
+	} else if (productTypes.length < 4) {
+		return productTypes.map(p => p.code).join(', ')
 	} else {
-		return product_code[0].code + ", " + product_code[1].code
+		const moreCount = productTypes.length - 2
+		return `${productTypes.slice(0, 2).map(p => p.code).join(', ')} + ${moreCount} more`
 	}
 }
 
