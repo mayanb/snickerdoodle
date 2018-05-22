@@ -22,7 +22,7 @@ import {WEEKLY, MONTHLY} from './GoalTypes'
 import { sortByRank } from '../../utilities/arrayutils'
 import * as types from './GoalTypes'
 
-export function fetchGoals(user_id) {
+export function fetchGoals() {
   return function (dispatch) {
     // dispatch an action that we are requesting a goal
     dispatch(requestGoals())

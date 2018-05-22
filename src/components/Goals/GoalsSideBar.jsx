@@ -18,9 +18,7 @@ class GoalsSideBar extends React.Component {
 	}
 	
 	componentDidMount() {
-		let {users} = this.props
-		let user = users.data[users.ui.activeUser].user
-		this.props.dispatch(actions.fetchGoals(user.profile_id))
+		this.props.dispatch(actions.fetchGoals())
 	}
 	
 	render() {
