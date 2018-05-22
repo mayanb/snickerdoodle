@@ -65,7 +65,7 @@ class ProductionTrends extends React.Component {
 						                 unitLabel={unitLabel} goal={monthlyGoalAmount} />
 						<div className="cumulatives">
 							<div>
-								<StepChartSubtitle data={weekToDate} unitLabel={unitLabel} rangeLabel="week"
+								<StepChartSubtitle data={weekToDate} unitLabel={unitLabel} rangeLabel="week" goal={weeklyGoalAmount}
 								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={weekToDate}
 								                     unitLabel={unitLabel} labelDays={true} goal={weeklyGoalAmount}/>
@@ -73,7 +73,7 @@ class ProductionTrends extends React.Component {
 								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 							</div>
 							<div>
-								<StepChartSubtitle data={monthToDate} unitLabel={unitLabel} rangeLabel="month"
+								<StepChartSubtitle data={monthToDate} unitLabel={unitLabel} rangeLabel="month" goal={monthlyGoalAmount}
 								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={monthToDate}
 								                     unitLabel={unitLabel} goal={monthlyGoalAmount} />
@@ -168,7 +168,7 @@ function LineChartSubtitle({ unitLabel }) {
 	)
 }
 
-function StepChartSubtitle({ data, unitLabel, rangeLabel, selectedProcess, selectedProducts }) {
+function StepChartSubtitle({ data, unitLabel, rangeLabel, selectedProcess, selectedProducts, goal }) {
 	if (!data.length) {
 		return null
 	}
@@ -180,10 +180,11 @@ function StepChartSubtitle({ data, unitLabel, rangeLabel, selectedProcess, selec
 	qs.set('selectedProducts', selectedProducts)
 	const path = `/activity-log?${qs.toString()}`
 	const total = data.reduce((sum, datum) => sum + datum.total_amount, 0).toLocaleString()
+	const goalText = goal ? `of ${goal.toLocaleString()} ` : ''
 	return (
 		<div className="step-chart-subtitle">
 			<Subtitle>
-				<b>{`${total} ${unitLabel}`}&nbsp;</b>{`this ${rangeLabel}`}
+				<b>{`${total} ${unitLabel}`}&nbsp;</b>{`${goalText}this ${rangeLabel}`}
 			</Subtitle>
 			<Link className="activity-link" to={path}>
 				Activity

@@ -180,7 +180,7 @@ export default class CumulativeAreaChart extends React.Component {
 
 			const label = svg.append("g")
 				.attr("class", "goal-label")
-				.attr("transform", `translate(${x2Value}, ${yValue - 10})`)
+				.attr("transform", `translate(${x2Value - 6}, ${yValue - 10})`)
 
 			label.append("rect")
 				.attr("rx", 10)
