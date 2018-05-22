@@ -2,6 +2,7 @@ import React from 'react'
 import { Tooltip } from 'antd';
 import GoalBar from './GoalBar'
 import Img from '../Img/Img'
+import { getProcessIcon } from '../../utilities/stringutils'
 import {connect} from "react-redux"
 import './styles/goal.css'
 
@@ -15,7 +16,7 @@ function Goal(props) {
 	return (
 		<div className="goal">
 			<div className="goal-icon">
-				<Img src={`${goal.process_icon && goal.process_icon.split('.png')[0]}@3x`} />
+				<Img src={getProcessIcon(goal.process_icon)} />
 			</div>
 			<div className="goal-info">
 				<div className="goal-name">

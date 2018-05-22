@@ -30,7 +30,7 @@
 	
 	.goal-filled-bar {
 		background-color: $theme-color;
-		background: linear-gradient(to left, $primary-light, #0E4FDF);
+		background: linear-gradient(to left, $primary-light, $primary);
 		color: rgba(255,255,255,0.5);
 		border-radius: 4px 0 0 4px;
 	}
