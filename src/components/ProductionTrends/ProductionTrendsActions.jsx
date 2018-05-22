@@ -7,6 +7,7 @@ import {
 import { PRODUCTION_TRENDS } from '../../reducers/ReducerTypes'
 import moment from 'moment'
 import { toUTCString, compareDates } from '../../utilities/dateutils'
+import * as downloadActions from '../../reducers/DownloadActions'
 
 export const RECENT_MONTHS = 'RECENT_MONTHS'
 export const MONTH_TO_DATE = 'MONTH_TO_DATE'
@@ -210,4 +211,25 @@ function today() {
 
 function periodDifference(start, end, periodType) {
 	return Math.round(moment.duration(end.diff(start)).as(periodType))
+}
+
+export function fetchDownload(selectedProcess, selectedProducts, processes, toggleDialog) {
+	const user = api.get_active_user().user
+	const params = {
+		process: selectedProcess,
+		products: selectedProducts.join(','),
+		user_id: user.user_id,
+	}
+	const name = processes.find(p => String(p.id) === String(selectedProcess)).name
+	const title = `${name} - Recent Trends`
+	const csvRequest = {
+		url: '/gauth/trends-csv/',
+		query: params,
+		title: title,
+	}
+	const googleRequest = {
+		url: '/gauth/trends-spreadsheet/',
+		query: params,
+	}
+	return downloadActions.fetchDownload(csvRequest, googleRequest, user, toggleDialog)
 }

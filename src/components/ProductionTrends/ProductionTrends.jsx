@@ -6,6 +6,8 @@ import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
 import GoalCard from './GoalCard'
 import PinButton from './PinButton'
+import MustEnablePopupsDialog from '../Activity/MustEnablePopupsDialog'
+import MustConnectGoogleDialog from '../Activity/MustConnectGoogleDialog'
 import { Select } from 'antd'
 import './styles/productiontrends.css'
 import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
@@ -21,9 +23,15 @@ class ProductionTrends extends React.Component {
 	constructor(props) {
 		super(props)
 
+		this.state = {
+			mustConnectGoogleDialog: false,
+			mustEnablePopupsDialog: false,
+		}
+
 		this.handleSearch = this.handleSearch.bind(this)
 		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
 		this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
+		this.toggleDialog = this.toggleDialog.bind(this)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -83,6 +91,7 @@ class ProductionTrends extends React.Component {
 						</div>
 					</div>
 				</Loading>
+				{this.renderDialog()}
 			</div>
 		)
 	}
@@ -134,6 +143,18 @@ class ProductionTrends extends React.Component {
 		)
 	}
 
+	renderDialog() {
+		if (this.state.mustEnablePopupsDialog) {
+			return <MustEnablePopupsDialog onToggle={() => this.toggleDialog('mustEnablePopupsDialog')} />
+		} else if (this.state.mustConnectGoogleDialog) {
+			return <MustConnectGoogleDialog onToggle={() => this.toggleDialog('mustConnectGoogleDialog')} />
+		} else return null
+	}
+
+	toggleDialog(dialog) {
+		this.setState({ [dialog]: !this.state[dialog] })
+	}
+
 	handleSearch(selectedProcess, selectedProducts) {
 		this.props.dispatch(productionTrendsActions.fetchRecentMonths(selectedProcess, selectedProducts))
 		this.props.dispatch(productionTrendsActions.fetchMonthToDate(selectedProcess, selectedProducts))
@@ -149,7 +170,8 @@ class ProductionTrends extends React.Component {
 	}
 
 	handleDownload() {
-
+		const { processes, selectedProcess, selectedProducts } = this.props
+		this.props.dispatch(productionTrendsActions.fetchDownload(selectedProcess, selectedProducts, processes, this.toggleDialog))
 	}
 }
 

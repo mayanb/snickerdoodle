@@ -18,7 +18,6 @@ import * as actions from "./ActivityActions"
 import * as taskActions from "../TaskPage/TaskActions"
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
-import api from '../WaffleconeAPI/api'
 
 import './styles/activitylist.css'
 
@@ -141,8 +140,7 @@ class Activity extends React.Component {
 	}
 
 	handleDownload(filters) {
-		const user = api.get_active_user().user
-		return this.props.dispatch(actions.fetchDownload(filters, user, this.props.processes, this.toggleDialog))
+		return this.props.dispatch(actions.fetchDownload(filters, this.props.processes, this.toggleDialog))
 	}
 
 	handlePagination(direction) {

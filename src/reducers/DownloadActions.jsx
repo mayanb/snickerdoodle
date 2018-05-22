@@ -49,9 +49,10 @@ function requestCsvSuccess() {
 
 function fetchGoogleSheet(request, user, toggleDialog) {
 	return function (dispatch) {
-		if (!user.gauth_access_token) {
+		if (!user.has_gauth_token) {
 			toggleDialog('mustConnectGoogleDialog')
-			return dispatch(requestGoogleSheetFailure('Must connect Google Account'))
+			dispatch(requestGoogleSheetFailure('Must connect Google Account'))
+			return new Promise(resolve => resolve())
 		}
 		dispatch(requestGoogleSheet())
 		return api.post(request.url)

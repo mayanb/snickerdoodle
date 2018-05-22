@@ -72,7 +72,8 @@ function csvTitle(filters, processes) {
 	return `${name} - ${start}-${end}`
 }
 
-export function fetchDownload(filters, user, processes, toggleDialog) {
+export function fetchDownload(filters, processes, toggleDialog) {
+	const user = api.get_active_user().user
 	const params = createParams(filters, user.user_id)
 	const title = csvTitle(filters, processes)
 	const csvRequest = {
