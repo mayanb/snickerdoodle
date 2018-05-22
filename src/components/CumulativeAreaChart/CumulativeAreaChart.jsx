@@ -58,9 +58,9 @@ export default class CumulativeAreaChart extends React.Component {
 
 		const margin = {
 				top: 20,
-				right: 50,
+				right: 48,
 				bottom: 30,
-				left: 40
+				left: 48
 			},
 			width = this.props.width - margin.left - margin.right,
 			height = this.props.height - margin.top - margin.bottom

@@ -9,8 +9,8 @@
     .options {
         display: flex;
         justify-content: space-between;
-        margin-left: 28px;
-
+        margin-left: 12px;
+        margin-right: 50px;
     }
 
     .process-product-icon {
@@ -62,7 +62,7 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
-        margin-right: 50px;
+        margin-right: 48px;
     }
 
     .activity-link {
@@ -78,14 +78,14 @@
     .trends-subtitle {
         font-size: 14px;
         margin-top: 4px;
-        margin-left: 40px;
+        margin-left: 48px;
         display: flex;
         color: $black;
         -webkit-font-smoothing: antialiased;
     }
 
     .trends-content {
-        margin-left: 36px;
+        margin-left: 12px;
         margin-top: 32px;
     }
 }
