@@ -15,7 +15,9 @@ export function ic(icon) {
 }
 
 export function getSrcImg(src, ext='.png') {
-	return `${process.env.PUBLIC_URL}/img/${src}${ext}`
+	let k = `${process.env.PUBLIC_URL}/img/${src}${ext}`
+	console.log(k)
+	return k
 }
 
 export function getProcessIconSrcImg(src) {
