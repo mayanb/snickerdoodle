@@ -4,6 +4,7 @@ import * as goalActions from '../Goals/GoalsActions'
 import './styles/pinbutton.css'
 import { checkEqual } from '../../utilities/arrayutils'
 import api from '../WaffleconeAPI/api.jsx'
+import Img from '../Img/Img'
 
 class PinButton extends React.Component {
 	constructor(props) {
@@ -30,6 +31,7 @@ class PinButton extends React.Component {
 		return (
 			<div className="pin-button">
 				{!isActive && <button onClick={this.handleCreatePin}>
+						<Img src="pinwhite@3x" />
 						Pin These Graphs
 					</button>
 				}
