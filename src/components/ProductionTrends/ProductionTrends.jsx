@@ -97,7 +97,7 @@ class ProductionTrends extends React.Component {
 		return (
 			<div className="options">
 				<div className="production-trends-filters">
-					<Img src="processes@2x" />
+					<Img src="processes_dark@2x" />
 					<Select
 						showSearch
 						value={formatProcessOption(defaultProcessType)}
@@ -109,7 +109,7 @@ class ProductionTrends extends React.Component {
 							</Select.Option>
 						)}
 					</Select>
-					<Img src="products@2x"/>
+					<Img src="products_dark@2x"/>
 					<Select
 						mode="multiple"
 						value={selectedProducts}
