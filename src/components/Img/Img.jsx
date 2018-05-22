@@ -19,7 +19,3 @@ export function getSrcImg(src, ext='.png') {
 	console.log(k)
 	return k
 }
-
-export function getProcessIconSrcImg(src) {
-	return `${process.env.PUBLIC_URL}/img/process-icons/${src}`
-}
