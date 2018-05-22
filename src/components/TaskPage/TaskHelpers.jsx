@@ -26,12 +26,6 @@ export function words(task) {
     return task.label
 }
 
-
-export function icon(k) {
-  var i = k.substr(0, k.length-4)
-  return i + "@3x"
-}
-
 export function pl(count, unit) {
   if (count) {
 

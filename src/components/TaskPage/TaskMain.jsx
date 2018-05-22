@@ -1,8 +1,7 @@
 import React from 'react'
 import './styles/taskmain.css'
 import TaskForm from './TaskForm'
-import { icon } from './TaskHelpers.jsx'
-import { formatAmount } from '../../utilities/stringutils'
+import { formatAmount, getProcessIcon } from '../../utilities/stringutils'
 import moment from 'moment'
 import Img from '../Img/Img'
 
@@ -31,7 +30,7 @@ function TaskName({ task }) {
 				Last Updated {moment(task.updated_at).format('dddd, MMMM Do YYYY, h:mm a')}
 			</div>
 			<div className="name-row">
-				<Img src={icon(task.process_type.icon)} />
+				<Img src={getProcessIcon(task.process_type.icon)} />
 				<div>
 					<span className="name">{task.display}</span>
 					<i className="material-icons">arrow_forward</i>

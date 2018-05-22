@@ -1,16 +1,31 @@
 @import 'styles/constants.scss';
 
-.tabs {
+.tabs-wrapper {
 	display: flex;
-
-	& > div {
-		margin-right: 12px;
-		padding-bottom: 8px;
+	
+	.tab-wrapper {
+		display: flex;
+		margin-right: 24px;
 		cursor: pointer;
+		color: $elephant;
+		padding-bottom: 0px;
+		border-bottom: 4px solid white; // Invisible -- avoids active-tab border from jostling content
+		
+		.icon-wrapper {
+			flex: 1;
+			margin-left: -6px;
+			margin-top: -2px;
+			height: 24px;
+		}
+		
+		.title {
+			flex: 1;
+		}
+		
+		&.active-tab {
+			color: $primary;
+			border-bottom: 4px solid $primary;
+		}
 	}
 }
 
-.active-tab {
-	color: $primary;
-	border-bottom: 4px solid $primary;
-}

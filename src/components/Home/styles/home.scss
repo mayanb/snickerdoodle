@@ -1,9 +1,10 @@
 @import 'styles/constants.scss';
 
 .dashboard {
-	width: calc(100vw - #{$nav-width});
-	//padding-right: $panel-width;
-
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	
 	.dash-content {
 		display: flex;
 
@@ -25,7 +26,6 @@
 		padding-bottom: 0;
 		margin-bottom: 0;
 		box-shadow: $card-shadow;
-		
 
 		.little-header {
 			margin-left: 16px; 

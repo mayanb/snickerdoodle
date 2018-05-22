@@ -3,7 +3,7 @@ import ObjectListItem from '../ObjectList/ObjectListItem'
 import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
 import { formatAmount } from "../../utilities/stringutils"
 import Img from '../Img/Img'
-import { icon } from "../TaskPage/TaskHelpers"
+import { getProcessIcon } from "../../utilities/stringutils"
 
 
 export default class ActivityListItem extends React.Component {
@@ -18,7 +18,7 @@ export default class ActivityListItem extends React.Component {
 		return (
 			<ObjectListItem className="activity-list-item" onClick={() => onViewTasks(index)}>
 				<div className="icon">
-					<Img className="icon-img" src={icon(process_type.icon)} />
+					<Img className="icon-img" src={getProcessIcon(process_type.icon)} />
 				</div>
 				<OverflowSafeText className="process-code">
 					{process_type.code}

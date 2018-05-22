@@ -1,0 +1,38 @@
+@import 'styles/constants.scss';
+
+.goal {
+	display: flex;
+	padding: 16px;
+	padding-left: 0px;
+	
+	span.more {
+		font-size: 10px;
+		color: $primary;
+	}
+	
+	.goal-icon {
+		padding-right: 8px;
+		img {
+			height: 20px;
+		}
+	}
+	
+	.goal-info {
+		flex: 6;
+		.goal-name {
+			flex: 1;
+			line-height: 20px;
+			cursor: pointer;
+			
+			span.product {
+				display:inline-block;
+				font-size: 14px;
+			}
+		}
+		
+		.goal-bars-wrapper {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}
