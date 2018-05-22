@@ -35,12 +35,14 @@ class GoalsSideBar extends React.Component {
 			{title: PINNNED_TITLE, active: pinnedTabActive, img: pinnedTabActive ? 'pinblue@3x' : 'pin@3x'},
 			{title: ALL_GOALS_TITLE, active: !pinnedTabActive},
 		]
+		const heightOfNavBarAndTabsHeader = 129
+		const listWrapperHeight = window.innerHeight - heightOfNavBarAndTabsHeader
 		return (
 			<div className="goals-side-bar">
 				<div className="goal-side-bar-tabs">
 					<Tabs tabs={tabs} onTab={this.handleTab}/>
 				</div>
-				<div className='goals-list-wrapper'>
+				<div className='goals-list-wrapper' style={{ height: listWrapperHeight }}>
 					{this.displayGoals(groupedGoals)}
 				</div>
 			</div>
