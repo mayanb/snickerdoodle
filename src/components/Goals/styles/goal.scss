@@ -11,30 +11,22 @@
 	}
 	
 	.goal-icon {
-		flex: 1;
-		min-width: 50px;
-		max-width: 50px;
-		
-		.inventory-icon {
-			height: 24px;
-			padding-left: 12px;
+		padding-right: 8px;
+		img {
+			height: 20px;
 		}
 	}
 	
 	.goal-info {
 		flex: 6;
-		
 		.goal-name {
 			flex: 1;
-			padding-top: 3px;
-			padding-bottom: 2px;
+			line-height: 20px;
 			cursor: pointer;
 			
 			span.product {
 				display:inline-block;
 				font-size: 14px;
-				line-height: 16px;
-				margin-top: 3px;
 			}
 		}
 		
