@@ -31,6 +31,22 @@
         stroke-width: 1.5px;
     }
 
+    .goal-line {
+        stroke: $green;
+        stroke-width: 1.5px;
+    }
+
+    .goal-label {
+        rect {
+            fill: $green;
+        }
+
+        text {
+            fill: white;
+            font-size: 12px;
+        }
+    }
+
     .y-axis-label {
         font-size: 12px;
     }

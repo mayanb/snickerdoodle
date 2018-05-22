@@ -41,7 +41,7 @@ export default class TrendsLineChart extends React.Component {
 	}
 
 	componentDidUpdate(preProps) {
-		if (!(preProps.data === this.props.data))
+		if (!(preProps.data === this.props.data) || !(preProps.goal === this.props.goal))
 			this.renderD3()
 	}
 
@@ -55,7 +55,7 @@ export default class TrendsLineChart extends React.Component {
 
 		const margin = {
 				top: 20,
-				right: 20,
+				right: 50,
 				bottom: 30,
 				left: 40
 			},
@@ -89,6 +89,9 @@ export default class TrendsLineChart extends React.Component {
 		// so that the line appears kind of in the middle
 		let dataMedian = median(chartData, c => c.value)
 		let dataMax = max(chartData, c => c.value)
+		if(this.props.goal) {
+			dataMax = Math.max(dataMax, this.props.goal)
+		}
 		let maxY = Math.max(dataMedian * 2, dataMax + dataMedian / 4.0)
 
 		// 1. find the best bucket size for this scale
@@ -159,6 +162,33 @@ export default class TrendsLineChart extends React.Component {
 			.attr("r", 4)
 			.attr("cx", d => x(d.date))
 			.attr("cy", d => y(d.value))
+
+		if(this.props.goal) {
+			const yValue = y(this.props.goal)
+			const x1Value = x(chartData[chartData.length - 2].date)
+			const x2Value = x(x.domain()[1])
+			svg.append("line")
+				.attr("class", "goal-line")
+				.attr("x1", x1Value)
+				.attr("y1", yValue)
+				.attr("x2", x2Value)
+				.attr("y2", yValue)
+
+			const label = svg.append("g")
+				.attr("class", "goal-label")
+				.attr("transform", `translate(${x2Value}, ${yValue - 10})`)
+
+			label.append("rect")
+				.attr("rx", 10)
+				.attr("ry", 10)
+				.attr("width", 50)
+				.attr("height", 20)
+
+			label.append("text")
+				.text("GOAL")
+				.attr("dx", 10)
+				.attr("dy", 14)
+		}
 
 		const focus = svg.append("g")
 			.attr("class", "focus")

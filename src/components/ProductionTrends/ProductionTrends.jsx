@@ -50,6 +50,8 @@ class ProductionTrends extends React.Component {
 		}
 
 		const unitLabel = selectedProcess ? pluralize(2, processes.find(p => String(p.id) === String(selectedProcess)).unit) : ''
+		const weeklyGoalAmount = weeklyGoal ? Number(weeklyGoal.goal) : null
+		const monthlyGoalAmount = monthlyGoal ? Number(monthlyGoal.goal) : null
 
 		return (
 			<div className="production-trends">
@@ -60,13 +62,13 @@ class ProductionTrends extends React.Component {
 							<LineChartSubtitle unitLabel={unitLabel} />
 						</div>
 						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={recentMonths}
-						                 unitLabel={unitLabel} />
+						                 unitLabel={unitLabel} goal={monthlyGoalAmount} />
 						<div className="cumulatives">
 							<div>
 								<StepChartSubtitle data={weekToDate} unitLabel={unitLabel} rangeLabel="week"
 								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={weekToDate}
-								                     unitLabel={unitLabel} labelDays={true} />
+								                     unitLabel={unitLabel} labelDays={true} goal={weeklyGoalAmount}/>
 								<GoalCard goal={weeklyGoal} timerange="w" onEdit={onEditGoal} onDelete={onDeleteGoal}
 								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 							</div>
@@ -74,7 +76,7 @@ class ProductionTrends extends React.Component {
 								<StepChartSubtitle data={monthToDate} unitLabel={unitLabel} rangeLabel="month"
 								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={monthToDate}
-								                     unitLabel={unitLabel} />
+								                     unitLabel={unitLabel} goal={monthlyGoalAmount} />
 								<GoalCard goal={monthlyGoal} timerange="m" onEdit={onEditGoal} onDelete={onDeleteGoal}
 								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
 							</div>
