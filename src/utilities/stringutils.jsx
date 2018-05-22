@@ -59,3 +59,7 @@ export function getGreetingTime(m) {
   
   return g;
 }
+
+export function getProcessIcon(dbIcon) {
+  return `process-icons/${dbIcon.split('.png')[0]}-process-icon@3x`
+}

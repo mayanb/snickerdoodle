@@ -1,7 +1,7 @@
 import React from 'react'
 import ObjectListItem from '../ObjectList/ObjectListItem'
 import moment from 'moment'
-import {icon} from '../TaskPage/TaskHelpers.jsx'
+import { getProcessIcon } from '../../utilities/stringutils'
 import {pluralize} from '../../utilities/stringutils'
 import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
 import ButtonDropdown from '../Card/ButtonDropdown'
@@ -58,7 +58,7 @@ export default class ProcessesListItem extends React.Component {
 		return (
 			<ObjectListItem className={this.getClassNames()} onClick={onClick}>
 				<div className="icon">
-					<Img className="icon-img" src={icon(item.icon)} />
+					<Img className="icon-img" src={getProcessIcon(item.icon)} />
 				</div>
 
 				<OverflowSafeText className="code">

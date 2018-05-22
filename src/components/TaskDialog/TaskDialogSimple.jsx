@@ -1,7 +1,8 @@
 import React from 'react'
 import './styles/taskdialog.css'
 import DialogHeader from '../Dialog/DialogHeader'
-import { icon, description } from '../TaskPage/TaskHelpers.jsx'
+import { description } from '../TaskPage/TaskHelpers.jsx'
+import { getProcessIcon } from '../../utilities/stringutils'
 import {Link} from 'react-router-dom'
 import Img from '../Img/Img'
 import Loading from '../Loading/Loading'
@@ -36,8 +37,8 @@ export default class TaskDialogSimple extends React.Component {
 }
 
 function ProcessTypeIcon({task}) {
-	const filename = task.process_type ? task.process_type.icon : ''
+	const filename = task.process_type ? getProcessIcon(task.process_type.icon) : ''
 		return (
-		<Img className="task-icon" src={icon(filename)}/>
+		<Img className="task-icon" src={filename}/>
 		)
 }
