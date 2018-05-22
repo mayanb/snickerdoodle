@@ -12,7 +12,6 @@ function Goal(props) {
 	const weeklyGoal =  props.goalGroup.weeklyGoal
 	const monthlyGoal =  props.goalGroup.monthlyGoal
 	const goal = weeklyGoal ? weeklyGoal : monthlyGoal
-	console.log(goal)
 	return (
 		<div className="goal">
 			<div className="goal-icon">

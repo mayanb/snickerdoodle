@@ -1,5 +1,5 @@
 import React from 'react'
-import Img, { ic, getProcessIconSrcImg } from '../Img/Img'
+import Img, { ic } from '../Img/Img'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 import './styles/iconpicker.css'
