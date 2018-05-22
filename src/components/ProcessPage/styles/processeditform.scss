@@ -1,15 +1,21 @@
 .edit-process-info {
-    .name-abbreviation {
+    
+    .icon-name-abbreviation {
         display: flex;
-    }
-
-    .name-group {
-        flex: 2;
-        margin-left: 20px;
-    }
-
-    .abbreviation-group {
-        flex: 1;
+        
+        .icon-group {
+            flex: 1;
+        }
+        
+        .abbreviation-group {
+            flex: 2;
+            margin-left: 16px;
+        }
+        
+        .name-group {
+            flex: 4;
+            margin-left: 16px;
+        }
     }
     
     .output-section-container {
@@ -20,20 +26,20 @@
     .output-section-header {
         margin-bottom: 8px;
     }
-
+    
     .output-quantity {
         display: flex;
-
+        
         .number {
             flex: 1;
             margin-right: 20px;
         }
-
+        
         .unit {
             flex: 2;
         }
     }
-
+    
     .button-wide {
         flex: 1;
         width: 100%;
