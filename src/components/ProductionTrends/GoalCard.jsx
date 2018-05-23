@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from '../Goals/GoalsActions'
 import api from '../WaffleconeAPI/api.jsx'
 import Input from '../Inputs/Input'
-import DeleteGoalDialog from '../Goals/DeleteGoalDialog'
+import { Modal } from 'antd'
 import moment from 'moment'
 import { pluralize } from '../../utilities/stringutils'
 import { Peripherals } from '../TaskPage/TaskForm'
@@ -37,7 +37,6 @@ class GoalCard extends React.Component {
 			<div className="goal-card-container">
 				{!goal && this.renderAddGoal()}
 				{goal && this.renderGoalCard()}
-				{this.renderDeleteGoalDialog()}
 			</div>
 		)
 	}
@@ -85,15 +84,6 @@ class GoalCard extends React.Component {
 		)
 	}
 
-	renderDeleteGoalDialog() {
-		if (this.state.isDeletingGoal)
-			return <DeleteGoalDialog
-				onConfirm={this.handleConfirm}
-				onToggle={() => this.setState({ isDeletingGoal: false })}
-			/>
-		return null
-	}
-
 	handleAdd() {
 		const { timerange, selectedProcess, selectedProducts } = this.props
 		const user = api.get_active_user().user
@@ -128,7 +118,14 @@ class GoalCard extends React.Component {
 	}
 
 	handleDelete() {
-		this.setState({ isDeletingGoal: true })
+		Modal.confirm({
+			title: 'Remove goal',
+			content: "Are you sure you want to remove this goal?",
+			okText: 'Yes, I\'m sure',
+			okType: 'danger',
+			onOk: this.handleConfirm,
+			onCancel: () => {}
+		})
 	}
 
 	handleConfirm() {
