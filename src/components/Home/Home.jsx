@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
 import GoalsSideBar from '../Goals/GoalsSideBar'
@@ -16,12 +15,6 @@ class Home extends React.Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
-			tabs: ['Production trends', 'Goals'],
-			activeTab: 0,
-		}
-
-		this.handleTab = this.handleTab.bind(this)
 		this.handleFilterChange = this.handleFilterChange.bind(this)
 		this.handleEditGoal = this.handleEditGoal.bind(this)
 		this.handleDeleteGoal = this.handleDeleteGoal.bind(this)
@@ -48,8 +41,8 @@ class Home extends React.Component {
 	handleFilterChange(selectedProcess, selectedProducts) {
 		const qs = new URLSearchParams(this.props.location.search)
 		qs.set('selectedProcess', selectedProcess)
-		qs.set('selectedProducts', selectedProducts.join(',') )
-		this.props.history.push({search: qs.toString() })
+		qs.set('selectedProducts', selectedProducts.join(','))
+		this.props.history.push({ search: qs.toString() })
 	}
 
 	getGoalIndex(goal) {
@@ -78,7 +71,7 @@ class Home extends React.Component {
 			const processMatch = String(goal.process_type) === selectedProcess
 			const productMatch = (selectedProducts.length === 0 && goal.all_product_types) ||
 				(checkEqual(selectedProducts, goal.product_code.map(p => String(p.id))))
-			return  processMatch && productMatch
+			return processMatch && productMatch
 
 		})
 	}
@@ -89,23 +82,6 @@ class Home extends React.Component {
 
 	monthlyGoal() {
 		return this.filteredGoals().find(goal => goal.timerange === 'm')
-	}
-
-	handleTab(i) {
-		this.setState({activeTab: i})
-	}
-
-	renderGoals() {
-		return (
-			<div style={{maxWidth: "400px", minWidth: "400px", marginLeft: "36px"}}>
-				<BigHeader>How's it going?</BigHeader>
-				<div style={{display: 'flex', maxWidth: "800px", minWidth: "800px"}}>
-					<Card className="goals-card">
-						<Goals/>
-					</Card>
-				</div>
-			</div>
-		)
 	}
 
 	render() {
@@ -125,9 +101,9 @@ class Home extends React.Component {
 		const { selectedProcess, selectedProducts } = this.getFilters()
 
 		return (
-			<div>
-				<div className="dashboard">
-					<ApplicationSectionHeader>Dashboard</ApplicationSectionHeader>
+			<div className="dashboard">
+				<ApplicationSectionHeader>Dashboard</ApplicationSectionHeader>
+				<div className="dashboard-content">
 					<ProductionTrends
 						processes={processes}
 						products={products}
@@ -150,13 +126,13 @@ const mapStateToProps = (state/*, props*/) => {
 	let { data, ui } = state.users
 	let team = data[ui.activeUser].user.team_name
 	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
-  return {
-    team: team,
-	  processes: state.processes.data,
-	  products: state.products.data,
-	  goals: state.goals.data,
-	  pins: state.pins.data,
-	  isFetchingData: isFetchingData
-  }
+	return {
+		team: team,
+		processes: state.processes.data,
+		products: state.products.data,
+		goals: state.goals.data,
+		pins: state.pins.data,
+		isFetchingData: isFetchingData
+	}
 }
 export default connect(mapStateToProps)(Home)

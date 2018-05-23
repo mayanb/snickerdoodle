@@ -54,7 +54,6 @@ class GoalCard extends React.Component {
 
 	renderGoalCard() {
 		const { goal } = this.props
-		const name = goal.userprofile_name.split('_')[0]
 		const date = moment(goal.created_at).format('MMMM D, YYYY')
 
 		return (
@@ -73,7 +72,7 @@ class GoalCard extends React.Component {
 				</div>
 				<div className="bottom-row">
 					<div className="set-by">
-						{`Set by ${name} on ${date}`}
+						{`Set by ${goal.userprofile_name} on ${date}`}
 					</div>
 					<Peripherals
 						isLoading={this.state.isLoading}
