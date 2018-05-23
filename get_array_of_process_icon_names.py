@@ -16,8 +16,8 @@ for name in files:
 print (icons_array)
 
 # DUPLICATE/REDUNDANT PROCESSS ICONS (used by some, current soln is to not show them in Icon Picker):
-# PURPLE BOX: DS, UBS, nibspack, group, gami, sample, unfoiledbarsample, nibstore, samplebarfoil,
+# default.png -> DS.png, UBS.png, nibspack.png, group.png, gami.png, sample.png, unfoiledbarsample.png, nibstore.png, samplebarfoil.png,
 # OTHERS:
-# winnow
-# rotaryconche
-# cook
+# breakandwinnow.png -> winnow.png
+# rotaryconchepull.png -> rotaryconche.png
+# roast.png -> cook.png
