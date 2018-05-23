@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Goals from '../Goals/Goals'
 import Card from '../Card/Card'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ProductionTrends from '../ProductionTrends/ProductionTrends'
+import GoalsSideBar from '../Goals/GoalsSideBar'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
 import * as goalActions from '../Goals/GoalsActions'
@@ -11,7 +11,6 @@ import './styles/home.css'
 import { shouldShowChecklist } from '../../utilities/userutils'
 import Checklist from '../NewUserChecklist/NewUserChecklist'
 import { checkEqual } from '../../utilities/arrayutils'
-
 
 class Home extends React.Component {
 	constructor(props) {
@@ -129,23 +128,19 @@ class Home extends React.Component {
 			<div>
 				<div className="dashboard">
 					<ApplicationSectionHeader>Dashboard</ApplicationSectionHeader>
-					<Tabs {...this.state} onTab={this.handleTab}/>
-					{
-						this.state.activeTab===0 ?
-							<ProductionTrends
-								processes={processes}
-								products={products}
-								selectedProcess={selectedProcess}
-								selectedProducts={selectedProducts}
-								onFilterChanage={this.handleFilterChange}
-								weeklyGoal={this.weeklyGoal()}
-								monthlyGoal={this.monthlyGoal()}
-								onEditGoal={this.handleEditGoal}
-								onDeleteGoal={this.handleDeleteGoal}
-							/> :
-							this.renderGoals()
-					}
-				</div>		
+					<ProductionTrends
+						processes={processes}
+						products={products}
+						selectedProcess={selectedProcess}
+						selectedProducts={selectedProducts}
+						onFilterChanage={this.handleFilterChange}
+						weeklyGoal={this.weeklyGoal()}
+						monthlyGoal={this.monthlyGoal()}
+						onEditGoal={this.handleEditGoal}
+						onDeleteGoal={this.handleDeleteGoal}
+					/>
+					<GoalsSideBar />
+				</div>
 			</div>
 		)
 	}
@@ -165,31 +160,3 @@ const mapStateToProps = (state/*, props*/) => {
   }
 }
 export default connect(mapStateToProps)(Home)
-
-function BigHeader(props) {
-	return (
-		<span style={{fontSize: "20px", lineHeight: "32px", color: '#445562', paddingTop: '5px', paddingBottom: '11px', display: 'block'}}>
-			{props.children}
-		</span>
-	)
-}
-
-function Tabs({tabs, activeTab, onTab}) {
-	return (
-		<div className="home-tabs">
-			{
-				tabs.map((t, i) => {
-					return <Tab title={t} key={i} active={activeTab===i} onTab={() => onTab(i)} />
-				})
-			}
-		</div>
-	)
-}
-
-function Tab({title, active, onTab}) {
-	return (
-		<div className={`home-tab ${active && 'active'}`} onClick={onTab}>
-			<span>{title}</span>
-		</div>
-	)
-}

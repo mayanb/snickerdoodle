@@ -78,3 +78,7 @@ export function shortNumber(amount) {
 	}
 
 }
+
+export function getProcessIcon(dbIcon) {
+	return `process-icons/${dbIcon.split('.png')[0]}-process-icon@3x`
+}
