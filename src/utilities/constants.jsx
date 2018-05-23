@@ -37,4 +37,9 @@ export const ICONS = [
 	'ship-process-icon@3x.png', 
 	'foil-process-icon@3x.png', 
 	'jar-process-icon@3x.png',
+	'cut-process-icon@3x.png',
+	'freeze-process-icon@3x.png',
+	'hocho-process-icon@3x.png',
+	'tank-process-icon@3x.png',
+	'qualitycheck-process-icon@3x.png',
 ]
