@@ -1,10 +1,11 @@
 import React from 'react'
-import Img, { ic } from '../Img/Img'
+import Img from '../Img/Img'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 import './styles/iconpicker.css'
 import { Dropdown, Menu } from 'antd'
 import { ICONS } from '../../utilities/constants'
+import { getProcessIcon } from '../../utilities/stringutils'
 
 // NOTE: icons with names like 'ship' that match emojis get replaced with the emoji,
 // so '&' is just noise that prevents that. #hacky
@@ -22,7 +23,7 @@ export default class IconPicker extends React.Component {
 			<div className="process-icon-picker-wrapper">
 				<Dropdown overlay={this.renderPickerInMenu()} trigger={['click']}>
 					<div className="process-icon-picker" onClick={this.togglePicker}>
-						<Img src={ic(icon || 'default.png')} height="30px" className="icon"/>
+						<Img src={getProcessIcon(icon || 'default.png')} height="30px" className="icon"/>
 						<i className='material-icons change-icon-icon'>loop</i>
 					</div>
 	    	</Dropdown>
