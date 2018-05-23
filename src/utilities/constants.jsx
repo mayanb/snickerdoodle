@@ -42,4 +42,9 @@ export const ICONS = [
 	'hocho-process-icon@3x.png',
 	'tank-process-icon@3x.png',
 	'qualitycheck-process-icon@3x.png',
+	'trash-process-icon@3x.png',
+	'weigh-process-icon@3x.png',
+	'time-process-icon@3x.png',
+	'lab-process-icon@3x.png',
+	'temp-process-icon@3x.png',
 ]
