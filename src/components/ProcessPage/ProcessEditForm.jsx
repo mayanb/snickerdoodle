@@ -3,7 +3,7 @@ import FormGroup from '../Inputs/FormGroup'
 import Button from '../Button/Button'
 import Input from '../Inputs/Input'
 import './styles/processeditform.css'
-import IconPicker from './IconPicker'
+import IconPicker from '../IconPicker/IconPicker'
 
 export default function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, isLoading, onChange, onSubmit}) {
 	return (

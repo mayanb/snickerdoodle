@@ -10,14 +10,7 @@ export default function Img({src, useExtension, ...rest}) {
 	)
 }
 
-export function ic(icon) {
-	return icon.substring(0, icon.length - 4) + "@3x"
-}
-
 export function getSrcImg(src, ext='.png') {
-	return `${process.env.PUBLIC_URL}/img/${src}${ext}`
-}
-
-export function getProcessIconSrcImg(src) {
-	return `${process.env.PUBLIC_URL}/img/process-icons/${src}`
+	let k = `${process.env.PUBLIC_URL}/img/${src}${ext}`
+	return k
 }

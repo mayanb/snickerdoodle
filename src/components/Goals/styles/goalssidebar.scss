@@ -1,0 +1,31 @@
+@import 'styles/constants.scss';
+
+.goals-side-bar {
+	min-width: 260px;
+	max-width: 260px;
+	background-color: white;
+	
+	.goal-side-bar-tabs {
+		padding-top: 38px;
+		padding-left: 20px;
+		border-bottom: 1px solid $gray-ultra-light;
+	}
+	
+	.goals-list-wrapper {
+		flex: 1;
+		padding-right: 24px;
+		padding-left: 10px;
+		
+		// Scroll-related css
+		//height set in JS
+		padding-bottom: 200px; // So nothing's covered by the help icon
+		overflow: hidden;
+		overflow-y: scroll;
+	}
+	
+	.goals-zero-state {
+		padding: 22px;
+		color: $elephant;
+		text-align: center;
+	}
+}

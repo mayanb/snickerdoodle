@@ -1,6 +1,5 @@
 import React from 'react'
-import { formatAmount } from '../../utilities/stringutils'
-import { icon } from './TaskHelpers.jsx'
+import { formatAmount, getProcessIcon } from '../../utilities/stringutils'
 import Img from '../Img/Img'
 
 export default function TaskSummary({ task, selected, onClick }) {
@@ -13,7 +12,7 @@ export default function TaskSummary({ task, selected, onClick }) {
 			onClick={() => followLink(onClick, task)}
 		>
 			<div className="task-icon">
-				{task.process_type.icon && <Img src={icon(task.process_type.icon)}/>}
+				{task.process_type.icon && <Img src={getProcessIcon(task.process_type.icon)}/>}
 			</div>
 			<div className="task-text">
 				<div className={"task-name " + (task.is_flagged && "task-flagged-name ") + (is_ancestor_flagged && " task-ancestor-flagged-name")}>

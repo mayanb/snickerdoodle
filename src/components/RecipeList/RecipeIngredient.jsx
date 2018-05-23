@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input } from 'antd'
+import { Input, Tooltip } from 'antd'
 import { RecipeSelect } from './RecipeSelect'
 import './styles/recipeingredient.css'
 
@@ -28,6 +28,12 @@ export default function Ingredient(props) {
 						disabled={props.disabled}
 					/>
 				</Input.Group>
+				<Tooltip
+	        trigger={['focus']}
+	        title={<span className="numeric-input-title">{ingredient.amount || 'Type an amount'}</span>}
+	        placement='topLeft'
+	        overlayClassName="numeric-input"
+	      >
 				<Input 
 					style={{
 						flex: 1, 
@@ -41,6 +47,7 @@ export default function Ingredient(props) {
 					onChange={e => onChange(index, 'amount', e.target.value)}
 					disabled={props.disabled}
 				/>
+				</Tooltip>
 				{ !props.disabled && <i className="material-icons" onClick={() => onRemove(index)}>close</i> }
 			</div>
 	)
