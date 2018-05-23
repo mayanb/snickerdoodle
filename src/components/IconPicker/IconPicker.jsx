@@ -4,6 +4,7 @@ import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 import './styles/iconpicker.css'
 import { Dropdown, Menu } from 'antd'
+import { ICONS } from '../../utilities/constants'
 
 // NOTE: icons with names like 'ship' that match emojis get replaced with the emoji,
 // so '&' is just noise that prevents that. #hacky
@@ -55,9 +56,8 @@ export default class IconPicker extends React.Component {
 		function getProcessIconSrcImg(src) {
 			return `${process.env.PUBLIC_URL}/img/process-icons/${src}`
 		}
-		const iconNames = ['prep-process-icon@3x.png', 'breakandwinnow-process-icon@3x.png', 'ingredient-process-icon@3x.png', 'prerefine-process-icon@3x.png', 'label-process-icon@3x.png', 'pack-process-icon@3x.png', 'pasteurize-process-icon@3x.png', 'package-process-icon@3x.png', 'ballmill-process-icon@3x.png', 'default-process-icon@3x.png', 'roast-process-icon@3x.png', 'lid-process-icon@3x.png', 'hold-process-icon@3x.png', 'rotaryconchepull-process-icon@3x.png', 'box-process-icon@3x.png', 'conche-process-icon@3x.png', 'grind-process-icon@3x.png', 'temper-process-icon@3x.png', 'melangerpull-process-icon@3x.png', 'melange-process-icon@3x.png', 'ship-process-icon@3x.png', 'foil-process-icon@3x.png', 'jar-process-icon@3x.png']
 		const iconData = []
-		iconNames.forEach(name => {
+		ICONS.forEach(name => {
 			const display_name = name.split('-process-icon@3x.png')[0] + ANTI_EMOJI_TAG
 			const icon = {
 				'name': display_name,
