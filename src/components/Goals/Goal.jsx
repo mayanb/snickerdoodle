@@ -5,6 +5,7 @@ import Img from '../Img/Img'
 import { getProcessIcon } from '../../utilities/stringutils'
 import {connect} from "react-redux"
 import { Link } from 'react-router-dom'
+import { dashboardPath } from "../../utilities/urlutils"
 import './styles/goal.css'
 
 const MAX_PRODUCTS_COUNT = 2
@@ -12,7 +13,8 @@ const MAX_PRODUCTS_COUNT = 2
 function Goal(props) {
 	const weeklyGoal =  props.goalGroup.weeklyGoal
 	const monthlyGoal =  props.goalGroup.monthlyGoal
-	const goal = weeklyGoal ? weeklyGoal : monthlyGoal
+	const goal = weeklyGoal || monthlyGoal || props.goalGroup.pin
+	console.log({goal, props})
 	const path = constructPath(goal)
 	return (
 		<Link to={path} className="goal">
@@ -33,12 +35,10 @@ function Goal(props) {
 }
 
 function constructPath(goal) {
-	const selectedProcess = goal.process_type
-	const selectedProducts = goal.all_product_types ? '' : goal.product_code.map(p => p.id).join(',')
-	const qs = new URLSearchParams()
-	qs.set('selectedProcess', selectedProcess)
-	qs.set('selectedProducts', selectedProducts )
-	return`/?${qs.toString()}`
+	return dashboardPath(
+		goal.process_type,
+		goal.all_product_types ? '' : goal.product_code.map(p => p.id).join(','),
+	)
 }
 
 function getGoalName(goal) {

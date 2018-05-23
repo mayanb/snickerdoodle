@@ -71,14 +71,16 @@ class GoalsSideBar extends React.Component {
 		const { goals, pins } = this.props
 		const groupedGoals = {}
 
-		const pinKeys = pins.map(getProductProcessKey)
+		pins.forEach(pin => {
+			const key = getProductProcessKey(pin)
+			if (!groupedGoals[key]) {
+				groupedGoals[key] = {}
+			}
+			groupedGoals[key].pin = pin
+		})
 
 		goals.forEach(goal => {
 			const key = getProductProcessKey(goal)
-
-			if (this.state.pinnedTabActive && !pinKeys.find(pinKey => pinKey === key)) {
-						return
-			}
 
 			if (!groupedGoals[key]) {
 				groupedGoals[key] = {}
@@ -89,7 +91,13 @@ class GoalsSideBar extends React.Component {
 				groupedGoals[key].monthlyGoal = goal
 			}
 		})
-		return Object.values(groupedGoals)
+
+
+		if (this.state.pinnedTabActive) {
+			return Object.values(groupedGoals).filter(goal => goal.pin)
+		} else {
+			return Object.values(groupedGoals).filter(goal => goal.weeklyGoal || goal.monthlyGoal)
+		}
 	}
 }
 

@@ -4,6 +4,7 @@ import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
 import { formatAmount } from "../../utilities/stringutils"
 import Img from '../Img/Img'
 import { getProcessIcon } from "../../utilities/stringutils"
+import { dashboardPath } from "../../utilities/urlutils"
 import { Link } from 'react-router-dom'
 
 
@@ -45,12 +46,10 @@ export default class ActivityListItem extends React.Component {
 }
 
 function ChartLink({process_type, product_types}) {
-	const selectedProcess = process_type.id
-	const selectedProducts = product_types.map(p => p.id)
-	const qs = new URLSearchParams()
-	qs.set('selectedProcess', selectedProcess)
-	qs.set('selectedProducts', selectedProducts.join(',') )
-	const path = `/?${qs.toString()}`
+	const path = dashboardPath(
+		process_type.id,
+		product_types.map(p => p.id)
+	)
 	return (
 		<Link to={path} className="chart">
 			<i className="material-icons">show_chart</i>
