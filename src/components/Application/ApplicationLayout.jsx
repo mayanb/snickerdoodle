@@ -12,7 +12,6 @@ import ZebraPrinter from '../OldComponents/ZebraPrinter'
 import Navbar from '../Navbar/Navbar.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter'
 import Task from '../TaskPage/TaskPage.jsx'
-import Goals from '../Goals/Goals'
 import PrivateRoute from '../Router/PrivateRoute'
 import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
@@ -69,7 +68,6 @@ function App(props) {
         <Route path={"/recipelist"} component={RecipeList} />
         <Route path={"/products/:id"} component={ProductPage} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
-        <Route path={"/goals"} component={Goals} />
         <Route path={"/account"} component={Account} />
         <Route path={"/googleconnect/:ext?"} component={Account} />
         <Route path={"/checklist/"} component={NewUserChecklist} />

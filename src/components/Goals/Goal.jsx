@@ -14,7 +14,6 @@ function Goal(props) {
 	const weeklyGoal =  props.goalGroup.weeklyGoal
 	const monthlyGoal =  props.goalGroup.monthlyGoal
 	const goal = weeklyGoal || monthlyGoal || props.goalGroup.pin
-	console.log({goal, props})
 	const path = constructPath(goal)
 	return (
 		<Link to={path} className="goal">
