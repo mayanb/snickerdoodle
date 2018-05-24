@@ -257,17 +257,24 @@ export default class CumulativeAreaChart extends React.Component {
 	}
 
 	renderTooltip() {
-		const dailyTotal = this.state.hover.change !== null ? this.state.hover.change.toLocaleString() : 'N/A'
-		const cumulativeTotal = this.state.hover.value !== null ? this.state.hover.value.toLocaleString() : 'N/A'
+		const { hover } = this.state
+		const hoverDate = parseInt(hover.period.slice(-2))
+		const currDate = moment(Date.now()).date() + 1
+		// Hide tooltip for future dates (useful because we've appended an extra date for visual purposes)
+		if (hoverDate >= currDate) {
+			return
+		}
+		const dailyTotal = hover.change !== null ? hover.change.toLocaleString() : 'N/A'
+		const cumulativeTotal = hover.value !== null ? hover.value.toLocaleString() : 'N/A'
 		return (
 			<LineChartTooltip
-				x={this.state.hover.x}
-				y={this.state.hover.y}
+				x={hover.x}
+				y={hover.y}
 				height={TOOLTIP_HEIGHT}
 				width={TOOLTIP_WIDTH}
 			>
 				<div>
-					<span className="title">Day: </span>{this.state.hover.period}
+					<span className="title">Day: </span>{hover.period}
 				</div>
 				<div>
 					<span className="title">Daily total: </span>{dailyTotal}
@@ -284,12 +291,26 @@ export default class CumulativeAreaChart extends React.Component {
 
 function convertChartData(data) {
 	const totalAmounts = data.map(d => d.total_amount)
+	let isFirstNull = true
 	return data.map((datum, i) => {
 		const value = datum.total_amount !== null ? sum(totalAmounts.slice(0, i + 1)) : null
-		return {
-			date: moment(datum.bucket),
-			value: value,
-			change: datum.total_amount
+		// We add one extra non-null datum at the end which duplicates the final non-null datum,
+		// producing a more legible flat line extending from final true data point
+		if (value == null && isFirstNull) {
+			const prevValue = sum(totalAmounts.slice(0, i))
+			const prevDatum = data[i - 1]
+			isFirstNull = false
+			return {
+				date: moment(datum.bucket),
+				value: prevValue,
+				change: prevDatum.total_amount
+			}
+		} else {
+			return {
+				date: moment(datum.bucket),
+				value: value,
+				change: datum.total_amount
+			}
 		}
 	})
 }
