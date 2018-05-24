@@ -2,7 +2,7 @@ import React from 'react'
 import FormGroup from '../Inputs/FormGroup'
 import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
-import IconPicker from '../ProcessPage/IconPicker'
+import IconPicker from '../IconPicker/IconPicker'
 import './styles/createprocessdialog.css'
 
 export default function CreateOrDuplicateProcessInputForm({ icon, name, code, number, unit, outputDescription, submitted, onInputChange, formErrorsArray }) {

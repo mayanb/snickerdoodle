@@ -1,6 +1,7 @@
 import React from 'react'
 import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
-import Img, { ic } from '../Img/Img'
+import Img from '../Img/Img'
+import { getProcessIcon } from '../../utilities/stringutils'
 import Button from '../Button/Button'
 import './styles/element.css'
 
@@ -27,7 +28,7 @@ export function ElementTitle({icon, text, buttonTitle, onClick, isLoading}) {
 	return (
 		<div className="element-title">
 			<div className="element-title-name">
-				<Img src={ic(icon || 'default.png')} height="30px" />
+				<Img src={getProcessIcon(icon || 'default.png')} height="30px" />
 				<span>{text}</span>
 			</div>
 			{ buttonTitle && <Button type='gray' isLoading={isLoading} onClick={onClick}>{buttonTitle}</Button> }
