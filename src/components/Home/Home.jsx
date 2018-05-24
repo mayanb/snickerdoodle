@@ -33,8 +33,8 @@ class Home extends React.Component {
 	}
 
 	setDefaultFilters() {
-		const foil = this.props.processes.find(p => p.name === 'Foil')
-		const defaultProcessType = foil ? foil.id : this.props.processes[0].id
+		const firstPin = this.props.pins[0]
+		const defaultProcessType = firstPin ? firstPin.process_type : this.props.processes[0].id
 		const { selectedProcess, selectedProducts } = this.getFilters()
 		this.handleFilterChange(
 			selectedProcess ? selectedProcess : defaultProcessType,
