@@ -31,10 +31,13 @@ class PinButton extends React.Component {
 
 		return (
 			<div className="pin-button">
-				{!isActive && <button onClick={this.handleCreatePin}>
+				{!isActive && <button className="pin" onClick={this.handleCreatePin}>
+					<div className="pin-content">
 						<Img src="pinwhite@3x" />
-						Pin These Graphs
-					</button>
+						<div>Pin These Graphs</div>
+					</div>
+				</button>
+				
 				}
 				{isActive && <button className="unpin" onClick={this.handleDeletePin}>
 					Unpin These Graphs
