@@ -5,6 +5,7 @@ import './styles/pinbutton.css'
 import { checkEqual } from '../../utilities/arrayutils'
 import api from '../WaffleconeAPI/api.jsx'
 import Img from '../Img/Img'
+import { PINS } from '../../utilities/constants'
 
 class PinButton extends React.Component {
 	constructor(props) {
@@ -44,8 +45,9 @@ class PinButton extends React.Component {
 	}
 
 	handleCreatePin() {
-		const { selectedProcess, selectedProducts } = this.props
+		const { selectedProcess, selectedProducts, setActiveTabTo } = this.props
 		const user = api.get_active_user().user
+		setActiveTabTo(PINS)
 		return this.props.dispatch(goalActions.postCreatePin({
 			userprofile: user.profile_id,
 			process_type: selectedProcess,

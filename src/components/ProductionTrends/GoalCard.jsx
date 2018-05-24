@@ -8,6 +8,7 @@ import moment from 'moment'
 import { pluralize } from '../../utilities/stringutils'
 import { Peripherals } from '../TaskPage/TaskForm'
 import './styles/goalcard.css'
+import { GOALS } from '../../utilities/constants'
 
 const TIME_TO_SHOW_SAVED = 1500
 
@@ -85,7 +86,7 @@ class GoalCard extends React.Component {
 	}
 
 	handleAdd() {
-		const { timerange, selectedProcess, selectedProducts } = this.props
+		const { timerange, selectedProcess, selectedProducts, setActiveTabTo } = this.props
 		const user = api.get_active_user().user
 		const data = {
 			userprofile: user.profile_id,
@@ -95,6 +96,7 @@ class GoalCard extends React.Component {
 			timerange: timerange
 		}
 		this.props.dispatch(actions.postCreateGoal(data))
+		setActiveTabTo(GOALS)
 	}
 
 	handleInputChange(e) {

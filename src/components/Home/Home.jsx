@@ -127,6 +127,7 @@ class Home extends React.Component {
 						monthlyGoal={this.monthlyGoal()}
 						onEditGoal={this.handleEditGoal}
 						onDeleteGoal={this.handleDeleteGoal}
+						setActiveTabTo={this.setActiveTabTo}
 					/>
 					<GoalsSideBar pinsTabIsActive={pinsTabIsActive} setActiveTabTo={this.setActiveTabTo}/>
 				</div>

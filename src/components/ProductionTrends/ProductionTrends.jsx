@@ -50,7 +50,7 @@ class ProductionTrends extends React.Component {
 	render() {
 		const {
 			selectedProcess, selectedProducts, processes, recentMonths, weekToDate, monthToDate, weeklyGoal,
-			monthlyGoal, onEditGoal, onDeleteGoal
+			monthlyGoal, onEditGoal, onDeleteGoal, setActiveTabTo
 		} = this.props
 
 		if (!selectedProcess || !processes || !processes.length) {
@@ -78,7 +78,7 @@ class ProductionTrends extends React.Component {
 								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={weekToDate}
 								                     unitLabel={unitLabel} labelDays={true} goal={weeklyGoalAmount}/>
 								<GoalCard goal={weeklyGoal} timerange="w" onEdit={onEditGoal} onDelete={onDeleteGoal}
-								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
+								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} setActiveTabTo={setActiveTabTo}/>
 							</div>
 							<div>
 								<StepChartSubtitle data={monthToDate} unitLabel={unitLabel} rangeLabel="month" goal={monthlyGoalAmount}
@@ -86,7 +86,7 @@ class ProductionTrends extends React.Component {
 								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={monthToDate}
 								                     unitLabel={unitLabel} goal={monthlyGoalAmount} />
 								<GoalCard goal={monthlyGoal} timerange="m" onEdit={onEditGoal} onDelete={onDeleteGoal}
-								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
+								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} setActiveTabTo={setActiveTabTo}/>
 							</div>
 						</div>
 					</div>
@@ -97,7 +97,7 @@ class ProductionTrends extends React.Component {
 	}
 
 	renderOptions() {
-		const { processes, products, selectedProcess, selectedProducts } = this.props
+		const { processes, products, selectedProcess, selectedProducts, setActiveTabTo } = this.props
 		if (!selectedProcess || !processes.length) {
 			return null
 		}
@@ -137,7 +137,11 @@ class ProductionTrends extends React.Component {
 					<button className="download">
 						<i className="material-icons" onClick={(e) => this.handleDownload(e)}>file_download</i>
 					</button>
-					<PinButton selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
+					<PinButton
+						selectedProcess={selectedProcess}
+						selectedProducts={selectedProducts}
+						setActiveTabTo={setActiveTabTo}
+					/>
 				</div>
 			</div>
 		)
