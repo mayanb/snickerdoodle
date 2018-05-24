@@ -139,16 +139,6 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
 
-		// add the Y axis label
-		// svg.append("text")
-		// 	.attr("class", "y-axis-label")
-		// 	.attr("transform", "rotate(-90)")
-		// 	.attr("y", 0 - margin.left)
-		// 	.attr("x", 0 - (height / 2))
-		// 	.attr("dy", "1em")
-		// 	.style("text-anchor", "middle")
-		// 	.text(this.props.unitLabel);
-
 		// add the X gridlines
 		svg.append("g")
 			.attr("class", "grid")
@@ -221,7 +211,6 @@ export default class CumulativeAreaChart extends React.Component {
 
 		function mousemove() {
 			const bisectDate = bisector(d => d.date).right
-
 			const x0 = x.invert(mouse(this)[0]),
 				i = bisectDate(chartData, x0, 1),
 				d0 = chartData[i - 1], // the date you're hovering over
@@ -259,7 +248,7 @@ export default class CumulativeAreaChart extends React.Component {
 
 	renderTooltip() {
 		const { hover } = this.state
-		const hoverDate = parseInt(hover.period.slice(-2))
+		const hoverDate = parseInt(hover.period.slice(-2), 10)
 		const currDate = moment(Date.now()).date() + 1
 		// Hide tooltip for future dates (useful because we've appended an extra date for visual purposes)
 		if (hoverDate >= currDate) {
