@@ -162,11 +162,11 @@ class ProductionTrends extends React.Component {
 	}
 
 	handleProcessTypeChange(selectedProcess) {
-		this.props.onFilterChanage(selectedProcess, this.props.selectedProducts)
+		this.props.onFilterChange(selectedProcess, this.props.selectedProducts)
 	}
 
 	handleProductTypeChange(selectedProducts) {
-		this.props.onFilterChanage(this.props.selectedProcess, selectedProducts)
+		this.props.onFilterChange(this.props.selectedProcess, selectedProducts)
 	}
 
 	handleDownload() {

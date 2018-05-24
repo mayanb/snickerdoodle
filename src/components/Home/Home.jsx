@@ -10,11 +10,15 @@ import './styles/home.css'
 import { shouldShowChecklist } from '../../utilities/userutils'
 import Checklist from '../NewUserChecklist/NewUserChecklist'
 import { checkEqual } from '../../utilities/arrayutils'
+import { GOALS, PINS } from '../../utilities/constants'
 
 class Home extends React.Component {
 	constructor(props) {
 		super(props)
+		
+		this.state = { pinsTabIsActive: true }
 
+		this.setActiveTabTo = this.setActiveTabTo.bind(this)
 		this.handleFilterChange = this.handleFilterChange.bind(this)
 		this.handleEditGoal = this.handleEditGoal.bind(this)
 		this.handleDeleteGoal = this.handleDeleteGoal.bind(this)
@@ -36,6 +40,14 @@ class Home extends React.Component {
 			selectedProcess ? selectedProcess : defaultProcessType,
 			selectedProducts
 		)
+	}
+	
+	setActiveTabTo(tabName) {
+		if (tabName === GOALS) {
+			this.setState({ pinsTabIsActive: false })
+		} else if (tabName === PINS) {
+			this.setState({ pinsTabIsActive: true })
+		}
 	}
 
 	handleFilterChange(selectedProcess, selectedProducts) {
@@ -99,6 +111,7 @@ class Home extends React.Component {
 		}
 
 		const { selectedProcess, selectedProducts } = this.getFilters()
+		const { pinsTabIsActive } = this.state
 
 		return (
 			<div className="dashboard">
@@ -109,13 +122,13 @@ class Home extends React.Component {
 						products={products}
 						selectedProcess={selectedProcess}
 						selectedProducts={selectedProducts}
-						onFilterChanage={this.handleFilterChange}
+						onFilterChange={this.handleFilterChange}
 						weeklyGoal={this.weeklyGoal()}
 						monthlyGoal={this.monthlyGoal()}
 						onEditGoal={this.handleEditGoal}
 						onDeleteGoal={this.handleDeleteGoal}
 					/>
-					<GoalsSideBar />
+					<GoalsSideBar pinsTabIsActive={pinsTabIsActive} setActiveTabTo={this.setActiveTabTo}/>
 				</div>
 			</div>
 		)

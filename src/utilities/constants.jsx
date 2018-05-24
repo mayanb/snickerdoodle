@@ -48,3 +48,6 @@ export const ICONS = [
 	'lab-process-icon@3x.png',
 	'temp-process-icon@3x.png',
 ]
+
+export const GOALS = 'GOALS'
+export const PINS = 'PINS'
