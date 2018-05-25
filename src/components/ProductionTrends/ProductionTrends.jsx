@@ -212,10 +212,10 @@ function StepChartSubtitle({ data, unitLabel, rangeLabel, selectedProcess, selec
 			<Subtitle>
 				<b>{`${total} ${unitLabel}`}&nbsp;</b>{`${goalText}this ${rangeLabel}`}
 			</Subtitle>
-			<Link className="activity-link" to={path}>
-				Activity
-				<i className="material-icons">assignment</i>
-			</Link>
+				<Link className="activity-link" to={path}>
+					<i className="material-icons">assignment</i>
+					View details
+				</Link>
 		</div>
 	)
 }

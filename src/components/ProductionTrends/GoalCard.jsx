@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from '../Goals/GoalsActions'
 import api from '../WaffleconeAPI/api.jsx'
 import Input from '../Inputs/Input'
-import { Modal } from 'antd'
+import { Modal, Button } from 'antd'
 import moment from 'moment'
 import { pluralize } from '../../utilities/stringutils'
 import { Peripherals } from '../TaskPage/TaskForm'
@@ -47,7 +47,7 @@ class GoalCard extends React.Component {
 		const rangeLabel = timerange === 'm' ? 'Monthly' : 'Weekly'
 		return (
 			<div className="add-goal" onClick={this.handleAdd}>
-				{`+ Add a ${rangeLabel} goal`}
+				<Button type="primary" ghost >+ Add a {rangeLabel} goal</Button>
 			</div>
 		)
 	}
