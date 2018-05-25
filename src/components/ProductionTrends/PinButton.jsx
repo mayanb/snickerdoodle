@@ -6,6 +6,7 @@ import { checkEqual } from '../../utilities/arrayutils'
 import api from '../WaffleconeAPI/api.jsx'
 import Img from '../Img/Img'
 import { PINS } from '../../utilities/constants'
+import Button from '../Button/Button'
 
 class PinButton extends React.Component {
 	constructor(props) {
@@ -31,17 +32,17 @@ class PinButton extends React.Component {
 
 		return (
 			<div className="pin-button">
-				{!isActive && <button className="pin" onClick={this.handleCreatePin}>
+				{!isActive && <Button onClick={this.handleCreatePin}>
 					<div className="pin-content">
 						<Img src="pinwhite@3x" />
 						<div>Pin These Graphs</div>
 					</div>
-				</button>
+				</Button>
 				
 				}
-				{isActive && <button className="unpin" onClick={this.handleDeletePin}>
+				{isActive && <Button onClick={this.handleDeletePin}>
 					Unpin These Graphs
-				</button>
+				</Button>
 				}
 			</div>
 		)

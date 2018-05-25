@@ -15,6 +15,7 @@ import { pluralize } from "../../utilities/stringutils"
 import { processProductFilter, formatOption } from '../../utilities/filters'
 import { checkEqual } from '../../utilities/arrayutils'
 import Img from '../Img/Img'
+import Button from '../Button/Button'
 
 const CHART_HEIGHT = 200
 const CHART_WIDTH = 900
@@ -134,9 +135,9 @@ class ProductionTrends extends React.Component {
 					</Select>
 				</div>
 				<div className="buttons">
-					<button className="download">
-						<i className="material-icons" onClick={(e) => this.handleDownload(e)}>file_download</i>
-					</button>
+					<Button type="gray">
+						<i className="material-icons prod-trends-download" onClick={(e) => this.handleDownload(e)}>file_download</i>
+					</Button>
 					<PinButton
 						selectedProcess={selectedProcess}
 						selectedProducts={selectedProducts}
