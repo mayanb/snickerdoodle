@@ -17,7 +17,7 @@ class GoalCard extends React.Component {
 		super(props)
 
 		this.handleDelete = this.handleDelete.bind(this)
-		this.handleConfirm = this.handleConfirm.bind(this)
+		this.handleConfirmDelete = this.handleConfirmDelete.bind(this)
 		this.handleAdd = this.handleAdd.bind(this)
 		this.handleInputChange = this.handleInputChange.bind(this)
 		this.handleSave = this.handleSave.bind(this)
@@ -107,7 +107,7 @@ class GoalCard extends React.Component {
 		if (this.state.amount === '') {
 			return
 		}
-
+		this.props.setActiveTabTo(GOALS)
 		this.setState({ isLoading: true, hasError: false })
 		return this.props.onEdit(this.props.goal, this.state.amount)
 			.then(() => {
@@ -120,17 +120,18 @@ class GoalCard extends React.Component {
 	}
 
 	handleDelete() {
+		this.props.setActiveTabTo(GOALS)
 		Modal.confirm({
 			title: 'Remove goal',
 			content: "Are you sure you want to remove this goal?",
 			okText: 'Yes, I\'m sure',
 			okType: 'danger',
-			onOk: this.handleConfirm,
+			onOk: this.handleConfirmDelete,
 			onCancel: () => {}
 		})
 	}
 
-	handleConfirm() {
+	handleConfirmDelete() {
 		this.props.onDelete(this.props.goal)
 	}
 }
