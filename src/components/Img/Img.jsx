@@ -4,7 +4,7 @@ import ReactImageFallback from "react-image-fallback"
 export default function Img({src, useExtension, ...rest}) {
 	let ext = useExtension ? '' : '.png' 
 	let srcImg = getSrcImg(src, ext)
-	let errorImg = `${process.env.PUBLIC_URL}/img/default@3x.png`
+	let errorImg = `${process.env.PUBLIC_URL}/img/process-icons/default-process-icon@3x.png`
 	return (
 		<ReactImageFallback src={srcImg} fallbackImage={errorImg} {...rest}/>
 	)

@@ -28,7 +28,7 @@ export default class ActivityListItem extends React.Component {
 				<OverflowSafeText className="process-name">
 					{process_type.name}
 				</OverflowSafeText>
-				<OverflowSafeText className="product-code">
+				<OverflowSafeText tooltipText={formatAllProductCodes(product_types)} className="product-code">
 					{formatProductCodes(product_types)}
 				</OverflowSafeText>
 				<OverflowSafeText className="runs">
@@ -55,6 +55,10 @@ function ChartLink({process_type, product_types}) {
 			<i className="material-icons">show_chart</i>
 		</Link>
 	)
+}
+
+function formatAllProductCodes(productTypes) {
+	return productTypes.map(e => e.code).join(", ")
 }
 
 function formatProductCodes(productTypes) {
