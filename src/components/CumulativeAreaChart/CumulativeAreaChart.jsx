@@ -55,7 +55,6 @@ export default class CumulativeAreaChart extends React.Component {
 		const ref = this.node
 
 		const chartData = convertChartData(this.props.data, this.props.name)
-		console.log(chartData)
 
 		const margin = {
 				top: 20,
