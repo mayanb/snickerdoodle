@@ -27,6 +27,7 @@ function Goal(props) {
 				<div className="goal-bars-wrapper">
 					<GoalBar goal={weeklyGoal} />
 					<GoalBar goal={monthlyGoal} />
+					{!weeklyGoal && !monthlyGoal && <div className="pinned-goal-zero-state">No goals set for this pin</div>}
 				</div>
 			</div>
 		</Link>
