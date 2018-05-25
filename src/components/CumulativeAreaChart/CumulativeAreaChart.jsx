@@ -210,13 +210,13 @@ export default class CumulativeAreaChart extends React.Component {
 			.on("mousemove", mousemove)
 
 		function mousemove() {
-			const bisectDate = bisector(d => d.date).right
+			const bisectDate = bisector(d => d.date).left
 			const x0 = x.invert(mouse(this)[0]),
 				i = bisectDate(chartData, x0, 1),
-				d0 = chartData[i - 1], // the date you're hovering over
-				d1 = chartData[i] // the next date, which is actually where we need to place our tt
+				currentDate = chartData[i - 1],
+				nextDate = chartData[i]
 
-			const xValue = x(d1.date)
+			const xValue = x(nextDate.date)
 
 			focus.attr("transform", "translate(" + xValue + ",0)")
 			focus.select(".x-hover-line").attr("y2", height)
@@ -225,9 +225,9 @@ export default class CumulativeAreaChart extends React.Component {
 				{
 					x: xValue + margin.left - TOOLTIP_WIDTH / 2,
 					y: 0 + margin.top - TOOLTIP_HEIGHT,
-					value: d0.value,
-					change: d0.change,
-					period: moment(d0.date).format('ddd, MMM D')
+					value: currentDate.value,
+					change: currentDate.change,
+					period: moment(currentDate.date).format('ddd, MMM D')
 				}
 			)
 		}
