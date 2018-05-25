@@ -107,6 +107,7 @@ class GoalCard extends React.Component {
 		if (this.state.amount === '') {
 			return
 		}
+		this.props.setActiveTabTo(GOALS)
 		this.setState({ isLoading: true, hasError: false })
 		return this.props.onEdit(this.props.goal, this.state.amount)
 			.then(() => {
@@ -119,6 +120,7 @@ class GoalCard extends React.Component {
 	}
 
 	handleDelete() {
+		this.props.setActiveTabTo(GOALS)
 		Modal.confirm({
 			title: 'Remove goal',
 			content: "Are you sure you want to remove this goal?",
