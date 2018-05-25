@@ -55,6 +55,7 @@ export default class CumulativeAreaChart extends React.Component {
 		const ref = this.node
 
 		const chartData = convertChartData(this.props.data, this.props.name)
+		console.log(chartData)
 
 		const margin = {
 				top: 20,
@@ -117,7 +118,13 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("transform", "translate(0," + height + ")")
 			.call(axisBottom(x)
 				.ticks(timeDay.every(tickLabelFrequency))
-				.tickFormat(d => {
+				.tickFormat((d, i) => {
+
+					// if it's the last index it's actually that extra tick. so no need to label
+					// it (8 ticks for 7 labels, since the labels are in between the ticks)
+					if (i === 7) {
+						return ''
+					}
 					const format = this.props.labelDays ? 'ddd' : 'M/D'
 					return moment(d).format(format)
 				})
@@ -282,7 +289,7 @@ export default class CumulativeAreaChart extends React.Component {
 function convertChartData(data) {
 	const totalAmounts = data.map(d => d.total_amount)
 	let isFirstNull = true
-	return data.map((datum, i) => {
+	let d = data.map((datum, i) => {
 		const value = datum.total_amount !== null ? sum(totalAmounts.slice(0, i + 1)) : null
 		// We add one extra non-null datum at the end which duplicates the final non-null datum,
 		// producing a more legible flat line extending from final true data point
@@ -303,5 +310,12 @@ function convertChartData(data) {
 			}
 		}
 	})
+
+	// we need to add another tick because we are actually labelling between ticks
+	// so for 7 labels we need 8 ticks
+	let lastDay = d[d.length - 1]
+	let d2 = { date: moment(lastDay.date).add(1, 'day'), value: null, change: null }
+	d.push(d2)
+	return d
 }
 
