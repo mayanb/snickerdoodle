@@ -23,8 +23,8 @@ export default class Datepicker extends React.Component {
 
   handleInit(which, payload) {
     console.log(payload)
-    let newPL = { startDate: moment.tz(new Date(this.props.initialDates.start), 'UTC'), 
-                  endDate : moment.tz(new Date(this.props.initialDates.end), 'UTC')}
+    let newPL = { startDate: moment.tz(new Date(this.props.initialDates.start), 'UTC').add(1, 'day'), 
+                  endDate : moment.tz(new Date(this.props.initialDates.end), 'UTC').add(1, 'day')}
 
     this.setState({predefined: newPL})
     this.props.onChange(this.props.initialDates)
@@ -48,8 +48,6 @@ export default class Datepicker extends React.Component {
   handleDropdownToggle() {
     this.setState({expanded: !this.state.expanded})
   }
-
-
 
   renderDatesButton() {
     let format = 'MM/DD/YY';
@@ -81,6 +79,7 @@ export default class Datepicker extends React.Component {
 		    >
 			    <div className="menuContentWrapper" style={{ display: "inline-block" }} onClick={this.stopPropagation}>
 				    <DateRange
+              { ...this.state.predefined }
 					    linkedCalendars={true}
 					    ranges={defaultRanges}
 					    onInit={this.handleInit}
