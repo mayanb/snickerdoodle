@@ -11,12 +11,17 @@ import { shouldShowChecklist } from '../../utilities/userutils'
 import Checklist from '../NewUserChecklist/NewUserChecklist'
 import { checkEqual } from '../../utilities/arrayutils'
 import { GOALS, PINS } from '../../utilities/constants'
+import PageSpecificNewFeatureIntro from '../NewFeatures/PageSpecificNewFeatureIntro'
+
 
 class Home extends React.Component {
 	constructor(props) {
 		super(props)
 		
-		this.state = { pinsTabIsActive: true }
+		this.state = {
+			pinsTabIsActive: true,
+			isAnnouncementOpen: true, // but will return null if already seen/
+		}
 
 		this.setActiveTabTo = this.setActiveTabTo.bind(this)
 		this.handleFilterChange = this.handleFilterChange.bind(this)
@@ -111,7 +116,7 @@ class Home extends React.Component {
 		}
 
 		const { selectedProcess, selectedProducts } = this.getFilters()
-		const { pinsTabIsActive } = this.state
+		const { pinsTabIsActive, isAnnouncementOpen } = this.state
 
 		return (
 			<div className="dashboard">
@@ -130,9 +135,28 @@ class Home extends React.Component {
 						setActiveTabTo={this.setActiveTabTo}
 					/>
 					<GoalsSideBar pinsTabIsActive={pinsTabIsActive} setActiveTabTo={this.setActiveTabTo}/>
+					{this.renderUserAttributeAnnouncementDialog()}
 				</div>
 			</div>
 		)
+	}
+	
+	renderUserAttributeAnnouncementDialog() {
+		return (
+			<PageSpecificNewFeatureIntro
+				onClose={this.handleCloseAnnouncement.bind(this)}
+				content="Keep your mission critical goals in focus. You can now sync your goals with real-time production trends, navigate quickly between trends and activity logs, and save important views of your data so key insights are just a click away."
+				title="Introducing the Re-vamped Trends and Goals"
+				finalCallToAction="Learn about revamped goals and trends"
+				imgSrc="girlwithclipboard"
+				imgHeightWithUnits="270px"
+				link="https://polymer.helpscoutdocs.com/article/13-setting-goals-and-pinning-trend-views-on-the-dashboard"
+				localStorageVarName="TIME_ATTRIBUTE_INFO"
+			/>)
+	}
+	
+	handleCloseAnnouncement() {
+		this.setState({ isAnnouncementOpen: false })
 	}
 }
 
