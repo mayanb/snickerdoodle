@@ -245,18 +245,6 @@ class Activity extends React.Component {
 		return (
 			<div className="activity-page-help-container">
 				<div className="activity-page-help"
-				     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/12-using-the-new-activity-log", '_blank')}>
-					<div className="activity-page-help-header">We’ve turbocharged this activity log</div>
-					<div>
-						<span>With a few clicks, understand your production line like never before. </span>
-						<span className="activity-page-help-link">
-						Learn how to uncover deeper insights from your data.
-					</span>
-						<span className="activity-page-forward">  <i
-							className="material-icons activity-page-forward-i">arrow_forward</i></span>
-					</div>
-				</div>
-				<div className="activity-page-help"
 				     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
 					<div className="activity-page-help-header">Create recipes for your products</div>
 					<div>
