@@ -63,36 +63,38 @@ class ProductionTrends extends React.Component {
 		const monthlyGoalAmount = monthlyGoal ? Number(monthlyGoal.goal) : null
 
 		return (
-			<div className="production-trends">
-				{this.renderOptions()}
-				<Loading isFetchingData={this.props.isFetchingData}>
-					<div className="trends-content">
-						<div className="every-month-header">
-							<LineChartSubtitle unitLabel={unitLabel} />
-						</div>
-						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={recentMonths}
-						                 unitLabel={unitLabel} goal={monthlyGoalAmount} />
-						<div className="cumulatives">
-							<div>
-								<StepChartSubtitle data={weekToDate} unitLabel={unitLabel} rangeLabel="week" goal={weeklyGoalAmount}
-								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
-								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={weekToDate}
-								                     unitLabel={unitLabel} labelDays={true} goal={weeklyGoalAmount}/>
-								<GoalCard goal={weeklyGoal} timerange="w" onEdit={onEditGoal} onDelete={onDeleteGoal}
-								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} setActiveTabTo={setActiveTabTo}/>
+			<div className="production-trends-wrapper">
+				<div className="production-trends">
+					{this.renderOptions()}
+					<Loading isFetchingData={this.props.isFetchingData}>
+						<div className="trends-content">
+							<div className="every-month-header">
+								<LineChartSubtitle unitLabel={unitLabel} />
 							</div>
-							<div>
-								<StepChartSubtitle data={monthToDate} unitLabel={unitLabel} rangeLabel="month" goal={monthlyGoalAmount}
-								                   selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
-								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={monthToDate}
-								                     unitLabel={unitLabel} goal={monthlyGoalAmount} />
-								<GoalCard goal={monthlyGoal} timerange="m" onEdit={onEditGoal} onDelete={onDeleteGoal}
-								          selectedProcess={selectedProcess} selectedProducts={selectedProducts} setActiveTabTo={setActiveTabTo}/>
+							<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={recentMonths}
+															 unitLabel={unitLabel} goal={monthlyGoalAmount} />
+							<div className="cumulatives">
+								<div>
+									<StepChartSubtitle data={weekToDate} unitLabel={unitLabel} rangeLabel="week" goal={weeklyGoalAmount}
+																		 selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
+									<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={weekToDate}
+																			 unitLabel={unitLabel} labelDays={true} goal={weeklyGoalAmount}/>
+									<GoalCard goal={weeklyGoal} timerange="w" onEdit={onEditGoal} onDelete={onDeleteGoal}
+														selectedProcess={selectedProcess} selectedProducts={selectedProducts} setActiveTabTo={setActiveTabTo}/>
+								</div>
+								<div>
+									<StepChartSubtitle data={monthToDate} unitLabel={unitLabel} rangeLabel="month" goal={monthlyGoalAmount}
+																		 selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
+									<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={monthToDate}
+																			 unitLabel={unitLabel} goal={monthlyGoalAmount} />
+									<GoalCard goal={monthlyGoal} timerange="m" onEdit={onEditGoal} onDelete={onDeleteGoal}
+														selectedProcess={selectedProcess} selectedProducts={selectedProducts} setActiveTabTo={setActiveTabTo}/>
+								</div>
 							</div>
 						</div>
-					</div>
-				</Loading>
-				{this.renderDialog()}
+					</Loading>
+					{this.renderDialog()}
+				</div>
 			</div>
 		)
 	}

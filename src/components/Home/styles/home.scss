@@ -4,8 +4,8 @@
 	width: 100%;
 
 	.dashboard-content {
-		display: flex;
-		justify-content: space-between;
+		position: relative;
+		overflow: hidden;
 	}
 
 	div.panel {
