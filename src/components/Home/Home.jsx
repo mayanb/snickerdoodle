@@ -20,6 +20,7 @@ class Home extends React.Component {
 		
 		this.state = {
 			pinsTabIsActive: true,
+			isAnnouncementOpen: true, // but will return null if already seen/
 		}
 
 		this.setActiveTabTo = this.setActiveTabTo.bind(this)
@@ -115,7 +116,7 @@ class Home extends React.Component {
 		}
 
 		const { selectedProcess, selectedProducts } = this.getFilters()
-		const { pinsTabIsActive } = this.state
+		const { pinsTabIsActive, isAnnouncementOpen } = this.state
 
 		return (
 			<div className="dashboard">
@@ -143,7 +144,7 @@ class Home extends React.Component {
 	renderUserAttributeAnnouncementDialog() {
 		return (
 			<PageSpecificNewFeatureIntro
-				onClose={() => null}
+				onClose={this.handleCloseAnnouncement.bind(this)}
 				content="Keep your mission critical goals in focus. You can now sync your goals with real-time production trends, navigate quickly between trends and activity logs, and save important views of your data so key insights are just a click away."
 				title="Introducing the Re-vamped Trends and Goals"
 				finalCallToAction="Learn about revamped goals and trends"
@@ -152,6 +153,10 @@ class Home extends React.Component {
 				link="https://polymer.helpscoutdocs.com/article/13-setting-goals-and-pinning-trend-views-on-the-dashboard"
 				localStorageVarName="NEW_PRODUCTION_TRENDS_AND_GOALS"
 			/>)
+	}
+	
+	handleCloseAnnouncement() {
+		this.setState({ isAnnouncementOpen: false })
 	}
 }
 
