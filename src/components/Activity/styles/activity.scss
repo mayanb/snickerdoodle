@@ -16,7 +16,7 @@ $z-index-dialog: 991;
 $z-index-edit-menu: 992;
 
 .activity {
-  min-width: 700px;
+  min-width: 1060px;
   width: 100%;
     background-color: white;
 
@@ -101,7 +101,7 @@ $z-index-edit-menu: 992;
         font-weight: bold;
         color: rgba(0,0,0,0.7);
         text-align: left;
-        flex: 2;
+        flex: 3;
       }
 
       img {
