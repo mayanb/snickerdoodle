@@ -1,5 +1,6 @@
 import React from 'react'
 import {emojify} from 'react-emojione'
+import Pill from '../Pill/Pill'
 import './styles/newfeatures.css'
 
 const nfs = [{
@@ -40,7 +41,7 @@ export default function NewFeaturesContent(props) {
 function Feature({title, type, content}) {
 	return (
 		<div className="nf">
-			<span className={`nf-pill ${type || 'new-feature'}`}>{type==='improvement'?'Improvement':'New feature'}</span>
+			<Pill color={type==='improvement'?'purple':'turquoise'}>{type==='improvement'?'Improvement':'New feature'}</Pill>
 			<span className="nf-title">{title}&nbsp;</span>
 			<span className="nf-content">{content}</span>
 		</div>

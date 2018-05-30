@@ -1,0 +1,25 @@
+@import 'styles/constants.scss';
+
+.pill {
+	display: inline-block;
+	border-radius: 10px;
+
+	font-size: 12px;
+	line-height: 20px;
+	padding: 0 8px;
+	color: white;
+	margin-right: 4px;
+
+	&.purple {
+		background-color: $purple;
+	}
+
+	&.gray {
+		background-color: $gray-ultra-light;
+		color: $gray;
+	}
+
+	&.turquoise {
+		background-color: #1ddbb1;
+	}
+}
