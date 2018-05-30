@@ -116,7 +116,7 @@ class Home extends React.Component {
 		}
 
 		const { selectedProcess, selectedProducts } = this.getFilters()
-		const { pinsTabIsActive, isAnnouncementOpen } = this.state
+		const { pinsTabIsActive } = this.state
 
 		return (
 			<div className="dashboard">
