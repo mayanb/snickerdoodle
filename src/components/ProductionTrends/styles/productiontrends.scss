@@ -4,14 +4,11 @@
     padding-top: 28px;
     margin-bottom: 80px;
     z-index: 0;
-    // Extra width enables you to scroll the full width of Production Trends when the screen is so
-    // small that GoalSideBar overlaps with it
-    min-width: 1176px; // 916 + 260 sidebar
-    
-    // If screen gets to small, make content x-scrollable
-    overflow-y: scroll;
+    overflow-x: scroll;
     
     .production-trends {
+        min-width: 916px;
+        max-width: 916px;
         .options {
             display: flex;
             justify-content: space-between;

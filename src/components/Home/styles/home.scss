@@ -4,9 +4,19 @@
 	width: 100%;
 
 	.dashboard-content {
-		position: relative;
-		overflow: hidden;
+		display: flex;
+		
+		&>div:last-child {
+			flex: 0;
+			flex-basis: 260px;
+			width: 260px;
+		}
+		
+		&>div:first-child {
+			flex: 1;
+		}
 	}
+
 
 	div.panel {
 		padding-top: 0;

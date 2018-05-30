@@ -151,7 +151,7 @@ class Home extends React.Component {
 				imgSrc="goal-setting"
 				imgHeightWithUnits="358px"
 				link="https://polymer.helpscoutdocs.com/article/13-setting-goals-and-pinning-trend-views-on-the-dashboard"
-				localStorageVarName="TIME_ATTRIBUTE_INFO"
+				localStorageVarName="NEW_PRODUCTION_TRENDS_AND_GOALS"
 			/>)
 	}
 	
