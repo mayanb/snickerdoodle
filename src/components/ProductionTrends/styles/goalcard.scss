@@ -1,0 +1,56 @@
+@import 'styles/constants.scss';
+
+.goal-card-container {
+    margin-left: 48px;
+    margin-right: 48px;
+
+    .goal-card {
+        width: 100%;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: $card-shadow;
+    }
+
+    .top-row {
+        display: flex;
+        padding: 8px 16px;
+        justify-content: space-between;
+        border-bottom: 1px solid $gray-ultra-light;
+        align-items: center;
+    }
+
+    .input {
+        width: 80px;
+        height: 32px;
+        margin: 0 8px;
+    }
+
+    .goal-amount {
+        display: flex;
+        align-items: center;
+    }
+
+    .delete {
+        color: $primary;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .bottom-row {
+        display: flex;
+        padding: 8px 16px;
+        justify-content: space-between;
+    }
+
+    .set-by {
+        font-size: 14px;
+        font-style: italic;
+        color: $gray-light;
+    }
+
+}
+
+.add-goal {
+    color: $primary;
+    cursor: pointer;
+}

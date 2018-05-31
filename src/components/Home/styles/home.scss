@@ -1,18 +1,22 @@
 @import 'styles/constants.scss';
 
 .dashboard {
-	display: flex;
 	width: 100%;
-	justify-content: space-between;
-	
-	.dash-content {
-		display: flex;
 
-		& > div {
+	.dashboard-content {
+		display: flex;
+		
+		&>div:last-child {
+			flex: 0;
+			flex-basis: 260px;
+			width: 260px;
+		}
+		
+		&>div:first-child {
 			flex: 1;
-			margin: 0px 0px 32px 32px;
 		}
 	}
+
 
 	div.panel {
 		padding-top: 0;

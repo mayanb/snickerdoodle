@@ -23,4 +23,4 @@ export const MODAL = 'MODAL'
 export const INVENTORY = 'INVENTORY'
 export const CSV = 'CSV'
 export const GOOGLE_SHEET = 'GOOGLE_SHEET'
-
+export const PINS = 'PINS'

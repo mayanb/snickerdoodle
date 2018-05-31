@@ -4,6 +4,8 @@ import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
 import { formatAmount, getProcessIcon } from "../../utilities/stringutils"
 import Pill from '../Pill/Pill'
 import Img from '../Img/Img'
+import { dashboardPath } from "../../utilities/urlutils"
+import { Link } from 'react-router-dom'
 
 
 export default class ActivityListItem extends React.Component {
@@ -38,9 +40,22 @@ export default class ActivityListItem extends React.Component {
 				</OverflowSafeText>
 				<div className="view-all-tasks">View all tasks</div>
 				<i className="material-icons download" onClick={(e) => this.handleDownload(e, index)}>file_download</i>
+				<ChartLink process_type={process_type} product_types={product_types} />
 			</ObjectListItem>
 		)
 	}
+}
+
+function ChartLink({process_type, product_types}) {
+	const path = dashboardPath(
+		process_type.id,
+		product_types.map(p => p.id)
+	)
+	return (
+		<Link to={path} className="chart">
+			<i className="material-icons">show_chart</i>
+		</Link>
+	)
 }
 
 function formatAllProductCodes(productTypes) {

@@ -1,0 +1,75 @@
+import React from 'react'
+import { connect } from 'react-redux'
+import * as goalActions from '../Goals/GoalsActions'
+import './styles/pinbutton.css'
+import { checkEqual } from '../../utilities/arrayutils'
+import api from '../WaffleconeAPI/api.jsx'
+import Img from '../Img/Img'
+import { PINS } from '../../utilities/constants'
+import Button from '../Button/Button'
+
+class PinButton extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.handleCreatePin = this.handleCreatePin.bind(this)
+		this.handleDeletePin = this.handleDeletePin.bind(this)
+	}
+
+	activePinIndex() {
+		const { selectedProcess, selectedProducts, pins } = this.props
+		return pins.findIndex(pin => {
+			const processMatch = String(pin.process_type) === selectedProcess
+			const productMatch = (selectedProducts.length === 0 && pin.all_product_types) ||
+				(checkEqual(selectedProducts, pin.product_code.map(p => String(p.id))))
+			return processMatch && productMatch
+		})
+	}
+
+
+	render() {
+		const isActive = this.activePinIndex() !== -1
+
+		return (
+			<div className="pin-button">
+				{!isActive && <Button onClick={this.handleCreatePin}>
+					<div className="pin-content">
+						<Img src="pinwhite@3x" />
+						<div>Pin These Graphs</div>
+					</div>
+				</Button>
+				
+				}
+				{isActive && <Button onClick={this.handleDeletePin}>
+					Unpin These Graphs
+				</Button>
+				}
+			</div>
+		)
+	}
+
+	handleCreatePin() {
+		const { selectedProcess, selectedProducts, setActiveTabTo } = this.props
+		const user = api.get_active_user().user
+		setActiveTabTo(PINS)
+		return this.props.dispatch(goalActions.postCreatePin({
+			userprofile: user.profile_id,
+			process_type: selectedProcess,
+			input_products: selectedProducts.length ? selectedProducts.join(',') : 'ALL',
+		}))
+	}
+
+	handleDeletePin() {
+		const i = this.activePinIndex()
+		return this.props.dispatch(goalActions.postDeletePin(this.props.pins[i], i))
+	}
+}
+
+const mapStateToProps = (state/*, props*/) => {
+	return {
+		pins: state.pins.data
+	}
+}
+
+export default connect(mapStateToProps)(PinButton)
+

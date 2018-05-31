@@ -13,7 +13,6 @@ import _users from './reducers/UserReducer'
 import { _modal } from './reducers/ModalReducer'
 import productionTrendsReducer from './reducers/ProductionTrendsReducer'
 import * as types from './reducers/ReducerTypes'
-import {weeklyGoalPredicate, monthlyGoalPredicate, _goals} from './reducers/GoalsReducer'
 
 Raven.config('https://8c758a47f63642cba6d88e88b0d54227@sentry.io/465008', {
 	environment: process.env.REACT_APP_BACKEND
@@ -34,9 +33,9 @@ export default function(data) {
   var reducer = combineReducers({
     users: _users,
     activity: createFilteredReducer(apiDataReducer, action => action.name === types.ACTIVITY, stateDefault),
-    weeklyGoals:  createFilteredReducer(_goals, weeklyGoalPredicate, stateDefault),
-    monthlyGoals:  createFilteredReducer(_goals, monthlyGoalPredicate, stateDefault),
-    members:  createFilteredReducer(apiDataReducer, action => action.name === types.MEMBERS, stateDefault), 
+	  goals:  createFilteredReducer(apiDataReducer, action => action.name === types.GOALS, stateDefault),
+	  pins:  createFilteredReducer(apiDataReducer, action => action.name === types.PINS, stateDefault),
+    members:  createFilteredReducer(apiDataReducer, action => action.name === types.MEMBERS, stateDefault),
     teams: createFilteredReducer(apiDataReducer, action => action.name === types.TEAMS, stateDefault), 
   	products:  createFilteredReducer(apiDataReducer, action => action.name === types.PRODUCTS, stateDefault),
 		recipes:  createFilteredReducer(apiDataReducer, action => action.name === types.RECIPES, stateDefault),

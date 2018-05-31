@@ -4,16 +4,9 @@ import Pill from '../Pill/Pill'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Get production insights fast.",
-	content: "We've revamped the Activity Log — you can now ask complex questions about your production line with a few keystrokes, quickly drilling down to get the nuanced insights you need.",
+	title: "Track tasks more accurately.",
+	content: "We’ve given the mobile app faster, more precise time inputting. This means using Time Fields for your Processes now helps squash input error, save time, and give you even finer control over your production line.",
 	type: 'improvement',
-}, {
-	title: "Add user fields.",
-	content: "Improve your record keeping by logging operators. You can now easily log who’s working on each task by selecting from a list of usernames. Visit the Process page to learn more.",
-	type: 'improvement',
-}, {
-	title: "Stay organized with recipes.",
-	content: "Guide your team every step of the way with instructions and ingredient information. With recipes, your team is guided directly in the app on what to do, what to use, and how much. Visit the Products page to get started.",
 }]
 
 let HEADER = {fontSmoothing: 'antialiased', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}
@@ -47,6 +40,19 @@ function Feature({title, type, content}) {
 		</div>
 	)
 }
+
+// const nfs = [{
+// 	title: "Get production insights fast.",
+// 	content: "We've revamped the Activity Log — you can now ask complex questions about your production line with a few keystrokes, quickly drilling down to get the nuanced insights you need.",
+// 	type: 'improvement',
+// }, {
+// 	title: "Add user fields.",
+// 	content: "Improve your record keeping by logging operators. You can now easily log who’s working on each task by selecting from a list of usernames. Visit the Process page to learn more.",
+// 	type: 'improvement',
+// }, {
+// 	title: "Stay organized with recipes.",
+// 	content: "Guide your team every step of the way with instructions and ingredient information. With recipes, your team is guided directly in the app on what to do, what to use, and how much. Visit the Products page to get started.",
+// }]
 
 // const nfs = [{
 // 	title: 'A new and improved inventory experience',

@@ -4,6 +4,8 @@ import GoalBar from './GoalBar'
 import Img from '../Img/Img'
 import { getProcessIcon } from '../../utilities/stringutils'
 import {connect} from "react-redux"
+import { Link } from 'react-router-dom'
+import { dashboardPath } from "../../utilities/urlutils"
 import './styles/goal.css'
 
 const MAX_PRODUCTS_COUNT = 2
@@ -11,9 +13,10 @@ const MAX_PRODUCTS_COUNT = 2
 function Goal(props) {
 	const weeklyGoal =  props.goalGroup.weeklyGoal
 	const monthlyGoal =  props.goalGroup.monthlyGoal
-	const goal = weeklyGoal ? weeklyGoal : monthlyGoal
+	const goal = weeklyGoal || monthlyGoal || props.goalGroup.pin
+	const path = constructPath(goal)
 	return (
-		<div className="goal">
+		<Link to={path} className="goal">
 			<div className="goal-icon">
 				<Img src={getProcessIcon(goal.process_icon)} />
 			</div>
@@ -24,9 +27,17 @@ function Goal(props) {
 				<div className="goal-bars-wrapper">
 					<GoalBar goal={weeklyGoal} />
 					<GoalBar goal={monthlyGoal} />
+					{!weeklyGoal && !monthlyGoal && <div className="pinned-goal-zero-state">No goals set for this pin</div>}
 				</div>
 			</div>
-		</div>
+		</Link>
+	)
+}
+
+function constructPath(goal) {
+	return dashboardPath(
+		goal.process_type,
+		goal.all_product_types ? '' : goal.product_code.map(p => p.id).join(','),
 	)
 }
 
@@ -66,12 +77,7 @@ function getProductDisplay(productTypes, allProducts) {
 }
 
 const mapStateToProps = (state, props) => {
-	let goals = state.monthlyGoals
-	if (state.weeklyGoals.ui.active) {
-		goals = state.weeklyGoals
-	}
-	
-	return { goals: goals }
+	return { goals: state.goals }
 }
 
 const connectedGoal = connect(mapStateToProps)(Goal)
