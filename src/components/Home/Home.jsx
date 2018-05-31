@@ -164,7 +164,6 @@ const mapStateToProps = (state/*, props*/) => {
 	let { data, ui } = state.users
 	let team = data[ui.activeUser].user.team_name
 	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
-	console.log(state.processes.data)
 	return {
 		team: team,
 		processes: state.processes.data,
