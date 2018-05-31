@@ -51,8 +51,8 @@ function ChartLink({process_type, product_types}) {
 		product_types.map(p => p.id)
 	)
 	return (
-		<Link to={path} className="chart">
-			<i className="material-icons">show_chart</i>
+		<Link to={path} className={`chart ${process_type.is_trashed ? 'trashed-process' : ''}`}>
+			{!process_type.is_trashed && <i className="material-icons">show_chart</i>}
 		</Link>
 	)
 }
