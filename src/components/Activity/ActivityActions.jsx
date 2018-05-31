@@ -63,11 +63,13 @@ function createParams(filters, userID) {
 
 function csvTitle(filters, processes) {
 	const { selectedProcesses, dates: { start, end } } = filters
+	const DEFAULT_NAME = 'Runs'
 	let name
 	if (selectedProcesses.length === 1) {
-		name = processes.find(p => String(p.id) === String(selectedProcesses[0])).name
+		const process = processes.find(p => String(p.id) === String(selectedProcesses[0]))
+		name = process ? process.name : DEFAULT_NAME
 	} else {
-		name = 'Runs'
+		name = DEFAULT_NAME
 	}
 	return `${name} - ${start}-${end}`
 }
