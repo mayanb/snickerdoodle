@@ -3,7 +3,7 @@ import pluralize from 'pluralize'
 import { Alert, Input, Tooltip } from 'antd'
 import ElementCard from '../Element/ElementCard'
 import './styles/recipe.css'
-import {icon} from '../TaskPage/TaskHelpers.jsx'
+import { getProcessIcon } from '../../utilities/stringutils'
 import Img from '../Img/Img'
 import IngredientList from './IngredientList'
 import { Slide } from '../Animations/Animations'
@@ -21,7 +21,7 @@ export default function Recipe({recipe, index, isSelected, onDelete, onSelect, p
 			<div className="recipe">
 				<RecipeField className="list-item-stage">
 					<Tooltip title={`(${process_type.code}) ${process_type.name}`}>
-						<Img className="icon-img" src={icon(processIcon)} />
+						<Img className="icon-img" src={getProcessIcon(processIcon)} />
 						<span>({process_type.code}) {process_type.name}</span>
 					</Tooltip>
 				</RecipeField>

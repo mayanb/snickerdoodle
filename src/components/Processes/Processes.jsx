@@ -7,13 +7,11 @@ import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import PaginatedTable from '../PaginatedTable/PaginatedTable'
 import ProcessesListItem from './ProcessesListItem'
 import CreateOrDuplicateProcessDialog from './CreateOrDuplicateProcessDialog'
-import PageSpecificNewFeatureIntro from '../NewFeatures/PageSpecificNewFeatureIntro'
 import './styles/processes.css'
 import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectionHeaderWithButton'
 import ZeroState from '../ObjectList/ObjectListZeroState'
 import { Modal, message } from 'antd'
 import ElementFilter from '../Element/ElementFilter'
-import { processesHaveNoUserAttributes } from '../../utilities/processutils'
 
 const { confirm } = Modal
 
@@ -27,9 +25,12 @@ class Processes extends React.Component {
 		isAnnouncementOpen: true, // but will return null if already seen
 		isDuplicating: false,
 		duplicatingObjectIndex: null,
-		isFiltering: false,
+		filter: null,
+		ordering: 'name',
 	}
-	
+
+		this.renderHeaderRow = this.renderHeaderRow.bind(this)
+
 		this.handleFilter = this.handleFilter.bind(this)
 		this.handleSelectProcess = this.handleSelectProcess.bind(this)
 		this.handlePagination = this.handlePagination.bind(this)
@@ -38,12 +39,24 @@ class Processes extends React.Component {
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleDuplicate = this.handleDuplicate.bind(this)
 		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
-		this.handleCloseAnnouncementModal = this.handleCloseAnnouncementModal.bind(this)
+	  this.handleReorder = this.handleReorder.bind(this)
   }
 
   // fetch products on load
   componentDidMount() {
-	this.props.dispatch(actions.fetchProcesses())
+  	this.fetchProcesses()
+  }
+
+  fetchProcesses() {
+	  const { ordering, filter } = this.state
+	  const params = {}
+	  if (ordering) {
+		  params['ordering'] = ordering
+	  }
+	  if (filter) {
+		  params['filter'] = filter
+	  }
+	  this.props.dispatch(actions.fetchProcesses(params))
   }
 
   render() {
@@ -53,7 +66,7 @@ class Processes extends React.Component {
 			this.props.history.push('/')
 		}
 
-		let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.isFiltering
+		let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.filter
 
 		return (
 			<div className="processes-container">
@@ -61,26 +74,9 @@ class Processes extends React.Component {
 					{ hasNone ? <ZeroState type="process" /> : this.renderTable() }
 					{this.renderDialog()}
 					{this.renderDuplicateDialog()}
-					{this.renderUserAttributeAnnouncementDialog()}
 			</div>
 		)
   }
-	
-	renderUserAttributeAnnouncementDialog() {
-		const { isDuplicateOpen, isAddingProcess, isAnnouncementOpen } = this.state
-		const { data } = this.props
-		const shouldShowAnnouncement = !(isDuplicateOpen || isAddingProcess) && isAnnouncementOpen && processesHaveNoUserAttributes(data)
-		return shouldShowAnnouncement ? (<PageSpecificNewFeatureIntro
-			onClose={this.handleCloseAnnouncementModal}
-			content="You can now easily log which users are working on a task. Add a user log field to one of your processes by selecting User as the datatype. Then when you create a new task on the app, you’ll be able to easily search, select, and record the username of who’s working on that task."
-			title="Introducing User Log Fields"
-			finalCallToAction="Learn more about user log fields"
-			imgSrc="girlwithclipboard"
-			imgHeightWithUnits="270px"
-			link="https://polymer.helpscoutdocs.com/article/11-user-fields"
-			localStorageVarName="USER_ATTRIBUTE_INFO"
-		/>) : null
-	}
 
   renderTable() {
   	let { ui } = this.props
@@ -115,20 +111,31 @@ class Processes extends React.Component {
 	}
 
 	renderHeaderRow() {
+  	const columns = [
+		  { title: null, className: 'icon', field: null },
+		  { title: 'Code', className: 'code', field: 'code' },
+		  { title: 'Name', className: 'name', field: 'name' },
+		  { title: 'Description', className: 'description', field: 'output_desc' },
+		  { title: 'Default amount', className: 'default-amount', field: 'default_amount' },
+		  { title: 'Last used', className: 'last-used', field: 'last_used' },
+		  { title: 'Created by', className: 'owner', field: null },
+		  { title: 'Date created', className: 'date', field: 'created_at' },
+		  { title: null, className: 'more-options-button', field: null },
+	  ]
+
 		return (
-			<ObjectListHeader>
-				<div className="icon"></div>
-				<div className="code">Code</div>
-				<div className="name">Name</div>
-				<div className="description">Description</div>
-				<div className="default-amount">Default Amount</div>
-				<div className="last-used">Last Used</div>
-				<div className="owner">Created by</div>
-				<div className="date">Date Created</div>
-				<div className="more-options-button"></div>
-			</ObjectListHeader>
+			<ObjectListHeader
+				columns={columns}
+				onReorder={this.handleReorder}
+				ordering={this.state.ordering}
+			/>
 		)
 	}
+
+	handleReorder(ordering) {
+  	this.setState({ordering: ordering}, this.fetchProcesses)
+	}
+
 
 	handleArchive(index) {
 		let p = this.props.data[index]
@@ -165,8 +172,7 @@ class Processes extends React.Component {
   /* EVENT HANDLERS */
 
   handleFilter(filterText) {
-  	this.setState({ isFiltering: filterText && filterText.length > 0})
-  	this.props.dispatch(actions.fetchProcesses({ filter: filterText }))	
+  	this.setState({ filter: filterText }, this.fetchProcesses)
   }
 
 	handleCreateProcess(newProcess) {
@@ -226,11 +232,8 @@ class Processes extends React.Component {
 				return this.handleSelectProcess(index)
 			})
 	}
-	
-	handleCloseAnnouncementModal() {
-		this.setState({ isAnnouncementOpen: false })
-	}
 }
+
 
 // This is our select function that will extract from the state the data slice we want to expose
 // through props to our component.
@@ -238,7 +241,6 @@ const mapStateToProps = (state/*, props*/) => {
   return {
 	data: state.processes.data,
 	ui: state.processes.ui,
-	inventoryData: state.inventories.data,
 	users: state.users
   }
 }

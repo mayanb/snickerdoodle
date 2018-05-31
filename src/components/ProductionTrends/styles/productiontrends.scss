@@ -1,69 +1,98 @@
 @import 'styles/constants.scss';
 
-.production-trends {
-    margin-bottom: 80px;
+.production-trends-wrapper {
+    padding-top: 28px;
+    padding-bottom: 80px;
     z-index: 0;
-
-    .ant-select {
-        width: 200px;
-        margin-left: 24px;
-    }
-
-    .every-month-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-right: 18px;
-        margin-bottom: 12px;
-    }
-
-    .cumulatives {
-        display: flex;
-        margin-top: 32px;
-    }
-
-    .trends-subtitle {
-        font-size: 14px;
-        margin-top: 4px;
-        margin-left: 40px;
-        display: flex;
-        color: $black;
-        -webkit-font-smoothing: antialiased;
-    }
-
-    .help {
-        display: flex;
-        align-items: center;
-        margin-left: 8px;
-        position: relative;
-
-        img {
-            height: 20px;
+    overflow-x: scroll;
+    
+    .production-trends {
+        min-width: 916px;
+        max-width: 916px;
+        .options {
+            display: flex;
+            justify-content: space-between;
+            margin-left: 12px;
+            margin-right: 50px;
         }
-
-        &:hover .help-tooltip {
-            display: block;
+        
+        .process-product-icon {
+            margin-left: 16px;
+            width: 24px;
+            opacity: 0.7;
         }
-
-        .help-tooltip {
-            background-color: white;
-            border: 1px solid $gray;
-            border-radius: 4px;
-            padding: 12px;
-            line-height: 20px;
-            display: none;
-            font-size: 12px;
+        
+        .production-trends-filters {
+            display: flex;
+            align-items: center;
+        }
+        
+        .ant-select {
             width: 200px;
-            position: absolute;
-            bottom: 28px;
-            right: -95px;
-            z-index: 1000;
+            margin-left: 8px;
         }
-    }
-
-    .trends-content {
-        margin-left: 36px;
-        max-width: 900px;
-        margin-top: 32px;
+        
+        .buttons {
+            display: inline-flex;
+            
+            button {
+                display: flex;
+                margin-left: 12px;
+                height: 32px;
+            }
+        }
+        
+        .prod-trends-download {
+            font-size: 20px;
+            line-height: 20px;
+            margin-top: -2px;
+        }
+        
+        .every-month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .cumulatives {
+            display: flex;
+            margin-top: 32px;
+        }
+        
+        .step-chart-subtitle {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-right: 48px;
+        }
+        
+        .activity-link {
+            display: flex;
+            color: $primary;
+            vertical-align: middle;
+            line-height: 20px;
+            
+            i {
+                font-size: 16px;
+                line-height: 20px;
+                margin-right: 6px;
+            }
+        }
+        
+        .trends-subtitle {
+            font-size: 14px;
+            margin-top: 4px;
+            margin-left: 48px;
+            display: flex;
+            color: $black;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .trends-content {
+            margin-left: 12px;
+            margin-top: 32px;
+        }
     }
 }

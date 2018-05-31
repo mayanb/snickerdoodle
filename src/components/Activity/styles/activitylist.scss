@@ -1,52 +1,67 @@
 @import 'styles/constants.scss';
 
-div.activity-list-item {
-	width: 100%;
-	display: flex;
-	align-items: center;
+.activity {
+    div.activity-list-item {
+        width: 100%;
+        display: flex;
+        align-items: center;
 
-	.icon {
-		flex: 1;
-		background-color: transparent;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		img {
-			max-width: 100%;
-		}
-	}
+        &:hover .download, &:hover .chart {
+            visibility: visible;
+        }
+    }
 
-	.process-code {
-		flex: 1;
-	}
+    .icon {
+        flex: 1;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        img {
+            max-width: 100%;
+        }
+    }
 
-	.process-name {
-		flex: 3;
-	}
+    .process-code {
+        flex: 1;
+    }
 
-	.product-code {
-		flex: 3;
-	}
+    .process-name {
+        flex: 3;
+    }
 
-	.runs {
-		flex: 3;
-	}
-	
-	.outputs {
-		flex: 4;
-	}
-	
-	.view-all-tasks {
-		flex: 2;
-		color: $primary-light;
-	}
+    .product-code {
+        flex: 3;
+    }
 
-	.download {
-		flex: 1;
+    .runs {
+        flex: 2;
+    }
+
+    .outputs {
+        flex: 3;
+    }
+
+    .view-all-tasks {
+        flex: 2;
+        color: $primary-light;
+    }
+
+    .download {
+        flex: 1;
         visibility: hidden;
-	}
-	
-	&:hover .download{
-		visibility: visible;
-	}
+    }
+
+    .chart {
+        flex: 1;
+        visibility: hidden;
+        height: 26px;
+        width: 43.5px;
+        
+        &.trashed-process {
+            pointer-events: none;
+            cursor: default;
+        }
+    }
+
 }

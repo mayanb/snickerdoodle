@@ -38,6 +38,8 @@ class ProcessPage extends React.Component {
 			return <span>Loading... </span>
 		}
 
+		console.log(data.icon)
+
 		return (
 			<div className="process-page">
 				<ElementHeader title={'Processes'} name={data.name} onBack={() => history.push('/processes')}/>

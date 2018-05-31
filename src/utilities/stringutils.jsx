@@ -59,3 +59,26 @@ export function getGreetingTime(m) {
   
   return g;
 }
+
+function precise(x) {
+	return Number.parseFloat(x).toPrecision(4);
+}
+
+export function shortNumber(amount) {
+	const n = Number(amount)
+	const numDigits = Math.floor(Math.log10(Math.abs(n))) + 1
+	if (numDigits < 4) {
+		return precise(n) / 1
+	} else if (numDigits < 7) {
+		return precise(n) / 1000 + 'k'
+	} else if (numDigits < 10) {
+		return precise(n) / 1000000 + 'm'
+	} else if (numDigits < 13) {
+		return precise(n) / 1000000000 + 'b'
+	}
+
+}
+
+export function getProcessIcon(dbIcon) {
+	return `process-icons/${dbIcon.split('.png')[0]}-process-icon@3x`
+}

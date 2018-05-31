@@ -1,6 +1,7 @@
 import React from 'react'
 import Spinner from 'react-spinkit'
 import './styles/taskform.css'
+import './styles/peripherals.css'
 import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
 
@@ -40,7 +41,7 @@ class AttributeField extends React.Component {
 				window.setTimeout(() => this.setState({ justSaved: false }), TIME_TO_LOAD + TIME_TO_SHOW_SAVED)
 			})
 			.catch(e => {
-				this.setState({ isLoading: false, hasError: true })
+				this.setState({ isLoading: false, hasError: true, justSaved: false })
 			})
 	}
 
@@ -155,7 +156,7 @@ class TextAttribute extends React.Component {
 	}
 }
 
-function Peripherals({ isLoading, justSaved, hasError, onRetry }) {
+export function Peripherals({ isLoading, justSaved, hasError, onRetry }) {
 	let peripheral = false
 	if (isLoading) {
 		peripheral = <Loading />

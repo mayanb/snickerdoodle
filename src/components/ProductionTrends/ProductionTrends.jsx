@@ -1,16 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import * as processesActions from '../Processes/ProcessesActions.jsx'
-import * as productsActions from '../Products/ProductsActions.jsx'
+import { Link } from 'react-router-dom'
 import * as productionTrendsActions from '../ProductionTrends/ProductionTrendsActions.jsx'
 import Loading from '../Loading/Loading'
 import TrendsLineChart from './TrendsLineChart'
+import GoalCard from './GoalCard'
+import PinButton from './PinButton'
+import MustEnablePopupsDialog from '../Activity/MustEnablePopupsDialog'
+import MustConnectGoogleDialog from '../Activity/MustConnectGoogleDialog'
 import { Select } from 'antd'
 import './styles/productiontrends.css'
 import CumulativeAreaChart from "../CumulativeAreaChart/CumulativeAreaChart"
-import Img from '../Img/Img'
 import { pluralize } from "../../utilities/stringutils"
 import { processProductFilter, formatOption } from '../../utilities/filters'
+import { checkEqual } from '../../utilities/arrayutils'
+import Img from '../Img/Img'
+import Button from '../Button/Button'
 
 const CHART_HEIGHT = 200
 const CHART_WIDTH = 900
@@ -20,118 +25,160 @@ class ProductionTrends extends React.Component {
 		super(props)
 
 		this.state = {
-			processType: null,
-			productTypes: []
+			mustConnectGoogleDialog: false,
+			mustEnablePopupsDialog: false,
 		}
 
 		this.handleSearch = this.handleSearch.bind(this)
 		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
 		this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
+		this.toggleDialog = this.toggleDialog.bind(this)
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.selectedProcess !== this.props.selectedProcess ||
+			!checkEqual(nextProps.selectedProducts, this.props.selectedProducts)) {
+			this.handleSearch(nextProps.selectedProcess, nextProps.selectedProducts)
+		}
 	}
 
 	componentDidMount() {
-		Promise.all([
-			this.props.dispatch(processesActions.fetchProcesses()),
-			this.props.dispatch(productsActions.fetchProducts())
-		])
-			.then(() => {
-				//Set default process type
-				if (this.props.processes.length && !this.state.processType) {
-					const foil = this.props.processes.find(p => p.name === 'Foil')
-					const defaultProcessType = foil ? foil.id : this.props.processes[0].id
-
-					this.setState({ processType: defaultProcessType }, this.handleSearch)
-				}
-			})
+		if (this.props.selectedProcess) {
+			this.handleSearch(this.props.selectedProcess, this.props.selectedProducts)
+		}
 	}
 
 	render() {
-		const unitLabel = this.state.processType ? pluralize(2, this.state.processType.unit) : ''
+		const {
+			selectedProcess, selectedProducts, processes, recentMonths, weekToDate, monthToDate, weeklyGoal,
+			monthlyGoal, onEditGoal, onDeleteGoal, setActiveTabTo
+		} = this.props
+
+		if (!selectedProcess || !processes || !processes.length) {
+			return null
+		}
+
+		const unitLabel = selectedProcess ? pluralize(2, processes.find(p => String(p.id) === String(selectedProcess)).unit) : ''
+		const weeklyGoalAmount = weeklyGoal ? Number(weeklyGoal.goal) : null
+		const monthlyGoalAmount = monthlyGoal ? Number(monthlyGoal.goal) : null
 
 		return (
-			<div className="production-trends">
-				<Loading isFetchingData={this.props.isFetchingData}>
-					<div className="trends-content">
-						<div className="every-month-header">
-							<Subtitle>
-								<b>How much do you make&nbsp;</b> every month?
-								<Help>Displays total production for each month</Help>
-							</Subtitle>
-							{this.renderOptions()}
-						</div>
-						<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={this.props.recentMonths}
-						                 unitLabel={unitLabel} />
-						<div className="cumulatives">
-							<div>
-								<Subtitle>
-									What did you make <b>&nbsp;this week?</b>
-									<Help>Displays this week's cumulative total production for each day</Help>
-								</Subtitle>
-								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={this.props.weekToDate}
-								                     unitLabel={unitLabel} labelDays={true} />
+			<div className="production-trends-wrapper">
+				<div className="production-trends">
+					{this.renderOptions()}
+					<Loading isFetchingData={this.props.isFetchingData}>
+						<div className="trends-content">
+							<div className="every-month-header">
+								<LineChartSubtitle unitLabel={unitLabel} />
 							</div>
-							<div>
-								<Subtitle>
-									What did you make <b>&nbsp;this month?</b>
-									<Help>Displays this month's cumulative total production for each day</Help>
-								</Subtitle>
-								<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={this.props.monthToDate}
-								                     unitLabel={unitLabel} />
+							<TrendsLineChart width={CHART_WIDTH} height={CHART_HEIGHT} data={recentMonths}
+															 unitLabel={unitLabel} goal={monthlyGoalAmount} />
+							<div className="cumulatives">
+								<div>
+									<StepChartSubtitle data={weekToDate} unitLabel={unitLabel} rangeLabel="week" goal={weeklyGoalAmount}
+																		 selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
+									<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={weekToDate}
+																			 unitLabel={unitLabel} labelDays={true} goal={weeklyGoalAmount}/>
+									<GoalCard goal={weeklyGoal} timerange="w" onEdit={onEditGoal} onDelete={onDeleteGoal}
+														selectedProcess={selectedProcess} selectedProducts={selectedProducts} setActiveTabTo={setActiveTabTo}/>
+								</div>
+								<div>
+									<StepChartSubtitle data={monthToDate} unitLabel={unitLabel} rangeLabel="month" goal={monthlyGoalAmount}
+																		 selectedProcess={selectedProcess} selectedProducts={selectedProducts} />
+									<CumulativeAreaChart width={CHART_WIDTH / 2} height={CHART_HEIGHT} data={monthToDate}
+																			 unitLabel={unitLabel} goal={monthlyGoalAmount} />
+									<GoalCard goal={monthlyGoal} timerange="m" onEdit={onEditGoal} onDelete={onDeleteGoal}
+														selectedProcess={selectedProcess} selectedProducts={selectedProducts} setActiveTabTo={setActiveTabTo}/>
+								</div>
 							</div>
 						</div>
-					</div>
-				</Loading>
+					</Loading>
+					{this.renderDialog()}
+				</div>
 			</div>
 		)
 	}
 
 	renderOptions() {
-		if (!this.state.processType) {
+		const { processes, products, selectedProcess, selectedProducts, setActiveTabTo } = this.props
+		if (!selectedProcess || !processes.length) {
 			return null
 		}
 		const formatProcessOption = p => `${formatOption(p)} (${pluralize(2, p.unit)})`
-		const defaultProcessType = this.props.processes.find(p => String(p.id) === String(this.state.processType))
+		const defaultProcessType = processes.find(p => String(p.id) === String(selectedProcess))
 		return (
 			<div className="options">
-				<Select
-					showSearch
-					value={formatProcessOption(defaultProcessType)}
-					filterOption={processProductFilter}
-					onChange={this.handleProcessTypeChange}
-				>
-					{this.props.processes.map(p => <Select.Option key={p.id} data={p}>
-							{formatProcessOption(p)}
-						</Select.Option>
-					)}
-				</Select>
-				<Select
-					mode="multiple"
-					allowClear
-					placeholder="Showing all products"
-					filterOption={processProductFilter}
-					onChange={this.handleProductTypeChange}
-				>
-					{this.props.products.map(p => <Select.Option key={p.id} data={p}>
-							{formatOption(p)}
-						</Select.Option>
-					)}
-				</Select>
+				<div className="production-trends-filters">
+					<Img src="processes_dark@2x" className="process-product-icon" />
+					<Select
+						showSearch
+						value={formatProcessOption(defaultProcessType)}
+						filterOption={processProductFilter}
+						onChange={this.handleProcessTypeChange}
+					>
+						{processes.map(p => <Select.Option key={p.id} data={p}>
+								{formatProcessOption(p)}
+							</Select.Option>
+						)}
+					</Select>
+					<Img src="products_dark@2x" className="process-product-icon" />
+					<Select
+						mode="multiple"
+						value={selectedProducts}
+						allowClear
+						placeholder="Showing all products"
+						filterOption={processProductFilter}
+						onChange={this.handleProductTypeChange}
+					>
+						{products.map(p => <Select.Option key={p.id} data={p}>
+								{formatOption(p)}
+							</Select.Option>
+						)}
+					</Select>
+				</div>
+				<div className="buttons">
+					<Button type="gray">
+						<i className="material-icons prod-trends-download" onClick={(e) => this.handleDownload(e)}>file_download</i>
+					</Button>
+					<PinButton
+						selectedProcess={selectedProcess}
+						selectedProducts={selectedProducts}
+						setActiveTabTo={setActiveTabTo}
+					/>
+				</div>
 			</div>
 		)
 	}
 
-	handleSearch() {
-		this.props.dispatch(productionTrendsActions.fetchRecentMonths(this.state.processType, this.state.productTypes))
-		this.props.dispatch(productionTrendsActions.fetchMonthToDate(this.state.processType, this.state.productTypes))
-		this.props.dispatch(productionTrendsActions.fetchWeekToDate(this.state.processType, this.state.productTypes))
+	renderDialog() {
+		if (this.state.mustEnablePopupsDialog) {
+			return <MustEnablePopupsDialog onToggle={() => this.toggleDialog('mustEnablePopupsDialog')} />
+		} else if (this.state.mustConnectGoogleDialog) {
+			return <MustConnectGoogleDialog onToggle={() => this.toggleDialog('mustConnectGoogleDialog')} />
+		} else return null
 	}
 
-	handleProcessTypeChange(newVal) {
-		this.setState({ processType: newVal }, this.handleSearch)
+	toggleDialog(dialog) {
+		this.setState({ [dialog]: !this.state[dialog] })
 	}
 
-	handleProductTypeChange(productTypeIDs) {
-		this.setState({ productTypes: productTypeIDs }, this.handleSearch)
+	handleSearch(selectedProcess, selectedProducts) {
+		this.props.dispatch(productionTrendsActions.fetchRecentMonths(selectedProcess, selectedProducts))
+		this.props.dispatch(productionTrendsActions.fetchMonthToDate(selectedProcess, selectedProducts))
+		this.props.dispatch(productionTrendsActions.fetchWeekToDate(selectedProcess, selectedProducts))
+	}
+
+	handleProcessTypeChange(selectedProcess) {
+		this.props.onFilterChange(selectedProcess, this.props.selectedProducts)
+	}
+
+	handleProductTypeChange(selectedProducts) {
+		this.props.onFilterChange(this.props.selectedProcess, selectedProducts)
+	}
+
+	handleDownload() {
+		const { processes, selectedProcess, selectedProducts } = this.props
+		this.props.dispatch(productionTrendsActions.fetchDownload(selectedProcess, selectedProducts, processes, this.toggleDialog))
 	}
 }
 
@@ -141,22 +188,47 @@ function Subtitle(props) {
 	)
 }
 
-function Help({ children }) {
+function LineChartSubtitle({ unitLabel }) {
+	const capitalizedUnitLabel = unitLabel.charAt(0).toUpperCase() + unitLabel.slice(1);
 	return (
-		<div className="help">
-			<Img src="help@2x" />
-			<div className="help-tooltip">
-				{children}
-			</div>
+		<Subtitle>
+			<b>{`${capitalizedUnitLabel} Produced Each Month`}</b>
+		</Subtitle>
+	)
+}
+
+function StepChartSubtitle({ data, unitLabel, rangeLabel, selectedProcess, selectedProducts, goal }) {
+	if (!data.length) {
+		return null
+	}
+
+	const qs = new URLSearchParams()
+	qs.set('start', data[0].bucket)
+	qs.set('end', data.slice(-1)[0].bucket)
+	qs.set('selectedProcesses', selectedProcess)
+	qs.set('selectedProducts', selectedProducts)
+	const path = `/activity-log?${qs.toString()}`
+	const total = data.reduce((sum, datum) => sum + datum.total_amount, 0).toLocaleString()
+	const goalText = goal ? `of ${goal.toLocaleString()} ` : ''
+	return (
+		<div className="step-chart-subtitle">
+			<Subtitle>
+				<b>{`${total} ${unitLabel}`}&nbsp;</b>{`${goalText}this ${rangeLabel}`}
+			</Subtitle>
+				<Link className="activity-link" to={path} target="_blank">
+					<i className="material-icons">assignment</i>
+					View details
+				</Link>
 		</div>
 	)
 }
 
+
 const mapStateToProps = (state/*, props*/) => {
-	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
+	const isFetchingData = state.productionTrends[productionTrendsActions.RECENT_MONTHS].ui.isFetchingData ||
+		state.productionTrends[productionTrendsActions.MONTH_TO_DATE].ui.isFetchingData ||
+		state.productionTrends[productionTrendsActions.WEEK_TO_DATE].ui.isFetchingData
 	return {
-		processes: state.processes.data,
-		products: state.products.data,
 		recentMonths: state.productionTrends[productionTrendsActions.RECENT_MONTHS].data,
 		monthToDate: state.productionTrends[productionTrendsActions.MONTH_TO_DATE].data,
 		weekToDate: state.productionTrends[productionTrendsActions.WEEK_TO_DATE].data,

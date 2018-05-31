@@ -1,0 +1,47 @@
+@import 'styles/constants.scss';
+
+.goal-bar-wrapper {
+	display: flex;
+	position: relative;
+	
+	.goal-interval {
+		flex: 3;
+		min-width: 48px;
+		font-size: 12px;
+		color: $elephant;
+	}
+	
+	&:hover, &:hover .goal-interval {
+		color: $primary;
+		cursor: pointer;
+	}
+	
+	.goal-whole-bar {
+		flex: 12;
+		
+		display: flex;
+		height: 6px;
+		margin-top: 8px;
+		margin-bottom: 4px;
+		background-color: rgba(0,0,0,0.1);
+		border-radius: 4px;
+		text-align: right;
+	}
+	
+	.goal-filled-bar {
+		background-color: $theme-color;
+		background: linear-gradient(to left, $primary-light, $primary);
+		color: rgba(255,255,255,0.5);
+		border-radius: 4px 0 0 4px;
+	}
+}
+
+// Style antd tooltip
+.ant-tooltip-inner .goal-hover-text {
+	font-size:14px;
+	color: $elephant-light;
+	
+	.current-progress {
+		color: $primary-light;
+	}
+}

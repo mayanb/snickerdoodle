@@ -16,7 +16,7 @@ $z-index-dialog: 991;
 $z-index-edit-menu: 992;
 
 .activity {
-  min-width: 700px;
+  min-width: 1060px;
   width: 100%;
     background-color: white;
 
@@ -101,7 +101,7 @@ $z-index-edit-menu: 992;
         font-weight: bold;
         color: rgba(0,0,0,0.7);
         text-align: left;
-        flex: 2;
+        flex: 3;
       }
 
       img {
@@ -186,22 +186,6 @@ $z-index-edit-menu: 992;
           margin: 8px auto;
     }
   }
-
-    // override PaginatedTable header border and text size
-    .paginated-table.border-none li.header .object-list-header {
-        border-top-width: 1px;
-        border-bottom-width: 1px;
-
-        .activity-list-header {
-            cursor: default;
-
-            & > div {
-                margin-top: 12px;
-                margin-bottom: 12px;
-                font-size: 14px;
-            }
-        }
-    }
 
   .object-list.activity-log {
     padding-bottom: 0;

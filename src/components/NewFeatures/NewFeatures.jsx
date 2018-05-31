@@ -4,8 +4,8 @@ import Button from '../Card/Button'
 import NewFeatureContent from './NewFeatureContent'
 import { withRouter } from 'react-router'
 
-const FEATURE_VERSION = 'newfeatures6'
-const FEATURE_PATHNAME = '/'
+const FEATURE_VERSION = 'newfeatures7'
+const FEATURE_PATHNAME = '/processes'
 
 class NewFeatures extends React.Component {
 	constructor(props) {

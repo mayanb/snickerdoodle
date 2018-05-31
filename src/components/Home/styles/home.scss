@@ -1,17 +1,22 @@
 @import 'styles/constants.scss';
 
 .dashboard {
-	width: calc(100vw - #{$nav-width});
-	//padding-right: $panel-width;
+	width: 100%;
 
-	.dash-content {
+	.dashboard-content {
 		display: flex;
-
-		& > div {
+		
+		&>div:last-child {
+			flex: 0;
+			flex-basis: 260px;
+			width: 260px;
+		}
+		
+		&>div:first-child {
 			flex: 1;
-			margin: 0px 0px 32px 32px;
 		}
 	}
+
 
 	div.panel {
 		padding-top: 0;
@@ -25,7 +30,6 @@
 		padding-bottom: 0;
 		margin-bottom: 0;
 		box-shadow: $card-shadow;
-		
 
 		.little-header {
 			margin-left: 16px; 

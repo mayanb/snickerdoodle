@@ -30,7 +30,8 @@ class AccountMenu extends React.Component {
   handleTeamChange(id) {
     this.props.dispatch(actions.switchActiveUser(id))
 	  this.handleDropdownToggle()
-	  window.location.reload()
+	  // Remove query string which might contain team-specific IDs
+	  window.location.href = window.location.origin + window.location.pathname.split('?')[0]
   }
 
   /* RENDERERS */

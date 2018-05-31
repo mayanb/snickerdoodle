@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { findBestBucketSize, getTicks } from '../../utilities/graphutils'
+import { shortNumber } from '../../utilities/stringutils'
 import LineChartTooltip from '../ProductionTrends/LineChartTooltip'
 import './styles/cumulativeareachart.css'
 
@@ -17,8 +18,10 @@ import {
 	sum,
 	mouse,
 	bisector,
-	timeDay
+	timeDay,
+	curveStepAfter,
 } from 'd3'
+
 
 const TOOLTIP_WIDTH = 188
 const TOOLTIP_HEIGHT = 84
@@ -40,7 +43,7 @@ export default class CumulativeAreaChart extends React.Component {
 	}
 
 	componentDidUpdate(preProps) {
-		if (!(preProps.data === this.props.data))
+		if (!(preProps.data === this.props.data) || !(preProps.goal === this.props.goal))
 			this.renderD3()
 	}
 
@@ -55,9 +58,9 @@ export default class CumulativeAreaChart extends React.Component {
 
 		const margin = {
 				top: 20,
-				right: 20,
+				right: 48,
 				bottom: 30,
-				left: 40
+				left: 48
 			},
 			width = this.props.width - margin.left - margin.right,
 			height = this.props.height - margin.top - margin.bottom
@@ -71,6 +74,7 @@ export default class CumulativeAreaChart extends React.Component {
 
 
 		const _area = area()
+			.curve(curveStepAfter)
 			.x(d => x(d.date))
 			.y0(height)
 			.y1(d => y(d.value))
@@ -85,14 +89,15 @@ export default class CumulativeAreaChart extends React.Component {
 			.append("g")
 			.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-		//const start = this.props.name === 'This Week' ? moment().startOf('week').toDate() : moment().startOf('month').toDate()
-		//x.domain([start, moment().toDate()])
 		x.domain(extent(chartData, d => d.date))
 
 		// do some math to find a good scale for this graph
 		// so that the line appears kind of in the middle
 		let dataMedian = median(chartData, d => d.value)
 		let dataMax = max(chartData, d => d.value)
+		if(this.props.goal) {
+			dataMax = Math.max(dataMax, this.props.goal)
+		}
 		let maxY = Math.max(dataMedian * 2, dataMax + dataMedian / 4.0)
 
 		// 1. find the best bucket size for this scale
@@ -112,31 +117,33 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("transform", "translate(0," + height + ")")
 			.call(axisBottom(x)
 				.ticks(timeDay.every(tickLabelFrequency))
-				.tickFormat(d => {
+				.tickFormat((d, i) => {
+
+					// if it's the last index it's actually that extra tick. so no need to label
+					// it (8 ticks for 7 labels, since the labels are in between the ticks)
+					if (i === 7) {
+						return ''
+					}
 					const format = this.props.labelDays ? 'ddd' : 'M/D'
 					return moment(d).format(format)
 				})
 			)
+			.selectAll('.x.axis text')
+      .attr('transform', 'translate(' + width/(chartData.length*2) + ',0)');
 
 		// add the Y axis
 		svg.append("g")
 			.attr("class", "y axis")
-			.call(axisLeft(y).tickValues(ticks))
+			.call(axisLeft(y)
+				.tickValues(ticks)
+				.tickFormat(shortNumber)
+
+			)
 			.append("text")
 			.attr("transform", "rotate(-90)")
 			.attr("y", 6)
 			.attr("dy", ".71em")
 			.style("text-anchor", "end")
-
-		// add the Y axis label
-		// svg.append("text")
-		// 	.attr("class", "y-axis-label")
-		// 	.attr("transform", "rotate(-90)")
-		// 	.attr("y", 0 - margin.left)
-		// 	.attr("x", 0 - (height / 2))
-		// 	.attr("dy", "1em")
-		// 	.style("text-anchor", "middle")
-		// 	.text(this.props.unitLabel);
 
 		// add the X gridlines
 		svg.append("g")
@@ -158,6 +165,33 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("class", "area")
 			.attr("d", _area)
 
+		if(this.props.goal) {
+			const yValue = y(this.props.goal)
+			const x1Value = x(x.domain()[0])
+			const x2Value = x(x.domain()[1])
+			svg.append("line")
+				.attr("class", "goal-line")
+				.attr("x1", x1Value)
+				.attr("y1", yValue)
+				.attr("x2", x2Value)
+				.attr("y2", yValue)
+
+			const label = svg.append("g")
+				.attr("class", "goal-label")
+				.attr("transform", `translate(${x2Value - 6}, ${yValue - 10})`)
+
+			label.append("rect")
+				.attr("rx", 10)
+				.attr("ry", 10)
+				.attr("width", 50)
+				.attr("height", 20)
+
+			label.append("text")
+				.text("GOAL")
+				.attr("dx", 10)
+				.attr("dy", 14)
+		}
+
 		const focus = svg.append("g")
 			.attr("class", "focus")
 			.style("display", "none")
@@ -166,6 +200,7 @@ export default class CumulativeAreaChart extends React.Component {
 			.attr("class", "x-hover-line hover-line")
 			.attr("y1", 0)
 			.attr("y2", height)
+
 
 		const updateHover = this.updateHover.bind(this)
 
@@ -182,14 +217,12 @@ export default class CumulativeAreaChart extends React.Component {
 
 		function mousemove() {
 			const bisectDate = bisector(d => d.date).left
-
 			const x0 = x.invert(mouse(this)[0]),
 				i = bisectDate(chartData, x0, 1),
-				d0 = chartData[i - 1],
-				d1 = chartData[i],
-				d = x0 - d0.date > d1.date - x0 ? d1 : d0
+				currentDate = chartData[i - 1],
+				nextDate = chartData[i]
 
-			const xValue = x(d.date)
+			const xValue = x(nextDate.date)
 
 			focus.attr("transform", "translate(" + xValue + ",0)")
 			focus.select(".x-hover-line").attr("y2", height)
@@ -198,9 +231,9 @@ export default class CumulativeAreaChart extends React.Component {
 				{
 					x: xValue + margin.left - TOOLTIP_WIDTH / 2,
 					y: 0 + margin.top - TOOLTIP_HEIGHT,
-					value: d.value,
-					change: d.change,
-					period: moment(d.date).format('MMM D')
+					value: currentDate.value,
+					change: currentDate.change,
+					period: moment(currentDate.date).format('ddd, MMM D')
 				}
 			)
 		}
@@ -220,17 +253,24 @@ export default class CumulativeAreaChart extends React.Component {
 	}
 
 	renderTooltip() {
-		const dailyTotal = this.state.hover.change !== null ? this.state.hover.change.toLocaleString() : 'N/A'
-		const cumulativeTotal = this.state.hover.value !== null ? this.state.hover.value.toLocaleString() : 'N/A'
+		const { hover } = this.state
+		const hoverDate = parseInt(hover.period.slice(-2), 10)
+		const currDate = moment(Date.now()).date() + 1
+		// Hide tooltip for future dates (useful because we've appended an extra date for visual purposes)
+		if (hoverDate >= currDate) {
+			return
+		}
+		const dailyTotal = hover.change !== null ? hover.change.toLocaleString() : 'N/A'
+		const cumulativeTotal = hover.value !== null ? hover.value.toLocaleString() : 'N/A'
 		return (
 			<LineChartTooltip
-				x={this.state.hover.x}
-				y={this.state.hover.y}
+				x={hover.x}
+				y={hover.y}
 				height={TOOLTIP_HEIGHT}
 				width={TOOLTIP_WIDTH}
 			>
 				<div>
-					<span className="title">Day: </span>{this.state.hover.period}
+					<span className="title">Day: </span>{hover.period}
 				</div>
 				<div>
 					<span className="title">Daily total: </span>{dailyTotal}
@@ -247,13 +287,34 @@ export default class CumulativeAreaChart extends React.Component {
 
 function convertChartData(data) {
 	const totalAmounts = data.map(d => d.total_amount)
-	return data.map((datum, i) => {
+	let isFirstNull = true
+	let d = data.map((datum, i) => {
 		const value = datum.total_amount !== null ? sum(totalAmounts.slice(0, i + 1)) : null
-		return {
-			date: moment(datum.bucket),
-			value: value,
-			change: datum.total_amount
+		// We add one extra non-null datum at the end which duplicates the final non-null datum,
+		// producing a more legible flat line extending from final true data point
+		if (value == null && isFirstNull) {
+			const prevValue = sum(totalAmounts.slice(0, i))
+			const prevDatum = data[i - 1]
+			isFirstNull = false
+			return {
+				date: moment(datum.bucket),
+				value: prevValue,
+				change: prevDatum.total_amount
+			}
+		} else {
+			return {
+				date: moment(datum.bucket),
+				value: value,
+				change: datum.total_amount
+			}
 		}
 	})
+
+	// we need to add another tick because we are actually labelling between ticks
+	// so for 7 labels we need 8 ticks
+	let lastDay = d[d.length - 1]
+	let d2 = { date: moment(lastDay.date).add(1, 'day'), value: null, change: null }
+	d.push(d2)
+	return d
 }
 

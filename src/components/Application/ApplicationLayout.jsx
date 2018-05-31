@@ -11,9 +11,7 @@ import Products from '../Products/Products'
 import ZebraPrinter from '../OldComponents/ZebraPrinter'
 import Navbar from '../Navbar/Navbar.jsx'
 import LabelPrinter from '../OldComponents/LabelPrinter'
-import Inventory from '../Inventory/Inventory.jsx'
 import Task from '../TaskPage/TaskPage.jsx'
-import Goals from '../Goals/Goals'
 import PrivateRoute from '../Router/PrivateRoute'
 import Login from '../Login/Login'
 import Topbar from '../Topbar/Topbar'
@@ -24,7 +22,7 @@ import ProcessPage from '../ProcessPage/ProcessPage'
 import Registration from '../Registration/Registration'
 import Modal from '../Modal/Modal'
 import NewFeatures from '../NewFeatures/NewFeatures'
-import Inventory2 from '../Inventory2/Inventory'
+import Inventory from '../Inventory/Inventory'
 import RecipeList from '../RecipeList/RecipeList'
 import NewUserChecklist from '../NewUserChecklist/NewUserChecklist'
 
@@ -59,8 +57,7 @@ function App(props) {
       <div className="application-content">
         <Route exact path={"/"} component={Home} />
 	      <Route exact path={"/activity-log"} component={Activity} />
-	      <Route path="/inventory" component={Inventory2} />
-	      <Route exact path={"/old-inventory/:id?"} component={Inventory} />
+	      <Route path="/inventory" component={Inventory} />
         <Route exact path={"/labels/"} component={ZebraPrinter} />
         <Route path={"/zebra/"} component={ZebraPrinter} />
         <Route path={"/dymo/"} component={LabelPrinter} />
@@ -71,7 +68,6 @@ function App(props) {
         <Route path={"/recipelist"} component={RecipeList} />
         <Route path={"/products/:id"} component={ProductPage} />
         <Route path={"/team/:ext?"} component={TeamSettings} />
-        <Route path={"/goals"} component={Goals} />
         <Route path={"/account"} component={Account} />
         <Route path={"/googleconnect/:ext?"} component={Account} />
         <Route path={"/checklist/"} component={NewUserChecklist} />
