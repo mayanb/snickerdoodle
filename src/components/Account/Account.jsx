@@ -26,6 +26,9 @@ class Account extends React.Component {
 	}
 	
 	updateFactorySetting(key, value) {
+		if (this.props.isUpdatingSetting) {
+			return
+		}
 		this.props.dispatch(actions.updateUserSetting(this.props.user.team, key, value))
 	}
 }
@@ -36,6 +39,7 @@ const mapStateToProps = (state/*, props*/) => {
   return {
     users: state.users,
 		user: user,
+		isUpdatingSetting: ui.isUpdatingSetting,
   }
 }
 
