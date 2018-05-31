@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import AccountHeader from './AccountHeader'
 import AccountBasics from './AccountBasics'
 import AccountIntegrations from './AccountIntegrations'
+import FactoryOptions from './FactoryOptions'
 import AccountTeam from './AccountTeam'
 import './styles/account.css'
 
@@ -13,6 +14,7 @@ class Account extends React.Component {
 				<AccountHeader />
 				<AccountBasics />
 				<AccountIntegrations ext={this.props.match.params.ext} />
+				<FactoryOptions/>
 				<AccountTeam />
 			</div>
 		)
