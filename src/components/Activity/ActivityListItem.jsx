@@ -1,9 +1,9 @@
 import React from 'react'
 import ObjectListItem from '../ObjectList/ObjectListItem'
 import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
-import { formatAmount } from "../../utilities/stringutils"
+import { formatAmount, getProcessIcon } from "../../utilities/stringutils"
+import Pill from '../Pill/Pill'
 import Img from '../Img/Img'
-import { getProcessIcon } from "../../utilities/stringutils"
 import { dashboardPath } from "../../utilities/urlutils"
 import { Link } from 'react-router-dom'
 
@@ -26,7 +26,8 @@ export default class ActivityListItem extends React.Component {
 					{process_type.code}
 				</OverflowSafeText>
 				<OverflowSafeText className="process-name">
-					{process_type.name}
+					<span style={{marginRight: '6px'}}>{process_type.name}</span>
+					{process_type.is_trashed && <Pill color='gray'>Deleted</Pill> }
 				</OverflowSafeText>
 				<OverflowSafeText tooltipText={formatAllProductCodes(product_types)} className="product-code">
 					{formatProductCodes(product_types)}

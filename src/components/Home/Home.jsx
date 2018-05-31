@@ -146,7 +146,7 @@ class Home extends React.Component {
 			<PageSpecificNewFeatureIntro
 				onClose={this.handleCloseAnnouncement.bind(this)}
 				content="Keep your mission critical goals in focus. You can now sync your goals with real-time production trends, navigate quickly between trends and activity logs, and save important views of your data so key insights are just a click away."
-				title="Introducing the Re-vamped Trends and Goals"
+				title="Introducing revamped trends and goals"
 				finalCallToAction="Learn about revamped goals and trends"
 				imgSrc="goal-setting"
 				imgHeightWithUnits="358px"
