@@ -56,6 +56,12 @@
         flex: 1;
         visibility: hidden;
         height: 26px;
+        width: 43.5px;
+        
+        &.trashed-process {
+            pointer-events: none;
+            cursor: default;
+        }
     }
 
 }
