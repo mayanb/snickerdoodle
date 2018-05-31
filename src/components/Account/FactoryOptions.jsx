@@ -38,7 +38,7 @@ function SelectableLabelImages({ taskLabelType }) {
 		<div className="selectable-label-images">
 			{labelImages.map((img, i) =>
 				<div key={i} className={`label-image ${taskLabelType === i ? 'selected' : ''}`}>
-					<Img src={img} height="52px" className="icon"/>
+					<Img src={img} className="icon"/>
 				</div>
 			)}
 		</div>

@@ -1,7 +1,7 @@
 @import 'styles/constants.scss';
 
 .my-account {
-	max-width: 500px;
+	max-width: 590px;
 	padding-left: 36px;
 
 }
@@ -21,7 +21,7 @@
 	}
 }
 
-.account-basics, .account-integrations, .account-team .factory-options {
+.account-basics, .account-integrations, .account-team, .factory-options {
 	margin-bottom: 50px;
 }
 
@@ -101,11 +101,19 @@
 		display: flex;
 		flex-direction: row;
 		margin-top: 8px;
+		
 		.label-image {
-			flex: 1;
+			flex: 0;
 			cursor: pointer;
-			&.selected {
-				border: 4px solid skyblue;
+			padding-right: 16px;
+			
+			img {
+				width: 135px;
+				border-radius: 6%;
+			}
+			
+			&.selected > img {
+				border: 2px solid $theme-color;
 			}
 		}
 	}
