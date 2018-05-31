@@ -14,7 +14,7 @@ class Account extends React.Component {
 				<AccountHeader />
 				<AccountBasics />
 				<AccountIntegrations ext={this.props.match.params.ext} />
-				<FactoryOptions/>
+				<FactoryOptions taskLabelType={this.props.taskLabelType}/>
 				<AccountTeam />
 			</div>
 		)
@@ -22,8 +22,11 @@ class Account extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
+	const {data, ui} = state.users
+	const user = data[ui.activeUser].user
   return {
-    users: state.users
+    users: state.users,
+		taskLabelType: user.task_label_type,
   }
 }
 

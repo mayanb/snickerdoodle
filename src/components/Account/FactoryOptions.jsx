@@ -4,18 +4,16 @@ import Card from '../Card/Card'
 import Img from '../Img/Img'
 
 
-export default class FactoryOptions extends React.Component {
-	render() {
-		return (
+export default function FactoryOptions({ taskLabelType }) {
+	return (
 			<div className="factory-options">
 				<AccountSectionHeader title="Factory Options" />
-				<LabelOptions />
+				<LabelOptions taskLabelType={taskLabelType}/>
 			</div>
-		)
-	}
+	)
 }
 
-function LabelOptions(props) {
+function LabelOptions({ taskLabelType }) {
 	return (
 		<Card>
 			<div className="account-integration">
@@ -27,18 +25,19 @@ function LabelOptions(props) {
 				<div className="integration-detail">
 					<span>Click to select the style of label you'd like printed whenever tasks labels are printed on the mobile app.</span>
 				</div>
-				<SelectableLabelImages/>
+				<SelectableLabelImages taskLabelType={taskLabelType}/>
 			</div>
 		</Card>
 	)
 }
 
-function SelectableLabelImages(props) {
+function SelectableLabelImages({ taskLabelType }) {
 	const labelImages = ['goal-setting', 'goal-setting', 'goal-setting']
+	console.log(taskLabelType)
 	return (
 		<div className="selectable-label-images">
-			{labelImages.map(img =>
-				<div className="label-image">
+			{labelImages.map((img, i) =>
+				<div key={i} className={`label-image ${taskLabelType === i ? 'selected' : ''}`}>
 					<Img src={img} height="52px" className="icon"/>
 				</div>
 			)}
