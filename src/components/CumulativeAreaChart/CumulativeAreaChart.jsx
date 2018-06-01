@@ -233,7 +233,7 @@ export default class CumulativeAreaChart extends React.Component {
 					y: 0 + margin.top - TOOLTIP_HEIGHT,
 					value: currentDate.value,
 					change: currentDate.change,
-					period: moment(currentDate.date).format('ddd, MMM D')
+					momentDate: moment(currentDate.date)
 				}
 			)
 		}
@@ -254,10 +254,8 @@ export default class CumulativeAreaChart extends React.Component {
 
 	renderTooltip() {
 		const { hover } = this.state
-		const hoverDate = parseInt(hover.period.slice(-2), 10)
-		const currDate = moment(Date.now()).date() + 1
 		// Hide tooltip for future dates (useful because we've appended an extra date for visual purposes)
-		if (hoverDate >= currDate) {
+		if (hover.momentDate.isAfter(moment(Date.now()))) {
 			return
 		}
 		const dailyTotal = hover.change !== null ? hover.change.toLocaleString() : 'N/A'
@@ -270,7 +268,7 @@ export default class CumulativeAreaChart extends React.Component {
 				width={TOOLTIP_WIDTH}
 			>
 				<div>
-					<span className="title">Day: </span>{hover.period}
+					<span className="title">Day: </span>{hover.momentDate.format('ddd, MMM D')}
 				</div>
 				<div>
 					<span className="title">Daily total: </span>{dailyTotal}
