@@ -6,7 +6,8 @@ import AccountIntegrations from './AccountIntegrations'
 import FactoryOptions from './FactoryOptions'
 import AccountTeam from './AccountTeam'
 import './styles/account.css'
-import * as actions from "../AccountMenu/UserActions";
+import * as actions from "../AccountMenu/UserActions"
+import {isAdmin} from '../../authentication/authentication'
 
 class Account extends React.Component {
 	constructor(props) {
@@ -14,12 +15,13 @@ class Account extends React.Component {
 		this.updateFactorySetting = this.updateFactorySetting.bind(this)
 	}
 	render() {
+		const { match, user } = this.props
 		return (
 			<div className="my-account">
 				<AccountHeader />
 				<AccountBasics />
-				<AccountIntegrations ext={this.props.match.params.ext} />
-				<FactoryOptions taskLabelType={this.props.user.task_label_type} onSubmit={this.updateFactorySetting}/>
+				<AccountIntegrations ext={match.params.ext} />
+				{isAdmin(user) && <FactoryOptions taskLabelType={user.task_label_type} onSubmit={this.updateFactorySetting}/>}
 				<AccountTeam />
 			</div>
 		)
