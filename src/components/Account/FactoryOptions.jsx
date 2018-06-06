@@ -25,7 +25,7 @@ export default function FactoryOptions({ taskLabelType, onSubmit }) {
 }
 
 function SelectableLabelImages({ taskLabelType, onSubmit }) {
-	const labelImages = ['goal-setting', 'goal-setting', 'goal-setting']
+	const labelImages = ['task-label-type-0', 'task-label-type-1', 'task-label-type-2']
 	return (
 		<div className="selectable-label-images">
 			{labelImages.map((img, i) =>
