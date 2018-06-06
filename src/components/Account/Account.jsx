@@ -6,7 +6,7 @@ import AccountIntegrations from './AccountIntegrations'
 import FactoryOptions from './FactoryOptions'
 import AccountTeam from './AccountTeam'
 import './styles/account.css'
-import * as actions from "../AccountMenu/UserActions"
+import * as actions from "./TeamActions"
 import {isAdmin} from '../../authentication/authentication'
 
 class Account extends React.Component {
@@ -31,7 +31,7 @@ class Account extends React.Component {
 		if (this.props.isUpdatingSetting) {
 			return
 		}
-		this.props.dispatch(actions.updateUserSetting(this.props.user.team, key, value))
+		this.props.dispatch(actions.updateLabelType(this.props.user.team, key, value))
 	}
 }
 
