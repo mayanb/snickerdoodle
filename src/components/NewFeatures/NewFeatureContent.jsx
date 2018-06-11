@@ -1,15 +1,16 @@
 import React from 'react'
 import {emojify} from 'react-emojione'
+import {Link} from 'react-router-dom'
 import Pill from '../Pill/Pill'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Track tasks more accurately.",
-	content: "We’ve given the mobile app faster, more precise time inputting. This means using Time Fields for your Processes now helps squash input error, save time, and give you even finer control over your production line.",
-	type: 'improvement',
+	title: "Customize your label types.",
+	content: <span>Visit <Link to='/account'>Account Settings</Link> to customize the label printed by your Brother printer.</span>,
+	type: 'feature',
 }]
 
-let HEADER = {fontSmoothing: 'antialiased', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}
+let HEADER = {display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}
 let H1 = {color: "#0073F9", padding: "0 8px"}
 export default function NewFeaturesContent(props) {
 	return (
@@ -40,6 +41,12 @@ function Feature({title, type, content}) {
 		</div>
 	)
 }
+
+// const nfs = [{
+// 	title: "Track tasks more accurately.",
+// 	content: "We’ve given the mobile app faster, more precise time inputting. This means using Time Fields for your Processes now helps squash input error, save time, and give you even finer control over your production line.",
+// 	type: 'improvement',
+// }]
 
 // const nfs = [{
 // 	title: "Get production insights fast.",
