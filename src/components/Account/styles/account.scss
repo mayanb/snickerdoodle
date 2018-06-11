@@ -1,7 +1,7 @@
 @import 'styles/constants.scss';
 
 .my-account {
-	max-width: 500px;
+	max-width: 590px;
 	padding-left: 36px;
 
 }
@@ -21,7 +21,7 @@
 	}
 }
 
-.account-basics, .account-integrations, .account-team {
+.account-basics, .account-integrations, .account-team, .factory-options {
 	margin-bottom: 50px;
 }
 
@@ -93,6 +93,34 @@
 	.integration-detail {
 		color: #9A9A9A;
 		line-height: 20px;
+	}
+}
+
+.factory-options {
+	.selectable-label-images {
+		display: flex;
+		flex-direction: row;
+		margin-top: 8px;
+		
+		.label-image {
+			flex: 0;
+			cursor: pointer;
+			margin-right: 16px;
+			
+			img {
+				
+				min-width: 135px;
+				max-width: 135px;
+				min-height: 90px;
+				max-height: 90px;
+				border-radius: 6%;
+				border: 2px solid white;
+			}
+			
+			&.selected > img {
+				border: 2px solid $theme-color;
+			}
+		}
 	}
 }
 
