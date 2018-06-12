@@ -6,13 +6,17 @@
 	padding: 16px;
 	border-bottom: 1px solid $gray-ultra-light;
 	border-top: 1px solid $gray-ultra-light;
+	-webkit-font-smoothing: antialiased;
+
+	a {
+		color: $primary;
+	}
 }
 
 .nf {
 	line-height: 20px;
 	font-size: 14px;
 	letter-spacing: 0;
-	-webkit-font-smoothing: antialiased;
 
 	padding-top: 16px;
 	&:first-child {
