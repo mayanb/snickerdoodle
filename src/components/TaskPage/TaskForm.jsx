@@ -115,6 +115,12 @@ class TextAttribute extends React.Component {
 		this.handleReset = this.handleReset.bind(this)
 	}
 
+	componentWillReceiveProps(np) {
+		if (np.value !== this.state.draftValue) {
+			this.setState({ draftValue: np.value })
+		}
+	}
+
 	handleInputChange(e) {
 		let word = e.target.value
 		this.setState({ draftValue: word})
