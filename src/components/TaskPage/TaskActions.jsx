@@ -22,7 +22,6 @@ export function getTask(task) {
   }
   return actions.fetch(TASK, request, null, res => {
     let task = res.body
-    console.log('constructing attributes')
     task.attributesWithValues = attributesWithValues(task.process_type.attributes, task.attribute_values)
     task.task_ingredients = addInputsToTaskIngredients(task.task_ingredients, task.inputs)
     return task
