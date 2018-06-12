@@ -12,6 +12,7 @@ const TIME_TO_SHOW_SAVED = 1500
 export default class TaskForm extends React.Component {
 	render() {
 		const { taskAttributes, onSave } = this.props
+		console.log(taskAttributes)
 		return (
 			<div className="task-form">
 				{taskAttributes.map(a =>
@@ -113,6 +114,12 @@ class TextAttribute extends React.Component {
 		this.handleInputChange = this.handleInputChange.bind(this)
 		this.handleSave = this.handleSave.bind(this)
 		this.handleReset = this.handleReset.bind(this)
+	}
+
+	componentWillReceiveProps(np) {
+		if (np.value !== this.state.draftValue) {
+			this.setState({ draftValue: np.value })
+		}
 	}
 
 	handleInputChange(e) {
