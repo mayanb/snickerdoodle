@@ -18,3 +18,18 @@ export function shouldShowChecklist(team) {
 		team !== 'mkec'
 	)
 }
+
+const PERSISTENT_USERS_KEY = 'users-v5'
+
+export function get_active_user() {
+	let users = getPersistentUserData()
+	return users.data[users.ui.activeUser]
+}
+
+export function getPersistentUserData() {
+	return JSON.parse(window.localStorage.getItem(PERSISTENT_USERS_KEY))
+}
+
+export function updatePersistentUserData(data) {
+	window.localStorage.setItem(PERSISTENT_USERS_KEY, JSON.stringify(data))
+}

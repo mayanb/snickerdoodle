@@ -14,6 +14,7 @@ import {
 } from '../../reducers/TaskReducerExtension'
 import {  TASK, TASKS, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
 import * as actions from '../../reducers/APIDataActions'
+import { get_active_user } from '../../utilities/userutils'
 
 export function getTask(task) {
   let request = { 
@@ -175,8 +176,7 @@ export function markAsUsed(index, id) {
     let team = 1
     let user_id = 1
     try {
-      let users = JSON.parse(window.localStorage.getItem('users-v5'))
-      let user = users.data[users.ui.activeUser].user
+      let user = get_active_user()
       team = user.team
       user_id = user.user_id
     } catch(e) {
