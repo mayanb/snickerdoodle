@@ -111,9 +111,9 @@ class ProcessAttributeList extends React.Component {
 		dispatch(actions.archiveAttribute(process_index, index, process.attributes[index]))
 	}
 
-	saveAttribute(name, type) {
+	saveAttribute(name, type, is_recurrent) {
 		let { process, dispatch } = this.props
-		let attribute = { name: name, process_type: process.id, datatype: type }
+		let attribute = { name: name, process_type: process.id, datatype: type, is_recurrent: is_recurrent }
 		dispatch(actions.saveAttribute(0, attribute))
 	}
 

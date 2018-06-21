@@ -62,9 +62,9 @@ export default class ProcessAttributeNew extends React.Component {
 	}
 
 	handleSubmit() {
-		let { name, type } = this.state
+		let { name, type, is_recurrent } = this.state
 		if(this.stateIsValid()) {
-			this.props.onSubmit(name, type.value)
+			this.props.onSubmit(name, type.value, is_recurrent)
 		}
 	}
 }
