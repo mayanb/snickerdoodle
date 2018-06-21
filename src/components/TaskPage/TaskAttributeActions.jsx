@@ -41,7 +41,7 @@ export function saveEditingAttribute(index, params) {
 	return function (dispatch) {
 		dispatch(requestSaveAttribute(index, params))
 
-		return api.post('/ics/taskAttributes/create/')
+		return api.post('/ics/taskAttributes/')
 			.send(params)
 			.then(res => {
 				dispatch(requestSaveAttributeSuccess(index, params))
