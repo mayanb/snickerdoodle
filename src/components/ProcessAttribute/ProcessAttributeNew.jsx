@@ -1,8 +1,8 @@
 import React from 'react'
 import Button from '../Button/Button'
-import { Checkbox } from 'antd'
 import ProcessAttributeField from './ProcessAttributeField'
 import ElementCard from '../Element/ElementCard'
+import ProcessAttributeRecurrentCheckbox from './ProcessAttributeRecurrentCheckbox'
 
 export default class ProcessAttributeNew extends React.Component {
 	constructor(props) {
@@ -33,9 +33,7 @@ export default class ProcessAttributeNew extends React.Component {
 						onChange={(e) => this.handleChange("type", e)}
 					/>
 				</div>
-				<div className="recurrent-checkbox">
-					<Checkbox onChange={this.handleCheckBoxChange}>Attribute records multiple values (e.g. temperature every hour) </Checkbox>
-				</div>
+				<ProcessAttributeRecurrentCheckbox checked={this.state.is_recurrent} onChange={this.handleCheckBoxChange}/>
 				<Button 
 					wide
 					isLoading={isLoading} 
