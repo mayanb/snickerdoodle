@@ -36,7 +36,7 @@ class AttributeField extends React.Component {
 
 	handleSave(value) {
 		this.setState({ isLoading: true, hasError: false })
-		return this.props.onSave(this.props.taskAttribute.id, value)
+		return this.props.onSave(this.props.taskAttribute, value)
 			.then(() => {
 				window.setTimeout(() => this.setState({ isLoading: false, justSaved: true }), TIME_TO_LOAD)
 				window.setTimeout(() => this.setState({ justSaved: false }), TIME_TO_LOAD + TIME_TO_SHOW_SAVED)
@@ -64,8 +64,8 @@ class AttributeField extends React.Component {
 		if (taskAttribute.is_recurrent) {
 			return <TaskRecurrentAttribute taskAttribute={taskAttribute} />
 		}
-		
-		const taskAttributeValue = taskAttribute.values.length === 0 ? '' : taskAttribute.values[0].value
+		const values = taskAttribute.values
+		const taskAttributeValue = values.length === 0 ? '' : values[values.length - 1].value
 		return taskAttribute.datatype === 'BOOL' ?
 			<BooleanAttribute 
 				value={taskAttributeValue}
