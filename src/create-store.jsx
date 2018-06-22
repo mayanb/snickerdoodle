@@ -7,7 +7,6 @@ import { stateDefault, productionTrendsStateDefault, modalStateDefault } from '.
 import {apiDataReducer} from './reducers/APIDataReducer'
 import {_task} from './reducers/TaskReducerExtension'
 import {_process} from './reducers/ProcessReducerExtension'
-import {_formula} from './reducers/FormulaReducerExtension'
 import { _inventory } from './reducers/InventoryReducerExtension'
 import _users from './reducers/UserReducer'
 import { _modal } from './reducers/ModalReducer'
@@ -46,11 +45,8 @@ export default function(data) {
   	taskDescendents: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_DESCENDENTS, stateDefault), 
   	taskAncestors: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_ANCESTORS, stateDefault), 
   	taskAttribute: createFilteredReducer(apiDataReducer, action => action.name === types.TASK_ATTRIBUTE, stateDefault), 
-  	processInventories: createFilteredReducer(apiDataReducer, action => action.name === types.PROCESS_INVENTORY, stateDefault),
     graphs: createFilteredReducer(apiDataReducer, action => action.name === types.GRAPHS, stateDefault),
-    contacts: createFilteredReducer(apiDataReducer, action => action.name === types.CONTACTS, stateDefault),
     alerts: createFilteredReducer(apiDataReducer, action => action.name === types.ALERTS, stateDefault),
-    formulas: createFilteredReducer(_formula, action => action.name === types.FORMULAS, stateDefault),
 	  productionTrends: createFilteredReducer(productionTrendsReducer, action => action.name === types.PRODUCTION_TRENDS, productionTrendsStateDefault),
 	  modal: createFilteredReducer(_modal, action => action.name === types.MODAL, modalStateDefault),
     inventory: createFilteredReducer(_inventory, action => action.name === types.INVENTORY, stateDefault),

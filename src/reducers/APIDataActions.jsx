@@ -12,6 +12,7 @@ import {
   REQUEST_EDIT_ITEM_SUCCESS,
   REQUEST_EDIT_ITEM_FAILURE,
   PAGE,
+  RESET_PAGE,
   SELECT,
 } from './APIDataReducer'
 import api from '../components/WaffleconeAPI/api.jsx'
@@ -24,6 +25,20 @@ export function fetch(name, request, sort, processorFn) {
       .then(async (res) => {
         let processed = await processorFn(res)
         return dispatch(requestSuccess(name, processed, sort))
+      })
+      .catch(err => dispatch(requestFailure(name, err)))
+  }
+}
+
+export function fetchPaginated(name, request, sort, processorFn, append) {
+  return dispatch => {
+    dispatch(getRequest(name))
+    return api.get(request.url)
+      .query(request.query)
+      .then(async (res) => {
+        let processed = await processorFn(res)
+        console.log(processed.next)
+        return dispatch(requestSuccess(name, processed.results, sort, append, processed.next))
       })
       .catch(err => dispatch(requestFailure(name, err)))
   }
@@ -80,6 +95,13 @@ export function page(name, direction) {
   }
 }
 
+export function resetPage(name) {
+  return {
+    type: RESET_PAGE,
+    name: name,
+  }
+}
+
 export function select(name, id) {
   return {
     type: SELECT,
@@ -112,12 +134,14 @@ export function requestFailure(name, err) {
   }
 }
 
-export function requestSuccess(name, json, sort) {
+export function requestSuccess(name, json, sort, append=false, more=null) {
   return {
     name: name,
     sort: sort,
     type: REQUEST_SUCCESS, 
-    data: json
+    data: json,
+    more: more,
+    append: append
   }
 }
 
