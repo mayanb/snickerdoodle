@@ -53,7 +53,11 @@ function attributesWithValues(attributes, attributeValues) {
   })
 	// Cluster recurring TaskAttributes into their respective Attributes
 	attributeValues.forEach(attrValue => attrByID[attrValue.attribute].values.push(attrValue))
-  return Object.values(attrByID).sort((a, b) => b.rank - a.rank) // Sort Attributes in user-specified order (rank)
+	// Sort Attributes in user-specified order (rank)
+  const _attributesWithValues = Object.values(attrByID).sort((a, b) => b.rank - a.rank)
+	// (In place) sort each attribute's values oldest to newest -- lets us display them properly, and predictably append new values to the end
+	_attributesWithValues.forEach(taskAttribute => taskAttribute.values.sort((a,b) => new Date(a.updated_at) - new Date(b.updated_at)))
+	return _attributesWithValues
 }
 
 export function getTasks(params) {
