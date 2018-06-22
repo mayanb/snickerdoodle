@@ -57,7 +57,7 @@ export function postCreate(name, request, sort, processorFn) {
   }
 }
 
-export function postEdit(name, request, index, processorFn) {
+export function patchEdit(name, request, index, processorFn) {
   return dispatch => {
     dispatch(requestEdit(name, index))
     return api.patch(request.url)
@@ -73,7 +73,7 @@ export function postEdit(name, request, index, processorFn) {
   }
 }
 
-export function postDelete(name, request, index) {
+export function softDelete(name, request, index) {
   return dispatch => {
     dispatch(requestDelete(name, index))
     return api.patch(request.url)

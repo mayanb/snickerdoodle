@@ -24,7 +24,7 @@ export function postRequestEditAccountType(index, data, success) {
     url: `/ics/userprofiles/edit/${data.id}/`,
     data: newData
   }
-  return actions.postEdit(MEMBERS, request, index, () => newData)
+  return actions.patchEdit(MEMBERS, request, index, () => newData)
 }
 
 export function pageMembers(direction) {

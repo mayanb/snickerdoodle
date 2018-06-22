@@ -39,7 +39,7 @@ export function editProcess(json, index, processID) {
     url: `${BASE_ENDPOINT}/edit/${processID}/`,
     data: json
   }
-  return actions.postEdit(PROCESSES, request, index, res => res.body)
+  return actions.patchEdit(PROCESSES, request, index, res => res.body)
 }
 
 export function postDeleteProcess(process, index) {
@@ -47,7 +47,7 @@ export function postDeleteProcess(process, index) {
     url: `${BASE_ENDPOINT}/${process.id}/`, 
     data: { is_trashed: true } 
   }
-  return actions.postDelete(PROCESSES, request, index)
+  return actions.softDelete(PROCESSES, request, index)
 }
 
 export function selectProcess(id) {
