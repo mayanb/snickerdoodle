@@ -1,4 +1,5 @@
 import update from 'immutability-helper'
+import { getPersistentUserData, updatePersistentUserData } from '../utilities/userutils'
 import {
 	REQUEST_LOGIN,
 	REQUEST_LOGIN_SUCCESS,
@@ -23,9 +24,8 @@ import {
 } from '../components/AccountMenu/UserActions'
 
 function getDefaultState() {
-	// get the state from local storage 
-	let state = JSON.parse(window.localStorage.getItem('users-v5'))
-
+	let state = getPersistentUserData()
+	
 	// if there was nothing in local storage, fill it with default 
 	if (!state) {
 		return {
@@ -92,7 +92,7 @@ function setGoogleAuthentication(state, action) {
 			}
 		}
 	})
-	window.localStorage.setItem('users-v5', JSON.stringify(ns))
+	updatePersistentUserData(ns)
 	return ns
 }
 
@@ -106,7 +106,7 @@ function setGoogleEmail(state, action) {
 			}
 		}
 	})
-	window.localStorage.setItem('users-v5', JSON.stringify(ns))
+	updatePersistentUserData(ns)
 	return ns
 }
 
@@ -137,7 +137,7 @@ function requestLoginSuccess(state, action) {
 		}
 	});
 
-	window.localStorage.setItem('users-v5', JSON.stringify(newState))
+	updatePersistentUserData(newState)
 	return newState
 }
 
@@ -173,7 +173,7 @@ function requestLogoutSuccess(state, action) {
 		}
 	})
 
-	window.localStorage.setItem('users-v5', JSON.stringify(newState))
+	updatePersistentUserData(newState)
 	return newState
 }
 
@@ -194,7 +194,7 @@ function switchActiveUser(state, action) {
 			$merge: {activeUser: action.id, isUpdatingSetting: null}
 		}
 	})
-	window.localStorage.setItem('users-v5', JSON.stringify(newState))
+	updatePersistentUserData(newState)
 	return newState
 }
 
@@ -253,7 +253,7 @@ function updateSettingSuccess(state, action) {
 			isUpdatingSetting: {$set: null}
 		}
 	})
-	window.localStorage.setItem('users-v5', JSON.stringify(ns))
+	updatePersistentUserData(ns)
 	return ns
 }
 
