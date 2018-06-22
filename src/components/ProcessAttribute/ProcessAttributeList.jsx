@@ -55,6 +55,7 @@ class ProcessAttributeList extends React.Component {
 				<div className="process-attr-list-header">
 					<span>Name</span>
 					<span>Type</span>
+					<span style={{visibility: 'hidden'}}>recurring</span>
 				</div>
 				<Slide>
 				{ 

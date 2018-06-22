@@ -48,6 +48,7 @@ class ProcessAttribute extends React.Component {
 			<ElementCard className="process-attribute" index={rank} handle onDelete={onDelete} onClick={onSelect}>
 				<span className="process-attr-name">{name}</span>
 				<ProcessAttributeDatatype type={datatype}/>
+				<div className={`recurrent-label ${is_recurrent ? '' : 'hidden'}`}>recurring</div>
 			</ElementCard>
 		)
 	}
