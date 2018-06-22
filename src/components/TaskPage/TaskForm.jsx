@@ -4,6 +4,7 @@ import './styles/taskform.css'
 import './styles/peripherals.css'
 import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
+import TaskRecurrentAttribute from './TaskRecurrentAttribute'
 
 const TIME_TO_STAY_UNSAVED = 500
 const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
@@ -60,6 +61,10 @@ class AttributeField extends React.Component {
 
 	renderValue() {
 		const { taskAttribute } = this.props
+		console.log(taskAttribute)
+		if (taskAttribute.is_recurrent) {
+			return <TaskRecurrentAttribute taskAttribute={taskAttribute} />
+		}
 		return taskAttribute.datatype === 'BOOL' ?
 			<BooleanAttribute 
 				value={taskAttribute.value} 
