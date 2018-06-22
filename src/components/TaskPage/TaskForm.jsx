@@ -61,18 +61,19 @@ class AttributeField extends React.Component {
 
 	renderValue() {
 		const { taskAttribute } = this.props
-		console.log(taskAttribute)
 		if (taskAttribute.is_recurrent) {
 			return <TaskRecurrentAttribute taskAttribute={taskAttribute} />
 		}
+		
+		const taskAttributeValue = taskAttribute.values.length === 0 ? '' : taskAttribute.values[0].value
 		return taskAttribute.datatype === 'BOOL' ?
 			<BooleanAttribute 
-				value={taskAttribute.value} 
+				value={taskAttributeValue}
 				onSave={this.handleSave}
 				{...this.state}
 			/> :
 			<TextAttribute 
-				value={taskAttribute.value} 
+				value={taskAttributeValue}
 				onSave={this.handleSave} 
 				{...this.state}
 			/>

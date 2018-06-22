@@ -1,22 +1,17 @@
 import React from 'react'
+import moment from 'moment'
 import './styles/taskrecurrentattribute.css'
-import { Input as AntDInput, List } from 'antd'
-const Search = AntDInput.Search
+import { Input, List } from 'antd'
+const Search = Input.Search
 
-export default function RecurrentAttribute({taskAttribute}) {
-	const data = [
-		'Racing car sprays burning fuel into crowd.',
-		'Japanese princess to wed commoner.',
-		'Australian walks 100km after outback crash.',
-		'Man charged over missing wedding girl.',
-		'Los Angeles battles huge wildfires.',
-	]
+export default function TaskRecurrentAttribute({taskAttribute}) {
+	const attributeValuesOldestToNewest = taskAttribute.values.sort((a,b) => new Date(a.updated_at) - new Date(b.updated_at))
 	return (
 		<div className="task-recurrent-attribute">
 			<List
 				bordered
-				dataSource={data}
-				renderItem={item => <Log item={item}/>}
+				dataSource={attributeValuesOldestToNewest}
+				renderItem={log => <Log log={log}/>}
 			/>
 			<Search
 				placeholder="Log a new value"
@@ -28,12 +23,14 @@ export default function RecurrentAttribute({taskAttribute}) {
 	)
 }
 
-function Log({item}) {
+function Log({log}) {
+	const logTime = moment(log.updated_at)
+	const displayTime = `${logTime.fromNow()} (${logTime.format("MMMM DD, hh:mma")})`
 	return (
 		<List.Item>
 			<div className="log">
-				<div className="value">Editable value</div>
-				<div className="time">One day ago (June 19, 9:31am)</div>
+				<div className="value">{log.value}</div>
+				<div className="time">{displayTime}</div>
 			</div>
 		</List.Item>
 	)

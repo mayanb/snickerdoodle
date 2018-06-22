@@ -42,13 +42,18 @@ function addInputsToTaskIngredients(taskIngredients, inputs) {
   })
 }
 
+// Match each ProcessType.Attribute with its TaskAttributeValue (if they've been filled in)
+// attribute.values = [...n] will contain n = 0 or 1 for non-recurring Attributes, n >= 0 for recurring Attributes
 function attributesWithValues(attributes, attributeValues) {
-	const sortedAttributeValues = attributeValues.sort((a, b) => b.id - a.id) //Sort to find most recent
-	return attributes.map(attribute => {
-		const valueObject = sortedAttributeValues.find(val => val.attribute === attribute.id)
-		attribute.value = valueObject ? valueObject.value : ''
-		return attribute
-	})
+  // Hash Attributes by id
+  const attrByID = {}
+  attributes.forEach(attr => {
+    attr.values = []
+		attrByID[attr.id] = attr
+  })
+	// Cluster recurring TaskAttributes into their respective Attributes
+	attributeValues.forEach(attrValue => attrByID[attrValue.attribute].values.push(attrValue))
+  return Object.values(attrByID).sort((a, b) => b.rank - a.rank) // Sort Attributes in user-specified order (rank)
 }
 
 export function getTasks(params) {
