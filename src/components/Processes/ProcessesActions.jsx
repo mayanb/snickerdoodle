@@ -1,6 +1,5 @@
 import * as actions from '../../reducers/APIDataActions'
 import {  PROCESSES } from '../../reducers/ReducerTypes'
-import {alphabetize} from '../../utilities/arrayutils.jsx'
 
 const BASE_ENDPOINT = '/ics/processes'
 
@@ -9,7 +8,7 @@ export function fetchProcesses(query) {
     url: BASE_ENDPOINT, 
     query: query,
   }
-  return actions.fetch(PROCESSES, request, alphabetize, res => organizeAttributes(res.body))
+  return actions.fetch(PROCESSES, request, null, res => organizeAttributes(res.body))
 }
 
 function organizeAttributes(processes) {
