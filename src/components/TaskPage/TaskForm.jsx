@@ -12,11 +12,11 @@ const TIME_TO_SHOW_SAVED = 1500
 
 export default class TaskForm extends React.Component {
 	render() {
-		const { taskAttributes, onSave } = this.props
+		const { taskAttributes, onSave, onCreate } = this.props
 		return (
 			<div className="task-form">
 				{taskAttributes.map(a =>
-					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} />
+					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} onCreate={onCreate}/>
 				)}
 			</div>
 		)
@@ -38,11 +38,14 @@ class AttributeField extends React.Component {
 		this.setState({ isLoading: true, hasError: false })
 		console.log('whatIm pulling id from',this.props.taskAttribute)
 		const { values } = this.props.taskAttribute
+		let apiPromise
 		if (values.length === 0) {
-			console.log('Attribute blank exist. Create a new one.')
-			return
+			console.log('Attribute doesnt exist. Create a new one.')
+			apiPromise = this.props.onCreate(this.props.taskAttribute.id, value)
+		} else {
+			apiPromise = this.props.onSave(this.props.taskAttribute.id, values[values.length - 1].id, value)
 		}
-		return this.props.onSave(this.props.taskAttribute.id, values[values.length - 1].id, value)
+		return apiPromise
 			.then(() => {
 				window.setTimeout(() => this.setState({ isLoading: false, justSaved: true }), TIME_TO_LOAD)
 				window.setTimeout(() => this.setState({ justSaved: false }), TIME_TO_LOAD + TIME_TO_SHOW_SAVED)
@@ -70,6 +73,7 @@ class AttributeField extends React.Component {
 		if (taskAttribute.is_recurrent) {
 			return <TaskRecurrentAttribute taskAttribute={taskAttribute} />
 		}
+		console.log(taskAttribute)
 		const values = taskAttribute.values
 		const taskAttributeValue = values.length === 0 ? '' : values[values.length - 1].value
 		return taskAttribute.datatype === 'BOOL' ?

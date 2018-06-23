@@ -15,6 +15,7 @@ class TaskPage extends React.Component {
 		this.handleFlagTask = this.handleFlagTask.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
 		this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
+		this.handleCreateAttribute = this.handleCreateAttribute.bind(this)
 	}
 
 	componentWillReceiveProps(np) {
@@ -48,6 +49,13 @@ class TaskPage extends React.Component {
 		let params = { taskAttributeID: taskAttributeID, task: task.id, value: value }
 		return this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
 	}
+	
+	handleCreateAttribute(attribute, value) {
+		const task = this.props.task
+		const index = task.attributesWithValues.findIndex(a => a.id === attribute)
+		let params = { attribute: attribute, task: task.id, value: value }
+		return this.props.dispatch(attributeActions.createEditingAttribute(index, params))
+	}
 
 	render() {
 		let { task } = this.props
@@ -66,6 +74,7 @@ class TaskPage extends React.Component {
 						task={task}
 					  attributes={task.attributesWithValues}
 					  onSaveAttribute={this.handleSaveAttribute}
+						onCreateAttribute={this.handleCreateAttribute}
 					/>
 					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.display} />
 				</div>

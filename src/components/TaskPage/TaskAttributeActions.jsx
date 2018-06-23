@@ -3,7 +3,8 @@ import { TASK } from '../../reducers/ReducerTypes'
 import {
   REQUEST_SAVE_ATTRIBUTE,
   REQUEST_SAVE_ATTRIBUTE_SUCCESS, 
-  REQUEST_SAVE_ATTRIBUTE_FAILURE
+  REQUEST_SAVE_ATTRIBUTE_FAILURE,
+	REQUEST_CREATE_ATTRIBUTE_SUCCESS,
 } from '../../reducers/TaskAttributeReducerExtension'
 
 
@@ -33,10 +34,19 @@ export function requestSaveAttributeFailure(index, params) {
 		params: params,
 
 	}
-
 }
 
-// PATCH-es taskAttribute (ie non-recurring task). params = {taskAttributeID, task, value}
+export function requestCreateAttributeSuccess(index, params, newTaskAttribute) {
+	return {
+		type: REQUEST_CREATE_ATTRIBUTE_SUCCESS,
+		name: TASK,
+		index: index,
+		params: params,
+		newTaskAttribute: newTaskAttribute,
+	}
+}
+
+// PATCH-es taskAttribute. params = {taskAttributeID, task, value}
 export function saveEditingAttribute(index, params) {
 	return function (dispatch) {
 		dispatch(requestSaveAttribute(index, params))
@@ -47,10 +57,26 @@ export function saveEditingAttribute(index, params) {
 				dispatch(requestSaveAttributeSuccess(index, params))
 			})
 			.catch(e => {
-				console.log(e)
 				dispatch(requestSaveAttributeFailure(index, params))
 				throw e
 			})
 	}
+}
 
+// Create new taskAttribute. params = { attribute, task, value }
+export function createEditingAttribute(index, params) {
+	return function (dispatch) {
+		dispatch(requestSaveAttribute(index, params))
+		
+		return api.post(`/ics/taskAttributes/`)
+			.send(params)
+			.then(res => {
+				console.log('yay, saved', res.body)
+				dispatch(requestCreateAttributeSuccess(index, params, res.body))
+			})
+			.catch(e => {
+				dispatch(requestSaveAttributeFailure(index, params))
+				throw e
+			})
+	}
 }

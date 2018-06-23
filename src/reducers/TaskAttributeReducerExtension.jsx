@@ -4,6 +4,8 @@ export const REQUEST_SAVE_ATTRIBUTE = 'REQUEST_SAVE_ATTRIBUTE'
 export const REQUEST_SAVE_ATTRIBUTE_SUCCESS = 'REQUEST_SAVE_ATTRIBUTE_SUCCESS'
 export const REQUEST_SAVE_ATTRIBUTE_FAILURE = 'REQUEST_SAVE_ATTRIBUTE_FAILURE'
 
+export const REQUEST_CREATE_ATTRIBUTE_SUCCESS = 'REQUEST_CREATE_ATTRIBUTE_SUCCESS'
+
 export function _taskAttribute(state, action) {
 	switch (action.type) {
 		case REQUEST_SAVE_ATTRIBUTE:
@@ -12,6 +14,8 @@ export function _taskAttribute(state, action) {
 			return requestSaveAttributeSuccess(state, action)
 		case REQUEST_SAVE_ATTRIBUTE_FAILURE:
 			return requestSaveAttributeFailure(state, action)
+		case REQUEST_CREATE_ATTRIBUTE_SUCCESS:
+			return requestCreateAttributeSuccess(state, action)
 		default:
 			return state
 	}
@@ -35,6 +39,24 @@ function requestSaveAttributeSuccess(state, action) {
 						[valuesArrayFinalIndex]: {
 							$merge: { value: action.params.value }
 						}
+					}
+				}
+			}
+		},
+		ui: {
+			$merge: { isSavingAttribute: false }
+		}
+	})
+}
+
+function requestCreateAttributeSuccess(state, action) {
+	console.log('bout to save (Attr, newTA)', state.data.attributesWithValues[action.index], action.newTaskAttribute)
+	return update(state, {
+		data: {
+			attributesWithValues: {
+				[action.index]: {
+					values: {
+						$push: [action.newTaskAttribute]
 					}
 				}
 			}
