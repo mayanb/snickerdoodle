@@ -17,7 +17,7 @@ import * as actions from '../../reducers/APIDataActions'
 
 export function getTask(task) {
   let request = { 
-    url: `/ics/tasks/${task}`, 
+    url: `/ics/tasks/${task}/`,
     query: {}
   }
   return actions.fetch(TASK, request, null, res => {
