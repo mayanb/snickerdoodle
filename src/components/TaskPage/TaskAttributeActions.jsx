@@ -71,7 +71,6 @@ export function createEditingAttribute(index, params) {
 		return api.post(`/ics/taskAttributes/`)
 			.send(params)
 			.then(res => {
-				console.log('yay, saved', res.body)
 				dispatch(requestCreateAttributeSuccess(index, params, res.body))
 			})
 			.catch(e => {

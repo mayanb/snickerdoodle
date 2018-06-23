@@ -50,7 +50,6 @@ function requestSaveAttributeSuccess(state, action) {
 }
 
 function requestCreateAttributeSuccess(state, action) {
-	console.log('bout to save (Attr, newTA)', state.data.attributesWithValues[action.index], action.newTaskAttribute)
 	return update(state, {
 		data: {
 			attributesWithValues: {
