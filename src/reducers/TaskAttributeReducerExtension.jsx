@@ -26,11 +26,16 @@ function requestSaveAttribute(state, action) {
 }
 
 function requestSaveAttributeSuccess(state, action) {
+	const valuesArrayFinalIndex = state.data.attributesWithValues[action.index].values.length - 1
 	return update(state, {
 		data: {
 			attributesWithValues: {
 				[action.index]: {
-					$merge: { value: action.params.value }
+					values: {
+						[valuesArrayFinalIndex]: {
+							$merge: { value: action.params.value }
+						}
+					}
 				}
 			}
 		},

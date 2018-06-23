@@ -36,17 +36,18 @@ export function requestSaveAttributeFailure(index, params) {
 
 }
 
-// params should have attribute, task, value
+// PATCH-es taskAttribute (ie non-recurring task). params = {taskAttributeID, task, value}
 export function saveEditingAttribute(index, params) {
 	return function (dispatch) {
 		dispatch(requestSaveAttribute(index, params))
 
-		return api.post('/ics/taskAttributes/')
-			.send(params)
+		return api.patch(`/ics/taskAttributes/${params.taskAttributeID}/`)
+			.send({value: params.value})
 			.then(res => {
 				dispatch(requestSaveAttributeSuccess(index, params))
 			})
 			.catch(e => {
+				console.log(e)
 				dispatch(requestSaveAttributeFailure(index, params))
 				throw e
 			})

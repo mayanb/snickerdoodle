@@ -36,7 +36,13 @@ class AttributeField extends React.Component {
 
 	handleSave(value) {
 		this.setState({ isLoading: true, hasError: false })
-		return this.props.onSave(this.props.taskAttribute, value)
+		console.log('whatIm pulling id from',this.props.taskAttribute)
+		const { values } = this.props.taskAttribute
+		if (values.length === 0) {
+			console.log('Attribute blank exist. Create a new one.')
+			return
+		}
+		return this.props.onSave(this.props.taskAttribute.id, values[values.length - 1].id, value)
 			.then(() => {
 				window.setTimeout(() => this.setState({ isLoading: false, justSaved: true }), TIME_TO_LOAD)
 				window.setTimeout(() => this.setState({ justSaved: false }), TIME_TO_LOAD + TIME_TO_SHOW_SAVED)

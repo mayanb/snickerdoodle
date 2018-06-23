@@ -42,10 +42,10 @@ class TaskPage extends React.Component {
 			.then(() => this.props.history.push('/activity-log'))
 	}
 
-	handleSaveAttribute(attributeId, value) {
+	handleSaveAttribute(attributeID, taskAttributeID, value) {
 		const task = this.props.task
-		const index = task.attributesWithValues.findIndex(a => a.id === attributeId)
-		let params = { attribute: attributeId, task: task.id, value: value }
+		const index = task.attributesWithValues.findIndex(a => a.id === attributeID)
+		let params = { taskAttributeID: taskAttributeID, task: task.id, value: value }
 		return this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
 	}
 
@@ -77,6 +77,7 @@ class TaskPage extends React.Component {
 const mapStateToProps = (state/*, props*/) => {
 	return {
 		task: state.task.data,
+		isSavingAttribute: state.task.ui.isSavingAttribute,
 	}
 }
 
