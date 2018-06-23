@@ -86,7 +86,6 @@ class TaskPage extends React.Component {
 const mapStateToProps = (state/*, props*/) => {
 	return {
 		task: state.task.data,
-		isSavingAttribute: state.task.ui.isSavingAttribute,
 	}
 }
 
