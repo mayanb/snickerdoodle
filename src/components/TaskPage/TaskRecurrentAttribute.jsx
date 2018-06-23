@@ -4,23 +4,44 @@ import './styles/taskrecurrentattribute.css'
 import { Input, List } from 'antd'
 const Search = Input.Search
 
-export default function TaskRecurrentAttribute({taskAttribute}) {
-	const attributeValuesOldestToNewest = taskAttribute.values.sort((a,b) => new Date(a.updated_at) - new Date(b.updated_at))
-	return (
-		<div className="task-recurrent-attribute">
-			<List
-				bordered
-				dataSource={attributeValuesOldestToNewest}
-				renderItem={log => <Log log={log}/>}
-			/>
-			<Search
-				placeholder="Log a new value"
-				enterButton="Add"
-				size="large"
-				onSearch={value => console.log(value)}
-			/>
-		</div>
-	)
+export default class TaskRecurrentAttribute extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {inputValue: ''}
+		
+		this.handleSearch = this.handleSearch.bind(this)
+	}
+	
+	render() {
+		const { loggedValues } = this.props
+		const { inputValue } = this.state
+		return (
+			<div className="task-recurrent-attribute">
+				{(loggedValues.length !== 0) && <List
+					bordered
+					dataSource={loggedValues}
+					renderItem={log => <Log log={log}/>}
+				/>}
+				<Search
+					placeholder="Log a new value"
+					enterButton="Add"
+					size="large"
+					value={inputValue}
+					onSearch={this.handleSearch}
+					style={{marginTop: '16px'}}
+					onChange={e => this.setState({ inputValue: e.target.value})}
+				/>
+			</div>
+		)
+	}
+	
+	handleSearch(value) {
+		if (value === '') {
+			return
+		}
+		this.props.onSave(value)
+		this.setState({ inputValue: ''})
+	}
 }
 
 function Log({log}) {

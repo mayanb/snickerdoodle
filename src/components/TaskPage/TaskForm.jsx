@@ -39,8 +39,8 @@ class AttributeField extends React.Component {
 		console.log('whatIm pulling id from',this.props.taskAttribute)
 		const { values } = this.props.taskAttribute
 		let apiPromise
-		if (values.length === 0) {
-			console.log('Attribute doesnt exist. Create a new one.')
+		if (values.length === 0 || this.props.taskAttribute.is_recurrent) { // Future: if we can EDIT recurrent attrs, this is too simple
+			console.log('Attribute doesnt exist OR is recurring Create a new one.')
 			apiPromise = this.props.onCreate(this.props.taskAttribute.id, value)
 		} else {
 			apiPromise = this.props.onSave(this.props.taskAttribute.id, values[values.length - 1].id, value)
@@ -71,7 +71,7 @@ class AttributeField extends React.Component {
 	renderValue() {
 		const { taskAttribute } = this.props
 		if (taskAttribute.is_recurrent) {
-			return <TaskRecurrentAttribute taskAttribute={taskAttribute} />
+			return <TaskRecurrentAttribute loggedValues={taskAttribute.values} onSave={this.handleSave} />
 		}
 		console.log(taskAttribute)
 		const values = taskAttribute.values
