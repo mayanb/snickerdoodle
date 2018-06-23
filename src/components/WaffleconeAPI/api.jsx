@@ -1,12 +1,8 @@
 import request from 'superagent'
 import * as urls from './urls'
+import { get_active_user } from '../../utilities/userutils'
 
 let host = urls.getBackend()
-
-function get_active_user() {
-	let users = JSON.parse(window.localStorage.getItem('users-v5'))
-	return users.data[users.ui.activeUser]
-}
 
 function get(path) {
 	let url = path.startsWith('http')?path:urls.latest(host, path)
@@ -33,7 +29,6 @@ function post(path) {
 		team = user.team
 		id = user.user_id
 		profile_id = user.profile_id
-		//token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
 	} catch(e) {
 		
 	}
@@ -52,7 +47,6 @@ function put(path) {
 	//let token = ""
 	try {
 		//team = get_active_user().user.team
-		//token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
 	} catch(e) {}
 
 	return request('PUT', url)

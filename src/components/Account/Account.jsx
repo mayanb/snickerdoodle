@@ -17,8 +17,7 @@ class Account extends React.Component {
 	}
 	
 	componentDidMount() {
-		const currentUserId = JSON.parse(window.localStorage.getItem('users-v5')).ui.activeUser
-		this.props.dispatch(userActions.requestRefreshUserAccount(currentUserId))
+		this.props.dispatch(userActions.requestRefreshUserAccount(this.props.user.id))
 	}
 	
 	render() {
