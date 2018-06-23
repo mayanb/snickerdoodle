@@ -65,24 +65,30 @@ class AttributeField extends React.Component {
 			</div>
 		)
 	}
-
+	
 	renderValue() {
 		const { taskAttribute } = this.props
+		const isBoolean = taskAttribute.datatype === 'BOOL'
 		if (taskAttribute.is_recurrent) {
-			return <TaskRecurrentAttribute loggedValues={taskAttribute.values} onSave={this.handleSave} />
+			return <TaskRecurrentAttribute
+				loggedValues={taskAttribute.values}
+				onSave={this.handleSave}
+				isBoolean={isBoolean}
+				{...this.state}
+			/>
 		}
 
 		const values = taskAttribute.values
 		const taskAttributeValue = values.length === 0 ? '' : values[values.length - 1].value
-		return taskAttribute.datatype === 'BOOL' ?
-			<BooleanAttribute 
+		return isBoolean ?
+			<BooleanAttribute
 				value={taskAttributeValue}
 				onSave={this.handleSave}
 				{...this.state}
 			/> :
-			<TextAttribute 
+			<TextAttribute
 				value={taskAttributeValue}
-				onSave={this.handleSave} 
+				onSave={this.handleSave}
 				{...this.state}
 			/>
 	}
@@ -128,7 +134,7 @@ class TextAttribute extends React.Component {
 		this.handleSave = this.handleSave.bind(this)
 		this.handleReset = this.handleReset.bind(this)
 	}
-
+	
 	handleInputChange(e) {
 		let word = e.target.value
 		this.setState({ draftValue: word})
@@ -146,7 +152,7 @@ class TextAttribute extends React.Component {
 
 	handleSave() {
 		if (this.state.draftValue === this.props.value) {
-			return 
+			return
 		}
 		this.handleSaveWrapper(this.state.draftValue)
 	}
