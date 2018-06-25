@@ -27,7 +27,7 @@ export function postDeleteProduct(product, index) {
     url: `/ics/products/${product.id}/`, 
     data: { is_trashed: true } 
   }
-  return actions.postDelete(PRODUCTS, request, index)
+  return actions.softDelete(PRODUCTS, request, index)
 }
 
 export function postEditProduct(product, newData, index) {
@@ -35,5 +35,5 @@ export function postEditProduct(product, newData, index) {
     url: `/ics/products/${product.id}/`,
     data: newData
   }
-  return actions.postEdit(PRODUCTS, request, index, res => res.body)
+  return actions.patchEdit(PRODUCTS, request, index, res => res.body)
 }
