@@ -1,103 +1,45 @@
-import api from '../WaffleconeAPI/api.jsx'
-import {
-  REQUEST,
-  REQUEST_SUCCESS,
-  REQUEST_FAILURE,
-  SELECT,
-  PAGE,
-	RESET_PAGE,
-} from '../../reducers/APIDataReducer'
 import {
 	REQUEST_HISTORY,
 	REQUEST_HISTORY_SUCCESS,
 	REQUEST_HISTORY_FAILURE,
 } from '../../reducers/InventoryReducerExtension'
-
+import api from '../WaffleconeAPI/api.jsx'
+import * as actions from '../../reducers/APIDataActions'
 import {  INVENTORY } from '../../reducers/ReducerTypes'
 
 export function fetchInitialInventory(processIds, productIds, ordering) {
-  return dispatch => {
-    dispatch(requestInventory())
-	  const query = {
-		  ordering: ordering
-	  }
-	  if(processIds.length)
-	  	query.process_types = processIds.join(',')
-	  if(productIds.length)
-		  query.product_types = productIds.join(',')
-	  return api.get('/ics/inventories/')
-		  .query(query)
-		  .then(({ body }) => {
-			  dispatch(requestInventorySuccess(body.results, body.next))
-		  })
-      .catch(e => {
-        dispatch(requestInventoryFailure(e))
-	      console.log(e)
-	      throw e
-      })
+  const query = {
+    ordering: ordering
   }
+  if(processIds.length)
+    query.process_types = processIds.join(',')
+  if(productIds.length)
+    query.product_types = productIds.join(',')
+  let request = {
+    url: '/ics/inventories/',
+    query: query
+  }
+  return actions.fetchPaginated(INVENTORY, request, null, res => res.body, false)
 }
 
 export function fetchMoreInventory(page) {
-  return dispatch => {
-    dispatch(requestInventory())
-    return api.get(page)
-      .then(({body}) => {
-        dispatch(requestInventorySuccess(body.results, body.next, true))
-      })
-      .catch(e => {
-        dispatch(requestInventoryFailure(e))
-        console.log(e)
-        throw e
-      })
+  let request = {
+    url: page,
+    query: {}
   }
+  return actions.fetchPaginated(INVENTORY, request, null, res => res.body, true)
 }
 
 export function selectInventory(index) {
-  return {
-    type: SELECT,
-    index: index,
-    name: INVENTORY,
-  }
+  return actions.select(INVENTORY, index)
 }
 
 export function pageInventory(direction) {
-  return {
-    type: PAGE,
-    direction: direction,
-    name: INVENTORY
-  }
+  return actions.page(INVENTORY, direction)
 }
 
 export function resetPageInventory() {
-	return {
-		type: RESET_PAGE,
-		name: INVENTORY
-	}
-}
-
-function requestInventory() {
-  return {
-    type: REQUEST,
-    name: INVENTORY
-  }
-}
-
-function requestInventoryFailure(err) {
-  return {
-    type: REQUEST_FAILURE,
-    name: INVENTORY
-  }
-}
-
-function requestInventorySuccess(json, more, append=false) {
-  return {
-    type: REQUEST_SUCCESS,
-    name: INVENTORY,
-    data: json,
-    more: more,
-    append: append,
-  }
+	return actions.resetPage(INVENTORY)
 }
 
 export function fetchInventoryHistory(teamId, processId, productId) {

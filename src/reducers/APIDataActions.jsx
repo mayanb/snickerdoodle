@@ -12,6 +12,7 @@ import {
   REQUEST_EDIT_ITEM_SUCCESS,
   REQUEST_EDIT_ITEM_FAILURE,
   PAGE,
+  RESET_PAGE,
   SELECT,
 } from './APIDataReducer'
 import api from '../components/WaffleconeAPI/api.jsx'
@@ -24,6 +25,20 @@ export function fetch(name, request, sort, processorFn) {
       .then(async (res) => {
         let processed = await processorFn(res)
         return dispatch(requestSuccess(name, processed, sort))
+      })
+      .catch(err => dispatch(requestFailure(name, err)))
+  }
+}
+
+export function fetchPaginated(name, request, sort, processorFn, append) {
+  return dispatch => {
+    dispatch(getRequest(name))
+    return api.get(request.url)
+      .query(request.query)
+      .then(async (res) => {
+        let processed = await processorFn(res)
+        console.log(processed.next)
+        return dispatch(requestSuccess(name, processed.results, sort, append, processed.next))
       })
       .catch(err => dispatch(requestFailure(name, err)))
   }
@@ -42,7 +57,7 @@ export function postCreate(name, request, sort, processorFn) {
   }
 }
 
-export function postEdit(name, request, index, processorFn) {
+export function patchEdit(name, request, index, processorFn) {
   return dispatch => {
     dispatch(requestEdit(name, index))
     return api.patch(request.url)
@@ -58,7 +73,7 @@ export function postEdit(name, request, index, processorFn) {
   }
 }
 
-export function postDelete(name, request, index) {
+export function softDelete(name, request, index) {
   return dispatch => {
     dispatch(requestDelete(name, index))
     return api.patch(request.url)
@@ -77,6 +92,13 @@ export function page(name, direction) {
     direction: direction,
     name: name,
 
+  }
+}
+
+export function resetPage(name) {
+  return {
+    type: RESET_PAGE,
+    name: name,
   }
 }
 
@@ -112,12 +134,14 @@ export function requestFailure(name, err) {
   }
 }
 
-export function requestSuccess(name, json, sort) {
+export function requestSuccess(name, json, sort, append=false, more=null) {
   return {
     name: name,
     sort: sort,
     type: REQUEST_SUCCESS, 
-    data: json
+    data: json,
+    more: more,
+    append: append
   }
 }
 

@@ -1,8 +1,6 @@
 import api from '../WaffleconeAPI/api.jsx'
+import * as actions from '../../reducers/APIDataActions'
 import {
-  REQUEST, 
-  REQUEST_SUCCESS, 
-  REQUEST_FAILURE,
   REQUEST_CREATE,
   REQUEST_CREATE_SUCCESS,
   REQUEST_CREATE_FAILURE,
@@ -13,7 +11,6 @@ import {
     MARK_OUTPUT_USED,
 } from '../../reducers/TaskReducerExtension'
 import {  TASK, TASKS, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
-import * as actions from '../../reducers/APIDataActions'
 import { get_active_user } from '../../utilities/userutils'
 
 export function getTask(task) {
@@ -61,121 +58,28 @@ function attributesWithValues(attributes, attributeValues) {
 	return _attributesWithValues
 }
 
-export function getTasks(params) {
-	return function (dispatch) {
-		dispatch(requestTasks())
-		return api.get('/ics/tasks/')
-			.query(params)
-			.then(res => dispatch(requestTasksSuccess(res.body)))
-			.catch(err => dispatch(requestTasksFailure(err)))
-	}
-}
-
-function requestTasks() {
-	return {
-		type: REQUEST,
-		name: TASKS
-	}
-}
-
-function requestTasksFailure(err) {
-  console.error('Error requesting tasks', err)
-	return {
-		type: REQUEST_FAILURE,
-		name: TASKS
-
-	}
-}
-
-function requestTasksSuccess(json) {
-	return {
-		type: REQUEST_SUCCESS,
-		name: TASKS,
-		data: json,
-
-	}
+export function getTasks(query) {
+  let request = {
+    url: '/ics/tasks/',
+    query: query,
+  }
+  return actions.fetch(TASKS, request, null, res => res.body)
 }
 
 export function getTaskAncestors(task) {
-  return function (dispatch) {
-    // dispatch an action that we are requesting inventory
-    dispatch(requestTaskAncestors())
-    return api.get('/ics/tasks/')
-      .query({child: task})
-      .end(function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestTaskAncestorsFailure(err))
-        } else {
-          dispatch(requestTaskAncestorsSuccess(res.body, task))
-        }
-      })
+  let request = {
+    url: '/ics/tasks/',
+    query: { child: task }
   }
+  return actions.fetch(TASK_ANCESTORS, request, null, res => res.body)
 }
-
-function requestTaskAncestors() {
-  return {
-    type: REQUEST,
-    name: TASK_ANCESTORS
-  }
-}
-
-function requestTaskAncestorsFailure(err) {
-  return {
-    type: REQUEST_FAILURE,
-    name: TASK_ANCESTORS
-
-  }
-}
-
-function requestTaskAncestorsSuccess(json, id) {
-  return {
-    type: REQUEST_SUCCESS,
-    name: TASK_ANCESTORS,
-    data: json, 
-    task: id
-
-  }
-}
-
 
 export function getTaskDescendents(task) {
-  return function (dispatch) {
-    // dispatch an action that we are requesting inventory
-    dispatch(requestTaskDescendents())
-    return api.get('/ics/tasks/')
-      .query({parent: task})
-      .end(function (err, res) {
-        if (err || !res.ok) {
-          dispatch(requestTaskDescendentsFailure(err))
-        } else {
-          dispatch(requestTaskDescendentsSuccess(res.body, task))
-        }
-      })
+  let request = {
+    url: '/ics/tasks/',
+    query: { parent: task }
   }
-}
-
-function requestTaskDescendents() {
-  return {
-    type: REQUEST,
-    name: TASK_DESCENDENTS
-  }
-}
-
-function requestTaskDescendentsFailure(err) {
-  return {
-    type: REQUEST_FAILURE,
-    name: TASK_DESCENDENTS
-
-  }
-}
-
-function requestTaskDescendentsSuccess(json, id) {
-  return {
-    type: REQUEST_SUCCESS,
-    name: TASK_DESCENDENTS,
-    index: id,
-    data: json,
-  }
+  return actions.fetch(TASK_DESCENDENTS, request, null, res => res.body)
 }
 
 
