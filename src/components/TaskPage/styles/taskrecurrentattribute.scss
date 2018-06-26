@@ -10,6 +10,11 @@
             flex: 1;
         }
         
+        .value {
+            max-width: 280px;
+            word-wrap: break-word;
+        }
+        
         .time {
             text-align: right;
             color: $gray-light;
