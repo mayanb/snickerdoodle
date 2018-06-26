@@ -20,7 +20,7 @@ export default class TaskRecurrentAttribute extends React.Component {
 		const { inputValue } = this.state
 		return (
 			<div className="task-recurrent-attribute">
-				{(loggedValues.length !== 0) && <List
+				{(loggedValues.length === 0) ? <ZeroState /> : <List
 					bordered
 					dataSource={loggedValues}
 					renderItem={log => <Log log={log}/>}
@@ -54,6 +54,12 @@ export default class TaskRecurrentAttribute extends React.Component {
 		this.props.onSave(value)
 		this.setState({ inputValue: ''})
 	}
+}
+
+function ZeroState() {
+	return (
+		<div className="attribute-zero-state">Nothing has been logged yet.</div>
+	)
 }
 
 function BooleanAttribute({ value, onToggle, onToggleSubmit }) {
