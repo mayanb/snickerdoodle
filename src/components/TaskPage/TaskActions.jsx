@@ -215,6 +215,17 @@ export function deleteTask(task) {
   }
 }
 
+export function uploadTaskFile(task, file) {
+  return function (dispatch) {
+
+    dispatch((requestEditTask()))
+
+    return api.put(`/ics/tasks/edit/${task.id}/`)
+      .send({})
+      .then(() => dispatch(requestEditTaskSuccess("files", files)))
+      .catch(e => console.log("Error", e))
+  }
+}
 
 function requestEditTask() {
   return {

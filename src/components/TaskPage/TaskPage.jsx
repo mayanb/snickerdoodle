@@ -15,6 +15,7 @@ class TaskPage extends React.Component {
 		this.handleFlagTask = this.handleFlagTask.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
 		this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
+		this.handleDropFile = this.handleDropFile.bind(this)
 	}
 
 	componentWillReceiveProps(np) {
@@ -49,6 +50,11 @@ class TaskPage extends React.Component {
 		return this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
 	}
 
+	handleDropFile(files) {
+		this.props.dispatch(actions.uploadTaskFile(files))
+		console.log(this.props)
+	}
+
 	render() {
 		let { task } = this.props
 
@@ -67,7 +73,7 @@ class TaskPage extends React.Component {
 					  attributes={task.attributesWithValues}
 					  onSaveAttribute={this.handleSaveAttribute}
 					/>
-					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.display} />
+					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} onDropFile={this.handleDropFile} name={task.display} />
 				</div>
 			</div>
 		)
