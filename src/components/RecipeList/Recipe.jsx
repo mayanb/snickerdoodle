@@ -57,7 +57,7 @@ function ExpandedRecipeContent({recipe, processes = [], products = []}) {
 				selectedProduct={recipe.product_type}
 				disabled={true}
 			/>
-			<Alert style={{ marginTop: "24px" }} message="Editing a recipe is coming soon! Unil then, you can delete the recipe and create a new one with all the updates you need." type="info" />
+			<Alert style={{ marginTop: "24px" }} message="Editing a recipe is coming soon! Until then, you can delete the recipe and create a new one with all the updates you need." type="info" />
 		</div>
 	)
 }

@@ -41,6 +41,28 @@ function post(path) {
 		.send({userprofile: profile_id, created_by: id, team: team, team_created_by: team})
 }
 
+function upload(path, file, extraData) {
+	let url = urls.latest(host, path)
+	let team = -1
+	//let token = ""
+	let id = -1
+	let profile_id = -1
+	try {
+		let user = get_active_user().user
+		team = user.team
+		id = user.user_id
+		profile_id = user.profile_id
+	} catch(e) {
+		
+	}
+
+	return request
+		.post(url)
+		.attach(file)
+		.field({userprofile: profile_id, created_by: id, team: team, team_created_by: team})
+		.field(extraData)
+}
+
 function put(path) {
 	let url = urls.latest(host, path)
 	//let team = -1
@@ -84,5 +106,5 @@ function patch(path) {
 		.set('Content-Type', 'application/json')
 		.send({userprofile: profile_id, created_by: id, team: team, team_created_by: team})
 }
-export default {get_active_user, get, post, del, host, put, patch}
+export default {get_active_user, get, post, del, host, put, patch, upload}
 
