@@ -9,6 +9,7 @@ import Sortable from '../Sortable/Container'
 import './styles/processattributelist.css'
 import ProcessAttributeDeleteDialog from './ProcessAttributeDeleteDialog'
 import {Slide} from '../Animations/Animations'
+import { IS_RECURRENT_MESSAGE } from './ProcessAttribute'
 
 const COMPONENT_PREFIX = 'process_attribute_list_'
 
@@ -55,7 +56,7 @@ class ProcessAttributeList extends React.Component {
 				<div className="process-attr-list-header">
 					<span>Name</span>
 					<span>Type</span>
-					<span style={{visibility: 'hidden'}}>recurring</span>
+					<span style={{visibility: 'hidden'}}>{IS_RECURRENT_MESSAGE}</span>
 				</div>
 				<Slide>
 				{ 
