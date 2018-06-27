@@ -58,12 +58,14 @@ class TaskPage extends React.Component {
 	}
 
 	render() {
-		let { task } = this.props
+		let { task, teamTimeFormat } = this.props
+
 
 		if (!task || task.length === 0)
 			return null
 
 		const qrCode = task.items.length && task.items[0].item_qr
+		console.log(task)
 
 		return (
 			<div className="task-page">
@@ -75,6 +77,7 @@ class TaskPage extends React.Component {
 					  attributes={task.attributesWithValues}
 					  onSaveAttribute={this.handleSaveAttribute}
 						onCreateAttribute={this.handleCreateAttribute}
+					  teamTimeFormat={teamTimeFormat}
 					/>
 					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.display} />
 				</div>
@@ -84,8 +87,11 @@ class TaskPage extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
+	console.log(state.users.data[state.users.ui.activeUser].user.time_format)
+
 	return {
 		task: state.task.data,
+		teamTimeFormat: state.users.data[state.users.ui.activeUser].user.time_format,
 	}
 }
 
