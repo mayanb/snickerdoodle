@@ -2,7 +2,8 @@ import React from 'react'
 import AccountSectionHeader from './AccountSectionHeader'
 import Card from '../Card/Card'
 import Img from '../Img/Img'
-import Switch from '../Switch/Switch'
+import { Switch } from 'antd';
+// import Switch from '../Switch/Switch'
 
 export default function FactoryOptions({ taskLabelType, onSubmit, teamInfo, onClick }) {
 	return (
@@ -32,16 +33,20 @@ export default function FactoryOptions({ taskLabelType, onSubmit, teamInfo, onCl
 }
 
 function RenderTimeFormatSwitch({teamInfo, onClick}) {
-		return (
-			<div>
-				<Switch 
-					// value={teamInfo} 
-					// onClick={() => this.updateUserSetting('send_emails', !this.props.send_emails)}
-					onClick = {() => onClick()}
-				/>
-				<span className="integration-detail"> (Click to enable 12 hour time format)</span>				
-			</div>
-		)
+	let time_format
+	if(teamInfo === 'm') 
+		time_format = false
+	else
+		time_format = true
+	return (
+		<div>
+			<span className="integration-detail"> Use 12 hour time format </span>				
+			<Switch 
+				defaultChecked = {time_format}
+				onClick = {() => onClick()}
+			/>
+		</div>
+	)
 }
 
 function SelectableLabelImages({ taskLabelType, onSubmit }) {

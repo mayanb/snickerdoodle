@@ -65,7 +65,6 @@ class TaskPage extends React.Component {
 			return null
 
 		const qrCode = task.items.length && task.items[0].item_qr
-		console.log(task)
 
 		return (
 			<div className="task-page">
@@ -76,7 +75,7 @@ class TaskPage extends React.Component {
 						task={task}
 					  attributes={task.attributesWithValues}
 					  onSaveAttribute={this.handleSaveAttribute}
-						onCreateAttribute={this.handleCreateAttribute}
+					  onCreateAttribute={this.handleCreateAttribute}
 					  teamTimeFormat={teamTimeFormat}
 					/>
 					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.display} />
@@ -87,7 +86,6 @@ class TaskPage extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
-	console.log(state.users.data[state.users.ui.activeUser].user.time_format)
 
 	return {
 		task: state.task.data,

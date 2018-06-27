@@ -1,7 +1,6 @@
 @import 'styles/constants.scss';
 
 .task-form {
-    max-width: 636px;
 
     .form-label {
         color: $elephant;
@@ -9,14 +8,13 @@
     }
 
     .attribute-field {
-        margin-bottom: 36px;
+        margin-bottom: 20px;
     }
 
     .boolean-container {
         display: flex;
         align-items: center;
         height: 38px;
-        margin-left: 24px;
 
         .switch {
             height: 16px;
@@ -25,10 +23,14 @@
     }
 
     .input-container {
+        width: 600px;
         position: relative;
+        display: flex;
     }
 
     .input-container input {
+        width: 400px;
+
         &.attr-error {
             border-color: $red;
         }

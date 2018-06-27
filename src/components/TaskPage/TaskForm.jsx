@@ -5,7 +5,6 @@ import './styles/peripherals.css'
 import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
 import TaskRecurrentAttribute from './TaskRecurrentAttribute'
-
 import moment from 'moment'
 import { DatePicker } from 'antd';
 
@@ -152,14 +151,7 @@ class TimeAttribute extends React.Component {
 		if (this.state.draftValue !== new_time) {
 			this.setState({ draftValue: new_time})
 			this.handleSaveWrapper(new_time)
-			console.log("****************************************")
 		}
-		// console.log(this.state.draftValue)
-		// console.log(moment(value).utc().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"))
-		// let dateTime = moment(this.state.draftValue)
-		// console.log(dateTime)
-		// console.log(moment(moment(value, moment.ISO_8601)))
-		// console.log(value)
 		return 
 	}
 
@@ -169,7 +161,6 @@ class TimeAttribute extends React.Component {
 
 	render() {
 		let dateTime = moment(this.state.draftValue)
-	
 		let format 
 		if(this.state.teamTimeFormat === 'n'){
 			format = "YYYY-MM-DD hh:mm:ss a"
@@ -230,7 +221,6 @@ class TextAttribute extends React.Component {
 	}
 
 	render() {
-		console.log(this.state)
 		const { draftValue } = this.state
 		return (
 			<div className="input-container">
