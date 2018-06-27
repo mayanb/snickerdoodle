@@ -15,6 +15,7 @@ class TaskPage extends React.Component {
 		this.handleFlagTask = this.handleFlagTask.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
 		this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
+		this.handleCreateAttribute = this.handleCreateAttribute.bind(this)
 	}
 
 	componentWillReceiveProps(np) {
@@ -42,20 +43,29 @@ class TaskPage extends React.Component {
 			.then(() => this.props.history.push('/activity-log'))
 	}
 
-	handleSaveAttribute(attributeId, value) {
+	handleSaveAttribute(attributeID, taskAttributeID, value) {
 		const task = this.props.task
-		const index = task.attributesWithValues.findIndex(a => a.id === attributeId)
-		let params = { attribute: attributeId, task: task.id, value: value }
+		const index = task.attributesWithValues.findIndex(a => a.id === attributeID)
+		let params = { taskAttributeID: taskAttributeID, task: task.id, value: value }
 		return this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
+	}
+	
+	handleCreateAttribute(attribute, value) {
+		const task = this.props.task
+		const index = task.attributesWithValues.findIndex(a => a.id === attribute)
+		let params = { attribute: attribute, task: task.id, value: value }
+		return this.props.dispatch(attributeActions.createEditingAttribute(index, params))
 	}
 
 	render() {
-		let { task } = this.props
+		let { task, teamTimeFormat } = this.props
+
 
 		if (!task || task.length === 0)
 			return null
 
 		const qrCode = task.items.length && task.items[0].item_qr
+		console.log(task)
 
 		return (
 			<div className="task-page">
@@ -66,6 +76,8 @@ class TaskPage extends React.Component {
 						task={task}
 					  attributes={task.attributesWithValues}
 					  onSaveAttribute={this.handleSaveAttribute}
+						onCreateAttribute={this.handleCreateAttribute}
+					  teamTimeFormat={teamTimeFormat}
 					/>
 					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} name={task.display} />
 				</div>
@@ -75,8 +87,11 @@ class TaskPage extends React.Component {
 }
 
 const mapStateToProps = (state/*, props*/) => {
+	console.log(state.users.data[state.users.ui.activeUser].user.time_format)
+
 	return {
 		task: state.task.data,
+		teamTimeFormat: state.users.data[state.users.ui.activeUser].user.time_format,
 	}
 }
 

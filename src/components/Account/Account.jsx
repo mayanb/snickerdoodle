@@ -14,6 +14,7 @@ class Account extends React.Component {
 	constructor(props) {
 		super(props)
 		this.updateFactorySetting = this.updateFactorySetting.bind(this)
+		this.callFunc = this.callFunc.bind(this)
 	}
 	
 	componentDidMount() {
@@ -27,12 +28,27 @@ class Account extends React.Component {
 				<AccountHeader />
 				<AccountBasics />
 				<AccountIntegrations ext={match.params.ext} />
-				{isAdmin(user) && <FactoryOptions taskLabelType={user.task_label_type} onSubmit={this.updateFactorySetting}/>}
+				{isAdmin(user) && <FactoryOptions taskLabelType={user.task_label_type} onClick={this.callFunc} onSubmit={this.updateFactorySetting}/>}
 				<AccountTeam />
 			</div>
 		)
 	}
 	
+	callFunc(){
+		if(this.props.isUpdatingSetting) {
+			return
+		}
+		console.log(this.props.user.time_format)
+		let new_format
+		if(this.props.user.time_format === 'm'){
+			new_format = 'n'
+		} else{
+			new_format = 'm'
+		}
+	    console.log(new_format)
+		this.updateFactorySetting('time_format', new_format);
+	}
+
 	updateFactorySetting(key, value) {
 		if (this.props.isUpdatingSetting) {
 			return
@@ -44,8 +60,9 @@ class Account extends React.Component {
 const mapStateToProps = (state/*, props*/) => {
 	const {data, ui} = state.users
 	const user = data[ui.activeUser].user
+	console.log(user)
   return {
-    users: state.users,
+        users: state.users,
 		user: user,
 		isUpdatingSetting: ui.isUpdatingSetting,
   }
