@@ -6,17 +6,20 @@ import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
 import TaskRecurrentAttribute from './TaskRecurrentAttribute'
 
+import moment from 'moment'
+import { DatePicker } from 'antd';
+
 const TIME_TO_STAY_UNSAVED = 500
 const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
 const TIME_TO_SHOW_SAVED = 1500
 
 export default class TaskForm extends React.Component {
 	render() {
-		const { taskAttributes, onSave, onCreate } = this.props
+		const { taskAttributes, onSave, onCreate, teamTimeFormat } = this.props
 		return (
 			<div className="task-form">
 				{taskAttributes.map(a =>
-					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} onCreate={onCreate}/>
+					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} onCreate={onCreate} teamTimeFormat={teamTimeFormat}/>
 				)}
 			</div>
 		)
@@ -57,6 +60,7 @@ class AttributeField extends React.Component {
 	render() {
 		const { taskAttribute } = this.props
 		return (
+
 			<div className="attribute-field">
 				<div className="form-label">
 					{taskAttribute.name}
@@ -67,7 +71,7 @@ class AttributeField extends React.Component {
 	}
 	
 	renderValue() {
-		const { taskAttribute } = this.props
+		const { taskAttribute, teamTimeFormat } = this.props
 		const isBoolean = taskAttribute.datatype === 'BOOL'
 		if (taskAttribute.is_recurrent) {
 			return <TaskRecurrentAttribute
@@ -80,17 +84,27 @@ class AttributeField extends React.Component {
 
 		const values = taskAttribute.values
 		const taskAttributeValue = values.length === 0 ? '' : values[values.length - 1].value
-		return isBoolean ?
-			<BooleanAttribute
-				value={taskAttributeValue}
-				onSave={this.handleSave}
-				{...this.state}
-			/> :
-			<TextAttribute
-				value={taskAttributeValue}
-				onSave={this.handleSave}
-				{...this.state}
-			/>
+		switch (taskAttribute.datatype) {
+    		case 'BOOL':
+      			return <BooleanAttribute 
+							value={taskAttributeValue} 
+							onSave={this.handleSave}
+							{...this.state}
+						/>
+			case 'TIME':
+				return <TimeAttribute 
+							value={taskAttributeValue} 
+							onSave={this.handleSave} 
+							teamTimeFormat={teamTimeFormat}
+							{...this.state}
+						/>
+			default:
+				return <TextAttribute 
+							value={taskAttributeValue} 
+							onSave={this.handleSave} 
+							{...this.state}
+						/>
+		}
 	}
 }
 
@@ -116,6 +130,60 @@ class BooleanAttribute extends React.Component {
 				<Switch
 					value={boolValue}
 					onClick={this.handleChange}
+				/>
+				<Peripherals {...this.props} onRetry={this.handleSave} />
+			</div>
+		)
+	}
+}
+
+class TimeAttribute extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			draftValue: props.value,
+			teamTimeFormat: props.teamTimeFormat,
+		}	
+		this.handleSave = this.handleSave.bind(this)
+	}
+
+	handleSave(value) {
+		let new_time = moment(value).utc().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
+		if (this.state.draftValue !== new_time) {
+			this.setState({ draftValue: new_time})
+			this.handleSaveWrapper(new_time)
+			console.log("****************************************")
+		}
+		// console.log(this.state.draftValue)
+		// console.log(moment(value).utc().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"))
+		// let dateTime = moment(this.state.draftValue)
+		// console.log(dateTime)
+		// console.log(moment(moment(value, moment.ISO_8601)))
+		// console.log(value)
+		return 
+	}
+
+	handleSaveWrapper(v) {
+		this.props.onSave(v)
+	}
+
+	render() {
+		let dateTime = moment(this.state.draftValue)
+	
+		let format 
+		if(this.state.teamTimeFormat === 'n'){
+			format = "YYYY-MM-DD hh:mm:ss a"
+		} else{
+			format = "YYYY-MM-DD HH:mm:ss a"
+		}
+		return (
+			<div className="input-container">
+				<DatePicker
+				    showTime
+				    format={format}
+				    placeholder="Select Time"
+				    defaultValue={dateTime}
+				    onOk={this.handleSave}
 				/>
 				<Peripherals {...this.props} onRetry={this.handleSave} />
 			</div>
@@ -162,6 +230,7 @@ class TextAttribute extends React.Component {
 	}
 
 	render() {
+		console.log(this.state)
 		const { draftValue } = this.state
 		return (
 			<div className="input-container">
