@@ -1,0 +1,33 @@
+@import 'styles/constants.scss';
+
+.task-recurrent-attribute {
+    .log {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        
+        & > div {
+            flex: 1;
+        }
+        
+        .value {
+            max-width: 280px;
+            word-wrap: break-word;
+        }
+        
+        .time {
+            text-align: right;
+            color: $gray-light;
+        }
+    }
+    
+    .attribute-zero-state {
+        background-color: rgba(0,0,0,0.05);
+        border-radius: 4px;
+        padding: 8px;
+        text-align: center;
+        color: rgba(0,0,0,0.3);
+    }
+    
+}
+
