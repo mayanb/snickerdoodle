@@ -1,7 +1,8 @@
 @import 'styles/constants.scss';
 
 .task-form {
-    max-width: 636px;
+    max-width: 500px;
+    min-width: 500px;
 
     .form-label {
         color: $elephant;
@@ -26,9 +27,12 @@
 
     .input-container {
         position: relative;
+        display: flex;
     }
 
     .input-container input {
+        max-width: 400px;
+        min-width: 400px;
         &.attr-error {
             border-color: $red;
         }
