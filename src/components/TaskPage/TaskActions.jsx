@@ -15,7 +15,7 @@ import { get_active_user } from '../../utilities/userutils'
 
 export function getTask(task) {
   let request = { 
-    url: `/ics/tasks/${task}`, 
+    url: `/ics/tasks/${task}/`,
     query: {}
   }
   return actions.fetch(TASK, request, null, res => {
@@ -40,13 +40,22 @@ function addInputsToTaskIngredients(taskIngredients, inputs) {
   })
 }
 
+// Match each ProcessType.Attribute with its TaskAttributeValue (if they've been filled in)
+// attribute.values = [...n] will contain n = 0 or 1 for non-recurring Attributes, n >= 0 for recurring Attributes
 function attributesWithValues(attributes, attributeValues) {
-	const sortedAttributeValues = attributeValues.sort((a, b) => b.id - a.id) //Sort to find most recent
-	return attributes.map(attribute => {
-		const valueObject = sortedAttributeValues.find(val => val.attribute === attribute.id)
-		attribute.value = valueObject ? valueObject.value : ''
-		return attribute
-	})
+  // Hash Attributes by id
+  const attrByID = {}
+  attributes.forEach(attr => {
+    attr.values = []
+		attrByID[attr.id] = attr
+  })
+	// Cluster recurring TaskAttributes into their respective Attributes
+	attributeValues.forEach(attrValue => attrByID[attrValue.attribute].values.push(attrValue))
+	// Sort Attributes in user-specified order (rank)
+  const _attributesWithValues = Object.values(attrByID).sort((a, b) => a.rank - b.rank)
+	// (In place) sort each attribute's values oldest to newest -- lets us display them properly, and predictably append new values to the end
+	_attributesWithValues.forEach(taskAttribute => taskAttribute.values.sort((a,b) => new Date(a.updated_at) - new Date(b.updated_at)))
+	return _attributesWithValues
 }
 
 export function getTasks(query) {

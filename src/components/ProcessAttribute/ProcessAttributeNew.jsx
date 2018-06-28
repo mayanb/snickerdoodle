@@ -2,6 +2,7 @@ import React from 'react'
 import Button from '../Button/Button'
 import ProcessAttributeField from './ProcessAttributeField'
 import ElementCard from '../Element/ElementCard'
+import ProcessAttributeRecurrentCheckbox from './ProcessAttributeRecurrentCheckbox'
 
 export default class ProcessAttributeNew extends React.Component {
 	constructor(props) {
@@ -9,8 +10,10 @@ export default class ProcessAttributeNew extends React.Component {
 		this.state = {
 			name: "",
 			type: null,
+			is_recurrent: false,
 		}
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleCheckBoxChange = this.handleCheckBoxChange.bind(this)
 	}
 
 	render() {
@@ -30,6 +33,7 @@ export default class ProcessAttributeNew extends React.Component {
 						onChange={(e) => this.handleChange("type", e)}
 					/>
 				</div>
+				<ProcessAttributeRecurrentCheckbox checked={this.state.is_recurrent} onChange={this.handleCheckBoxChange}/>
 				<Button 
 					wide
 					isLoading={isLoading} 
@@ -40,6 +44,10 @@ export default class ProcessAttributeNew extends React.Component {
 				</Button>
 			</ElementCard>
 		)
+	}
+	
+	handleCheckBoxChange(e) {
+		this.setState({ is_recurrent: e.target.checked })
 	}
 
 	handleChange(field, value) {
@@ -52,9 +60,9 @@ export default class ProcessAttributeNew extends React.Component {
 	}
 
 	handleSubmit() {
-		let { name, type } = this.state
+		let { name, type, is_recurrent } = this.state
 		if(this.stateIsValid()) {
-			this.props.onSubmit(name, type.value)
+			this.props.onSubmit(name, type.value, is_recurrent)
 		}
 	}
 }
