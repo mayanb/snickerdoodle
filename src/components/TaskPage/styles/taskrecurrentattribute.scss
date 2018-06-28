@@ -1,6 +1,9 @@
 @import 'styles/constants.scss';
 
 .task-recurrent-attribute {
+    max-width: 400px;
+    min-width: 400px;
+    
     .log {
         display: flex;
         justify-content: space-between;
