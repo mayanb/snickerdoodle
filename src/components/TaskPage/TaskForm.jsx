@@ -4,6 +4,8 @@ import './styles/taskform.css'
 import './styles/peripherals.css'
 import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
+import moment from 'moment'
+import { DatePicker } from 'antd';
 
 const TIME_TO_STAY_UNSAVED = 500
 const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
@@ -11,11 +13,11 @@ const TIME_TO_SHOW_SAVED = 1500
 
 export default class TaskForm extends React.Component {
 	render() {
-		const { taskAttributes, onSave } = this.props
+		const { taskAttributes, onSave, onCreate, teamTimeFormat } = this.props
 		return (
 			<div className="task-form">
 				{taskAttributes.map(a =>
-					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} />
+					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} onCreate={onCreate} teamTimeFormat={teamTimeFormat}/>
 				)}
 			</div>
 		)
@@ -59,18 +61,29 @@ class AttributeField extends React.Component {
 	}
 
 	renderValue() {
-		const { taskAttribute } = this.props
-		return taskAttribute.datatype === 'BOOL' ?
-			<BooleanAttribute 
-				value={taskAttribute.value} 
-				onSave={this.handleSave}
-				{...this.state}
-			/> :
-			<TextAttribute 
-				value={taskAttribute.value} 
-				onSave={this.handleSave} 
-				{...this.state}
-			/>
+		const { taskAttribute, teamTimeFormat } = this.props
+
+		switch (taskAttribute.datatype) {
+    		case 'BOOL':
+      			return <BooleanAttribute 
+							value={taskAttribute.value} 
+							onSave={this.handleSave}
+							{...this.state}
+						/>
+			case 'TIME':
+				return <TimeAttribute 
+							value={taskAttribute.value} 
+							onSave={this.handleSave} 
+							teamTimeFormat={teamTimeFormat}
+							{...this.state}
+						/>
+			default:
+				return <TextAttribute 
+							value={taskAttribute.value} 
+							onSave={this.handleSave} 
+							{...this.state}
+						/>
+		}
 	}
 }
 
@@ -159,6 +172,83 @@ class TextAttribute extends React.Component {
 				<Peripherals {...this.props} onRetry={this.handleSave} />
 			</div>
 		)
+	}
+}
+
+class TimeAttribute extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			draftValue: props.value,
+			teamTimeFormat: props.teamTimeFormat,
+		}	
+		this.handleSave = this.handleSave.bind(this)
+	}
+
+	handleSave(value) {
+		let new_time = moment(value).utc().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
+		if(this.state.draftValue !== new_time) {
+			this.setState({ draftValue: new_time})
+			this.handleSaveWrapper(new_time)
+		}
+		return 
+	}
+
+	handleSaveWrapper(v) {
+		this.props.onSave(v)
+	}
+
+	isValidISODate(dateString) {
+        return moment(dateString, moment.ISO_8601, true).isValid()
+    }
+
+	render() {
+		if(this.isValidISODate(this.state.draftValue)){
+			let dateTime = moment(this.state.draftValue)
+			let format 
+			let timeFormat
+			if(this.state.teamTimeFormat === 'n'){
+				format = "YYYY-MM-DD hh:mm a"
+				timeFormat = "hh:mm"
+			} else{
+				format = "YYYY-MM-DD HH:mm"
+				timeFormat = "HH:mm"
+			}
+			return (
+				<div className="input-container">
+					<DatePicker
+					    showTime={{format: timeFormat}}
+					    format={format}
+					    placeholder="Select Time"
+					    defaultValue={dateTime}
+					    onOk={this.handleSave}
+					/>
+					<Peripherals {...this.props} onRetry={this.handleSave} />
+				</div>
+			)
+		} else {
+			let dateTime = this.state.draftValue
+			let format 
+			let timeFormat
+			if(this.state.teamTimeFormat === 'n'){
+				format = "YYYY-MM-DD hh:mm a"
+				timeFormat = "hh:mm"
+			} else{
+				format = "YYYY-MM-DD HH:mm"
+				timeFormat = "HH:mm"
+			}
+			return (
+				<div className="input-container">
+					<DatePicker
+					    showTime={{format: timeFormat}}
+					    format={format}
+					    placeholder={dateTime}
+					    onOk={this.handleSave}
+					/>
+					<Peripherals {...this.props} onRetry={this.handleSave} />
+				</div>
+			)
+		}
 	}
 }
 

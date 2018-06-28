@@ -2,8 +2,9 @@ import React from 'react'
 import AccountSectionHeader from './AccountSectionHeader'
 import Card from '../Card/Card'
 import Img from '../Img/Img'
+import { Switch } from 'antd';
 
-export default function FactoryOptions({ taskLabelType, onSubmit }) {
+export default function FactoryOptions({ taskLabelType, onSubmit, teamInfo, onClick}) {
 	return (
 			<div className="factory-options">
 				<AccountSectionHeader title="Factory Options" />
@@ -18,9 +19,32 @@ export default function FactoryOptions({ taskLabelType, onSubmit }) {
 							<span>Click to select the style of label you'd like printed whenever tasks labels are printed on the mobile app.</span>
 						</div>
 						<SelectableLabelImages taskLabelType={taskLabelType} onSubmit={onSubmit}/>
+						<div className="integration-info">
+							<div>
+								<span>Set Time Format</span>
+							</div>
+						</div>
+						<RenderTimeFormatSwitch teamInfo={teamInfo} onClick={onClick}/>
 					</div>
 				</Card>
 			</div>
+	)
+}
+
+function RenderTimeFormatSwitch({teamInfo, onClick}) {
+	let time_format
+	if(teamInfo === 'm') 
+		time_format = false
+	else
+		time_format = true
+	return (
+		<div>
+			<span className="integration-detail"> Use 12 hour time format </span>				
+			<Switch 
+				defaultChecked = {time_format}
+				onClick = {() => onClick()}
+			/>
+		</div>
 	)
 }
 
