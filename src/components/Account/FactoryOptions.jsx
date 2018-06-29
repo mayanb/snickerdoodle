@@ -32,17 +32,14 @@ export default function FactoryOptions({ taskLabelType, onSubmit, teamInfo, onCl
 }
 
 function RenderTimeFormatSwitch({teamInfo, onClick}) {
-	let time_format
-	if(teamInfo === 'm') 
-		time_format = false
-	else
-		time_format = true
+	let time_format = teamInfo === 'n' ? true : false
 	return (
 		<div>
+			<span>{time_format}</span>
 			<span className="integration-detail"> Use 12 hour time format </span>				
 			<Switch 
-				defaultChecked = {time_format}
-				onClick = {() => onClick()}
+				checked = {time_format}
+				onChange = {() => onClick(teamInfo)}
 			/>
 		</div>
 	)

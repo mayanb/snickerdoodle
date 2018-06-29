@@ -34,17 +34,8 @@ class Account extends React.Component {
 		)
 	}
 
-	updateTimeFormat(){	
-		if(this.props.isUpdatingSetting) {
-			return
-		}
-
-		let new_format
-		if(this.props.user.time_format === 'm'){
-			new_format = 'n'
-		} else{
-			new_format = 'm'
-		}
+	updateTimeFormat(time_format){	
+		let new_format = time_format === 'n' ? 'm' : 'n'
 		this.updateFactorySetting('time_format', new_format);
 	}
 

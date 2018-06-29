@@ -203,21 +203,25 @@ class TimeAttribute extends React.Component {
     }
 
 	render() {
+		let format 
+		let timeFormat
+		let use12Hours
+		if(this.state.teamTimeFormat === 'n'){
+			format = "YYYY-MM-DD h:mm a"
+			timeFormat = "hh:mm a"
+			use12Hours = true
+		} else{
+			format = "YYYY-MM-DD HH:mm"
+			timeFormat = "HH:mm"
+			use12Hours = false
+		}
+
 		if(this.isValidISODate(this.state.draftValue)){
 			let dateTime = moment(this.state.draftValue)
-			let format 
-			let timeFormat
-			if(this.state.teamTimeFormat === 'n'){
-				format = "YYYY-MM-DD hh:mm a"
-				timeFormat = "hh:mm"
-			} else{
-				format = "YYYY-MM-DD HH:mm"
-				timeFormat = "HH:mm"
-			}
 			return (
 				<div className="input-container">
 					<DatePicker
-					    showTime={{format: timeFormat}}
+					    showTime={{format: timeFormat, use12Hours: use12Hours}}
 					    format={format}
 					    placeholder="Select Time"
 					    defaultValue={dateTime}
@@ -228,19 +232,10 @@ class TimeAttribute extends React.Component {
 			)
 		} else {
 			let dateTime = this.state.draftValue
-			let format 
-			let timeFormat
-			if(this.state.teamTimeFormat === 'n'){
-				format = "YYYY-MM-DD hh:mm a"
-				timeFormat = "hh:mm"
-			} else{
-				format = "YYYY-MM-DD HH:mm"
-				timeFormat = "HH:mm"
-			}
 			return (
 				<div className="input-container">
 					<DatePicker
-					    showTime={{format: timeFormat}}
+					    showTime={{format: timeFormat, use12Hours: use12Hours}}
 					    format={format}
 					    placeholder={dateTime}
 					    onOk={this.handleSave}
