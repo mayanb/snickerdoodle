@@ -203,18 +203,10 @@ class TimeAttribute extends React.Component {
     }
 
 	render() {
-		let format 
-		let timeFormat
-		let use12Hours
-		if(this.state.teamTimeFormat === 'n'){
-			format = "YYYY-MM-DD h:mm a"
-			timeFormat = "hh:mm a"
-			use12Hours = true
-		} else{
-			format = "YYYY-MM-DD HH:mm"
-			timeFormat = "HH:mm"
-			use12Hours = false
-		}
+		const isNormal = this.state.teamTimeFormat === 'n'
+		const format = isNormal ? "YYYY-MM-DD h:mm a" : "YYYY-MM-DD HH:mm"
+		const timeFormat = isNormal ? "hh:mm a" : "HH:mm"
+		const use12Hours = isNormal
 
 		if(this.isValidISODate(this.state.draftValue)){
 			let dateTime = moment(this.state.draftValue)
