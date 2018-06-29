@@ -13,11 +13,11 @@ const TIME_TO_SHOW_SAVED = 1500
 
 export default class TaskForm extends React.Component {
 	render() {
-		const { taskAttributes, onSave, onCreate, teamTimeFormat } = this.props
+		const { taskAttributes, onSave, teamTimeFormat } = this.props
 		return (
 			<div className="task-form">
 				{taskAttributes.map(a =>
-					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} onCreate={onCreate} teamTimeFormat={teamTimeFormat}/>
+					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} teamTimeFormat={teamTimeFormat}/>
 				)}
 			</div>
 		)
