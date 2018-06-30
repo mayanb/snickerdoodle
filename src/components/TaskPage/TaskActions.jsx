@@ -46,7 +46,7 @@ function attributesWithValues(attributes, attributeValues) {
 		const valueObject = sortedAttributeValues.find(val => val.attribute === attribute.id)
 		attribute.value = valueObject ? valueObject.value : ''
 		return attribute
-	})
+	}).filter(attr => !attr.is_trashed || attr.value.length)
 }
 
 export function getTasks(query) {
