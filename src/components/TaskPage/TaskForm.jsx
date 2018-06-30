@@ -68,7 +68,7 @@ class AttributeField extends React.Component {
 	}
 	
 	renderValue() {
-		const { taskAttribute } = this.props
+		const { taskAttribute, teamTimeFormat } = this.props
 		const isBoolean = taskAttribute.datatype === 'BOOL'
 		if (taskAttribute.is_recurrent) {
 			return <TaskRecurrentAttribute
@@ -79,7 +79,7 @@ class AttributeField extends React.Component {
 			/>
 		}
 
-    const values = taskAttribute.values
+    	const values = taskAttribute.values
 		const taskAttributeValue = values.length === 0 ? '' : values[values.length - 1].value
 		switch (taskAttribute.datatype) {
     		case 'BOOL':
