@@ -60,7 +60,7 @@ function attributesWithValues(attributes, attributeValues) {
       return !attr.is_trashed || attr.values.length
     } else {
       return !attr.is_trashed || (attr.values.length && attr.values[attr.values.length - 1].length)
-      })
+    }})
 }
 
 export function getTasks(query) {
