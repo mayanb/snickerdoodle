@@ -1,12 +1,8 @@
 import request from 'superagent'
 import * as urls from './urls'
+import { get_active_user } from '../../utilities/userutils'
 
 let host = urls.getBackend()
-
-function get_active_user() {
-	let users = JSON.parse(window.localStorage.getItem('users-v5'))
-	return users.data[users.ui.activeUser]
-}
 
 function get(path) {
 	let url = path.startsWith('http')?path:urls.latest(host, path)
@@ -33,7 +29,6 @@ function post(path) {
 		team = user.team
 		id = user.user_id
 		profile_id = user.profile_id
-		//token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
 	} catch(e) {
 		
 	}
@@ -46,13 +41,34 @@ function post(path) {
 		.send({userprofile: profile_id, created_by: id, team: team, team_created_by: team})
 }
 
+function upload(path, file, extraData) {
+	let url = urls.latest(host, path)
+	let team = -1
+	//let token = ""
+	let id = -1
+	let profile_id = -1
+	try {
+		let user = get_active_user().user
+		team = user.team
+		id = user.user_id
+		profile_id = user.profile_id
+	} catch(e) {
+		
+	}
+
+	return request
+		.post(url)
+		.attach(file)
+		.field({userprofile: profile_id, created_by: id, team: team, team_created_by: team})
+		.field(extraData)
+}
+
 function put(path) {
 	let url = urls.latest(host, path)
 	//let team = -1
 	//let token = ""
 	try {
 		//team = get_active_user().user.team
-		//token = JSON.parse(window.localStorage.getItem('users-v5')).data[team].token
 	} catch(e) {}
 
 	return request('PUT', url)
@@ -90,5 +106,5 @@ function patch(path) {
 		.set('Content-Type', 'application/json')
 		.send({userprofile: profile_id, created_by: id, team: team, team_created_by: team})
 }
-export default {get_active_user, get, post, del, host, put, patch}
+export default {get_active_user, get, post, del, host, put, patch, upload}
 

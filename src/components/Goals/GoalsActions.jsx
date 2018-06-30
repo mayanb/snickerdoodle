@@ -23,11 +23,9 @@ export function postCreateGoal(data) {
 export function postDeleteGoal(goal, index) {
 	const request = {
 		url: `/ics/goals/edit/${goal.id}/`,
-		data: {
-			is_trashed: true
-		}
+		data: { is_trashed: true }
 	}
-	return actions.postDelete(GOALS, request, index)
+	return actions.softDelete(GOALS, request, index)
 }
 
 export function postEditGoalAmount(goal, amount, index) {
@@ -37,7 +35,7 @@ export function postEditGoalAmount(goal, amount, index) {
 			goal: amount
 		}
 	}
-	return actions.postEdit(GOALS, request, index, res => res.body)
+	return actions.patchEdit(GOALS, request, index, res => res.body)
 }
 
 
@@ -68,10 +66,8 @@ export function postCreatePin(data) {
 export function postDeletePin(pin, index) {
 	const request = {
 		url: `/ics/pins/edit/${pin.id}/`,
-		data: {
-			is_trashed: true
-		}
+		data: { is_trashed: true }
 	}
-	return actions.postDelete(PINS, request, index)
+	return actions.softDelete(PINS, request, index)
 }
 

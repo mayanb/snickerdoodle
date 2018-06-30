@@ -14,11 +14,11 @@ class Account extends React.Component {
 	constructor(props) {
 		super(props)
 		this.updateFactorySetting = this.updateFactorySetting.bind(this)
+		this.updateTimeFormat = this.updateTimeFormat.bind(this)
 	}
 	
 	componentDidMount() {
-		const currentUserId = JSON.parse(window.localStorage.getItem('users-v5')).ui.activeUser
-		this.props.dispatch(userActions.requestRefreshUserAccount(currentUserId))
+		this.props.dispatch(userActions.requestRefreshUserAccount(this.props.user.id))
 	}
 	
 	render() {
@@ -28,12 +28,17 @@ class Account extends React.Component {
 				<AccountHeader />
 				<AccountBasics />
 				<AccountIntegrations ext={match.params.ext} />
-				{isAdmin(user) && <FactoryOptions taskLabelType={user.task_label_type} onSubmit={this.updateFactorySetting}/>}
+				{isAdmin(user) && <FactoryOptions teamInfo={user.time_format} taskLabelType={user.task_label_type} onClick={this.updateTimeFormat} onSubmit={this.updateFactorySetting}/>}
 				<AccountTeam />
 			</div>
 		)
 	}
-	
+
+	updateTimeFormat(time_format){	
+		let new_format = time_format === 'n' ? 'm' : 'n'
+		this.updateFactorySetting('time_format', new_format);
+	}
+
 	updateFactorySetting(key, value) {
 		if (this.props.isUpdatingSetting) {
 			return

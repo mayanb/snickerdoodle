@@ -7,7 +7,7 @@ import Img from '../Img/Img'
 
 export default class TaskMain extends React.Component {
 	render() {
-		const { task, attributes, onSaveAttribute } = this.props
+		const { task, attributes, onSaveAttribute, teamTimeFormat } = this.props
 		return (
 			<div className="task-main">
 				<div className="task-main-container">
@@ -16,6 +16,7 @@ export default class TaskMain extends React.Component {
 					<TaskForm
 						taskAttributes={attributes}
 						onSave={onSaveAttribute}
+						teamTimeFormat={teamTimeFormat}
 					/>
 				</div>
 			</div>
