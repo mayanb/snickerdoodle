@@ -5,8 +5,8 @@ import Pill from '../Pill/Pill'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Customize your label types.",
-	content: <span>Visit <Link to='/account'>Account Settings</Link> to customize the label printed by your Brother printer.</span>,
+	title: "Set time format.",
+	content: <span>Visit <Link to='/account'>Account Settings</Link> to switch between 12 hour and 24 hour time format. </span>,
 	type: 'feature',
 }]
 
