@@ -1,6 +1,10 @@
 @import 'styles/constants.scss';
+$task-form-width: 500px;
+$peripherals-width: 100px; // Peripherals will flex to fit this
 
 .task-form {
+    max-width: $task-form-width;
+    min-width: $task-form-width;
 
     .form-label {
         color: $elephant;
@@ -8,13 +12,14 @@
     }
 
     .attribute-field {
-        margin-bottom: 20px;
+        margin-bottom: 36px;
     }
 
     .boolean-container {
         display: flex;
         align-items: center;
         height: 38px;
+        margin-left: 24px;
 
         .switch {
             height: 16px;
@@ -23,14 +28,15 @@
     }
 
     .input-container {
-        width: 600px;
         position: relative;
         display: flex;
+        max-height: 38px;
     }
 
     .input-container input {
-        width: 400px;
-
+        max-width: $task-form-width - $peripherals-width;
+        min-width: $task-form-width - $peripherals-width;
+        
         &.attr-error {
             border-color: $red;
         }
