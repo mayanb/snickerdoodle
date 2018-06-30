@@ -55,11 +55,12 @@ function attributesWithValues(attributes, attributeValues) {
   const _attributesWithValues = Object.values(attrByID).sort((a, b) => a.rank - b.rank)
 	// (In place) sort each attribute's values oldest to newest -- lets us display them properly, and predictably append new values to the end
 	_attributesWithValues.forEach(taskAttribute => taskAttribute.values.sort((a,b) => new Date(a.updated_at) - new Date(b.updated_at)))
-	return _attributesWithValues.filter(attr => {
+	console.log(_attributesWithValues)
+  return _attributesWithValues.filter(attr => {
     if (attr.is_recurrent) {
       return !attr.is_trashed || attr.values.length
     } else {
-      return !attr.is_trashed || (attr.values.length && attr.values[attr.values.length - 1].length)
+      return !attr.is_trashed || (attr.values.length && attr.values[attr.values.length - 1].value.length)
     }})
 }
 
