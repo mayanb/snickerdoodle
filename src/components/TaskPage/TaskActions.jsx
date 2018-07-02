@@ -54,7 +54,7 @@ function attributesWithValues(attributes, attributeValues) {
 	// Sort Attributes in user-specified order (rank)
   const _attributesWithValues = Object.values(attrByID).sort((a, b) => a.rank - b.rank)
 	// (In place) sort each attribute's values oldest to newest -- lets us display them properly, and predictably append new values to the end
-	_attributesWithValues.forEach(taskAttribute => taskAttribute.values.sort((a,b) => new Date(a.updated_at) - new Date(b.updated_at)))
+	_attributesWithValues.forEach(taskAttribute => taskAttribute.values.sort((a,b) => new Date(a.created_at) - new Date(b.created_at)))
 
 	// filter to show both attributes that are active (not trashed) and attributes that are trashed but have data in them
   return _attributesWithValues.filter(attr => {
