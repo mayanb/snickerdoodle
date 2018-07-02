@@ -79,7 +79,7 @@ function BooleanAttribute({ value, onToggle, onToggleSubmit }) {
 }
 
 function Log({log}) {
-	const logTime = moment(log.updated_at)
+	const logTime = moment(log.created_at)
 	const displayTime = `${logTime.fromNow()} (${logTime.format("MMMM DD, hh:mma")})`
 	const displayValue = log.datatype === 'BOOL' ? (log.value ? 'Yes' : 'No') : log.value
 	return (
