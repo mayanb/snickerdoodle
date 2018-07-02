@@ -103,7 +103,7 @@ class ProcessAttributeList extends React.Component {
 				onSelect: () => this.handleSelect(attr),
 				onUpdate: (newAttr) => this.handleUpdate(attr, newAttr)
 			}
-		})
+		}).filter(attr => !attr.is_trashed)
 	}
 
 	// MARK:- ACTIONS 
