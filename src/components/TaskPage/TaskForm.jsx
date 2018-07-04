@@ -1,12 +1,16 @@
 import React from 'react'
 import Spinner from 'react-spinkit'
+import {
+	TIME,
+	BOOL,
+} from '../../utilities/constants'
 import './styles/taskform.css'
 import './styles/peripherals.css'
 import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
 import TaskRecurrentAttribute from './TaskRecurrentAttribute'
-import moment from 'moment'
-import { DatePicker } from 'antd';
+import TimeAttribute from './TimeAttribute'
+
 const TIME_TO_STAY_UNSAVED = 500
 const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
 const TIME_TO_SHOW_SAVED = 1500
@@ -31,10 +35,10 @@ class AttributeField extends React.Component {
 			isLoading: false,
 			justSaved: false,
 		}
-
+		
 		this.handleSave = this.handleSave.bind(this)
 	}
-
+	
 	handleSave(value) {
 		this.setState({ isLoading: true, hasError: false })
 		const { values } = this.props.taskAttribute
@@ -53,8 +57,8 @@ class AttributeField extends React.Component {
 				this.setState({ isLoading: false, hasError: true, justSaved: false })
 			})
 	}
-
-
+	
+	
 	render() {
 		const { taskAttribute } = this.props
 		return (
@@ -69,38 +73,38 @@ class AttributeField extends React.Component {
 	
 	renderValue() {
 		const { taskAttribute, teamTimeFormat } = this.props
-		const isBoolean = taskAttribute.datatype === 'BOOL'
 		if (taskAttribute.is_recurrent) {
 			return <TaskRecurrentAttribute
 				loggedValues={taskAttribute.values}
 				onSave={this.handleSave}
-				isBoolean={isBoolean}
+				type={taskAttribute.datatype}
+				teamTimeFormat={teamTimeFormat}
 				{...this.state}
 			/>
 		}
-
-    	const values = taskAttribute.values
+		
+		const values = taskAttribute.values
 		const taskAttributeValue = values.length === 0 ? '' : values[values.length - 1].value
 		switch (taskAttribute.datatype) {
-    		case 'BOOL':
-      			return <BooleanAttribute 
-							value={taskAttributeValue} 
-							onSave={this.handleSave}
-							{...this.state}
-						/>
-			case 'TIME':
-				return <TimeAttribute 
-							value={taskAttributeValue} 
-							onSave={this.handleSave} 
-							teamTimeFormat={teamTimeFormat}
-							{...this.state}
-						/>
+			case BOOL:
+				return <BooleanAttribute
+					value={taskAttributeValue}
+					onSave={this.handleSave}
+					{...this.state}
+				/>
+			case TIME:
+				return <TimeAttribute
+					value={taskAttributeValue}
+					onSave={this.handleSave}
+					teamTimeFormat={teamTimeFormat}
+					{...this.state}
+				/>
 			default:
-				return <TextAttribute 
-							value={taskAttributeValue} 
-							onSave={this.handleSave} 
-							{...this.state}
-						/>
+				return <TextAttribute
+					value={taskAttributeValue}
+					onSave={this.handleSave}
+					{...this.state}
+				/>
 		}
 	}
 }
@@ -110,13 +114,13 @@ class BooleanAttribute extends React.Component {
 		super(props)
 		this.handleChange = this.handleChange.bind(this)
 	}
-
+	
 	handleChange(val) {
 		//Set new value to opposite of existing value
 		const newValue = this.props.value ? '' : 'true'
 		this.props.onSave(newValue)
 	}
-
+	
 	render() {
 		let { value } = this.props
 		const boolValue = value === 'true'
@@ -156,22 +160,22 @@ class TextAttribute extends React.Component {
 			}
 		}, TIME_TO_STAY_UNSAVED)
 	}
-
+	
 	handleReset() {
 		this.setState({ draftValue: this.props.value })
 	}
-
+	
 	handleSave() {
 		if (this.state.draftValue === this.props.value) {
 			return
 		}
 		this.handleSaveWrapper(this.state.draftValue)
 	}
-
+	
 	handleSaveWrapper(v) {
 		this.props.onSave(v)
 	}
-
+	
 	render() {
 		const { draftValue } = this.state
 		return (
@@ -184,70 +188,6 @@ class TextAttribute extends React.Component {
 				<Peripherals {...this.props} onRetry={this.handleSave} />
 			</div>
 		)
-	}
-}
-
-class TimeAttribute extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			draftValue: props.value,
-			teamTimeFormat: props.teamTimeFormat,
-		}	
-		this.handleSave = this.handleSave.bind(this)
-	}
-
-	handleSave(value) {
-		let new_time = moment(value).utc().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
-		if(this.state.draftValue !== new_time) {
-			this.setState({ draftValue: new_time})
-			this.handleSaveWrapper(new_time)
-		}
-		return 
-	}
-
-	handleSaveWrapper(v) {
-		this.props.onSave(v)
-	}
-
-	isValidISODate(dateString) {
-        return moment(dateString, moment.ISO_8601, true).isValid()
-    }
-
-	render() {
-		const isNormal = this.state.teamTimeFormat === 'n'
-		const format = isNormal ? "YYYY-MM-DD h:mm a" : "YYYY-MM-DD HH:mm"
-		const timeFormat = isNormal ? "hh:mm a" : "HH:mm"
-		const use12Hours = isNormal
-
-		if(this.isValidISODate(this.state.draftValue)){
-			let dateTime = moment(this.state.draftValue)
-			return (
-				<div className="input-container">
-					<DatePicker
-					    showTime={{format: timeFormat, use12Hours: use12Hours}}
-					    format={format}
-					    placeholder="Select Time"
-					    defaultValue={dateTime}
-					    onOk={this.handleSave}
-					/>
-					<Peripherals {...this.props} onRetry={this.handleSave} />
-				</div>
-			)
-		} else {
-			let dateTime = this.state.draftValue
-			return (
-				<div className="input-container">
-					<DatePicker
-					    showTime={{format: timeFormat, use12Hours: use12Hours}}
-					    format={format}
-					    placeholder={dateTime}
-					    onOk={this.handleSave}
-					/>
-					<Peripherals {...this.props} onRetry={this.handleSave} />
-				</div>
-			)
-		}
 	}
 }
 
