@@ -56,6 +56,26 @@ class ProcessPage extends React.Component {
 					</ElementContent>
 					{this.renderDuplicateDialog()}
 				</Loading>
+				{this.renderHelp()}
+			</div>
+		)
+	}
+	
+	renderHelp() {
+		return (
+			<div className="help-container">
+				<div className="help"
+						 onClick={() => window.open("https://polymer.helpscoutdocs.com/article/16-recurring-log-fields", '_blank')}>
+					<div className="help-header">You can now fill in log fields multiple times!</div>
+					<div>
+						<span>We've added recurring log fields so your team can record multiple entries for each log field, and you can keep track of changes. </span>
+						<span className="help-link">
+						Learn how to get finer resolution over your production tracking now.
+					</span>
+						<span className="forward">  <i
+							className="material-icons activity-page-forward-i">arrow_forward</i></span>
+					</div>
+				</div>
 			</div>
 		)
 	}
