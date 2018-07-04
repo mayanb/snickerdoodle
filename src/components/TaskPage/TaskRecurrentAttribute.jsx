@@ -54,7 +54,7 @@ export default class TaskRecurrentAttribute extends React.Component {
 						value="Log a new date and time"
 						onSave={this.handleSearch}
 						teamTimeFormat={teamTimeFormat}
-						{...this.state}
+						{...this.props}
 					/>
 				)
 			default: // USER, TEXT, NUMB
