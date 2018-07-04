@@ -45,6 +45,7 @@ export default class TimeAttribute extends React.Component {
 						placeholder="Select Time"
 						defaultValue={dateTime}
 						onOk={this.handleSave}
+						size="large"
 					/>
 					<Peripherals {...this.props} onRetry={this.handleSave} />
 				</div>
@@ -58,6 +59,7 @@ export default class TimeAttribute extends React.Component {
 						format={format}
 						placeholder={dateTime}
 						onOk={this.handleSave}
+						size="large"
 					/>
 					<Peripherals {...this.props} onRetry={this.handleSave} />
 				</div>
