@@ -8,6 +8,10 @@ const nfs = [{
 	title: "Set time format.",
 	content: <span>Visit <Link to='/account'>Account Settings</Link> to switch between 12 hour and 24 hour time format. </span>,
 	type: 'feature',
+},{
+	title: "Keep track of changes in your log fields.",
+	content: <span>You can now fill in log fields multiple times! Record multiple entries for each log field, and keep track of changes. <Link to='/processes'>Add recurring fields to a process now.</Link></span>,
+	type: 'feature',
 }]
 
 let HEADER = {display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}

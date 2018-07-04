@@ -11,6 +11,15 @@
 	.process-attr-name {
 		color: $gray-dark;
 	}
+	
+	.recurrent-label {
+		flex: 1;
+		color: $gray-light;
+		&.hidden {
+			visibility: hidden;
+		}
+		
+	}
 }
 
 .process-attr-selected, .process-attribute-new  {
@@ -26,4 +35,8 @@
 				flex: 1;
 			}
 		}
+	
+	.recurrent-checkbox {
+		padding-bottom: 16px;
 	}
+}

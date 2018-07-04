@@ -9,6 +9,7 @@ import Sortable from '../Sortable/Container'
 import './styles/processattributelist.css'
 import ProcessAttributeDeleteDialog from './ProcessAttributeDeleteDialog'
 import {Slide} from '../Animations/Animations'
+import { IS_RECURRENT_MESSAGE } from './ProcessAttribute'
 
 const COMPONENT_PREFIX = 'process_attribute_list_'
 
@@ -55,6 +56,7 @@ class ProcessAttributeList extends React.Component {
 				<div className="process-attr-list-header">
 					<span>Name</span>
 					<span>Type</span>
+					<span style={{visibility: 'hidden'}}>{IS_RECURRENT_MESSAGE}</span>
 				</div>
 				<Slide>
 				{ 
@@ -101,7 +103,7 @@ class ProcessAttributeList extends React.Component {
 				onSelect: () => this.handleSelect(attr),
 				onUpdate: (newAttr) => this.handleUpdate(attr, newAttr)
 			}
-		})
+		}).filter(attr => !attr.is_trashed)
 	}
 
 	// MARK:- ACTIONS 
@@ -111,9 +113,9 @@ class ProcessAttributeList extends React.Component {
 		dispatch(actions.archiveAttribute(process_index, index, process.attributes[index]))
 	}
 
-	saveAttribute(name, type) {
+	saveAttribute(name, type, is_recurrent) {
 		let { process, dispatch } = this.props
-		let attribute = { name: name, process_type: process.id, datatype: type }
+		let attribute = { name: name, process_type: process.id, datatype: type, is_recurrent: is_recurrent }
 		dispatch(actions.saveAttribute(0, attribute))
 	}
 

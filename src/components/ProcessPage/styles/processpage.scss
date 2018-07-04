@@ -9,6 +9,34 @@
 	.process-attributes {
 		flex: 5;
 	}
+	
+	.help-container {
+		z-index: 1000000;
+		position: fixed;
+		bottom: 30px;
+		right: 0px;
+		margin-right: 24px;
+		margin-bottom: 76px;
+	}
+	
+	.help {
+		background-color: $primary;
+		margin-bottom: 24px;
+		color: white;
+		padding: 12px;
+		border-radius: 8px;
+		width: 400px;
+		cursor: pointer;
+	}
+	
+	.help-header {
+		font-weight: bold;
+		padding-bottom: 12px;
+	}
+	.help-link {
+		font-weight: bold;
+	}
+	
 }
 
 .process-information {
@@ -20,7 +48,7 @@
 	flex: 1;
 
 	.process-basic-information-container {
-		flex: 1;
+		padding-bottom: 100px;
 	}
 
 	.process-information-basic {
@@ -46,5 +74,6 @@
 
 .process-attributes {
 	background-color: white;
+	padding-bottom: 400px; // Allows scroll space so Help Bubble doesn't hide attributes
 }
 

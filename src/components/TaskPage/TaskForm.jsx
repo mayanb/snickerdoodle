@@ -1,11 +1,15 @@
 import React from 'react'
 import Spinner from 'react-spinkit'
+import {
+	TIME,
+	BOOL,
+} from '../../utilities/constants'
 import './styles/taskform.css'
 import './styles/peripherals.css'
 import Input from '../Inputs/Input'
 import Switch from '../Switch/Switch'
-import moment from 'moment'
-import { DatePicker } from 'antd';
+import TaskRecurrentAttribute from './TaskRecurrentAttribute'
+import TimeAttribute from './TimeAttribute'
 
 const TIME_TO_STAY_UNSAVED = 500
 const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
@@ -13,11 +17,11 @@ const TIME_TO_SHOW_SAVED = 1500
 
 export default class TaskForm extends React.Component {
 	render() {
-		const { taskAttributes, onSave, teamTimeFormat } = this.props
+		const { taskAttributes, onSave, onCreate, teamTimeFormat } = this.props
 		return (
 			<div className="task-form">
 				{taskAttributes.map(a =>
-					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} teamTimeFormat={teamTimeFormat}/>
+					<AttributeField taskAttribute={a} key={a.id} onSave={onSave} onCreate={onCreate} teamTimeFormat={teamTimeFormat}/>
 				)}
 			</div>
 		)
@@ -31,13 +35,20 @@ class AttributeField extends React.Component {
 			isLoading: false,
 			justSaved: false,
 		}
-
+		
 		this.handleSave = this.handleSave.bind(this)
 	}
-
+	
 	handleSave(value) {
 		this.setState({ isLoading: true, hasError: false })
-		return this.props.onSave(this.props.taskAttribute.id, value)
+		const { values } = this.props.taskAttribute
+		let apiPromise
+		if (values.length === 0 || this.props.taskAttribute.is_recurrent) { // Future: if we can EDIT recurrent attrs, this is too simple
+			apiPromise = this.props.onCreate(this.props.taskAttribute.id, value)
+		} else {
+			apiPromise = this.props.onSave(this.props.taskAttribute.id, values[values.length - 1].id, value)
+		}
+		return apiPromise
 			.then(() => {
 				window.setTimeout(() => this.setState({ isLoading: false, justSaved: true }), TIME_TO_LOAD)
 				window.setTimeout(() => this.setState({ justSaved: false }), TIME_TO_LOAD + TIME_TO_SHOW_SAVED)
@@ -46,8 +57,8 @@ class AttributeField extends React.Component {
 				this.setState({ isLoading: false, hasError: true, justSaved: false })
 			})
 	}
-
-
+	
+	
 	render() {
 		const { taskAttribute } = this.props
 		return (
@@ -59,30 +70,41 @@ class AttributeField extends React.Component {
 			</div>
 		)
 	}
-
+	
 	renderValue() {
 		const { taskAttribute, teamTimeFormat } = this.props
-
+		if (taskAttribute.is_recurrent) {
+			return <TaskRecurrentAttribute
+				loggedValues={taskAttribute.values}
+				onSave={this.handleSave}
+				type={taskAttribute.datatype}
+				teamTimeFormat={teamTimeFormat}
+				{...this.state}
+			/>
+		}
+		
+		const values = taskAttribute.values
+		const taskAttributeValue = values.length === 0 ? '' : values[values.length - 1].value
 		switch (taskAttribute.datatype) {
-    		case 'BOOL':
-      			return <BooleanAttribute 
-							value={taskAttribute.value} 
-							onSave={this.handleSave}
-							{...this.state}
-						/>
-			case 'TIME':
-				return <TimeAttribute 
-							value={taskAttribute.value} 
-							onSave={this.handleSave} 
-							teamTimeFormat={teamTimeFormat}
-							{...this.state}
-						/>
+			case BOOL:
+				return <BooleanAttribute
+					value={taskAttributeValue}
+					onSave={this.handleSave}
+					{...this.state}
+				/>
+			case TIME:
+				return <TimeAttribute
+					value={taskAttributeValue}
+					onSave={this.handleSave}
+					teamTimeFormat={teamTimeFormat}
+					{...this.state}
+				/>
 			default:
-				return <TextAttribute 
-							value={taskAttribute.value} 
-							onSave={this.handleSave} 
-							{...this.state}
-						/>
+				return <TextAttribute
+					value={taskAttributeValue}
+					onSave={this.handleSave}
+					{...this.state}
+				/>
 		}
 	}
 }
@@ -92,13 +114,13 @@ class BooleanAttribute extends React.Component {
 		super(props)
 		this.handleChange = this.handleChange.bind(this)
 	}
-
+	
 	handleChange(val) {
 		//Set new value to opposite of existing value
 		const newValue = this.props.value ? '' : 'true'
 		this.props.onSave(newValue)
 	}
-
+	
 	render() {
 		let { value } = this.props
 		const boolValue = value === 'true'
@@ -127,13 +149,7 @@ class TextAttribute extends React.Component {
 		this.handleSave = this.handleSave.bind(this)
 		this.handleReset = this.handleReset.bind(this)
 	}
-
-	componentWillReceiveProps(np) {
-		if (np.value !== this.state.draftValue) {
-			this.setState({ draftValue: np.value })
-		}
-	}
-
+	
 	handleInputChange(e) {
 		let word = e.target.value
 		this.setState({ draftValue: word})
@@ -144,22 +160,22 @@ class TextAttribute extends React.Component {
 			}
 		}, TIME_TO_STAY_UNSAVED)
 	}
-
+	
 	handleReset() {
 		this.setState({ draftValue: this.props.value })
 	}
-
+	
 	handleSave() {
 		if (this.state.draftValue === this.props.value) {
-			return 
+			return
 		}
 		this.handleSaveWrapper(this.state.draftValue)
 	}
-
+	
 	handleSaveWrapper(v) {
 		this.props.onSave(v)
 	}
-
+	
 	render() {
 		const { draftValue } = this.state
 		return (
@@ -172,70 +188,6 @@ class TextAttribute extends React.Component {
 				<Peripherals {...this.props} onRetry={this.handleSave} />
 			</div>
 		)
-	}
-}
-
-class TimeAttribute extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			draftValue: props.value,
-			teamTimeFormat: props.teamTimeFormat,
-		}	
-		this.handleSave = this.handleSave.bind(this)
-	}
-
-	handleSave(value) {
-		let new_time = moment(value).utc().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
-		if(this.state.draftValue !== new_time) {
-			this.setState({ draftValue: new_time})
-			this.handleSaveWrapper(new_time)
-		}
-		return 
-	}
-
-	handleSaveWrapper(v) {
-		this.props.onSave(v)
-	}
-
-	isValidISODate(dateString) {
-        return moment(dateString, moment.ISO_8601, true).isValid()
-    }
-
-	render() {
-		const isNormal = this.state.teamTimeFormat === 'n'
-		const format = isNormal ? "YYYY-MM-DD h:mm a" : "YYYY-MM-DD HH:mm"
-		const timeFormat = isNormal ? "hh:mm a" : "HH:mm"
-		const use12Hours = isNormal
-
-		if(this.isValidISODate(this.state.draftValue)){
-			let dateTime = moment(this.state.draftValue)
-			return (
-				<div className="input-container">
-					<DatePicker
-					    showTime={{format: timeFormat, use12Hours: use12Hours}}
-					    format={format}
-					    placeholder="Select Time"
-					    defaultValue={dateTime}
-					    onOk={this.handleSave}
-					/>
-					<Peripherals {...this.props} onRetry={this.handleSave} />
-				</div>
-			)
-		} else {
-			let dateTime = this.state.draftValue
-			return (
-				<div className="input-container">
-					<DatePicker
-					    showTime={{format: timeFormat, use12Hours: use12Hours}}
-					    format={format}
-					    placeholder={dateTime}
-					    onOk={this.handleSave}
-					/>
-					<Peripherals {...this.props} onRetry={this.handleSave} />
-				</div>
-			)
-		}
 	}
 }
 
