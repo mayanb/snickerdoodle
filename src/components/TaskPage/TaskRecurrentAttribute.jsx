@@ -1,7 +1,13 @@
 import React from 'react'
 import moment from 'moment'
 import Switch from '../Switch/Switch'
+import {
+	TIME,
+	BOOL,
+} from '../../utilities/constants'
 import './styles/taskrecurrentattribute.css'
+import TimeAttribute from './TimeAttribute'
+import { getDateDisplay } from '../../utilities/dateutils'
 import { Input, List, Button } from 'antd'
 const Search = Input.Search
 
@@ -16,8 +22,7 @@ export default class TaskRecurrentAttribute extends React.Component {
 	}
 	
 	render() {
-		const { loggedValues, isBoolean } = this.props
-		const { inputValue } = this.state
+		const { loggedValues } = this.props
 		return (
 			<div className="task-recurrent-attribute">
 				{(loggedValues.length === 0) ? <ZeroState /> : <List
@@ -25,8 +30,36 @@ export default class TaskRecurrentAttribute extends React.Component {
 					dataSource={loggedValues}
 					renderItem={log => <Log log={log}/>}
 				/>}
-				{isBoolean ? <BooleanAttribute value={inputValue} onToggle={this.handleToggle} onToggleSubmit={this.handleToggleSubmit}/>
-					: <Search
+				{this.newEntryInput()}
+			</div>
+		)
+	}
+	
+	newEntryInput() {
+		const { teamTimeFormat, type } = this.props
+		const { inputValue } = this.state
+		
+		switch (type) {
+			case BOOL:
+				return (
+					<BooleanAttribute
+						value={inputValue}
+						onToggle={this.handleToggle}
+						onToggleSubmit={this.handleToggleSubmit}
+					/>
+				)
+			case TIME:
+				return (
+					<TimeAttribute
+						value="Log a new date and time"
+						onSave={this.handleSearch}
+						teamTimeFormat={teamTimeFormat}
+						{...this.state}
+					/>
+				)
+			default: // USER, TEXT, NUMB
+				return (
+					<Search
 						placeholder="Log a new value"
 						enterButton="Add"
 						size="large"
@@ -34,9 +67,9 @@ export default class TaskRecurrentAttribute extends React.Component {
 						onSearch={this.handleSearch}
 						style={{marginTop: '16px'}}
 						onChange={e => this.setState({ inputValue: e.target.value})}
-					/>}
-			</div>
-		)
+					/>
+				)
+		}
 	}
 	
 	handleToggle(value) {
@@ -81,13 +114,23 @@ function BooleanAttribute({ value, onToggle, onToggleSubmit }) {
 function Log({log}) {
 	const logTime = moment(log.created_at)
 	const displayTime = `${logTime.fromNow()} (${logTime.format("MMMM DD, hh:mma")})`
-	const displayValue = log.datatype === 'BOOL' ? (log.value ? 'Yes' : 'No') : log.value
 	return (
 		<List.Item>
 			<div className="log">
-				<div className="value">{displayValue}</div>
+				<div className="value">{getDisplayValue(log.value, log.datatype)}</div>
 				<div className="time">{displayTime}</div>
 			</div>
 		</List.Item>
 	)
+}
+
+function getDisplayValue(value, type) {
+	switch (type) {
+		case BOOL:
+			return value ? 'Yes' : 'No'
+		case TIME:
+			return getDateDisplay(value)
+		default:
+			return value
+	}
 }

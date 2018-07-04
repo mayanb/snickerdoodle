@@ -18,3 +18,11 @@ export function compareDates(date1, date2) {
 	const format = 'YYYY-MM-DD'
 	return date1.format(format) === date2.format(format)
 }
+
+export function getDateDisplay(value) {
+	return isValidISODate(value) ? moment(value).format("MMMM DD, hh:mma") : value
+}
+
+export function isValidISODate(dateString) {
+	return moment(dateString, moment.ISO_8601, true).isValid()
+}
