@@ -4,14 +4,13 @@ import './styles/peripherals.css'
 import moment from 'moment'
 import { DatePicker } from 'antd';
 import { Peripherals } from './TaskForm'
-import { isValidISODate } from '../../utilities/dateutils'
+import { isValidISODate, getTimeFormat } from '../../utilities/dateutils'
 
 export default class TimeAttribute extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			draftValue: props.value,
-			teamTimeFormat: props.teamTimeFormat,
 		}
 		this.handleSave = this.handleSave.bind(this)
 	}
@@ -22,7 +21,6 @@ export default class TimeAttribute extends React.Component {
 			this.setState({ draftValue: new_time})
 			this.handleSaveWrapper(new_time)
 		}
-		return
 	}
 	
 	handleSaveWrapper(v) {
@@ -30,40 +28,25 @@ export default class TimeAttribute extends React.Component {
 	}
 	
 	render() {
-		const isNormal = this.state.teamTimeFormat === 'n'
-		const format = isNormal ? "YYYY-MM-DD h:mm a" : "YYYY-MM-DD HH:mm"
-		const timeFormat = isNormal ? "hh:mm a" : "HH:mm"
-		const use12Hours = isNormal
+		const { teamTimeFormat } = this.props
+		const { draftValue } = this.state
 		
-		if(isValidISODate(this.state.draftValue)){
-			let dateTime = moment(this.state.draftValue)
-			return (
-				<div className="input-container">
-					<DatePicker
-						showTime={{format: timeFormat, use12Hours: use12Hours}}
-						format={format}
-						placeholder="Select Time"
-						defaultValue={dateTime}
-						onOk={this.handleSave}
-						size="large"
-					/>
-					<Peripherals {...this.props} onRetry={this.handleSave} />
-				</div>
-			)
-		} else {
-			let dateTime = this.state.draftValue
-			return (
-				<div className="input-container">
-					<DatePicker
-						showTime={{format: timeFormat, use12Hours: use12Hours}}
-						format={format}
-						placeholder={dateTime}
-						onOk={this.handleSave}
-						size="large"
-					/>
-					<Peripherals {...this.props} onRetry={this.handleSave} />
-				</div>
-			)
-		}
+		const format = getTimeFormat(teamTimeFormat)
+		const use12Hours = teamTimeFormat === 'n'
+		const defaultValue = isValidISODate(draftValue) ? moment(draftValue) : undefined
+		const placeholder = isValidISODate(draftValue) ? 'Select a Time' : draftValue
+		return (
+			<div className="input-container">
+				<DatePicker
+					showTime={{format: format, use12Hours: use12Hours}}
+					format={format}
+					placeholder={placeholder}
+					defaultValue={defaultValue}
+					onOk={this.handleSave}
+					size="large"
+				/>
+				<Peripherals {...this.props} onRetry={this.handleSave} />
+			</div>
+		)
 	}
 }

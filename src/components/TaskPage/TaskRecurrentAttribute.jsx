@@ -22,13 +22,13 @@ export default class TaskRecurrentAttribute extends React.Component {
 	}
 	
 	render() {
-		const { loggedValues } = this.props
+		const { loggedValues, teamTimeFormat } = this.props
 		return (
 			<div className="task-recurrent-attribute">
 				{(loggedValues.length === 0) ? <ZeroState /> : <List
 					bordered
 					dataSource={loggedValues}
-					renderItem={log => <Log log={log}/>}
+					renderItem={log => <Log log={log} teamTimeFormat={teamTimeFormat}/>}
 				/>}
 				{this.newEntryInput()}
 			</div>
@@ -111,25 +111,25 @@ function BooleanAttribute({ value, onToggle, onToggleSubmit }) {
 	)
 }
 
-function Log({log}) {
+function Log({log, teamTimeFormat}) {
 	const logTime = moment(log.created_at)
-	const displayTime = `${logTime.fromNow()} (${logTime.format("MMMM DD, hh:mma")})`
+	const displayTime = `${logTime.fromNow()} (${getDateDisplay(log.created_at)})`
 	return (
 		<List.Item>
 			<div className="log">
-				<div className="value">{getDisplayValue(log.value, log.datatype)}</div>
+				<div className="value">{getDisplayValue(log.value, log.datatype, teamTimeFormat)}</div>
 				<div className="time">{displayTime}</div>
 			</div>
 		</List.Item>
 	)
 }
 
-function getDisplayValue(value, type) {
+function getDisplayValue(value, type, teamTimeFormat) {
 	switch (type) {
 		case BOOL:
 			return value ? 'Yes' : 'No'
 		case TIME:
-			return getDateDisplay(value)
+			return getDateDisplay(value, teamTimeFormat)
 		default:
 			return value
 	}
