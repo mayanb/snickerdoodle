@@ -22,12 +22,12 @@ export function getTask(task_id) {
 
     return api.get(`/ics/tasks/${task_id}`)
       .then(async (res) => {
-        let processed = res.body
-        processed.attributesWithValues = attributesWithValues(processed.process_type.attributes, processed.attribute_values)
-        processed.task_ingredients = addInputsToTaskIngredients(processed.task_ingredients, processed.inputs)
+        const task = res.body
+        task.attributesWithValues = attributesWithValues(task.process_type.attributes, task.attribute_values)
+        task.task_ingredients = addInputsToTaskIngredients(task.task_ingredients, task.inputs)
         
         dispatch(getFileList(task_id))
-        return dispatch(actions.requestSuccess(TASK, processed, null))
+        return dispatch(actions.requestSuccess(TASK, task, null))
       })
       .catch(err => dispatch(actions.requestFailure(TASK, err)))
   }
@@ -281,10 +281,11 @@ function requestEditTaskFailure(err) {
 export function uploadTaskFiles(task, files_to_upload) {
   return function (dispatch) {
     dispatch(requestEditTask())
-    let extraData = {
+    const extraData = {
       task: task.id
     }
     
+    // creates a copy of the task.files array
     let uploaded_files = JSON.parse(JSON.stringify(task.files));
     return api.upload(`/ics/files/`, files_to_upload[0], extraData)
       .then((res) => {
@@ -293,11 +294,11 @@ export function uploadTaskFiles(task, files_to_upload) {
 
         // recursively call uploadTaskFiles if there are more files to upload
         if (files_to_upload.length > 1) {
-          var next_files_to_upload = update(files_to_upload, {
+          const next_files_to_upload = update(files_to_upload, {
             $splice: [[0, 1]]
           })
           // create a task copy with an updated files array
-          var new_task = update(task, {
+          const new_task = update(task, {
             'files': {
               '$merge': uploaded_files
             }
