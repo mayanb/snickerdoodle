@@ -8,22 +8,43 @@ import {
 import {
     REQUEST_EDIT_TASK,
     REQUEST_EDIT_TASK_SUCCESS,
+    REQUEST_EDIT_TASK_FAILURE,
     MARK_OUTPUT_USED,
 } from '../../reducers/TaskReducerExtension'
-import {  TASK, TASKS, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
+import { TASK, TASKS, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
 import { get_active_user } from '../../utilities/userutils'
+import update from 'immutability-helper'
 
-export function getTask(task) {
-  let request = { 
-    url: `/ics/tasks/${task}`, 
-    query: {}
+export function getTask(task_id) {
+  return dispatch => {
+
+    dispatch(actions.getRequest(TASK))
+
+    return api.get(`/ics/tasks/${task_id}`)
+      .then(async (res) => {
+        let processed = res.body
+        processed.attributesWithValues = attributesWithValues(processed.process_type.attributes, processed.attribute_values)
+        processed.task_ingredients = addInputsToTaskIngredients(processed.task_ingredients, processed.inputs)
+        
+        dispatch(getFileList(task_id))
+        return dispatch(actions.requestSuccess(TASK, processed, null))
+      })
+      .catch(err => dispatch(actions.requestFailure(TASK, err)))
   }
-  return actions.fetch(TASK, request, null, res => {
-    let task = res.body
-    task.attributesWithValues = attributesWithValues(task.process_type.attributes, task.attribute_values)
-    task.task_ingredients = addInputsToTaskIngredients(task.task_ingredients, task.inputs)
-    return task
-  })
+}
+
+export function getFileList(task_id) {
+  return dispatch => {
+    
+    dispatch(requestEditTask())
+
+    return api.get(`/ics/files/`)
+      .query({task: task_id})
+      .then((res) => {
+        dispatch(requestEditTaskSuccess('files', res.body))
+      })
+      .catch(e => dispatch(requestEditTaskFailure(e)))
+  }
 }
 
 function addInputsToTaskIngredients(taskIngredients, inputs) {
@@ -215,18 +236,6 @@ export function deleteTask(task) {
   }
 }
 
-export function uploadTaskFile(task, file) {
-  return function (dispatch) {
-
-    dispatch((requestEditTask()))
-
-    return api.put(`/ics/tasks/edit/${task.id}/`)
-      .send({})
-      .then(() => dispatch(requestEditTaskSuccess("files", files)))
-      .catch(e => console.log("Error", e))
-  }
-}
-
 function requestEditTask() {
   return {
     type: REQUEST_EDIT_TASK,
@@ -242,4 +251,46 @@ function requestEditTaskSuccess(field, value) {
     field: field,
     value: value
   }
+}
+
+function requestEditTaskFailure(err) {
+  console.error('Oh no! Something went wrong\n' + err)
+  return {
+    type: REQUEST_EDIT_TASK_FAILURE,
+    name: TASK,
+    error: err
+  }
+}
+
+export function uploadTaskFiles(task, files_to_upload) {
+  return function (dispatch) {
+    dispatch(requestEditTask())
+    let extraData = {
+      task: task.id
+    }
+    
+    let uploaded_files = JSON.parse(JSON.stringify(task.files));
+    return api.upload(`/ics/files/`, files_to_upload[0], extraData)
+      .then((res) => {
+        uploaded_files.unshift(res.body)
+        dispatch(requestEditTaskSuccess('files', uploaded_files))
+
+        // recursively call uploadTaskFiles if there are more files to upload
+        if (files_to_upload.length > 1) {
+          var next_files_to_upload = update(files_to_upload, {
+            $splice: [[0, 1]]
+          })
+          // create a task copy with an updated files array
+          var new_task = update(task, {
+            'files': {
+              '$merge': uploaded_files
+            }
+          })
+          // recursive call
+          dispatch(uploadTaskFiles(new_task, next_files_to_upload))
+        }
+
+      })
+      .catch(e => dispatch(requestEditTaskFailure(e)))
+    }
 }

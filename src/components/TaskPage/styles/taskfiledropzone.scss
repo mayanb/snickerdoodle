@@ -1,0 +1,26 @@
+@import 'styles/constants.scss';
+
+.dropzone {
+    color: #C0C0C0;
+    height: 90px;
+    border: dashed 2px #DBDBDB;
+    border-radius: 3px;
+    background-color: #EBEBEB;
+    text-align: center;
+    padding: 14px 40px;
+    margin-top: 50px;
+    font-size: 12px;
+    line-height: 14px;
+
+    div {
+        margin-top: 7px;
+    }
+}
+
+.active {
+    border: solid 2px rgb(144, 214, 147);
+}
+
+.file-list {
+    margin-top: 22px;
+}

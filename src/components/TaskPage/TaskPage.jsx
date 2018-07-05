@@ -15,7 +15,8 @@ class TaskPage extends React.Component {
 		this.handleFlagTask = this.handleFlagTask.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
 		this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
-		this.handleDropFile = this.handleDropFile.bind(this)
+		this.handleDropFiles = this.handleDropFiles.bind(this)
+		
 	}
 
 	componentWillReceiveProps(np) {
@@ -50,9 +51,9 @@ class TaskPage extends React.Component {
 		return this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
 	}
 
-	handleDropFile(files) {
-		this.props.dispatch(actions.uploadTaskFile(files))
-		console.log(this.props)
+	handleDropFiles(files) {
+		const { task, dispatch } = this.props
+		dispatch(actions.uploadTaskFiles(task, files))
 	}
 
 	render() {
@@ -70,10 +71,10 @@ class TaskPage extends React.Component {
 					<ProductHistory />
 					<TaskMain 
 						task={task}
-					  attributes={task.attributesWithValues}
-					  onSaveAttribute={this.handleSaveAttribute}
+						attributes={task.attributesWithValues}
+						onSaveAttribute={this.handleSaveAttribute}
 					/>
-					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} onDropFile={this.handleDropFile} name={task.display} />
+					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} onDropFiles={this.handleDropFiles} task={task} name={task.display} />
 				</div>
 			</div>
 		)
