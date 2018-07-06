@@ -286,7 +286,7 @@ export function uploadTaskFiles(task, files_to_upload) {
     }
     
     // creates a copy of the task.files array
-    let uploaded_files = JSON.parse(JSON.stringify(task.files));
+    const uploaded_files = JSON.parse(JSON.stringify(task.files));
     return api.upload(`/ics/files/`, files_to_upload[0], extraData)
       .then((res) => {
         uploaded_files.unshift(res.body)
