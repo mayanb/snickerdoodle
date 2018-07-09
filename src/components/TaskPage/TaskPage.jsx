@@ -60,7 +60,9 @@ class TaskPage extends React.Component {
 
 	handleDropFiles(files) {
 		const { task, dispatch } = this.props
-		dispatch(actions.uploadTaskFiles(task, files))
+		files.forEach(file => {
+			dispatch(actions.uploadTaskFile(task, file))
+		})
 	}
 
 	render() {

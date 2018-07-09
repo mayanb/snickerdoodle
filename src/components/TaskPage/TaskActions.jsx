@@ -8,12 +8,12 @@ import {
 import {
     REQUEST_EDIT_TASK,
     REQUEST_EDIT_TASK_SUCCESS,
+    REQUEST_PUSH_TO_TASK_SUCCESS,
     REQUEST_EDIT_TASK_FAILURE,
     MARK_OUTPUT_USED,
 } from '../../reducers/TaskReducerExtension'
 import { TASK, TASKS, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
 import { get_active_user } from '../../utilities/userutils'
-import update from 'immutability-helper'
 
 export function getTask(task_id) {
   return dispatch => {
@@ -161,7 +161,6 @@ function requestCreateMovementFailure(err) {
   return {
     type: REQUEST_CREATE_FAILURE,
     name: MOVEMENTS
-
   }
 }
 
@@ -256,13 +255,21 @@ function requestEditTask() {
   return {
     type: REQUEST_EDIT_TASK,
     name: TASK
-
   }
 }
 
 function requestEditTaskSuccess(field, value) {
   return {
     type: REQUEST_EDIT_TASK_SUCCESS,
+    name: TASK,
+    field: field,
+    value: value
+  }
+}
+
+function requestPushToTaskSuccess(field, value) {
+  return {
+    type: REQUEST_PUSH_TO_TASK_SUCCESS,
     name: TASK,
     field: field,
     value: value
@@ -278,35 +285,18 @@ function requestEditTaskFailure(err) {
   }
 }
 
-export function uploadTaskFiles(task, files_to_upload) {
+export function uploadTaskFile(task, file) {
   return function (dispatch) {
     dispatch(requestEditTask())
-    const extraData = {
-      task: task.id
-    }
+    const extraData = { task: task.id }
     
-    // creates a copy of the task.files array
-    const uploaded_files = JSON.parse(JSON.stringify(task.files));
-    return api.upload(`/ics/files/`, files_to_upload[0], extraData)
+    return api.upload(`/ics/files/`, file, extraData)
       .then((res) => {
-        uploaded_files.unshift(res.body)
-        dispatch(requestEditTaskSuccess('files', uploaded_files))
-
-        // recursively call uploadTaskFiles if there are more files to upload
-        if (files_to_upload.length > 1) {
-          const next_files_to_upload = update(files_to_upload, {
-            $splice: [[0, 1]]
-          })
-          // create a task copy with an updated files array
-          const new_task = update(task, {
-            'files': {
-              '$merge': uploaded_files
-            }
-          })
-          // recursive call
-          dispatch(uploadTaskFiles(new_task, next_files_to_upload))
+        if (!task.files) {
+          dispatch(requestEditTaskSuccess('files', [res.body]))
+        } else {
+          dispatch(requestPushToTaskSuccess('files', [res.body]))
         }
-
       })
       .catch(e => dispatch(requestEditTaskFailure(e)))
     }
