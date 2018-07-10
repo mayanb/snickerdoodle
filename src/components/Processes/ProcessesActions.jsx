@@ -36,7 +36,7 @@ export function postDuplicateProcess(json) {
 
 export function editProcess(json, index, processID) {
   let request = {
-    url: `${BASE_ENDPOINT}/edit/${processID}/`,
+    url: `${BASE_ENDPOINT}/${processID}/`,
     data: json
   }
   return actions.patchEdit(PROCESSES, request, index, res => res.body)
