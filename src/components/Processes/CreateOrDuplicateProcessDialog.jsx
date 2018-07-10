@@ -14,6 +14,7 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 			number: "",
 			unit: "",
 			outputDescription: "",
+			category:"wip",
 			submitted: false,
 			formErrorsArray: [],
 		}
@@ -57,6 +58,7 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 			default_amount: this.state.number,
 			unit: this.state.unit,
 			output_desc: this.state.outputDescription,
+			category: this.state.category,
 		}
 
 		onSubmit(newProcess)
@@ -70,7 +72,7 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 	
 	formErrors() {
 		const errors = []
-		let { name, code, number, unit, outputDescription } = this.state
+		let { name, code, number, unit, outputDescription, category } = this.state
 		
 		if (!name)
 			errors.push("Please make sure you've filled out a name.")
@@ -92,6 +94,9 @@ export default class CreateOrDuplicateProcessDialog extends React.Component {
 		
 		if(!outputDescription)
 			errors.push("Please make sure you've filled out an output description.")
+
+		if(!category)
+			errors.push("Please make sure you've selected a category")
 		this.setState({ formErrorsArray: errors })
 		return errors
 	}

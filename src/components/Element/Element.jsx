@@ -24,14 +24,22 @@ export function ElementContent({children}) {
 	)
 }
 
-export function ElementTitle({icon, text, buttonTitle, onClick, isLoading}) {
+export function ElementTitle({icon, text, buttonTitle, onClick, isLoading, children, height}) {
+	if(height !== "58px") height = "30px"
 	return (
-		<div className="element-title">
-			<div className="element-title-name">
-				<Img src={getProcessIcon(icon || 'default.png')} height="30px" />
-				<span>{text}</span>
+		<div>
+			<div className="element-title">
+				<div className="element-title-name">
+					<Img src={getProcessIcon(icon || 'default.png')} height={height} />
+					<div>
+						<span>{text}</span>
+						<div>
+							{children}
+						</div>
+					</div>
+				</div>
+				{ buttonTitle && <Button type='gray' isLoading={isLoading} style={{height:"30px"}} onClick={onClick}>{buttonTitle}</Button> }	
 			</div>
-			{ buttonTitle && <Button type='gray' isLoading={isLoading} onClick={onClick}>{buttonTitle}</Button> }
 		</div>
 	)
 }
