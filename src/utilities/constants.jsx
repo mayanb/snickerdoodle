@@ -19,7 +19,7 @@ export const TIME = 'TIME'
 export const BOOL = 'BOOL'
 export const USER = 'USER'
 
-export const PROCESS_NAME_MAX_LENGTH = 20
+export const ATTRIBUTE_NAME_MAX_LENGTH = 20
 
 export const ICONS = [
 	'prep-process-icon@3x.png', 
