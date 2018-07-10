@@ -4,7 +4,7 @@ import ProcessAttributeDatatype from './ProcessAttributeDatatype'
 import Select2 from '../Inputs/Select'
 import Input from '../Inputs/Input'
 import FormGroup from '../Inputs/FormGroup'
-import { ATTRIBUTE_TYPES } from '../../utilities/constants'
+import { ATTRIBUTE_TYPES, ATTRIBUTE_NAME_MAX_LENGTH } from '../../utilities/constants'
 
 export default function ProcessAttributeField(props) {
 	return (
@@ -60,12 +60,25 @@ class EditText extends React.Component {
 					placeholder="eg. Temperature"
 					value={value}
 					onChange={onChange}
-					ref={(e) => this.inputRef = e } 
+					ref={(e) => this.inputRef = e }
+					maxLength={ATTRIBUTE_NAME_MAX_LENGTH}
 				/>
+				<TextLengthError value={value} />
 				</FormGroup>
 			</div>
 		)
 	}
+}
+
+function TextLengthError({value}) {
+	if (value.length === ATTRIBUTE_NAME_MAX_LENGTH) {
+		return (
+			<div className='error'>
+				Reached 20 character limit.
+			</div>
+		)
+	}
+	return null
 }
 
 export function EditSelect(props) {
