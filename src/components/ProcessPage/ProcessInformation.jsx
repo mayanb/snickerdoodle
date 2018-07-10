@@ -3,6 +3,7 @@ import {pluralize} from '../../utilities/stringutils'
 import ProcessPageEditForm from './ProcessPageEditForm'
 import ProcessEditForm from "./ProcessEditForm"
 import { ElementTitle } from '../Element/Element'
+import {categoryColor, categoryName} from '../../utilities/processutils'
 import { Modal, Tag } from 'antd'
 
 const { confirm } = Modal
@@ -23,12 +24,8 @@ export default class ProcessInformation extends React.Component {
 		const { isEditing } = this.state
 		const { process, onArchive, onDuplicate, isSavingEdit } = this.props
 		const { icon, code, name, category } = process
-		let category_name = "Work in Progress"
-		let category_color = "#40B3FF"
-		if(category !== "wip"){
-			category === 'rm' ? category_name = "Raw Material" : category_name = "Finished Goods"
-			category === 'rm' ? category_color = "#F2A51F" : category_color = "#5BD069"
-		}
+		const category_name = categoryName(category)
+		const category_color = categoryColor(category)
 		return (
 			<div className="process-information">
 				<ElementTitle

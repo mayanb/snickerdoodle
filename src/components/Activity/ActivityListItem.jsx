@@ -6,6 +6,7 @@ import Pill from '../Pill/Pill'
 import Img from '../Img/Img'
 import { dashboardPath } from "../../utilities/urlutils"
 import { Link } from 'react-router-dom'
+import {categoryColor, categoryName} from '../../utilities/processutils'
 import { Tag } from 'antd';
 
 
@@ -18,12 +19,9 @@ export default class ActivityListItem extends React.Component {
 	render() {
 		const { item, index, onViewTasks } = this.props
 		const { process_type, product_types, runs, amount } = item
-		let category_name = "Work in Progress"
-		let category_color = "#40B3FF"
-		if(process_type.category !== "wip"){
-			process_type.category === 'rm' ? category_name = "Raw Material" : category_name = "Finished Goods"
-			process_type.category === 'rm' ? category_color = "#F2A51F" : category_color = "#5BD069"
-		}
+		const category = process_type.category
+		const category_name = categoryName(category)
+		const category_color = categoryColor(category)
 		return (
 			<ObjectListItem className="activity-list-item" onClick={() => onViewTasks(index)}>
 				<div className="icon">

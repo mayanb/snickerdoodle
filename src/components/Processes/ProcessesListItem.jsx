@@ -7,6 +7,7 @@ import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import ButtonStopClickPropagate from '../Card/ButtonStopClickPropagate'
 import Img from '../Img/Img'
+import {categoryColor, categoryName} from '../../utilities/processutils'
 import { Tag } from 'antd';
 
 export default class ProcessesListItem extends React.Component {
@@ -56,13 +57,9 @@ export default class ProcessesListItem extends React.Component {
 	render() {
 		let { item, onClick } = this.props
 		let { expanded } = this.state
-		let category_name = "Work in Progress"
-		let category_color = "#40B3FF"
 		const category = item.category
-		if(category !== "wip"){
-			category === 'rm' ? category_name = "Raw Material" : category_name = "Finished Goods"
-			category === 'rm' ? category_color = "#F2A51F" : category_color = "#5BD069"
-		}
+		const category_name = categoryName(category)
+		const category_color = categoryColor(category)
 		return (
 			<ObjectListItem className={this.getClassNames()} onClick={onClick}>
 				<div className="icon">
