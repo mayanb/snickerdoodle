@@ -5,7 +5,7 @@ import { getProcessIcon } from '../../utilities/stringutils'
 import Button from '../Button/Button'
 import './styles/element.css'
 
-export function ElementHeader({title, name, onBack}) {
+export function ElementHeader({ title, name, onBack }) {
 	return (
 		<ApplicationSectionHeader>
 			<div className="element-header">
@@ -16,7 +16,7 @@ export function ElementHeader({title, name, onBack}) {
 	)
 }
 
-export function ElementContent({children}) {
+export function ElementContent({ children }) {
 	return (
 		<div className="element-content">
 			{children}
@@ -24,8 +24,7 @@ export function ElementContent({children}) {
 	)
 }
 
-export function ElementTitle({icon, text, buttonTitle, onClick, isLoading, children, height}) {
-	if(height !== "58px") height = "30px"
+export function ElementTitle({ icon, text, buttonTitle, onClick, isLoading, children, height = "30px" }) {
 	return (
 		<div>
 			<div className="element-title">
@@ -38,7 +37,7 @@ export function ElementTitle({icon, text, buttonTitle, onClick, isLoading, child
 						</div>
 					</div>
 				</div>
-				{ buttonTitle && <Button type='gray' isLoading={isLoading} style={{height:"30px"}} onClick={onClick}>{buttonTitle}</Button> }	
+				{buttonTitle && <Button type='gray' isLoading={isLoading} style={{ height: "30px" }} onClick={onClick}>{buttonTitle}</Button>}
 			</div>
 		</div>
 	)

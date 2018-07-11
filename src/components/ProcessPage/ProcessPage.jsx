@@ -38,11 +38,9 @@ class ProcessPage extends React.Component {
 			return <span>Loading... </span>
 		}
 
-		console.log(data.icon)
-
 		return (
 			<div className="process-page">
-				<ElementHeader title={'Processes'} name={data.name} onBack={() => history.push('/processes')}/>
+				<ElementHeader title={'Processes'} name={data.name} onBack={() => history.push('/processes')} />
 				<Loading isFetchingData={ui.isFetchingData}>
 					<ElementContent>
 						<ProcessInformation
@@ -60,17 +58,17 @@ class ProcessPage extends React.Component {
 			</div>
 		)
 	}
-	
+
 	renderHelp() {
 		return (
 			<div className="help-container">
 				<div className="help"
-						 onClick={() => window.open("https://polymer.helpscoutdocs.com/article/16-recurring-log-fields", '_blank')}>
+					onClick={() => window.open("https://polymer.helpscoutdocs.com/article/16-recurring-log-fields", '_blank')}>
 					<div className="help-header">You can now fill in log fields multiple times!</div>
 					<div>
 						<span>We've added recurring log fields so your team can record multiple entries for each log field, and you can keep track of changes. </span>
 						<span className="help-link">
-						Learn how to get finer resolution over your production tracking now.
+							Learn how to get finer resolution over your production tracking now.
 					</span>
 						<span className="forward">  <i
 							className="material-icons activity-page-forward-i">arrow_forward</i></span>
@@ -92,7 +90,7 @@ class ProcessPage extends React.Component {
 				className='create-process-dialog'
 				submitButtonText='Create new process with these same fields'
 			/>
-			
+
 		)
 	}
 
@@ -103,7 +101,7 @@ class ProcessPage extends React.Component {
 			okText: 'Yes, I\'m sure',
 			okType: 'danger',
 			onOk: () => this.handleConfirmArchive(),
-			onCancel: () => {}
+			onCancel: () => { }
 		})
 	}
 
@@ -121,24 +119,24 @@ class ProcessPage extends React.Component {
 	}
 
 	handleCancelDuplicate() {
-		this.setState({isDuplicateOpen: false})
+		this.setState({ isDuplicateOpen: false })
 	}
 
 	handleDuplicateProcess(newProcess) {
 		if (this.state.isDuplicating) {
-			return 
+			return
 		}
 		let p = this.props.data
 		let json = newProcess
 		json["duplicate_id"] = p.id
-		this.setState({isDuplicating: true})
+		this.setState({ isDuplicating: true })
 		this.props.dispatch(actions.postDuplicateProcess(json))
 			.then((res) => {
-				this.setState({isDuplicating: false, isDuplicateOpen: false})
+				this.setState({ isDuplicating: false, isDuplicateOpen: false })
 				this.props.history.push('/processes/' + res.item.id)
 			})
 	}
-	
+
 	handleSubmitChange(newData) {
 		return this.props.dispatch(actions.editProcess(newData, this.props.index, this.props.data.id))
 	}

@@ -2,19 +2,19 @@ import React from 'react'
 import ObjectListItem from '../ObjectList/ObjectListItem'
 import moment from 'moment'
 import { getProcessIcon } from '../../utilities/stringutils'
-import {pluralize} from '../../utilities/stringutils'
+import { pluralize } from '../../utilities/stringutils'
 import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import ButtonStopClickPropagate from '../Card/ButtonStopClickPropagate'
 import Img from '../Img/Img'
-import {categoryColor, categoryName} from '../../utilities/processutils'
-import { Tag } from 'antd';
+import { categoryColor, categoryName } from '../../utilities/processutils'
+import { Tag } from 'antd'
 
 export default class ProcessesListItem extends React.Component {
 
 	constructor(props) {
 		super(props)
-		this.state = {expanded: false}
+		this.state = { expanded: false }
 		this.handleDropdownToggle = this.handleDropdownToggle.bind(this)
 	}
 
@@ -25,7 +25,7 @@ export default class ProcessesListItem extends React.Component {
 	}
 
 	handleDropdownToggle() {
-		this.setState({expanded: !this.state.expanded })
+		this.setState({ expanded: !this.state.expanded })
 	}
 
 	handleDropdownOption(fn) {
@@ -37,13 +37,13 @@ export default class ProcessesListItem extends React.Component {
 		let { onArchive, onDuplicate } = this.props
 		return (
 			<div className="menu-section">
-				<div style={{minWidth: "100px"}}>
+				<div style={{ minWidth: "100px" }}>
 					<ButtonStopClickPropagate secondary onClick={() => this.handleDropdownOption(onDuplicate)}>
 						<i className="material-icons">content_copy</i>
 						<span>Duplicate</span>
 					</ButtonStopClickPropagate>
-				</div>				
-				<div style={{minWidth: "100px"}}>
+				</div>
+				<div style={{ minWidth: "100px" }}>
 					<ButtonStopClickPropagate secondary onClick={() => this.handleDropdownOption(onArchive)}>
 						<i className="material-icons">delete_forever</i>
 						<span>Delete</span>
@@ -58,8 +58,8 @@ export default class ProcessesListItem extends React.Component {
 		let { item, onClick } = this.props
 		let { expanded } = this.state
 		const category = item.category
-		const category_name = categoryName(category)
-		const category_color = categoryColor(category)
+		const categoryTitle = categoryName(category)
+		const categoryColorCode = categoryColor(category)
 		return (
 			<ObjectListItem className={this.getClassNames()} onClick={onClick}>
 				<div className="icon">
@@ -75,7 +75,7 @@ export default class ProcessesListItem extends React.Component {
 				</OverflowSafeText>
 
 				<OverflowSafeText className="category">
-				    <Tag color={category_color} style={{textAlign:"left", fontSize:'11px'}}>{category_name}</Tag>
+					<Tag color={categoryColorCode} style={{ textAlign: "left", fontSize: '11px' }}>{categoryTitle}</Tag>
 				</OverflowSafeText>
 
 				<OverflowSafeText className="default-amount">
@@ -83,7 +83,7 @@ export default class ProcessesListItem extends React.Component {
 				</OverflowSafeText>
 
 				<OverflowSafeText className="last-used">
-					{ item.last_used? moment(item.last_used).fromNow() : "Never" }
+					{item.last_used ? moment(item.last_used).fromNow() : "Never"}
 				</OverflowSafeText>
 
 				<OverflowSafeText className="owner">
@@ -95,16 +95,16 @@ export default class ProcessesListItem extends React.Component {
 				</OverflowSafeText>
 
 				<div className="more-options-button">
-					<ButtonDropdown 
-			            menu
-			            expanded={expanded} 
-			            onToggleDropdown={this.handleDropdownToggle}
-			            button={<i className="material-icons more_horiz">more_horiz</i>}
-	          		>
-		            <div className="account-menu">
-		              { this.renderProcessOptions() }
-		            </div>
-	          		</ButtonDropdown>
+					<ButtonDropdown
+						menu
+						expanded={expanded}
+						onToggleDropdown={this.handleDropdownToggle}
+						button={<i className="material-icons more_horiz">more_horiz</i>}
+					>
+						<div className="account-menu">
+							{this.renderProcessOptions()}
+						</div>
+					</ButtonDropdown>
 				</div>
 			</ObjectListItem>
 		)

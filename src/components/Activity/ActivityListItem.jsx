@@ -6,8 +6,8 @@ import Pill from '../Pill/Pill'
 import Img from '../Img/Img'
 import { dashboardPath } from "../../utilities/urlutils"
 import { Link } from 'react-router-dom'
-import {categoryColor, categoryName} from '../../utilities/processutils'
-import { Tag } from 'antd';
+import { categoryColor, categoryName } from '../../utilities/processutils'
+import { Tag } from 'antd'
 
 
 export default class ActivityListItem extends React.Component {
@@ -20,8 +20,8 @@ export default class ActivityListItem extends React.Component {
 		const { item, index, onViewTasks } = this.props
 		const { process_type, product_types, runs, amount } = item
 		const category = process_type.category
-		const category_name = categoryName(category)
-		const category_color = categoryColor(category)
+		const categoryTitle = categoryName(category)
+		const categoryColorCode = categoryColor(category)
 		return (
 			<ObjectListItem className="activity-list-item" onClick={() => onViewTasks(index)}>
 				<div className="icon">
@@ -31,11 +31,11 @@ export default class ActivityListItem extends React.Component {
 					{process_type.code}
 				</OverflowSafeText>
 				<OverflowSafeText className="process-name">
-					<span style={{marginRight: '6px'}}>{process_type.name}</span>
-					{process_type.is_trashed && <Pill color='gray'>Deleted</Pill> }
+					<span style={{ marginRight: '6px' }}>{process_type.name}</span>
+					{process_type.is_trashed && <Pill color='gray'>Deleted</Pill>}
 				</OverflowSafeText>
-				<OverflowSafeText className="product-code">
-				    <Tag color={category_color} style={{textAlign:"left", fontSize:'11px'}}>{category_name}</Tag>
+				<OverflowSafeText className="category">
+					<Tag color={categoryColorCode} style={{ textAlign: "left", fontSize: '11px' }}>{categoryTitle}</Tag>
 				</OverflowSafeText>
 				<OverflowSafeText tooltipText={formatAllProductCodes(product_types)} className="product-code">
 					{formatProductCodes(product_types)}
@@ -54,7 +54,7 @@ export default class ActivityListItem extends React.Component {
 	}
 }
 
-function ChartLink({process_type, product_types}) {
+function ChartLink({ process_type, product_types }) {
 	const path = dashboardPath(
 		process_type.id,
 		product_types.map(p => p.id)
