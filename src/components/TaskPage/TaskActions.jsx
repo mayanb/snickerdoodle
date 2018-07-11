@@ -8,22 +8,43 @@ import {
 import {
     REQUEST_EDIT_TASK,
     REQUEST_EDIT_TASK_SUCCESS,
+    REQUEST_PUSH_TO_TASK_SUCCESS,
+    REQUEST_EDIT_TASK_FAILURE,
     MARK_OUTPUT_USED,
 } from '../../reducers/TaskReducerExtension'
-import {  TASK, TASKS, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
+import { TASK, TASKS, TASK_ANCESTORS, TASK_DESCENDENTS, MOVEMENTS } from '../../reducers/ReducerTypes'
 import { get_active_user } from '../../utilities/userutils'
 
-export function getTask(task) {
-  let request = { 
-    url: `/ics/tasks/${task}/`,
-    query: {}
+export function getTask(task_id) {
+  return dispatch => {
+
+    dispatch(actions.getRequest(TASK))
+
+    return api.get(`/ics/tasks/${task_id}`)
+      .then(async (res) => {
+        const task = res.body
+        task.attributesWithValues = attributesWithValues(task.process_type.attributes, task.attribute_values)
+        task.task_ingredients = addInputsToTaskIngredients(task.task_ingredients, task.inputs)
+        
+        dispatch(getFileList(task_id))
+        return dispatch(actions.requestSuccess(TASK, task, null))
+      })
+      .catch(err => dispatch(actions.requestFailure(TASK, err)))
   }
-  return actions.fetch(TASK, request, null, res => {
-    let task = res.body
-    task.attributesWithValues = attributesWithValues(task.process_type.attributes, task.attribute_values)
-    task.task_ingredients = addInputsToTaskIngredients(task.task_ingredients, task.inputs)
-    return task
-  })
+}
+
+export function getFileList(task_id) {
+  return dispatch => {
+    
+    dispatch(requestEditTask())
+
+    return api.get(`/ics/files/`)
+      .query({task: task_id})
+      .then((res) => {
+        dispatch(requestEditTaskSuccess('files', res.body))
+      })
+      .catch(e => dispatch(requestEditTaskFailure(e)))
+  }
 }
 
 function addInputsToTaskIngredients(taskIngredients, inputs) {
@@ -140,7 +161,6 @@ function requestCreateMovementFailure(err) {
   return {
     type: REQUEST_CREATE_FAILURE,
     name: MOVEMENTS
-
   }
 }
 
@@ -231,12 +251,10 @@ export function deleteTask(task) {
   }
 }
 
-
 function requestEditTask() {
   return {
     type: REQUEST_EDIT_TASK,
     name: TASK
-
   }
 }
 
@@ -247,4 +265,39 @@ function requestEditTaskSuccess(field, value) {
     field: field,
     value: value
   }
+}
+
+function requestPushToTaskSuccess(field, value) {
+  return {
+    type: REQUEST_PUSH_TO_TASK_SUCCESS,
+    name: TASK,
+    field: field,
+    value: value
+  }
+}
+
+function requestEditTaskFailure(err) {
+  console.error('Oh no! Something went wrong\n' + err)
+  return {
+    type: REQUEST_EDIT_TASK_FAILURE,
+    name: TASK,
+    error: err
+  }
+}
+
+export function uploadTaskFile(task, file) {
+  return function (dispatch) {
+    dispatch(requestEditTask())
+    const extraData = { task: task.id }
+    
+    return api.upload(`/ics/files/`, file, extraData)
+      .then((res) => {
+        if (!task.files) {
+          dispatch(requestEditTaskSuccess('files', [res.body]))
+        } else {
+          dispatch(requestPushToTaskSuccess('files', [res.body]))
+        }
+      })
+      .catch(e => dispatch(requestEditTaskFailure(e)))
+    }
 }
