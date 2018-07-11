@@ -3,8 +3,8 @@ import {pluralize} from '../../utilities/stringutils'
 import ProcessPageEditForm from './ProcessPageEditForm'
 import ProcessEditForm from "./ProcessEditForm"
 import { ElementTitle } from '../Element/Element'
-import { categoryColor, categoryName } from '../../utilities/processutils'
-import { Modal, Tag } from 'antd'
+import CategoryTag from '../CategoryTag/CategoryTag'
+import { Modal } from 'antd'
 
 const { confirm } = Modal
 
@@ -24,8 +24,6 @@ export default class ProcessInformation extends React.Component {
 		const { isEditing } = this.state
 		const { process, onArchive, onDuplicate, isSavingEdit } = this.props
 		const { icon, code, name, category } = process
-		const categoryTitle = categoryName(category)
-		const categoryColorCode = categoryColor(category)
 		return (
 			<div className="process-information">
 				<ElementTitle
@@ -36,7 +34,7 @@ export default class ProcessInformation extends React.Component {
 					isLoading={isSavingEdit}
 					height="58px"
 				>
-		 		<Tag color={categoryColorCode} style={{margin:'5px', textAlign:"left", fontSize:'11px'}}>{categoryTitle}</Tag>
+				<CategoryTag category={category} styles={{margin:"5px", cursor: "default"}} />
 				</ElementTitle>
 				<div className="process-basic-information-container">
 				{ isEditing ? 

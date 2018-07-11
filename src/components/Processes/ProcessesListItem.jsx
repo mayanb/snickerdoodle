@@ -7,8 +7,7 @@ import OverflowSafeText from '../OverflowSafeText/OverflowSafeText'
 import ButtonDropdown from '../Card/ButtonDropdown'
 import ButtonStopClickPropagate from '../Card/ButtonStopClickPropagate'
 import Img from '../Img/Img'
-import { categoryColor, categoryName } from '../../utilities/processutils'
-import { Tag } from 'antd'
+import CategoryTag from '../CategoryTag/CategoryTag'
 
 export default class ProcessesListItem extends React.Component {
 
@@ -58,8 +57,6 @@ export default class ProcessesListItem extends React.Component {
 		let { item, onClick } = this.props
 		let { expanded } = this.state
 		const category = item.category
-		const categoryTitle = categoryName(category)
-		const categoryColorCode = categoryColor(category)
 		return (
 			<ObjectListItem className={this.getClassNames()} onClick={onClick}>
 				<div className="icon">
@@ -74,9 +71,9 @@ export default class ProcessesListItem extends React.Component {
 					{item.name}
 				</OverflowSafeText>
 
-				<OverflowSafeText className="category">
-					<Tag color={categoryColorCode} style={{ textAlign: "left", fontSize: '11px' }}>{categoryTitle}</Tag>
-				</OverflowSafeText>
+				<div className="category">
+					<CategoryTag category={category} />
+				</div>
 
 				<OverflowSafeText className="default-amount">
 					{`${parseInt(item.default_amount, 10)} ${pluralize(item.default_amount, item.unit)}`}

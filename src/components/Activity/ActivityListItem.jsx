@@ -6,8 +6,7 @@ import Pill from '../Pill/Pill'
 import Img from '../Img/Img'
 import { dashboardPath } from "../../utilities/urlutils"
 import { Link } from 'react-router-dom'
-import { categoryColor, categoryName } from '../../utilities/processutils'
-import { Tag } from 'antd'
+import CategoryTag from '../CategoryTag/CategoryTag'
 
 
 export default class ActivityListItem extends React.Component {
@@ -20,8 +19,6 @@ export default class ActivityListItem extends React.Component {
 		const { item, index, onViewTasks } = this.props
 		const { process_type, product_types, runs, amount } = item
 		const category = process_type.category
-		const categoryTitle = categoryName(category)
-		const categoryColorCode = categoryColor(category)
 		return (
 			<ObjectListItem className="activity-list-item" onClick={() => onViewTasks(index)}>
 				<div className="icon">
@@ -34,9 +31,9 @@ export default class ActivityListItem extends React.Component {
 					<span style={{ marginRight: '6px' }}>{process_type.name}</span>
 					{process_type.is_trashed && <Pill color='gray'>Deleted</Pill>}
 				</OverflowSafeText>
-				<OverflowSafeText className="category">
-					<Tag color={categoryColorCode} style={{ textAlign: "left", fontSize: '11px' }}>{categoryTitle}</Tag>
-				</OverflowSafeText>
+				<div className="category">
+					<CategoryTag category={category} />
+				</div>
 				<OverflowSafeText tooltipText={formatAllProductCodes(product_types)} className="product-code">
 					{formatProductCodes(product_types)}
 				</OverflowSafeText>
