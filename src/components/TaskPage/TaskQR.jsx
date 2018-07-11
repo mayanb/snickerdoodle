@@ -3,6 +3,7 @@ import Button from '../Button/Button'
 import './styles/taskqr.css'
 import Img from '../Img/Img'
 
+import TaskFileDropzone from './TaskFileDropzone'
 import TaskInputsAndOutputs from './TaskInputsAndOutputs'
 
 export default class TaskQR extends React.Component {
@@ -14,7 +15,7 @@ export default class TaskQR extends React.Component {
 	}
 
 	render() {
-		const { name, onDelete } = this.props
+		const { name, onDelete, onDropFiles, task } = this.props
 		return (
 			<div className="task-qr">
 				<div className="title">
@@ -27,6 +28,7 @@ export default class TaskQR extends React.Component {
 				<div className="delete-task">
 					<Button wide type="red" onClick={onDelete}>Delete {name}</Button>
 				</div>
+				<TaskFileDropzone onDropFiles={onDropFiles} task={task} />
 				<TaskInputsAndOutputs />
 			</div>
 		)

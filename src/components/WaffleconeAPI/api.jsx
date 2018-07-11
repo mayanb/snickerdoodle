@@ -55,10 +55,10 @@ function upload(path, file, extraData) {
 	} catch(e) {
 		
 	}
-
+	
 	return request
 		.post(url)
-		.attach(file)
+		.attach('file_binary', file)
 		.field({userprofile: profile_id, created_by: id, team: team, team_created_by: team})
 		.field(extraData)
 }
