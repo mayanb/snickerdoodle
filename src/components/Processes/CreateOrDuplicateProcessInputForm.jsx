@@ -3,7 +3,8 @@ import FormGroup from '../Inputs/FormGroup'
 import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
 import IconPicker from '../IconPicker/IconPicker'
-import { Select } from 'antd';
+import { Select } from 'antd'
+import { WIP, FG, RM } from '../../utilities/constants'
 import './styles/createprocessdialog.css'
 
 export default function CreateOrDuplicateProcessInputForm({ icon, name, code, number, unit, outputDescription, category, submitted, onInputChange, formErrorsArray }) {
@@ -87,10 +88,17 @@ function Category({ onInputChange, category }) {
 	return (
 		<FormGroup label="Category">
 			<div className="process-category">
-				<Select labelInValue defaultValue={{ key: category }} style={{ fontSize:"14px" }} onChange={(e) => onInputChange(e.key, "category")} size="large" className="select">
-				    <Option value="fg">Finished Goods</Option>
-				    <Option value="rm">Raw Materials</Option>
-				    <Option value="wip">Work In Progress</Option>
+				<Select 
+					labelInValue 
+					defaultValue={{ key: category }} 
+					style={{ fontSize:"14px" }} 
+					onChange={(e) => onInputChange(e.key, "category")} 
+					size="large" 
+					className="select"
+				>
+				    <Option value={FG}>Finished Goods</Option>
+				    <Option value={RM}>Raw Materials</Option>
+				    <Option value={WIP}>Work In Progress</Option>
 				</Select>
 			</div>
 		</FormGroup>

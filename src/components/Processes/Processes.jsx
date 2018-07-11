@@ -67,6 +67,7 @@ class Processes extends React.Component {
 		}
 
 		let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.filter
+		
 		return (
 			<div className="processes-container">
 				<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>

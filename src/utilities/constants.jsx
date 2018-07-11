@@ -60,12 +60,18 @@ export const ICONS = [
 export const GOALS = 'GOALS'
 export const PINS = 'PINS'
 
-export const CATEGORY_NAME = new Map();
-CATEGORY_NAME.set("wip", "Work in Progress");
-CATEGORY_NAME.set("fg", "Finished Goods");
-CATEGORY_NAME.set("rm", "Raw Material");
+export const WIP = 'wip'
+export const FG = 'fg'
+export const RM = 'rm'
 
-export const CATEGORY_COLOR = new Map();
-CATEGORY_COLOR.set("wip", "#40B3FF");
-CATEGORY_COLOR.set("fg", "#5BD069");
-CATEGORY_COLOR.set("rm", "#F2A51F");
+export const CATEGORY_NAME = {
+	[WIP]: "Work in Progress",
+	[FG]: "Finished Goods",
+	[RM]: "Raw Material"
+}
+
+export const CATEGORY_COLOR = {
+	[WIP]: "#40B3FF",
+	[FG]: "#5BD069",
+	[RM]: "#F2A51F"
+}
