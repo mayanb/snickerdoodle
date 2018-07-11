@@ -61,6 +61,7 @@ class Activity extends React.Component {
 			},
 			selectedProcesses: qsFilters.selectedProcesses,
 			selectedProducts: qsFilters.selectedProducts,
+			selectedCategories: qsFilters.selectedCategories,
 			keywords: qsFilters.keyword || '',
 			flaggedOnly: qsFilters === 'true' || false,
 			aggregateProducts: qsFilters === 'true' || false,
@@ -75,6 +76,7 @@ class Activity extends React.Component {
 		qs.set('end', filters.dates.end)
 		qs.set('selectedProcesses', filters.selectedProcesses.join(','))
 		qs.set('selectedProducts', filters.selectedProducts.join(','))
+		qs.set('selectedCategories', filters.selectedCategories.join(','))
 		qs.set('keywords', filters.keywords)
 		qs.set('flaggedOnly', String(filters.flaggedOnly))
 		qs.set('aggregateProducts', String(filters.aggregateProducts))
@@ -90,6 +92,7 @@ class Activity extends React.Component {
 			},
 			selectedProcesses: qs.get('selectedProcesses') ? qs.get('selectedProcesses').split(',') : [],
 			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : [],
+			selectedCategories: qs.get('selectedCategories') ? qs.get('selectedCategories').split(',') : [],
 			keywords: qs.get('keywords') || '',
 			flaggedOnly: qs.get('flaggedOnly') === 'true',
 			aggregateProducts: qs.get('aggregateProducts') === 'true',
@@ -120,7 +123,9 @@ class Activity extends React.Component {
 	handleDownloadAll() {
 		const { selectedProcesses, selectedProducts } = this.getFilters()
 		const { data } = this.props
-		const processes = selectedProcesses.length ? selectedProcesses : [...new Set(data.map(row => row.process_type.id))]
+		const processes = selectedProcesses.length ? 
+			selectedProcesses : 
+			[...new Set(data.map(row => row.process_type.id))]
 		const products = selectedProducts.length ?
 			selectedProducts :
 			[...new Set([].concat(...data.map(row => row.product_types.map(p => p.id))))]
@@ -272,6 +277,9 @@ class Activity extends React.Component {
 		}
 		if (filters.selectedProducts.length) {
 			params.product_types = filters.selectedProducts.join(',')
+		}
+		if (filters.selectedCategories.length) {
+			params.category_types = filters.selectedCategories.join(',')
 		}
 		if (filters.keywords) {
 			params.label = filters.keywords
