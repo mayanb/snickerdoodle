@@ -18,8 +18,10 @@ class ProductPage extends React.Component {
 	}
 
 	componentDidMount() {
-		let { id } = this.props.match.params
-		this.props.dispatch(productActions.fetchProducts({ id: id }))
+		const { dispatch } = this.props
+		const { id } = this.props.match.params
+		dispatch(productActions.fetchProducts())
+			.then(() => dispatch(productActions.selectProduct(id)))
 	}
 
 	render() {
