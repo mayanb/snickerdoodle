@@ -3,6 +3,7 @@ import {pluralize} from '../../utilities/stringutils'
 import ProcessPageEditForm from './ProcessPageEditForm'
 import ProcessEditForm from "./ProcessEditForm"
 import { ElementTitle } from '../Element/Element'
+import CategoryTag from '../CategoryTag/CategoryTag'
 import { Modal } from 'antd'
 
 const { confirm } = Modal
@@ -22,7 +23,7 @@ export default class ProcessInformation extends React.Component {
 	render() {
 		const { isEditing } = this.state
 		const { process, onArchive, onDuplicate, isSavingEdit } = this.props
-		const { icon, code, name } = process
+		const { icon, code, name, category } = process
 		return (
 			<div className="process-information">
 				<ElementTitle
@@ -31,7 +32,10 @@ export default class ProcessInformation extends React.Component {
 					buttonTitle={this.state.isEditing ? 'Cancel' : 'Edit'}
 					onClick={this.handleToggleEditing}
 					isLoading={isSavingEdit}
-				/>
+					height="58px"
+				>
+				<CategoryTag category={category} styles={{margin:"5px", cursor: "default"}} />
+				</ElementTitle>
 				<div className="process-basic-information-container">
 				{ isEditing ? 
 					<ProcessEditForm onChange={this.handleChange} onSubmit={this.handleSubmit} {...this.state} isLoading={isSavingEdit} /> :

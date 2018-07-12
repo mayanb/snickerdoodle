@@ -18,7 +18,6 @@ import * as actions from "./ActivityActions"
 import * as taskActions from "../TaskPage/TaskActions"
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
-
 import './styles/activitylist.css'
 
 class Activity extends React.Component {
@@ -79,7 +78,7 @@ class Activity extends React.Component {
 		qs.set('keywords', filters.keywords)
 		qs.set('flaggedOnly', String(filters.flaggedOnly))
 		qs.set('aggregateProducts', String(filters.aggregateProducts))
-		this.props.history.push({search: qs.toString() })
+		this.props.history.push({ search: qs.toString() })
 	}
 
 	getFilters() {
@@ -148,7 +147,7 @@ class Activity extends React.Component {
 	}
 
 	handleReorder(ordering) {
-		this.setState({ordering: ordering},() => this.getActivity(this.getFilters()))
+		this.setState({ ordering: ordering }, () => this.getActivity(this.getFilters()))
 	}
 
 	render() {
@@ -167,11 +166,11 @@ class Activity extends React.Component {
 					processes={processes}
 					products={products}
 				/>
-					<div className="content">
-						{this.renderDialog()}
-						{this.renderTaskDialog()}
-						{this.renderTable()}
-					</div>
+				<div className="content">
+					{this.renderDialog()}
+					{this.renderTaskDialog()}
+					{this.renderTable()}
+				</div>
 				{this.renderHelp()}
 			</div>
 		)
@@ -183,6 +182,7 @@ class Activity extends React.Component {
 			{ title: null, className: 'icon', field: null },
 			{ title: 'Code', className: 'process-code', field: 'process_type__code' },
 			{ title: 'Process Type', className: 'process-name', field: 'process_type__name' },
+			{ title: 'Category', className: 'category', field: 'process_type__category' },
 			{ title: 'Product Type', className: 'product-code', field: product_type_field },
 			{ title: 'Runs', className: 'runs', field: 'runs' },
 			{ title: 'Amount', className: 'outputs', field: 'amount' },
@@ -191,7 +191,7 @@ class Activity extends React.Component {
 			{ title: null, className: 'chart', field: null },
 		]
 		return (
-			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering}/>
+			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering} />
 		)
 	}
 
@@ -212,7 +212,7 @@ class Activity extends React.Component {
 							TitleRow={this.renderTableHeader}
 							onPagination={this.handlePagination}
 							onClick={this.handleSelect}
-							extra={{onViewTasks: this.handleSelect, onDownload: this.handleDownloadRow}}
+							extra={{ onViewTasks: this.handleSelect, onDownload: this.handleDownloadRow }}
 						/>
 					</ObjectList>
 				</div>
@@ -245,12 +245,12 @@ class Activity extends React.Component {
 		return (
 			<div className="activity-page-help-container">
 				<div className="activity-page-help"
-				     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
+					onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
 					<div className="activity-page-help-header">Create recipes for your products</div>
 					<div>
 						<span>Guide your team with instructions and ingredients and keep your inventory accurate. </span>
 						<span className="activity-page-help-link">
-						Learn how to supercharge your team now.  
+							Learn how to supercharge your team now.
 					</span>
 						<span className="activity-page-forward">  <i
 							className="material-icons activity-page-forward-i">arrow_forward</i></span>
