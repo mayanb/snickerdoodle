@@ -37,3 +37,7 @@ export function postEditProduct(product, newData, index) {
   }
   return actions.patchEdit(PRODUCTS, request, index, res => res.body)
 }
+
+export function selectProduct(id) {
+	return actions.select(PRODUCTS, id)
+}
