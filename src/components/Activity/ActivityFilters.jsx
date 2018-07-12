@@ -115,7 +115,7 @@ export default class ActivityFilters extends React.Component {
 							onChange={this.handleCategoryTypesChange}
 						>
 							{categories.map(c => <Select.Option key={c.code} data={c}>
-									{formatOption(c)}
+									{c.name}
 								</Select.Option>
 							)}
 						</Select>}
