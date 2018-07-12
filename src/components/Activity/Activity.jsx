@@ -187,7 +187,7 @@ class Activity extends React.Component {
 			{ title: null, className: 'icon', field: null },
 			{ title: 'Code', className: 'process-code', field: 'process_type__code' },
 			{ title: 'Process Type', className: 'process-name', field: 'process_type__name' },
-			{ title: 'Category', className: 'category', field: 'category' },
+			{ title: 'Category', className: 'category', field: 'process_type__category' },
 			{ title: 'Product Type', className: 'product-code', field: product_type_field },
 			{ title: 'Runs', className: 'runs', field: 'runs' },
 			{ title: 'Amount', className: 'outputs', field: 'amount' },
