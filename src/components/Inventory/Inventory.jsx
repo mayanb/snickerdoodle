@@ -18,6 +18,7 @@ export class Inventory extends React.Component {
 		this.state = {
 			processTypes: [],
 			productTypes: [],
+			categoryTypes: [],
 			ordering: 'creating_task__process_type'
 		}
 
@@ -35,11 +36,9 @@ export class Inventory extends React.Component {
 	}
 
 	fetchInventory() {
-		const { processTypes, productTypes, ordering } = this.state
-		this.props.dispatch(actions.fetchInitialInventory(processTypes, productTypes, ordering))
+		const { processTypes, productTypes, categoryTypes, ordering } = this.state
+		this.props.dispatch(actions.fetchInitialInventory(processTypes, productTypes, categoryTypes, ordering))
 	}
-
-
 
 	render() {
 		let { ui } = this.props
@@ -76,6 +75,7 @@ export class Inventory extends React.Component {
 		const columns = [
 			{ title: null, className: 'inv-icon', field: null },
 			{ title: 'Inventory Unit', className: 'inv-title', field: null },
+			{ title: 'Category', className: 'inv-category', field: null },
 			{ title: 'Code', className: 'inv-code', field: null },
 			{ title: 'Amount', className: 'inv-amount', field: null },
 		]
@@ -100,10 +100,11 @@ export class Inventory extends React.Component {
 		dispatch(actions.pageInventory(direction))
 	}
 
-	handleFilter(processTypes, productTypes) {
+	handleFilter(processTypes, productTypes, categoryTypes) {
 		this.setState({
-			processTypes: processTypes,
-			productTypes: productTypes
+			processTypes,
+			productTypes,
+			categoryTypes,
 		}, this.fetchInventory)
 		this.props.dispatch(actions.resetPageInventory())
 	}
