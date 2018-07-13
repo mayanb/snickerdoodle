@@ -4,6 +4,7 @@ import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
 import { Select } from 'antd'
 import { processProductFilter, formatOption } from '../../utilities/filters'
+import { RM, WIP, FG, CATEGORY_NAME } from '../../utilities/constants'
 
 class InventoryFilters extends React.Component {
 	constructor(props) {
@@ -11,12 +12,14 @@ class InventoryFilters extends React.Component {
 
 		this.state = {
 			processTypes: [],
-			productTypes: []
+			productTypes: [],
+			categoryTypes: [],
 		}
 
 		this.handleFilter = this.handleFilter.bind(this)
 		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
 		this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
+		this.handleCategoryTypeChange = this.handleCategoryTypeChange.bind(this)
 	}
 
 	componentDidMount() {
@@ -54,6 +57,18 @@ class InventoryFilters extends React.Component {
 						</Select.Option>
 					)}
 				</Select>
+				<Select
+					mode="multiple"
+					allowClear
+					placeholder="Filter categories"
+					filterOption={processProductFilter}
+					onChange={this.handleCategoryTypeChange}
+				>
+					{this.props.categories.map(c => <Select.Option key={c.code} data={c}>
+							{c.name}
+						</Select.Option>
+					)}
+				</Select>
 			</div>
 		)
 
@@ -67,16 +82,26 @@ class InventoryFilters extends React.Component {
 		this.setState({ productTypes: newVal }, this.handleFilter)
 	}
 
+	handleCategoryTypeChange(newVal) {
+		this.setState({ categoryTypes: newVal }, this.handleFilter)
+	}
+
 	handleFilter() {
-		this.props.onFilter(this.state.processTypes, this.state.productTypes)
+		this.props.onFilter(this.state.processTypes, this.state.productTypes, this.state.categoryTypes)
 	}
 }
 
 const mapStateToProps = (state/*, props*/) => {
 	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
+	const categories = [
+		{ name: CATEGORY_NAME[RM], code: RM },
+		{ name: CATEGORY_NAME[WIP], code: WIP },
+		{ name: CATEGORY_NAME[FG], code: FG },
+	]
 	return {
 		processes: state.processes.data,
 		products: state.products.data,
+		categories,
 		isFetchingData: isFetchingData
 	}
 }
