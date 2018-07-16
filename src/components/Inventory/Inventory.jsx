@@ -37,6 +37,11 @@ export class Inventory extends React.Component {
 		this.setDefaultFilters()
 	}
 
+	fetchInventory() {
+		const { processTypes, productTypes, categoryTypes, ordering } = this.state
+		this.props.dispatch(actions.fetchInitialInventory(processTypes, productTypes, categoryTypes, ordering))
+	}
+
 	render() {
 		let { ui } = this.props
 		return (
@@ -74,6 +79,7 @@ export class Inventory extends React.Component {
 		const columns = [
 			{ title: null, className: 'inv-icon', field: null },
 			{ title: 'Inventory Unit', className: 'inv-title', field: null },
+			{ title: 'Category', className: 'inv-category', field: null },
 			{ title: 'Code', className: 'inv-code', field: null },
 			{ title: 'Amount', className: 'inv-amount', field: null },
 		]
