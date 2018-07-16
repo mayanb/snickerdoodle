@@ -30,6 +30,14 @@ export function fetchMoreInventory(page) {
   return actions.fetchPaginated(INVENTORY, request, null, res => res.body, true)
 }
 
+export function fetchInventory(params) {
+	const request = {
+		url: '/ics/inventories/',
+		query: params
+	}
+	return actions.fetchPaginated(INVENTORY, request, null, res => res.body, false)
+}
+
 export function selectInventory(index) {
   return actions.select(INVENTORY, index)
 }

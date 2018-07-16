@@ -16,8 +16,9 @@ export class Inventory extends React.Component {
 		super(props)
 
 		this.state = {
-			processTypes: [],
-			productTypes: [],
+			selectedProcesses: [],
+			selectedProducts: [],
+			selectedCategories: [],
 			ordering: 'creating_task__process_type'
 		}
 
@@ -26,20 +27,15 @@ export class Inventory extends React.Component {
 		this.handleReorder = this.handleReorder.bind(this)
 		this.handleSelectRow = this.handleSelectRow.bind(this)
 		this.handlePagination = this.handlePagination.bind(this)
-		this.handleFilter = this.handleFilter.bind(this)
+		//this.handleFilter = this.handleFilter.bind(this)
+		this.handleFilterChange = this.handleFilterChange.bind(this)
 		this.fetchInventory = this.fetchInventory.bind(this)
 	}
 
 	componentDidMount() {
 		this.fetchInventory()
+		this.setDefaultFilters()
 	}
-
-	fetchInventory() {
-		const { processTypes, productTypes, ordering } = this.state
-		this.props.dispatch(actions.fetchInitialInventory(processTypes, productTypes, ordering))
-	}
-
-
 
 	render() {
 		let { ui } = this.props
@@ -50,7 +46,9 @@ export class Inventory extends React.Component {
 				<div className="inventory-content">
 					<div className="inventory-list-container">
 						<InventoryFilters
-							onFilter={this.handleFilter}
+							filters={this.getFilters()}
+							onFilterChange={this.handleFilterChange}
+							//onFilter={this.handleFilter}
 						/>
 						<Loading isFetchingData={ui.isFetchingData}>
 							<ObjectList>
@@ -100,12 +98,68 @@ export class Inventory extends React.Component {
 		dispatch(actions.pageInventory(direction))
 	}
 
-	handleFilter(processTypes, productTypes) {
-		this.setState({
-			processTypes: processTypes,
-			productTypes: productTypes
-		}, this.fetchInventory)
-		this.props.dispatch(actions.resetPageInventory())
+	// handleFilter(processTypes, productTypes) {
+	// 	this.setState({
+	// 		processTypes: processTypes,
+	// 		productTypes: productTypes
+	// 	}, this.fetchInventory)
+	// 	this.props.dispatch(actions.resetPageInventory())
+	// }
+
+	handleFilterChange(filters) {
+		this.getInventory(filters)
+		const qs = new URLSearchParams(this.props.location.search)
+		qs.set('selectedProcesses', filters.selectedProcesses.join(','))
+		qs.set('selectedProducts', filters.selectedProducts.join(','))
+		//qs.set('selectedCategories', filters.selectedCategories.join(','))
+		qs.set('aggregateProcesses', String(filters.aggregateProcesses))
+		this.props.history.push({ search: qs.toString() })
+	}
+
+	setDefaultFilters() {
+		const qsFilters = this.getFilters()
+		const filters = {
+			selectedProcesses: qsFilters.selectedProcesses,
+			selectedProducts: qsFilters.selectedProducts,
+			//selectedCategories: qsFilters.selectedCategories,
+			aggregateProcesses: qsFilters === 'true' || false,
+		}
+		this.handleFilterChange(filters)
+	}
+
+	fetchInventory() {
+		this.getInventory(this.getFilters())
+		// const { processTypes, productTypes, ordering } = this.state
+		// this.props.dispatch(actions.fetchInitialInventory(processTypes, productTypes, ordering))
+	}
+
+	getInventory(filters) {
+		const params = { ordering: this.state.ordering }
+		if (filters.selectedProcesses.length) {
+			params.process_types = filters.selectedProcesses.join(',')
+		}
+		if (filters.selectedProducts.length) {
+			params.product_types = filters.selectedProducts.join(',')
+		}
+		// if (filters.selectedCategories.length) {
+		// 	params.category_types = filters.selectedCategories.join(',')
+		// }
+		if (filters.aggregateProcesses) {
+			params.aggregate_processes = 'true'
+		}
+
+		this.props.dispatch(actions.fetchInventory(params))
+	}
+
+	getFilters() {
+		//console.log('---- Inventory.getFilters', this.props)
+		const qs = new URLSearchParams(this.props.location.search)
+		return {
+			selectedProcesses: qs.get('selectedProcesses') ? qs.get('selectedProcesses').split(',') : [],
+			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : [],
+			//selectedCategories: qs.get('selectedCategories') ? qs.get('selectedCategories').split(',') : [],
+			aggregateProcesses: qs.get('aggregateProcesses') === 'true',
+		}
 	}
 }
 

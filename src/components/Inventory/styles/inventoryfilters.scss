@@ -1,0 +1,19 @@
+@import 'styles/constants.scss';
+
+.inventory-filters {
+    display: flex;
+    flex-direction: column;
+    margin: 24px 36px;
+    color: $gray;
+
+    .row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        .checkboxes {
+            display: flex;
+            flex-grow: 1;
+        }
+    }
+}
