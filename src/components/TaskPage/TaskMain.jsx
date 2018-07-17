@@ -39,6 +39,7 @@ function TaskName({ task }) {
 					<span className="default-output">{formatAmount(task.total_amount, task.process_type.unit)}</span>
 				</div>
 			</div>
+			{task.cost && (<span className=" default-output " style={{marginLeft: '210px'}}>Total Cost: {parseFloat(task.cost)}$</span>)}
 		</div>
 	)
 }
