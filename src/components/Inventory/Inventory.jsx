@@ -19,6 +19,7 @@ export class Inventory extends React.Component {
 			selectedProcesses: [],
 			selectedProducts: [],
 			selectedCategories: [],
+			aggregateProducts: false,
 			ordering: 'creating_task__process_type'
 		}
 
@@ -27,19 +28,12 @@ export class Inventory extends React.Component {
 		this.handleReorder = this.handleReorder.bind(this)
 		this.handleSelectRow = this.handleSelectRow.bind(this)
 		this.handlePagination = this.handlePagination.bind(this)
-		//this.handleFilter = this.handleFilter.bind(this)
 		this.handleFilterChange = this.handleFilterChange.bind(this)
 		this.fetchInventory = this.fetchInventory.bind(this)
 	}
 
 	componentDidMount() {
-		this.fetchInventory()
 		this.setDefaultFilters()
-	}
-
-	fetchInventory() {
-		const { processTypes, productTypes, categoryTypes, ordering } = this.state
-		this.props.dispatch(actions.fetchInitialInventory(processTypes, productTypes, categoryTypes, ordering))
 	}
 
 	render() {
@@ -53,7 +47,6 @@ export class Inventory extends React.Component {
 						<InventoryFilters
 							filters={this.getFilters()}
 							onFilterChange={this.handleFilterChange}
-							//onFilter={this.handleFilter}
 						/>
 						<Loading isFetchingData={ui.isFetchingData}>
 							<ObjectList>
@@ -104,39 +97,23 @@ export class Inventory extends React.Component {
 		dispatch(actions.pageInventory(direction))
 	}
 
-	// handleFilter(processTypes, productTypes) {
-	// 	this.setState({
-	// 		processTypes: processTypes,
-	// 		productTypes: productTypes
-	// 	}, this.fetchInventory)
-	// 	this.props.dispatch(actions.resetPageInventory())
-	// }
-
 	handleFilterChange(filters) {
+		this.setState(filters)
 		this.getInventory(filters)
 		const qs = new URLSearchParams(this.props.location.search)
 		qs.set('selectedProcesses', filters.selectedProcesses.join(','))
 		qs.set('selectedProducts', filters.selectedProducts.join(','))
-		//qs.set('selectedCategories', filters.selectedCategories.join(','))
-		qs.set('aggregateProcesses', String(filters.aggregateProcesses))
+		qs.set('selectedCategories', filters.selectedCategories.join(','))
+		qs.set('aggregateProducts', String(filters.aggregateProducts))
 		this.props.history.push({ search: qs.toString() })
 	}
 
 	setDefaultFilters() {
-		const qsFilters = this.getFilters()
-		const filters = {
-			selectedProcesses: qsFilters.selectedProcesses,
-			selectedProducts: qsFilters.selectedProducts,
-			//selectedCategories: qsFilters.selectedCategories,
-			aggregateProcesses: qsFilters === 'true' || false,
-		}
-		this.handleFilterChange(filters)
+		this.handleFilterChange(this.getFilters())
 	}
 
 	fetchInventory() {
 		this.getInventory(this.getFilters())
-		// const { processTypes, productTypes, ordering } = this.state
-		// this.props.dispatch(actions.fetchInitialInventory(processTypes, productTypes, ordering))
 	}
 
 	getInventory(filters) {
@@ -147,24 +124,23 @@ export class Inventory extends React.Component {
 		if (filters.selectedProducts.length) {
 			params.product_types = filters.selectedProducts.join(',')
 		}
-		// if (filters.selectedCategories.length) {
-		// 	params.category_types = filters.selectedCategories.join(',')
-		// }
-		if (filters.aggregateProcesses) {
-			params.aggregate_processes = 'true'
+		if (filters.selectedCategories.length) {
+			params.category_types = filters.selectedCategories.join(',')
+		}
+		if (filters.aggregateProducts) {
+			params.aggregate_products = 'true'
 		}
 
 		this.props.dispatch(actions.fetchInventory(params))
 	}
 
 	getFilters() {
-		//console.log('---- Inventory.getFilters', this.props)
 		const qs = new URLSearchParams(this.props.location.search)
 		return {
 			selectedProcesses: qs.get('selectedProcesses') ? qs.get('selectedProcesses').split(',') : [],
 			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : [],
-			//selectedCategories: qs.get('selectedCategories') ? qs.get('selectedCategories').split(',') : [],
-			aggregateProcesses: qs.get('aggregateProcesses') === 'true',
+			selectedCategories: qs.get('selectedCategories') ? qs.get('selectedCategories').split(',') : [],
+			aggregateProducts: qs.get('aggregateProducts') === 'true',
 		}
 	}
 }
