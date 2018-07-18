@@ -86,7 +86,9 @@ export class Inventory extends React.Component {
 	}
 
 	handleSelectRow(i) {
-		this.props.dispatch(actions.selectInventory(i))
+		if (!this.state.aggregateProducts) {
+			this.props.dispatch(actions.selectInventory(i))
+		}
 	}
 
 	handlePagination(direction) {
