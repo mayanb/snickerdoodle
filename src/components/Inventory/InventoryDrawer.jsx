@@ -50,7 +50,11 @@ class InventoryDrawer extends React.Component {
 					<InventoryDrawerAdjustedAmount inventory={selectedInventory} onSaveAdjustment={this.handleSaveAdjustment} /> :
 					<AddAdjustment onClick={this.handleToggleAddAdjustment} />
 				}
-				<TaskFileDropzone onDropFiles={this.handleDropFiles} task={{files: []}}/>
+				<TaskFileDropzone
+					onDropFiles={this.handleDropFiles}
+					task={{files: []}}
+					dropzoneText="Drag a CSV file of inventory changes here to submit them."
+				/>
 				<Loading isFetchingData={ui.isFetchingHistory || ui.isAdjusting}>
 					<AdjustmentHistory history={selectedInventory.history} unit={selectedInventory.process_unit} />
 				</Loading>
