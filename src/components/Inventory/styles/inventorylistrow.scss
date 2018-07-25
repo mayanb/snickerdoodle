@@ -36,7 +36,7 @@
     }
 
     .inv-category {
-        flex: 2;
+        flex: 1.5;
     }
 
     .inv-code {
@@ -44,6 +44,10 @@
     }
 
     .inv-amount {
+        flex: 1.5;
+    }
+
+    .inv-cost {
         flex: 1;
     }
 

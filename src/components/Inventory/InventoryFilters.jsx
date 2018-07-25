@@ -2,11 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
-import { Select } from 'antd'
+import { Select, Tooltip } from 'antd'
 import Checkbox from '../Inputs/Checkbox'
 import './styles/inventoryfilters.css'
+import { shortInventoryName, formatCost } from './inventoryUtils'
 import { processProductFilter, formatOption } from '../../utilities/filters'
-import { RM, WIP, FG, CATEGORY_NAME } from '../../utilities/constants'
+import { RM, WIP, FG, CATEGORY_NAME, CATEGORY_COLOR } from '../../utilities/constants'
 
 class InventoryFilters extends React.Component {
 	constructor(props) {
@@ -24,7 +25,7 @@ class InventoryFilters extends React.Component {
 	}
 
 	render() {
-		const { filters, products, processes } = this.props
+		const { filters, products, processes, isFetchingAggregateData, aggregateData } = this.props
 		const categories = [
 			{ name: CATEGORY_NAME[RM], code: RM },
 			{ name: CATEGORY_NAME[WIP], code: WIP },
@@ -85,6 +86,9 @@ class InventoryFilters extends React.Component {
 						/>
 					</div>
 				</div>
+				<div className='row'>
+					<AggregateCostBar data={aggregateData} isFetchingData={isFetchingAggregateData}/>
+				</div>
 			</div>
 		)
 
@@ -108,6 +112,27 @@ class InventoryFilters extends React.Component {
 	}
 }
 
+function AggregateCostBar({ data, isFetchingData })  {
+	console.log('AggregateCostBar.data', data)
+	return (
+		<div className='aggregate-cost-bar'>
+			{!isFetchingData && data && data.map((item, i) => {
+				const itemColor = CATEGORY_COLOR[item.category]
+				const itemStyle = {
+					flex: item.adjusted_cost,
+					backgroundColor: itemColor,
+				}
+				const text = shortInventoryName(item) + ' ' + formatCost(item.adjusted_cost)
+				return item.adjusted_cost > 0 ? (
+					<Tooltip title={text} key={i}>
+						<div style={itemStyle} className="cost-item"></div>
+					</Tooltip>
+				) : null
+			})}
+		</div>
+	)
+}
+
 const mapStateToProps = (state/*, props*/) => {
 	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
 	const categories = [
@@ -119,7 +144,8 @@ const mapStateToProps = (state/*, props*/) => {
 		processes: state.processes.data,
 		products: state.products.data,
 		categories,
-		isFetchingData: isFetchingData
+		isFetchingData: isFetchingData,
+		isFetchingAggregateData: state.inventory.ui.isFetchingAggregateData
 	}
 }
 
