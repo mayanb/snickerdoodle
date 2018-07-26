@@ -5,7 +5,7 @@ import * as productsActions from '../Products/ProductsActions.jsx'
 import { Select, Tooltip } from 'antd'
 import Checkbox from '../Inputs/Checkbox'
 import './styles/inventoryfilters.css'
-import { shortInventoryName, formatCost } from './inventoryUtils'
+import { shortInventoryName, formatCost, inventoryName } from './inventoryUtils'
 import { processProductFilter, formatOption } from '../../utilities/filters'
 import { RM, WIP, FG, CATEGORY_NAME, CATEGORY_COLOR } from '../../utilities/constants'
 
@@ -87,7 +87,7 @@ class InventoryFilters extends React.Component {
 					</div>
 				</div>
 				<div className='row'>
-					<AggregateCostBar data={aggregateData} isFetchingData={isFetchingAggregateData}/>
+					<AggregateCostBar data={aggregateData} filters={filters} isFetchingData={isFetchingAggregateData}/>
 				</div>
 			</div>
 		)
@@ -112,25 +112,62 @@ class InventoryFilters extends React.Component {
 	}
 }
 
-function AggregateCostBar({ data, isFetchingData })  {
-	console.log('AggregateCostBar.data', data)
+function AggregateCostBar({ data, filters, isFetchingData })  {
+	const { selectedCategories, selectedProcesses, selectedProducts } = filters
+	let processed = data
+	if (data && selectedCategories.length === 0 && selectedProcesses.length === 0 && selectedProducts.length === 0) {
+		processed = aggregateByCategories(data)
+	}
 	return (
 		<div className='aggregate-cost-bar'>
-			{!isFetchingData && data && data.map((item, i) => {
+			{!isFetchingData && data && processed.map((item, i) => {
 				const itemColor = CATEGORY_COLOR[item.category]
 				const itemStyle = {
 					flex: item.adjusted_cost,
 					backgroundColor: itemColor,
 				}
-				const text = shortInventoryName(item) + ' ' + formatCost(item.adjusted_cost)
+				let item_type = ''
+				if ('process_types' in item) {
+					item_type = CATEGORY_NAME[item.category]
+				} else if (item.product_types.length > 1) {
+					item_type = item.process_type.name
+				} else {
+					item_type = shortInventoryName(item)
+				}
 				return item.adjusted_cost > 0 ? (
-					<Tooltip title={text} key={i}>
+					<Tooltip title={`${item_type} ${formatCost(item.adjusted_cost)}`} key={i}>
 						<div style={itemStyle} className="cost-item"></div>
 					</Tooltip>
 				) : null
 			})}
 		</div>
 	)
+}
+
+function aggregateByCategories(data) {
+	let lastCategory = null
+	let itemToAdd = {}
+	let processed = []
+	data.forEach(item => {
+		if (lastCategory !== item.category) {
+			if (lastCategory !== null) {
+				processed.push(itemToAdd)
+			}
+			lastCategory = item.category
+			itemToAdd = {
+				category: item.category,
+				adjusted_cost: 0,
+				process_types: []
+			}
+		}
+		itemToAdd.adjusted_cost += item.adjusted_cost
+		itemToAdd.process_types.push({
+			process_type: item.process_type,
+			product_types: item.product_types
+		})
+	})
+	processed.push(itemToAdd)
+	return processed
 }
 
 const mapStateToProps = (state/*, props*/) => {
