@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
 import { Select, Tooltip } from 'antd'
+import Spinner from 'react-spinkit'
 import Checkbox from '../Inputs/Checkbox'
 import './styles/inventoryfilters.css'
-import { shortInventoryName, formatCost, inventoryName } from './inventoryUtils'
+import { formatCost, inventoryName } from './inventoryUtils'
 import { processProductFilter, formatOption } from '../../utilities/filters'
 import { RM, WIP, FG, CATEGORY_NAME, CATEGORY_COLOR } from '../../utilities/constants'
 
@@ -86,9 +87,9 @@ class InventoryFilters extends React.Component {
 						/>
 					</div>
 				</div>
-				<div className='row'>
+				{ noFilters(filters) && <div className='row'>
 					<AggregateCostBar data={aggregateData} filters={filters} isFetchingData={isFetchingAggregateData}/>
-				</div>
+				</div>}
 			</div>
 		)
 
@@ -113,14 +114,11 @@ class InventoryFilters extends React.Component {
 }
 
 function AggregateCostBar({ data, filters, isFetchingData })  {
-	const { selectedCategories, selectedProcesses, selectedProducts } = filters
-	let processed = data
-	if (data && selectedCategories.length === 0 && selectedProcesses.length === 0 && selectedProducts.length === 0) {
-		processed = aggregateByCategories(data)
-	}
+	const processed = processData(data, filters)
+
 	return (
 		<div className='aggregate-cost-bar'>
-			{!isFetchingData && data && processed.map((item, i) => {
+			{ data && processed.map((item, i) => {
 				const itemColor = CATEGORY_COLOR[item.category]
 				const itemStyle = {
 					flex: item.adjusted_cost,
@@ -132,7 +130,7 @@ function AggregateCostBar({ data, filters, isFetchingData })  {
 				} else if (item.product_types.length > 1) {
 					item_type = item.process_type.name
 				} else {
-					item_type = shortInventoryName(item)
+					item_type = inventoryName(item)
 				}
 				return item.adjusted_cost > 0 ? (
 					<Tooltip title={`${item_type} ${formatCost(item.adjusted_cost)}`} key={i}>
@@ -140,34 +138,47 @@ function AggregateCostBar({ data, filters, isFetchingData })  {
 					</Tooltip>
 				) : null
 			})}
+			{ isFetchingData &&
+				<div className='spinner-container'>
+					<Spinner fadeIn="quarter" name={"ball-beat"} />
+				</div>
+			}
 		</div>
 	)
 }
 
-function aggregateByCategories(data) {
-	let lastCategory = null
-	let itemToAdd = {}
-	let processed = []
-	data.forEach(item => {
-		if (lastCategory !== item.category) {
-			if (lastCategory !== null) {
-				processed.push(itemToAdd)
+function processData(data, filters) {
+	if (data && noFilters(filters)) {
+		let lastCategory = null
+		let itemToAdd = {}
+		let processed = []
+		data.forEach(item => {
+			if (lastCategory !== item.category) {
+				if (lastCategory !== null) {
+					processed.push(itemToAdd)
+				}
+				lastCategory = item.category
+				itemToAdd = {
+					category: item.category,
+					adjusted_cost: 0,
+					process_types: []
+				}
 			}
-			lastCategory = item.category
-			itemToAdd = {
-				category: item.category,
-				adjusted_cost: 0,
-				process_types: []
-			}
-		}
-		itemToAdd.adjusted_cost += item.adjusted_cost
-		itemToAdd.process_types.push({
-			process_type: item.process_type,
-			product_types: item.product_types
+			itemToAdd.adjusted_cost += item.adjusted_cost
+			itemToAdd.process_types.push({
+				process_type: item.process_type,
+				product_types: item.product_types
+			})
 		})
-	})
-	processed.push(itemToAdd)
-	return processed
+		processed.push(itemToAdd)
+		return processed
+	}
+	return data
+}
+
+function noFilters(filters) {
+	const { selectedCategories, selectedProcesses, selectedProducts } = filters
+	return selectedCategories.length === 0 && selectedProcesses.length === 0 && selectedProducts.length === 0
 }
 
 const mapStateToProps = (state/*, props*/) => {
