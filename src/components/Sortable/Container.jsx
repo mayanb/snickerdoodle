@@ -69,7 +69,7 @@ class Container extends Component {
 						id={card.id}
 						text={card.name}
 						renderer={this.props.renderer}
-						renderProps={update(card, {$merge: {index: i}})}
+						renderProps={update(card, {$merge: {index: i + 1}})}
 						moveCard={this.moveCard.bind(this)}
 						canDrag={this.props.canEdit}
 						findCard={this.findCard.bind(this)}
