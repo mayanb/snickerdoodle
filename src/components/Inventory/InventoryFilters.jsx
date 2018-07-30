@@ -87,9 +87,9 @@ class InventoryFilters extends React.Component {
 						/>
 					</div>
 				</div>
-				{ noFilters(filters) && <div className='row'>
+				<div className='row'>
 					<AggregateCostBar data={aggregateData} filters={filters} isFetchingData={isFetchingAggregateData}/>
-				</div>}
+				</div>
 			</div>
 		)
 
@@ -118,7 +118,7 @@ function AggregateCostBar({ data, filters, isFetchingData })  {
 
 	return (
 		<div className='aggregate-cost-bar'>
-			{ data && processed.map((item, i) => {
+			{ !isFetchingData && data && processed.map((item, i) => {
 				const itemColor = CATEGORY_COLOR[item.category]
 				const itemStyle = {
 					flex: item.adjusted_cost,

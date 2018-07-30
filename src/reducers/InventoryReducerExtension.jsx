@@ -132,28 +132,41 @@ function annotateHistory(data) {
 	return annotatedHistory.reverse()
 }
 
-function requestAggregate(state/*, action*/) {
+function aggregateActionIsValid(state, data) {
+    return data.timestamp >= state.ui.aggregateDataTimestamp;
+}
+
+function requestAggregate(state, action) {
 	return update(state, {
 		ui: {
-			$merge: { isFetchingAggregateData: true }
+			$merge: { 
+				isFetchingAggregateData: true,
+				aggregateDataTimestamp: action.timestamp,
+			}
 		}
 	})
 }
 
 function requestAggregateSuccess(state, action) {
-	const aggregateData = action.data
-	return update(state, {
-		ui: {
-			$merge: { isFetchingAggregateData: false }
-		},
-		aggregateData: { $set: aggregateData }
-	})
+	const { data } = action
+	if (aggregateActionIsValid(state, action)) {
+		return update(state, {
+			ui: {
+				$merge: { isFetchingAggregateData: false }
+			},
+			aggregateData: { $set: data }
+		})
+	}
+	return state
 }
 
-function requestAggregateFailure(state/*, action*/) {
-	return update(state, {
-		ui: {
-			$merge: { isFetchingAggregateData: false }
-		}
-	})
+function requestAggregateFailure(state, action) {
+	if (aggregateActionIsValid(state, action)) {
+		return update(state, {
+			ui: {
+				$merge: { isFetchingAggregateData: false }
+			}
+		})
+	}
+	return state
 }

@@ -27,12 +27,14 @@ export function fetchMoreInventory(page) {
 }
 
 export function fetchAggregate(params) {
-  return dispatch => {
-    dispatch(requestAggregate())
-    return api.get('/ics/inventories/aggregate/')
-      .query(params)
-      .then(res => dispatch(requestAggregateSuccess(res.body)))
-      .catch(err => dispatch(requestAggregateFailure(err)))
+  return async dispatch => {
+		const timestamp = Date.now()
+    dispatch(requestAggregate({ timestamp }))
+    return await api.get('/ics/inventories/aggregate/')
+			.query(params)
+			.then(res => res.body)
+      .then(body => dispatch(requestAggregateSuccess({ data: body, timestamp })))
+      .catch(err => dispatch(requestAggregateFailure({ error: err, timestamp })))
   }
 }
 
@@ -83,10 +85,11 @@ function requestInventoryHistoryFailure(err) {
 	}
 }
 
-function requestAggregate() {
+function requestAggregate(data) {
 	return {
 		type: REQUEST_AGGREGATE,
 		name: INVENTORY,
+		timestamp: data.timestamp,
 	}
 }
 
@@ -94,7 +97,8 @@ function requestAggregateSuccess(json) {
 	return {
 		type: REQUEST_AGGREGATE_SUCCESS,
 		name: INVENTORY,
-		data: json,
+		data: json.data,
+		timestamp: json.timestamp
 	}
 }
 
