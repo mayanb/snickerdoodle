@@ -51,6 +51,7 @@ class ProcessAttributeList extends React.Component {
 			return <ZeroState />
 		}
 		const canEditCardOrder = selectedAttribute === -1 || selectedAttribute === undefined
+		attrs.forEach(attr => console.log(attr.rank, attr.name))
 		return (
 			<div>
 				<div className="process-attr-list-header">
@@ -103,7 +104,7 @@ class ProcessAttributeList extends React.Component {
 				onSelect: () => this.handleSelect(attr),
 				onUpdate: (newAttr) => this.handleUpdate(attr, newAttr)
 			}
-		}).filter(attr => !attr.is_trashed)
+		})
 	}
 
 	// MARK:- ACTIONS 
