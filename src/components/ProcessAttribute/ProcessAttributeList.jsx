@@ -51,7 +51,6 @@ class ProcessAttributeList extends React.Component {
 			return <ZeroState />
 		}
 		const canEditCardOrder = selectedAttribute === -1 || selectedAttribute === undefined
-		attrs.forEach(attr => console.log(attr.rank, attr.name))
 		return (
 			<div>
 				<div className="process-attr-list-header">
@@ -159,7 +158,6 @@ class ProcessAttributeList extends React.Component {
 
   moveAttribute(id, toIndex) {
 	  let {process_index} = this.props
-		console.log(`move id ${id} to ${toIndex}`)
 		this.props.dispatch(actions.postRequestMoveAttribute(process_index, id, toIndex))
   }
 

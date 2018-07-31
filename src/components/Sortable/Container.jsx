@@ -41,7 +41,6 @@ class Container extends Component {
 
 	finishMovingCard() {
 		const cardIndex = this.state.cards.findIndex(c => c.isMoving)
-		console.log(cardIndex)
 		this.props.finishMovingCard(this.state.cards[cardIndex].id, cardIndex)
 	}
 
