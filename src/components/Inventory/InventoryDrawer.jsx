@@ -65,7 +65,7 @@ class InventoryDrawer extends React.Component {
 	handleDropFiles(files) {
 		const { dispatch } = this.props
 		Promise.all(files.map(file => dispatch(adjustmentActions.requestUploadCsvFile(file))))
-			.then(() => console.log('yay'))
+			.then(() => alert('Stitch order CSV successfully uploaded. You should see inventory adjustments made on the respective items.'))
 	}
 	
 	
