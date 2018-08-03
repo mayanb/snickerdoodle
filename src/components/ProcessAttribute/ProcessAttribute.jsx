@@ -31,11 +31,11 @@ class ProcessAttribute extends React.Component {
 	}
 
 	render() {
-		let {isSelected, name, datatype, rank, last_five_values, onDelete, onSelect, onUpdate} = this.props
+		let {isSelected, name, datatype, index, last_five_values, onDelete, onSelect, onUpdate} = this.props
 		let { editingName, editingType, is_recurrent } = this.state
 		if (isSelected) {
 			return (
-				<ElementCard selected className="process-attr-selected" handle index={rank} onDelete={onDelete}>
+				<ElementCard selected className="process-attr-selected" handle index={index} onDelete={onDelete}>
 					<div className="process-attr-inputs">
 						<ProcessAttributeField focus edit name="Name" value={editingName} onChange={(e) => this.handleChange('editingName', e.target.value)} />
 						<ProcessAttributeField edit select name="Type" value={editingType} onChange={(e) => this.handleChange('editingType', e.value)} />
@@ -47,7 +47,7 @@ class ProcessAttribute extends React.Component {
 			)
 		}
 		return (
-			<ElementCard className="process-attribute" index={rank} handle onDelete={onDelete} onClick={onSelect}>
+			<ElementCard className="process-attribute" index={index} handle onDelete={onDelete} onClick={onSelect}>
 				<span className="process-attr-name">{name}</span>
 				<ProcessAttributeDatatype type={datatype}/>
 				<div className={`recurrent-label ${is_recurrent ? '' : 'hidden'}`}>{IS_RECURRENT_MESSAGE}</div>
