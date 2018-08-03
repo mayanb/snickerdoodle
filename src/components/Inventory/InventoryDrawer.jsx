@@ -8,17 +8,19 @@ import * as adjustmentActions from './AdjustmentActions'
 import { formatAmount } from '../../utilities/stringutils'
 import { inventoryName } from './inventoryUtils'
 import Loading from '../Loading/Loading'
+import TaskFileDropzone from '../TaskPage/TaskFileDropzone'
 import './styles/inventorydrawer.css'
 
 class InventoryDrawer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = { isAddingAdjustment: false }
-
+		
 		this.handleToggleAddAdjustment = this.handleToggleAddAdjustment.bind(this)
 		this.handleSaveAdjustment = this.handleSaveAdjustment.bind(this)
+		this.handleDropFiles = this.handleDropFiles.bind(this)
 	}
-
+	
 	componentWillReceiveProps(nextProps) {
 		if (this.props.teamId !== nextProps.teamId ||
 			this.props.selectedInventory.process_id !== nextProps.selectedInventory.process_id ||
@@ -26,39 +28,52 @@ class InventoryDrawer extends React.Component {
 			this.fetchHistory(nextProps.teamId, nextProps.selectedInventory.process_id, nextProps.selectedInventory.product_id)
 		}
 	}
-
+	
 	fetchHistory(teamId, processId, productId) {
 		this.props.dispatch(actions.fetchInventoryHistory(teamId, processId, productId))
 	}
-
+	
 	render() {
 		let { selectedInventory, ui } = this.props
-
+		
 		if (!selectedInventory.process_id) {
 			return null
 		}
-
+		
 		return (
 			<div className="inventory-drawer">
 				<DrawerTitle inventory={selectedInventory}
-				             showCancel={this.state.isAddingAdjustment}
-				             onCancel={this.handleToggleAddAdjustment}
+										 showCancel={this.state.isAddingAdjustment}
+										 onCancel={this.handleToggleAddAdjustment}
 				/>
 				{this.state.isAddingAdjustment ?
 					<InventoryDrawerAdjustedAmount inventory={selectedInventory} onSaveAdjustment={this.handleSaveAdjustment} /> :
 					<AddAdjustment onClick={this.handleToggleAddAdjustment} />
 				}
+				<TaskFileDropzone
+					onDropFiles={this.handleDropFiles}
+					task={{files: []}}
+					dropzoneText="Drag a CSV file of inventory changes here to submit them."
+				/>
 				<Loading isFetchingData={ui.isFetchingHistory || ui.isAdjusting}>
 					<AdjustmentHistory history={selectedInventory.history} unit={selectedInventory.process_unit} />
 				</Loading>
 			</div>
 		)
 	}
-
+	
+	handleDropFiles(files) {
+		const { dispatch } = this.props
+		Promise.all(files.map(file => dispatch(adjustmentActions.requestUploadCsvFile(file))))
+			.then(() => console.log('yay'))
+	}
+	
+	
+	
 	handleToggleAddAdjustment() {
 		this.setState({ isAddingAdjustment: !this.state.isAddingAdjustment })
 	}
-
+	
 	handleSaveAdjustment(amount, explanation) {
 		this.handleToggleAddAdjustment()
 		this.props.dispatch(adjustmentActions.requestCreateAdjustment(
@@ -72,7 +87,7 @@ class InventoryDrawer extends React.Component {
 				this.fetchHistory(this.props.teamId, this.props.selectedInventory.process_id, this.props.selectedInventory.product_id)
 			})
 			.catch(() => {
-
+			
 			})
 	}
 }
@@ -113,5 +128,4 @@ function DrawerTitle({ inventory, showCancel, onCancel }) {
 		</div>
 	)
 }
-
 

@@ -30,6 +30,23 @@ export function requestCreateAdjustment(userProfileId, processId, productId, amo
 	}
 }
 
+export function requestUploadCsvFile(file) {
+	return dispatch => {
+		dispatch(startCreatingAdjustment())
+
+		return api.upload(`/cogs/adjustments/csv/`, file, {})
+			.then(res => {
+				console.log('res.body: ', res.body)
+				res.body.forEach(adjustment => dispatch(createAdjustmentSuccess(adjustment.data)))
+			})
+			.catch(e => {
+				dispatch(createAdjustmentFailure(e))
+				console.log(e)
+				throw e
+			})
+	}
+}
+
 function startCreatingAdjustment() {
 	return {
 		type: START_ADJUSTMENT,

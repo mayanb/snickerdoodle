@@ -15,17 +15,18 @@ export default class TaskFileDropzone extends React.Component {
 
     render() {
         const { files } = this.props.task
+			  const { dropzoneText } = this.props
         return (
             <section className='dropzone-container'>
                 <Dropzone className={this.state.className} onDrop={this.handleDrop} onDragEnter={this.handleDragEnter} onDragLeave={this.handleDragLeave}>
                     <Img useExtension src='plus.svg' />
-                    <div>Drag a file here to attach it.</div>
+                    <div>{dropzoneText || 'Drag a file here to attach it.'}</div>
                 </Dropzone>
                 <aside>
                     <List className='file-list'
                         size='small'
                         locale={{emptyText: 'No Files'}}
-                        bordered 
+                        bordered
                         dataSource={files}
                         renderItem={this.FileDownloadLink}
                     />
