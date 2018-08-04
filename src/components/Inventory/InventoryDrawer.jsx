@@ -37,6 +37,25 @@ class InventoryDrawer extends React.Component {
 		this.props.dispatch(actions.fetchInventoryHistory(teamId, processId, productId))
 	}
 
+	fetchAggregate() {
+		const { filters } = this.props
+		const params = { ordering: this.props.ordering }
+		if (filters.selectedCategories.length) {
+			params.category_types = filters.selectedCategories.join(',')
+		}
+		if (filters.selectedProcesses.length) {
+			params.process_types = filters.selectedProcesses.join(',')
+		}
+		if (filters.selectedProducts.length) {
+			params.product_types = filters.selectedProducts.join(',')
+		}
+		if (filters.aggregateProducts) {
+			params.aggregate_products = 'true'
+		}
+
+		this.props.dispatch(actions.fetchAggregate(params))
+	}
+
 	render() {
 		let { selectedInventory, ui } = this.props
 		if (!selectedInventory.process_type || selectedInventory.product_types.length > 1) {
@@ -72,13 +91,12 @@ class InventoryDrawer extends React.Component {
 			this.props.selectedInventory.product_types[0].id,
 			amount,
 			explanation
-		))
-			.then(() => {
-				this.fetchHistory(this.props.teamId, this.props.selectedInventory.process_type.id, this.props.selectedInventory.product_types[0].id)
-			})
-			.catch(() => {
+		)).then(() => {
+			this.fetchHistory(this.props.teamId, this.props.selectedInventory.process_type.id, this.props.selectedInventory.product_types[0].id)
+			this.fetchAggregate()
+		}).catch(() => {
 
-			})
+		})
 	}
 }
 

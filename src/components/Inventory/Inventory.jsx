@@ -38,6 +38,7 @@ export class Inventory extends React.Component {
 
 	render() {
 		let { ui } = this.props
+		const filters = this.getFilters()
 		return (
 			<div className="inventory-container">
 				<ApplicationSectionHeader>Inventory</ApplicationSectionHeader>
@@ -45,7 +46,7 @@ export class Inventory extends React.Component {
 				<div className="inventory-content">
 					<div className="inventory-list-container">
 						<InventoryFilters
-							filters={this.getFilters()}
+							filters={filters}
 							data={this.props.data}
 							aggregateData={this.props.aggregateData}
 							onFilterChange={this.handleFilterChange}
@@ -63,7 +64,10 @@ export class Inventory extends React.Component {
 							</ObjectList>
 						</Loading>
 					</div>
-					<InventoryDrawer />
+					<InventoryDrawer 
+						filters={filters} 
+						ordering={this.state.ordering}
+					/>
 				</div>
 
 			</div>

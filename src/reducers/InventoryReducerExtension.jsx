@@ -98,7 +98,7 @@ function historySuccess(state, action) {
 				$merge: {
 					history: annotatedHistory,
 					adjusted_amount: endAmount,
-					adjusted_cost: cost
+					adjusted_cost: cost ? cost : state.data[index].adjusted_cost
 				}
 			}
 		}
