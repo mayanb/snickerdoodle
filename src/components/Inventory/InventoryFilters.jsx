@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
 import { Select } from 'antd'
+import Checkbox from '../Inputs/Checkbox'
+import './styles/inventoryfilters.css'
 import { processProductFilter, formatOption } from '../../utilities/filters'
 import { RM, WIP, FG, CATEGORY_NAME } from '../../utilities/constants'
 
@@ -10,16 +12,10 @@ class InventoryFilters extends React.Component {
 	constructor(props) {
 		super(props)
 
-		this.state = {
-			processTypes: [],
-			productTypes: [],
-			categoryTypes: [],
-		}
-
-		this.handleFilter = this.handleFilter.bind(this)
 		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
 		this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
 		this.handleCategoryTypeChange = this.handleCategoryTypeChange.bind(this)
+		this.handleAggregateProductsChange = this.handleAggregateProductsChange.bind(this)
 	}
 
 	componentDidMount() {
@@ -28,66 +24,87 @@ class InventoryFilters extends React.Component {
 	}
 
 	render() {
+		const { filters, products, processes } = this.props
+		const categories = [
+			{ name: CATEGORY_NAME[RM], code: RM },
+			{ name: CATEGORY_NAME[WIP], code: WIP },
+			{ name: CATEGORY_NAME[FG], code: FG },
+		]
 		if (this.props.isFetchingData)
 			return null
 
 		return (
 			<div className='inventory-filters'>
-				<Select
-					mode="multiple"
-					allowClear
-					placeholder="Filter processes"
-					filterOption={processProductFilter}
-					onChange={this.handleProcessTypeChange}
-				>
-					{this.props.processes.map(p => <Select.Option key={p.id} data={p}>
-							{formatOption(p)}
-						</Select.Option>
-					)}
-				</Select>
-				<Select
-					mode="multiple"
-					allowClear
-					placeholder="Filter products"
-					filterOption={processProductFilter}
-					onChange={this.handleProductTypeChange}
-				>
-					{this.props.products.map(p => <Select.Option key={p.id} data={p}>
-							{formatOption(p)}
-						</Select.Option>
-					)}
-				</Select>
-				<Select
-					mode="multiple"
-					allowClear
-					placeholder="Filter categories"
-					filterOption={processProductFilter}
-					onChange={this.handleCategoryTypeChange}
-				>
-					{this.props.categories.map(c => <Select.Option key={c.code} data={c}>
-							{c.name}
-						</Select.Option>
-					)}
-				</Select>
+				<div className='row'>
+					{processes.length > 0 && <Select
+						mode="multiple"
+						value={filters.selectedProcesses}
+						allowClear
+						placeholder="Filter processes"
+						filterOption={processProductFilter}
+						onChange={this.handleProcessTypeChange}
+					>
+						{processes.map(p => <Select.Option key={p.id} data={p}>
+								{formatOption(p)}
+							</Select.Option>
+						)}
+					</Select>}
+					{products.length > 0 && <Select
+						mode="multiple"
+						value={filters.selectedProducts}
+						allowClear
+						placeholder="Filter products"
+						filterOption={processProductFilter}
+						onChange={this.handleProductTypeChange}
+					>
+						{products.map(p => <Select.Option key={p.id} data={p}>
+								{formatOption(p)}
+							</Select.Option>
+						)}
+					</Select>}
+					{categories.length > 0 && <Select
+						mode="multiple"
+						value={filters.selectedCategories}
+						allowClear
+						placeholder="Filter categories"
+						filterOption={processProductFilter}
+						onChange={this.handleCategoryTypeChange}
+					>
+						{categories.map(c => <Select.Option key={c.code} data={c}>
+								{c.name}
+							</Select.Option>
+						)}
+					</Select>}
+				</div>
+				<div className='row'>
+					<div className="checkboxes">
+						<Checkbox
+							label="Aggregate across product types"
+							checked={filters.aggregateProducts}
+							onChange={this.handleAggregateProductsChange}
+						/>
+					</div>
+				</div>
 			</div>
 		)
 
 	}
 
-	handleProcessTypeChange(newVal) {
-		this.setState({ processTypes: newVal }, this.handleFilter)
+	handleProcessTypeChange(selectedProcesses) {
+		this.props.onFilterChange({ ...this.props.filters, selectedProcesses })
 	}
 
-	handleProductTypeChange(newVal) {
-		this.setState({ productTypes: newVal }, this.handleFilter)
+	handleProductTypeChange(selectedProducts) {
+		this.props.onFilterChange({ ...this.props.filters, selectedProducts })
 	}
 
-	handleCategoryTypeChange(newVal) {
-		this.setState({ categoryTypes: newVal }, this.handleFilter)
+	handleCategoryTypeChange(selectedCategories) {
+		this.props.onFilterChange({ ...this.props.filters, selectedCategories })
 	}
 
-	handleFilter() {
-		this.props.onFilter(this.state.processTypes, this.state.productTypes, this.state.categoryTypes)
+	handleAggregateProductsChange(event) {
+		const isChecked = event.target.checked
+		this.props.onFilterChange({ ...this.props.filters, aggregateProducts: isChecked })
 	}
 }
 

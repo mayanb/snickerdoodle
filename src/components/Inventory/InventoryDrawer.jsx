@@ -22,10 +22,21 @@ class InventoryDrawer extends React.Component {
 	}
 	
 	componentWillReceiveProps(nextProps) {
-		if (this.props.teamId !== nextProps.teamId ||
-			this.props.selectedInventory.process_id !== nextProps.selectedInventory.process_id ||
-			this.props.selectedInventory.product_id !== nextProps.selectedInventory.product_id) {
-			this.fetchHistory(nextProps.teamId, nextProps.selectedInventory.process_id, nextProps.selectedInventory.product_id)
+		const { process_type, product_types, teamId } = this.props.selectedInventory
+		const { 
+			process_type: next_process_type, 
+			product_types: next_product_types,
+			history: next_history,
+		} = nextProps.selectedInventory
+		
+		if ((teamId !== nextProps.teamId) ||
+			(!process_type && next_process_type) ||
+			(product_types && next_product_types && (
+				(product_types[0].id !== next_product_types[0].id) ||
+				(!next_history)
+			))
+		){
+			this.fetchHistory(nextProps.teamId, next_process_type.id, next_product_types[0].id)
 		}
 	}
 	
@@ -34,9 +45,9 @@ class InventoryDrawer extends React.Component {
 	}
 	
 	render() {
-		let { selectedInventory, ui } = this.props
-		
-		if (!selectedInventory.process_id) {
+		let { selectedInventory, ui, filters } = this.props
+		let { process_type } = selectedInventory
+		if (!process_type || filters.aggregateProducts) {
 			return null
 		}
 		
@@ -56,7 +67,7 @@ class InventoryDrawer extends React.Component {
 					dropzoneText="Drag a CSV file of inventory changes here to submit them."
 				/>
 				<Loading isFetchingData={ui.isFetchingHistory || ui.isAdjusting}>
-					<AdjustmentHistory history={selectedInventory.history} unit={selectedInventory.process_unit} />
+					<AdjustmentHistory history={selectedInventory.history} unit={selectedInventory.process_type.unit} />
 				</Loading>
 			</div>
 		)
@@ -78,13 +89,13 @@ class InventoryDrawer extends React.Component {
 		this.handleToggleAddAdjustment()
 		this.props.dispatch(adjustmentActions.requestCreateAdjustment(
 			this.props.userProfileId,
-			this.props.selectedInventory.process_id,
-			this.props.selectedInventory.product_id,
+			this.props.selectedInventory.process_type.id,
+			this.props.selectedInventory.product_types[0].id,
 			amount,
 			explanation
 		))
 			.then(() => {
-				this.fetchHistory(this.props.teamId, this.props.selectedInventory.process_id, this.props.selectedInventory.product_id)
+				this.fetchHistory(this.props.teamId, this.props.selectedInventory.process_type.id, this.props.selectedInventory.product_types[0].id)
 			})
 			.catch(() => {
 			
@@ -116,13 +127,13 @@ function AddAdjustment({ onClick }) {
 }
 
 function DrawerTitle({ inventory, showCancel, onCancel }) {
-	let { adjusted_amount, process_unit } = inventory
+	let { adjusted_amount, process_type } = inventory
 	return (
 		<div className="inv-drawer-title">
-			<InventoryIcon icon={inventory.process_icon} outerSize={36} innerSize={24} />
+			<InventoryIcon icon={process_type.icon} outerSize={36} innerSize={24} />
 			<div>
 				<span>{inventoryName(inventory)}</span>
-				<div>{formatAmount(adjusted_amount, process_unit)}</div>
+				<div>{formatAmount(adjusted_amount, process_type.unit)}</div>
 			</div>
 			{showCancel && <div className="cancel" onClick={onCancel}>Cancel</div>}
 		</div>

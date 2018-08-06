@@ -30,8 +30,8 @@ export function _inventory(state, action) {
 
 function getIndexOfInventory(state, proc, prod) {
 	return state.data.findIndex(e => {
-		return (parseInt(proc, 10) === parseInt(e.process_id, 10) &&
-			parseInt(prod, 10) === parseInt(e.product_id, 10)
+		return (parseInt(proc, 10) === parseInt(e.process_type.id, 10) &&
+			parseInt(prod, 10) === parseInt(e.product_types[0].id, 10)
 		)
 	})
 }

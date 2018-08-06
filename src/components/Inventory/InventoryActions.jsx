@@ -7,24 +7,12 @@ import api from '../WaffleconeAPI/api.jsx'
 import * as actions from '../../reducers/APIDataActions'
 import {  INVENTORY } from '../../reducers/ReducerTypes'
 
-export function fetchInitialInventory(processIds, productIds, categoryCodes, ordering) {
-  const query = {
-    ordering: ordering
-  }
-	if(processIds.length) {
-		query.process_types = processIds.join(',')
+export function fetchInventory(params) {
+	const request = {
+		url: '/ics/inventories/',
+		query: params
 	}
-	if(productIds.length) {
-		query.product_types = productIds.join(',')
-	}
-	if(categoryCodes.length){
-		query.category_types = categoryCodes.join(',')
-	}
-  let request = {
-    url: '/ics/inventories/',
-    query: query
-  }
-  return actions.fetchPaginated(INVENTORY, request, null, res => res.body, false)
+	return actions.fetchPaginated(INVENTORY, request, null, res => res.body, false)
 }
 
 export function fetchMoreInventory(page) {
