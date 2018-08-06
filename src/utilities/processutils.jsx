@@ -3,7 +3,3 @@ export function processesHaveNoUserAttributes (processes) {
 		return process.attributes.find(attr => attr.datatype === 'USER') !== undefined
 	}))
 }
-
-export function updateRanksToMatchOrder(attributes) {
-	attributes.forEach((attribute, index) => attribute.rank = index)
-}

@@ -41,6 +41,7 @@ class Container extends Component {
 
 	finishMovingCard() {
 		const cardIndex = this.state.cards.findIndex(c => c.isMoving)
+		console.log(cardIndex)
 		this.props.finishMovingCard(this.state.cards[cardIndex].id, cardIndex)
 	}
 
@@ -68,7 +69,7 @@ class Container extends Component {
 						id={card.id}
 						text={card.name}
 						renderer={this.props.renderer}
-						renderProps={update(card, {$merge: {index: i + 1}})}
+						renderProps={update(card, {$merge: {index: i}})}
 						moveCard={this.moveCard.bind(this)}
 						canDrag={this.props.canEdit}
 						findCard={this.findCard.bind(this)}
