@@ -1,6 +1,5 @@
 import * as actions from '../../reducers/APIDataActions'
 import {  PROCESSES } from '../../reducers/ReducerTypes'
-import { updateRanksToMatchOrder } from '../../utilities/processutils'
 
 const BASE_ENDPOINT = '/ics/processes'
 
@@ -15,8 +14,6 @@ export function fetchProcesses(query) {
 function organizeAttributes(processes) {
   for (var p of processes) {
     p.attributes.sort((a, b) => a.rank - b.rank)
-    p.attributes = p.attributes.filter(attribute => !attribute.is_trashed)
-		updateRanksToMatchOrder(p.attributes)
   }
   return processes
 }

@@ -45,12 +45,12 @@ class ProcessAttributeList extends React.Component {
 	}
 
 	renderList() {
-		const { isAddingAttribute, isSavingAttribute, selectedAttribute } = this.props.ui
+		let {ui} = this.props
 		let attrs = this.constructAttributeList()
-		if (!attrs.length && !isAddingAttribute) {
+		if (!attrs.length && !ui.isAddingAttribute) {
 			return <ZeroState />
 		}
-		const canEditCardOrder = selectedAttribute === -1 || selectedAttribute === undefined
+
 		return (
 			<div>
 				<div className="process-attr-list-header">
@@ -60,16 +60,16 @@ class ProcessAttributeList extends React.Component {
 				</div>
 				<Slide>
 				{ 
-					isAddingAttribute && <ProcessAttributeNew
+					ui.isAddingAttribute && <ProcessAttributeNew 
 						onSubmit={this.saveAttribute}
-						isLoading={isSavingAttribute}
+						isLoading={ui.isSavingAttribute}
 						key={COMPONENT_PREFIX + 'create'}
 					/> 
 				}
 				</Slide>
 				<Sortable 
 					cards={attrs}
-					canEdit={canEditCardOrder}
+					canEdit={!ui.selectedAttribute}
 					finishMovingCard={this.moveAttribute.bind(this)} 
 					renderer={ProcessAttribute} 
 				/>
@@ -103,7 +103,7 @@ class ProcessAttributeList extends React.Component {
 				onSelect: () => this.handleSelect(attr),
 				onUpdate: (newAttr) => this.handleUpdate(attr, newAttr)
 			}
-		})
+		}).filter(attr => !attr.is_trashed)
 	}
 
 	// MARK:- ACTIONS 
