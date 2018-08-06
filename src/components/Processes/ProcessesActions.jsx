@@ -5,7 +5,7 @@ const BASE_ENDPOINT = '/ics/processes'
 
 export function fetchProcesses(query) {
   let request = { 
-    url: BASE_ENDPOINT, 
+    url: `${BASE_ENDPOINT}/`, 
     query: query,
   }
   return actions.fetch(PROCESSES, request, null, res => organizeAttributes(res.body))
