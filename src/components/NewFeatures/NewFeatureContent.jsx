@@ -12,6 +12,11 @@ const nfs = [{
 	title: "Keep track of changes in your log fields.",
 	content: <span>You can now fill in log fields multiple times! Record multiple entries for each log field, and keep track of changes. <Link to='/processes'>Add recurring fields to a process now.</Link></span>,
 	type: 'feature',
+},
+{
+	title: "Attach files to a task.",
+	content: <span>You can now attach useful files and images to a task! Select a task from the <Link to='/activity-log'>activity logs </Link>to upload your first file today.</span>,
+	type: 'feature',
 }]
 
 let HEADER = {display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px 0'}
