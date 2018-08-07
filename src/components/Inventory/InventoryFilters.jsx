@@ -2,13 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
-import { Select, Tooltip } from 'antd'
+import { Select } from 'antd'
 import Spinner from 'react-spinkit'
 import Checkbox from '../Inputs/Checkbox'
 import './styles/inventoryfilters.css'
-import { formatCost, inventoryName } from './inventoryUtils'
+import { formatCost } from './inventoryUtils'
 import { processProductFilter, formatOption } from '../../utilities/filters'
-import { RM, WIP, FG, CATEGORY_NAME, CATEGORY_COLOR } from '../../utilities/constants'
+import { RM, WIP, FG, CATEGORY_NAME } from '../../utilities/constants'
 
 class InventoryFilters extends React.Component {
 	constructor(props) {
