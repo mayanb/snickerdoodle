@@ -20,15 +20,20 @@ class InventoryDrawer extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const { process_type, product_types } = this.props.selectedInventory
+		const { process_type, product_types, teamId } = this.props.selectedInventory
 		const { 
 			process_type: next_process_type, 
 			product_types: next_product_types,
+			history: next_history,
 		} = nextProps.selectedInventory
-
-		if (this.props.teamId !== nextProps.teamId ||
+		
+		if ((teamId !== nextProps.teamId) ||
 			(!process_type && next_process_type) ||
-			(product_types && next_product_types && product_types[0].id !== next_product_types[0].id)) {
+			(product_types && next_product_types && (
+				(product_types[0].id !== next_product_types[0].id) ||
+				(!next_history)
+			))
+		){
 			this.fetchHistory(nextProps.teamId, next_process_type.id, next_product_types[0].id)
 		}
 	}
@@ -57,8 +62,9 @@ class InventoryDrawer extends React.Component {
 	}
 
 	render() {
-		let { selectedInventory, ui } = this.props
-		if (!selectedInventory.process_type || selectedInventory.product_types.length > 1) {
+		let { selectedInventory, ui, filters } = this.props
+		let { process_type } = selectedInventory
+		if (!process_type || filters.aggregateProducts) {
 			return null
 		}
 
