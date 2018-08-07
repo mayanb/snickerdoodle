@@ -47,6 +47,8 @@ export class Inventory extends React.Component {
 					<div className="inventory-list-container">
 						<InventoryFilters
 							filters={filters}
+							data={this.props.data}
+							aggregateData={this.props.aggregateData}
 							onFilterChange={this.handleFilterChange}
 						/>
 						<Loading isFetchingData={ui.isFetchingData}>
@@ -62,7 +64,10 @@ export class Inventory extends React.Component {
 							</ObjectList>
 						</Loading>
 					</div>
-					<InventoryDrawer filters={filters} />
+					<InventoryDrawer 
+						filters={filters} 
+						ordering={this.state.ordering}
+					/>
 				</div>
 
 			</div>
@@ -76,6 +81,7 @@ export class Inventory extends React.Component {
 			{ title: 'Category', className: 'inv-category', field: null },
 			{ title: 'Code', className: 'inv-code', field: null },
 			{ title: 'Amount', className: 'inv-amount', field: null },
+			{ title: 'Cost', className: 'inv-cost', field: null },
 		]
 		return (
 			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering} />
@@ -121,20 +127,21 @@ export class Inventory extends React.Component {
 
 	getInventory(filters) {
 		const params = { ordering: this.state.ordering }
+		if (filters.selectedCategories.length) {
+			params.category_types = filters.selectedCategories.join(',')
+		}
 		if (filters.selectedProcesses.length) {
 			params.process_types = filters.selectedProcesses.join(',')
 		}
 		if (filters.selectedProducts.length) {
 			params.product_types = filters.selectedProducts.join(',')
 		}
-		if (filters.selectedCategories.length) {
-			params.category_types = filters.selectedCategories.join(',')
-		}
 		if (filters.aggregateProducts) {
 			params.aggregate_products = 'true'
 		}
 
 		this.props.dispatch(actions.fetchInventory(params))
+		this.props.dispatch(actions.fetchAggregate(params))
 	}
 
 	getFilters() {
@@ -150,6 +157,7 @@ export class Inventory extends React.Component {
 
 const mapStateToProps = (state/*, props*/) => {
 	return {
+		aggregateData: state.inventory.aggregateData,
 		data: state.inventory.data,
 		ui: state.inventory.ui,
 	}

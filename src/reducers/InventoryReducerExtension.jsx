@@ -7,6 +7,9 @@ export const ADJUSTMENT_FAILURE = 'REQUEST_INVENTORY_FAILURE'
 export const REQUEST_HISTORY = 'REQUEST_HISTORY'
 export const REQUEST_HISTORY_SUCCESS = 'HISTORY_SUCCESS'
 export const REQUEST_HISTORY_FAILURE = 'HISTORY_FAILURE'
+export const REQUEST_AGGREGATE = 'REQUEST_AGGREGATE'
+export const REQUEST_AGGREGATE_SUCCESS = 'REQUEST_AGGREGATE_SUCCESS'
+export const REQUEST_AGGREGATE_FAILURE = 'REQUEST_AGGREGATE_FAILURE'
 
 export function _inventory(state, action) {
 	let ns = apiDataReducer(state, action)
@@ -23,6 +26,12 @@ export function _inventory(state, action) {
 			return historySuccess(state, action)
 		case REQUEST_HISTORY_FAILURE:
 			return historyFailure(state, action)
+		case REQUEST_AGGREGATE:
+			return requestAggregate(state, action)
+		case REQUEST_AGGREGATE_SUCCESS:
+			return requestAggregateSuccess(state, action)
+		case REQUEST_AGGREGATE_FAILURE:
+			return requestAggregateFailure(state, action)
 		default:
 			return ns
 	}
@@ -79,7 +88,7 @@ function requestHistory(state, action) {
 function historySuccess(state, action) {
 	let index = getIndexOfInventory(state, action.processId, action.productId)
 	const annotatedHistory = annotateHistory(action.data)
-	const endAmount = annotatedHistory[0].data.endAmount
+	const { endAmount, cost } = annotatedHistory[0].data
 	return update(state, {
 		ui: {
 			$merge: { isFetchingHistory: false }
@@ -88,7 +97,8 @@ function historySuccess(state, action) {
 			[index]: {
 				$merge: {
 					history: annotatedHistory,
-					adjusted_amount: endAmount
+					adjusted_amount: endAmount,
+					adjusted_cost: cost ? cost : state.data[index].adjusted_cost
 				}
 			}
 		}
@@ -120,4 +130,43 @@ function annotateHistory(data) {
 		startAmount = item.data.endAmount
 	})
 	return annotatedHistory.reverse()
+}
+
+function aggregateActionIsValid(state, data) {
+    return data.timestamp >= state.ui.aggregateDataTimestamp;
+}
+
+function requestAggregate(state, action) {
+	return update(state, {
+		ui: {
+			$merge: { 
+				isFetchingAggregateData: true,
+				aggregateDataTimestamp: action.timestamp,
+			}
+		}
+	})
+}
+
+function requestAggregateSuccess(state, action) {
+	const { data } = action
+	if (aggregateActionIsValid(state, action)) {
+		return update(state, {
+			ui: {
+				$merge: { isFetchingAggregateData: false }
+			},
+			aggregateData: { $set: data }
+		})
+	}
+	return state
+}
+
+function requestAggregateFailure(state, action) {
+	if (aggregateActionIsValid(state, action)) {
+		return update(state, {
+			ui: {
+				$merge: { isFetchingAggregateData: false }
+			}
+		})
+	}
+	return state
 }

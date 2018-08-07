@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
 import { Select } from 'antd'
+import Spinner from 'react-spinkit'
 import Checkbox from '../Inputs/Checkbox'
 import './styles/inventoryfilters.css'
+import { formatCost } from './inventoryUtils'
 import { processProductFilter, formatOption } from '../../utilities/filters'
 import { RM, WIP, FG, CATEGORY_NAME } from '../../utilities/constants'
 
@@ -24,7 +26,7 @@ class InventoryFilters extends React.Component {
 	}
 
 	render() {
-		const { filters, products, processes } = this.props
+		const { filters, products, processes, isFetchingAggregateData, aggregateData } = this.props
 		const categories = [
 			{ name: CATEGORY_NAME[RM], code: RM },
 			{ name: CATEGORY_NAME[WIP], code: WIP },
@@ -85,6 +87,9 @@ class InventoryFilters extends React.Component {
 						/>
 					</div>
 				</div>
+				<div className='row'>
+					<AggregateCategoryBoxes data={aggregateData} isFetchingData={isFetchingAggregateData}/>
+				</div>
 			</div>
 		)
 
@@ -108,6 +113,47 @@ class InventoryFilters extends React.Component {
 	}
 }
 
+function AggregateCategoryBoxes({ data, isFetchingData }) {
+	const processed = processData(data)
+	
+	return (
+		<div className='category-boxes-container'>
+			<div className="category-box">
+				<div className='category-box-title'>{CATEGORY_NAME['rm']}</div>
+				<div className='category-box-cost'>
+					{ !isFetchingData && formatCost(processed['rm'])}
+					{ isFetchingData && <Spinner fadeIn="quarter" name="wave" color="grey" />}
+				</div>
+			</div>
+			<div className="category-box">
+				<div className='category-box-title'>{CATEGORY_NAME['wip']}</div>
+				<div className='category-box-cost'>
+					{ !isFetchingData && formatCost(processed['wip'])}
+					{ isFetchingData && <Spinner fadeIn="quarter" name="wave" color="grey" />}
+				</div>
+			</div>
+			<div className="category-box">
+				<div className='category-box-title'>{CATEGORY_NAME['fg']}</div>
+				<div className='category-box-cost'>
+					{ !isFetchingData && formatCost(processed['fg'])}
+					{ isFetchingData && <Spinner fadeIn="quarter" name="wave" color="grey" />}
+				</div>
+			</div>
+		</div>
+	)
+}
+
+function processData(data) {
+	const processed = { 'rm': 0, 'wip': 0, 'fg': 0 }
+	if (data) {
+		data.forEach(dataItem => {
+			const { category, adjusted_cost } = dataItem
+			processed[category] += adjusted_cost
+		})
+	}
+	return processed
+}
+
 const mapStateToProps = (state/*, props*/) => {
 	const isFetchingData = state.processes.ui.isFetchingData || state.products.ui.isFetchingData
 	const categories = [
@@ -119,7 +165,8 @@ const mapStateToProps = (state/*, props*/) => {
 		processes: state.processes.data,
 		products: state.products.data,
 		categories,
-		isFetchingData: isFetchingData
+		isFetchingData: isFetchingData,
+		isFetchingAggregateData: state.inventory.ui.isFetchingAggregateData
 	}
 }
 

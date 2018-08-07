@@ -15,5 +15,43 @@
             display: flex;
             flex-grow: 1;
         }
+
+        .category-boxes-container {
+            display: flex;
+            width: 600px;
+            color: $gray-light;
+
+            .category-box {
+                flex: 1;
+                padding: 16px 0;
+                display: flex;
+                flex-direction: column;
+                margin-right: 10px;
+                background-color: white;
+                box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+                border-radius: 4px;
+
+                .category-box-title {
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    color: $gray;
+                    text-align: center;
+                    font-size: 18px;
+                }
+
+                .category-box-cost {
+                    flex: 1.6;
+                    display: flex;
+                    justify-content: center;
+                    padding-top: 12px;
+                    text-align: center;
+                    color: $gray;
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+            }
+        }
     }
 }
