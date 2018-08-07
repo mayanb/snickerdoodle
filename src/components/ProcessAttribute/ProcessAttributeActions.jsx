@@ -74,8 +74,8 @@ export function archiveAttribute(process_index, attribute_index, attribute) {
   return function (dispatch) {
     dispatch(requestArchiveAttribute(process_index, attribute_index))
 
-    return api.patch(`/ics/attributes/${attribute.id}/`)
-      .send({is_trashed: true})
+    return api.put(`/ics/attributes/move/${attribute.id}/`)
+			.send({new_rank: -1}) // -1 sentinel signals deletion, removing attr from rankings
       .end(function (err, res) {
         if (err || !res.ok) {
           dispatch(requestArchiveAttributeFailure(process_index, attribute_index, attribute))
