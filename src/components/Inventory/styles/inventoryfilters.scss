@@ -16,37 +16,41 @@
             flex-grow: 1;
         }
 
-        .aggregate-cost-bar {
-            margin-right: 34px;
-            flex: 1;
-            height: 30px;
+        .category-boxes-container {
             display: flex;
-            flex-direction: row;
-            border: solid $gray-light 1px;
-            background-color: #e6e6e6;
-            border-radius: 4px;
-            
-            .cost-item {
-                border-right: solid $gray-light 1px;
-                cursor: pointer;
+            width: 600px;
+            color: $gray-light;
 
-                &:first-child {
-                    border-radius: 3px 0 0 3px;
+            .category-box {
+                flex: 1;
+                padding: 16px 0;
+                display: flex;
+                flex-direction: column;
+                margin-right: 10px;
+                background-color: white;
+                box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+                border-radius: 4px;
+
+                .category-box-title {
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
+                    color: $gray;
+                    text-align: center;
+                    font-size: 18px;
                 }
 
-                &:last-child {
-                    border-right: none;
-                    border-radius: 0 3px 3px 0;
+                .category-box-cost {
+                    flex: 1.6;
+                    display: flex;
+                    justify-content: center;
+                    padding-top: 12px;
+                    text-align: center;
+                    color: $gray;
+                    font-size: 24px;
+                    font-weight: bold;
                 }
-
-                &:hover {
-                    box-shadow: inset 0 0 0 500px rgba(0,0,0,0.05);
-                }
-            }
-
-            .spinner-container {
-                margin-top: 4px;
-                margin: 4px auto 0 auto;
             }
         }
     }

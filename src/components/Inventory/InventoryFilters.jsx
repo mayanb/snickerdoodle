@@ -88,7 +88,7 @@ class InventoryFilters extends React.Component {
 					</div>
 				</div>
 				<div className='row'>
-					<AggregateCostBar data={aggregateData} filters={filters} isFetchingData={isFetchingAggregateData}/>
+					<AggregateCategoryBoxes data={aggregateData} isFetchingData={isFetchingAggregateData}/>
 				</div>
 			</div>
 		)
@@ -113,72 +113,45 @@ class InventoryFilters extends React.Component {
 	}
 }
 
-function AggregateCostBar({ data, filters, isFetchingData })  {
-	const processed = processData(data, filters)
-
+function AggregateCategoryBoxes({ data, isFetchingData }) {
+	const processed = processData(data)
+	
 	return (
-		<div className='aggregate-cost-bar'>
-			{ !isFetchingData && data && processed.map((item, i) => {
-				const itemColor = CATEGORY_COLOR[item.category]
-				const itemStyle = {
-					flex: item.adjusted_cost,
-					backgroundColor: itemColor,
-				}
-				let item_type = ''
-				if ('process_types' in item) {
-					item_type = CATEGORY_NAME[item.category]
-				} else if (item.product_types.length > 1) {
-					item_type = item.process_type.name
-				} else {
-					item_type = inventoryName(item)
-				}
-				return item.adjusted_cost > 0 ? (
-					<Tooltip title={`${item_type} ${formatCost(item.adjusted_cost)}`} key={i}>
-						<div style={itemStyle} className="cost-item"></div>
-					</Tooltip>
-				) : null
-			})}
-			{ isFetchingData &&
-				<div className='spinner-container'>
-					<Spinner fadeIn="quarter" name={"ball-beat"} />
+		<div className='category-boxes-container'>
+			<div className="category-box">
+				<div className='category-box-title'>{CATEGORY_NAME['rm']}</div>
+				<div className='category-box-cost'>
+					{ !isFetchingData && formatCost(processed['rm'])}
+					{ isFetchingData && <Spinner fadeIn="quarter" name="wave" color="grey" />}
 				</div>
-			}
+			</div>
+			<div className="category-box">
+				<div className='category-box-title'>{CATEGORY_NAME['wip']}</div>
+				<div className='category-box-cost'>
+					{ !isFetchingData && formatCost(processed['wip'])}
+					{ isFetchingData && <Spinner fadeIn="quarter" name="wave" color="grey" />}
+				</div>
+			</div>
+			<div className="category-box">
+				<div className='category-box-title'>{CATEGORY_NAME['fg']}</div>
+				<div className='category-box-cost'>
+					{ !isFetchingData && formatCost(processed['fg'])}
+					{ isFetchingData && <Spinner fadeIn="quarter" name="wave" color="grey" />}
+				</div>
+			</div>
 		</div>
 	)
 }
 
-function processData(data, filters) {
-	if (data && noFilters(filters)) {
-		let lastCategory = null
-		let itemToAdd = {}
-		let processed = []
-		data.forEach(item => {
-			if (lastCategory !== item.category) {
-				if (lastCategory !== null) {
-					processed.push(itemToAdd)
-				}
-				lastCategory = item.category
-				itemToAdd = {
-					category: item.category,
-					adjusted_cost: 0,
-					process_types: []
-				}
-			}
-			itemToAdd.adjusted_cost += item.adjusted_cost
-			itemToAdd.process_types.push({
-				process_type: item.process_type,
-				product_types: item.product_types
-			})
+function processData(data) {
+	const processed = { 'rm': 0, 'wip': 0, 'fg': 0 }
+	if (data) {
+		data.forEach(dataItem => {
+			const { category, adjusted_cost } = dataItem
+			processed[category] += adjusted_cost
 		})
-		processed.push(itemToAdd)
-		return processed
 	}
-	return data
-}
-
-function noFilters(filters) {
-	const { selectedCategories, selectedProcesses, selectedProducts } = filters
-	return selectedCategories.length === 0 && selectedProcesses.length === 0 && selectedProducts.length === 0
+	return processed
 }
 
 const mapStateToProps = (state/*, props*/) => {
