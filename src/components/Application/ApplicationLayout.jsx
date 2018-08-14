@@ -5,6 +5,7 @@ import './styles/layout.css'
 import Walkthrough from '../Walkthrough/Walkthrough'
 import CreateTeam from '../Walkthrough/CreateTeam'
 import Home from '../Home/Home'
+import ProductionPlanning from '../ProductionPlanning/ProductionPlanning'
 import Activity from '../Activity/Activity'
 import Processes from '../Processes/Processes'
 import Products from '../Products/Products'
@@ -56,6 +57,7 @@ function App(props) {
 	    <NewFeatures />
       <div className="application-content">
         <Route exact path={"/"} component={Home} />
+        <Route exact path={"/production-planning"} component={ProductionPlanning} />
 	      <Route exact path={"/activity-log"} component={Activity} />
 	      <Route path="/inventory" component={Inventory} />
         <Route exact path={"/labels/"} component={ZebraPrinter} />

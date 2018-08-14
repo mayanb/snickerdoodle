@@ -1,0 +1,22 @@
+@import 'styles/constants.scss';
+
+.production-planning-container {
+	width: calc(100vw - #{$nav-width});
+	height: fit-content;
+
+	.production-planning-body {
+		display: flex;
+		flex-direction: row;
+
+		.production-planning-content {
+			flex: 3.5;
+			padding: 30px 50px;
+		
+			.selections {
+				flex: 1;
+				display: flex;
+				flex-direction: row;
+			}
+		}
+	}
+}

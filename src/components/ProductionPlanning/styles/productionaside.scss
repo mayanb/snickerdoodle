@@ -1,0 +1,55 @@
+@import 'styles/constants.scss';
+
+.production-aside-container {
+    flex: 1;
+    background-color: white;
+    padding: 30px 20px 20px 20px;
+
+    .title {
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .item-container {
+        background-color: white;
+        box-shadow: $shadow-2;
+        margin-bottom: 10px;
+
+        .content-container {
+            padding: 8px 20px 20px 20px;
+
+            .title-container {
+                display: flex;
+                flex-direction: row;
+
+                .title {
+                    flex: 3;
+                    font-size: 16px;
+                    color: $gray;
+                }
+
+                .warning {
+                    flex: 1;
+                    text-align: right;
+                }
+            }
+
+            .info-container{
+                display: flex;
+                flex-direction: row;
+
+                .label {
+                    flex: 1;
+                    color: $gray;
+                }
+                
+                .value {
+                    flex: 1;
+                    text-align: right;
+                }
+            }
+
+        }
+
+    }
+}
