@@ -59,7 +59,6 @@ export class ProductionAside extends React.Component {
 	}
 
 	render() {
-		let { ui } = this.props
 		const { data } = this.state
 		return (
 			<div className='production-aside-container'>
