@@ -8,28 +8,25 @@ import * as productsActions from '../Products/ProductsActions'
 class ProductionPlanningFilters extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { 
-			selectedProcess: null, 
-			selectedProduct: null
-		}
 
+        this.props.dispatch(processesActions.fetchProcesses())
         this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
         this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
-        this.handleFilter = this.handleFilter.bind(this)
 	}
 
-	componentDidMount() {
-		this.props.dispatch(processesActions.fetchProcesses())
-	}
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.selectedProcess && this.props.selectedProcess !== nextProps.selectedProcess) {
+            this.props.dispatch(productsActions.fetchProducts({process: nextProps.selectedProcess}))
+        }
+    }
 
 	render() {
-		const { isFetchingData, processes, products } = this.props
-		const { selectedProcess, selectedProduct } = this.state
+		const { selectedProcess, selectedProduct, isFetchingData, processes, products } = this.props
 		return (
             <div className='selections'>
                 <Select
                     allowClear
-                    value={selectedProcess ? selectedProcess : undefined}
+                    value={processes.length > 0 && selectedProcess ? selectedProcess : undefined}
                     placeholder="Select process"
                     filterOption={processProductFilter}
                     onChange={this.handleProcessTypeChange}
@@ -44,7 +41,7 @@ class ProductionPlanningFilters extends React.Component {
                 </Select>
                 <Select
                     allowClear
-                    value={selectedProduct ? selectedProduct : undefined}
+                    value={products.length > 0 && selectedProduct ? selectedProduct : undefined}
                     placeholder="Select product"
                     filterOption={processProductFilter}
                     onChange={this.handleProductTypeChange}
@@ -64,15 +61,11 @@ class ProductionPlanningFilters extends React.Component {
 
     handleProcessTypeChange(selectedProcess) {
 		this.props.dispatch(productsActions.fetchProducts({process: selectedProcess}))
-		this.setState({selectedProcess, selectedProduct: null}, this.handleFilter)
+        this.props.onFilter(selectedProcess, this.props.selectedProduct)
 	}
 
 	handleProductTypeChange(selectedProduct) {
-		this.setState({selectedProduct}, this.handleFilter)
-    }
-    
-    handleFilter() {
-        this.props.onFilter(this.state.selectedProcess, this.state.selectedProduct)
+        this.props.onFilter(this.props.selectedProcess, selectedProduct)
     }
 }
 
