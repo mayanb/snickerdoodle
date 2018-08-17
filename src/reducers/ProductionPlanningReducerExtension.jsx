@@ -43,7 +43,7 @@ function ancestorsInventorySuccess(state, action) {
 		},
 		data: {
             $merge: {
-                [action.category]: action.data // action.data is probably wrong
+                [action.category]: action.data
             }
 		}
 	})
@@ -66,13 +66,18 @@ function remainingInventory(state, action) {
 }
 
 function remainingInventorySuccess(state, action) {
+    // Convert date_exhaused to a js Date object
+    const newData = []
+    action.data.forEach(item => {
+        newData.push({...item, date_exhausted: new Date(item.date_exhausted)})
+    })
 	return update(state, {
 		ui: {
 			$merge: { isFetchingData: false }
 		},
 		data: {
             $merge: {
-                [action.category]: action.data // action.data is probably wrong
+                [action.category]: newData
             }
 		}
 	})

@@ -1,6 +1,7 @@
 @import 'styles/constants.scss';
 
 .work-in-progress-list-container {
+
     .inv-row {
         display: flex;
         min-height: 48px;
@@ -17,6 +18,17 @@
         }
     }
 
+    .inv-icon {
+        flex: 1;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        img {
+            max-width: 100%;
+        }
+    }
+
     .inv-col {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -24,18 +36,14 @@
     }
 
     .inv-product {
-        flex: 1;
+        flex: 4;
     }
 
     .inv-in-stock{
-        flex: 1;
-    }
-
-    .inv-created-at{
-        flex: 1;
+        flex: 4;
     }
 
     .inv-can-make{
-        flex: 1;
+        flex: 4;
     }
 }

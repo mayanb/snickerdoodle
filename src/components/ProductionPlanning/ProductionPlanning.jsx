@@ -11,6 +11,8 @@ import Table from '../Table/Table'
 import * as actions from './ProductionPlanningActions'
 import './styles/productionplanning.css'
 
+const CHART_WIDTH = 900
+
 export class ProductionPlanning extends React.Component {
 	constructor(props) {
 		super(props)
@@ -44,8 +46,12 @@ export class ProductionPlanning extends React.Component {
 							selectedProcess={selectedProcess}
 							selectedProduct={selectedProduct} 
 						/>
-						<RawMaterialTimeline data={rawMaterials}/>
+						<RawMaterialTimeline 
+							width={CHART_WIDTH} 
+							data={rawMaterials}
+						/>
 						<ObjectList isFetchingData={ui.isFetchingData} className='work-in-progress-list-container'>
+							<div className='content-title'>{`In-Progress Ingredients for ${selectedProcess} ${selectedProduct}`}</div>
 							<Table
 								ui={ui}
 								data={workInProgress}
@@ -63,6 +69,7 @@ export class ProductionPlanning extends React.Component {
 
 	renderTableHeader() {
 		const columns = [
+			{ title: '', className: 'inv-icon', field: null },
 			{ title: 'Product', className: 'inv-product', field: null },
 			{ title: 'In Stock', className: 'inv-in-stock', field: null },
 			{ title: 'Can Make', className: 'inv-can-make', field: null },
@@ -104,21 +111,6 @@ export class ProductionPlanning extends React.Component {
 		const selectedProduct = selectedProcess && qs.get('selectedProduct') ? qs.get('selectedProduct') : ''
 		this.handleFilter(selectedProcess, selectedProduct)
 	}
-}
-
-function RawMaterialChart({data, process, product}) {
-	return (
-		<div>
-			<h1>Raw Material Chart</h1>
-			{ process && product && data && data.map((rm, i) => {
-				return (
-					<div key={i}>
-						{`${rm.process_type.code}-${rm.product_type.code}      ${rm.date_exhausted}`}
-					</div>
-				)
-			}) }
-		</div>
-	)
 }
 
 function IngredientWarningList() {

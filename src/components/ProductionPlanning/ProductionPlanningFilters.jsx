@@ -61,7 +61,7 @@ class ProductionPlanningFilters extends React.Component {
 
     handleProcessTypeChange(selectedProcess) {
 		this.props.dispatch(productsActions.fetchProducts({process: selectedProcess}))
-        this.props.onFilter(selectedProcess, this.props.selectedProduct)
+        this.props.onFilter(selectedProcess, null)
 	}
 
 	handleProductTypeChange(selectedProduct) {

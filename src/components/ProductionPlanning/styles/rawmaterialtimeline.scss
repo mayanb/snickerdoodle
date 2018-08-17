@@ -1,3 +1,53 @@
-.raw-material-timeline {
-    
+@import 'styles/constants.scss';
+
+.raw-materials-timeline {
+    .bar {
+        fill: $primary;
+        border-radius: 0 20px 20px 0;
+    }
+
+    // Both axes styles
+    .axis line {
+      fill: none;
+      stroke-width: 1px;
+      shape-rendering: crispEdges;
+    }
+
+    // Axes styles
+    .x path {
+        stroke: $elephant;
+    }
+    .y path {
+        stroke: $gray-dark;
+    }
+
+    // Axes ticks
+    .x line {
+        stroke: $elephant-light;
+    }
+    .y line {
+        display: none;
+    }
+
+    // Axes text
+    .x text {
+        fill: $elephant;
+        font-size: 10px;
+    }
+    .y text {
+        fill: white;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .toolTip {
+        position: absolute;
+        display: none;
+        min-width: 80px;
+        height: auto;
+        background: none repeat scroll 0 0 #ffffff;
+        border: 1px solid #6F257F;
+        padding: 14px;
+        text-align: center;
+    }
 }
