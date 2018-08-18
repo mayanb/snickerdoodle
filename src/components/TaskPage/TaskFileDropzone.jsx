@@ -37,7 +37,7 @@ export default class TaskFileDropzone extends React.Component {
     FileDownloadLink(f) {
         return (
             <List.Item style={{overflow: 'scroll'}} >
-                <a href={`https://${f.url}`}>{f.name}</a>
+                <a href={`https://${f.url}`}>{f.name}{f.extension}</a>
             </List.Item>
         )
     }
