@@ -2,10 +2,9 @@ import React from 'react'
 import { formatAmount, getProcessIcon } from "../../utilities/stringutils"
 import ObjectListItem from '../ObjectList/ObjectListItem'
 import Img from '../Img/Img'
-import './styles/workinprogresslistrow.css'
+import './styles/inprogresslistrow.css'
 
-export default function WorkInProgressListRow({item, onClick, isSelected}) {
-    //console.log('item', item)
+export default function InProgressListRow({item, onClick, isSelected}) {
 	const { process_type, product_type, adjusted_amount } = item
 	let className = isSelected ? 'selected-inv-row' : ''
 	return (

@@ -4,6 +4,7 @@ import { Select } from 'antd'
 import { processProductFilter, formatOption } from '../../utilities/filters'
 import * as processesActions from '../Processes/ProcessesActions'
 import * as productsActions from '../Products/ProductsActions'
+import './styles/productionplanningfilters.css'
 
 class ProductionPlanningFilters extends React.Component {
 	constructor(props) {
@@ -12,25 +13,25 @@ class ProductionPlanningFilters extends React.Component {
         this.props.dispatch(processesActions.fetchProcesses())
         this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
         this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
-	}
+    }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.selectedProcess && this.props.selectedProcess !== nextProps.selectedProcess) {
-            this.props.dispatch(productsActions.fetchProducts({process: nextProps.selectedProcess}))
+        if (nextProps.selectedProcessId && this.props.selectedProcessId !== nextProps.selectedProcessId) {
+            this.props.dispatch(productsActions.fetchProducts({process: nextProps.selectedProcessId}))
         }
     }
 
 	render() {
-		const { selectedProcess, selectedProduct, isFetchingData, processes, products } = this.props
+        const { selectedProcessId, selectedProductId, isFetchingData, processes, products } = this.props
 		return (
-            <div className='selections'>
+            <div className='production-planning-filters'>
                 <Select
                     allowClear
-                    value={processes.length > 0 && selectedProcess ? selectedProcess : undefined}
+                    value={processes.length > 0 && selectedProcessId ? selectedProcessId : undefined}
                     placeholder="Select process"
                     filterOption={processProductFilter}
                     onChange={this.handleProcessTypeChange}
-                    style={{width: '200px', marginRight: '20px'}}
+                    style={{width: '300px', marginRight: '20px'}}
                     notFoundContent={ isFetchingData ? 'Loading...' : 'Not Found'}
                 >
                     { processes && processes.map(p => 
@@ -41,12 +42,12 @@ class ProductionPlanningFilters extends React.Component {
                 </Select>
                 <Select
                     allowClear
-                    value={products.length > 0 && selectedProduct ? selectedProduct : undefined}
+                    value={products.length > 0 && selectedProductId ? selectedProductId : undefined}
                     placeholder="Select product"
                     filterOption={processProductFilter}
                     onChange={this.handleProductTypeChange}
-                    disabled={!selectedProcess}
-                    style={{width: '200px', marginRight: '20px'}}
+                    disabled={!selectedProcessId}
+                    style={{width: '300px', marginRight: '20px'}}
                     notFoundContent={ isFetchingData ? 'Loading...' : 'Not Found'}
                 >
                     { products && products.map(p => 
@@ -59,13 +60,13 @@ class ProductionPlanningFilters extends React.Component {
 		)
     }
 
-    handleProcessTypeChange(selectedProcess) {
-		this.props.dispatch(productsActions.fetchProducts({process: selectedProcess}))
-        this.props.onFilter(selectedProcess, null)
+    handleProcessTypeChange(selectedProcessId) {
+        this.props.dispatch(productsActions.fetchProducts({process: selectedProcessId}))
+        this.props.onFilter(selectedProcessId, null)
 	}
 
-	handleProductTypeChange(selectedProduct) {
-        this.props.onFilter(this.props.selectedProcess, selectedProduct)
+	handleProductTypeChange(selectedProductId) {
+        this.props.onFilter(this.props.selectedProcessId, selectedProductId)
     }
 }
 

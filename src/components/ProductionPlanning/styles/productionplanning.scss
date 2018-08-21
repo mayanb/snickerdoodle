@@ -8,26 +8,43 @@
 		display: flex;
 		flex-direction: row;
 
-		.production-planning-content {
+		.production-planning-main {
 			flex: 3.5;
 			padding: 30px 50px;
-		
-			.selections {
-				flex: 1;
-				display: flex;
-				flex-direction: row;
+
+			.warning-list-container {
+				padding: 16px 22px;
+				background-color: white;
+				box-shadow: $shadow-1;
+				margin-bottom: 16px;
 			}
 
-			.work-in-progress-list-container {
+			.warning-title {
+				display: flex;
+
+				.toggle-list {
+					margin-left: auto;
+					color: $primary-light;
+					cursor: pointer;
+
+					&:hover {
+						color: $primary;
+					}
+				}
+			}
+
+			.in-progress-list-container {
 				padding: 22px;
 				background-color: white;
-				box-shadow: $shadow-2;
+				box-shadow: $shadow-1;
 			}
 
 			.content-title {
 				font-weight: bold;
 				margin-bottom: 22px;
 			}
+
+			
 
 			.object-list-header {
 				border-top: none;

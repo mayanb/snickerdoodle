@@ -1,6 +1,11 @@
 @import 'styles/constants.scss';
 
 .raw-materials-timeline {
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: center;
+
     .bar {
         fill: $primary;
         border-radius: 0 20px 20px 0;

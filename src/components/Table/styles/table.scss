@@ -1,0 +1,8 @@
+.unpaginated-table-container {
+    display: flex;
+    justify-content: center;
+
+    .unpaginated-table {
+        flex: 1;
+    }
+}

@@ -1,71 +1,71 @@
 import update from 'immutability-helper'
 import { apiDataReducer } from './APIDataReducer'
 
-export const REQUEST_ANCESTORS_INVENTORY = 'REQUEST_ANCESTORS_INVENTORY'
-export const REQUEST_ANCESTORS_INVENTORY_SUCCESS = 'REQUEST_ANCESTORS_INVENTORY_SUCCESS'
-export const REQUEST_ANCESTORS_INVENTORY_FAILURE = 'REQUEST_ANCESTORS_INVENTORY_FAILURE'
-export const REQUEST_REMAINING_INVENTORY = 'REQUEST_REMAINING_INVENTORY'
-export const REQUEST_REMAINING_INVENTORY_SUCCESS = 'REQUEST_REMAINING_INVENTORY_SUCCESS'
-export const REQUEST_REMAINING_INVENTORY_FAILURE = 'REQUEST_REMAINING_INVENTORY_FAILURE'
+export const REQUEST_IN_PROGRESS_INVENTORY = 'REQUEST_IN_PROGRESS_INVENTORY'
+export const REQUEST_IN_PROGRESS_INVENTORY_SUCCESS = 'REQUEST_IN_PROGRESS_INVENTORY_SUCCESS'
+export const REQUEST_IN_PROGRESS_INVENTORY_FAILURE = 'REQUEST_IN_PROGRESS_INVENTORY_FAILURE'
+export const REQUEST_REMAINING_RAW_MATERIALS = 'REQUEST_REMAINING_RAW_MATERIALS'
+export const REQUEST_REMAINING_RAW_MATERIALS_SUCCESS = 'REQUEST_REMAINING_RAW_MATERIALS_SUCCESS'
+export const REQUEST_REMAINING_RAW_MATERIALS_FAILURE = 'REQUEST_REMAINING_RAW_MATERIALS_FAILURE'
 
 export function _productionPlanning(state, action) {
 	let ns = apiDataReducer(state, action)
 	switch (action.type) {
-		case REQUEST_ANCESTORS_INVENTORY:
-			return ancestorsInventory(state, action)
-		case REQUEST_ANCESTORS_INVENTORY_SUCCESS:
-			return ancestorsInventorySuccess(state, action)
-		case REQUEST_ANCESTORS_INVENTORY_FAILURE:
-            return ancestorsInventoryFailure(state, action)
-        case REQUEST_REMAINING_INVENTORY:
-			return remainingInventory(state, action)
-		case REQUEST_REMAINING_INVENTORY_SUCCESS:
-			return remainingInventorySuccess(state, action)
-		case REQUEST_REMAINING_INVENTORY_FAILURE:
-			return remainingInventoryFailure(state, action)
+		case REQUEST_IN_PROGRESS_INVENTORY:
+			return inProgressInventory(state, action)
+		case REQUEST_IN_PROGRESS_INVENTORY_SUCCESS:
+			return inProgressInventorySuccess(state, action)
+		case REQUEST_IN_PROGRESS_INVENTORY_FAILURE:
+            return inProgressInventoryFailure(state, action)
+        case REQUEST_REMAINING_RAW_MATERIALS:
+			return remainingRawMaterials(state, action)
+		case REQUEST_REMAINING_RAW_MATERIALS_SUCCESS:
+			return remainingRawMaterialsSuccess(state, action)
+		case REQUEST_REMAINING_RAW_MATERIALS_FAILURE:
+			return remainingRawMaterialsFailure(state, action)
 		default:
 			return ns
 	}
 }
 
-function ancestorsInventory(state, action) {
+function inProgressInventory(state/*, action*/) {
 	return update(state, {
 		ui: {
-			$merge: { isFetchingData: true }
+			$merge: { isFetchingInProgress: true }
 		}
 	})
 }
 
-function ancestorsInventorySuccess(state, action) {
+function inProgressInventorySuccess(state, action) {
 	return update(state, {
 		ui: {
-			$merge: { isFetchingData: false }
+			$merge: { isFetchingInProgress: false }
 		},
 		data: {
             $merge: {
-                [action.category]: action.data
+                inProgress: action.data
             }
 		}
 	})
 }
 
-function ancestorsInventoryFailure(state, action) {
+function inProgressInventoryFailure(state/*, action*/) {
 	return update(state, {
 		ui: {
-			$merge: { isFetchingData: false }
+			$merge: { isFetchingInProgress: false }
 		}
 	})
 }
 
-function remainingInventory(state, action) {
+function remainingRawMaterials(state/*, action*/) {
 	return update(state, {
 		ui: {
-			$merge: { isFetchingData: true }
+			$merge: { isFetchingRawMaterials: true }
 		}
 	})
 }
 
-function remainingInventorySuccess(state, action) {
+function remainingRawMaterialsSuccess(state, action) {
     // Convert date_exhaused to a js Date object
     const newData = []
     action.data.forEach(item => {
@@ -73,20 +73,20 @@ function remainingInventorySuccess(state, action) {
     })
 	return update(state, {
 		ui: {
-			$merge: { isFetchingData: false }
+			$merge: { isFetchingRawMaterials: false }
 		},
 		data: {
             $merge: {
-                [action.category]: newData
+                rawMaterials: newData
             }
 		}
 	})
 }
 
-function remainingInventoryFailure(state, action) {
+function remainingRawMaterialsFailure(state/*, action*/) {
 	return update(state, {
 		ui: {
-			$merge: { isFetchingData: false }
+			$merge: { isFetchingRawMaterials: false }
 		}
 	})
 }

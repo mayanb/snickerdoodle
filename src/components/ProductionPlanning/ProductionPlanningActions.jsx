@@ -1,45 +1,44 @@
 import {
-    REQUEST_ANCESTORS_INVENTORY,
-    REQUEST_ANCESTORS_INVENTORY_SUCCESS,
-    REQUEST_ANCESTORS_INVENTORY_FAILURE,
-    REQUEST_REMAINING_INVENTORY,
-    REQUEST_REMAINING_INVENTORY_SUCCESS,
-    REQUEST_REMAINING_INVENTORY_FAILURE,
+    REQUEST_IN_PROGRESS_INVENTORY,
+    REQUEST_IN_PROGRESS_INVENTORY_SUCCESS,
+    REQUEST_IN_PROGRESS_INVENTORY_FAILURE,
+    REQUEST_REMAINING_RAW_MATERIALS,
+    REQUEST_REMAINING_RAW_MATERIALS_SUCCESS,
+    REQUEST_REMAINING_RAW_MATERIALS_FAILURE,
 } from '../../reducers/ProductionPlanningReducerExtension'
 import api from '../WaffleconeAPI/api.jsx'
-import * as actions from '../../reducers/APIDataActions'
 import { PRODUCTION_PLANNING } from '../../reducers/ReducerTypes'
 
-export function fetchAncestorsInventory(processId, productId, category, ordering) {
+export function fetchInProgressInventory(processId, productId, category, ordering) {
     return function (dispatch) {
-        dispatch(requestAncestorsInventory)
+        dispatch(requestInProgressInventory())
         return api.get('/ics/inventory/ancestors/')
 			.query({ process: processId, product: productId, ancestor_category: category, ordering })
-			.then(res => {console.log('SERVER RESPONSE (ANCESTORS)', res.body); dispatch(requestAncestorsInventorySuccess(res.body, processId, productId, category))})
-			.catch(err => dispatch(requestAncestorsInventoryFailure(err)))
+			.then(res => {console.log('SERVER RESPONSE (In Progress)', res.body); dispatch(requestInProgressInventorySuccess(res.body, processId, productId, category))})
+			.catch(err => dispatch(requestInProgressInventoryFailure(err)))
     }
 }
 
-export function fetchRemainingInventory(processId, productId, category, ordering) {
+export function fetchRemainingRawMaterials(processId, productId, category, ordering) {
     return function (dispatch) {
-        dispatch(requestRemainingInventory)
+        dispatch(requestRemainingRawMaterials())
         return api.get('/ics/inventory/remaining/')
 			.query({ process: processId, product: productId, ancestor_category: category, ordering })
-			.then(res => {console.log('SERVER RESPONSE (REMAINING)', res.body); dispatch(requestRemainingInventorySuccess(res.body, processId, productId, category))})
-			.catch(err => dispatch(requestRemainingInventoryFailure(err)))
+			.then(res => {console.log('SERVER RESPONSE (Raw Materials)', res.body); dispatch(requestRemainingRawMaterialsSuccess(res.body, processId, productId, category))})
+			.catch(err => dispatch(requestRemainingRawMaterialsFailure(err)))
     }
 }
 
-function requestAncestorsInventory() {
+function requestInProgressInventory() {
 	return {
-        type: REQUEST_ANCESTORS_INVENTORY,
+        type: REQUEST_IN_PROGRESS_INVENTORY,
 		name: PRODUCTION_PLANNING,
 	}
 }
 
-function requestAncestorsInventorySuccess(json, processId, productId, category) {
+function requestInProgressInventorySuccess(json, processId, productId, category) {
 	return {
-		type: REQUEST_ANCESTORS_INVENTORY_SUCCESS,
+		type: REQUEST_IN_PROGRESS_INVENTORY_SUCCESS,
         name: PRODUCTION_PLANNING,
         data: json,
 		processId,
@@ -48,24 +47,24 @@ function requestAncestorsInventorySuccess(json, processId, productId, category) 
 	}
 }
 
-function requestAncestorsInventoryFailure(err) {
+function requestInProgressInventoryFailure(err) {
 	console.error('Oh no! Something went wrong\n' + err)
 	return {
-		type: REQUEST_ANCESTORS_INVENTORY_FAILURE,
+		type: REQUEST_IN_PROGRESS_INVENTORY_FAILURE,
 		name: PRODUCTION_PLANNING,
 	}
 }
 
-function requestRemainingInventory() {
+function requestRemainingRawMaterials() {
 	return {
-        type: REQUEST_REMAINING_INVENTORY,
+        type: REQUEST_REMAINING_RAW_MATERIALS,
 		name: PRODUCTION_PLANNING,
 	}
 }
 
-function requestRemainingInventorySuccess(json, processId, productId, category) {
+function requestRemainingRawMaterialsSuccess(json, processId, productId, category) {
 	return {
-		type: REQUEST_REMAINING_INVENTORY_SUCCESS,
+		type: REQUEST_REMAINING_RAW_MATERIALS_SUCCESS,
         name: PRODUCTION_PLANNING,
         data: json,
 		processId,
@@ -74,10 +73,10 @@ function requestRemainingInventorySuccess(json, processId, productId, category) 
 	}
 }
 
-function requestRemainingInventoryFailure(err) {
+function requestRemainingRawMaterialsFailure(err) {
 	console.error('Oh no! Something went wrong\n' + err)
 	return {
-		type: REQUEST_REMAINING_INVENTORY_FAILURE,
+		type: REQUEST_REMAINING_RAW_MATERIALS_FAILURE,
 		name: PRODUCTION_PLANNING,
 	}
 }
