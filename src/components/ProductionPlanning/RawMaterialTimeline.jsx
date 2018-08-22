@@ -42,7 +42,7 @@ export class RawMaterialTimeline extends React.Component {
         
         /* REMOVE THIS */
         // data.push({ 
-        //     "date_exhausted": new Date('Mon Sept 10 2018 20:38:15 GMT-0800'),
+        //     "date_exhausted": new Date('Mon Aug 10 2018 20:38:15 GMT-0800'),
         //     "product_type": { "name": "Milk" }
         // })
         // data.push({ 
@@ -109,9 +109,9 @@ export class RawMaterialTimeline extends React.Component {
             // changes bar opacity based on when the raw material will be exhausted
             .style("opacity", d => {
                 // Minimum opacity will be at maxDate 
-                // i.e. 4 months in the future the bar will be at its lightest opacity
+                // i.e. 2 months in the future the bar will be at its lightest opacity
                 const maxDate = new Date(now.getTime())
-                maxDate.setMonth(maxDate.getMonth() + 4)
+                maxDate.setMonth(maxDate.getMonth() + 2)
 
                 // creates scale for assigning opacity
                 const MIN_OPACITY = 0.2

@@ -4,7 +4,7 @@ import './styles/table.css'
 
 export default class Table extends React.Component {
 	render() {
-        let { data, TitleRow, onClick, Row, isFetchingData } = this.props
+        let { data, TitleRow, onClick, rowContext, Row, isFetchingData } = this.props
         return (
             <div className='unpaginated-table-container'>
                 { isFetchingData ? 
@@ -18,6 +18,7 @@ export default class Table extends React.Component {
                                 onClick={onClick} 
                                 isSelected={this.isSelected(i)}
                                 index={i}
+                                context={rowContext}
                             />
                         )}
                     </div>

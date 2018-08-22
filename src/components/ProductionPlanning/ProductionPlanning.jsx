@@ -110,6 +110,7 @@ export class ProductionPlanning extends React.Component {
 										ui={ui}
 										data={inProgress}
 										TitleRow={this.renderInProgressTableHeader}
+										rowContext={{selectedProcess: selectedProcessDetail, selectedProduct: selectedProductDetail}}
 										Row={InProgressListRow}
 										isFetchingData={ui.isFetchingInProgress}
 									/>
