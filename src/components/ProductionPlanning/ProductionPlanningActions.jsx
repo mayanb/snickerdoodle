@@ -12,7 +12,7 @@ import { PRODUCTION_PLANNING } from '../../reducers/ReducerTypes'
 export function fetchInProgressInventory(processId, productId, category, ordering) {
     return function (dispatch) {
         dispatch(requestInProgressInventory())
-        return api.get('/ics/inventory/ancestors/')
+        return api.get('/ics/inventory/in-progress/')
 			.query({ process: processId, product: productId, ancestor_category: category, ordering })
 			.then(res => dispatch(requestInProgressInventorySuccess(res.body, processId, productId, category)))
 			.catch(err => dispatch(requestInProgressInventoryFailure(err)))
@@ -22,7 +22,7 @@ export function fetchInProgressInventory(processId, productId, category, orderin
 export function fetchRemainingRawMaterials(processId, productId, category, ordering) {
     return function (dispatch) {
         dispatch(requestRemainingRawMaterials())
-        return api.get('/ics/inventory/remaining/')
+        return api.get('/ics/inventory/remaining-raw-materials/')
 			.query({ process: processId, product: productId, ancestor_category: category, ordering })
 			.then(res => dispatch(requestRemainingRawMaterialsSuccess(res.body, processId, productId, category)))
 			.catch(err => dispatch(requestRemainingRawMaterialsFailure(err)))
