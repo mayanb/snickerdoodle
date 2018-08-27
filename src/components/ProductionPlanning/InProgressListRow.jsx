@@ -6,7 +6,7 @@ import './styles/inprogresslistrow.css'
 
 export default function InProgressListRow({item, onClick, isSelected, context}) {
 	const { process_type, product_type, adjusted_amount, can_make } = item
-	const { selectedProcess, selectedProduct } = context
+	const { selectedProcess } = context
 	let className = isSelected ? 'selected-inv-row' : ''
 	return (
 		<ObjectListItem className={className} onClick={onClick}>

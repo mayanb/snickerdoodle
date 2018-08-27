@@ -7,8 +7,6 @@ import {
 	axisBottom,
 	axisLeft,
 	select,
-    min,
-    event,
     timeFormat,
 } from 'd3'
 import './styles/rawmaterialtimeline.css'
@@ -40,20 +38,6 @@ export class RawMaterialTimeline extends React.Component {
         const ref = this.node
         const BAR_WIDTH = 30
         
-        /* REMOVE THIS */
-        // data.push({ 
-        //     "date_exhausted": new Date('Mon Aug 10 2018 20:38:15 GMT-0800'),
-        //     "product_type": { "name": "Milk" }
-        // })
-        // data.push({ 
-        //     "date_exhausted": new Date('Mon Oct 25 2018 20:38:15 GMT-0800'),
-        //     "product_type": { "name": "Raw Tumaco Colombia" }
-        // })
-        // data.push({ 
-        //     "date_exhausted": new Date('Mon Jun 20 2019 20:38:15 GMT-0800'),
-        //     "product_type": { "name": "Sugar" }
-        // })
-        /***************/
         const margin = {
             top: 0,
             right: 0,
@@ -67,8 +51,6 @@ export class RawMaterialTimeline extends React.Component {
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-        var tooltip = select("body").append("div").attr("class", "toolTip");
 
         var x = scaleTime().range([0, width]);
         var y = scaleBand().range([height, 0]);
@@ -126,14 +108,6 @@ export class RawMaterialTimeline extends React.Component {
                 }
                 return opacity
             })
-            .on("mousemove", function(d){
-                tooltip
-                .style("left", event.pageX - 50 + "px")
-                .style("top", event.pageY - 70 + "px")
-                .style("display", "inline-block")
-                .html((d.area) + "<br>" + "£" + (d.date_exhausted));
-            })
-            .on("mouseout", function(d){ tooltip.style("display", "none");});
         
         svg.append("g")
             .attr("class", "y axis")

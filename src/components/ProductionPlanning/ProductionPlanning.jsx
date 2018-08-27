@@ -5,7 +5,7 @@ import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import ObjectList from '../ObjectList/ObjectList'
 import InProgressListRow from './InProgressListRow'
 import WarningListRow from './WarningListRow'
-import { ProductionAside } from './ProductionAside'
+import ProductionAside from './ProductionAside'
 import ProductionPlanningFilters from './ProductionPlanningFilters'
 import { RawMaterialTimeline } from './RawMaterialTimeline'
 import Table from '../Table/Table'
@@ -29,7 +29,6 @@ export class ProductionPlanning extends React.Component {
 
 		this.renderInProgressTableHeader = this.renderInProgressTableHeader.bind(this)
 		this.renderWarningTableHeader = this.renderWarningTableHeader.bind(this)
-		this.handleSelectRow = this.handleSelectRow.bind(this)
 		this.handleReorder = this.handleReorder.bind(this)
 		this.handleFilter = this.handleFilter.bind(this)
 		this.toggleExpandWarningList = this.toggleExpandWarningList.bind(this)
@@ -74,15 +73,18 @@ export class ProductionPlanning extends React.Component {
 						/>
 						{selectedProcessId && selectedProductId && 
 							<div className='production-planning-content'>
-								{ selectedProcessDetail && selectedProductDetail && 
-									<div className='content-title'>{`Ingredients needed for ${selectedProcessDetail.name} ${selectedProductDetail.code}`}</div>
+								{ (ui.isFetchingRawMaterials || (rawMaterials && rawMaterials.length > 0)) && 
+								<div>
+									{ selectedProcessDetail && selectedProductDetail && 
+										<div className='content-title'>{`Ingredients needed for ${selectedProcessDetail.name} ${selectedProductDetail.code}`}</div>
+									}
+									<RawMaterialTimeline 
+										isFetchingData={ui.isFetchingRawMaterials}
+										width={CHART_WIDTH} 
+										data={rawMaterials}
+									/>
+								</div>
 								}
-								<RawMaterialTimeline 
-									isFetchingData={ui.isFetchingRawMaterials}
-									width={CHART_WIDTH} 
-									data={rawMaterials}
-								/>
-
 								{ !ui.isFetchingRawMaterials && warningList && warningList.length > 0 &&
 								<ObjectList className='warning-list-container'>
 									<div className='warning-title' onClick={this.toggleExpandWarningList}>
@@ -102,6 +104,7 @@ export class ProductionPlanning extends React.Component {
 								</ObjectList>
 								}
 
+								{ (ui.isFetchingInProgress || (inProgress && inProgress.length > 0)) &&
 								<ObjectList className='in-progress-list-container'>
 									{ selectedProcessDetail && selectedProductDetail && 
 										<div className='content-title'>{`In-Progress Ingredients for ${selectedProcessDetail.name} ${selectedProductDetail.code}`}</div>
@@ -115,10 +118,11 @@ export class ProductionPlanning extends React.Component {
 										isFetchingData={ui.isFetchingInProgress}
 									/>
 								</ObjectList> 
+								}
 							</div>
 						}
 					</div>
-					<ProductionAside />
+					<ProductionAside onSelect={this.handleFilter} />
 				</div>
 			</div>
 		)
@@ -147,10 +151,6 @@ export class ProductionPlanning extends React.Component {
 		)
 	}
 
-	handleSelectRow() {
-		console.log('ROW CLICKED')
-	}
-
 	handleReorder(ordering) {
 		this.setState({ ordering }, this.fetchInventories)
 	}
@@ -164,10 +164,6 @@ export class ProductionPlanning extends React.Component {
 			selectedProductDetail: selectedProductId ? this.getDetail(selectedProductId, products) : null,
 		}, this.fetchInventories)
 
-		if (selectedProcessId && this.props.processes) {
-			this.setState({})
-		}
-
 		const qs = new URLSearchParams(this.props.location.search)
 		qs.set('selectedProcess', selectedProcessId ? selectedProcessId : '')
 		qs.set('selectedProduct', selectedProductId ? selectedProductId : '')
@@ -176,7 +172,7 @@ export class ProductionPlanning extends React.Component {
 
 	getDetail(id, arr) {
 		for (let i = 0; i < arr.length; i++) {
-			if (id == arr[i].id) {
+			if (id === String(arr[i].id)) {
 				return arr[i]
 			}
 		}
@@ -190,7 +186,6 @@ export class ProductionPlanning extends React.Component {
 	fetchInventories() {
 		const { selectedProcessId, selectedProductId, ordering } = this.state
 		if (selectedProcessId && selectedProductId) {
-			console.log("FETCHING ANCESTORS...")
 			this.props.dispatch(actions.fetchRemainingRawMaterials(selectedProcessId, selectedProductId, 'rm', ordering))
 			this.props.dispatch(actions.fetchInProgressInventory(selectedProcessId, selectedProductId, 'wip', ordering))
 		}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatAmount, getProcessIcon } from "../../utilities/stringutils"
+import { formatAmount } from "../../utilities/stringutils"
 import ObjectListItem from '../ObjectList/ObjectListItem'
 import moment from 'moment'
 import './styles/warninglistrow.css'

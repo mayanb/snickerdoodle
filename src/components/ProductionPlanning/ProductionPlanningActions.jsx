@@ -14,7 +14,7 @@ export function fetchInProgressInventory(processId, productId, category, orderin
         dispatch(requestInProgressInventory())
         return api.get('/ics/inventory/ancestors/')
 			.query({ process: processId, product: productId, ancestor_category: category, ordering })
-			.then(res => {console.log('SERVER RESPONSE (In Progress)', res.body); dispatch(requestInProgressInventorySuccess(res.body, processId, productId, category))})
+			.then(res => dispatch(requestInProgressInventorySuccess(res.body, processId, productId, category)))
 			.catch(err => dispatch(requestInProgressInventoryFailure(err)))
     }
 }
@@ -24,7 +24,7 @@ export function fetchRemainingRawMaterials(processId, productId, category, order
         dispatch(requestRemainingRawMaterials())
         return api.get('/ics/inventory/remaining/')
 			.query({ process: processId, product: productId, ancestor_category: category, ordering })
-			.then(res => {console.log('SERVER RESPONSE (Raw Materials)', res.body); dispatch(requestRemainingRawMaterialsSuccess(res.body, processId, productId, category))})
+			.then(res => dispatch(requestRemainingRawMaterialsSuccess(res.body, processId, productId, category)))
 			.catch(err => dispatch(requestRemainingRawMaterialsFailure(err)))
     }
 }
