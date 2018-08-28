@@ -8,7 +8,18 @@
 
     .bar {
         fill: $primary;
-        border-radius: 0 20px 20px 0;
+    }
+
+    .grayed-out-bar {
+        fill: $elephant;
+    }
+
+    .stop-left {
+        stop-color: white
+    }
+
+    .stop-right {
+        stop-color: $elephant
     }
 
     // Both axes styles
@@ -39,8 +50,15 @@
         fill: $elephant;
         font-size: 10px;
     }
-    .y text {
-        fill: white;
+
+    .y-axis-text {
+        fill: $gray-dark;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .y-axis-text-danger {
+        fill: $red;
         font-size: 12px;
         font-weight: bold;
     }

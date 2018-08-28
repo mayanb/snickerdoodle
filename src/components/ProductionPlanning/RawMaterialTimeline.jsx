@@ -9,6 +9,7 @@ import {
 	select,
     timeFormat,
 } from 'd3'
+import { getSrcImg } from '../Img/Img'
 import './styles/rawmaterialtimeline.css'
 
 export class RawMaterialTimeline extends React.Component {
@@ -52,20 +53,22 @@ export class RawMaterialTimeline extends React.Component {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        var x = scaleTime().range([0, width]);
-        var y = scaleBand().range([height, 0]);
-
         data.sort(function(a, b) { return b.date_exhausted - a.date_exhausted; });
         
         const now = new Date()
 
         const minAxisDate = new Date(now.getTime())
-        minAxisDate.setMonth(minAxisDate.getMonth() - 1)
+        minAxisDate.setDate(minAxisDate.getDate() - 25)
         const maxAxisDate = new Date(minAxisDate.getTime())
         maxAxisDate.setMonth(maxAxisDate.getMonth() + 4)
 
-        x.domain([minAxisDate, maxAxisDate]);
-        y.domain(data.map(function(d) { return d.product_type.name; })).padding(0.25);
+        let x = scaleTime()
+            .range([0, width])
+            .domain([minAxisDate, maxAxisDate])
+        let y = scaleBand()
+            .range([height, 0])
+            .domain(data.map(function(d) { return d.product_type.name; }))
+            .padding(0.25);
         
         svg.append("g")
             .attr("class", "x axis")
@@ -78,16 +81,19 @@ export class RawMaterialTimeline extends React.Component {
                 .tickSizeOuter(0)
             )
 
+        let nowPlusOne = new Date(now.getTime())
+        nowPlusOne.setDate(nowPlusOne.getDate() + 1)
         svg.selectAll(".bar")
             .data(data)
             .enter().append("path")
             .attr("d", d => {
-                const barLength = d.date_exhausted < now ? x(now) : x(d.date_exhausted)
+                // we use nowPlusOne instead of now so that there is a little nub sticking out if the resource is exhausted
+                const barLength = d.date_exhausted < nowPlusOne ? x(nowPlusOne) - x(now): x(d.date_exhausted) - x(now)
                 // border radius is perfectly round when it is one third of the bar width
                 const borderRadius = BAR_WIDTH/3
-                return rightRoundedRect(0, y(d.product_type.name), barLength, y.bandwidth(), borderRadius)
+                return rightRoundedRect(x(now), y(d.product_type.name), barLength, y.bandwidth(), borderRadius)
             })
-            .attr("class", "bar")
+            .attr("class", d => d.date_exhausted < now ? "grayed-out-bar" : "bar")
             // changes bar opacity based on when the raw material will be exhausted
             .style("opacity", d => {
                 // Minimum opacity will be at maxDate 
@@ -109,14 +115,50 @@ export class RawMaterialTimeline extends React.Component {
                 return opacity
             })
         
+        let gradient = svg.append('defs')
+            .append('linearGradient')
+            .attr('id', 'gradient')
+            .attr("x2", "0%")
+            .attr("x1", "100%")
+        gradient.append("stop")
+            .attr("offset", "0%")
+            .attr("class", "stop-right")
+            .attr("stop-opacity", 0.6);
+        gradient.append("stop")
+            .attr("offset", "100%")
+            .attr("class", "stop-left")
+            .attr("stop-opacity", 0);
+            
+        svg.selectAll('rect')
+            .data(data)
+            .enter().append("rect")
+            .attr("width", x(now))
+            .attr("height", y.bandwidth())
+            .attr("x", 0)
+            .attr("y", d => y(d.product_type.name))
+            .style("fill", "url(#gradient)");
+
         svg.append("g")
             .attr("class", "y axis")
             .attr("transform", "translate(" + x(now) + ", 0)")
             .call(axisLeft(y)
                 .tickSizeOuter(0)
             )
-
-        // Rounded rectancle on right side
+        
+        svg.selectAll(".y text")
+            .data(data)
+            .attr("class", d => d.date_exhausted < now ? "y-axis-text-danger" : "y-axis-text")
+            .text(d => d.date_exhausted < now ? "No " + d.product_type.name : d.product_type.name)
+        
+        svg.selectAll('.y .tick')
+            .data(data)
+            .insert('svg:image', ':first-child')
+            .attr('xlink:href', getSrcImg('warning@2x')) 
+            .attr("width", 14)
+            .attr("height", 14)
+            .attr("opacity", d => d.date_exhausted < now ? 1.0 : 0.0)
+        
+        // Rounded rectancle on its right side
         function rightRoundedRect(x, y, width, height, radius) {
             return "M" + x + "," + y
                  + "h" + (width - radius)
