@@ -24,7 +24,7 @@ export class ProductionPlanning extends React.Component {
 			selectedProcessDetail: null,
 			selectedProductDetail: null,
 			expandWarningList: false,
-			ordering: 'creating_task__process_type__name'
+			ordering: 'process_type.name'
 		}
 		
 		this.renderInProgressTableHeader = this.renderInProgressTableHeader.bind(this)
@@ -152,7 +152,8 @@ export class ProductionPlanning extends React.Component {
 	}
 
 	handleReorder(ordering) {
-		this.setState({ ordering }, this.fetchProductionPlanning)
+		// TODO: Handle Reordering
+		// this.setState({ ordering }, this.fetchProductionPlanning)
 	}
 
 	handleFilter(selectedProcessId, selectedProductId) {

@@ -28,7 +28,7 @@ function productionPlanning(state/*, action*/) {
 }
 
 function productionPlanningSuccess(state, action) {
-	const { data } = action
+	const { data, ordering } = action
 
 	const rawMaterials = []
 	const inProgress = []
@@ -42,6 +42,16 @@ function productionPlanningSuccess(state, action) {
 			inProgress.push(item)
 		}
 	})
+
+	if (ordering === 'process_type.name') {
+		inProgress.sort((a, b) => {
+			if (a.process_type.name < b.process_type.name)
+				return -1
+			if (a.process_type.name > b.process_type.name)
+				return 1
+			return 0
+		})
+	}
 
 	return update(state, {
 		ui: {

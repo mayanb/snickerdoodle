@@ -10,8 +10,8 @@ export function fetchProductionPlanning(process, product, ordering) {
     return function (dispatch) {
         dispatch(requestProductionPlanning())
         return api.get('/ics/production-planning/')
-			.query({ process, product, ordering })
-			.then(res => dispatch(requestProductionPlanningSuccess(res.body)))
+			.query({ process, product })
+			.then(res => dispatch(requestProductionPlanningSuccess(res.body, ordering)))
 			.catch(err => dispatch(requestProductionPlanningFailure(err)))
     }
 }
@@ -23,11 +23,12 @@ function requestProductionPlanning() {
 	}
 }
 
-function requestProductionPlanningSuccess(json) {
+function requestProductionPlanningSuccess(json, ordering) {
 	return {
 		type: REQUEST_PRODUCTION_PLANNING_SUCCESS,
         name: PRODUCTION_PLANNING,
-        data: json,
+		data: json,
+		ordering,
 	}
 }
 
