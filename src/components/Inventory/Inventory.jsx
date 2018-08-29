@@ -81,7 +81,7 @@ export class Inventory extends React.Component {
 			{ title: 'Category', className: 'inv-category', field: null },
 			{ title: 'Code', className: 'inv-code', field: null },
 			{ title: 'Amount', className: 'inv-amount', field: null },
-			{ title: 'Cost', className: 'inv-cost', field: null },
+			{ title: 'Dollar value', className: 'inv-cost', field: null },
 		]
 		return (
 			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering} />
