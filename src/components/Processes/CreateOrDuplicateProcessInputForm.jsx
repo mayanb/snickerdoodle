@@ -4,13 +4,15 @@ import FormErrors from '../Inputs/FormErrors'
 import Input from '../Inputs/Input'
 import IconPicker from '../IconPicker/IconPicker'
 import './styles/createprocessdialog.css'
+import ProcessCategoryPicker from './ProcessCategoryPicker'
 
-export default function CreateOrDuplicateProcessInputForm({ icon, name, code, number, unit, outputDescription, submitted, onInputChange, formErrorsArray }) {
+export default function CreateOrDuplicateProcessInputForm({ icon, name, code, number, unit, outputDescription, category, submitted, onInputChange, formErrorsArray }) {
 	return (
 		<div>
 			<NameAndAbbreviation onInputChange={onInputChange} icon={icon} code={code} name={name} />
 			<OutputQuantity onInputChange={onInputChange} number={number} unit={unit}/>
 			<OutputDescription onInputChange={onInputChange} outputDescription={outputDescription} />
+			<Category onInputChange={onInputChange} category={category}/>
 			{submitted && <FormErrors errors={formErrorsArray}/>}
 		</div>
 )
@@ -76,6 +78,14 @@ function OutputDescription({ onInputChange, outputDescription }) {
 				value={outputDescription}
 				onChange={(e) => onInputChange(e.target.value, "outputDescription")}
 			/>
+		</FormGroup>
+	)
+}
+
+function Category({ onInputChange, category }) {
+	return (
+		<FormGroup label="Category">
+			<ProcessCategoryPicker onChange={e => onInputChange(e.key, "category")} category={category} />
 		</FormGroup>
 	)
 }

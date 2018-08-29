@@ -67,7 +67,7 @@ class Processes extends React.Component {
 		}
 
 		let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.filter
-
+		
 		return (
 			<div className="processes-container">
 				<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
@@ -115,7 +115,7 @@ class Processes extends React.Component {
 		  { title: null, className: 'icon', field: null },
 		  { title: 'Code', className: 'code', field: 'code' },
 		  { title: 'Name', className: 'name', field: 'name' },
-		  { title: 'Description', className: 'description', field: 'output_desc' },
+		  { title: 'Category', className: 'category', field: 'category' },
 		  { title: 'Default amount', className: 'default-amount', field: 'default_amount' },
 		  { title: 'Last used', className: 'last-used', field: 'last_used' },
 		  { title: 'Created by', className: 'owner', field: null },

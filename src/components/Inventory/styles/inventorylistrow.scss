@@ -35,11 +35,19 @@
         flex: 4;
     }
 
+    .inv-category {
+        flex: 1.5;
+    }
+
     .inv-code {
         flex: 2;
     }
 
     .inv-amount {
+        flex: 1.5;
+    }
+
+    .inv-cost {
         flex: 1;
     }
 
