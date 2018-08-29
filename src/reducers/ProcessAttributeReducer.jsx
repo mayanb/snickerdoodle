@@ -1,4 +1,5 @@
 import update from 'immutability-helper'
+import { updateRanksToMatchOrder } from '../utilities/processutils'
 
 export const START_ADDING_ATTRIBUTE = 'START_ADDING_ATTRIBUTE'
 export const FINISH_ADDING_ATTRIBUTE = 'FINISH_ADDING_ATTRIBUTE'
@@ -154,7 +155,7 @@ function requestSaveAttributeFailure(state, action) {
 }
 
 function requestArchiveAttribute(state, action) {
-	return update(state, {
+	const ns = update(state, {
 		data: {
 			[action.process_index]: {
 				attributes: {
@@ -163,6 +164,10 @@ function requestArchiveAttribute(state, action) {
 			}
 		}
 	})
+
+	updateRanksToMatchOrder(ns.data[action.process_index].attributes)
+
+	return ns
 }
 
 function requestArchiveAttributeSuccess(state, action) {
@@ -208,11 +213,7 @@ function requestMoveAttributeSuccess(state, action) {
 		}
 	})
 
-	
-	// update all the ranks to match the new order in the array
-	for (var i = 0; i < ns.data[action.process_index].attributes.length; i++) {
-		ns.data[action.process_index].attributes[i].rank = i
-	}
+	updateRanksToMatchOrder(ns.data[action.process_index].attributes)
 
 	// return 
 	return ns
