@@ -9,53 +9,8 @@ import * as goalUtils from '../Goals/GoalUtils'
 class ProductionAside extends React.Component {
 	constructor(props) {
 		super(props)
-		let mockData = [
-			{
-				process: 'Package',
-				product: 'TUM',
-				amount_remaining: 1200,
-				monthly_goal: {created: 6000, goal: 10000},
-				daily_goal: 340,
-				warning: true
-			},
-			{
-				process: 'Package',
-				product: 'CRT',
-				amount_remaining: 1200,
-				monthly_goal: {created: 600, goal: 1000},
-				daily_goal: 34,
-				warning: false
-			},
-			{
-				process: 'Foil Bar Samples',
-				product: 'MD16',
-				amount_remaining: 1200,
-				monthly_goal: {created: 600, goal: 1000},
-				daily_goal: 34,
-				warning: false
-			},
-			{
-				process: 'Package',
-				product: 'MD16',
-				amount_remaining: 1200,
-				monthly_goal: {created: 600, goal: 1000},
-				daily_goal: 34,
-				warning: false
-			},
-			{
-				process: 'Foil Bar Samples',
-				product: 'CV17',
-				amount_remaining: 1200,
-				monthly_goal: {created: 6000, goal: 10000},
-				daily_goal: 34,
-				warning: false
-			},
-		]
 		
 		this.props.dispatch(goalActions.fetchGoals())
-		this.state = {
-			data: mockData
-		}
 	}
 
 	render() {
@@ -152,9 +107,7 @@ function formatGoals(goals) {
 
 const mapStateToProps = (state/*, props*/) => {
 	const goals = formatGoals(state.goals.data)
-	return {
-		goals,
-	}
+	return { goals }
 }
 
 export default connect(mapStateToProps)(ProductionAside)

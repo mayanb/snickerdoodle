@@ -1,80 +1,40 @@
 import {
-    REQUEST_IN_PROGRESS_INVENTORY,
-    REQUEST_IN_PROGRESS_INVENTORY_SUCCESS,
-    REQUEST_IN_PROGRESS_INVENTORY_FAILURE,
-    REQUEST_REMAINING_RAW_MATERIALS,
-    REQUEST_REMAINING_RAW_MATERIALS_SUCCESS,
-    REQUEST_REMAINING_RAW_MATERIALS_FAILURE,
+	REQUEST_PRODUCTION_PLANNING,
+	REQUEST_PRODUCTION_PLANNING_SUCCESS,
+	REQUEST_PRODUCTION_PLANNING_FAILURE,
 } from '../../reducers/ProductionPlanningReducerExtension'
 import api from '../WaffleconeAPI/api.jsx'
 import { PRODUCTION_PLANNING } from '../../reducers/ReducerTypes'
 
-export function fetchInProgressInventory(processId, productId, ordering) {
+export function fetchProductionPlanning(process, product, ordering) {
     return function (dispatch) {
-        dispatch(requestInProgressInventory())
+        dispatch(requestProductionPlanning())
         return api.get('/ics/production-planning/')
-			.query({ process: processId, product: productId, type: 'in-progress', ordering })
-			.then(res => dispatch(requestInProgressInventorySuccess(res.body, processId, productId)))
-			.catch(err => dispatch(requestInProgressInventoryFailure(err)))
+			.query({ process, product, ordering })
+			.then(res => dispatch(requestProductionPlanningSuccess(res.body)))
+			.catch(err => dispatch(requestProductionPlanningFailure(err)))
     }
 }
 
-export function fetchRemainingRawMaterials(processId, productId, ordering) {
-    return function (dispatch) {
-        dispatch(requestRemainingRawMaterials())
-        return api.get('/ics/production-planning/')
-			.query({ process: processId, product: productId, type: 'raw-materials', ordering })
-			.then(res => dispatch(requestRemainingRawMaterialsSuccess(res.body, processId, productId)))
-			.catch(err => dispatch(requestRemainingRawMaterialsFailure(err)))
-    }
-}
-
-function requestInProgressInventory() {
+function requestProductionPlanning() {
 	return {
-        type: REQUEST_IN_PROGRESS_INVENTORY,
+        type: REQUEST_PRODUCTION_PLANNING,
 		name: PRODUCTION_PLANNING,
 	}
 }
 
-function requestInProgressInventorySuccess(json, processId, productId) {
+function requestProductionPlanningSuccess(json) {
 	return {
-		type: REQUEST_IN_PROGRESS_INVENTORY_SUCCESS,
+		type: REQUEST_PRODUCTION_PLANNING_SUCCESS,
         name: PRODUCTION_PLANNING,
         data: json,
-		processId,
-        productId,
 	}
 }
 
-function requestInProgressInventoryFailure(err) {
+function requestProductionPlanningFailure(err) {
 	console.error('Oh no! Something went wrong\n' + err)
 	return {
-		type: REQUEST_IN_PROGRESS_INVENTORY_FAILURE,
-		name: PRODUCTION_PLANNING,
-	}
-}
-
-function requestRemainingRawMaterials() {
-	return {
-        type: REQUEST_REMAINING_RAW_MATERIALS,
-		name: PRODUCTION_PLANNING,
-	}
-}
-
-function requestRemainingRawMaterialsSuccess(json, processId, productId) {
-	return {
-		type: REQUEST_REMAINING_RAW_MATERIALS_SUCCESS,
-        name: PRODUCTION_PLANNING,
-        data: json,
-		processId,
-        productId,
-	}
-}
-
-function requestRemainingRawMaterialsFailure(err) {
-	console.error('Oh no! Something went wrong\n' + err)
-	return {
-		type: REQUEST_REMAINING_RAW_MATERIALS_FAILURE,
+		type: REQUEST_PRODUCTION_PLANNING_FAILURE,
 		name: PRODUCTION_PLANNING,
 	}
 }
