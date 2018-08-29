@@ -26,6 +26,7 @@ class ProductionPlanningFilters extends React.Component {
 		return (
             <div className='production-planning-filters'>
                 <Select
+                    showSearch
                     allowClear
                     value={processes.length > 0 && selectedProcessId ? selectedProcessId : undefined}
                     placeholder="Select process"
@@ -41,6 +42,7 @@ class ProductionPlanningFilters extends React.Component {
                     ) }
                 </Select>
                 <Select
+                    showSearch
                     allowClear
                     value={products.length > 0 && selectedProductId ? selectedProductId : undefined}
                     placeholder="Select product"

@@ -70,7 +70,7 @@ function remainingRawMaterialsSuccess(state, action) {
     const newData = []
     action.data.forEach(item => {
         newData.push({...item, date_exhausted: new Date(item.date_exhausted)})
-    })
+	})
 	return update(state, {
 		ui: {
 			$merge: { isFetchingRawMaterials: false }

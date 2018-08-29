@@ -115,6 +115,7 @@ export class RawMaterialTimeline extends React.Component {
                 return opacity
             })
         
+        // create gradient for gray part
         let gradient = svg.append('defs')
             .append('linearGradient')
             .attr('id', 'gradient')
@@ -128,10 +129,11 @@ export class RawMaterialTimeline extends React.Component {
             .attr("offset", "100%")
             .attr("class", "stop-left")
             .attr("stop-opacity", 0);
-            
+        
+        // gray part at the beginning of each bar
         svg.selectAll('rect')
-            .data(data)
-            .enter().append("rect")
+            .data(data).enter()
+            .append("rect")
             .attr("width", x(now))
             .attr("height", y.bandwidth())
             .attr("x", 0)
@@ -149,14 +151,17 @@ export class RawMaterialTimeline extends React.Component {
             .data(data)
             .attr("class", d => d.date_exhausted < now ? "y-axis-text-danger" : "y-axis-text")
             .text(d => d.date_exhausted < now ? "No " + d.product_type.name : d.product_type.name)
-        
-        svg.selectAll('.y .tick')
-            .data(data)
-            .insert('svg:image', ':first-child')
-            .attr('xlink:href', getSrcImg('warning@2x')) 
-            .attr("width", 14)
-            .attr("height", 14)
-            .attr("opacity", d => d.date_exhausted < now ? 1.0 : 0.0)
+
+        svg.selectAll('.y .axis')
+            .data(data).enter()
+            .append('svg:image', ':first-child')
+            .attr('class', 'error-icon')
+            .attr('xlink:href', getSrcImg('error', '.svg')) 
+            .attr('width', 14)
+            .attr('height', 14)
+            .attr('x', 10)
+            .attr('y', d => y(d.product_type.name) + 3)
+            .attr('opacity', d => d.date_exhausted <= now ? 1.0 : 0.0)
         
         // Rounded rectancle on its right side
         function rightRoundedRect(x, y, width, height, radius) {

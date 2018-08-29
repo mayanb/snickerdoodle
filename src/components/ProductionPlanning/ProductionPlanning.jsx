@@ -186,8 +186,8 @@ export class ProductionPlanning extends React.Component {
 	fetchInventories() {
 		const { selectedProcessId, selectedProductId, ordering } = this.state
 		if (selectedProcessId && selectedProductId) {
-			this.props.dispatch(actions.fetchRemainingRawMaterials(selectedProcessId, selectedProductId, 'rm', ordering))
-			this.props.dispatch(actions.fetchInProgressInventory(selectedProcessId, selectedProductId, 'wip', ordering))
+			this.props.dispatch(actions.fetchRemainingRawMaterials(selectedProcessId, selectedProductId, ordering))
+			this.props.dispatch(actions.fetchInProgressInventory(selectedProcessId, selectedProductId, ordering))
 		}
 	}
 

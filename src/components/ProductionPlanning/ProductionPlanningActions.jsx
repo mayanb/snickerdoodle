@@ -9,22 +9,22 @@ import {
 import api from '../WaffleconeAPI/api.jsx'
 import { PRODUCTION_PLANNING } from '../../reducers/ReducerTypes'
 
-export function fetchInProgressInventory(processId, productId, category, ordering) {
+export function fetchInProgressInventory(processId, productId, ordering) {
     return function (dispatch) {
         dispatch(requestInProgressInventory())
-        return api.get('/ics/inventory/in-progress/')
-			.query({ process: processId, product: productId, ancestor_category: category, ordering })
-			.then(res => dispatch(requestInProgressInventorySuccess(res.body, processId, productId, category)))
+        return api.get('/ics/production-planning/')
+			.query({ process: processId, product: productId, type: 'in-progress', ordering })
+			.then(res => dispatch(requestInProgressInventorySuccess(res.body, processId, productId)))
 			.catch(err => dispatch(requestInProgressInventoryFailure(err)))
     }
 }
 
-export function fetchRemainingRawMaterials(processId, productId, category, ordering) {
+export function fetchRemainingRawMaterials(processId, productId, ordering) {
     return function (dispatch) {
         dispatch(requestRemainingRawMaterials())
-        return api.get('/ics/inventory/remaining-raw-materials/')
-			.query({ process: processId, product: productId, ancestor_category: category, ordering })
-			.then(res => dispatch(requestRemainingRawMaterialsSuccess(res.body, processId, productId, category)))
+        return api.get('/ics/production-planning/')
+			.query({ process: processId, product: productId, type: 'raw-materials', ordering })
+			.then(res => dispatch(requestRemainingRawMaterialsSuccess(res.body, processId, productId)))
 			.catch(err => dispatch(requestRemainingRawMaterialsFailure(err)))
     }
 }
@@ -36,14 +36,13 @@ function requestInProgressInventory() {
 	}
 }
 
-function requestInProgressInventorySuccess(json, processId, productId, category) {
+function requestInProgressInventorySuccess(json, processId, productId) {
 	return {
 		type: REQUEST_IN_PROGRESS_INVENTORY_SUCCESS,
         name: PRODUCTION_PLANNING,
         data: json,
 		processId,
         productId,
-        category
 	}
 }
 
@@ -62,14 +61,13 @@ function requestRemainingRawMaterials() {
 	}
 }
 
-function requestRemainingRawMaterialsSuccess(json, processId, productId, category) {
+function requestRemainingRawMaterialsSuccess(json, processId, productId) {
 	return {
 		type: REQUEST_REMAINING_RAW_MATERIALS_SUCCESS,
         name: PRODUCTION_PLANNING,
         data: json,
 		processId,
         productId,
-        category
 	}
 }
 
