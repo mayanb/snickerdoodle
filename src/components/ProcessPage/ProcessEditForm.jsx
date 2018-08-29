@@ -4,13 +4,15 @@ import Button from '../Button/Button'
 import Input from '../Inputs/Input'
 import './styles/processeditform.css'
 import IconPicker from '../IconPicker/IconPicker'
+import ProcessCategoryPicker from '../Processes/ProcessCategoryPicker'
 
-export default function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, isLoading, onChange, onSubmit}) {
+export default function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, category, isLoading, onChange, onSubmit}) {
 	return (
 		<div className='edit-process-info'>
 			<CodeAndName onChange={onChange} icon={icon} code={code} name={name} />
 			<OutputDescription onChange={onChange} output_desc={output_desc} />
 			<OutputQuantity onChange={onChange} default_amount={default_amount} unit={unit}/>
+			<Category onChange={onChange} category={category} />
 			<FormGroup>
 				<Button wide onClick={onSubmit} isLoading={isLoading}>Save changes</Button>
 			</FormGroup>
@@ -76,6 +78,14 @@ function OutputQuantity({ onChange, default_amount, unit }) {
 					onChange={(e) => onChange(e.target.value, "unit")}
 				/>
 			</div>
+		</FormGroup>
+	)
+}
+
+function Category({ onChange, category}) {
+	return (
+		<FormGroup label="Category">
+			<ProcessCategoryPicker onChange={e => onChange(e.key, "category")} category={category} />
 		</FormGroup>
 	)
 }

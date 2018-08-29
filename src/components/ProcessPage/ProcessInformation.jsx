@@ -38,7 +38,12 @@ export default class ProcessInformation extends React.Component {
 				</ElementTitle>
 				<div className="process-basic-information-container">
 				{ isEditing ? 
-					<ProcessEditForm onChange={this.handleChange} onSubmit={this.handleSubmit} {...this.state} isLoading={isSavingEdit} /> :
+					<ProcessEditForm 
+						onChange={this.handleChange} 
+						onSubmit={this.handleSubmit} 
+						{...this.state} 
+						isLoading={isSavingEdit} 
+					/> :
 					<ProcessBasicInformation { ...process } />
 				}
 				</div>
