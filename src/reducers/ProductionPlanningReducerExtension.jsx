@@ -19,16 +19,19 @@ export function _productionPlanning(state, action) {
 	}
 }
 
-function productionPlanning(state/*, action*/) {
+function productionPlanning(state, action) {
 	return update(state, {
 		ui: {
-			$merge: { isFetchingData: true }
+			$merge: { 
+				isFetchingData: true,
+				timestamp: action.timestamp
+			}
 		}
 	})
 }
 
 function productionPlanningSuccess(state, action) {
-	const { data, ordering } = action
+	const { data, ordering, timestamp } = action
 
 	const rawMaterials = []
 	const inProgress = []
@@ -53,24 +56,33 @@ function productionPlanningSuccess(state, action) {
 			return 0
 		})
 	}
-
-	return update(state, {
-		ui: {
-			$merge: { isFetchingData: false }
-		},
-		data: {
-            $merge: {
-				rawMaterials: rawMaterials,
-				inProgress: inProgress,
-            }
-		}
-	})
+	if (actionIsValid(state, timestamp)) {
+		return update(state, {
+			ui: {
+				$merge: { isFetchingData: false }
+			},
+			data: {
+				$merge: {
+					rawMaterials: rawMaterials,
+					inProgress: inProgress,
+				}
+			}
+		})
+	}
+	return state
 }
 
-function productionPlanningFailure(state/*, action*/) {
-	return update(state, {
-		ui: {
-			$merge: { isFetchingData: false }
-		}
-	})
+function productionPlanningFailure(state, action) {
+	if (actionIsValid(state, action.timestamp)) {
+		return update(state, {
+			ui: {
+				$merge: { isFetchingData: false }
+			}
+		})
+	}
+	return state
+}
+
+function actionIsValid(state, timestamp) {
+    return timestamp >= state.ui.timestamp;
 }
