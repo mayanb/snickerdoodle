@@ -34,7 +34,7 @@ class ProductionAside extends React.Component {
 			percent = weeklyGoal.actual / weeklyGoal.goal * 100
 		}
 		const goal_selected = process_id === parseInt(selected.process_id) && product_id === parseInt(selected.product_id) ? true : false
-		console.log('goal (' + process_id + ',' + product_id + ') selected = ' + goal_selected)
+
 		return (
 			<div className={`goal-container ${goal_selected ? 'selected' : ''}`} key={`${process_name} ${product_code}`} onClick={() => this.handleSelect(process_id, product_id)}>
 				<ProgressBar percent={percent} />
