@@ -85,6 +85,7 @@ export class ProductionPlanning extends React.Component {
 									/>
 								</div>
 								}
+
 								{ !ui.isFetchingData && warningList && warningList.length > 0 &&
 								<ObjectList className='warning-list-container'>
 									<div className='warning-title' onClick={this.toggleExpandWarningList}>
@@ -201,8 +202,9 @@ export class ProductionPlanning extends React.Component {
 
 function formatWarningNames(warningList) {
 	const names = []
-	for (let i = 0; i < warningList.length; i++){
-		names.push(warningList[i].product_type.name)
+	for (let i = 0; i < warningList.length; i++) {
+		const { process_type, product_type } = warningList[i]
+		names.push(`${process_type.name} ${product_type.name}`)
 	}
 	return names.join(', ')
 }
