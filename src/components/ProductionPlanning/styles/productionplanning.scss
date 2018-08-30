@@ -12,6 +12,12 @@
 			flex: 3.5;
 			padding: 30px 50px;
 
+			.empty-screen-text {
+				margin: 36px 0;
+				color: $gray;
+				font-style: italic;
+			}
+
 			.warning-list-container {
 				padding: 16px 22px;
 				background-color: white;

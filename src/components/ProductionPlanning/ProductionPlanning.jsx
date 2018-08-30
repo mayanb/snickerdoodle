@@ -67,7 +67,13 @@ export class ProductionPlanning extends React.Component {
 							selectedProcessId={selectedProcessId}
 							selectedProductId={selectedProductId} 
 						/>
-						{selectedProcessId && selectedProductId && 
+						{ (!selectedProcessId || !selectedProductId) &&
+						<div className='empty-screen-text'>Select a process and product to continue.</div>
+						}
+						{ !ui.isFetchingData && selectedProcessId && selectedProductId && rawMaterials && rawMaterials.length === 0 && inProgress && inProgress.length === 0 &&
+						<div className='empty-screen-text'>No results. Try selecting a different process and product combination.</div>
+						}
+						{ selectedProcessId && selectedProductId && 
 							<div className='production-planning-content'>
 								{ (ui.isFetchingData || (rawMaterials && rawMaterials.length > 0)) && 
 								<div>
