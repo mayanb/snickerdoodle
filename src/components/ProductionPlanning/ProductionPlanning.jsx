@@ -117,7 +117,13 @@ export class ProductionPlanning extends React.Component {
 							</div>
 						}
 					</div>
-					<ProductionAside onSelect={this.handleFilter} />
+					<ProductionAside 
+						onSelect={this.handleFilter} 
+						selected={{
+							process_id: selectedProcessId,
+							product_id: selectedProductId,
+						}} 
+					/>
 				</div>
 			</div>
 		)

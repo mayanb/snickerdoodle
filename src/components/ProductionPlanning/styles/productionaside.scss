@@ -61,6 +61,10 @@
             }
 
         }
+    }
 
+    .selected {
+        box-shadow: $shadow-2;
+        transform: scale(1.01);
     }
 }

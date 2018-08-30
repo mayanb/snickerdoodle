@@ -14,16 +14,16 @@ class ProductionAside extends React.Component {
 	}
 
 	render() {
-		const { goals } = this.props
+		const { goals, selected } = this.props
 		return (
 			<div className='production-aside-container'>
 				<div className='title'>In Production this Month</div>
-				{ goals && goals.map(groupedGoal => this.renderGoal(groupedGoal)) }
+				{ goals && goals.map(groupedGoal => this.renderGoal(groupedGoal, selected)) }
 			</div>
 		)
 	}
 
-	renderGoal(groupedGoal) {
+	renderGoal(groupedGoal, selected) {
 		const { info, w: weeklyGoal, m: monthlyGoal } = groupedGoal
 		const { process_name, process_unit, product_code, process_id, product_id, inventory_amount } = info
 		const warning = null // need to fetch if there are any raw materials running low for this Process/Product type
@@ -33,8 +33,10 @@ class ProductionAside extends React.Component {
 		} else if (weeklyGoal) {
 			percent = weeklyGoal.actual / weeklyGoal.goal * 100
 		}
+		const goal_selected = process_id === parseInt(selected.process_id) && product_id === parseInt(selected.product_id) ? true : false
+		console.log('goal (' + process_id + ',' + product_id + ') selected = ' + goal_selected)
 		return (
-			<div className='goal-container' key={`${process_name} ${product_code}`} onClick={() => this.handleSelect(process_id, product_id)}>
+			<div className={`goal-container ${goal_selected ? 'selected' : ''}`} key={`${process_name} ${product_code}`} onClick={() => this.handleSelect(process_id, product_id)}>
 				<ProgressBar percent={percent} />
 				<div className='content-container'>
 					<div className='title-container'>
