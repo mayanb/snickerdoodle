@@ -133,6 +133,7 @@ export class ProductionPlanning extends React.Component {
 		const columns = [
 			{ title: '', className: 'inv-icon', field: null },
 			{ title: 'Product', className: 'inv-product', field: null },
+			{ title: 'Category', className: 'inv-category', field: null },
 			{ title: 'In Stock', className: 'inv-in-stock', field: null },
 			{ title: 'Can Make', className: 'inv-can-make', field: null },
 		]
