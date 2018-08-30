@@ -35,7 +35,8 @@ function productionPlanningSuccess(state, action) {
 	data.forEach(item => {
 		if (item.process_type.category === 'rm') {
 			// Converts date string to Date object
-			rawMaterials.push({...item, date_exhausted: new Date(item.date_exhausted)})
+			const date_exhausted = item.date_exhausted ? new Date(item.date_exhausted) : null
+			rawMaterials.push({ ...item, date_exhausted })
 			inProgress.push(item)
 		}
 		if (item.process_type.category === 'wip') {

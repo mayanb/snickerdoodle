@@ -53,7 +53,15 @@ export class RawMaterialTimeline extends React.Component {
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        data.sort(function(a, b) { return b.date_exhausted - a.date_exhausted; });
+        data.sort(function(a, b) {
+            if (a.date_exhausted === null) {
+                return Number.MIN_SAFE_INTEGER
+            } 
+            if (b.date_exhausted === null) {
+                return Number.MAX_SAFE_INTEGER
+            }
+            return b.date_exhausted - a.date_exhausted
+        })
         
         const now = new Date()
 
@@ -87,6 +95,8 @@ export class RawMaterialTimeline extends React.Component {
             .data(data)
             .enter().append("path")
             .attr("d", d => {
+                if (!d.date_exhausted)
+                    return null
                 // we use nowPlusOne instead of now so that there is a little nub sticking out if the resource is exhausted
                 const barLength = d.date_exhausted < nowPlusOne ? x(nowPlusOne) - x(now): x(d.date_exhausted) - x(now)
                 // border radius is perfectly round when it is one third of the bar width
@@ -138,8 +148,15 @@ export class RawMaterialTimeline extends React.Component {
             .attr("height", y.bandwidth())
             .attr("x", 0)
             .attr("y", d => y(d.product_type.name))
-            .style("fill", "url(#gradient)");
+            .attr('opacity', d => {
+                if (!d.date_exhausted) {
+                    return 0.0
+                }
+                return 1.0
+            })
+            .style("fill", "url(#gradient)")
 
+        // y axis
         svg.append("g")
             .attr("class", "y axis")
             .attr("transform", "translate(" + x(now) + ", 0)")
@@ -147,11 +164,23 @@ export class RawMaterialTimeline extends React.Component {
                 .tickSizeOuter(0)
             )
         
+        // change y axis text color if exhausted material
         svg.selectAll(".y text")
             .data(data)
-            .attr("class", d => d.date_exhausted < now ? "y-axis-text-danger" : "y-axis-text")
-            .text(d => d.date_exhausted < now ? "No " + d.product_type.name : d.product_type.name)
+            .attr('class', d => {
+                if (!d.date_exhausted || d.date_exhausted > now) {
+                    return 'y-axis-text'
+                }
+                return 'y-axis-text-danger'
+            })
+            .text(d => {
+                if (!d.date_exhausted || d.date_exhausted > now) {
+                    return d.product_type.name
+                }
+                return "No " + d.product_type.name
+            })
 
+        // error icon
         svg.selectAll('.y .axis')
             .data(data).enter()
             .append('svg:image', ':first-child')
@@ -161,7 +190,21 @@ export class RawMaterialTimeline extends React.Component {
             .attr('height', 14)
             .attr('x', 10)
             .attr('y', d => y(d.product_type.name) + 3)
-            .attr('opacity', d => d.date_exhausted <= now ? 1.0 : 0.0)
+            .attr('opacity', d => {
+                if (!d.date_exhausted || d.date_exhausted > now){
+                    return 0.0
+                }
+                return 1.0
+            })
+
+        // not enough recent usage data
+        svg.selectAll('.y .axis')
+            .data(data).enter()
+            .append('text')
+            .text(d => !d.date_exhausted ? 'Not enough recent usage data' : '')
+            .attr('class', 'not-enough-usage-data')
+            .attr('x', x(now) + 8)
+            .attr('y', d => y(d.product_type.name) + 14)
         
         // Rounded rectancle on its right side
         function rightRoundedRect(x, y, width, height, radius) {
