@@ -6,6 +6,7 @@ import Pill from '../Pill/Pill'
 import Img from '../Img/Img'
 import { dashboardPath } from "../../utilities/urlutils"
 import { Link } from 'react-router-dom'
+import CategoryTag from '../CategoryTag/CategoryTag'
 
 
 export default class ActivityListItem extends React.Component {
@@ -17,6 +18,7 @@ export default class ActivityListItem extends React.Component {
 	render() {
 		const { item, index, onViewTasks } = this.props
 		const { process_type, product_types, runs, amount } = item
+		const category = process_type.category
 		return (
 			<ObjectListItem className="activity-list-item" onClick={() => onViewTasks(index)}>
 				<div className="icon">
@@ -26,9 +28,12 @@ export default class ActivityListItem extends React.Component {
 					{process_type.code}
 				</OverflowSafeText>
 				<OverflowSafeText className="process-name">
-					<span style={{marginRight: '6px'}}>{process_type.name}</span>
-					{process_type.is_trashed && <Pill color='gray'>Deleted</Pill> }
+					<span style={{ marginRight: '6px' }}>{process_type.name}</span>
+					{process_type.is_trashed && <Pill color='gray'>Deleted</Pill>}
 				</OverflowSafeText>
+				<div className="category">
+					<CategoryTag category={category} />
+				</div>
 				<OverflowSafeText tooltipText={formatAllProductCodes(product_types)} className="product-code">
 					{formatProductCodes(product_types)}
 				</OverflowSafeText>
@@ -46,7 +51,7 @@ export default class ActivityListItem extends React.Component {
 	}
 }
 
-function ChartLink({process_type, product_types}) {
+function ChartLink({ process_type, product_types }) {
 	const path = dashboardPath(
 		process_type.id,
 		product_types.map(p => p.id)

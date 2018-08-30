@@ -32,5 +32,13 @@
             flex: 4;
         }
     }
+
+    .process-category {
+        display: flex;
+
+        .select {
+            flex: 1;
+        }
+    }
 }
 

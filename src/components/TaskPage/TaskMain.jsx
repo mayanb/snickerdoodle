@@ -4,6 +4,7 @@ import TaskForm from './TaskForm'
 import { formatAmount, getProcessIcon } from '../../utilities/stringutils'
 import moment from 'moment'
 import Img from '../Img/Img'
+import TaskCogs from './TaskCogs'
 
 export default class TaskMain extends React.Component {
 	render() {
@@ -12,6 +13,7 @@ export default class TaskMain extends React.Component {
 			<div className="task-main">
 				<div className="task-main-container">
 					<TaskName task={task} />
+					<TaskCogs task={task} />
 					<TaskInfo task={task} />
 					<TaskForm
 						taskAttributes={attributes}

@@ -59,3 +59,19 @@ export const ICONS = [
 
 export const GOALS = 'GOALS'
 export const PINS = 'PINS'
+
+export const WIP = 'wip'
+export const FG = 'fg'
+export const RM = 'rm'
+
+export const CATEGORY_NAME = {
+	[WIP]: "Work in Progress",
+	[FG]: "Finished Goods",
+	[RM]: "Raw Material"
+}
+
+export const CATEGORY_COLOR = {
+	[WIP]: "#40B3FF",
+	[FG]: "#5BD069",
+	[RM]: "#F2A51F"
+}

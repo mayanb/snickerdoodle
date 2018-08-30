@@ -9,11 +9,6 @@
 	display: flex;
 	height: calc(100% - #{$section-header-height});
 
-	.inventory-filters {
-		display: flex;
-		margin: 24px 36px;
-	}
-
 	.pagination {
 		padding: 0 36px;
 	}

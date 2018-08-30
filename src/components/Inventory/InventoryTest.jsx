@@ -4,7 +4,7 @@ import * as actions from './InventoryActions'
 
 class Inventory extends React.Component {
 	componentDidMount() {
-		this.props.dispatch(actions.fetchInitialInventory())
+		this.props.dispatch(actions.fetchInventory())
 	}
 
 	render() {

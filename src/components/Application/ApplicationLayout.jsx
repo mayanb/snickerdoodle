@@ -32,7 +32,6 @@ export default class ApplicationLayoutStable extends React.Component {
   render () {
     return (
       <Router>
-
           <Switch>
             <Route path="/create/:code?" component={CreateTeam} />
             <Route path={"/introduction"} component={Walkthrough} />
