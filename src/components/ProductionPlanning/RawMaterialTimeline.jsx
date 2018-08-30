@@ -75,7 +75,7 @@ export class RawMaterialTimeline extends React.Component {
             .domain([minAxisDate, maxAxisDate])
         let y = scaleBand()
             .range([height, 0])
-            .domain(data.map(function(d) { return d.product_type.name; }))
+            .domain(data.map(function(d) { return getYAxisId(d.process_type.id, d.product_type.name) }))
             .padding(0.25);
         
         // x axis
@@ -102,7 +102,7 @@ export class RawMaterialTimeline extends React.Component {
                 const barLength = d.date_exhausted < nowPlusOne ? x(nowPlusOne) - x(now): x(d.date_exhausted) - x(now)
                 // border radius is perfectly round when it is one third of the bar width
                 const borderRadius = BAR_WIDTH/3
-                return rightRoundedRect(x(now), y(d.product_type.name), barLength, y.bandwidth(), borderRadius)
+                return rightRoundedRect(x(now), y(getYAxisId(d.process_type.id, d.product_type.name)), barLength, y.bandwidth(), borderRadius)
             })
             .attr("class", d => d.date_exhausted < now ? "grayed-out-bar" : "bar")
             // changes bar opacity based on when the raw material will be exhausted
@@ -148,7 +148,7 @@ export class RawMaterialTimeline extends React.Component {
             .attr("width", x(now))
             .attr("height", y.bandwidth())
             .attr("x", 0)
-            .attr("y", d => y(d.product_type.name))
+            .attr("y", d => y(getYAxisId(d.process_type.id, d.product_type.name)))
             .attr('opacity', d => {
                 if (!d.date_exhausted) {
                     return 0.0
@@ -190,7 +190,7 @@ export class RawMaterialTimeline extends React.Component {
             .attr('width', 14)
             .attr('height', 14)
             .attr('x', 10)
-            .attr('y', d => y(d.product_type.name) + 3)
+            .attr('y', d => y(getYAxisId(d.process_type.id, d.product_type.name)) + 3)
             .attr('opacity', d => {
                 if (!d.date_exhausted || d.date_exhausted > now){
                     return 0.0
@@ -205,7 +205,11 @@ export class RawMaterialTimeline extends React.Component {
             .text(d => !d.date_exhausted ? 'Not enough recent usage data' : '')
             .attr('class', 'not-enough-usage-data')
             .attr('x', x(now) + 8)
-            .attr('y', d => y(d.product_type.name) + 14)
+            .attr('y', d => y(getYAxisId(d.process_type.id, d.product_type.name)) + 14)
+        
+        function getYAxisId(process_id, product_id) {
+            return process_id + ',' + product_id
+        }
         
         // Rounded rectancle on its right side
         function rightRoundedRect(x, y, width, height, radius) {
