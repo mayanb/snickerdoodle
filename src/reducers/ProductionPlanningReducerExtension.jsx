@@ -49,11 +49,9 @@ function productionPlanningSuccess(state, action) {
 
 	if (ordering === 'process_type.name') {
 		inProgress.sort((a, b) => {
-			if (a.process_type.name < b.process_type.name)
-				return -1
-			if (a.process_type.name > b.process_type.name)
-				return 1
-			return 0
+			const a_is_rm = a.process_type.category === 'rm',
+				  b_is_rm = b.process_type.category === 'rm'
+			return (b.warning && b_is_rm) - (a.warning && a_is_rm) || a.process_type.name - b.process_type.name
 		})
 	}
 	if (actionIsValid(state, timestamp)) {

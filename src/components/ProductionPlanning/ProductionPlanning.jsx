@@ -4,7 +4,6 @@ import ApplicationSectionHeader from '../Application/ApplicationSectionHeader'
 import ObjectListHeader from '../ObjectList/ObjectListHeader'
 import ObjectList from '../ObjectList/ObjectList'
 import InProgressListRow from './InProgressListRow'
-import WarningListRow from './WarningListRow'
 import ProductionAside from './ProductionAside'
 import ProductionPlanningFilters from './ProductionPlanningFilters'
 import { RawMaterialTimeline } from './RawMaterialTimeline'
@@ -23,7 +22,6 @@ export class ProductionPlanning extends React.Component {
 			selectedProductId: null,
 			selectedProcessDetail: null,
 			selectedProductDetail: null,
-			expandWarningList: false,
 			ordering: 'process_type.name'
 		}
 		
@@ -31,7 +29,6 @@ export class ProductionPlanning extends React.Component {
 		this.renderWarningTableHeader = this.renderWarningTableHeader.bind(this)
 		this.handleReorder = this.handleReorder.bind(this)
 		this.handleFilter = this.handleFilter.bind(this)
-		this.toggleExpandWarningList = this.toggleExpandWarningList.bind(this)
 		this.fetchProductionPlanning = this.fetchProductionPlanning.bind(this)
 	}
 
@@ -59,7 +56,6 @@ export class ProductionPlanning extends React.Component {
 			selectedProductId, 
 			selectedProcessDetail, 
 			selectedProductDetail,
-			expandWarningList
 		} = this.state
 		return (
 			<div className='production-planning-container'>
@@ -87,37 +83,29 @@ export class ProductionPlanning extends React.Component {
 								}
 
 								{ !ui.isFetchingData && warningList && warningList.length > 0 &&
-								<ObjectList className='warning-list-container'>
+								<div className='warning-list-container'>
 									<div className='warning-title' onClick={this.toggleExpandWarningList}>
 										<Img src='warning@2x' height="20px" />
 										<div style={{'marginLeft': '10px'}}>{`Ingredient supply getting low: ${formatWarningNames(warningList)}`}</div>
-										<div className='toggle-list'>{ expandWarningList ? 'Hide List' : 'Show List' }</div>
 									</div>
-									{ this.state.expandWarningList && 
-									<Table
-										ui={ui}
-										data={warningList}
-										TitleRow={this.renderWarningTableHeader}
-										Row={WarningListRow}
-										isFetchingData={ui.isFetchingData}
-									/>
-									}
-								</ObjectList>
+								</div>
 								}
 
 								{ (ui.isFetchingData || (inProgress && inProgress.length > 0)) &&
 								<ObjectList className='in-progress-list-container'>
 									{ selectedProcessDetail && selectedProductDetail && 
+									<div>
 										<div className='content-title'>{`In-Progress Ingredients for ${selectedProcessDetail.name} ${selectedProductDetail.code}`}</div>
+										<Table
+											ui={ui}
+											data={inProgress}
+											TitleRow={this.renderInProgressTableHeader}
+											rowContext={{selectedProcess: selectedProcessDetail, selectedProduct: selectedProductDetail}}
+											Row={InProgressListRow}
+											isFetchingData={ui.isFetchingData}
+										/>
+									</div>
 									}
-									<Table
-										ui={ui}
-										data={inProgress}
-										TitleRow={this.renderInProgressTableHeader}
-										rowContext={{selectedProcess: selectedProcessDetail, selectedProduct: selectedProductDetail}}
-										Row={InProgressListRow}
-										isFetchingData={ui.isFetchingData}
-									/>
 								</ObjectList> 
 								}
 							</div>
@@ -136,6 +124,7 @@ export class ProductionPlanning extends React.Component {
 			{ title: 'Category', className: 'inv-category', field: null },
 			{ title: 'In Stock', className: 'inv-in-stock', field: null },
 			{ title: 'Can Make', className: 'inv-can-make', field: null },
+			{ title: '', className: 'inv-warning', field: null },
 		]
 		return (
 			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering} />
@@ -180,10 +169,6 @@ export class ProductionPlanning extends React.Component {
 			}
 		}
 		return null
-	}
-
-	toggleExpandWarningList() {
-		this.setState({ expandWarningList: !this.state.expandWarningList })
 	}
 
 	fetchProductionPlanning() {

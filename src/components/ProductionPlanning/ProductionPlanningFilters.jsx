@@ -11,14 +11,9 @@ class ProductionPlanningFilters extends React.Component {
 		super(props)
 
         this.props.dispatch(processesActions.fetchProcesses())
+        this.props.dispatch(productsActions.fetchProducts())
         this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
         this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.selectedProcessId && this.props.selectedProcessId !== nextProps.selectedProcessId) {
-            this.props.dispatch(productsActions.fetchProducts({process: nextProps.selectedProcessId}))
-        }
     }
 
 	render() {
@@ -48,7 +43,6 @@ class ProductionPlanningFilters extends React.Component {
                     placeholder="Select product"
                     filterOption={processProductFilter}
                     onChange={this.handleProductTypeChange}
-                    disabled={!selectedProcessId}
                     style={{width: '300px', marginRight: '20px'}}
                     notFoundContent={ isFetchingData ? 'Loading...' : 'Not Found'}
                 >
@@ -63,8 +57,7 @@ class ProductionPlanningFilters extends React.Component {
     }
 
     handleProcessTypeChange(selectedProcessId) {
-        this.props.dispatch(productsActions.fetchProducts({process: selectedProcessId}))
-        this.props.onFilter(selectedProcessId, null)
+        this.props.onFilter(selectedProcessId, this.props.selectedProductId)
 	}
 
 	handleProductTypeChange(selectedProductId) {

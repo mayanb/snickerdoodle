@@ -21,16 +21,6 @@
 
 			.warning-title {
 				display: flex;
-
-				.toggle-list {
-					margin-left: auto;
-					color: $primary-light;
-					cursor: pointer;
-
-					&:hover {
-						color: $primary;
-					}
-				}
 			}
 
 			.in-progress-list-container {
