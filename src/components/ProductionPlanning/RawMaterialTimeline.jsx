@@ -78,6 +78,7 @@ export class RawMaterialTimeline extends React.Component {
             .domain(data.map(function(d) { return d.product_type.name; }))
             .padding(0.25);
         
+        // x axis
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
@@ -175,9 +176,9 @@ export class RawMaterialTimeline extends React.Component {
             })
             .text(d => {
                 if (!d.date_exhausted || d.date_exhausted > now) {
-                    return d.product_type.name
+                    return d.process_type.name + ' ' + d.product_type.name
                 }
-                return "No " + d.product_type.name
+                return "No " + d.process_type.name + ' ' + d.product_type.name
             })
 
         // error icon
