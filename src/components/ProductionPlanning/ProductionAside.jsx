@@ -1,31 +1,46 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { dateToUTCString } from '../../utilities/dateutils'
 import Img from '../Img/Img'
 import * as goalActions from '../Goals/GoalsActions'
+import * as activityActions from '../Activity/ActivityActions'
 import './styles/productionaside.css'
 import { formatAmount } from '../../utilities/stringutils'
-import * as goalUtils from '../Goals/GoalUtils'
+import moment from 'moment'
 
 class ProductionAside extends React.Component {
 	constructor(props) {
 		super(props)
 		
+		const { user } = this.props
+		let startDate = moment().subtract(30, 'd').format('YYYY-MM-DD');
+		let endDate = moment(new Date()).format("YYYY-MM-DD")
+		let params = {
+			team: user.team,
+			category_types: 'fg',
+			start: dateToUTCString(startDate),
+			end: dateToUTCString(endDate),
+		}
+		this.props.dispatch(activityActions.fetchActivity(params))
 		this.props.dispatch(goalActions.fetchGoals())
 	}
 
+	componentWillReceiveProps(nextProps) {
+
+	}
 	render() {
-		const { goals, selected } = this.props
+		const { asideData, selected } = this.props
 		return (
 			<div className='production-aside-container'>
 				<div className='title'>In Production this Month</div>
-				{ goals && goals.map(groupedGoal => this.renderGoal(groupedGoal, selected)) }
+				{ asideData && asideData.map(group => this.renderGoal(group, selected)) }
 			</div>
 		)
 	}
 
-	renderGoal(groupedGoal, selected) {
-		const { info, w: weeklyGoal, m: monthlyGoal } = groupedGoal
-		const { process_name, process_unit, product_code, process_id, product_id, inventory_amount } = info
+	renderGoal(group, selected) {
+		const { info, w: weeklyGoal, m: monthlyGoal } = group
+		const { process_name, process_unit, product_code, process_id, product_id, amount, type } = info
 		const warning = null // need to fetch if there are any raw materials running low for this Process/Product type
 		let percent = 0
 		if (monthlyGoal) {
@@ -33,15 +48,14 @@ class ProductionAside extends React.Component {
 		} else if (weeklyGoal) {
 			percent = weeklyGoal.actual / weeklyGoal.goal * 100
 		}
-		const goal_selected = process_id === parseInt(selected.process_id) && product_id === parseInt(selected.product_id) ? true : false
+		const is_selected = String(process_id) === selected.process_id && String(product_id) === selected.product_id ? true : false
 
 		return (
-			<div className={`goal-container ${goal_selected ? 'selected' : ''}`} key={`${process_name} ${product_code}`} onClick={() => this.handleSelect(process_id, product_id)}>
-				<ProgressBar percent={percent} />
+			<div className={`aside-item-container ${is_selected ? 'selected' : ''}`} key={`${process_name} ${product_code}`} onClick={() => this.handleSelect(process_id, product_id)}>
+				{type === 'goal' && <ProgressBar percent={percent} />}
 				<div className='content-container'>
 					<div className='title-container'>
-						<div className='goal-title'>{`${process_name} ${product_code}`}</div>
-
+						<div className='title'>{`${process_name} ${product_code}`}</div>
 						{ warning && 
 							<div className='warning'>
 								<Img src='warning@2x' height="20px" />
@@ -49,8 +63,8 @@ class ProductionAside extends React.Component {
 						}
 					</div>
 					<div className='info-container'>
-						<div className='label'>In Inventory</div>
-						<div className='value'>{formatAmount(inventory_amount, process_unit)}</div>
+						<div className='label'>{type === 'goal' ? 'In Inventory' : 'Produced'}</div>
+						<div className='value'>{formatAmount(amount, process_unit)}</div>
 					</div>
 					{ monthlyGoal && 
 					<div className='info-container'>
@@ -82,34 +96,68 @@ function ProgressBar({ percent }) {
 	)
 }
 
-function formatGoals(goals) {
-	const goalGroups = {}
+function formatAsideData(goals, activities) {
+	const groups = {}
+
+	activities.forEach(activity => {
+		const key = getProductProcessKey(activity, 'activity')
+		if (!groups[key]) {
+			groups[key] = {}
+		}
+		groups[key].info = {
+			type: 'activity',
+			amount: activity.amount,
+			process_id: activity.process_type.id,
+			process_name: activity.process_type.name, 
+			process_unit: activity.process_type.unit,
+			product_id: activity.product_types[0].id,
+			product_code: activity.product_types[0].code,
+		}
+	})
+
 	goals.forEach(goal => {
 		if (!goal.is_trashed && !goal.all_product_types) {
-			const goalKey = goalUtils.getProductProcessKey(goal)
-			if (!goalGroups[goalKey]) {
-				goalGroups[goalKey] = {}
+			const key = getProductProcessKey(goal, 'goal')
+			if (!groups[key]) {
+				groups[key] = {}
 			}
-			goalGroups[goalKey].info = { 
-				inventory_amount: goal.total_inventory_amount,
+			groups[key].info = { 
+				type: 'goal',
+				amount: goal.total_inventory_amount,
 				process_id: goal.process_type,
 				process_name: goal.process_name, 
 				process_unit: goal.process_unit,
 				product_id: goal.product_code[0].id,
 				product_code: goal.product_code[0].code,
 			}
-			goalGroups[goalKey][goal.timerange] = { 
+			groups[key][goal.timerange] = { 
 				actual: Math.round(goal.actual), 
 				goal: Math.round(goal.goal) 
 			}
 		}
 	})
-	return Object.values(goalGroups)
+	
+	return Object.values(groups)
+}
+
+function getProductProcessKey(item, type) {
+	if (type === 'goal') {
+		return `${item.process_type}_${item.product_code[0].id}`
+	} else {
+		return `${item.process_type.id}_${item.product_types[0].id}`
+	}
 }
 
 const mapStateToProps = (state/*, props*/) => {
-	const goals = formatGoals(state.goals.data)
-	return { goals }
+	let {data, ui} = state.users
+	let user = {}
+	if (ui.activeUser && ui.activeUser >= 0 && data[ui.activeUser]) {
+		user = data[ui.activeUser].user
+	}
+	return { 
+		asideData: formatAsideData(state.goals.data, state.activity.data),
+		user,
+	}
 }
 
 export default connect(mapStateToProps)(ProductionAside)
