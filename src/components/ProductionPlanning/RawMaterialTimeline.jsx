@@ -36,6 +36,8 @@ export class RawMaterialTimeline extends React.Component {
         if (!data || !data.length)
             return
 
+        let not_enough_usage_data = data.every(d => !d.date_exhausted)
+
         const ref = this.node
         const BAR_WIDTH = 30
         
@@ -46,7 +48,7 @@ export class RawMaterialTimeline extends React.Component {
             left: 0
         }
         const width = this.props.width - margin.left - margin.right
-        const height = (data.length * BAR_WIDTH)
+        const height = not_enough_usage_data ? BAR_WIDTH : (data.length * BAR_WIDTH)
         const svg = select(ref)
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
@@ -89,6 +91,17 @@ export class RawMaterialTimeline extends React.Component {
                 .tickSizeInner([-height])
                 .tickSizeOuter(0)
             )
+
+        if (not_enough_usage_data) {
+            // label for if all data is not recent
+            svg.append('text')
+                .text('Not enough recent usage data')
+                .attr('class', 'not-enough-usage-data all')
+                .attr('x', width/2)
+                .attr('y', 19)
+
+            return
+        }
 
         let nowPlusOne = new Date(now.getTime())
         nowPlusOne.setDate(nowPlusOne.getDate() + 1)

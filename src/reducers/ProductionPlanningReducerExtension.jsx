@@ -51,7 +51,7 @@ function productionPlanningSuccess(state, action) {
 		inProgress.sort((a, b) => {
 			const a_is_rm = a.process_type.category === 'rm',
 				  b_is_rm = b.process_type.category === 'rm'
-			return (b.warning && b_is_rm) - (a.warning && a_is_rm) || a.process_type.name - b.process_type.name
+			return (b.warning && b_is_rm) - (a.warning && a_is_rm) || a.process_type.name.localeCompare(b.process_type.name)
 		})
 	}
 	if (actionIsValid(state, timestamp)) {

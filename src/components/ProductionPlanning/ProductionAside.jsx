@@ -13,7 +13,7 @@ class ProductionAside extends React.Component {
 		super(props)
 		
 		const { user } = this.props
-		let startDate = moment().subtract(30, 'd').format('YYYY-MM-DD');
+		let startDate = moment().subtract(1, 'months').format('YYYY-MM-DD');
 		let endDate = moment(new Date()).format("YYYY-MM-DD")
 		let params = {
 			team: user.team,
@@ -63,7 +63,7 @@ class ProductionAside extends React.Component {
 						}
 					</div>
 					<div className='info-container'>
-						<div className='label'>{type === 'goal' ? 'In Inventory' : 'Produced'}</div>
+						<div className='label'>Produced</div>
 						<div className='value'>{formatAmount(amount, process_unit)}</div>
 					</div>
 					{ monthlyGoal && 
@@ -104,7 +104,7 @@ function formatAsideData(goals, activities) {
 		if (!groups[key]) {
 			groups[key] = {}
 		}
-		groups[key].info = {
+		groups[key]['info'] = {
 			type: 'activity',
 			amount: activity.amount,
 			process_id: activity.process_type.id,
@@ -118,21 +118,12 @@ function formatAsideData(goals, activities) {
 	goals.forEach(goal => {
 		if (!goal.is_trashed && !goal.all_product_types) {
 			const key = getProductProcessKey(goal, 'goal')
-			if (!groups[key]) {
-				groups[key] = {}
-			}
-			groups[key].info = { 
-				type: 'goal',
-				amount: goal.total_inventory_amount,
-				process_id: goal.process_type,
-				process_name: goal.process_name, 
-				process_unit: goal.process_unit,
-				product_id: goal.product_code[0].id,
-				product_code: goal.product_code[0].code,
-			}
-			groups[key][goal.timerange] = { 
-				actual: Math.round(goal.actual), 
-				goal: Math.round(goal.goal) 
+			if (groups[key]) {
+				groups[key]['info']['type'] = 'goal'
+				groups[key][goal.timerange] = { 
+					actual: Math.round(goal.actual), 
+					goal: Math.round(goal.goal) 
+				}
 			}
 		}
 	})
