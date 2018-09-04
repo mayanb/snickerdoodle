@@ -8,6 +8,8 @@ import {
 	axisLeft,
 	select,
     timeFormat,
+    max,
+    selection
 } from 'd3'
 import { getSrcImg } from '../Img/Img'
 import './styles/rawmaterialtimeline.css'
@@ -31,6 +33,13 @@ export class RawMaterialTimeline extends React.Component {
 	}
     
     renderTimeline() {
+
+        selection.prototype.moveToFront = function() {
+            return this.each(function(){
+              this.parentNode.appendChild(this);
+            })
+        }
+        
         const { data } = this.props
 
         if (!data || !data.length)
@@ -67,18 +76,47 @@ export class RawMaterialTimeline extends React.Component {
         
         const now = new Date()
 
+        let y = scaleBand()
+            .range([height, 0])
+            .domain(data.map(function(d) { return getYAxisId(d.process_type.id, d.product_type.name) }))
+            .padding(0.25);
+
+        // y axis
+        let yAxis = svg.append("g")
+            .attr("class", "y axis")
+            //.attr("transform", "translate(" + x(now) + ", 0)")
+            .call(axisLeft(y)
+                .tickSizeOuter(0)
+            )
+        
+        // change y axis text color if exhausted material
+        svg.selectAll(".y text")
+            .data(data)
+            .attr('class', d => {
+                if (!d.date_exhausted || d.date_exhausted > now) {
+                    return 'y-axis-text'
+                }
+                return 'y-axis-text-danger'
+            })
+            .text(d => {
+                if (!d.date_exhausted || d.date_exhausted > now) {
+                    return d.process_type.name + ' ' + d.product_type.name
+                }
+                return "No " + d.process_type.name + ' ' + d.product_type.name
+            })
+
+        let maxLabelWidth = max(yAxis.selectAll('text').nodes(), n => n.getComputedTextLength())
+
         const minAxisDate = new Date(now.getTime())
-        minAxisDate.setDate(minAxisDate.getDate() - 25)
+        minAxisDate.setDate(minAxisDate.getDate() - maxLabelWidth/6)
         const maxAxisDate = new Date(minAxisDate.getTime())
         maxAxisDate.setMonth(maxAxisDate.getMonth() + 4)
 
         let x = scaleTime()
             .range([0, width])
             .domain([minAxisDate, maxAxisDate])
-        let y = scaleBand()
-            .range([height, 0])
-            .domain(data.map(function(d) { return getYAxisId(d.process_type.id, d.product_type.name) }))
-            .padding(0.25);
+
+        yAxis.attr('transform', 'translate(' + x(now) + ', 0)')
         
         // x axis
         svg.append("g")
@@ -91,9 +129,10 @@ export class RawMaterialTimeline extends React.Component {
                 .tickSizeInner([-height])
                 .tickSizeOuter(0)
             )
-
+        
         if (not_enough_usage_data) {
             // label for if all data is not recent
+            yAxis.remove()
             svg.append('text')
                 .text('Not enough recent usage data')
                 .attr('class', 'not-enough-usage-data all')
@@ -170,29 +209,7 @@ export class RawMaterialTimeline extends React.Component {
             })
             .style("fill", "url(#gradient)")
 
-        // y axis
-        svg.append("g")
-            .attr("class", "y axis")
-            .attr("transform", "translate(" + x(now) + ", 0)")
-            .call(axisLeft(y)
-                .tickSizeOuter(0)
-            )
-        
-        // change y axis text color if exhausted material
-        svg.selectAll(".y text")
-            .data(data)
-            .attr('class', d => {
-                if (!d.date_exhausted || d.date_exhausted > now) {
-                    return 'y-axis-text'
-                }
-                return 'y-axis-text-danger'
-            })
-            .text(d => {
-                if (!d.date_exhausted || d.date_exhausted > now) {
-                    return d.process_type.name + ' ' + d.product_type.name
-                }
-                return "No " + d.process_type.name + ' ' + d.product_type.name
-            })
+        yAxis.moveToFront()
 
         // error icon
         svg.selectAll('.y .axis')
