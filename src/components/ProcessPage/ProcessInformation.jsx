@@ -4,6 +4,7 @@ import ProcessPageEditForm from './ProcessPageEditForm'
 import ProcessEditForm from "./ProcessEditForm"
 import { ElementTitle } from '../Element/Element'
 import CategoryTag from '../CategoryTag/CategoryTag'
+import Tags from '../Tags/Tags'
 import { Modal } from 'antd'
 
 const { confirm } = Modal
@@ -44,7 +45,7 @@ export default class ProcessInformation extends React.Component {
 						{...this.state} 
 						isLoading={isSavingEdit} 
 					/> :
-					<ProcessBasicInformation { ...process } />
+					<ProcessBasicInformation { ...process } tags={[{name: 'burning'}, {name: 'learning'}, {name: 'cool'}]} />
 				}
 				</div>
 				<ProcessPageEditForm onArchive={onArchive} onDuplicate={onDuplicate}/>
@@ -89,7 +90,7 @@ export default class ProcessInformation extends React.Component {
 	}
 }
 
-function ProcessBasicInformation({ code, name, output_desc, default_amount, unit}) {
+function ProcessBasicInformation({ code, name, tags, output_desc, default_amount, unit}) {
 	let defaultAmount = parseFloat(default_amount)
 	return (
 		<div className="process-information-basic">
@@ -101,6 +102,12 @@ function ProcessBasicInformation({ code, name, output_desc, default_amount, unit
 				<span>Output Description</span>
 				<span className={output_desc ? 'emphasis' : 'no-description'}>{output_desc || "No description"}</span>
 			</div>
+			{ tags && tags.length > 0 &&
+			<div className="piece-of-info">
+				<span>Tags</span>
+				<Tags tags={tags} style={{ marginTop: '4px' }}/>
+			</div>
+			} 
 		</div>
 	)
 }
