@@ -5,7 +5,7 @@ import './styles/tags.css'
 export default function Tags({style, tags, ...rest}) {
     return (
         <div className='tags-list-container' style={style}>
-            { tags && tags.length > 0 && tags.map(tag => <Tag name={tag.name} />) }
+            { tags && tags.length > 0 && tags.map(tag => <Tag key={tag.id} name={tag.name} />) }
         </div>
     )
 }

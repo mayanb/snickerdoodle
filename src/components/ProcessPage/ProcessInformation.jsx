@@ -45,7 +45,7 @@ export default class ProcessInformation extends React.Component {
 						{...this.state} 
 						isLoading={isSavingEdit} 
 					/> :
-					<ProcessBasicInformation { ...process } tags={[{name: 'burning'}, {name: 'learning'}, {name: 'cool'}]} />
+					<ProcessBasicInformation { ...process } />
 				}
 				</div>
 				<ProcessPageEditForm onArchive={onArchive} onDuplicate={onDuplicate}/>
@@ -76,7 +76,7 @@ export default class ProcessInformation extends React.Component {
 		if (this.state.isSavingEdit) {
 			return 
 		}
-		let { icon, name, code, output_desc, default_amount, unit, category } = this.state
+		let { icon, name, code, output_desc, default_amount, unit, category, tags} = this.state
 		const updatedProcessInfo = {
 			icon: icon,
 			name: name,
@@ -84,7 +84,8 @@ export default class ProcessInformation extends React.Component {
 			output_desc: output_desc,
 			default_amount: default_amount,
 			unit: unit,
-			category: category
+			category: category,
+			tags: tags,
 		}
 		this.handleConfirmSubmit(updatedProcessInfo)
 	}

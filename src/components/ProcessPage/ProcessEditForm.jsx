@@ -1,4 +1,5 @@
 import React from 'react'
+import { Select } from 'antd'
 import FormGroup from '../Inputs/FormGroup'
 import Button from '../Button/Button'
 import Input from '../Inputs/Input'
@@ -6,13 +7,14 @@ import './styles/processeditform.css'
 import IconPicker from '../IconPicker/IconPicker'
 import ProcessCategoryPicker from '../Processes/ProcessCategoryPicker'
 
-export default function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, category, isLoading, onChange, onSubmit}) {
+export default function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, category, tags, tagNames, isLoading, onChange, onSubmit}) {
 	return (
 		<div className='edit-process-info'>
 			<CodeAndName onChange={onChange} icon={icon} code={code} name={name} />
 			<OutputDescription onChange={onChange} output_desc={output_desc} />
 			<OutputQuantity onChange={onChange} default_amount={default_amount} unit={unit}/>
 			<Category onChange={onChange} category={category} />
+			<TagSelect onChange={onChange} tags={tagNames ? tagNames : tags} />
 			<FormGroup>
 				<Button wide onClick={onSubmit} isLoading={isLoading}>Save changes</Button>
 			</FormGroup>
@@ -86,6 +88,28 @@ function Category({ onChange, category}) {
 	return (
 		<FormGroup label="Category">
 			<ProcessCategoryPicker onChange={e => onChange(e.key, "category")} category={category} />
+		</FormGroup>
+	)
+}
+
+function TagSelect({ onChange, tags }) {
+	const tagNames = tags.map(t => t.name)
+	return (
+		<FormGroup label="Tags">
+			<Select 
+				mode="tags"
+				size="large"
+				style={{ width: '100%' }}
+				placeholder="Select Tags"
+				defaultValue={tagNames}
+				onChange={ e => {
+					const formatted = []
+					e.forEach(tagName => {
+						formatted.push({'name': tagName})
+					})
+					onChange(formatted, 'tags')
+				}}
+			/>
 		</FormGroup>
 	)
 }
