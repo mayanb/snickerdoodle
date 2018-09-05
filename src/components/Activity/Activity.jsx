@@ -304,7 +304,6 @@ class Activity extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	console.log('state.activity.data', state.activity.data)
 	return {
 		data: state.activity.data,
 		ui: state.activity.ui,
