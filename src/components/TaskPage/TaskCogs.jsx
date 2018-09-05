@@ -4,23 +4,33 @@ import { InputNumber } from 'antd'
 import { Peripherals } from './TaskForm'
 import { RM } from '../../utilities/constants'
 
-const TIME_TO_STAY_UNSAVED = 500
+const TIME_TO_STAY_UNSAVED = 1000 // Saving represents a significant backend/DB change. We don't want ot over-fire.
 const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
 const TIME_TO_SHOW_SAVED = 1500
 
 export default function TaskCogs({ task, onSaveCost }) {
 	return (
 		<Card>
-			<div style={{display: "flex", flexDirection: "column"}}>
-				<span style={{fontWeight:700}}>COGS data</span>
-				<Cost cost={task.cost} category={task.process_type.category} onSaveCost={onSaveCost}/>
-				<span>Remaining value: {format(task.remaining_worth)}</span>
+			<div className="task-cogs">
+				<UpdatingCost cost={task.cost} category={task.process_type.category} onSaveCost={onSaveCost} />
+				<StaticCost label="Remaining value" cost={task.remaining_worth} />
 			</div>
 		</Card>
 	)
 }
 
-class Cost extends React.Component {
+function StaticCost({label, cost}) {
+	return (
+		<div className="task-cogs-row">
+			<div className="info">
+				<div>{label}:</div>
+				<div>{format(cost)}</div>
+			</div>
+		</div>
+	)
+}
+
+class UpdatingCost extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -38,17 +48,19 @@ class Cost extends React.Component {
 	render() {
 		const { cost, category } = this.props
 		return category === RM ? (
-			<div>
-				<span>Cost of raw material:</span>
-				<InputNumber
-					defaultValue={cost || 0}
-					formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-					parser={value => value.replace(/\$\s?|(,*)/g, '')}
-					onChange={this.handleChange}
-				/>
+			<div className="task-cogs-row">
+				<div className="info">
+					<div>Cost of raw material:</div>
+					<InputNumber
+						defaultValue={cost || 0}
+						formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+						parser={value => value.replace(/\$\s?|(,*)/g, '')}
+						onChange={this.handleChange}
+					/>
+				</div>
 				<Peripherals {...this.state} onRetry={this.handleSave} />
 			</div>
-		) : <div>Cost to create: {cost}</div>
+		) : <StaticCost label="Cost to create" cost={cost} />
 	}
 	
 	handleChange(newCost) {
