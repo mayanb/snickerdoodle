@@ -54,7 +54,7 @@ class UpdatingCost extends React.Component {
 					<InputNumber
 						defaultValue={cost || 0}
 						formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-						parser={value => value.replace(/\$\s?|(,*)/g, '')}
+						parser={value => value.replace(/[^0-9.]+/g, '')}
 						onChange={this.handleChange}
 					/>
 				</div>
@@ -73,6 +73,10 @@ class UpdatingCost extends React.Component {
 	}
 	
 	handleSave(newCost) {
+		if (isNaN(newCost)) {
+			return
+		}
+		
 		this.setState({ isLoading: true, hasError: false })
 		const apiPromise = this.props.onSaveCost(newCost)
 		return apiPromise
