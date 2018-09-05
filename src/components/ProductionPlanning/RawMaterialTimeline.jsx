@@ -41,11 +41,12 @@ export class RawMaterialTimeline extends React.Component {
         }
         
         const { data } = this.props
+        const now = new Date()
 
         if (!data || !data.length)
             return
 
-        let not_enough_usage_data = data.every(d => !d.date_exhausted)
+        let not_enough_usage_data = data.every(d => !d.date_exhausted && !is_error(d, now))
 
         const ref = this.node
         const BAR_WIDTH = 30
@@ -65,17 +66,16 @@ export class RawMaterialTimeline extends React.Component {
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         data.sort(function(a, b) {
-            if (a.date_exhausted === null) {
+            if (!a.date_exhausted && a.adjusted_amount > 0) {
                 return Number.MIN_SAFE_INTEGER
             } 
-            if (b.date_exhausted === null) {
+            if (!b.date_exhausted && b.adjusted_amount > 0) {
                 return Number.MAX_SAFE_INTEGER
             }
             return b.date_exhausted - a.date_exhausted
         })
-        
-        const now = new Date()
 
+        // y scale
         let y = scaleBand()
             .range([height, 0])
             .domain(data.map(function(d) { return getYAxisId(d.process_type.id, d.product_type.name) }))
@@ -93,29 +93,31 @@ export class RawMaterialTimeline extends React.Component {
         svg.selectAll(".y text")
             .data(data)
             .attr('class', d => {
-                if (!d.date_exhausted || d.date_exhausted > now) {
-                    return 'y-axis-text'
+                if (is_error(d, now)) {
+                    return 'y-axis-text-danger'
                 }
-                return 'y-axis-text-danger'
+                return 'y-axis-text'
             })
             .text(d => {
-                if (!d.date_exhausted || d.date_exhausted > now) {
-                    return d.process_type.name + ' ' + d.product_type.name
+                if (is_error(d, now)) {
+                    return 'No ' + d.process_type.name + ' ' + d.product_type.name
                 }
-                return "No " + d.process_type.name + ' ' + d.product_type.name
+                return d.process_type.name + ' ' + d.product_type.name
             })
 
         let maxLabelWidth = max(yAxis.selectAll('text').nodes(), n => n.getComputedTextLength())
 
         const minAxisDate = new Date(now.getTime())
-        minAxisDate.setDate(minAxisDate.getDate() - maxLabelWidth/6)
+        minAxisDate.setDate(minAxisDate.getDate() - maxLabelWidth/5.5)
         const maxAxisDate = new Date(minAxisDate.getTime())
         maxAxisDate.setMonth(maxAxisDate.getMonth() + 4)
 
+        // x scale
         let x = scaleTime()
             .range([0, width])
             .domain([minAxisDate, maxAxisDate])
 
+        // position the y axis at the current date
         yAxis.attr('transform', 'translate(' + x(now) + ', 0)')
         
         // x axis
@@ -148,15 +150,15 @@ export class RawMaterialTimeline extends React.Component {
             .data(data)
             .enter().append("path")
             .attr("d", d => {
-                if (!d.date_exhausted)
+                if (!d.date_exhausted && !is_error(d, now))
                     return null
                 // we use nowPlusOne instead of now so that there is a little nub sticking out if the resource is exhausted
-                const barLength = d.date_exhausted < nowPlusOne ? x(nowPlusOne) - x(now): x(d.date_exhausted) - x(now)
+                const barLength = is_error(d, nowPlusOne) ? x(nowPlusOne) - x(now): x(d.date_exhausted) - x(now)
                 // border radius is perfectly round when it is one third of the bar width
                 const borderRadius = BAR_WIDTH/3
                 return rightRoundedRect(x(now), y(getYAxisId(d.process_type.id, d.product_type.name)), barLength, y.bandwidth(), borderRadius)
             })
-            .attr("class", d => d.date_exhausted < now ? "grayed-out-bar" : "bar")
+            .attr("class", d => is_error(d, now) ? "grayed-out-bar" : "bar")
             // changes bar opacity based on when the raw material will be exhausted
             .style("opacity", d => {
                 // Minimum opacity will be at maxDate 
@@ -202,7 +204,7 @@ export class RawMaterialTimeline extends React.Component {
             .attr("x", 0)
             .attr("y", d => y(getYAxisId(d.process_type.id, d.product_type.name)))
             .attr('opacity', d => {
-                if (!d.date_exhausted) {
+                if (!d.date_exhausted && !is_error(d, now)) {
                     return 0.0
                 }
                 return 1.0
@@ -222,21 +224,28 @@ export class RawMaterialTimeline extends React.Component {
             .attr('x', 10)
             .attr('y', d => y(getYAxisId(d.process_type.id, d.product_type.name)) + 3)
             .attr('opacity', d => {
-                if (!d.date_exhausted || d.date_exhausted > now){
-                    return 0.0
+                if (is_error(d, now)) {
+                    return 1.0
                 }
-                return 1.0
+                return 0.0
             })
 
         // not enough recent usage data
         svg.selectAll('.y .axis')
             .data(data).enter()
             .append('text')
-            .text(d => !d.date_exhausted ? 'Not enough recent usage data' : '')
+            .text(d => !d.date_exhausted && !is_error(d, now) ? 'Not enough recent usage data' : '')
             .attr('class', 'not-enough-usage-data')
             .attr('x', x(now) + 8)
             .attr('y', d => y(getYAxisId(d.process_type.id, d.product_type.name)) + 14)
         
+        function is_error(d, time) {
+            if ((d.date_exhausted && d.date_exhausted < time) || d.adjusted_amount <= 0) {
+                return true
+            }
+            return false
+        }
+
         function getYAxisId(process_id, product_id) {
             return process_id + ',' + product_id
         }
