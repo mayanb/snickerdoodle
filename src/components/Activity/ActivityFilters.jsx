@@ -20,6 +20,7 @@ export default class ActivityFilters extends React.Component {
 		this.handleProcessTypesChange = this.handleProcessTypesChange.bind(this)
 		this.handleProductTypesChange = this.handleProductTypesChange.bind(this)
 		this.handleCategoryTypesChange = this.handleCategoryTypesChange.bind(this)
+		this.handleTagTypesChange = this.handleTagTypesChange.bind(this)
 		this.handleFlaggedOnlyChange = this.handleFlaggedOnlyChange.bind(this)
 		this.handleAggregateProductsChange = this.handleAggregateProductsChange.bind(this)
 		this.handleDownload = this.handleDownload.bind(this)
@@ -45,6 +46,10 @@ export default class ActivityFilters extends React.Component {
 		this.props.onFilterChange({ ...this.props.filters, selectedCategories: selectedCategories })
 	}
 
+	handleTagTypesChange(selectedTags) {
+		this.props.onFilterChange({ ...this.props.filters, selectedTags: selectedTags })
+	}
+
 	handleFlaggedOnlyChange(event) {
 		const isChecked = event.target.checked
 		this.props.onFilterChange({ ...this.props.filters, flaggedOnly: isChecked })
@@ -61,7 +66,7 @@ export default class ActivityFilters extends React.Component {
 	}
 
 	render() {
-		const { filters, downloadDisabled, processes, products } = this.props
+		const { filters, downloadDisabled, processes, products, tags } = this.props
 		const categories = [
 			{ name: CATEGORY_NAME[RM], code: RM },
 			{ name: CATEGORY_NAME[WIP], code: WIP },
@@ -129,6 +134,19 @@ export default class ActivityFilters extends React.Component {
 							value={filters.keywords}
 							onChange={this.handleKeywordsChange}
 						/>
+					</div>
+					<div className="select-container">
+						{ tags.length > 0 && 
+						<Select
+							mode="multiple"
+							value={filters.selectedTags}
+							allowClear
+							placeholder="Filter Tags"
+							onChange={this.handleTagTypesChange}
+						>
+							{ tags.map(t => <Select.Option key={t.name} data={t}>{t.name}</Select.Option>) }
+						</Select>
+						}
 					</div>
 					<div className="checkboxes">
 						<Checkbox
