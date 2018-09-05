@@ -251,6 +251,26 @@ export function deleteTask(task) {
   }
 }
 
+export function updateTaskCost(task, newCost) {
+	return function (dispatch) {
+		dispatch((requestEditTask()))
+		return api.put(`/ics/tasks/edit/${task.id}/`)
+			.send({
+				is_open: task.is_open,
+				label: task.label,
+				label_index: task.label_index,
+				custom_display: task.custom_display,
+				is_trashed: task.is_trashed,
+				is_flagged: task.is_flagged,
+				experiment: null,
+        cost: newCost,
+        cost_set_by_user: newCost, // Safely store user inputs in separate field in case we need to reset graph
+			})
+			.then(() => dispatch(requestEditTaskSuccess("cost", newCost)))
+			.catch(e => console.log("Error", e))
+	}
+}
+
 function requestEditTask() {
   return {
     type: REQUEST_EDIT_TASK,

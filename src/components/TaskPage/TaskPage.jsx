@@ -15,6 +15,7 @@ class TaskPage extends React.Component {
 		this.handleFlagTask = this.handleFlagTask.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
 		this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
+		this.handleSaveCost = this.handleSaveCost.bind(this)
 		this.handleDropFiles = this.handleDropFiles.bind(this)
 		this.handleCreateAttribute = this.handleCreateAttribute.bind(this)
 	}
@@ -51,6 +52,10 @@ class TaskPage extends React.Component {
 		return this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
 	}
 	
+	handleSaveCost(newCost) {
+		return this.props.dispatch(actions.updateTaskCost(this.props.task, newCost))
+	}
+	
 	handleCreateAttribute(attribute, value) {
 		const task = this.props.task
 		const index = task.attributesWithValues.findIndex(a => a.id === attribute)
@@ -80,10 +85,11 @@ class TaskPage extends React.Component {
 					<ProductHistory />
 					<TaskMain 
 						task={task}
-					  	attributes={task.attributesWithValues}
-					  	onSaveAttribute={this.handleSaveAttribute}
+						attributes={task.attributesWithValues}
+						onSaveAttribute={this.handleSaveAttribute}
+						onSaveCost={this.handleSaveCost}
 						onCreateAttribute={this.handleCreateAttribute}
-					  	teamTimeFormat={teamTimeFormat}
+						teamTimeFormat={teamTimeFormat}
 					/>
 					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} onDropFiles={this.handleDropFiles} task={task} name={task.display} />
 				</div>
