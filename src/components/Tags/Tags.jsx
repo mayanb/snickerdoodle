@@ -1,5 +1,5 @@
 import React from 'react'
-import Tag from '../Tag/Tag'
+import Tag from './Tag'
 import './styles/tags.css'
 
 export default function Tags({style, tags, ...rest}) {

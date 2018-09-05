@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Select } from 'antd'
 import FormGroup from '../Inputs/FormGroup'
 import Button from '../Button/Button'
@@ -7,20 +8,28 @@ import './styles/processeditform.css'
 import IconPicker from '../IconPicker/IconPicker'
 import ProcessCategoryPicker from '../Processes/ProcessCategoryPicker'
 
-export default function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, category, tags, tagNames, isLoading, onChange, onSubmit}) {
+function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, category, tags, allTags, isLoading, onChange, onSubmit}) {
 	return (
 		<div className='edit-process-info'>
 			<CodeAndName onChange={onChange} icon={icon} code={code} name={name} />
 			<OutputDescription onChange={onChange} output_desc={output_desc} />
 			<OutputQuantity onChange={onChange} default_amount={default_amount} unit={unit}/>
 			<Category onChange={onChange} category={category} />
-			<TagSelect onChange={onChange} tags={tagNames ? tagNames : tags} />
+			<TagSelect onChange={onChange} tags={tags} allTags={allTags} />
 			<FormGroup>
 				<Button wide onClick={onSubmit} isLoading={isLoading}>Save changes</Button>
 			</FormGroup>
 		</div>
 	)
 }
+
+const mapStateToProps = (state/*, props*/) => { 
+	return {
+		allTags: state.tags.data,
+	}
+}
+
+export default connect(mapStateToProps)(EditProcessInfoForm)
 
 function CodeAndName({ onChange, icon, code, name }) {
 	return (
@@ -92,8 +101,10 @@ function Category({ onChange, category}) {
 	)
 }
 
-function TagSelect({ onChange, tags }) {
+function TagSelect({ onChange, tags, allTags }) {
+	const Option = Select.Option
 	const tagNames = tags.map(t => t.name)
+	const allTagsNames = allTags.map(t => t.name)
 	return (
 		<FormGroup label="Tags">
 			<Select 
@@ -109,7 +120,9 @@ function TagSelect({ onChange, tags }) {
 					})
 					onChange(formatted, 'tags')
 				}}
-			/>
+			>
+				{ allTagsNames && allTagsNames.map(tagName => <Option key={tagName}>{tagName}</Option>) }
+			</Select>
 		</FormGroup>
 	)
 }
