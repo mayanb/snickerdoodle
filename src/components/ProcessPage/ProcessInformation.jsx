@@ -76,7 +76,7 @@ export default class ProcessInformation extends React.Component {
 		if (this.state.isSavingEdit) {
 			return 
 		}
-		let { icon, name, code, output_desc, default_amount, unit, category, tags} = this.state
+		let { icon, name, code, output_desc, default_amount, unit, category, tags } = this.state
 		const updatedProcessInfo = {
 			icon: icon,
 			name: name,
@@ -103,12 +103,13 @@ function ProcessBasicInformation({ code, name, tags, output_desc, default_amount
 				<span>Output Description</span>
 				<span className={output_desc ? 'emphasis' : 'no-description'}>{output_desc || "No description"}</span>
 			</div>
-			{ tags && tags.length > 0 &&
 			<div className="piece-of-info">
 				<span>Tags</span>
-				<Tags tags={tags} style={{ marginTop: '4px' }}/>
+				{ tags && tags.length > 0 ?
+				<Tags tags={tags} style={{ marginTop: '4px' }}/> :
+				<span className='no-tags'>No tags</span>
+				}
 			</div>
-			} 
 		</div>
 	)
 }

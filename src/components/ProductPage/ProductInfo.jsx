@@ -1,6 +1,7 @@
 import React from 'react'
 import DeleteProduct from './DeleteProduct'
 import ProductEditInfoForm from './ProductEditInfoForm'
+import Tags from '../Tags/Tags'
 import { ElementTitle } from '../Element/Element'
 
 export default class ProductInfo extends React.Component {
@@ -57,30 +58,37 @@ export default class ProductInfo extends React.Component {
 		}
 	}
 	
-	handleChange(e, type) {
-		let key = type
-		this.setState({ [key] : e.target.value })
+	handleChange(value, type) {
+		this.setState({ [type] : value })
 	}
 	
 	handleSubmit() {
 		if (this.props.isSavingEdit) {
 			return
 		}
-		let { name, code, description } = this.state
+		let { name, code, description, tags } = this.state
 		this.props.onSubmitEdit({
 			name: name,
 			code: code,
 			description: description,
+			tags: tags,
 		}).then(() => this.setState({ isEditing: false }))
 	}
 }
 
-function ProductBasicInfo({ code, name, description, }) {
+function ProductBasicInfo({ code, name, tags, description, }) {
 	return (
 		<div className='product-information-basic'>
 			<div className='piece-of-info'>
 				<span>Description</span>
 				<span className={description ? 'emphasis' : 'no-description'}>{description || 'No description'}</span>
+			</div>
+			<div className="piece-of-info">
+				<span>Tags</span>
+				{ tags && tags.length > 0 ?
+				<Tags tags={tags} style={{ marginTop: '4px' }}/> :
+				<span className='no-tags'>No tags</span>
+				}
 			</div>
 		</div>
 	)

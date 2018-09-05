@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Select } from 'antd'
 import FormGroup from '../Inputs/FormGroup'
 import Button from '../Button/Button'
 import Input from '../Inputs/Input'
 import './styles/processeditform.css'
 import IconPicker from '../IconPicker/IconPicker'
+import TagSelect from '../Tags/TagSelect'
 import ProcessCategoryPicker from '../Processes/ProcessCategoryPicker'
 
 function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, category, tags, allTags, isLoading, onChange, onSubmit}) {
@@ -15,7 +15,7 @@ function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, un
 			<OutputDescription onChange={onChange} output_desc={output_desc} />
 			<OutputQuantity onChange={onChange} default_amount={default_amount} unit={unit}/>
 			<Category onChange={onChange} category={category} />
-			<TagSelect onChange={onChange} tags={tags} allTags={allTags} />
+			<TagSelect onChange={onChange} selectedTags={tags} allTags={allTags} />
 			<FormGroup>
 				<Button wide onClick={onSubmit} isLoading={isLoading}>Save changes</Button>
 			</FormGroup>
@@ -97,32 +97,6 @@ function Category({ onChange, category}) {
 	return (
 		<FormGroup label="Category">
 			<ProcessCategoryPicker onChange={e => onChange(e.key, "category")} category={category} />
-		</FormGroup>
-	)
-}
-
-function TagSelect({ onChange, tags, allTags }) {
-	const Option = Select.Option
-	const tagNames = tags.map(t => t.name)
-	const allTagsNames = allTags.map(t => t.name)
-	return (
-		<FormGroup label="Tags">
-			<Select 
-				mode="tags"
-				size="large"
-				style={{ width: '100%' }}
-				placeholder="Select Tags"
-				defaultValue={tagNames}
-				onChange={ e => {
-					const formatted = []
-					e.forEach(tagName => {
-						formatted.push({'name': tagName})
-					})
-					onChange(formatted, 'tags')
-				}}
-			>
-				{ allTagsNames && allTagsNames.map(tagName => <Option key={tagName}>{tagName}</Option>) }
-			</Select>
 		</FormGroup>
 	)
 }
