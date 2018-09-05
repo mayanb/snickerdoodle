@@ -51,7 +51,7 @@ export default class CumulativeAreaChart extends React.Component {
 		if (!this.props.data || !this.props.data.length)
 			return
 
-
+			
 		const ref = this.node
 
 		const chartData = convertChartData(this.props.data, this.props.name)

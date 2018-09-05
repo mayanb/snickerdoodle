@@ -1,0 +1,55 @@
+@import 'styles/constants.scss';
+
+.production-planning-container {
+	width: calc(100vw - #{$nav-width});
+	height: fit-content;
+
+	.production-planning-body {
+		display: flex;
+		flex-direction: row;
+
+		.production-planning-main {
+			flex: 3.5;
+			padding: 30px 50px;
+
+			.empty-screen-text {
+				margin: 36px 0;
+				color: $gray;
+				font-style: italic;
+			}
+
+			.warning-list-container {
+				padding: 16px 22px;
+				background-color: white;
+				box-shadow: $shadow-1;
+				margin-bottom: 16px;
+			}
+
+			.warning-title {
+				display: flex;
+			}
+
+			.in-progress-list-container {
+				padding: 22px;
+				background-color: white;
+				box-shadow: $shadow-1;
+			}
+
+			.content-title {
+				font-weight: bold;
+				margin-bottom: 22px;
+			}
+
+			
+
+			.object-list-header {
+				border-top: none;
+				padding: 0 36px 0 36px;
+			}
+
+			.object-list-item {
+				padding: 0 36px 0 36px;
+			}
+		}
+	}
+}
