@@ -10,7 +10,7 @@ export default class ObjectListItem extends React.Component {
 		if(this.props.className) {
 			className = `${className} ${this.props.className}`
 		}
-
+		
 		return (
 			<div {...this.props} className={className}>
 				{this.props.children}
