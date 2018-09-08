@@ -8,6 +8,8 @@ import TaskMain from './TaskMain'
 import TaskQR from './TaskQR'
 import './styles/taskpage.css'
 
+const TIME_TO_WAIT_FOR_COST_PROPAGATION_TO_FINISH = 2000
+
 class TaskPage extends React.Component {
 	constructor(props) {
 		super(props)
@@ -54,6 +56,12 @@ class TaskPage extends React.Component {
 	
 	handleSaveCost(newCost) {
 		return this.props.dispatch(actions.updateTaskCost(this.props.task, newCost))
+			.then(() => {
+				window.setTimeout(() => {
+					console.log('Sending task refresh REQUEST');
+					this.props.dispatch(actions.getTask(this.props.task.id)).then(() => console.log('fetching task is DONE.'))
+				}, TIME_TO_WAIT_FOR_COST_PROPAGATION_TO_FINISH)
+			})
 	}
 	
 	handleCreateAttribute(attribute, value) {
