@@ -8,6 +8,7 @@ import TaskMain from './TaskMain'
 import TaskQR from './TaskQR'
 import './styles/taskpage.css'
 
+// Our best guess of how long the cost update async function will take to update the DB so we can refresh.
 const TIME_TO_WAIT_FOR_COST_PROPAGATION_TO_FINISH = 2000
 
 class TaskPage extends React.Component {
@@ -57,10 +58,11 @@ class TaskPage extends React.Component {
 	handleSaveCost(newCost) {
 		return this.props.dispatch(actions.updateTaskCost(this.props.task, newCost))
 			.then(() => {
-				window.setTimeout(() => {
-					console.log('Sending task refresh REQUEST');
-					this.props.dispatch(actions.getTask(this.props.task.id)).then(() => console.log('fetching task is DONE.'))
-				}, TIME_TO_WAIT_FOR_COST_PROPAGATION_TO_FINISH)
+				return new Promise((resolve) => { // returning a promise means the next .then will wait on the promise
+					window.setTimeout(() => {
+						resolve(this.props.dispatch(actions.getTask(this.props.task.id)).then(() => console.log('fetching task is DONE.')))
+					}, TIME_TO_WAIT_FOR_COST_PROPAGATION_TO_FINISH)
+				})
 			})
 	}
 	
