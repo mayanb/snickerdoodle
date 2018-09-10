@@ -265,6 +265,7 @@ export function updateTaskCost(task, newCost) {
 				experiment: null,
         cost: newCost,
         cost_set_by_user: newCost, // Safely store user inputs in separate field in case we need to reset graph
+        remaining_worth: newCost,
 			})
 			.then(() => dispatch(requestEditTaskSuccess("cost", newCost)))
 			.catch(e => console.log("Error", e))
