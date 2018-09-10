@@ -1,0 +1,80 @@
+@import 'styles/constants.scss';
+
+.raw-materials-timeline {
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: center;
+
+    .bar {
+        fill: $primary;
+    }
+
+    .grayed-out-bar {
+        fill: $elephant;
+    }
+
+    .stop-left {
+        stop-color: white
+    }
+
+    .stop-right {
+        stop-color: $elephant
+    }
+
+    // Both axes styles
+    .axis line {
+      fill: none;
+      stroke-width: 1px;
+      shape-rendering: crispEdges;
+    }
+
+    // Axes styles
+    .x path {
+        stroke: $elephant;
+    }
+    .y path {
+        stroke: $gray-dark;
+    }
+
+    // Axes ticks
+    .x line {
+        stroke: $elephant-light;
+    }
+    .y line {
+        display: none;
+    }
+
+    // Axes text
+    .x text {
+        fill: $elephant;
+        font-size: 10px;
+    }
+
+    .y-axis-text {
+        fill: $gray-dark;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .y-axis-text-danger {
+        fill: $red;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .not-enough-usage-data {
+        font-size: 12px;
+        font-style: italic;
+        fill: $elephant;
+        paint-order: stroke;
+        stroke: $background-color;
+        stroke-width: 6;
+        stroke-linecap: butt;
+        stroke-linejoin: miter;
+    }
+
+    .not-enough-usage-data.all {
+        text-anchor: middle;
+    }
+}

@@ -64,9 +64,10 @@ class Navbar extends React.Component {
   renderActivityLogAndInventoryNavigation() {
     let group1 = [
       {title: 'Dashboard', icon: 'dashboard@2x', link: ''},
+      {title: 'Production Planning', icon: 'production_planning', link: 'production-planning'},
       {title: 'Activity Log', icon: 'activity@2x', link: 'activity-log'},
+      {title: 'Inventory', icon: 'inventory@2x', link: 'inventory'},
     ]
-    group1.push({title: 'Inventory', icon: 'inventory@2x', link: 'inventory'})
     return <NavigationGroup group={group1} title={null} />
 
   }

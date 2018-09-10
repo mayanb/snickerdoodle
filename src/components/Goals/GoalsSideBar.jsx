@@ -6,6 +6,7 @@ import Goal from './Goal'
 import './styles/goalssidebar.css'
 import * as actions from "./GoalsActions"
 import { GOALS, PINS } from '../../utilities/constants'
+import * as utils from './GoalUtils'
 
 
 const PINNNED_TITLE = 'Pinned'
@@ -74,7 +75,7 @@ class GoalsSideBar extends React.Component {
 		const groupedGoals = {}
 
 		pins.forEach(pin => {
-			const key = getProductProcessKey(pin)
+			const key = utils.getProductProcessKey(pin)
 			if (!groupedGoals[key]) {
 				groupedGoals[key] = {}
 			}
@@ -82,7 +83,7 @@ class GoalsSideBar extends React.Component {
 		})
 
 		goals.forEach(goal => {
-			const key = getProductProcessKey(goal)
+			const key = utils.getProductProcessKey(goal)
 
 			if (!groupedGoals[key]) {
 				groupedGoals[key] = {}
@@ -101,14 +102,6 @@ class GoalsSideBar extends React.Component {
 			return Object.values(groupedGoals).filter(goal => goal.weeklyGoal || goal.monthlyGoal)
 		}
 	}
-}
-
-
-
-// Returns a unique process/product(s) identifier used as the key of the hashmap to group weekly/monthly goals
-const getProductProcessKey = (goal) => {
-	const productIDs = goal.all_product_types ? 'ALL' : goal.product_code.map(product => product.id).sort().join(',')
-	return `${productIDs}_${String(goal.process_type)}`
 }
 
 const mapStateToProps = (state, props) => {
