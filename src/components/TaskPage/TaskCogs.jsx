@@ -82,14 +82,14 @@ class UpdatingCost extends React.Component {
 	handleChange(newCost) {
 		this.setState({ draftCost: newCost})
 		window.setTimeout(() => {
-			if(newCost === this.state.draftCost && newCost !== this.props.cost) {
+			if(newCost === this.state.draftCost && newCost !== parseFloat(this.props.cost)) {
 				this.handleSave(newCost)
 			}
 		}, TIME_TO_STAY_UNSAVED)
 	}
 	
 	handleSave(newCost) {
-		if (isNaN(newCost)) {
+		if (!isValidDollarAmount(newCost)) {
 			return
 		}
 		
@@ -108,4 +108,13 @@ class UpdatingCost extends React.Component {
 
 function format(n) {
 	return '$' + parseFloat(n || 0).toFixed(2)
+}
+
+function isValidDollarAmount(num) {
+	if (isNaN(num)) {
+		return false
+	}
+	const dollarAmountRegex = /^\$?\d{1,3}((,?)(\d{3}))*(\.\d\d)?$/g;
+	const matches = num.toString().match(dollarAmountRegex)
+	return matches && matches.length === 1 && matches[0] === num.toString()
 }
