@@ -1,6 +1,6 @@
 import React from 'react'
 import Card from '../Card/Card'
-import { InputNumber } from 'antd'
+import { InputNumber, Tag } from 'antd'
 import { Peripherals } from './TaskForm'
 import { RM } from '../../utilities/constants'
 
@@ -74,7 +74,7 @@ class UpdatingCost extends React.Component {
 						onChange={this.handleChange}
 					/>
 				</div>
-				<Peripherals {...this.state} onRetry={this.handleSave} />
+				{isValidDollarAmount(this.state.draftCost || 0) ? <Peripherals {...this.state} onRetry={this.handleSave} /> : <Tag color="red">Invalid</Tag>}
 			</div>
 		) : <StaticCost label="Cost to create" cost={cost} />
 	}
@@ -114,7 +114,7 @@ function isValidDollarAmount(num) {
 	if (isNaN(num)) {
 		return false
 	}
-	const dollarAmountRegex = /^\$?\d{1,3}((,?)(\d{3}))*(\.\d\d)?$/g;
+	const dollarAmountRegex =  /^(\d{1,5}|\d{0,5}\.\d{1,2})$/g // https://stackoverflow.com/questions/15773309/regex-to-match-value-up-to-2-decimal
 	const matches = num.toString().match(dollarAmountRegex)
 	return matches && matches.length === 1 && matches[0] === num.toString()
 }

@@ -78,6 +78,7 @@ $container-width: $task-form-width - $peripherals-width; // This is the width of
         .task-cogs-row {
             display: flex;
             flex-direction: row;
+            align-items: center;
 	
 						div.info {
 							display: flex;
