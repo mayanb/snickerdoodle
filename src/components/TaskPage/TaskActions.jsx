@@ -47,6 +47,22 @@ export function getFileList(task_id) {
   }
 }
 
+
+export function checkIfGraphHasCycles(task_id) {
+	return dispatch => {
+		dispatch(requestEditTask())
+		return api.get(`/ics/tasks/check-if-graph-has-cycles/`)
+			.query({task: task_id})
+			.then((res) => {
+				dispatch(requestEditTaskSuccess('graphHasCycles', res.body.graph_has_cycles))
+      })
+			.catch(e => {
+			  dispatch(requestEditTaskFailure(e))
+			})
+	}
+}
+
+
 function addInputsToTaskIngredients(taskIngredients, inputs) {
   return taskIngredients.map(ta => {
     const { ingredient } = ta

@@ -35,6 +35,7 @@ class TaskPage extends React.Component {
 
 	loadTask(id) {
 		this.props.dispatch(actions.getTask(id))
+			.then(() => this.props.dispatch(actions.checkIfGraphHasCycles(id))) // so it doesn't get over-written
 		this.props.dispatch(actions.getTaskAncestors(id))
 		this.props.dispatch(actions.getTaskDescendents(id))
 	}
@@ -60,7 +61,7 @@ class TaskPage extends React.Component {
 			.then(() => {
 				return new Promise((resolve) => { // returning a promise means the next .then will wait on the promise
 					window.setTimeout(() => {
-						resolve(this.props.dispatch(actions.getTask(this.props.task.id)).then(() => console.log('fetching task is DONE.')))
+						resolve(this.props.dispatch(actions.getTask(this.props.task.id)))
 					}, TIME_TO_WAIT_FOR_COST_PROPAGATION_TO_FINISH)
 				})
 			})

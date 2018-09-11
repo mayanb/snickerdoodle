@@ -9,14 +9,21 @@ const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
 const TIME_TO_SHOW_SAVED = 1500
 
 export default function TaskCogs({ task, onSaveCost }) {
-	return (
-		<Card>
-			<div className="task-cogs">
-				<UpdatingCost cost={task.cost} category={task.process_type.category} onSaveCost={onSaveCost} />
-				<StaticCost label="Remaining value" cost={task.remaining_worth} />
-			</div>
-		</Card>
-	)
+	const graphHasCycles = task.graphHasCycles
+	if (graphHasCycles === undefined) {
+		return <div>loading</div>
+	} else if (graphHasCycles === true) {
+		return <div>Sorry, has cycles. Impossible to calculate cost</div>
+	} else {
+		return (
+			<Card>
+				<div className="task-cogs">
+					<UpdatingCost cost={task.cost} category={task.process_type.category} onSaveCost={onSaveCost} />
+					<StaticCost label="Remaining value" cost={task.remaining_worth} />
+				</div>
+			</Card>
+		)
+	}
 }
 
 function StaticCost({label, cost}) {
