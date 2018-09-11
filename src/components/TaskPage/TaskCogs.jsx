@@ -9,10 +9,10 @@ const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
 const TIME_TO_SHOW_SAVED = 1500
 
 export default function TaskCogs({ task, onSaveCost }) {
-	const graphHasCycles = task.graphHasCycles
-	if (graphHasCycles === undefined) {
+	const { graph_has_cycles } = task
+	if (graph_has_cycles === undefined) {
 		return <div>loading</div>
-	} else if (graphHasCycles === true) {
+	} else if (graph_has_cycles === true) {
 		return (
 			<Card>
 				<div className="task-cogs">

@@ -54,7 +54,7 @@ export function checkIfGraphHasCycles(task_id) {
 		return api.get(`/ics/tasks/check-if-graph-has-cycles/`)
 			.query({task: task_id})
 			.then((res) => {
-				dispatch(requestEditTaskSuccess('graphHasCycles', res.body.graph_has_cycles))
+				dispatch(requestEditTaskSuccess('graph_has_cycles', res.body.graph_has_cycles))
       })
 			.catch(e => {
 			  dispatch(requestEditTaskFailure(e))
