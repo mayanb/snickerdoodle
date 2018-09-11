@@ -10,30 +10,29 @@ const TIME_TO_SHOW_SAVED = 1500
 
 export default function TaskCogs({ task, onSaveCost }) {
 	const { graph_has_cycles } = task
-	if (graph_has_cycles === undefined) {
-		return <div>loading</div>
-	} else if (graph_has_cycles === true) {
-		return (
-			<Card>
-				<div className="task-cogs">
-					<div>
-						Looks like
-						<span style={{fontWeight: 'bold'}}> {task.display} </span>
-						has a task listed as both as a descendant and an ancestor. We can't calculate a cost in this case.
-					</div>
-				</div>
-			</Card>
-		)
-	} else {
-		return (
-			<Card>
-				<div className="task-cogs">
+	const loading = graph_has_cycles === undefined
+	return (
+		<Card>
+			<div className="task-cogs">
+				<div style={{display: loading ? 'block' : 'none'}}>Loading cost data...</div>
+				<div style={{display: loading || graph_has_cycles ? 'none' : 'block'}}>
 					<UpdatingCost cost={task.cost} category={task.process_type.category} onSaveCost={onSaveCost} />
 					<StaticCost label="Remaining value" cost={task.remaining_worth} />
 				</div>
-			</Card>
-		)
-	}
+				<HasCycleMessage task={task} visible={graph_has_cycles} />
+			</div>
+		</Card>
+	)
+}
+
+function HasCycleMessage({task, visible}) {
+	return (
+		<div style={{display: visible ? 'block' : 'none'}}>
+			Looks like
+			<span style={{fontWeight: 'bold'}}> {task.display} </span>
+			has a task listed as both as a descendant and an ancestor. We can't calculate a cost in this case.
+		</div>
+	)
 }
 
 function StaticCost({label, cost}) {

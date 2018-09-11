@@ -61,7 +61,11 @@ class TaskPage extends React.Component {
 			.then(() => {
 				return new Promise((resolve) => { // returning a promise means the next .then will wait on the promise
 					window.setTimeout(() => {
-						resolve(this.props.dispatch(actions.getTask(this.props.task.id)))
+						const taskID = this.props.task.id
+						resolve(
+							this.props.dispatch(actions.getTask(taskID))
+								.then(() => this.props.dispatch(actions.checkIfGraphHasCycles(taskID)))
+						)
 					}, TIME_TO_WAIT_FOR_COST_PROPAGATION_TO_FINISH)
 				})
 			})
