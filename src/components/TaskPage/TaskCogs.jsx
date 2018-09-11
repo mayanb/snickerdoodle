@@ -13,7 +13,17 @@ export default function TaskCogs({ task, onSaveCost }) {
 	if (graphHasCycles === undefined) {
 		return <div>loading</div>
 	} else if (graphHasCycles === true) {
-		return <div>Sorry, has cycles. Impossible to calculate cost</div>
+		return (
+			<Card>
+				<div className="task-cogs">
+					<div>
+						Looks like
+						<span style={{fontWeight: 'bold'}}> {task.display} </span>
+						has a task listed as both as a descendant and an ancestor. We can't calculate a cost in this case.
+					</div>
+				</div>
+			</Card>
+		)
 	} else {
 		return (
 			<Card>
