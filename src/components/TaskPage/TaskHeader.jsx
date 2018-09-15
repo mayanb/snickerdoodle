@@ -8,18 +8,18 @@ import TaskDialogSimple from '../TaskDialog/TaskDialogSimple'
 class TaskHeader extends React.Component {
 	render() {
 		const { task, onToggleFlag, history } = this.props
-		const { is_flagged, num_flagged_ancestors } = task
+		const { is_flagged, flagged_ancestors_id_string } = task
 		const title = `Activity Log / ${task.display}`
 		const flagged_ancestors = (this.props.ancestors || []).filter(e => e.is_flagged)
 		const onBack = () => history.push('/activity-log')
 
 		return (
-			<div className={'task-header ' + (is_flagged ? 'flagged ' : ' ') + (num_flagged_ancestors > 0 ? 'ancestor_is_flagged' : '')}>
+			<div className={'task-header ' + (is_flagged ? 'flagged ' : ' ') + (flagged_ancestors_id_string ? 'ancestor_is_flagged' : '')}>
 				<div className="title">
 					<i className="material-icons" onClick={onBack}>arrow_back</i>
 					{title}
 				</div>
-				{ num_flagged_ancestors > 0 && <TaskAncestorFlagged tasks={flagged_ancestors}/> }
+				{ flagged_ancestors_id_string && <TaskAncestorFlagged tasks={flagged_ancestors}/> }
 				<button className="header-button" onClick={onToggleFlag}>
 					{ is_flagged ? 'Remove flag' : 'Flag this task'}
 				</button>
