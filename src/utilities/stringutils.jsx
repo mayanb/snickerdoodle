@@ -1,4 +1,4 @@
-import { colors } from './colors'
+import { colors, contrasts_with_white_colors } from './colors'
 
 export function pluralize(number, noun) {
 	if (parseInt(number, 10) !== 1) {
@@ -19,7 +19,11 @@ export function gerund(infinitive) {
 }
     
 export function colorHash(str) {
-    return colors[Math.abs(str.hashCode() % colors.length)]
+  return colors[Math.abs(str.hashCode() % colors.length)]
+}
+
+export function tagColorHash(str) {
+  return contrasts_with_white_colors[Math.abs(str.hashCode() % contrasts_with_white_colors.length)]
 }
 
 export function formatNumber(amount) {
