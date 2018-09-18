@@ -18,6 +18,7 @@ import * as actions from "./ActivityActions"
 import * as taskActions from "../TaskPage/TaskActions"
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
+import * as tagActions from '../Tags/TagActions'
 import './styles/activitylist.css'
 
 class Activity extends React.Component {
@@ -49,6 +50,7 @@ class Activity extends React.Component {
 	componentDidMount() {
 		this.props.dispatch(processesActions.fetchProcesses())
 		this.props.dispatch(productsActions.fetchProducts())
+		this.props.dispatch(tagActions.fetchTags())
 	}
 
 	setDefaultFilters() {
@@ -62,6 +64,7 @@ class Activity extends React.Component {
 			selectedProcesses: qsFilters.selectedProcesses,
 			selectedProducts: qsFilters.selectedProducts,
 			selectedCategories: qsFilters.selectedCategories,
+			selectedTags: qsFilters.selectedTags,
 			keywords: qsFilters.keyword || '',
 			flaggedOnly: qsFilters === 'true' || false,
 			aggregateProducts: qsFilters === 'true' || false,
@@ -77,6 +80,7 @@ class Activity extends React.Component {
 		qs.set('selectedProcesses', filters.selectedProcesses.join(','))
 		qs.set('selectedProducts', filters.selectedProducts.join(','))
 		qs.set('selectedCategories', filters.selectedCategories.join(','))
+		qs.set('selectedTags', filters.selectedTags.join(','))
 		qs.set('keywords', filters.keywords)
 		qs.set('flaggedOnly', String(filters.flaggedOnly))
 		qs.set('aggregateProducts', String(filters.aggregateProducts))
@@ -93,6 +97,7 @@ class Activity extends React.Component {
 			selectedProcesses: qs.get('selectedProcesses') ? qs.get('selectedProcesses').split(',') : [],
 			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : [],
 			selectedCategories: qs.get('selectedCategories') ? qs.get('selectedCategories').split(',') : [],
+			selectedTags: qs.get('selectedTags') ? qs.get('selectedTags').split(',') : [],
 			keywords: qs.get('keywords') || '',
 			flaggedOnly: qs.get('flaggedOnly') === 'true',
 			aggregateProducts: qs.get('aggregateProducts') === 'true',
@@ -156,7 +161,7 @@ class Activity extends React.Component {
 	}
 
 	render() {
-		const { data, processes, products } = this.props
+		const { data, processes, products, tags } = this.props
 		if (!this.getFilters().dates.start) {
 			this.setDefaultFilters()
 		}
@@ -170,6 +175,7 @@ class Activity extends React.Component {
 					downloadDisabled={!data.length}
 					processes={processes}
 					products={products}
+					tags={tags}
 				/>
 				<div className="content">
 					{this.renderDialog()}
@@ -281,6 +287,9 @@ class Activity extends React.Component {
 		if (filters.selectedCategories.length) {
 			params.category_types = filters.selectedCategories.join(',')
 		}
+		if (filters.selectedTags.length) {
+			params.tags = filters.selectedTags.join(',')
+		}
 		if (filters.keywords) {
 			params.label = filters.keywords
 		}
@@ -298,6 +307,7 @@ const mapStateToProps = (state) => {
 	return {
 		data: state.activity.data,
 		ui: state.activity.ui,
+		tags: state.tags.data,
 		tasks: state.tasks.data,
 		tasksUI: state.tasks.ui,
 		processes: state.processes.data,

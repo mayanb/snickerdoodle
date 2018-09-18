@@ -62,6 +62,10 @@ $container-width: $task-form-width - $peripherals-width; // This is the width of
             color: $gray-dark;
         }
 
+        .no-tags {
+            color: $gray-light;
+        }
+
     }
 	
 		.task-main-container > .card {

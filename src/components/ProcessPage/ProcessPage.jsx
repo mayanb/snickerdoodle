@@ -4,6 +4,7 @@ import { Modal, message } from 'antd'
 import * as actions from '../Processes/ProcessesActions'
 import { ElementHeader, ElementContent } from '../Element/Element'
 import * as processActions from '../Processes/ProcessesActions'
+import * as tagActions from '../Tags/TagActions'
 import ProcessInformation from './ProcessInformation'
 import ProcessAttributeList from '../ProcessAttribute/ProcessAttributeList'
 import { withRouter } from 'react-router-dom'
@@ -29,6 +30,7 @@ class ProcessPage extends React.Component {
 	componentDidMount() {
 		let { id } = this.props.match.params
 		this.props.dispatch(processActions.fetchProcesses({ id: id }))
+		this.props.dispatch(tagActions.fetchTags())
 	}
 
 	render() {

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
+import * as tagActions from '../Tags/TagActions'
 import { Select } from 'antd'
 import Spinner from 'react-spinkit'
 import Checkbox from '../Inputs/Checkbox'
@@ -17,16 +18,18 @@ class InventoryFilters extends React.Component {
 		this.handleProcessTypeChange = this.handleProcessTypeChange.bind(this)
 		this.handleProductTypeChange = this.handleProductTypeChange.bind(this)
 		this.handleCategoryTypeChange = this.handleCategoryTypeChange.bind(this)
+		this.handleTagTypeChange = this.handleTagTypeChange.bind(this)
 		this.handleAggregateProductsChange = this.handleAggregateProductsChange.bind(this)
 	}
 
 	componentDidMount() {
 		this.props.dispatch(processesActions.fetchProcesses())
 		this.props.dispatch(productsActions.fetchProducts())
+		this.props.dispatch(tagActions.fetchTags())
 	}
 
 	render() {
-		const { filters, products, processes, isFetchingAggregateData, aggregateData } = this.props
+		const { filters, products, processes, tags, isFetchingAggregateData, aggregateData } = this.props
 		const categories = [
 			{ name: CATEGORY_NAME[RM], code: RM },
 			{ name: CATEGORY_NAME[WIP], code: WIP },
@@ -38,7 +41,7 @@ class InventoryFilters extends React.Component {
 		return (
 			<div className='inventory-filters'>
 				<div className='row'>
-					{processes.length > 0 && <Select
+					{ processes.length > 0 && <Select
 						mode="multiple"
 						value={filters.selectedProcesses}
 						allowClear
@@ -46,12 +49,11 @@ class InventoryFilters extends React.Component {
 						filterOption={processProductFilter}
 						onChange={this.handleProcessTypeChange}
 					>
-						{processes.map(p => <Select.Option key={p.id} data={p}>
-								{formatOption(p)}
-							</Select.Option>
-						)}
+						{ processes.map(p => 
+							<Select.Option key={p.id} data={p}>{formatOption(p)}</Select.Option>
+						) }
 					</Select>}
-					{products.length > 0 && <Select
+					{ products.length > 0 && <Select
 						mode="multiple"
 						value={filters.selectedProducts}
 						allowClear
@@ -59,12 +61,11 @@ class InventoryFilters extends React.Component {
 						filterOption={processProductFilter}
 						onChange={this.handleProductTypeChange}
 					>
-						{products.map(p => <Select.Option key={p.id} data={p}>
-								{formatOption(p)}
-							</Select.Option>
-						)}
+						{ products.map(p => 
+							<Select.Option key={p.id} data={p}>{formatOption(p)}</Select.Option>
+						) }
 					</Select>}
-					{categories.length > 0 && <Select
+					{ categories.length > 0 && <Select
 						mode="multiple"
 						value={filters.selectedCategories}
 						allowClear
@@ -72,13 +73,23 @@ class InventoryFilters extends React.Component {
 						filterOption={processProductFilter}
 						onChange={this.handleCategoryTypeChange}
 					>
-						{categories.map(c => <Select.Option key={c.code} data={c}>
-								{c.name}
-							</Select.Option>
-						)}
+						{ categories.map(c => 
+							<Select.Option key={c.code} data={c}>{c.name}</Select.Option>
+						) }
 					</Select>}
 				</div>
 				<div className='row'>
+					{ tags.length > 0 && <Select
+						mode="multiple"
+						value={filters.selectedTags}
+						allowClear
+						placeholder="Filter tags"
+						onChange={this.handleTagTypeChange}
+					>
+						{ tags.map(t => 
+							<Select.Option key={t.name} data={t}>{t.name}</Select.Option>
+						) }
+					</Select>}
 					<div className="checkboxes">
 						<Checkbox
 							label="Aggregate across product types"
@@ -105,6 +116,10 @@ class InventoryFilters extends React.Component {
 
 	handleCategoryTypeChange(selectedCategories) {
 		this.props.onFilterChange({ ...this.props.filters, selectedCategories })
+	}
+
+	handleTagTypeChange(selectedTags) {
+		this.props.onFilterChange({ ...this.props.filters, selectedTags })
 	}
 
 	handleAggregateProductsChange(event) {
@@ -164,6 +179,7 @@ const mapStateToProps = (state/*, props*/) => {
 	return {
 		processes: state.processes.data,
 		products: state.products.data,
+		tags: state.tags.data,
 		categories,
 		isFetchingData: isFetchingData,
 		isFetchingAggregateData: state.inventory.ui.isFetchingAggregateData
