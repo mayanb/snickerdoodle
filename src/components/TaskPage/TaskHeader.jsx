@@ -40,7 +40,7 @@ class TaskAncestorFlagged extends React.Component {
 	
 	componentDidMount() {
 		const { flagged_ancestors_id_string } = this.props
-		const params = { flagged_ancestors_id_string: flagged_ancestors_id_string }
+		const params = { pipe_delimited_task_ids_string: flagged_ancestors_id_string }
 		
 		// Rather than wait the potentially SUPER LONG time to retrieve all ancestors and filter for flagged ones
 		// we instead use the delimited string of flagged task ids to retrieve flagged tasks separately and quickly.
