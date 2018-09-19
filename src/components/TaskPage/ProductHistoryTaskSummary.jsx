@@ -5,7 +5,7 @@ import Img from '../Img/Img'
 export default function TaskSummary({ task, selected, onClick }) {
 	const amount = task.total_amount || (task.items && task.items.reduce((sum, item) => sum + Number(item.amount), 0))
 	const formattedAmount = amount ? formatAmount(amount, task.process_type.unit) : '(Unknown Amount)'
-	const is_ancestor_flagged = !task.is_flagged && task.num_flagged_ancestors > 0
+	const is_ancestor_flagged = !task.is_flagged && task.flagged_ancestors_id_string
 	return (
 		<div
 			className={'task-summary ' + (selected ? 'selected' : '')}
