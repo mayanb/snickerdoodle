@@ -5,6 +5,7 @@ import { formatAmount, getProcessIcon } from '../../utilities/stringutils'
 import moment from 'moment'
 import Img from '../Img/Img'
 import TaskCogs from './TaskCogs'
+import Tags from '../Tags/Tags'
 
 export default class TaskMain extends React.Component {
 	render() {
@@ -46,6 +47,7 @@ function TaskName({ task }) {
 }
 
 function TaskInfo({ task }) {
+	const tags = [...task.process_type.tags, ...task.product_type.tags]
 	return (
 		<div className="task-info">
 			<div className="group">
@@ -67,6 +69,13 @@ function TaskInfo({ task }) {
 			<div className="group">
 				<div className="label">Output</div>
 				<div className="value">{formatAmount(task.total_amount, task.process_type.unit)}</div>
+			</div>
+			<div className="group">
+				<div className="label">Tags</div>
+				{ tags && tags.length > 0 ?
+				<Tags tags={tags} /> :
+				<span className='no-tags'>No tags</span> 
+				}
 			</div>
 		</div>
 	)

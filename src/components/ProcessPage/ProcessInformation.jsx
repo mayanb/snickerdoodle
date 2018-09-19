@@ -4,6 +4,7 @@ import ProcessPageEditForm from './ProcessPageEditForm'
 import ProcessEditForm from "./ProcessEditForm"
 import { ElementTitle } from '../Element/Element'
 import CategoryTag from '../CategoryTag/CategoryTag'
+import Tags from '../Tags/Tags'
 import { Modal } from 'antd'
 
 const { confirm } = Modal
@@ -75,7 +76,7 @@ export default class ProcessInformation extends React.Component {
 		if (this.state.isSavingEdit) {
 			return 
 		}
-		let { icon, name, code, output_desc, default_amount, unit, category } = this.state
+		let { icon, name, code, output_desc, default_amount, unit, category, tags } = this.state
 		const updatedProcessInfo = {
 			icon: icon,
 			name: name,
@@ -83,13 +84,14 @@ export default class ProcessInformation extends React.Component {
 			output_desc: output_desc,
 			default_amount: default_amount,
 			unit: unit,
-			category: category
+			category: category,
+			tags: tags,
 		}
 		this.handleConfirmSubmit(updatedProcessInfo)
 	}
 }
 
-function ProcessBasicInformation({ code, name, output_desc, default_amount, unit}) {
+function ProcessBasicInformation({ code, name, tags, output_desc, default_amount, unit}) {
 	let defaultAmount = parseFloat(default_amount)
 	return (
 		<div className="process-information-basic">
@@ -100,6 +102,13 @@ function ProcessBasicInformation({ code, name, output_desc, default_amount, unit
 			<div className="piece-of-info">
 				<span>Output Description</span>
 				<span className={output_desc ? 'emphasis' : 'no-description'}>{output_desc || "No description"}</span>
+			</div>
+			<div className="piece-of-info">
+				<span>Tags</span>
+				{ tags && tags.length > 0 ?
+				<Tags tags={tags} style={{ marginTop: '4px' }}/> :
+				<span className='no-tags'>No tags</span>
+				}
 			</div>
 		</div>
 	)

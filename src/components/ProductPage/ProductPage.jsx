@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { ElementHeader, ElementContent } from '../Element/Element'
 import * as productActions from '../Products/ProductsActions'
+import * as tagActions from '../Tags/TagActions'
 import ProductInfo from './ProductInfo'
 import RecipeList from '../RecipeList/RecipeList'
 import './styles/productpage.css'
@@ -22,6 +23,7 @@ class ProductPage extends React.Component {
 		const { id } = this.props.match.params
 		dispatch(productActions.fetchProducts())
 			.then(() => dispatch(productActions.selectProduct(id)))
+		this.props.dispatch(tagActions.fetchTags())
 	}
 
 	render() {
