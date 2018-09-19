@@ -5,12 +5,12 @@ import Pill from '../Pill/Pill'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Set time format.",
-	content: <span>Visit <Link to='/account'>Account Settings</Link> to switch between 12 hour and 24 hour time format. </span>,
+	title: "Plan for the future with Production Planning.",
+	content: <span>Easily see which raw materials are running low and how many finished goods they can produce. Visit the <Link to='/production-planning'>Production Planning</Link> page to get started.</span>,
 	type: 'feature',
 },{
-	title: "Keep track of changes in your log fields.",
-	content: <span>You can now fill in log fields multiple times! Record multiple entries for each log field, and keep track of changes. <Link to='/processes'>Add recurring fields to a process now.</Link></span>,
+	title: "Manage your production with tags.",
+	content: <span>Group together products and processes that are frequently used together. Add tags to your <Link to='/products'>Products</Link> and <Link to='/processes'>Processes</Link> today.</span>,
 	type: 'feature',
 }]
 
@@ -45,6 +45,16 @@ function Feature({title, type, content}) {
 		</div>
 	)
 }
+
+// const nfs = [{
+// 	title: "Set time format.",
+// 	content: <span>Visit <Link to='/account'>Account Settings</Link> to switch between 12 hour and 24 hour time format. </span>,
+// 	type: 'feature',
+// },{
+// 	title: "Keep track of changes in your log fields.",
+// 	content: <span>You can now fill in log fields multiple times! Record multiple entries for each log field, and keep track of changes. <Link to='/processes'>Add recurring fields to a process now.</Link></span>,
+// 	type: 'feature',
+// }]
 
 // const nfs = [{
 // 	title: "Track tasks more accurately.",
