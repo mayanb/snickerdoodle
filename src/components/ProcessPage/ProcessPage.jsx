@@ -65,14 +65,14 @@ class ProcessPage extends React.Component {
 		return (
 			<div className="help-container">
 				<div className="help"
-					onClick={() => window.open("https://polymer.helpscoutdocs.com/article/16-recurring-log-fields", '_blank')}>
-					<div className="help-header">You can now fill in log fields multiple times!</div>
+					onClick={() => window.open("https://polymer.helpscoutdocs.com/article/19-understanding-categories", '_blank')}>
+					<div className="help-header">You can now select a category for this process!</div>
 					<div>
-						<span>We've added recurring log fields so your team can record multiple entries for each log field, and you can keep track of changes. </span>
+						<span>We added categories so you can gain various insights on how raw materials, work in progress, and finished goods are used. </span>
 						<span className="help-link">
-							Learn how to get finer resolution over your production tracking now.
-					</span>
-						<span className="forward">  <i
+							Learn how Polymer uses categories.
+						</span>
+						<span className="forward"><i
 							className="material-icons activity-page-forward-i">arrow_forward</i></span>
 					</div>
 				</div>
