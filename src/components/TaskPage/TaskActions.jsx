@@ -47,6 +47,22 @@ export function getFileList(task_id) {
   }
 }
 
+
+export function checkIfGraphHasCycles(task_id) {
+	return dispatch => {
+		dispatch(requestEditTask())
+		return api.get(`/ics/tasks/check-if-graph-has-cycles/`)
+			.query({task: task_id})
+			.then((res) => {
+				dispatch(requestEditTaskSuccess('graph_has_cycles', res.body.graph_has_cycles))
+      })
+			.catch(e => {
+			  dispatch(requestEditTaskFailure(e))
+			})
+	}
+}
+
+
 function addInputsToTaskIngredients(taskIngredients, inputs) {
   return taskIngredients.map(ta => {
     const { ingredient } = ta
@@ -249,6 +265,27 @@ export function deleteTask(task) {
       .then(() => dispatch(requestEditTaskSuccess("is_trashed", true)))
       .catch(e => console.log("Error", e))
   }
+}
+
+export function updateTaskCost(task, newCost) {
+	return function (dispatch) {
+		dispatch((requestEditTask()))
+		return api.put(`/ics/tasks/edit/${task.id}/`)
+			.send({
+				is_open: task.is_open,
+				label: task.label,
+				label_index: task.label_index,
+				custom_display: task.custom_display,
+				is_trashed: task.is_trashed,
+				is_flagged: task.is_flagged,
+				experiment: null,
+        cost: newCost,
+        cost_set_by_user: newCost, // Safely store user inputs in separate field in case we need to reset graph
+        remaining_worth: newCost,
+			})
+			.then(() => dispatch(requestEditTaskSuccess("cost", newCost)))
+			.catch(e => console.log("Error", e))
+	}
 }
 
 function requestEditTask() {
