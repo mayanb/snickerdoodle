@@ -8,6 +8,9 @@ import TaskMain from './TaskMain'
 import TaskQR from './TaskQR'
 import './styles/taskpage.css'
 
+// Our best guess of how long the cost update async function will take to update the DB so we can refresh.
+const TIME_TO_WAIT_FOR_COST_PROPAGATION_TO_FINISH = 2000
+
 class TaskPage extends React.Component {
 	constructor(props) {
 		super(props)
@@ -15,6 +18,7 @@ class TaskPage extends React.Component {
 		this.handleFlagTask = this.handleFlagTask.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
 		this.handleSaveAttribute = this.handleSaveAttribute.bind(this)
+		this.handleSaveCost = this.handleSaveCost.bind(this)
 		this.handleDropFiles = this.handleDropFiles.bind(this)
 		this.handleCreateAttribute = this.handleCreateAttribute.bind(this)
 	}
@@ -31,6 +35,7 @@ class TaskPage extends React.Component {
 
 	loadTask(id) {
 		this.props.dispatch(actions.getTask(id))
+			.then(() => this.props.dispatch(actions.checkIfGraphHasCycles(id))) // so it doesn't get over-written
 		this.props.dispatch(actions.getTaskAncestors(id))
 		this.props.dispatch(actions.getTaskDescendents(id))
 	}
@@ -49,6 +54,21 @@ class TaskPage extends React.Component {
 		const index = task.attributesWithValues.findIndex(a => a.id === attributeID)
 		let params = { taskAttributeID: taskAttributeID, task: task.id, value: value }
 		return this.props.dispatch(attributeActions.saveEditingAttribute(index, params))
+	}
+	
+	handleSaveCost(newCost) {
+		return this.props.dispatch(actions.updateTaskCost(this.props.task, newCost))
+			.then(() => {
+				return new Promise((resolve) => { // returning a promise means the next .then will wait on the promise
+					window.setTimeout(() => {
+						const taskID = this.props.task.id
+						resolve(
+							this.props.dispatch(actions.getTask(taskID))
+								.then(() => this.props.dispatch(actions.checkIfGraphHasCycles(taskID)))
+						)
+					}, TIME_TO_WAIT_FOR_COST_PROPAGATION_TO_FINISH)
+				})
+			})
 	}
 	
 	handleCreateAttribute(attribute, value) {
@@ -80,10 +100,11 @@ class TaskPage extends React.Component {
 					<ProductHistory />
 					<TaskMain 
 						task={task}
-					  	attributes={task.attributesWithValues}
-					  	onSaveAttribute={this.handleSaveAttribute}
+						attributes={task.attributesWithValues}
+						onSaveAttribute={this.handleSaveAttribute}
+						onSaveCost={this.handleSaveCost}
 						onCreateAttribute={this.handleCreateAttribute}
-					  	teamTimeFormat={teamTimeFormat}
+						teamTimeFormat={teamTimeFormat}
 					/>
 					<TaskQR qrCode={qrCode} onDelete={this.handleDelete} onDropFiles={this.handleDropFiles} task={task} name={task.display} />
 				</div>
