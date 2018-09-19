@@ -19,6 +19,7 @@ export class Inventory extends React.Component {
 			selectedProcesses: [],
 			selectedProducts: [],
 			selectedCategories: [],
+			selectedTags: [],
 			aggregateProducts: false,
 			ordering: 'creating_task__process_type'
 		}
@@ -113,6 +114,7 @@ export class Inventory extends React.Component {
 		qs.set('selectedProcesses', filters.selectedProcesses.join(','))
 		qs.set('selectedProducts', filters.selectedProducts.join(','))
 		qs.set('selectedCategories', filters.selectedCategories.join(','))
+		qs.set('selectedTags', filters.selectedTags.join(','))
 		qs.set('aggregateProducts', String(filters.aggregateProducts))
 		this.props.history.push({ search: qs.toString() })
 	}
@@ -127,14 +129,17 @@ export class Inventory extends React.Component {
 
 	getInventory(filters) {
 		const params = { ordering: this.state.ordering }
-		if (filters.selectedCategories.length) {
-			params.category_types = filters.selectedCategories.join(',')
-		}
 		if (filters.selectedProcesses.length) {
 			params.process_types = filters.selectedProcesses.join(',')
 		}
 		if (filters.selectedProducts.length) {
 			params.product_types = filters.selectedProducts.join(',')
+		}
+		if (filters.selectedCategories.length) {
+			params.category_types = filters.selectedCategories.join(',')
+		}
+		if (filters.selectedTags.length) {
+			params.tags = filters.selectedTags.join(',')
 		}
 		if (filters.aggregateProducts) {
 			params.aggregate_products = 'true'
@@ -150,6 +155,7 @@ export class Inventory extends React.Component {
 			selectedProcesses: qs.get('selectedProcesses') ? qs.get('selectedProcesses').split(',') : [],
 			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : [],
 			selectedCategories: qs.get('selectedCategories') ? qs.get('selectedCategories').split(',') : [],
+			selectedTags: qs.get('selectedTags') ? qs.get('selectedTags').split(',') : [],
 			aggregateProducts: qs.get('aggregateProducts') === 'true',
 		}
 	}
