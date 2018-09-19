@@ -4,26 +4,32 @@ import { InputNumber, Tag } from 'antd'
 import { Peripherals } from './TaskForm'
 import { RM } from '../../utilities/constants'
 
-const TIME_TO_STAY_UNSAVED = 1000 // Saving represents a significant backend/DB change. We don't want ot over-fire.
+const TIME_TO_STAY_UNSAVED = 1000 // Saving represents a significant backend/DB change. We don't want to over-fire.
 const TIME_TO_LOAD = 0 //any extra time you want to show the loader for
 const TIME_TO_SHOW_SAVED = 1500
 
+
 export default function TaskCogs({ task, onSaveCost }) {
-	const { graph_has_cycles } = task
+	const { cost, remaining_worth, graph_has_cycles } = task
 	const loading = graph_has_cycles === undefined
 	return (
 		<Card>
 			<div className="task-cogs">
 				<div style={{display: loading ? 'block' : 'none'}}>Loading cost data...</div>
-				<div style={{display: loading || graph_has_cycles ? 'none' : 'block'}}>
-					<UpdatingCost cost={task.cost} category={task.process_type.category} onSaveCost={onSaveCost} />
-					<StaticCost label="Remaining value" cost={task.remaining_worth} />
-				</div>
+				<UpdatingCostAndRemainingWorth
+					cost={cost}
+					remaining_worth={remaining_worth}
+					category={task.process_type.category}
+					onSaveCost={onSaveCost}
+					loading={loading}
+					graph_has_cycles={graph_has_cycles}
+				/>
 				<HasCycleMessage task={task} visible={graph_has_cycles} />
 			</div>
 		</Card>
 	)
 }
+
 
 function HasCycleMessage({task, visible}) {
 	return (
@@ -35,18 +41,21 @@ function HasCycleMessage({task, visible}) {
 	)
 }
 
-function StaticCost({label, cost}) {
+
+function StaticCost({label, cost, onSave, ...peripheralsInfo}) {
 	return (
 		<div className="task-cogs-row">
 			<div className="info">
 				<div>{label}:</div>
 				<div>{format(cost)}</div>
 			</div>
+			<Peripherals {...peripheralsInfo} onRetry={onSave} />
 		</div>
 	)
 }
 
-class UpdatingCost extends React.Component {
+
+class UpdatingCostAndRemainingWorth extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -62,21 +71,34 @@ class UpdatingCost extends React.Component {
 	}
 	
 	render() {
-		const { cost, category } = this.props
-		return category === RM ? (
-			<div className="task-cogs-row">
-				<div className="info">
-					<div>Cost of raw material:</div>
-					<InputNumber
-						defaultValue={cost || 0}
-						formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-						parser={value => value.replace(/[^0-9.]+/g, '')}
-						onChange={this.handleChange}
-					/>
+		const { cost, remaining_worth, category, loading, graph_has_cycles } = this.props
+		
+		if (category === RM) {
+			return (
+				<div style={{display: loading || graph_has_cycles ? 'none' : 'block'}}>
+					<div className="task-cogs-row">
+						<div className="info">
+							<div>Cost of raw material:</div>
+							<InputNumber
+								defaultValue={cost || 0}
+								formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+								parser={value => value.replace(/[^0-9.]+/g, '')}
+								onChange={this.handleChange}
+							/>
+						</div>
+						{isValidDollarAmount(this.state.draftCost || 0) || <Tag color="red">Invalid</Tag>}
+					</div>
+					<StaticCost label="Remaining value" cost={remaining_worth} onSave={this.handleSave} {...this.state} />
 				</div>
-				{isValidDollarAmount(this.state.draftCost || 0) ? <Peripherals {...this.state} onRetry={this.handleSave} /> : <Tag color="red">Invalid</Tag>}
+			)
+		}
+		
+		return (
+			<div style={{display: loading || graph_has_cycles ? 'none' : 'block'}}>
+				<StaticCost label="Cost to create" cost={cost} />
+				<StaticCost label="Remaining value" cost={remaining_worth} />
 			</div>
-		) : <StaticCost label="Cost to create" cost={cost} />
+		)
 	}
 	
 	handleChange(newCost) {
@@ -105,6 +127,9 @@ class UpdatingCost extends React.Component {
 			})
 	}
 }
+
+
+// Helper functions
 
 function format(n) {
 	return '$' + parseFloat(n || 0).toFixed(2)
