@@ -22,14 +22,12 @@ class Products extends React.Component {
 
 	  this.state = {
 		  isAddingProduct: false,
-			shouldDisplayRecipeModal: true,
 		  filter: null,
 		  ordering: 'name',
 	  }
 
 	  this.renderHeaderRow = this.renderHeaderRow.bind(this)
 
-	  this.handleCloseRecipeAnnouncementModal = this.handleCloseRecipeAnnouncementModal.bind(this)
 	  this.handleFilter = this.handleFilter.bind(this)
 	  this.handleToggleDialog = this.handleToggleDialog.bind(this)
     this.handlePagination = this.handlePagination.bind(this)
@@ -59,20 +57,17 @@ class Products extends React.Component {
 
   render() {
     let { users, ui, data, recipeUI, recipeData } = this.props
-		const { shouldDisplayRecipeModal } = this.state
     let account_type = users.data[users.ui.activeUser].user.account_type
     if (account_type !== 'a') {
     	this.props.history.push('/')
     }
 
     let hasNone = !ui.isFetchingData && (!data || !data.length) && !this.state.filter
-    let hasNoRecipes = !recipeUI.isFetchingData && (!recipeData || !recipeData.length)
 	  return (
 	  	<div className="products">
 			  <ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create product"
 			                                      title="Products" />
 					{ hasNone ? <ZeroState type="product" /> : this.renderTable() }
-					{ (!hasNone && hasNoRecipes && shouldDisplayRecipeModal) ? this.renderCreateRecipeModal() : null}
 			 		{this.renderDialog()}
 		  </div>
 	  )
@@ -106,19 +101,6 @@ class Products extends React.Component {
 	  )
   }
 
-	renderCreateRecipeModal() {
-  	return (<PageSpecificNewFeatureIntro
-			onClose={this.handleCloseRecipeAnnouncementModal}
-			content="Polymer's powerful Recipes help you stay even more organized. Set ingredients and instructions to guide your team and automatically update inventory."
-			title="Introducing Recipes"
-			finalCallToAction="Learn how to create your first recipe now!"
-			imgSrc="dairyfactory"
-			imgHeightWithUnits="350px"
-			link="https://polymer.helpscoutdocs.com/article/10-understanding-recipes"
-			localStorageVarName="CREATE_RECIPE_INFO"
-		/>)
-	}
-
 	renderHeaderRow() {
   	const columns = [
 		  { title: 'Code', className: 'code', field: 'code' },
@@ -141,10 +123,6 @@ class Products extends React.Component {
 	}
 
   /* EVENT HANDLERS */
-	handleCloseRecipeAnnouncementModal() {
-		this.setState({shouldDisplayRecipeModal: false})
-	}
-
   handleFilter(filterText) {
 	  this.setState({ filter: filterText }, this.fetchProducts)
   }
