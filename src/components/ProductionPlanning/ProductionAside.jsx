@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { dateToUTCString } from '../../utilities/dateutils'
 import Img from '../Img/Img'
+import { Link } from 'react-router-dom'
 import * as goalActions from '../Goals/GoalsActions'
 import * as activityActions from '../Activity/ActivityActions'
 import './styles/productionaside.css'
@@ -33,6 +34,12 @@ class ProductionAside extends React.Component {
 		return (
 			<div className='production-aside-container'>
 				<div className='title'>In Production this Month</div>
+				{ !asideData.length && 
+					<div>
+						<div className='empty-screen-text'>No finished goods produced. </div>
+						<div className='empty-screen-text'>Visit the <Link className='link' to='/processes'>Processes Page</Link> to categorize some processes as finished goods.</div>
+					</div>
+				}
 				{ asideData && asideData.map(group => this.renderGoal(group, selected)) }
 			</div>
 		)
