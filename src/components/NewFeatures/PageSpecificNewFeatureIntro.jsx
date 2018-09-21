@@ -5,7 +5,7 @@ import Img from '../Img/Img'
 import './styles/pagespecificnewfeatureinfo.css'
 
 
-export default function PageSpecificNewFeatureIntro({ onClose, content, title, finalCallToAction, imgSrc, imgHeightWithUnits, link, localStorageVarName }) {
+export default function PageSpecificNewFeatureIntro({ onClose, content, title, finalCallToAction, imgSrc, useImgExtension, imgHeightWithUnits, link, localStorageVarName }) {
 	const modalPreviouslySeen = window.localStorage.getItem(localStorageVarName)
 	if (modalPreviouslySeen) {
 		return null
@@ -22,7 +22,7 @@ export default function PageSpecificNewFeatureIntro({ onClose, content, title, f
 				<div className="new-feature">
 					<div className="new-feature-header">{title}</div>
 					<div style={{display: "flex", alignItems: "flex-end", "justifyContent": "center"}}>
-						<Img src={imgSrc} height={imgHeightWithUnits}/>
+						<Img src={imgSrc} useExtension={useImgExtension} height={imgHeightWithUnits}/>
 					</div>
 					<div className="new-feature-text">{content}</div>
 					<div>

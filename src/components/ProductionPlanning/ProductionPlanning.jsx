@@ -11,6 +11,8 @@ import Table from '../Table/Table'
 import Img from '../Img/Img'
 import * as actions from './ProductionPlanningActions'
 import './styles/productionplanning.css'
+import PageSpecificNewFeatureIntro from '../NewFeatures/PageSpecificNewFeatureIntro'
+
 
 const CHART_WIDTH = 900
 
@@ -22,7 +24,8 @@ export class ProductionPlanning extends React.Component {
 			selectedProductId: null,
 			selectedProcessDetail: null,
 			selectedProductDetail: null,
-			ordering: 'process_type.name'
+			ordering: 'process_type.name',
+			isAnnouncementOpen: true, // but will return null if already seen/
 		}
 		
 		this.renderInProgressTableHeader = this.renderInProgressTableHeader.bind(this)
@@ -59,6 +62,7 @@ export class ProductionPlanning extends React.Component {
 		} = this.state
 		return (
 			<div className='production-planning-container'>
+			{this.renderProductionPlanningAnnouncementDialog()}
 				<ApplicationSectionHeader>Production Planning</ApplicationSectionHeader>
 				<div className='production-planning-body'>
 					<div className='production-planning-main'>
@@ -152,6 +156,25 @@ export class ProductionPlanning extends React.Component {
 		return (
 			<ObjectListHeader columns={columns} ordering={this.state.ordering}/>
 		)
+	}
+
+	renderProductionPlanningAnnouncementDialog() {
+		return (
+			<PageSpecificNewFeatureIntro
+				onClose={this.handleCloseAnnouncement.bind(this)}
+				title="Introducing the Production Planning Page"
+				content="Keep your production on track and understand how much inventory you have left with the Production Planning Page! You can now monitor the quanity of raw materials in your factory and estimate when those materials will run out. You can also tell how much of a finished good each of your SKUs can make."
+				finalCallToAction="Click to learn more about the Production Planning Page"
+				useImgExtension
+				imgSrc="undraw_report.svg"
+				imgHeightWithUnits="358px"
+				link="https://polymer.helpscoutdocs.com/article/20-using-the-production-planning-page"
+				localStorageVarName="NEW_PRODUCTION_PLANNING_PAGE"
+			/>)
+	}
+
+	handleCloseAnnouncement() {
+		this.setState({ isAnnouncementOpen: false })
 	}
 
 	handleReorder(ordering) {

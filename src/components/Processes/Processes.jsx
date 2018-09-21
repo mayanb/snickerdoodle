@@ -12,6 +12,7 @@ import ApplicationSectionHeaderWithButton from '../Application/ApplicationSectio
 import ZeroState from '../ObjectList/ObjectListZeroState'
 import { Modal, message } from 'antd'
 import ElementFilter from '../Element/ElementFilter'
+import PageSpecificNewFeatureIntro from '../NewFeatures/PageSpecificNewFeatureIntro'
 
 const { confirm } = Modal
 
@@ -39,7 +40,7 @@ class Processes extends React.Component {
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleDuplicate = this.handleDuplicate.bind(this)
 		this.handleDuplicateProcess = this.handleDuplicateProcess.bind(this)
-	  this.handleReorder = this.handleReorder.bind(this)
+		this.handleReorder = this.handleReorder.bind(this)
   }
 
   // fetch products on load
@@ -70,6 +71,7 @@ class Processes extends React.Component {
 		
 		return (
 			<div className="processes-container">
+				{this.renderCategoriesAnnouncementDialog()}
 				<ApplicationSectionHeaderWithButton onToggleDialog={this.handleToggleDialog} buttonText="Create process" title="Processes"/>
 					{ hasNone ? <ZeroState type="process" /> : this.renderTable() }
 					{this.renderDialog()}
@@ -130,6 +132,25 @@ class Processes extends React.Component {
 				ordering={this.state.ordering}
 			/>
 		)
+	}
+
+	renderCategoriesAnnouncementDialog() {
+		return (
+			<PageSpecificNewFeatureIntro
+				onClose={this.handleCloseAnnouncement.bind(this)}
+				title="Introducing Categories"
+				content="Learn more about the different types of processes and how they can have an impact on your production. You can now set the categories: Raw Materials, Work in Progress, and Finished Goods for each of your processes."
+				finalCallToAction="Learn more about Categories"
+				useImgExtension
+				imgSrc="undraw_creation_process.svg"
+				imgHeightWithUnits="358px"
+				link="https://polymer.helpscoutdocs.com/article/19-understanding-categories"
+				localStorageVarName="NEW_PROCESS_CATEGORIES"
+			/>)
+	}
+
+	handleCloseAnnouncement() {
+		this.setState({ isAnnouncementOpen: false })
 	}
 
 	handleReorder(ordering) {
