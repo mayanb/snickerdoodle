@@ -1,16 +1,14 @@
 import React from 'react'
 import {emojify} from 'react-emojione'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import Pill from '../Pill/Pill'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Set time format.",
-	content: <span>Visit <Link to='/account'>Account Settings</Link> to switch between 12 hour and 24 hour time format. </span>,
-	type: 'feature',
-},{
-	title: "Keep track of changes in your log fields.",
-	content: <span>You can now fill in log fields multiple times! Record multiple entries for each log field, and keep track of changes. <Link to='/processes'>Add recurring fields to a process now.</Link></span>,
+	title: "Understand factory costs like never before.",
+	content: (<span><a href='https://polymer.helpscoutdocs.com/article/21-understanding-and-setting-costs-for-tasks' target="_blank" rel="noopener noreferrer">
+		Learn how to track the cost of every item in your factory in real time.
+	</a></span>),
 	type: 'feature',
 }]
 
@@ -46,6 +44,13 @@ function Feature({title, type, content}) {
 	)
 }
 
+
+
+// ,{
+// 	title: "Keep track of changes in your log fields.",
+// 		content: <span>You can now fill in log fields multiple times! Record multiple entries for each log field, and keep track of changes. <Link to='/processes'>Add recurring fields to a process now.</Link></span>,
+// 		type: 'feature',
+// }
 // const nfs = [{
 // 	title: "Track tasks more accurately.",
 // 	content: "We’ve given the mobile app faster, more precise time inputting. This means using Time Fields for your Processes now helps squash input error, save time, and give you even finer control over your production line.",
