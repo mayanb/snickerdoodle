@@ -20,6 +20,8 @@ class ProcessPage extends React.Component {
 		this.state = {
 			isDuplicateOpen: false,
 			isDuplicating: false,
+			isAnnouncementOpen: true, // but will return null if already seen/
+
 		}
 		this.handleArchive = this.handleArchive.bind(this)
 		this.handleDuplicate = this.handleDuplicate.bind(this)
