@@ -10,6 +10,16 @@
         margin-bottom: 20px;
     }
 
+    .empty-screen-text {
+        margin: 20px 0;
+        color: $gray;
+        font-style: italic;
+    }
+
+    .link {
+        color: $primary
+    }
+
     .aside-item-container {
         background-color: white;
         box-shadow: $shadow-1;
