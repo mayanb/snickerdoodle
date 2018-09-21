@@ -5,7 +5,7 @@ import Pill from '../Pill/Pill'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Peer into the production manager's chrystal ball.",
+	title: "Peer into the production planning crystal ball.",
 	content: <span>Visit the <Link to='/production-planning'>Production Planning</Link> page to take your factory planning to the next level.</span>,
 	type: 'feature',
 },{
