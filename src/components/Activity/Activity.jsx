@@ -182,7 +182,7 @@ class Activity extends React.Component {
 					{this.renderTaskDialog()}
 					{this.renderTable()}
 				</div>
-				{/*this.renderHelp()*/}
+				{this.renderHelp()}
 			</div>
 		)
 	}
@@ -252,24 +252,24 @@ class Activity extends React.Component {
 		} else return null
 	}
 
-	// renderHelp() {
-	// 	return (
-	// 		<div className="activity-page-help-container">
-	// 			<div className="activity-page-help"
-	// 				onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
-	// 				<div className="activity-page-help-header">Create recipes for your products</div>
-	// 				<div>
-	// 					<span>Guide your team with instructions and ingredients and keep your inventory accurate. </span>
-	// 					<span className="activity-page-help-link">
-	// 						Learn how to supercharge your team now.
-	// 				</span>
-	// 					<span className="activity-page-forward">  <i
-	// 						className="material-icons activity-page-forward-i">arrow_forward</i></span>
-	// 				</div>
-	// 			</div>
-	// 		</div>
-	// 	)
-	// }
+	renderHelp() {
+		return (
+			<div className="activity-page-help-container">
+				<div className="activity-page-help"
+					onClick={() => window.open("https://polymer.helpscoutdocs.com/article/21-understanding-and-setting-costs-for-tasks", '_blank')}>
+					<div className="activity-page-help-header">Track value like never before</div>
+					<div>
+						<span>Track cost for every item in your factory, and understand how value is distribute across your production line. </span>
+						<span className="activity-page-help-link">
+							Learn how to supercharge your production insights now.
+					</span>
+						<span className="activity-page-forward">  <i
+							className="material-icons activity-page-forward-i">arrow_forward</i></span>
+					</div>
+				</div>
+			</div>
+		)
+	}
 
 	getActivity(filters) {
 		const range = filters.dates

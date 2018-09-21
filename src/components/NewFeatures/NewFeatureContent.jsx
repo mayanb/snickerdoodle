@@ -5,12 +5,18 @@ import Pill from '../Pill/Pill'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Plan for the future with Production Planning.",
-	content: <span>Easily see which raw materials are running low and how many finished goods they can produce. Visit the <Link to='/production-planning'>Production Planning</Link> page to get started.</span>,
+	title: "Peer into the production planning crystal ball.",
+	content: <span>Visit the <Link to='/production-planning'>Production Planning</Link> page to take your factory planning to the next level.</span>,
 	type: 'feature',
 },{
-	title: "Manage your production with tags.",
-	content: <span>Group together products and processes that are frequently used together. Add tags to your <Link to='/products'>Products</Link> and <Link to='/processes'>Processes</Link> today.</span>,
+	title: "Understand factory costs like never before.",
+	content: (<span><a href='https://polymer.helpscoutdocs.com/article/21-understanding-and-setting-costs-for-tasks' target="_blank" rel="noopener noreferrer">
+		Learn how to track the cost of every item in your factory in real time.
+	</a></span>),
+	type: 'feature',
+},{
+	title: "Make Polymer fit your factory like a glove.",
+	content: <span>Adapt Polymer to your diverse factory contexts for ultra efficient data entry and insights. Add tags to your <Link to='/products'>Products</Link> and <Link to='/processes'>Processes</Link> today.</span>,
 	type: 'feature',
 }]
 

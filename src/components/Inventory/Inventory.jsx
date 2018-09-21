@@ -70,7 +70,7 @@ export class Inventory extends React.Component {
 						ordering={this.state.ordering}
 					/>
 				</div>
-
+				{this.renderHelp()}
 			</div>
 		)
 	}
@@ -86,6 +86,25 @@ export class Inventory extends React.Component {
 		]
 		return (
 			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering} />
+		)
+	}
+	
+	renderHelp() {
+		return (
+			<div className="inventory-page-help-container">
+				<div className="inventory-page-help"
+						 onClick={() => window.open("https://polymer.helpscoutdocs.com/article/21-understanding-and-setting-costs-for-tasks", '_blank')}>
+					<div className="inventory-page-help-header">Track value like never before</div>
+					<div>
+						<span>Track cost for every item in your factory, and understand how value is distribute across your production line. </span>
+						<span className="inventory-page-help-link">
+							Learn how to supercharge your production insights now.
+					</span>
+						<span className="inventory-page-forward">  <i
+							className="material-icons inventory-page-forward-i">arrow_forward</i></span>
+					</div>
+				</div>
+			</div>
 		)
 	}
 
