@@ -5,17 +5,18 @@ import Pill from '../Pill/Pill'
 import './styles/newfeatures.css'
 
 const nfs = [{
-	title: "Set time format.",
-	content: <span>Visit <Link to='/account'>Account Settings</Link> to switch between 12 hour and 24 hour time format. </span>,
+	title: "Peer into the production planning crystal ball.",
+	content: <span>Visit the <Link to='/production-planning'>Production Planning</Link> page to take your factory planning to the next level.</span>,
 	type: 'feature',
 },{
-	title: "Keep track of changes in your log fields.",
-	content: <span>You can now fill in log fields multiple times! Record multiple entries for each log field, and keep track of changes. <Link to='/processes'>Add recurring fields to a process now.</Link></span>,
+	title: "Understand factory costs like never before.",
+	content: (<span><a href='https://polymer.helpscoutdocs.com/article/21-understanding-and-setting-costs-for-tasks' target="_blank" rel="noopener noreferrer">
+		Learn how to track the cost of every item in your factory in real time.
+	</a></span>),
 	type: 'feature',
-},
-{
-	title: "Attach files to a task.",
-	content: <span>You can now attach useful files and images to a task! Select a task from the <Link to='/activity-log'>activity logs </Link>to upload your first file today.</span>,
+},{
+	title: "Make Polymer fit your factory like a glove.",
+	content: <span>Adapt Polymer to your diverse factory contexts for ultra efficient data entry and insights. Add tags to your <Link to='/products'>Products</Link> and <Link to='/processes'>Processes</Link> today.</span>,
 	type: 'feature',
 }]
 
@@ -50,6 +51,16 @@ function Feature({title, type, content}) {
 		</div>
 	)
 }
+
+// const nfs = [{
+// 	title: "Set time format.",
+// 	content: <span>Visit <Link to='/account'>Account Settings</Link> to switch between 12 hour and 24 hour time format. </span>,
+// 	type: 'feature',
+// },{
+// 	title: "Keep track of changes in your log fields.",
+// 	content: <span>You can now fill in log fields multiple times! Record multiple entries for each log field, and keep track of changes. <Link to='/processes'>Add recurring fields to a process now.</Link></span>,
+// 	type: 'feature',
+// }]
 
 // const nfs = [{
 // 	title: "Track tasks more accurately.",

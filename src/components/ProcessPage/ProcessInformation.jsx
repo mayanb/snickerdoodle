@@ -3,6 +3,8 @@ import {pluralize} from '../../utilities/stringutils'
 import ProcessPageEditForm from './ProcessPageEditForm'
 import ProcessEditForm from "./ProcessEditForm"
 import { ElementTitle } from '../Element/Element'
+import CategoryTag from '../CategoryTag/CategoryTag'
+import Tags from '../Tags/Tags'
 import { Modal } from 'antd'
 
 const { confirm } = Modal
@@ -22,7 +24,7 @@ export default class ProcessInformation extends React.Component {
 	render() {
 		const { isEditing } = this.state
 		const { process, onArchive, onDuplicate, isSavingEdit } = this.props
-		const { icon, code, name } = process
+		const { icon, code, name, category } = process
 		return (
 			<div className="process-information">
 				<ElementTitle
@@ -31,10 +33,18 @@ export default class ProcessInformation extends React.Component {
 					buttonTitle={this.state.isEditing ? 'Cancel' : 'Edit'}
 					onClick={this.handleToggleEditing}
 					isLoading={isSavingEdit}
-				/>
+					height="58px"
+				>
+				<CategoryTag category={category} styles={{margin:"5px", cursor: "default"}} />
+				</ElementTitle>
 				<div className="process-basic-information-container">
 				{ isEditing ? 
-					<ProcessEditForm onChange={this.handleChange} onSubmit={this.handleSubmit} {...this.state} isLoading={isSavingEdit} /> :
+					<ProcessEditForm 
+						onChange={this.handleChange} 
+						onSubmit={this.handleSubmit} 
+						{...this.state} 
+						isLoading={isSavingEdit} 
+					/> :
 					<ProcessBasicInformation { ...process } />
 				}
 				</div>
@@ -66,20 +76,22 @@ export default class ProcessInformation extends React.Component {
 		if (this.state.isSavingEdit) {
 			return 
 		}
-		let { icon, name, code, output_desc, default_amount, unit } = this.state
+		let { icon, name, code, output_desc, default_amount, unit, category, tags } = this.state
 		const updatedProcessInfo = {
 			icon: icon,
 			name: name,
 			code: code,
 			output_desc: output_desc,
 			default_amount: default_amount,
-			unit: unit
+			unit: unit,
+			category: category,
+			tags: tags,
 		}
 		this.handleConfirmSubmit(updatedProcessInfo)
 	}
 }
 
-function ProcessBasicInformation({ code, name, output_desc, default_amount, unit}) {
+function ProcessBasicInformation({ code, name, tags, output_desc, default_amount, unit}) {
 	let defaultAmount = parseFloat(default_amount)
 	return (
 		<div className="process-information-basic">
@@ -90,6 +102,13 @@ function ProcessBasicInformation({ code, name, output_desc, default_amount, unit
 			<div className="piece-of-info">
 				<span>Output Description</span>
 				<span className={output_desc ? 'emphasis' : 'no-description'}>{output_desc || "No description"}</span>
+			</div>
+			<div className="piece-of-info">
+				<span>Tags</span>
+				{ tags && tags.length > 0 ?
+				<Tags tags={tags} style={{ marginTop: '4px' }}/> :
+				<span className='no-tags'>No tags</span>
+				}
 			</div>
 		</div>
 	)

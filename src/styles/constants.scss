@@ -65,6 +65,10 @@ $card-shadow: 0 0 8px 0 rgba(0,0,0,0.08);
 $panel-width: 300px;
 $section-header-height: 56px;
 $object-list-left-padding: 36px;
-$object-list-right-padding: 72px;
+$object-list-right-padding: 36px;
 $task-page-top-padding: 36px;
 
+
+//-------- Task Page Layout
+$task-form-width: 500px;
+$peripherals-width: 100px; // Peripherals will flex to fit this

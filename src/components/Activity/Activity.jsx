@@ -18,7 +18,7 @@ import * as actions from "./ActivityActions"
 import * as taskActions from "../TaskPage/TaskActions"
 import * as processesActions from '../Processes/ProcessesActions.jsx'
 import * as productsActions from '../Products/ProductsActions.jsx'
-
+import * as tagActions from '../Tags/TagActions'
 import './styles/activitylist.css'
 
 class Activity extends React.Component {
@@ -50,6 +50,7 @@ class Activity extends React.Component {
 	componentDidMount() {
 		this.props.dispatch(processesActions.fetchProcesses())
 		this.props.dispatch(productsActions.fetchProducts())
+		this.props.dispatch(tagActions.fetchTags())
 	}
 
 	setDefaultFilters() {
@@ -62,6 +63,8 @@ class Activity extends React.Component {
 			},
 			selectedProcesses: qsFilters.selectedProcesses,
 			selectedProducts: qsFilters.selectedProducts,
+			selectedCategories: qsFilters.selectedCategories,
+			selectedTags: qsFilters.selectedTags,
 			keywords: qsFilters.keyword || '',
 			flaggedOnly: qsFilters === 'true' || false,
 			aggregateProducts: qsFilters === 'true' || false,
@@ -76,10 +79,12 @@ class Activity extends React.Component {
 		qs.set('end', filters.dates.end)
 		qs.set('selectedProcesses', filters.selectedProcesses.join(','))
 		qs.set('selectedProducts', filters.selectedProducts.join(','))
+		qs.set('selectedCategories', filters.selectedCategories.join(','))
+		qs.set('selectedTags', filters.selectedTags.join(','))
 		qs.set('keywords', filters.keywords)
 		qs.set('flaggedOnly', String(filters.flaggedOnly))
 		qs.set('aggregateProducts', String(filters.aggregateProducts))
-		this.props.history.push({search: qs.toString() })
+		this.props.history.push({ search: qs.toString() })
 	}
 
 	getFilters() {
@@ -91,6 +96,8 @@ class Activity extends React.Component {
 			},
 			selectedProcesses: qs.get('selectedProcesses') ? qs.get('selectedProcesses').split(',') : [],
 			selectedProducts: qs.get('selectedProducts') ? qs.get('selectedProducts').split(',') : [],
+			selectedCategories: qs.get('selectedCategories') ? qs.get('selectedCategories').split(',') : [],
+			selectedTags: qs.get('selectedTags') ? qs.get('selectedTags').split(',') : [],
 			keywords: qs.get('keywords') || '',
 			flaggedOnly: qs.get('flaggedOnly') === 'true',
 			aggregateProducts: qs.get('aggregateProducts') === 'true',
@@ -121,7 +128,9 @@ class Activity extends React.Component {
 	handleDownloadAll() {
 		const { selectedProcesses, selectedProducts } = this.getFilters()
 		const { data } = this.props
-		const processes = selectedProcesses.length ? selectedProcesses : [...new Set(data.map(row => row.process_type.id))]
+		const processes = selectedProcesses.length ? 
+			selectedProcesses : 
+			[...new Set(data.map(row => row.process_type.id))]
 		const products = selectedProducts.length ?
 			selectedProducts :
 			[...new Set([].concat(...data.map(row => row.product_types.map(p => p.id))))]
@@ -148,11 +157,11 @@ class Activity extends React.Component {
 	}
 
 	handleReorder(ordering) {
-		this.setState({ordering: ordering},() => this.getActivity(this.getFilters()))
+		this.setState({ ordering: ordering }, () => this.getActivity(this.getFilters()))
 	}
 
 	render() {
-		const { data, processes, products } = this.props
+		const { data, processes, products, tags } = this.props
 		if (!this.getFilters().dates.start) {
 			this.setDefaultFilters()
 		}
@@ -166,12 +175,13 @@ class Activity extends React.Component {
 					downloadDisabled={!data.length}
 					processes={processes}
 					products={products}
+					tags={tags}
 				/>
-					<div className="content">
-						{this.renderDialog()}
-						{this.renderTaskDialog()}
-						{this.renderTable()}
-					</div>
+				<div className="content">
+					{this.renderDialog()}
+					{this.renderTaskDialog()}
+					{this.renderTable()}
+				</div>
 				{this.renderHelp()}
 			</div>
 		)
@@ -183,6 +193,7 @@ class Activity extends React.Component {
 			{ title: null, className: 'icon', field: null },
 			{ title: 'Code', className: 'process-code', field: 'process_type__code' },
 			{ title: 'Process Type', className: 'process-name', field: 'process_type__name' },
+			{ title: 'Category', className: 'category', field: 'process_type__category' },
 			{ title: 'Product Type', className: 'product-code', field: product_type_field },
 			{ title: 'Runs', className: 'runs', field: 'runs' },
 			{ title: 'Amount', className: 'outputs', field: 'amount' },
@@ -191,7 +202,7 @@ class Activity extends React.Component {
 			{ title: null, className: 'chart', field: null },
 		]
 		return (
-			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering}/>
+			<ObjectListHeader columns={columns} onReorder={this.handleReorder} ordering={this.state.ordering} />
 		)
 	}
 
@@ -212,7 +223,7 @@ class Activity extends React.Component {
 							TitleRow={this.renderTableHeader}
 							onPagination={this.handlePagination}
 							onClick={this.handleSelect}
-							extra={{onViewTasks: this.handleSelect, onDownload: this.handleDownloadRow}}
+							extra={{ onViewTasks: this.handleSelect, onDownload: this.handleDownloadRow }}
 						/>
 					</ObjectList>
 				</div>
@@ -245,12 +256,12 @@ class Activity extends React.Component {
 		return (
 			<div className="activity-page-help-container">
 				<div className="activity-page-help"
-				     onClick={() => window.open("https://polymer.helpscoutdocs.com/article/10-understanding-recipes", '_blank')}>
-					<div className="activity-page-help-header">Create recipes for your products</div>
+					onClick={() => window.open("https://polymer.helpscoutdocs.com/article/21-understanding-and-setting-costs-for-tasks", '_blank')}>
+					<div className="activity-page-help-header">Track value like never before</div>
 					<div>
-						<span>Guide your team with instructions and ingredients and keep your inventory accurate. </span>
+						<span>Track cost for every item in your factory, and understand how value is distribute across your production line. </span>
 						<span className="activity-page-help-link">
-						Learn how to supercharge your team now.  
+							Learn how to supercharge your production insights now.
 					</span>
 						<span className="activity-page-forward">  <i
 							className="material-icons activity-page-forward-i">arrow_forward</i></span>
@@ -273,6 +284,12 @@ class Activity extends React.Component {
 		if (filters.selectedProducts.length) {
 			params.product_types = filters.selectedProducts.join(',')
 		}
+		if (filters.selectedCategories.length) {
+			params.category_types = filters.selectedCategories.join(',')
+		}
+		if (filters.selectedTags.length) {
+			params.tags = filters.selectedTags.join(',')
+		}
 		if (filters.keywords) {
 			params.label = filters.keywords
 		}
@@ -290,6 +307,7 @@ const mapStateToProps = (state) => {
 	return {
 		data: state.activity.data,
 		ui: state.activity.ui,
+		tags: state.tags.data,
 		tasks: state.tasks.data,
 		tasksUI: state.tasks.ui,
 		processes: state.processes.data,

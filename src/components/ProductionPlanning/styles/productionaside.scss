@@ -1,0 +1,80 @@
+@import 'styles/constants.scss';
+
+.production-aside-container {
+    flex: 1;
+    background-color: white;
+    padding: 30px 20px 200px 20px;
+
+    .title {
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .empty-screen-text {
+        margin: 20px 0;
+        color: $gray;
+        font-style: italic;
+    }
+
+    .link {
+        color: $primary
+    }
+
+    .aside-item-container {
+        background-color: white;
+        box-shadow: $shadow-1;
+        margin-bottom: 12px;
+        cursor: pointer;
+
+        .outer-progress-bar {
+            background-color: $gray-ultra-light;
+
+            .inner-progress-bar {
+                background-color: $primary;
+                height: 6px;
+            }
+        }
+
+        .content-container {
+            padding: 8px 20px 20px 20px;
+
+            .title-container {
+                display: flex;
+                flex-direction: row;
+
+                .title {
+                    flex: 3;
+                    font-size: 15px;
+                    color: $black;
+                    margin: 6px 0 10px 0;
+                }
+
+                .warning {
+                    flex: 1;
+                    text-align: right;
+                }
+            }
+
+            .info-container{
+                display: flex;
+                flex-direction: row;
+
+                .label {
+                    flex: 1;
+                    color: $gray;
+                }
+                
+                .value {
+                    flex: 1;
+                    text-align: right;
+                }
+            }
+
+        }
+    }
+
+    .selected {
+        box-shadow: $shadow-2;
+        transform: scale(1.01);
+    }
+}

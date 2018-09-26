@@ -1,22 +1,35 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import FormGroup from '../Inputs/FormGroup'
 import Button from '../Button/Button'
 import Input from '../Inputs/Input'
 import './styles/processeditform.css'
 import IconPicker from '../IconPicker/IconPicker'
+import TagSelect from '../Tags/TagSelect'
+import ProcessCategoryPicker from '../Processes/ProcessCategoryPicker'
 
-export default function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, isLoading, onChange, onSubmit}) {
+function EditProcessInfoForm({ icon, code, name, output_desc, default_amount, unit, category, tags, allTags, isLoading, onChange, onSubmit}) {
 	return (
 		<div className='edit-process-info'>
 			<CodeAndName onChange={onChange} icon={icon} code={code} name={name} />
 			<OutputDescription onChange={onChange} output_desc={output_desc} />
 			<OutputQuantity onChange={onChange} default_amount={default_amount} unit={unit}/>
+			<Category onChange={onChange} category={category} />
+			<TagSelect onChange={onChange} selectedTags={tags} allTags={allTags} />
 			<FormGroup>
 				<Button wide onClick={onSubmit} isLoading={isLoading}>Save changes</Button>
 			</FormGroup>
 		</div>
 	)
 }
+
+const mapStateToProps = (state/*, props*/) => { 
+	return {
+		allTags: state.tags.data,
+	}
+}
+
+export default connect(mapStateToProps)(EditProcessInfoForm)
 
 function CodeAndName({ onChange, icon, code, name }) {
 	return (
@@ -76,6 +89,14 @@ function OutputQuantity({ onChange, default_amount, unit }) {
 					onChange={(e) => onChange(e.target.value, "unit")}
 				/>
 			</div>
+		</FormGroup>
+	)
+}
+
+function Category({ onChange, category}) {
+	return (
+		<FormGroup label="Category">
+			<ProcessCategoryPicker onChange={e => onChange(e.key, "category")} category={category} />
 		</FormGroup>
 	)
 }

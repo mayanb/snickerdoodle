@@ -1,4 +1,5 @@
 @import 'styles/constants.scss';
+$container-width: $task-form-width - $peripherals-width; // This is the width of the attribute input boxes
 
 .task-main {
     flex-grow: 1;
@@ -61,5 +62,46 @@
             color: $gray-dark;
         }
 
+        .no-tags {
+            color: $gray-light;
+        }
+
+    }
+	
+		.task-main-container > .card {
+			margin-left: -4px;
+			margin-bottom: 26px;
+			min-width: $container-width;
+			max-width: $container-width;
+		}
+    
+    .task-cogs {
+        display: flex;
+        flex-direction: column;
+        
+        .task-cogs-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+	
+						div.info {
+							display: flex;
+							flex-direction: row;
+							min-width: $container-width - $peripherals-width;
+							max-width: $container-width - $peripherals-width;
+							
+							align-items: center;
+							margin-bottom: 6px;
+							margin-top: 6px;
+							
+							div {
+								flex: 1;
+							}
+							
+							div.ant-input-number {
+								margin-left: -20px;
+							}
+						}
+        }
     }
 }

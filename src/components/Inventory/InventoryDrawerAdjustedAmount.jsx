@@ -26,7 +26,8 @@ export default class InventoryDrawerAdjustedAmount extends React.Component {
 
 	render() {
 		const { inventory, onSaveAdjustment } = this.props
-		const unit = inventory.process_unit
+		const { process_type } = inventory
+		const unit = process_type.unit
 		let discrepancy = ''
 		if (inventory.history && inventory.history.length && this.state.amount) {
 			const discrepancyAmount = this.state.amount - inventory.history[0].data.endAmount
