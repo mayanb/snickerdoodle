@@ -57,15 +57,17 @@ function startAdjustment(state, action) {
 
 function adjustmentSuccess(state, action) {
 	let index = getIndexOfInventory(state, action.process_type, action.product_type)
+	const data = index === -1 ? {} : {
+		[index]: {
+			$merge: { amount: action.amount }
+		}
+	}
+	
 	return update(state, {
 		ui: {
 			$merge: { isAdjusting: false }
 		},
-		data: {
-			[index]: {
-				$merge: { amount: action.amount }
-			}
-		}
+		data: data,
 	})
 }
 

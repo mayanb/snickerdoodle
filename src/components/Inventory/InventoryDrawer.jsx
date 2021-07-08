@@ -8,6 +8,7 @@ import * as adjustmentActions from './AdjustmentActions'
 import { formatAmount } from '../../utilities/stringutils'
 import { inventoryName } from './inventoryUtils'
 import Loading from '../Loading/Loading'
+import TaskFileDropzone from '../TaskPage/TaskFileDropzone'
 import './styles/inventorydrawer.css'
 
 class InventoryDrawer extends React.Component {
@@ -17,6 +18,7 @@ class InventoryDrawer extends React.Component {
 
 		this.handleToggleAddAdjustment = this.handleToggleAddAdjustment.bind(this)
 		this.handleSaveAdjustment = this.handleSaveAdjustment.bind(this)
+		this.handleDropFiles = this.handleDropFiles.bind(this)
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -78,12 +80,25 @@ class InventoryDrawer extends React.Component {
 					<InventoryDrawerAdjustedAmount inventory={selectedInventory} onSaveAdjustment={this.handleSaveAdjustment} /> :
 					<AddAdjustment onClick={this.handleToggleAddAdjustment} />
 				}
+				<TaskFileDropzone
+					onDropFiles={this.handleDropFiles}
+					task={{files: []}}
+					dropzoneText="Drag a CSV file of inventory changes here to submit them."
+				/>
 				<Loading isFetchingData={ui.isFetchingHistory || ui.isAdjusting}>
 					<AdjustmentHistory history={selectedInventory.history} unit={selectedInventory.process_type.unit} />
 				</Loading>
 			</div>
 		)
 	}
+	
+	handleDropFiles(files) {
+		const { dispatch } = this.props
+		Promise.all(files.map(file => dispatch(adjustmentActions.requestUploadCsvFile(file))))
+			.then(() => console.log('yay'))
+	}
+	
+	
 
 	handleToggleAddAdjustment() {
 		this.setState({ isAddingAdjustment: !this.state.isAddingAdjustment })
